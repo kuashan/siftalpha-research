@@ -323,3 +323,35 @@ E031 is materially different from E030 because it removes the required prior-pro
 
 Current phase:
 Discovery may begin only after the pre-registration commits are confirmed on `main`.
+
+
+## E031 execution checkpoint — Discovery partial
+
+E031 remains IN_PROGRESS.
+
+Data retrieval completed successfully for 10 of 30 Discovery tickers before the market-data provider returned an explicit RATE_LIMIT response:
+
+- AAPL
+- MSFT
+- NVDA
+- JPM
+- XOM
+- FDX
+- NEE
+- ORCL
+- WMT
+- GS
+
+For the successfully retrieved tickers, the provider returned 501 daily bars from 2024-09-18 through 2026-09-17.
+
+The apparent zero-row responses previously observed for ADBE / WFC / MRK / TMO / RTX / AVGO were diagnosed as provider rate-limit failures, not true missing-market-data observations.
+
+No E031 Discovery conclusion is allowed from the partial 10-stock subset.
+
+Still unopened:
+- E031 OOS: QCOM, NKE, SCHW, GILD, CSX, META, AMD, CRM, TXN, AMZN
+- E031 Frozen OOS: LOW, BA, PGR, ADP, MDLZ
+
+Rules, thresholds, cohorts, and evaluation gates remain exactly as pre-registered in `preregistrations/E031.md`.
+
+Do not alter or replace any ticker because of the provider rate limit.
