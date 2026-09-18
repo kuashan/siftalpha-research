@@ -106,3 +106,116 @@ Main future research targets:
 3. profit giveback control
 4. ADD / REDUCE / RE-ADD action discovery
 5. only after action validation: position-size optimization
+
+
+## Action-discovery round — 2026-09-19
+
+### No-Progress REDUCE
+
+Tested:
+- first effective Green -> Gray before any Red maturity
+- running MFE < 1 entry ATR
+- current close <= original entry price
+
+Discovery:
+- 20 events
+- median candidate price ~1.11% above eventual final close
+- average candidate price ~2.54% below eventual final close
+
+New 10-stock OOS:
+- 2 events
+- average candidate price ~1.20% below eventual final close
+
+Decision: REJECT as a general REDUCE rule.
+
+### Profit-Giveback REDUCE
+
+Tested a path-aware rule:
+- effective Red
+- prior MFE >= 2 entry ATR
+- giveback >= 1 entry ATR
+- raw state Gray
+
+Discovery:
+- 47 events
+- average price advantage vs final close only ~+0.23%
+
+New OOS:
+- 5 events
+- average advantage reversed to ~-0.68%
+
+Decision: REJECT as a general REDUCE rule.
+
+### RTE after proven progress
+
+RTE after at least 2 ATR of prior MFE:
+- 8 baseline events
+- 62.5% of RTE prices were above the later final close
+- average advantage ~+1.46%
+- median advantage ~+5.82%
+
+New 10-stock OOS produced zero qualifying RTE events.
+
+Decision: retain as CANDIDATE only; evidence remains sparse.
+
+### ADD — repeated Qualified GRB
+
+Discovery:
+- 37 add events
+- win rate 51.4%
+- average subsequent add leg +7.31%
+- median +0.66%
+- 25 later Mature, 12 later Fail
+
+Frozen new OOS:
+- 5 events
+- win rate 20%
+- average -5.22%
+- median -2.44%
+
+Decision: REJECT.
+
+### ADD — Red-confirmed path breakout
+
+Definition:
+- trade has matured into effective Red
+- later close exceeds the highest high formed from entry through Red confirmation
+
+Discovery:
+- 33 events
+- win rate 39.4%
+- average +7.50%
+- median -2.63%
+
+Decision: REJECT. Positive mean is not representative of the typical add leg.
+
+### RE-ADD — RTE high reclaim
+
+Definition:
+- RTE occurs
+- remain in effective Red
+- later close exceeds the RTE-day high
+- RE-ADD next open
+
+Discovery:
+- 6 events
+- win rate 33.3%
+- average subsequent leg -0.95%
+- median -3.05%
+- average buyback price ~1.4% above the earlier RTE reduction price
+
+Decision: REJECT.
+
+### Action-layer conclusion
+
+The correct position-management architecture remains:
+OPEN / HOLD / ADD / REDUCE / RE-ADD / CLOSE.
+
+However, architectural completeness does not justify inventing triggers.
+
+Current validated/candidate status:
+- OPEN = validated
+- ADD = none validated
+- REDUCE = RTE candidate only
+- RE-ADD = none validated
+- CLOSE = validated failure/mature rules
