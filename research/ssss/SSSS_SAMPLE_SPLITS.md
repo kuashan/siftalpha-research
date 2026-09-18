@@ -212,12 +212,19 @@ Pre-registered before any E030 result was inspected.
 
 | Role | Cohort | Tickers | Count | Prior SSSS exposure | Official 45? | Status |
 |---|---|---|---:|---|---|---|
-| Discovery | E030_D | AAPL, MSFT, NVDA, JPM, XOM, ADBE, WFC, MRK, FDX, NEE, ORCL, WMT, GS, TMO, RTX, AVGO, PEP, C, MDT, UNP, IBM, CVX, HD, AMGN, MCD | 25 | Yes | Yes | PRE-REGISTERED |
-| OOS | E030_OOS | LLY, GE, V, TGT, COP, QCOM, NKE, SCHW, GILD, CSX | 10 | Yes | Yes | PRE-REGISTERED |
-| Frozen OOS | E030_FOOS | LOW, BA, PGR, ADP, MDLZ | 5 | No appearance in retained split ledger; unknown earliest aggregate membership cannot be ruled out | No | PRE-REGISTERED |
+| Discovery | E030_D | AAPL, MSFT, NVDA, JPM, XOM, ADBE, WFC, MRK, FDX, NEE, ORCL, WMT, GS, TMO, RTX, AVGO, PEP, C, MDT, UNP, IBM, CVX, HD, AMGN, MCD | 25 | Yes | Yes | COMPLETED — REJECTED |
+| OOS | E030_OOS | LLY, GE, V, TGT, COP, QCOM, NKE, SCHW, GILD, CSX | 10 | Yes | Yes | NOT OPENED |
+| Frozen OOS | E030_FOOS | LOW, BA, PGR, ADP, MDLZ | 5 | No appearance in retained split ledger; unknown earliest aggregate membership cannot be ruled out | No | NOT OPENED |
 
 Fixed evaluation window: 2024-09-01 through 2026-09-18. Warm-up data may begin 2024-01-01.
 
 The Frozen OOS cohort must not be queried for E030 outcomes until one exact rule survives OOS and is frozen.
 
 Full rule family, metrics, and pass/fail criteria are frozen in `preregistrations/E030.md`.
+
+
+E030 status update:
+- Discovery completed and failed the pre-registered eligibility gate.
+- OOS was not opened.
+- Frozen OOS was not opened.
+- The Frozen OOS tickers remain unqueried for E030 outcomes.
