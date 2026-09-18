@@ -439,3 +439,48 @@ See:
 - `preregistrations/E032.md`
 - `SSSS_SAMPLE_SPLITS.md`
 - `SSSS_SAMPLE_SPLITS.csv`
+
+
+## E032 result — ADD Opportunity Map
+
+Status: CANDIDATE_ZONES_FOUND.
+
+Discovery completed:
+- 30 / 30 stocks
+- 40 resolved trades
+- 3332 all-bar hypothetical ADD observations
+- 15 formal map cells passed the pre-registered candidate-zone gate
+
+The strongest zones concentrate early in the lifecycle:
+- before Effective Red
+- near the original entry price
+- before large price extension
+
+The strongest formal cell was:
+StructuralSep < 0 and close < FastMid
+with 30 first-entry trade events across 22 stocks, +4.65% average hypothetical ADD return and +2.97% median.
+
+Other top zones include:
+- PRE_RED in the first 0-4 bars
+- Effective Green with dsep > 0
+- running MFE < 1 EntryATR while current progress <= 0
+
+Important interpretation:
+these zones are not validated ADD triggers.
+Several are so close to the original OPEN that they may simply imply that earlier exposure is economically superior to delayed confirmation.
+
+E032 did not open OOS.
+E032 did not open Frozen OOS.
+No production/research ADD action was added.
+
+Current action maturity remains:
+- OPEN: validated
+- ADD: no validated trigger
+- HOLD: active
+- REDUCE: RTE candidate only; WhiteLower no-progress warning-only
+- RE-ADD: no validated trigger
+- FAILURE CLOSE: validated
+- MATURE CLOSE: validated
+
+Next research frontier:
+separate "increase starter exposure" from a genuinely selective early second-entry rule.
