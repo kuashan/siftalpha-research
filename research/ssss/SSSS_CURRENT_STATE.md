@@ -355,3 +355,38 @@ Still unopened:
 Rules, thresholds, cohorts, and evaluation gates remain exactly as pre-registered in `preregistrations/E031.md`.
 
 Do not alter or replace any ticker because of the provider rate limit.
+
+
+## E031 result — completed at Discovery
+
+E031 Structural Confirmation ADD completed all 30 pre-registered Discovery stocks.
+
+All six variants were rejected at Discovery.
+
+Key result:
+- S050B: 43 signals, 34 resolved, 25 stocks, average +4.21%, median -2.90%, profit factor 2.24, median execution distance 2.50 EntryATR.
+- S100B: 29 resolved, average +4.22%, median -2.97%.
+- S150B: 13 resolved, average +11.05%, median -3.13%.
+- S050X: 19 resolved, average +3.96%, median -3.47%.
+- S100X: 15 resolved, average +10.07%, median -2.70%.
+- S150X: 9 resolved, average +12.88%, median -3.13%.
+
+Every variant failed the required positive-median condition.
+
+Therefore:
+- E031 = REJECT_DISCOVERY
+- OOS was not opened
+- Frozen OOS was not opened
+- no ADD rule was added
+
+Interpretation:
+normalized band separation captures some large trends but does not solve incremental entry timing. Higher thresholds become later and more winner-concentrated.
+
+Current action maturity remains:
+- OPEN: validated
+- ADD: no validated trigger
+- HOLD: active
+- REDUCE: RTE candidate only; WhiteLower no-progress warning-only
+- RE-ADD: no validated trigger
+- FAILURE CLOSE: validated
+- MATURE CLOSE: validated
