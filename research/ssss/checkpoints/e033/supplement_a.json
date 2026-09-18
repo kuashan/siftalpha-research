@@ -1,0 +1,39 @@
+{
+  "experiment": "E033",
+  "provider": "Massive",
+  "tickers": [
+    "ADBE",
+    "WFC",
+    "MRK",
+    "FDX",
+    "RTX"
+  ],
+  "coverage": [
+    {
+      "ticker": "ADBE",
+      "bars": 0,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    },
+    {
+      "ticker": "WFC",
+      "bars": 0,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    },
+    {
+      "ticker": "MRK",
+      "bars": 0,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    },
+    {
+      "ticker": "FDX",
+      "bars": 0,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    },
+    {
+      "ticker": "RTX",
+      "bars": 0,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    }
+  ],
+  "trades": []
+}
