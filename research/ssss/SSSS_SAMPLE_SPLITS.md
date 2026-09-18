@@ -372,3 +372,11 @@ No equity or crypto holdout may be queried.
 
 Full definition:
 `preregistrations/E034.md`
+
+
+E034 final status:
+- equity Discovery: 40 resolved lifecycles, 31 Mature / 9 Failure;
+- no ER10 / CHOP14 / CMF20 / OBVImpulse10 snapshot passed the pre-registered diagnostic gate;
+- crypto Discovery: 7 resolved lifecycles, 4 Mature / 3 Failure;
+- crypto diagnostics were too sparse for formal interpretation;
+- all equity and crypto holdouts remained unopened.
