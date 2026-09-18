@@ -10,7 +10,7 @@ Status:
 - OPEN: validated research rule
 - FAILURE CLOSE: validated research rule
 - MATURE CLOSE: validated research rule
-- ADD: not yet validated; E030/E031 trigger families rejected; E032 opportunity map found Discovery candidate zones but accepted no trigger
+- ADD: not yet validated; E030/E031 trigger families rejected; E032 found early opportunity zones; E033 selective early-entry rules also rejected because they did not distinguish Mature from Failure paths
 - REDUCE: RTE is research candidate only
 - RE-ADD: not yet validated
 
