@@ -336,3 +336,55 @@ Next direction:
 - search for an ADD point that proves the trade without chasing
 - treat RTE as the leading sparse REDUCE candidate
 - optimize starter/add allocation only after the action frontier is better established
+
+
+## E030 ADD round — 2026-09-19
+
+Research question:
+Can an early Qualified GRB trade prove direction, complete a controlled pullback, and then re-accelerate into a non-chasing ADD before Effective Red?
+
+The round was pre-registered before results:
+- Discovery: 25 stocks
+- OOS: 10 stocks
+- Frozen OOS: 5 stocks
+- six fixed variants only
+- no post-result threshold changes permitted
+
+Discovery variants:
+- U075 / U100 / U150: FastUpper reset after prior 0.75 / 1.00 / 1.50 EntryATR progress
+- M075 / M100 / M150: FastMid test/reclaim after the same three progress thresholds
+
+Common re-acceleration requirements:
+- before first Effective Red
+- C > FastUpper
+- C > prior-day high
+- dsep > 0
+- signal close no more than 0.25 EntryATR above the prior running high
+- next-open ADD execution
+
+Discovery result:
+- U075: 3 signals, 0 resolved ADD legs, 3 stocks
+- U100: 3 signals, 0 resolved ADD legs, 3 stocks
+- U150: 3 signals, 0 resolved ADD legs, 3 stocks
+- M075: 0 signals
+- M100: 0 signals
+- M150: 0 signals
+
+The three U-family signals occurred in AAPL, MSFT, and XOM and were still unresolved by the sample end.
+
+Pre-registered eligibility required:
+- at least 12 resolved ADD legs
+- at least 6 Discovery stocks
+- positive mean
+- positive median
+- profit factor > 1
+
+Decision: REJECT at Discovery.
+
+OOS was not opened.
+Frozen OOS was not opened.
+
+Interpretation:
+The combined requirement of prior progress + controlled pullback + pre-Red re-acceleration + anti-chase cap is too restrictive in the available history. This exact six-variant family should not be revived without a materially different hypothesis.
+
+Important: the failure is not evidence that pullback-based ADD is impossible. It only rejects this tightly constrained formulation.
