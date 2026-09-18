@@ -131,3 +131,60 @@ FLAT
 ```
 
 Do not optimize position percentages until action triggers themselves have passed out-of-sample validation.
+
+
+## Latest action-discovery round
+
+No new production action was accepted.
+
+### ADD
+
+Rejected after discovery/OOS:
+- Repeat Qualified GRB within the same effective Green episode
+  - baseline: 37 events, 51.4% win, +7.31% average, +0.66% median
+  - new OOS: 5 events, 20% win, -5.22% average, -2.44% median
+- Effective Red then breakout above the pre-Red path high
+  - 33 events, 39.4% win, +7.50% average, -2.63% median
+  - positive mean was driven by a small number of large trend continuations
+
+Conclusion: no validated ADD trigger exists yet.
+
+### REDUCE
+
+Rejected as general REDUCE:
+- No-Progress Gray with MFE < 1 ATR and close <= entry
+  - baseline median price advantage ~+1.11%, but average ~-2.54%
+  - new OOS average ~-1.20%
+- Profit Giveback + Raw Gray
+  - baseline price advantage only ~+0.23%
+  - new OOS average ~-0.68%
+
+RTE after at least 2 ATR of prior favorable excursion remains a research candidate only:
+- baseline: 8 events
+- 62.5% occurred above the later final close price
+- average price advantage ~+1.46%
+- median price advantage ~+5.82%
+- latest 10-stock OOS produced zero such events, so evidence remains too sparse
+
+### RE-ADD
+
+Rejected:
+- RTE reduction followed by dsep > 0
+- RTE reduction followed by a close above the RTE-day high while still Red
+
+For the latter:
+- 6 baseline events
+- re-add leg win rate 33.3%
+- average re-add leg -0.95%
+- median re-add leg -3.05%
+- average buyback price was about 1.4% above the earlier RTE reduction price
+
+### Current action maturity
+
+- OPEN: validated research rule
+- ADD: no validated trigger
+- HOLD: active
+- REDUCE: RTE remains candidate only
+- RE-ADD: no validated trigger
+- FAILURE CLOSE: validated research rule
+- MATURE CLOSE: validated research rule
