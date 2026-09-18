@@ -148,3 +148,20 @@ Design implication:
 - preserve the early Qualified GRB starter
 - discover a non-chasing confirmation point for ADD
 - use partial-risk architecture only after the ADD/REDUCE frontier is validated
+
+
+## E030 ADD update — 2026-09-19
+
+Rejected at Discovery:
+Progress -> Controlled Pullback -> Re-acceleration ADD using the pre-registered six-variant E030 family.
+
+Discovery outcome:
+- FastUpper-reset family: only 3 signals across 3 stocks and 0 resolved ADD legs
+- FastMid-test/reclaim family: 0 signals
+
+This failed the pre-registered minimum-event gate before any OOS was opened.
+
+State-machine consequence:
+- ADD remains RESEARCH / none accepted
+- no production transition is added
+- do not revive the exact E030 six-variant family under a new name without a materially different hypothesis
