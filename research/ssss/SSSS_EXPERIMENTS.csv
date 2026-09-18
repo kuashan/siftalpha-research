@@ -1,0 +1,19 @@
+experiment_id,date,category,rule,result,decision,notes
+E001,2026-09-19,core,XMA->DEMA,DEMA state agreement ~86.9%,KEEP,Causal rewrite selected
+E002,2026-09-19,buy,PriceNearWhite,Repeated OOS separation,KEEP,C >= WhiteLower - 2*ATR14
+E003,2026-09-19,buy,2D MTF hard confirmation,Inconsistent OOS; discarded mature trends,REJECT,Diagnostic only
+E004,2026-09-19,buy,MA30 hard confirmation,Reversed OOS,REJECT,No stable incremental value
+E005,2026-09-19,buy,A8 yellow hard confirmation,Highly redundant with GRB,REJECT,Keep only as observation
+E006,2026-09-19,buy,SAR hard confirmation,No stable incremental value,REJECT,Modern source formula has SAR branch disabled after 2009-06-30
+E007,2026-09-19,sell_failure,Gray->Green,Best validated failure close so far,KEEP,Execute next open
+E008,2026-09-19,sell_failure,Deep Relapse,Prediction precision high but economic exit worse,REJECT_AS_CLOSE,May remain warning
+E009,2026-09-19,sell_failure,C<FastLower,No economic improvement; mature false kills,REJECT_AS_CLOSE,
+E010,2026-09-19,sell_mature,Red->Gray,Best validated mature close so far,KEEP,Execute next open
+E011,2026-09-19,sell_mature,Raw Gray 1/2,No stable cross-group improvement,REJECT_AS_FULL_CLOSE,
+E012,2026-09-19,reduce,RTE,Promising but small event count,CANDIDATE,Do not use as full close
+E013,2026-09-19,add,Bullish Gray,Weak hit rate and negative median,REJECT,
+E014,2026-09-19,add,Effective Red,Weak hit rate and negative median,REJECT,
+E015,2026-09-19,add,+1ATR progress,Failed independent OOS,REJECT,
+E016,2026-09-19,add,+2ATR progress,Too late / chase effect,REJECT,
+E017,2026-09-19,readd,RTE then dsep>0,~30% win; avg ~-2.34%; median ~-4.86%,REJECT,
+E018,2026-09-19,baseline,Corrected effective-Green episode accounting,71 completed; 59.2% win; +8.84% avg net,OFFICIAL_BASELINE,Use effective non-Green->Green episode boundaries
