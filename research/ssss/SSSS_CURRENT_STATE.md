@@ -390,3 +390,21 @@ Current action maturity remains:
 - RE-ADD: no validated trigger
 - FAILURE CLOSE: validated
 - MATURE CLOSE: validated
+
+
+## Data-source resilience
+
+SSSS now follows `SSSS_DATA_SOURCE_POLICY.md`.
+
+Massive remains the current primary research source.
+
+A yfinance fallback downloader is retained for research recovery and provider-parity testing.
+
+Provider switching is allowed without changing the experiment ID only when:
+- cohorts stay fixed;
+- date range stays fixed;
+- strategy formula stays fixed;
+- execution and evaluation rules stay fixed;
+- the replacement provider is documented before its result is interpreted.
+
+Do not silently mix providers ticker-by-ticker inside an official research stage.
