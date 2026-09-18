@@ -270,3 +270,34 @@ The exact E030 Discovery / OOS / Frozen OOS split, six-variant Discovery family,
 No E030 result may be interpreted unless the sequence in `SSSS_RESEARCH_PROTOCOL.md` is followed.
 
 Current phase: Discovery may begin only after the pre-registration commits are confirmed on `main`.
+
+
+## E030 result — completed at Discovery
+
+E030 Progress -> Controlled Pullback -> Re-acceleration ADD failed its pre-registered Discovery gate.
+
+Results:
+- FastUpper-reset variants U075 / U100 / U150: 3 signals each, 0 resolved ADD legs, 3 stocks
+- FastMid-test variants M075 / M100 / M150: 0 signals
+
+Required minimum:
+- 12 resolved ADD legs
+- 6 Discovery stocks
+
+Therefore:
+- E030 = REJECT_DISCOVERY
+- E030 OOS was not opened
+- E030 Frozen OOS was not opened
+- no ADD rule was added to the model
+
+Current action maturity remains:
+- OPEN: validated
+- ADD: no validated trigger
+- HOLD: active
+- REDUCE: RTE candidate only; WhiteLower no-progress warning-only
+- RE-ADD: no validated trigger
+- FAILURE CLOSE: validated
+- MATURE CLOSE: validated
+
+Research implication:
+The next ADD round should keep the idea of "prove direction without chasing" but remove at least one structural bottleneck rather than merely loosening E030 thresholds after seeing the result. A new formulation requires a new experiment ID and a new pre-registration.
