@@ -238,12 +238,21 @@ Pre-registered before any E031 result was inspected.
 
 | Role | Cohort | Tickers | Count | Prior SSSS exposure | Official 45? | Status |
 |---|---|---|---:|---|---|---|
-| Discovery | E031_D | AAPL, MSFT, NVDA, JPM, XOM, ADBE, WFC, MRK, FDX, NEE, ORCL, WMT, GS, TMO, RTX, AVGO, PEP, C, MDT, UNP, IBM, CVX, HD, AMGN, MCD, LLY, GE, V, TGT, COP | 30 | Yes | Yes | PRE-REGISTERED |
-| OOS | E031_OOS | QCOM, NKE, SCHW, GILD, CSX, META, AMD, CRM, TXN, AMZN | 10 | Yes | Yes | PRE-REGISTERED |
-| Frozen OOS | E031_FOOS | LOW, BA, PGR, ADP, MDLZ | 5 | No appearance in retained pre-E030 split ledger; earliest unknown aggregate membership cannot be ruled out | No | PRE-REGISTERED |
+| Discovery | E031_D | AAPL, MSFT, NVDA, JPM, XOM, ADBE, WFC, MRK, FDX, NEE, ORCL, WMT, GS, TMO, RTX, AVGO, PEP, C, MDT, UNP, IBM, CVX, HD, AMGN, MCD, LLY, GE, V, TGT, COP | 30 | Yes | Yes | IN PROGRESS — RATE LIMITED |
+| OOS | E031_OOS | QCOM, NKE, SCHW, GILD, CSX, META, AMD, CRM, TXN, AMZN | 10 | Yes | Yes | NOT OPENED |
+| Frozen OOS | E031_FOOS | LOW, BA, PGR, ADP, MDLZ | 5 | No appearance in retained pre-E030 split ledger; earliest unknown aggregate membership cannot be ruled out | No | NOT OPENED |
 
 Fixed evaluation window: 2024-09-01 through 2026-09-18.
 
 E031 tests StructuralSep = (FastMid - WhiteMid) / WhiteWidth at fixed 0.50 / 1.00 / 1.50 crossings with two confirmation modes.
 
 Full rule family and gates are frozen in `preregistrations/E031.md`.
+
+
+E031 execution checkpoint:
+- 10/30 Discovery tickers were retrieved successfully.
+- Market-data retrieval then stopped because the provider returned an explicit RATE_LIMIT error.
+- No Discovery eligibility decision has been made.
+- OOS remains unopened.
+- Frozen OOS remains unopened.
+- No cohort substitution or rule change is permitted.
