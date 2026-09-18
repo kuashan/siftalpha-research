@@ -219,3 +219,120 @@ Current validated/candidate status:
 - REDUCE = RTE candidate only
 - RE-ADD = none validated
 - CLOSE = validated failure/mature rules
+
+
+## Tail-loss position-action round — 2026-09-19
+
+Objective: reduce the left tail without destroying the large winners that drive the strategy's positive skew.
+
+### No-Progress + WhiteLower
+
+Definition:
+- before any Red maturity
+- effective Gray
+- running MFE < 1 entry ATR
+- close < WhiteLower
+
+Baseline:
+- 13 triggers
+- hit 6 of 10 losses worse than -5%
+- hit 4 of 5 losses worse than -10%
+- touched only 2 eventual winners
+- average action-vs-final-close edge +0.81%
+- average edge on <-10% losses +6.46%
+
+Independent follow-up:
+- 25 completed trades
+- 2 triggers
+- both were <-10% losses
+- no winners touched
+- average action-vs-final-close edge only +0.58%
+
+Decision: CANDIDATE WARNING / possible second-stage REDUCE only. Identification was useful but timing was often late.
+
+### No-Progress + FastMid
+
+Definition:
+- before any Red maturity
+- effective Gray
+- running MFE < 1 entry ATR
+- close < FastMid
+
+Baseline:
+- 12 triggers
+- hit 6 of 10 losses worse than -5%
+- hit 4 of 5 losses worse than -10%
+- touched 2 winners
+- average action-vs-final-close edge +1.41%
+- average edge on <-10% losses +9.22%
+
+First independent follow-up:
+- 25 completed trades
+- 2 triggers
+- both were <-10% losses
+- no winners touched
+- average edge +1.94%
+
+Second frozen OOS:
+- 8 completed trades
+- 2 triggers
+- both were eventual winners
+- zero tail-loss hits
+- average action-vs-final-close edge -9.30%
+- one false reduction was NOC, which later finished about +13.73%
+
+Decision: REJECT as mandatory REDUCE. This was a clear OOS reversal.
+
+### No-Progress loss thresholds
+
+Tested while running MFE remained < 1 entry ATR and before Red:
+- close <= entry - 1 ATR
+- close <= entry - 1.5 ATR
+- close <= entry - 2 ATR
+
+All five baseline losses worse than -10% were captured, but the rules also touched eventual winners and had negative average marginal value.
+
+Decision: REJECT as general REDUCE rules. The strategy cannot use simple ATR-loss de-risking without sacrificing important recoveries.
+
+### Profit round-trip
+
+Tested after a trade had previously reached +2 ATR or +3 ATR of MFE, then returned to the entry-price area.
+
+These rules occasionally protected a tail loss but touched too many eventual winners. Average marginal value was negative or near zero.
+
+Decision: REJECT as general REDUCE.
+
+### Staged-entry / delayed Red unit
+
+Tested the idea of keeping a second notional unit in cash until the trade matured into effective Red.
+
+Correct implementation:
+- Failure paths never receive the delayed unit.
+- Mature paths add the delayed unit at the next open after Red maturity.
+
+Per-unit results across the 71-trade baseline:
+- normal OPEN unit: +8.84% average
+- delayed Red unit: +3.89% average
+- shifting one full unit from OPEN to Red reduced average return by about 4.95 percentage points
+
+Failure-path benefit:
+- the delayed unit stays in cash, so it avoids Failure-path losses completely.
+
+Mature-path cost:
+- delayed Red unit average +5.31%
+- median -1.21%
+- much of the large-trend early move is missed.
+
+Decision: REJECT as a full replacement for initial exposure. Retain as a position-sizing frontier concept only.
+
+### Tail-loss conclusion
+
+No mandatory tail-loss REDUCE trigger passed OOS.
+
+The main structural lesson is that early weakness can later recover into major winners, while waiting until a tail-loss classifier becomes very precise often makes the action too late to add much economic value.
+
+Next direction:
+- preserve Qualified GRB as an early starter signal
+- search for an ADD point that proves the trade without chasing
+- treat RTE as the leading sparse REDUCE candidate
+- optimize starter/add allocation only after the action frontier is better established
