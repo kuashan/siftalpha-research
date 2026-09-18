@@ -199,3 +199,15 @@ Interpretation:
 
 State-machine status remains:
 ADD = RESEARCH / none accepted.
+
+
+## E033 ADD / sizing update — 2026-09-19
+
+Selective Early Second Entry was rejected at Discovery.
+
+All four candidates had positive per-event economics, but none achieved the required Mature-vs-Failure discrimination.
+
+State-machine consequence:
+- ADD remains unvalidated
+- no selective early ADD transition is added
+- early positive marginal economics should now be studied as a sizing / split-entry problem, not assumed to be a technical confirmation signal
