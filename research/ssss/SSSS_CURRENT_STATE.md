@@ -221,3 +221,15 @@ Current action maturity remains:
 - RE-ADD: no validated trigger
 - FAILURE CLOSE: validated
 - MATURE CLOSE: validated
+
+
+## Official universe and sample-split source
+
+The corrected baseline must be interpreted together with:
+
+- `SSSS_UNIVERSE_45.md` — exact 45-stock baseline membership
+- `SSSS_SAMPLE_SPLITS.md` — Discovery / OOS / Frozen OOS audit history
+- `SSSS_SAMPLE_SPLITS.csv` — machine-readable split ledger
+- `ssss_universe.py` — executable cohort configuration
+
+Do not recompute or compare baseline statistics using a different universe without explicitly versioning the universe change.
