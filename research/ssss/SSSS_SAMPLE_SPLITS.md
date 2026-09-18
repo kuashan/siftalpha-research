@@ -305,9 +305,9 @@ Pre-registered before any E033 result was viewed.
 
 | Role | Cohort | Tickers | Count | Status |
 |---|---|---|---:|---|
-| Discovery | E033_D | AAPL, MSFT, NVDA, JPM, XOM, ADBE, WFC, MRK, FDX, NEE, ORCL, WMT, GS, TMO, RTX, AVGO, PEP, C, MDT, UNP, IBM, CVX, HD, AMGN, MCD, LLY, GE, V, TGT, COP | 30 | PRE-REGISTERED |
-| OOS | E033_OOS | QCOM, NKE, SCHW, GILD, CSX, META, AMD, CRM, TXN, AMZN | 10 | PRE-REGISTERED — DO NOT OPEN |
-| Frozen OOS | E033_FOOS | LOW, BA, PGR, ADP, MDLZ | 5 | PRE-REGISTERED — DO NOT OPEN |
+| Discovery | E033_D | AAPL, MSFT, NVDA, JPM, XOM, ADBE, WFC, MRK, FDX, NEE, ORCL, WMT, GS, TMO, RTX, AVGO, PEP, C, MDT, UNP, IBM, CVX, HD, AMGN, MCD, LLY, GE, V, TGT, COP | 30 | COMPLETED — REJECTED |
+| OOS | E033_OOS | QCOM, NKE, SCHW, GILD, CSX, META, AMD, CRM, TXN, AMZN | 10 | NOT OPENED |
+| Frozen OOS | E033_FOOS | LOW, BA, PGR, ADP, MDLZ | 5 | NOT OPENED |
 
 E033 compares four exact selective early-second-entry rules against:
 - BASE_1U
@@ -316,3 +316,12 @@ E033 compares four exact selective early-second-entry rules against:
 
 Full definition:
 `preregistrations/E033.md`
+
+
+E033 final status:
+- 30/30 Discovery stocks completed;
+- all four candidates had positive ADD-leg mean and median;
+- none passed Mature-vs-Failure path-selectivity requirements;
+- OOS was not opened;
+- Frozen OOS was not opened;
+- no ADD trigger was accepted.
