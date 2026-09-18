@@ -1,0 +1,539 @@
+{
+  "experiment": "E033",
+  "provider": "Massive",
+  "tickers": [
+    "AVGO",
+    "CVX",
+    "HD",
+    "AMGN",
+    "MCD"
+  ],
+  "coverage": [
+    {
+      "ticker": "AVGO",
+      "bars": 501,
+      "warning": null
+    },
+    {
+      "ticker": "CVX",
+      "bars": 501,
+      "warning": null
+    },
+    {
+      "ticker": "HD",
+      "bars": 501,
+      "warning": null
+    },
+    {
+      "ticker": "AMGN",
+      "bars": 501,
+      "warning": null
+    },
+    {
+      "ticker": "MCD",
+      "bars": 501,
+      "warning": null
+    }
+  ],
+  "trades": [
+    {
+      "ticker": "AVGO",
+      "trade_id": "AVGO-1",
+      "path": "MATURE",
+      "entry_date": "2026-04-08",
+      "resolved": true,
+      "entry_atr": 11.879100000000003,
+      "entry_px": 351.75,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2026-04-09",
+          "exec_date": "2026-04-10",
+          "bars": 2,
+          "entry_dist_atr": 0.773628,
+          "resolved": true,
+          "add_ret": 0.02822354,
+          "immediate_ret": 0.05508743,
+          "delay_cost": -0.02686389
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2026-04-08",
+          "exec_date": "2026-04-09",
+          "bars": 1,
+          "entry_dist_atr": 0.0463,
+          "resolved": true,
+          "add_ret": 0.05344026,
+          "immediate_ret": 0.05508743,
+          "delay_cost": -0.00164717
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": true,
+          "signal_date": "2026-04-09",
+          "exec_date": "2026-04-10",
+          "bars": 2,
+          "entry_dist_atr": 0.773628,
+          "resolved": true,
+          "add_ret": 0.02822354,
+          "immediate_ret": 0.05508743,
+          "delay_cost": -0.02686389
+        }
+      },
+      "exit_date": "2026-07-01",
+      "base_ret": 0.05508743,
+      "nextday_ret": 0.05344026
+    },
+    {
+      "ticker": "CVX",
+      "trade_id": "CVX-1",
+      "path": "MATURE",
+      "entry_date": "2025-06-09",
+      "resolved": true,
+      "entry_atr": 2.6848999999999967,
+      "entry_px": 140.55,
+      "candidates": {
+        "C04": {
+          "triggered": false
+        },
+        "D10": {
+          "triggered": false
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": false
+        }
+      },
+      "exit_date": "2025-10-13",
+      "base_ret": 0.06510352,
+      "nextday_ret": 0.05259668
+    },
+    {
+      "ticker": "CVX",
+      "trade_id": "CVX-2",
+      "path": "MATURE",
+      "entry_date": "2025-12-31",
+      "resolved": true,
+      "entry_atr": 2.08107142857143,
+      "entry_px": 152.39,
+      "candidates": {
+        "C04": {
+          "triggered": false
+        },
+        "D10": {
+          "triggered": false
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": false
+        }
+      },
+      "exit_date": "2026-05-14",
+      "base_ret": 0.21935817,
+      "nextday_ret": 0.22116119
+    },
+    {
+      "ticker": "HD",
+      "trade_id": "HD-1",
+      "path": "FAILURE",
+      "entry_date": "2025-05-05",
+      "resolved": true,
+      "entry_atr": 7.995671428571411,
+      "entry_px": 362.13,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2025-05-07",
+          "exec_date": "2025-05-08",
+          "bars": 3,
+          "entry_dist_atr": 0.235127,
+          "resolved": true,
+          "add_ret": -0.04049131,
+          "immediate_ret": -0.03551001,
+          "delay_cost": -0.0049813
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2025-05-05",
+          "exec_date": "2025-05-06",
+          "bars": 1,
+          "entry_dist_atr": -0.431483,
+          "resolved": true,
+          "add_ret": -0.02623297,
+          "immediate_ret": -0.03551001,
+          "delay_cost": 0.00927704
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": true,
+          "signal_date": "2025-05-07",
+          "exec_date": "2025-05-08",
+          "bars": 3,
+          "entry_dist_atr": 0.235127,
+          "resolved": true,
+          "add_ret": -0.04049131,
+          "immediate_ret": -0.03551001,
+          "delay_cost": -0.0049813
+        }
+      },
+      "exit_date": "2025-06-23",
+      "base_ret": -0.03551001,
+      "nextday_ret": -0.02623297
+    },
+    {
+      "ticker": "HD",
+      "trade_id": "HD-2",
+      "path": "MATURE",
+      "entry_date": "2025-06-30",
+      "resolved": true,
+      "entry_atr": 6.345785714285723,
+      "entry_px": 369.28,
+      "candidates": {
+        "C04": {
+          "triggered": false
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2025-06-30",
+          "exec_date": "2025-07-01",
+          "bars": 1,
+          "entry_dist_atr": -0.778469,
+          "resolved": true,
+          "add_ret": 0.03780265,
+          "immediate_ret": 0.02391957,
+          "delay_cost": 0.01388308
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": true,
+          "signal_date": "2025-07-01",
+          "exec_date": "2025-07-02",
+          "bars": 2,
+          "entry_dist_atr": 0.687858,
+          "resolved": true,
+          "add_ret": 0.01195792,
+          "immediate_ret": 0.02391957,
+          "delay_cost": -0.01196165
+        }
+      },
+      "exit_date": "2025-10-14",
+      "base_ret": 0.02391957,
+      "nextday_ret": 0.03780265
+    },
+    {
+      "ticker": "HD",
+      "trade_id": "HD-3",
+      "path": "MATURE",
+      "entry_date": "2025-12-12",
+      "resolved": true,
+      "entry_atr": 9.095714285714296,
+      "entry_px": 359.26,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2025-12-12",
+          "exec_date": "2025-12-15",
+          "bars": 1,
+          "entry_dist_atr": 0.014292,
+          "resolved": true,
+          "add_ret": -0.01252258,
+          "immediate_ret": -0.01216525,
+          "delay_cost": -0.00035733
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2025-12-15",
+          "exec_date": "2025-12-16",
+          "bars": 2,
+          "entry_dist_atr": -0.259463,
+          "resolved": true,
+          "add_ret": -0.0056332,
+          "immediate_ret": -0.01216525,
+          "delay_cost": 0.00653205
+        },
+        "S10": {
+          "triggered": true,
+          "signal_date": "2025-12-19",
+          "exec_date": "2025-12-22",
+          "bars": 6,
+          "entry_dist_atr": -1.534239,
+          "resolved": true,
+          "add_ret": 0.02775665,
+          "immediate_ret": -0.01216525,
+          "delay_cost": 0.0399219
+        },
+        "R10": {
+          "triggered": false
+        }
+      },
+      "exit_date": "2026-03-09",
+      "base_ret": -0.01216525,
+      "nextday_ret": -0.01252258
+    },
+    {
+      "ticker": "HD",
+      "trade_id": "HD-4",
+      "path": "MATURE",
+      "entry_date": "2026-06-10",
+      "resolved": true,
+      "entry_atr": 8.213814285714287,
+      "entry_px": 323.265,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2026-06-11",
+          "exec_date": "2026-06-12",
+          "bars": 2,
+          "entry_dist_atr": 0.637341,
+          "resolved": true,
+          "add_ret": 0.04096014,
+          "immediate_ret": 0.05781759,
+          "delay_cost": -0.01685745
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2026-06-10",
+          "exec_date": "2026-06-11",
+          "bars": 1,
+          "entry_dist_atr": -0.118702,
+          "resolved": true,
+          "add_ret": 0.06101773,
+          "immediate_ret": 0.05781759,
+          "delay_cost": 0.00320014
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": true,
+          "signal_date": "2026-06-11",
+          "exec_date": "2026-06-12",
+          "bars": 2,
+          "entry_dist_atr": 0.637341,
+          "resolved": true,
+          "add_ret": 0.04096014,
+          "immediate_ret": 0.05781759,
+          "delay_cost": -0.01685745
+        }
+      },
+      "exit_date": "2026-07-28",
+      "base_ret": 0.05781759,
+      "nextday_ret": 0.06101773
+    },
+    {
+      "ticker": "AMGN",
+      "trade_id": "AMGN-1",
+      "path": "MATURE",
+      "entry_date": "2025-05-28",
+      "resolved": true,
+      "entry_atr": 6.631649999999992,
+      "entry_px": 279.02,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2025-05-29",
+          "exec_date": "2025-05-30",
+          "bars": 2,
+          "entry_dist_atr": 0.541343,
+          "resolved": true,
+          "add_ret": 0.00757203,
+          "immediate_ret": 0.02053591,
+          "delay_cost": -0.01296388
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2025-05-28",
+          "exec_date": "2025-05-29",
+          "bars": 1,
+          "entry_dist_atr": 0.030158,
+          "resolved": true,
+          "add_ret": 0.01980492,
+          "immediate_ret": 0.02053591,
+          "delay_cost": -0.00073099
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": true,
+          "signal_date": "2025-05-29",
+          "exec_date": "2025-05-30",
+          "bars": 2,
+          "entry_dist_atr": 0.541343,
+          "resolved": true,
+          "add_ret": 0.00757203,
+          "immediate_ret": 0.02053591,
+          "delay_cost": -0.01296388
+        }
+      },
+      "exit_date": "2025-08-13",
+      "base_ret": 0.02053591,
+      "nextday_ret": 0.01980492
+    },
+    {
+      "ticker": "AMGN",
+      "trade_id": "AMGN-2",
+      "path": "MATURE",
+      "entry_date": "2025-10-02",
+      "resolved": true,
+      "entry_atr": 7.421807142857148,
+      "entry_px": 298.31,
+      "candidates": {
+        "C04": {
+          "triggered": false
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2025-10-02",
+          "exec_date": "2025-10-03",
+          "bars": 1,
+          "entry_dist_atr": -0.079495,
+          "resolved": true,
+          "add_ret": -0.02593235,
+          "immediate_ret": -0.02785887,
+          "delay_cost": 0.00192652
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": false
+        }
+      },
+      "exit_date": "2025-10-30",
+      "base_ret": -0.02785887,
+      "nextday_ret": -0.02593235
+    },
+    {
+      "ticker": "AMGN",
+      "trade_id": "AMGN-3",
+      "path": "OPEN_UNRESOLVED",
+      "entry_date": "2026-05-26",
+      "resolved": false,
+      "entry_atr": 7.038142857142852,
+      "entry_px": 340.56,
+      "candidates": {
+        "C04": {
+          "triggered": false
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2026-05-26",
+          "exec_date": "2026-05-27",
+          "bars": 1,
+          "entry_dist_atr": -0.147766,
+          "resolved": false
+        },
+        "S10": {
+          "triggered": true,
+          "signal_date": "2026-06-01",
+          "exec_date": "2026-06-02",
+          "bars": 5,
+          "entry_dist_atr": -2.044573,
+          "resolved": false
+        },
+        "R10": {
+          "triggered": true,
+          "signal_date": "2026-06-04",
+          "exec_date": "2026-06-05",
+          "bars": 8,
+          "entry_dist_atr": 1.16508,
+          "resolved": false
+        }
+      }
+    },
+    {
+      "ticker": "MCD",
+      "trade_id": "MCD-1",
+      "path": "MATURE",
+      "entry_date": "2025-07-11",
+      "resolved": true,
+      "entry_atr": 4.587728571428564,
+      "entry_px": 298.14,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2025-07-14",
+          "exec_date": "2025-07-15",
+          "bars": 2,
+          "entry_dist_atr": 0.688794,
+          "resolved": true,
+          "add_ret": 0.00138056,
+          "immediate_ret": 0.01199424,
+          "delay_cost": -0.01061368
+        },
+        "D10": {
+          "triggered": false
+        },
+        "S10": {
+          "triggered": true,
+          "signal_date": "2025-07-24",
+          "exec_date": "2025-07-25",
+          "bars": 10,
+          "entry_dist_atr": -0.289904,
+          "resolved": true,
+          "add_ret": 0.01652897,
+          "immediate_ret": 0.01199424,
+          "delay_cost": 0.00453473
+        },
+        "R10": {
+          "triggered": true,
+          "signal_date": "2025-07-22",
+          "exec_date": "2025-07-23",
+          "bars": 8,
+          "entry_dist_atr": 0.294263,
+          "resolved": true,
+          "add_ret": 0.00743252,
+          "immediate_ret": 0.01199424,
+          "delay_cost": -0.00456172
+        }
+      },
+      "exit_date": "2025-09-22",
+      "base_ret": 0.01199424,
+      "nextday_ret": 0.00847638
+    },
+    {
+      "ticker": "MCD",
+      "trade_id": "MCD-2",
+      "path": "OPEN_UNRESOLVED",
+      "entry_date": "2026-07-08",
+      "resolved": false,
+      "entry_atr": 6.415357142857142,
+      "entry_px": 281.27,
+      "candidates": {
+        "C04": {
+          "triggered": false
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2026-07-08",
+          "exec_date": "2026-07-09",
+          "bars": 1,
+          "entry_dist_atr": -0.812114,
+          "resolved": false
+        },
+        "S10": {
+          "triggered": true,
+          "signal_date": "2026-07-13",
+          "exec_date": "2026-07-14",
+          "bars": 4,
+          "entry_dist_atr": -1.44497,
+          "resolved": false
+        },
+        "R10": {
+          "triggered": false
+        }
+      }
+    }
+  ]
+}
