@@ -642,3 +642,38 @@ Before feature outcomes were computed, actual Massive coverage was frozen:
 BNB is not replaced.
 
 Normal warm-up remains mandatory and BNB may legitimately be too sparse.
+
+
+## E034 result — Orthogonal Feature Diagnostic
+
+Status: NO_DIAGNOSTIC_CANDIDATE.
+
+Equity:
+- 30/30 stocks
+- 40 resolved lifecycles
+- 31 Mature / 9 Failure
+- ER10, CHOP14, CMF20, and OBVImpulse10 were tested at two fixed snapshots
+- no feature/snapshot passed the pre-registered diagnostic gate
+
+Largest equity separation:
+CHOP14 at entry-day close:
+- Mature median 51.79
+- Failure median 56.98
+- Cliff delta -0.190
+- below the required |0.33| threshold
+- quartile behavior was not monotonic
+
+Crypto:
+- BTC / ETH / SOL / BNB
+- only 7 resolved lifecycles
+- 4 Mature / 3 Failure
+- all feature/snapshot results classified TOO_SPARSE
+
+Therefore:
+- no trading rule is created
+- all equity holdouts remain unopened
+- all crypto holdouts remain unopened
+
+Research implication:
+single-snapshot ER / CHOP / CMF / normalized-OBV levels did not solve Mature-vs-Failure discrimination on equities.
+Crypto needs more independent lifecycle history before these features can be judged.
