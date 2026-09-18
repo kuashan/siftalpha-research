@@ -252,3 +252,21 @@ Only after that commit may Discovery begin.
 OOS is not a second Discovery stage. Frozen OOS must remain untouched until the candidate rule has been frozen.
 
 If a cohort or tested rule changes after results are viewed, the work must receive a new experiment ID and a new pre-registration commit.
+
+
+## Active research round — E030
+
+Status: PRE-REGISTERED.
+
+Research target:
+Progress -> Controlled Pullback -> Re-acceleration ADD.
+
+The exact E030 Discovery / OOS / Frozen OOS split, six-variant Discovery family, date window, execution convention, and pass/fail criteria are frozen in:
+
+- `preregistrations/E030.md`
+- `SSSS_SAMPLE_SPLITS.md`
+- `SSSS_SAMPLE_SPLITS.csv`
+
+No E030 result may be interpreted unless the sequence in `SSSS_RESEARCH_PROTOCOL.md` is followed.
+
+Current phase: Discovery may begin only after the pre-registration commits are confirmed on `main`.
