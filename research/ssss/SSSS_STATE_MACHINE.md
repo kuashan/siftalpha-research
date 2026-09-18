@@ -165,3 +165,22 @@ State-machine consequence:
 - ADD remains RESEARCH / none accepted
 - no production transition is added
 - do not revive the exact E030 six-variant family under a new name without a materially different hypothesis
+
+
+## E031 ADD update — 2026-09-19
+
+Rejected at Discovery:
+StructuralSep confirmation ADD.
+
+All six pre-registered variants had negative median ADD-leg returns despite several having positive averages and profit factors above 2.
+
+Best-balanced variant S050B still had:
+- 34 resolved events
+- 25 stocks
+- +4.21% average
+- -2.90% median
+
+State-machine consequence:
+- ADD remains RESEARCH / none accepted
+- normalized band separation must not be promoted into a production ADD transition
+- the exact E031 family should not be revived without a materially different timing hypothesis
