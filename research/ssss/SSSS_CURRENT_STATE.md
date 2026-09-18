@@ -521,3 +521,34 @@ Bars before 2024-09-18 are not included in the current plan.
 E033 therefore uses the accessible Massive history beginning 2024-09-18 and retains the model's 150-bar warm-up requirement.
 
 No E033 rule, cohort, or pass/fail threshold changed.
+
+
+## E033 result — Selective Early Second Entry
+
+Status: REJECT_DISCOVERY.
+
+Discovery:
+- 30 / 30 stocks
+- 52 total trades
+- 40 resolved
+- 31 Mature
+- 9 Failure
+
+All four pre-registered candidates produced positive average and median ADD-leg economics, but none met the required path-selectivity gate.
+
+Key examples:
+- C04: +5.62% average / +1.44% median, but Mature trigger 71.0% vs Failure 66.7%
+- D10: +6.34% / +1.98%, but Failure trigger 88.9% exceeded Mature 67.7%
+- S10: +5.03% / +2.78%, but Failure trigger 55.6% exceeded Mature 38.7%
+- R10: +5.48% / +1.31%, but Failure trigger 55.6% exceeded Mature 48.4% and top-3 winners contributed 81.5%
+
+Therefore:
+- E033 = REJECT_DISCOVERY
+- OOS not opened
+- Frozen OOS not opened
+- no ADD trigger added
+
+Important research implication:
+early second-unit economics are positive, but the tested early information does not reliably select which trades deserve the extra unit.
+
+This shifts the research frontier from ADD-signal discovery toward position sizing and mechanical split-entry policy comparison.
