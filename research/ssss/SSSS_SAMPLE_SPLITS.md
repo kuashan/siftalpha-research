@@ -264,3 +264,25 @@ E031 final status:
 - no variant passed Discovery eligibility;
 - OOS was not opened;
 - Frozen OOS was not opened.
+
+
+---
+
+## 14. E032 — ADD Opportunity Map
+
+Pre-registered before any E032 outcome was inspected.
+
+| Role | Cohort | Tickers | Count | Status |
+|---|---|---|---:|---|
+| Discovery | E032_D | AAPL, MSFT, NVDA, JPM, XOM, ADBE, WFC, MRK, FDX, NEE, ORCL, WMT, GS, TMO, RTX, AVGO, PEP, C, MDT, UNP, IBM, CVX, HD, AMGN, MCD, LLY, GE, V, TGT, COP | 30 | PRE-REGISTERED |
+| Reserved OOS | E032_OOS | QCOM, NKE, SCHW, GILD, CSX, META, AMD, CRM, TXN, AMZN | 10 | RESERVED — DO NOT OPEN |
+| Reserved Frozen OOS | E032_FOOS | LOW, BA, PGR, ADP, MDLZ | 5 | RESERVED — DO NOT OPEN |
+
+E032 is Discovery-only by design.
+
+It maps hypothetical next-open ADD economics across five fixed causal maps and cannot validate an ADD trigger.
+
+Any rule inspired by the map requires a new experiment before OOS.
+
+Full definition:
+`preregistrations/E032.md`
