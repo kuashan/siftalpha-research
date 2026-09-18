@@ -388,3 +388,75 @@ Interpretation:
 The combined requirement of prior progress + controlled pullback + pre-Red re-acceleration + anti-chase cap is too restrictive in the available history. This exact six-variant family should not be revived without a materially different hypothesis.
 
 Important: the failure is not evidence that pullback-based ADD is impossible. It only rejects this tightly constrained formulation.
+
+
+## E031 Structural Confirmation ADD — 2026-09-19
+
+Research question:
+Can normalized fast-band vs white-band separation provide a useful ADD confirmation after Qualified GRB but before Effective Red?
+
+Structural variable:
+
+```text
+StructuralSep = (FastMid - WhiteMid) / WhiteWidth
+```
+
+Pre-registered six-variant family:
+- S050B / S100B / S150B
+- S050X / S100X / S150X
+
+Discovery cohort:
+30 fixed stocks.
+
+OOS and Frozen OOS remained unopened throughout Discovery.
+
+### Discovery results
+
+| Variant | Signals | Resolved | Stocks | Win rate | Avg net | Median net | Q25 | Profit factor | Median entry distance | Median lead to Red | Top-3 positive share |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| S050B | 43 | 34 | 25 | 35.3% | +4.21% | -2.90% | -5.43% | 2.24 | 2.50 EntryATR | 4 bars | 61.9% |
+| S100B | 38 | 29 | 24 | 34.5% | +4.22% | -2.97% | -5.40% | 2.30 | 3.00 EntryATR | 2 bars | 69.8% |
+| S150B | 16 | 13 | 13 | 38.5% | +11.05% | -3.13% | -6.04% | 4.35 | 3.09 EntryATR | 1 bar | 83.3% |
+| S050X | 24 | 19 | 19 | 26.3% | +3.96% | -3.47% | -6.14% | 2.05 | 3.11 EntryATR | 3 bars | 89.4% |
+| S100X | 19 | 15 | 16 | 40.0% | +10.07% | -2.70% | -5.25% | 4.24 | 3.40 EntryATR | 2 bars | 76.5% |
+| S150X | 12 | 9 | 11 | 44.4% | +12.88% | -3.13% | -6.04% | 4.80 | 3.40 EntryATR | 1 bar | 91.6% |
+
+### Pre-registered eligibility gate
+
+A variant required all of:
+- at least 15 resolved ADD legs
+- at least 8 stocks
+- positive average net ADD-leg return
+- positive median net ADD-leg return
+- profit factor > 1.25
+- 25th percentile > -8%
+- top-3 winners <= 70% of gross positive ADD return
+- median ADD execution distance <= 2.5 EntryATR
+- median lead to Effective Red >= 2 bars
+
+No variant passed.
+
+The decisive common failure was:
+- every variant had a negative median ADD-leg return.
+
+Additional problems increased at higher thresholds:
+- execution became later / farther from original entry
+- lead time to Effective Red compressed
+- positive results became increasingly concentrated in a few large winners
+
+### Decision
+
+E031 = REJECT_DISCOVERY.
+
+Do not open OOS.
+Do not open Frozen OOS.
+Do not add an ADD trigger to the model.
+
+### Interpretation
+
+Structural separation alone is informative about trend strength but is not a robust ADD timing rule.
+
+The positive mean and high profit factor in several variants are misleading if viewed without the median. The typical ADD leg remained negative, while a small number of very large trends lifted the average.
+
+This repeats the central SSSS lesson:
+large winners matter greatly, but an ADD rule must improve exposure to those trends without making the typical incremental unit lose money.
