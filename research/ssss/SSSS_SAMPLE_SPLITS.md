@@ -202,3 +202,22 @@ Changing any cohort after results are viewed requires a new experiment ID and a 
 No future result should be called "Frozen OOS" unless both the cohort and the tested rule were frozen before viewing the outcome.
 
 See `SSSS_RESEARCH_PROTOCOL.md` for the full governing protocol.
+
+
+---
+
+## 12. E030 — Progress → Controlled Pullback → Re-acceleration ADD
+
+Pre-registered before any E030 result was inspected.
+
+| Role | Cohort | Tickers | Count | Prior SSSS exposure | Official 45? | Status |
+|---|---|---|---:|---|---|---|
+| Discovery | E030_D | AAPL, MSFT, NVDA, JPM, XOM, ADBE, WFC, MRK, FDX, NEE, ORCL, WMT, GS, TMO, RTX, AVGO, PEP, C, MDT, UNP, IBM, CVX, HD, AMGN, MCD | 25 | Yes | Yes | PRE-REGISTERED |
+| OOS | E030_OOS | LLY, GE, V, TGT, COP, QCOM, NKE, SCHW, GILD, CSX | 10 | Yes | Yes | PRE-REGISTERED |
+| Frozen OOS | E030_FOOS | LOW, BA, PGR, ADP, MDLZ | 5 | No appearance in retained split ledger; unknown earliest aggregate membership cannot be ruled out | No | PRE-REGISTERED |
+
+Fixed evaluation window: 2024-09-01 through 2026-09-18. Warm-up data may begin 2024-01-01.
+
+The Frozen OOS cohort must not be queried for E030 outcomes until one exact rule survives OOS and is frozen.
+
+Full rule family, metrics, and pass/fail criteria are frozen in `preregistrations/E030.md`.
