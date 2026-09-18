@@ -460,3 +460,47 @@ The positive mean and high profit factor in several variants are misleading if v
 
 This repeats the central SSSS lesson:
 large winners matter greatly, but an ADD rule must improve exposure to those trends without making the typical incremental unit lose money.
+
+
+## E032 ADD Opportunity Map — 2026-09-19
+
+E032 reversed the research workflow:
+instead of proposing an ADD trigger first, every causally available in-trade decision bar was labeled with the hypothetical next-open ADD return to the already validated final CLOSE.
+
+Governance:
+- Discovery: 30 fixed stocks
+- Reserved OOS: not opened
+- Reserved Frozen OOS: not opened
+- five formal maps only
+- primary statistics used first-entry-per-trade within each map cell
+
+Coverage:
+- 30 / 30 Discovery stocks
+- 40 resolved trades
+- 3332 all-bar hypothetical ADD observations
+- Massive only; intermittent rate limits were retried without provider mixing
+
+Result:
+- 15 pre-defined cells passed the CANDIDATE_ZONE gate
+- E032 outcome = CANDIDATE_ZONES_FOUND
+
+Top five formal zones:
+
+1. m4 / S_LT_0|F_BELOW_MID: 30 events, 22 stocks, win 70.00%, avg 4.65%, median 2.97%, PF 3.67, median entry distance -0.87 EntryATR, median timing 8.5 bars
+2. m3 / M_LT_1|P_LE_0: 34 events, 22 stocks, win 64.71%, avg 9.59%, median 2.57%, PF 8.49, median entry distance -0.38 EntryATR, median timing 1 bars
+3. m1 / PRE_RED|B00_04: 40 events, 24 stocks, win 62.50%, avg 8.45%, median 2.57%, PF 7.19, median entry distance -0.04 EntryATR, median timing 1 bars
+4. m2 / P_LE_0|G_GE_2: 25 events, 17 stocks, win 60.00%, avg 5.45%, median 2.78%, PF 5.48, median entry distance -1.43 EntryATR, median timing 9 bars
+5. m5 / GREEN|D_POS: 38 events, 24 stocks, win 63.16%, avg 5.99%, median 2.57%, PF 5.43, median entry distance -0.03 EntryATR, median timing 1 bars
+
+Main interpretation:
+the positive marginal-return surface clusters early, before Effective Red and before large price extension.
+
+Several high-ranking cells are extremely close to the original OPEN in both time and price. Therefore they may represent "more initial exposure" rather than a genuinely new confirmation signal.
+
+This is important because it explains why later confirmation-style ADD rules repeatedly failed:
+by the time the trade looks obviously stronger, the typical remaining incremental return is often already weak or negative.
+
+Decision:
+- do not accept an ADD trigger from E032
+- do not modify the state machine
+- any selective early-second-entry rule must be a new pre-registered experiment
