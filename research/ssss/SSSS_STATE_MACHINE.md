@@ -128,3 +128,23 @@ After RTE:
 - RE-ADD
 
 This produced weak subsequent legs and typically bought back above the earlier reduction price.
+
+
+## Tail-risk action update — 2026-09-19
+
+No mandatory tail-loss REDUCE rule has been added to the state machine.
+
+Rejected:
+- No-Progress + FastMid
+- no-progress drawdown thresholds of 1 / 1.5 / 2 entry ATR
+- profit round-trip after prior +2 / +3 ATR MFE
+- replacing a full OPEN exposure unit with an Effective-Red delayed unit
+
+Warning-only:
+- No-Progress + WhiteLower may be retained as a diagnostic / possible second-stage de-risk signal, but it is not a validated action.
+
+Design implication:
+- avoid solving tail risk with blunt early exits
+- preserve the early Qualified GRB starter
+- discover a non-chasing confirmation point for ADD
+- use partial-risk architecture only after the ADD/REDUCE frontier is validated
