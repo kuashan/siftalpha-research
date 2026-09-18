@@ -10,7 +10,7 @@ Status:
 - OPEN: validated research rule
 - FAILURE CLOSE: validated research rule
 - MATURE CLOSE: validated research rule
-- ADD: not yet validated; E030 pullback/re-acceleration and E031 StructuralSep families rejected at Discovery
+- ADD: not yet validated; E030/E031 trigger families rejected; E032 opportunity map found Discovery candidate zones but accepted no trigger
 - REDUCE: RTE is research candidate only
 - RE-ADD: not yet validated
 
