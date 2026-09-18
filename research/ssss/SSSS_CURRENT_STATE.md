@@ -552,3 +552,29 @@ Important research implication:
 early second-unit economics are positive, but the tested early information does not reliably select which trades deserve the extra unit.
 
 This shifts the research frontier from ADD-signal discovery toward position sizing and mechanical split-entry policy comparison.
+
+
+## Open-source quant research pivot
+
+The research frontier has broadened beyond iterative SSSS-only indicator tweaks.
+
+A source survey now prioritizes orthogonal feature families:
+1. volume / flow
+2. trend efficiency / choppiness
+3. volatility compression / release
+4. multi-timeframe context
+5. crypto-specific BTC / derivatives context
+
+A separate crypto research track is now defined.
+
+Proposed 12-asset crypto research universe:
+- Discovery/core: BTC, ETH, SOL, BNB
+- fresh OOS candidates: XRP, ADA, DOGE, TRX
+- fresh Frozen OOS candidates: LINK, AVAX, LTC, BCH
+
+No empirical OOS/Frozen OOS designation becomes official until the exact exchange, quote pair, timeframe, date range, and rule are pre-registered.
+
+CCXT is added as the preferred open-source crypto OHLCV research adapter.
+
+Important:
+equity and crypto evidence must be reported independently; do not average them into one validation score.
