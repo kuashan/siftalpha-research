@@ -627,3 +627,18 @@ Tracks:
 Equity and crypto results must remain separate.
 
 E034 is diagnostic only and cannot create a trading rule.
+
+
+## E034 provider coverage — pre-result
+
+Before feature outcomes were computed, actual Massive coverage was frozen:
+
+- equity: from 2024-09-18
+- BTC/USD: 2024-09-18 to 2026-09-17
+- ETH/USD: 2024-09-18 to 2026-09-17
+- SOL/USD: 2024-09-18 to 2026-09-17
+- BNB/USD: 2026-03-04 to 2026-09-17 only
+
+BNB is not replaced.
+
+Normal warm-up remains mandatory and BNB may legitimately be too sparse.
