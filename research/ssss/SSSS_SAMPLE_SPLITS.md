@@ -325,3 +325,50 @@ E033 final status:
 - OOS was not opened;
 - Frozen OOS was not opened;
 - no ADD trigger was accepted.
+
+
+---
+
+## 16. E034 — Orthogonal Feature Diagnostic
+
+Duplication audit completed before pre-registration.
+
+Equity Discovery:
+AAPL, MSFT, NVDA, JPM, XOM,
+ADBE, WFC, MRK, FDX, NEE,
+ORCL, WMT, GS, TMO, RTX,
+AVGO, PEP, C, MDT, UNP,
+IBM, CVX, HD, AMGN, MCD,
+LLY, GE, V, TGT, COP
+
+Equity OOS:
+QCOM, NKE, SCHW, GILD, CSX, META, AMD, CRM, TXN, AMZN
+
+Equity Frozen OOS:
+LOW, BA, PGR, ADP, MDLZ
+
+Crypto Discovery:
+BTC, ETH, SOL, BNB
+using Massive composite USD daily tickers.
+
+Crypto OOS reserved:
+XRP, ADA, DOGE, TRX
+
+Crypto Frozen OOS reserved:
+LINK, AVAX, LTC, BCH
+
+E034 tests only:
+- ER10
+- CHOP14
+- CMF20
+- OBVImpulse10
+
+Snapshots:
+- Qualified GRB signal close
+- original OPEN execution-day close
+
+E034 is Discovery-only.
+No equity or crypto holdout may be queried.
+
+Full definition:
+`preregistrations/E034.md`
