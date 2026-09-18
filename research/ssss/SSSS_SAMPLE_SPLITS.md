@@ -238,7 +238,7 @@ Pre-registered before any E031 result was inspected.
 
 | Role | Cohort | Tickers | Count | Prior SSSS exposure | Official 45? | Status |
 |---|---|---|---:|---|---|---|
-| Discovery | E031_D | AAPL, MSFT, NVDA, JPM, XOM, ADBE, WFC, MRK, FDX, NEE, ORCL, WMT, GS, TMO, RTX, AVGO, PEP, C, MDT, UNP, IBM, CVX, HD, AMGN, MCD, LLY, GE, V, TGT, COP | 30 | Yes | Yes | IN PROGRESS — RATE LIMITED |
+| Discovery | E031_D | AAPL, MSFT, NVDA, JPM, XOM, ADBE, WFC, MRK, FDX, NEE, ORCL, WMT, GS, TMO, RTX, AVGO, PEP, C, MDT, UNP, IBM, CVX, HD, AMGN, MCD, LLY, GE, V, TGT, COP | 30 | Yes | Yes | COMPLETED — REJECTED |
 | OOS | E031_OOS | QCOM, NKE, SCHW, GILD, CSX, META, AMD, CRM, TXN, AMZN | 10 | Yes | Yes | NOT OPENED |
 | Frozen OOS | E031_FOOS | LOW, BA, PGR, ADP, MDLZ | 5 | No appearance in retained pre-E030 split ledger; earliest unknown aggregate membership cannot be ruled out | No | NOT OPENED |
 
@@ -256,3 +256,11 @@ E031 execution checkpoint:
 - OOS remains unopened.
 - Frozen OOS remains unopened.
 - No cohort substitution or rule change is permitted.
+
+
+E031 final status:
+- all 30 Discovery tickers were eventually retrieved despite intermittent provider rate limits;
+- every pre-registered variant had negative median ADD-leg return;
+- no variant passed Discovery eligibility;
+- OOS was not opened;
+- Frozen OOS was not opened.
