@@ -274,9 +274,9 @@ Pre-registered before any E032 outcome was inspected.
 
 | Role | Cohort | Tickers | Count | Status |
 |---|---|---|---:|---|
-| Discovery | E032_D | AAPL, MSFT, NVDA, JPM, XOM, ADBE, WFC, MRK, FDX, NEE, ORCL, WMT, GS, TMO, RTX, AVGO, PEP, C, MDT, UNP, IBM, CVX, HD, AMGN, MCD, LLY, GE, V, TGT, COP | 30 | PRE-REGISTERED |
-| Reserved OOS | E032_OOS | QCOM, NKE, SCHW, GILD, CSX, META, AMD, CRM, TXN, AMZN | 10 | RESERVED — DO NOT OPEN |
-| Reserved Frozen OOS | E032_FOOS | LOW, BA, PGR, ADP, MDLZ | 5 | RESERVED — DO NOT OPEN |
+| Discovery | E032_D | AAPL, MSFT, NVDA, JPM, XOM, ADBE, WFC, MRK, FDX, NEE, ORCL, WMT, GS, TMO, RTX, AVGO, PEP, C, MDT, UNP, IBM, CVX, HD, AMGN, MCD, LLY, GE, V, TGT, COP | 30 | COMPLETED — CANDIDATE ZONES FOUND |
+| Reserved OOS | E032_OOS | QCOM, NKE, SCHW, GILD, CSX, META, AMD, CRM, TXN, AMZN | 10 | NOT OPENED |
+| Reserved Frozen OOS | E032_FOOS | LOW, BA, PGR, ADP, MDLZ | 5 | NOT OPENED |
 
 E032 is Discovery-only by design.
 
@@ -286,3 +286,12 @@ Any rule inspired by the map requires a new experiment before OOS.
 
 Full definition:
 `preregistrations/E032.md`
+
+
+E032 final status:
+- all 30 Discovery stocks completed from Massive;
+- 40 resolved trades produced 3332 all-bar opportunity observations;
+- 15 pre-defined cells passed the candidate-zone gate;
+- OOS was not opened;
+- Frozen OOS was not opened;
+- no ADD trigger was accepted.
