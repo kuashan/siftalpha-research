@@ -617,3 +617,90 @@ This strengthens a new hypothesis:
 the early opportunity found in E032 may be primarily a position-sizing effect rather than a separate technical ADD signal.
 
 Next research should compare starter-size / mechanical split-entry policies under explicit risk and capital-normalization assumptions rather than inventing another early trigger.
+
+
+## E034 Orthogonal Feature Diagnostic — 2026-09-19
+
+Purpose:
+test whether four open-source-derived orthogonal features add lifecycle-quality information beyond the existing SSSS structure.
+
+Duplication audit was completed first.
+
+Features:
+- ER10
+- CHOP14
+- CMF20
+- OBVImpulse10
+
+Snapshots:
+- S0: Qualified GRB signal close
+- S1: original OPEN execution-day close
+
+### Equity Discovery
+
+Coverage:
+- 30 / 30 pre-registered stocks completed
+- 40 resolved lifecycles
+- 31 Mature
+- 9 Failure
+- no missing feature values at either snapshot
+
+#### S0 — signal close
+
+| Feature | Mature median | Failure median | Cliff delta | Candidate |
+|---|---:|---:|---:|---|
+| ER10 | 0.2697 | 0.2668 | -0.039 | No |
+| CHOP14 | 53.38 | 55.45 | -0.090 | No |
+| CMF20 | 0.0455 | 0.0462 | -0.147 | No |
+| OBVImpulse10 | 0.2162 | 0.2603 | -0.082 | No |
+
+#### S1 — entry-day close
+
+| Feature | Mature median | Failure median | Cliff delta | Candidate |
+|---|---:|---:|---:|---|
+| ER10 | 0.2392 | 0.3037 | -0.061 | No |
+| CHOP14 | 51.79 | 56.98 | -0.190 | No |
+| CMF20 | 0.0335 | 0.0415 | -0.061 | No |
+| OBVImpulse10 | 0.2730 | 0.2335 | +0.011 | No |
+
+No feature/snapshot met the pre-registered |Cliff delta| >= 0.33 gate plus quartile-consistency requirements.
+
+CHOP14 at S1 showed the largest equity separation in the expected lower-choppiness-for-Mature direction, but:
+- magnitude remained below the fixed gate;
+- quartile Mature rates were non-monotonic (90%, 80%, 60%, 80%);
+- therefore it is not an E034 diagnostic candidate.
+
+### Crypto Discovery
+
+Coverage:
+- BTC, ETH, SOL, BNB
+- 7 resolved lifecycles total
+- 4 Mature
+- 3 Failure
+- BNB history began only 2026-03-04
+
+Every crypto feature/snapshot was labeled TOO_SPARSE under the pre-registered rule.
+
+Notable but non-actionable observations:
+- ER10 S0 Cliff delta = -1.00
+- ER10 S1 Cliff delta = -0.50
+- OBVImpulse10 S1 Cliff delta = -0.33
+
+These values must not be treated as validated signals because n=7.
+
+### Decision
+
+E034 = NO_DIAGNOSTIC_CANDIDATE.
+
+Do not open:
+- equity OOS
+- equity Frozen OOS
+- crypto OOS
+- crypto Frozen OOS
+
+Do not create a hard filter from any E034 feature.
+
+Main lesson:
+these four single-feature snapshots did not materially separate Mature from Failure in the current equity sample, and the crypto daily sample is too small to judge.
+
+The next crypto-oriented research step should increase independent lifecycle sample size through a pre-registered longer-history provider or a separate lower-timeframe experiment rather than mining thresholds from seven trades.
