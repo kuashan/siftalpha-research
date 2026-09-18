@@ -46,3 +46,11 @@ Every new round must commit its Discovery / OOS / Frozen OOS membership to `main
 - `research/ssss/data_sources/requirements.txt` — isolated fallback-data dependencies
 
 Do not silently mix market-data providers inside one official research stage.
+
+
+## Open-source quant and crypto research track
+
+- `research/ssss/SSSS_OPEN_SOURCE_QUANT_SURVEY.md` — open-source strategy architecture and indicator survey
+- `research/ssss/SSSS_CRYPTO_RESEARCH_PLAN.md` — separate crypto validation track
+- `research/ssss/ssss_crypto_universe.py` — proposed 12-asset crypto research universe
+- `research/ssss/data_sources/ccxt_ohlcv.py` — exchange-native crypto OHLCV downloader through CCXT
