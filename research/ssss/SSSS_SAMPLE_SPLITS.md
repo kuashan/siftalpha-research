@@ -167,16 +167,38 @@ If the original conversation/export containing those lists is later recovered, u
 
 ## 11. Sample-split governance rule
 
-Going forward, every new research round must record **before results are inspected**:
+Going forward, every new research round must be **pre-registered and committed to `main` before any result is computed or inspected**.
+
+Before the round starts, record:
 
 1. experiment ID
-2. research question
-3. Discovery tickers
-4. OOS tickers
-5. Frozen OOS tickers
-6. date range
-7. whether a ticker overlaps prior research
-8. whether the cohort is part of the official baseline
-9. final decision
+2. research question / hypothesis
+3. exact candidate rule or feature definition
+4. Discovery tickers
+5. OOS tickers
+6. Frozen OOS tickers
+7. date range for each cohort
+8. whether a ticker overlaps prior research
+9. whether the cohort is part of the official baseline
+10. execution convention
+11. primary evaluation / rejection criteria
+12. status = PRE-REGISTERED
 
-No future result should be called "Frozen OOS" unless the cohort was fixed before viewing the outcome.
+Required order:
+
+```text
+write Discovery / OOS / Frozen OOS lists
+-> commit to main
+-> run Discovery
+-> freeze candidate
+-> run OOS
+-> if it survives, freeze again
+-> open Frozen OOS
+-> final decision
+```
+
+Changing any cohort after results are viewed requires a new experiment ID and a new pre-registration commit.
+
+No future result should be called "Frozen OOS" unless both the cohort and the tested rule were frozen before viewing the outcome.
+
+See `SSSS_RESEARCH_PROTOCOL.md` for the full governing protocol.
