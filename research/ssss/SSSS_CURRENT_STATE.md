@@ -578,3 +578,22 @@ CCXT is added as the preferred open-source crypto OHLCV research adapter.
 
 Important:
 equity and crypto evidence must be reported independently; do not average them into one validation score.
+
+
+## Historical feature duplication audit
+
+Before opening the next feature experiment, retained research history was audited.
+
+Result:
+- ER10: NEW
+- CHOP14: NEW
+- CMF20: PARTIAL_OVERLAP but materially different from generic volume hard filtering
+- OBVImpulse10: PARTIAL_OVERLAP but materially different from generic volume hard filtering
+- RVOL20: DEFER because the exact old volume-filter formula is unrecovered
+- Squeeze: PARTIAL_OVERLAP with fast-width / volatility-expansion research
+- NATR regime: PARTIAL_OVERLAP with prior ATR research
+
+The next safe feature-diagnostic set is limited to:
+ER10, CHOP14, CMF20, OBVImpulse10.
+
+Do not open a new hard-filter experiment until these features first show incremental diagnostic value.
