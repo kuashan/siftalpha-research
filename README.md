@@ -30,3 +30,10 @@ The executable Python model contains only the rules currently accepted as the co
 - `research/ssss/ssss_universe.py` — executable ticker/cohort configuration with integrity checks
 
 Important: historical research cohorts must not be silently mixed into the official 45-stock baseline.
+
+
+## Research governance
+
+- `research/ssss/SSSS_RESEARCH_PROTOCOL.md` — mandatory pre-registration protocol for every new research round
+
+Every new round must commit its Discovery / OOS / Frozen OOS membership to `main` before any corresponding results are computed or inspected.
