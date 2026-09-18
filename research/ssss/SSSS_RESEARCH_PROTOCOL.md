@@ -108,3 +108,43 @@ Do not modify `models/ssss_core_v0_1.py`.
 Sample assignment must be decided before outcome inspection.
 
 No attractive result is allowed to change which data are called Discovery, OOS, or Frozen OOS after the fact.
+
+
+## Mandatory pre-round duplication audit
+
+Before assigning or pre-registering any new Experiment ID, perform a repository duplication audit.
+
+At minimum re-read:
+
+- `SSSS_EXPERIMENTS.csv`
+- `SSSS_RESEARCH_LOG.md`
+- `SSSS_CURRENT_STATE.md`
+- `SSSS_STATE_MACHINE.md`
+- `SSSS_SAMPLE_SPLITS.md`
+- `SSSS_SAMPLE_SPLITS.csv`
+- relevant prior preregistrations
+- relevant prior checkpoints
+- current mutable model notes
+
+The new round must explicitly classify its relationship to prior work as one of:
+
+- NEW: materially new hypothesis / feature family
+- PARTIAL_OVERLAP: shares some ingredients but tests a materially different hypothesis
+- REPLICATION: intentionally repeats a prior test for robustness
+- DUPLICATE: substantially the same rule / feature / cohort question already tested
+
+A DUPLICATE round must not be opened under a new Experiment ID merely by renaming an indicator or making cosmetic threshold changes.
+
+For PARTIAL_OVERLAP or REPLICATION, the pre-registration must state:
+- which prior experiment(s) overlap;
+- what is materially different;
+- why the new test is still informative;
+- which previous failures or findings must remain constraints.
+
+For indicator research, verify not only the indicator name but also whether the underlying information family has already been tested.
+Examples:
+- a new moving-average formula may still duplicate prior trend-direction research;
+- a new volume indicator may overlap with a previously rejected generic volume hard filter, while still being materially different if it measures money-flow or divergence rather than raw volume;
+- a new multi-timeframe feature must acknowledge the rejected hard 2D MTF filter and cannot silently recreate it.
+
+Do not inspect new empirical outcomes until this duplication audit has been recorded in the pre-registration or research notes.
