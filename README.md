@@ -20,3 +20,13 @@ SSSS causal trading model and position-state-machine research.
 Research results currently rely mainly on approximately two years of available market history. They are not claims of long-run or live performance.
 
 The executable Python model contains only the rules currently accepted as the core research model. Candidate position-management logic remains explicitly marked as research until validated.
+
+
+## Universe and sample-split audit
+
+- `research/ssss/SSSS_UNIVERSE_45.md` — exact 45-stock universe behind the corrected official baseline
+- `research/ssss/SSSS_SAMPLE_SPLITS.md` — human-readable Discovery / OOS / Frozen OOS split history
+- `research/ssss/SSSS_SAMPLE_SPLITS.csv` — machine-readable sample-split ledger
+- `research/ssss/ssss_universe.py` — executable ticker/cohort configuration with integrity checks
+
+Important: historical research cohorts must not be silently mixed into the official 45-stock baseline.
