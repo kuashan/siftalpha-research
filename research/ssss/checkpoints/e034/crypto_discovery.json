@@ -1,0 +1,213 @@
+{
+  "experiment": "E034",
+  "track": "crypto",
+  "provider": "Massive Crypto composite USD",
+  "pairs": [
+    [
+      "BTC",
+      "X:BTCUSD"
+    ],
+    [
+      "ETH",
+      "X:ETHUSD"
+    ],
+    [
+      "SOL",
+      "X:SOLUSD"
+    ],
+    [
+      "BNB",
+      "X:BNBUSD"
+    ]
+  ],
+  "coverage": [
+    {
+      "symbol": "BTC",
+      "ticker": "X:BTCUSD",
+      "bars": 730,
+      "first": "2024-09-18",
+      "last": "2026-09-17",
+      "warning": null
+    },
+    {
+      "symbol": "ETH",
+      "ticker": "X:ETHUSD",
+      "bars": 730,
+      "first": "2024-09-18",
+      "last": "2026-09-17",
+      "warning": null
+    },
+    {
+      "symbol": "SOL",
+      "ticker": "X:SOLUSD",
+      "bars": 729,
+      "first": "2024-09-18",
+      "last": "2026-09-17",
+      "warning": null
+    },
+    {
+      "symbol": "BNB",
+      "ticker": "X:BNBUSD",
+      "bars": 198,
+      "first": "2026-03-04",
+      "last": "2026-09-17",
+      "warning": null
+    }
+  ],
+  "records": [
+    {
+      "ticker": "BTC",
+      "provider_ticker": "X:BTCUSD",
+      "trade_id": "BTC-1",
+      "path": "MATURE",
+      "signal_date": "2025-03-24",
+      "entry_date": "2025-03-25",
+      "exit_date": "2025-09-02",
+      "final_ret": 0.24600427,
+      "S0": {
+        "ER10": 0.2115785,
+        "CHOP14": 51.65830351,
+        "CMF20": 0.03517415,
+        "OBVImpulse10": 0.12836763
+      },
+      "S1": {
+        "ER10": 0.19686719,
+        "CHOP14": 59.54116917,
+        "CMF20": -0.02131598,
+        "OBVImpulse10": -0.04205988
+      }
+    },
+    {
+      "ticker": "BTC",
+      "provider_ticker": "X:BTCUSD",
+      "trade_id": "BTC-2",
+      "path": "FAILURE",
+      "signal_date": "2026-01-13",
+      "entry_date": "2026-01-14",
+      "exit_date": "2026-01-28",
+      "final_ret": -0.06751083,
+      "S0": {
+        "ER10": 0.4071551,
+        "CHOP14": 48.21192591,
+        "CMF20": 0.08929738,
+        "OBVImpulse10": 0.0677652
+      },
+      "S1": {
+        "ER10": 0.43934611,
+        "CHOP14": 45.19405879,
+        "CMF20": 0.14678668,
+        "OBVImpulse10": 0.2206654
+      }
+    },
+    {
+      "ticker": "BTC",
+      "provider_ticker": "X:BTCUSD",
+      "trade_id": "BTC-3",
+      "path": "MATURE",
+      "signal_date": "2026-03-15",
+      "entry_date": "2026-03-16",
+      "exit_date": "2026-05-24",
+      "final_ret": 0.05067115,
+      "S0": {
+        "ER10": 0.16493964,
+        "CHOP14": 60.91310128,
+        "CMF20": 0.0523776,
+        "OBVImpulse10": 0.49561461
+      },
+      "S1": {
+        "ER10": 0.61321525,
+        "CHOP14": 56.95172418,
+        "CMF20": 0.0943248,
+        "OBVImpulse10": 0.7642924
+      }
+    },
+    {
+      "ticker": "ETH",
+      "provider_ticker": "X:ETHUSD",
+      "trade_id": "ETH-1",
+      "path": "MATURE",
+      "signal_date": "2025-02-23",
+      "entry_date": "2025-02-24",
+      "exit_date": "2025-06-29",
+      "final_ret": -0.13744358,
+      "S0": {
+        "ER10": 0.25099671,
+        "CHOP14": 57.98930254,
+        "CMF20": -0.1280761,
+        "OBVImpulse10": 0.12754185
+      },
+      "S1": {
+        "ER10": 0.25723189,
+        "CHOP14": 56.23537989,
+        "CMF20": -0.16794482,
+        "OBVImpulse10": -0.16452244
+      }
+    },
+    {
+      "ticker": "ETH",
+      "provider_ticker": "X:ETHUSD",
+      "trade_id": "ETH-2",
+      "path": "FAILURE",
+      "signal_date": "2026-01-02",
+      "entry_date": "2026-01-03",
+      "exit_date": "2026-01-29",
+      "final_ret": -0.03966539,
+      "S0": {
+        "ER10": 0.49596874,
+        "CHOP14": 59.09438696,
+        "CMF20": -0.08962187,
+        "OBVImpulse10": 0.16543162
+      },
+      "S1": {
+        "ER10": 0.5941359,
+        "CHOP14": 59.92441952,
+        "CMF20": -0.06463341,
+        "OBVImpulse10": 0.34575977
+      }
+    },
+    {
+      "ticker": "ETH",
+      "provider_ticker": "X:ETHUSD",
+      "trade_id": "ETH-3",
+      "path": "FAILURE",
+      "signal_date": "2026-04-07",
+      "entry_date": "2026-04-08",
+      "exit_date": "2026-05-25",
+      "final_ret": -0.06555352,
+      "S0": {
+        "ER10": 0.55822057,
+        "CHOP14": 53.78768317,
+        "CMF20": -0.05307567,
+        "OBVImpulse10": 0.28589866
+      },
+      "S1": {
+        "ER10": 0.43061326,
+        "CHOP14": 54.79791848,
+        "CMF20": -0.08059965,
+        "OBVImpulse10": 0.17254907
+      }
+    },
+    {
+      "ticker": "SOL",
+      "provider_ticker": "X:SOLUSD",
+      "trade_id": "SOL-1",
+      "path": "MATURE",
+      "signal_date": "2025-04-12",
+      "entry_date": "2025-04-13",
+      "exit_date": "2025-06-05",
+      "final_ret": 0.15719019,
+      "S0": {
+        "ER10": 0.22807018,
+        "CHOP14": 52.57837299,
+        "CMF20": 0.02996112,
+        "OBVImpulse10": 0.14729428
+      },
+      "S1": {
+        "ER10": 0.16326531,
+        "CHOP14": 53.58209619,
+        "CMF20": 0.00950768,
+        "OBVImpulse10": 0.19489249
+      }
+    }
+  ]
+}
