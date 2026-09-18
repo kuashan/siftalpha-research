@@ -188,3 +188,36 @@ For the latter:
 - RE-ADD: no validated trigger
 - FAILURE CLOSE: validated research rule
 - MATURE CLOSE: validated research rule
+
+
+## Tail-loss action update — 2026-09-19
+
+No new mandatory position action was accepted.
+
+Rejected as general REDUCE after OOS:
+- No-Progress + FastMid
+- no-progress loss thresholds at -1 / -1.5 / -2 entry ATR
+- profit round-trip after prior +2 / +3 ATR MFE
+
+No-Progress + WhiteLower remains only a warning / possible second-stage REDUCE candidate:
+- classification toward tail losses was reasonably selective
+- but independent action-price advantage was small, so it is not yet an accepted trade action
+
+A full shift of a second exposure unit from OPEN to Effective Red was also rejected:
+- OPEN unit average return: +8.84%
+- delayed Red unit average return: +3.89%
+- full unit shift reduced average return by about 4.95 percentage points
+
+Interpretation:
+- initial exposure must remain early enough to participate in large trends
+- but future position sizing should still consider a starter-position architecture
+- the next useful research target is an ADD event that confirms the trade without chasing
+
+Current action maturity remains:
+- OPEN: validated research rule
+- ADD: no validated trigger
+- HOLD: active
+- REDUCE: RTE remains the leading candidate; WhiteLower no-progress is warning-only
+- RE-ADD: no validated trigger
+- FAILURE CLOSE: validated
+- MATURE CLOSE: validated
