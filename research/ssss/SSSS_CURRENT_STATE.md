@@ -510,3 +510,14 @@ Benchmarks:
 E033 must distinguish a real selective second-entry rule from simply increasing starter size.
 
 OOS and Frozen OOS remain unopened until the protocol gates permit them.
+
+
+## E033 data coverage note — pre-result
+
+Before any E033 outcome was computed, Massive entitlement was checked.
+
+Bars before 2024-09-18 are not included in the current plan.
+
+E033 therefore uses the accessible Massive history beginning 2024-09-18 and retains the model's 150-bar warm-up requirement.
+
+No E033 rule, cohort, or pass/fail threshold changed.
