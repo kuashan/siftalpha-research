@@ -1,0 +1,83 @@
+# SSSS Position State Machine
+
+Version: v0.1.0
+
+## Target architecture
+
+```
+FLAT
+  |
+  | Qualified GRB
+  v
+OPEN
+  |
+  v
+POSITION
+  |---- ADD ----------> POSITION
+  |---- REDUCE -------> REDUCED
+  |                       |
+  |                       | RE-ADD
+  |                       v
+  |                    POSITION
+  |
+  |---- Failure Gray->Green ---> CLOSE ---> FLAT
+  |
+  |---- Mature Red->Gray ------> CLOSE ---> FLAT
+```
+
+## Current maturity
+
+| Action | Status | Current trigger |
+|---|---|---|
+| OPEN | VALIDATED RESEARCH | Qualified GRB |
+| HOLD | ACTIVE | default while position remains valid |
+| ADD | RESEARCH | none accepted |
+| REDUCE | CANDIDATE | RTE |
+| RE-ADD | RESEARCH | none accepted |
+| CLOSE (failure) | VALIDATED RESEARCH | Gray -> Green |
+| CLOSE (mature) | VALIDATED RESEARCH | Red -> Gray |
+
+## Rejected direct ADD triggers
+
+Do not revive without new evidence:
+
+- Bullish Gray alone
+- Effective Red alone
+- +1 ATR profit progress alone
+- +2 ATR profit progress alone
+- Bullish Gray + 1 ATR
+- Red + 1 ATR
+
+Reason: averages were often lifted by rare large trends while hit rate / median outcome was weak or reversed out of sample.
+
+## Rejected RE-ADD trigger
+
+```
+RTE
+-> reduce
+-> dsep becomes positive again
+-> RE-ADD
+```
+
+Observed re-add leg was weak:
+- win rate about 30%
+- average about -2.34%
+- median about -4.86%
+
+## REDUCE candidate
+
+RTE remains the leading candidate for partial de-risking.
+
+Across the currently observed RTE events, RTE pricing was on average above the later final close price, but event count is still small. It is not yet a validated mandatory REDUCE action.
+
+## Design rule
+
+A position percentage is not assigned until the corresponding action trigger has passed validation.
+
+The final model should eventually define:
+- initial OPEN allocation
+- one or more ADD increments
+- one or more REDUCE increments
+- RE-ADD logic
+- maximum total exposure
+- CLOSE of all remaining exposure
