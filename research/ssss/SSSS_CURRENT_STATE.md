@@ -597,3 +597,33 @@ The next safe feature-diagnostic set is limited to:
 ER10, CHOP14, CMF20, OBVImpulse10.
 
 Do not open a new hard-filter experiment until these features first show incremental diagnostic value.
+
+
+## Active research round — E034
+
+Status: PRE-REGISTERED.
+
+E034 follows the mandatory historical duplication audit.
+
+Included features:
+- ER10
+- CHOP14
+- CMF20
+- OBVImpulse10
+
+Excluded:
+- RVOL20 due unresolved overlap with prior volume hard filter
+- Squeeze due overlap with prior volatility-expansion research
+- NATR regime due extensive prior ATR-family research
+
+Two fixed snapshots:
+- Qualified GRB signal close
+- original OPEN execution-day close
+
+Tracks:
+- 30-stock Equity Discovery
+- BTC / ETH / SOL / BNB Crypto Discovery
+
+Equity and crypto results must remain separate.
+
+E034 is diagnostic only and cannot create a trading rule.
