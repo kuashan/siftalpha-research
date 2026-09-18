@@ -37,3 +37,12 @@ Important: historical research cohorts must not be silently mixed into the offic
 - `research/ssss/SSSS_RESEARCH_PROTOCOL.md` — mandatory pre-registration protocol for every new research round
 
 Every new round must commit its Discovery / OOS / Frozen OOS membership to `main` before any corresponding results are computed or inspected.
+
+
+## SSSS data-source resilience
+
+- `research/ssss/SSSS_DATA_SOURCE_POLICY.md` — provider-switching and parity-audit rules
+- `research/ssss/data_sources/yfinance_daily.py` — research fallback downloader
+- `research/ssss/data_sources/requirements.txt` — isolated fallback-data dependencies
+
+Do not silently mix market-data providers inside one official research stage.
