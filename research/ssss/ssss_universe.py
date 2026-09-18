@@ -85,6 +85,19 @@ ACTIVE_RESEARCH_SPLITS = {
         "META", "AMD", "CRM", "TXN", "AMZN",
     ],
     "E031_frozen_oos": ["LOW", "BA", "PGR", "ADP", "MDLZ"],
+    "E032_discovery": [
+        "AAPL", "MSFT", "NVDA", "JPM", "XOM",
+        "ADBE", "WFC", "MRK", "FDX", "NEE",
+        "ORCL", "WMT", "GS", "TMO", "RTX",
+        "AVGO", "PEP", "C", "MDT", "UNP",
+        "IBM", "CVX", "HD", "AMGN", "MCD",
+        "LLY", "GE", "V", "TGT", "COP",
+    ],
+    "E032_oos_reserved": [
+        "QCOM", "NKE", "SCHW", "GILD", "CSX",
+        "META", "AMD", "CRM", "TXN", "AMZN",
+    ],
+    "E032_frozen_oos_reserved": ["LOW", "BA", "PGR", "ADP", "MDLZ"],
 }
 
 # Exact membership not safely recoverable from the retained research context.
@@ -134,6 +147,22 @@ def validate() -> None:
     assert not (
         set(ACTIVE_RESEARCH_SPLITS["E031_oos"])
         & set(ACTIVE_RESEARCH_SPLITS["E031_frozen_oos"])
+    )
+
+    assert len(ACTIVE_RESEARCH_SPLITS["E032_discovery"]) == 30
+    assert len(ACTIVE_RESEARCH_SPLITS["E032_oos_reserved"]) == 10
+    assert len(ACTIVE_RESEARCH_SPLITS["E032_frozen_oos_reserved"]) == 5
+    assert not (
+        set(ACTIVE_RESEARCH_SPLITS["E032_discovery"])
+        & set(ACTIVE_RESEARCH_SPLITS["E032_oos_reserved"])
+    )
+    assert not (
+        set(ACTIVE_RESEARCH_SPLITS["E032_discovery"])
+        & set(ACTIVE_RESEARCH_SPLITS["E032_frozen_oos_reserved"])
+    )
+    assert not (
+        set(ACTIVE_RESEARCH_SPLITS["E032_oos_reserved"])
+        & set(ACTIVE_RESEARCH_SPLITS["E032_frozen_oos_reserved"])
     )
 
 
