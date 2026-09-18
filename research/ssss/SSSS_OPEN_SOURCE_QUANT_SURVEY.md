@@ -420,3 +420,23 @@ After alpha/context work:
 - drawdown / exposure constraints
 
 Do not optimize allocation percentages before the signal/context frontier is stable.
+
+
+## 8. Duplication-audit outcome
+
+Before starting the first open-source-derived feature experiment, the retained SSSS history was audited.
+
+Classification:
+- ER10: NEW
+- CHOP14: NEW
+- CMF20: PARTIAL_OVERLAP with rejected generic volume hard filter, but materially different
+- OBVImpulse10: PARTIAL_OVERLAP with rejected generic volume hard filter, but materially different
+- RVOL20: DEFER because the exact prior volume-filter formula is not retained
+- Squeeze state: PARTIAL_OVERLAP with prior fast-width / volatility-expansion research
+- NATR regime: PARTIAL_OVERLAP with extensive ATR-based research
+
+The first safe diagnostic set is therefore:
+ER10, CHOP14, CMF20, OBVImpulse10.
+
+See:
+`SSSS_HISTORICAL_FEATURE_AUDIT.md`
