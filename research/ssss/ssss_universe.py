@@ -56,6 +56,24 @@ HISTORICAL_SPLITS = {
     "crypto_frozen_validation": ["BTC", "ETH", "SOL", "BNB"],
 }
 
+
+# Pre-registered active research splits. These are experiment governance data,
+# not changes to the official 45-stock baseline.
+ACTIVE_RESEARCH_SPLITS = {
+    "E030_discovery": [
+        "AAPL", "MSFT", "NVDA", "JPM", "XOM",
+        "ADBE", "WFC", "MRK", "FDX", "NEE",
+        "ORCL", "WMT", "GS", "TMO", "RTX",
+        "AVGO", "PEP", "C", "MDT", "UNP",
+        "IBM", "CVX", "HD", "AMGN", "MCD",
+    ],
+    "E030_oos": [
+        "LLY", "GE", "V", "TGT", "COP",
+        "QCOM", "NKE", "SCHW", "GILD", "CSX",
+    ],
+    "E030_frozen_oos": ["LOW", "BA", "PGR", "ADP", "MDLZ"],
+}
+
 # Exact membership not safely recoverable from the retained research context.
 KNOWN_MISSING_HISTORICAL_MEMBERSHIP = {
     "early_grb_discovery12": 12,
@@ -72,6 +90,22 @@ def validate() -> None:
 
     for name, tickers in HISTORICAL_SPLITS.items():
         assert len(tickers) > 0, name
+
+    assert len(ACTIVE_RESEARCH_SPLITS["E030_discovery"]) == 25
+    assert len(ACTIVE_RESEARCH_SPLITS["E030_oos"]) == 10
+    assert len(ACTIVE_RESEARCH_SPLITS["E030_frozen_oos"]) == 5
+    assert not (
+        set(ACTIVE_RESEARCH_SPLITS["E030_discovery"])
+        & set(ACTIVE_RESEARCH_SPLITS["E030_oos"])
+    )
+    assert not (
+        set(ACTIVE_RESEARCH_SPLITS["E030_discovery"])
+        & set(ACTIVE_RESEARCH_SPLITS["E030_frozen_oos"])
+    )
+    assert not (
+        set(ACTIVE_RESEARCH_SPLITS["E030_oos"])
+        & set(ACTIVE_RESEARCH_SPLITS["E030_frozen_oos"])
+    )
 
 
 if __name__ == "__main__":
