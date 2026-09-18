@@ -301,3 +301,25 @@ Current action maturity remains:
 
 Research implication:
 The next ADD round should keep the idea of "prove direction without chasing" but remove at least one structural bottleneck rather than merely loosening E030 thresholds after seeing the result. A new formulation requires a new experiment ID and a new pre-registration.
+
+
+## Active research round — E031
+
+Status: PRE-REGISTERED.
+
+Research target:
+Structural Confirmation ADD.
+
+Core variable:
+StructuralSep = (FastMid - WhiteMid) / WhiteWidth.
+
+The E031 sample split, six fixed variants, requested data window, execution convention, and pass/fail gates are frozen in:
+
+- `preregistrations/E031.md`
+- `SSSS_SAMPLE_SPLITS.md`
+- `SSSS_SAMPLE_SPLITS.csv`
+
+E031 is materially different from E030 because it removes the required prior-profit / pullback / re-acceleration sequence and tests model-band structural separation directly.
+
+Current phase:
+Discovery may begin only after the pre-registration commits are confirmed on `main`.
