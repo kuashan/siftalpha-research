@@ -233,3 +233,22 @@ The corrected baseline must be interpreted together with:
 - `ssss_universe.py` — executable cohort configuration
 
 Do not recompute or compare baseline statistics using a different universe without explicitly versioning the universe change.
+
+
+## Mandatory research-round pre-registration
+
+Every new SSSS research round must follow `SSSS_RESEARCH_PROTOCOL.md`.
+
+Before any result is computed or inspected:
+
+- assign a new experiment ID;
+- write the exact Discovery, OOS, and Frozen OOS ticker lists;
+- write the date ranges, overlap status, rule definition, execution convention, and evaluation criteria;
+- update the sample-split audit;
+- commit the pre-registration to `main`.
+
+Only after that commit may Discovery begin.
+
+OOS is not a second Discovery stage. Frozen OOS must remain untouched until the candidate rule has been frozen.
+
+If a cohort or tested rule changes after results are viewed, the work must receive a new experiment ID and a new pre-registration commit.
