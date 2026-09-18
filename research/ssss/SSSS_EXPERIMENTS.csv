@@ -17,3 +17,9 @@ E015,2026-09-19,add,+1ATR progress,Failed independent OOS,REJECT,
 E016,2026-09-19,add,+2ATR progress,Too late / chase effect,REJECT,
 E017,2026-09-19,readd,RTE then dsep>0,~30% win; avg ~-2.34%; median ~-4.86%,REJECT,
 E018,2026-09-19,baseline,Corrected effective-Green episode accounting,71 completed; 59.2% win; +8.84% avg net,OFFICIAL_BASELINE,Use effective non-Green->Green episode boundaries
+E019,2026-09-19,reduce,No-Progress Gray + MFE<1ATR + close<=entry,Baseline median +1.11% but mean -2.54%; new OOS mean -1.20%,REJECT,Not stable economically
+E020,2026-09-19,reduce,Red + MFE>=2ATR + giveback>=1ATR + Raw Gray,Baseline price advantage +0.23%; new OOS -0.68%,REJECT,OOS reversal
+E021,2026-09-19,reduce,RTE after MFE>=2ATR,8 baseline events; avg price advantage +1.46%; median +5.82%; new 10-stock OOS had 0 events,CANDIDATE,Sparse event count
+E022,2026-09-19,add,Repeat Qualified GRB in same effective Green episode,Baseline 37 events avg +7.31% median +0.66%; OOS 5 events avg -5.22% median -2.44%,REJECT,Failed OOS
+E023,2026-09-19,readd,RTE then close above RTE-day high while still Red,6 events; 33.3% win; avg -0.95%; median -3.05%,REJECT,Buyback averaged ~1.4% above reduction price
+E024,2026-09-19,add,Red-confirmed breakout above pre-Red path high,33 events; 39.4% win; avg +7.50%; median -2.63%,REJECT,Mean dominated by rare large trends
