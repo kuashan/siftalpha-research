@@ -184,3 +184,18 @@ State-machine consequence:
 - ADD remains RESEARCH / none accepted
 - normalized band separation must not be promoted into a production ADD transition
 - the exact E031 family should not be revived without a materially different timing hypothesis
+
+
+## E032 diagnostic update — 2026-09-19
+
+ADD Opportunity Map found 15 Discovery candidate zones, primarily early/pre-Red and near the original entry.
+
+This does not create an ADD transition.
+
+Interpretation:
+- later confirmation has repeatedly produced weak typical incremental returns;
+- early marginal economics are materially better;
+- the next ADD hypothesis should test a selective early second entry rather than a late confirmation chase.
+
+State-machine status remains:
+ADD = RESEARCH / none accepted.
