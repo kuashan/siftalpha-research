@@ -81,3 +81,50 @@ The final model should eventually define:
 - RE-ADD logic
 - maximum total exposure
 - CLOSE of all remaining exposure
+
+
+## Action Discovery Update — 2026-09-19
+
+The position-state-machine architecture remains unchanged, but several candidate actions were rejected.
+
+### Newly rejected ADD triggers
+
+- repeated Qualified GRB inside the same effective Green episode
+- Red-confirmed breakout above the highest price formed between OPEN and Red confirmation
+
+The repeated-GRB candidate failed new out-of-sample validation:
+- 5 OOS events
+- 20% winning add legs
+- average add leg -5.22%
+- median add leg -2.44%
+
+The Red-confirmed breakout candidate also had a negative median add leg (-2.63%).
+
+### Newly rejected REDUCE triggers
+
+- No-Progress Gray:
+  - first Green->Gray before Red
+  - running MFE < 1 entry ATR
+  - current close <= original entry price
+- Profit-Giveback Raw Gray:
+  - effective Red
+  - prior MFE >= 2 entry ATR
+  - giveback >= 1 entry ATR
+  - raw state Gray
+
+Neither showed stable positive economic value out of sample.
+
+### RTE status
+
+RTE remains a candidate REDUCE event only.
+
+Do not convert it into mandatory REDUCE until more independent RTE events are observed.
+
+### Newly rejected RE-ADD trigger
+
+After RTE:
+- remain in effective Red
+- close above the RTE event-day high
+- RE-ADD
+
+This produced weak subsequent legs and typically bought back above the earlier reduction price.
