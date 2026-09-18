@@ -10,7 +10,7 @@ Status:
 - OPEN: validated research rule
 - FAILURE CLOSE: validated research rule
 - MATURE CLOSE: validated research rule
-- ADD: not yet validated
+- ADD: not yet validated; E030 pullback/re-acceleration family rejected at Discovery for insufficient resolved events
 - REDUCE: RTE is research candidate only
 - RE-ADD: not yet validated
 
