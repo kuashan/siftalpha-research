@@ -484,3 +484,29 @@ Current action maturity remains:
 
 Next research frontier:
 separate "increase starter exposure" from a genuinely selective early second-entry rule.
+
+
+## Active research round — E033
+
+Status: PRE-REGISTERED.
+
+Research target:
+Selective Early Second Entry.
+
+Motivation:
+E032 showed that marginal ADD economics cluster early and near the original entry. E033 now tests whether genuinely new early post-entry information can select which trades deserve a second unit.
+
+Fixed candidates:
+- C04: early continuation
+- D10: early discount / unproven trend
+- S10: structural discount
+- R10: early entry reclaim
+
+Benchmarks:
+- BASE_1U
+- IMMEDIATE_2U
+- NEXTDAY_2ND
+
+E033 must distinguish a real selective second-entry rule from simply increasing starter size.
+
+OOS and Frozen OOS remain unopened until the protocol gates permit them.
