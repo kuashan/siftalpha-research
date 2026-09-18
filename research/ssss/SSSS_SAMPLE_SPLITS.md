@@ -295,3 +295,24 @@ E032 final status:
 - OOS was not opened;
 - Frozen OOS was not opened;
 - no ADD trigger was accepted.
+
+
+---
+
+## 15. E033 — Selective Early Second Entry
+
+Pre-registered before any E033 result was viewed.
+
+| Role | Cohort | Tickers | Count | Status |
+|---|---|---|---:|---|
+| Discovery | E033_D | AAPL, MSFT, NVDA, JPM, XOM, ADBE, WFC, MRK, FDX, NEE, ORCL, WMT, GS, TMO, RTX, AVGO, PEP, C, MDT, UNP, IBM, CVX, HD, AMGN, MCD, LLY, GE, V, TGT, COP | 30 | PRE-REGISTERED |
+| OOS | E033_OOS | QCOM, NKE, SCHW, GILD, CSX, META, AMD, CRM, TXN, AMZN | 10 | PRE-REGISTERED — DO NOT OPEN |
+| Frozen OOS | E033_FOOS | LOW, BA, PGR, ADP, MDLZ | 5 | PRE-REGISTERED — DO NOT OPEN |
+
+E033 compares four exact selective early-second-entry rules against:
+- BASE_1U
+- IMMEDIATE_2U
+- NEXTDAY_2ND
+
+Full definition:
+`preregistrations/E033.md`
