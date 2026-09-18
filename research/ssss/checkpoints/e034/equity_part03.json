@@ -1,0 +1,40 @@
+{
+  "experiment": "E034",
+  "track": "equity",
+  "provider": "Massive Stocks",
+  "tickers": [
+    "ORCL",
+    "WMT",
+    "GS",
+    "TMO",
+    "RTX"
+  ],
+  "coverage": [
+    {
+      "ticker": "ORCL",
+      "bars": 0,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    },
+    {
+      "ticker": "WMT",
+      "bars": 0,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    },
+    {
+      "ticker": "GS",
+      "bars": 0,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    },
+    {
+      "ticker": "TMO",
+      "bars": 0,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    },
+    {
+      "ticker": "RTX",
+      "bars": 0,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    }
+  ],
+  "records": []
+}
