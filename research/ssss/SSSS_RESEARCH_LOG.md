@@ -504,3 +504,116 @@ Decision:
 - do not accept an ADD trigger from E032
 - do not modify the state machine
 - any selective early-second-entry rule must be a new pre-registered experiment
+
+
+## E033 Selective Early Second Entry — 2026-09-19
+
+Objective:
+test whether early post-entry information can selectively identify trades that deserve a second unit, instead of merely increasing starter size.
+
+Governance:
+- Discovery: 30 fixed stocks
+- OOS: not opened
+- Frozen OOS: not opened
+- four exact pre-registered candidates
+- Massive only
+- actual Massive history begins 2024-09-18 because earlier bars are not entitled
+- normal 150-bar warm-up retained
+- earliest observed E033 entry: 2025-04-28
+
+Discovery coverage:
+- 52 total trades
+- 40 resolved
+- 31 Mature
+- 9 Failure
+
+Benchmarks on the 40 resolved trades:
+- BASE_1U: average +8.38%, median +2.22%, win 62.5%, PF 6.41
+- NEXTDAY_2ND: average +8.45%, median +2.57%, win 62.5%, PF 7.19
+
+Candidate results:
+
+### C04 — Early Continuation
+- 28 resolved ADD legs
+- 19 stocks
+- win 67.9%
+- average +5.62%
+- median +1.44%
+- PF 4.97
+- Mature trigger rate 71.0%
+- Failure trigger rate 66.7%
+- Failure trades avoiding second unit: 33.3%
+- median entry distance +0.37 EntryATR
+- median timing 2 bars
+- median delay cost vs immediate second unit: -0.83%
+
+Decision: REJECT.
+Reason: positive economics but almost no useful path discrimination; failed the required Mature-minus-Failure trigger-rate spread and failure-avoidance gate.
+
+### D10 — Early Discount / Unproven Trend
+- 29 resolved ADD legs
+- 20 stocks
+- win 65.5%
+- average +6.34%
+- median +1.98%
+- PF 5.93
+- Mature trigger rate 67.7%
+- Failure trigger rate 88.9%
+- Failure trades avoiding second unit: 11.1%
+- median entry distance -0.38 EntryATR
+- median timing 1 bar
+- median delay cost +1.10%
+
+Decision: REJECT.
+Reason: despite good ADD economics and better entry prices, it triggered Failure trades even more often than Mature trades.
+
+### S10 — Structural Discount
+- 17 resolved ADD legs
+- 14 stocks
+- win 76.5%
+- average +5.03%
+- median +2.78%
+- Q25 +0.18%
+- PF 5.95
+- Mature trigger rate 38.7%
+- Failure trigger rate 55.6%
+- Failure trades avoiding second unit: 44.4%
+- median entry distance -1.43 EntryATR
+- median timing 6 bars
+- median delay cost +2.82%
+
+Decision: REJECT.
+Reason: attractive per-event economics but inverse selectivity; Failure trades triggered more often than Mature trades.
+
+### R10 — Early Entry Reclaim
+- 20 resolved ADD legs
+- 16 stocks
+- win 70.0%
+- average +5.48%
+- median +1.31%
+- PF 7.00
+- top-3 winners 81.5% of gross positive return
+- Mature trigger rate 48.4%
+- Failure trigger rate 55.6%
+- Failure trades avoiding second unit: 44.4%
+- median entry distance +0.42 EntryATR
+- median timing 3 bars
+- median delay cost -0.94%
+
+Decision: REJECT.
+Reason: Failure trigger rate exceeded Mature trigger rate and winner concentration exceeded the pre-registered 70% cap.
+
+### E033 conclusion
+
+No candidate passed the pre-registered Discovery gate.
+
+The important finding is not that early second entries are economically bad.
+They were generally economically positive.
+
+The failure is selectivity:
+none reliably distinguished Mature from Failure paths.
+
+This strengthens a new hypothesis:
+the early opportunity found in E032 may be primarily a position-sizing effect rather than a separate technical ADD signal.
+
+Next research should compare starter-size / mechanical split-entry policies under explicit risk and capital-normalization assumptions rather than inventing another early trigger.
