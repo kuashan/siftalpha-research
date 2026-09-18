@@ -1,0 +1,40 @@
+{
+  "experiment": "E034",
+  "track": "equity",
+  "provider": "Massive Stocks",
+  "tickers": [
+    "IBM",
+    "CVX",
+    "HD",
+    "AMGN",
+    "MCD"
+  ],
+  "coverage": [
+    {
+      "ticker": "IBM",
+      "bars": 501,
+      "warning": null
+    },
+    {
+      "ticker": "CVX",
+      "bars": 0,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    },
+    {
+      "ticker": "HD",
+      "bars": 0,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    },
+    {
+      "ticker": "AMGN",
+      "bars": 0,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    },
+    {
+      "ticker": "MCD",
+      "bars": 0,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    }
+  ],
+  "records": []
+}
