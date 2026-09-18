@@ -408,3 +408,34 @@ Provider switching is allowed without changing the experiment ID only when:
 - the replacement provider is documented before its result is interpreted.
 
 Do not silently mix providers ticker-by-ticker inside an official research stage.
+
+
+## Active research round — E032
+
+Status: PRE-REGISTERED.
+
+Research target:
+ADD Opportunity Map.
+
+E032 does not start from a proposed trigger.
+
+It maps the hypothetical marginal return of adding one unit at every causally available in-trade decision bar and holding that unit to the already validated official final CLOSE.
+
+Formal maps are frozen to:
+1. lifecycle phase x bars since entry
+2. current progress x giveback
+3. running MFE x current progress
+4. StructuralSep x fast-band price location
+5. effective state x dsep sign
+
+Primary cell statistics use first-entry-per-trade counting to prevent long trades from dominating through repeated daily observations.
+
+E032 is Discovery-only:
+- OOS must remain unopened;
+- Frozen OOS must remain unopened;
+- any discovered zone requires a new Experiment ID before rule validation.
+
+See:
+- `preregistrations/E032.md`
+- `SSSS_SAMPLE_SPLITS.md`
+- `SSSS_SAMPLE_SPLITS.csv`
