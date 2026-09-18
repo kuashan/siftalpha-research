@@ -228,3 +228,22 @@ E030 status update:
 - OOS was not opened.
 - Frozen OOS was not opened.
 - The Frozen OOS tickers remain unqueried for E030 outcomes.
+
+
+---
+
+## 13. E031 — Structural Confirmation ADD
+
+Pre-registered before any E031 result was inspected.
+
+| Role | Cohort | Tickers | Count | Prior SSSS exposure | Official 45? | Status |
+|---|---|---|---:|---|---|---|
+| Discovery | E031_D | AAPL, MSFT, NVDA, JPM, XOM, ADBE, WFC, MRK, FDX, NEE, ORCL, WMT, GS, TMO, RTX, AVGO, PEP, C, MDT, UNP, IBM, CVX, HD, AMGN, MCD, LLY, GE, V, TGT, COP | 30 | Yes | Yes | PRE-REGISTERED |
+| OOS | E031_OOS | QCOM, NKE, SCHW, GILD, CSX, META, AMD, CRM, TXN, AMZN | 10 | Yes | Yes | PRE-REGISTERED |
+| Frozen OOS | E031_FOOS | LOW, BA, PGR, ADP, MDLZ | 5 | No appearance in retained pre-E030 split ledger; earliest unknown aggregate membership cannot be ruled out | No | PRE-REGISTERED |
+
+Fixed evaluation window: 2024-09-01 through 2026-09-18.
+
+E031 tests StructuralSep = (FastMid - WhiteMid) / WhiteWidth at fixed 0.50 / 1.00 / 1.50 crossings with two confirmation modes.
+
+Full rule family and gates are frozen in `preregistrations/E031.md`.
