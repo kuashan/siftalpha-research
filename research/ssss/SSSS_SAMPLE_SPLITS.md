@@ -380,3 +380,40 @@ E034 final status:
 - crypto Discovery: 7 resolved lifecycles, 4 Mature / 3 Failure;
 - crypto diagnostics were too sparse for formal interpretation;
 - all equity and crypto holdouts remained unopened.
+
+
+---
+
+## 17. E035 — BTC 15m Dynamic Position Engine Discovery Map
+
+Duplication audit completed before pre-registration.
+
+E035 is NEW at the 15-minute timeframe and PARTIAL_OVERLAP at the action-architecture level.
+
+Temporal split:
+
+| Role | Period | Status |
+|---|---|---|
+| Discovery | BTC / X:BTCUSD / 2024-09-18 through 2025-08-31 | PRE-REGISTERED |
+| OOS | BTC / X:BTCUSD / 2025-09-01 through 2026-03-31 | RESERVED — DO NOT OPEN |
+| Frozen OOS | BTC / X:BTCUSD / 2026-04-01 through 2026-09-17 | RESERVED — DO NOT OPEN |
+
+Cross-asset 15m holdouts:
+ETH, SOL, BNB — DO NOT OPEN in E035.
+
+E035 Phase A freezes exactly three 15m structural baselines:
+- B0 LEGACY_COUNT_REFERENCE
+- B1 NATIVE_12H
+- B2 NATIVE_24H
+
+Only if one baseline passes the pre-registered viability gate may Phase B map:
+- OPEN
+- ADD
+- REDUCE
+- RE-ADD
+- CLOSE
+
+E035 is Discovery-only and cannot validate a production action.
+
+Full definition:
+`preregistrations/E035.md`
