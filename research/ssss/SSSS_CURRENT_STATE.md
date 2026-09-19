@@ -900,3 +900,36 @@ The exact first-ADD formula is tested literally as one re-add candidate, alongsi
 
 No full-close rule is changed in E038.
 All holdouts remain unopened.
+
+
+## E038 result — tactical REDUCE / RE-ADD pairing
+
+Status: NO_TACTICAL_REDUCE_CANDIDATE.
+
+32 starter lifecycles contained the leading first ADD.
+
+Key result:
+GREEN->GRAY after ADD is informative but not a general REDUCE action.
+
+For the tactical 10% tranche:
+- Failure-path incremental benefit from reducing at GREEN->GRAY was strongly positive;
+- Mature-path average incremental value was strongly negative because large continuations were sacrificed.
+
+Therefore GREEN->GRAY is better treated as a risk-classification point than as an unconditional reduce command.
+
+Exact reuse of the first ADD formula for RE-ADD failed structurally and empirically:
+- 5/32 re-adds after GREEN->GRAY
+- 0 after mature-giveback reduction
+- 0 after RTE reduction
+
+Reason:
+RunningMFE<1 ATR is cumulative from the original starter and normally cannot become true again later in a mature lifecycle.
+
+No tested recovery rule passed.
+
+Current 15m action frontier:
+- STARTER OPEN: GREEN_TRANSITION Discovery candidate
+- FIRST ADD: early unextended zone Discovery candidate
+- REDUCE: no validated action; GREEN->GRAY becomes priority risk-classification checkpoint
+- RE-ADD: requires a new local-reset/recovery formulation
+- CLOSE: keep current reference close
