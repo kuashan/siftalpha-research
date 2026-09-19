@@ -258,3 +258,25 @@ State-machine consequence:
 do not add executable actions yet.
 
 The strongest next validation target is an exact early ADD rule derived from the pre-registered opportunity cells, while preserving the current close logic until a superior risk action is independently validated.
+
+
+## E038 BTC 15m tactical-tranche update — 2026-09-19
+
+No tactical REDUCE / RE-ADD cycle was accepted.
+
+Important role refinement:
+
+GREEN->GRAY after first ADD:
+- useful risk checkpoint
+- not an unconditional reduce action
+
+It benefited Failure paths but damaged large Mature continuations on average.
+
+RE-ADD:
+the first-ADD formula cannot be reused literally because its RunningMFE<1 ATR condition is anchored to the original starter lifecycle and does not reset.
+
+State-machine consequence:
+- preserve 30% core exposure through tactical warnings until a full-close condition occurs;
+- do not automatically remove the 10% tactical tranche at GREEN->GRAY;
+- next research should classify GREEN->GRAY into "temporary weakening" vs "true failure-risk";
+- any future RE-ADD rule should use a local post-reduction reset anchor rather than global first-entry MFE.
