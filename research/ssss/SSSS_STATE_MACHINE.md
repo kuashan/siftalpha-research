@@ -211,3 +211,25 @@ State-machine consequence:
 - ADD remains unvalidated
 - no selective early ADD transition is added
 - early positive marginal economics should now be studied as a sizing / split-entry problem, not assumed to be a technical confirmation signal
+
+
+## 15m crypto architecture direction — 2026-09-19
+
+The final state machine is explicitly dynamic and exposure-based.
+
+The current core executes only OPEN / HOLD / CLOSE because intermediate actions are not yet validated.
+
+For the crypto track, research will move toward a native 15-minute model that supports:
+- multiple OPEN modes
+- ADD
+- REDUCE
+- RE-ADD
+- CLOSE
+
+according to changing causal indicator evidence.
+
+Do not interpret the current single-position daily implementation as the final product design.
+
+The 15m model must be versioned separately; daily parameter counts cannot simply be copied or mechanically rescaled.
+
+Exact exposure percentages remain unfrozen until action triggers are validated.
