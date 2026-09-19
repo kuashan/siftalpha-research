@@ -1063,3 +1063,22 @@ Therefore:
 - it is inactive pending OOS;
 - do not reuse it for profitable-position ADD;
 - no repeated REDUCE threshold is active.
+
+
+## Active research round — E041
+
+Status: PRE-REGISTERED.
+
+Research target:
+isolate the E040 provisional 1% FastLower LOSS_PULLBACK_ADD and determine whether one or two loss-add steps best preserve economic value within the existing drawdown tolerance.
+
+Frozen variants:
+- L1: maximum one LOSS_PULLBACK_ADD, max exposure 40%
+- L2: maximum two LOSS_PULLBACK_ADD actions, max exposure 50%
+
+TREND_PULLBACK_ADD is disabled.
+Repeated REDUCE / RE-ADD are disabled.
+Reference CLOSE is unchanged.
+
+E041 is Discovery-only.
+BTC OOS / Frozen OOS and ETH/SOL/BNB 15m remain unopened.
