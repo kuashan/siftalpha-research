@@ -955,3 +955,42 @@ Two causal probability outputs:
 Loss-add threshold is selected only from the frozen -2%..-8% grid using chronological OOF Discovery predictions.
 
 Any surviving rule is DISCOVERY_CANDIDATE only.
+
+
+## E039 result — probability-guided sizing
+
+Status: NO_PROBABILITY_ACTION_MODEL.
+
+Chronological OOF testing of 63 fixed probability/loss-threshold combinations produced zero eligible full action engines.
+
+The simpler E037 benchmark remained better.
+
+Provisional LOSS_ADD research zone:
+-6% to -7% position loss.
+
+Research center:
+-6%.
+
+Evidence at -6%:
+- 7 events
+- mean incremental unit return +0.40%
+- median +1.14%
+- PF 1.34
+- q25 -1.59%
+
+Insufficient event count for activation.
+
+Therefore the mutable 15m research configuration records:
+- LOSS_ADD_CANDIDATE_THRESHOLD = -0.06
+- LOSS_ADD_CANDIDATE_BAND = (-0.07, -0.06)
+- LOSS_ADD_ENABLED = False
+
+Probability-guided TREND_ADD and both REDUCE modes are also disabled.
+
+Current architecture intent remains:
+- OPEN 30%
+- two future ADD modes
+- two future REDUCE modes
+- current CLOSE unchanged
+
+but none of the new probability actions is validated.
