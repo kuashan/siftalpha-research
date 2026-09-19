@@ -15,6 +15,7 @@ Status:
 - BTC 15m: E037 found GREEN_TRANSITION starter economics and 10 early ADD candidate zones; no REDUCE / RE-ADD / CLOSE zone validated
 - BTC 15m E038: paired tactical REDUCE/RE-ADD failed; GREEN->GRAY is risk-classification only; exact first-ADD rule cannot be reused for re-add
 - BTC 15m E039: probability-guided sizing failed Discovery; provisional LOSS_ADD band -6% to -7%, center -6%, disabled
+- BTC 15m E040: local-reset repeated pullback suggests 1% FastLower-valid LOSS_PULLBACK_ADD; profitable pullback ADD and repeated REDUCE remain rejected; inactive pending OOS
 - REDUCE: RTE is research candidate only
 - RE-ADD: not yet validated
 
