@@ -704,3 +704,73 @@ Main lesson:
 these four single-feature snapshots did not materially separate Mature from Failure in the current equity sample, and the crypto daily sample is too small to judge.
 
 The next crypto-oriented research step should increase independent lifecycle sample size through a pre-registered longer-history provider or a separate lower-timeframe experiment rather than mining thresholds from seven trades.
+
+
+## E035 BTC 15m Dynamic Position Engine — Phase A — 2026-09-19
+
+Status:
+NO_15M_BASELINE.
+
+Data:
+- X:BTCUSD Massive composite
+- 15m UTC bars
+- Discovery only
+- 33,312 continuous bars
+- 2024-09-19 00:00 UTC through 2025-08-31 23:45 UTC
+- no gaps / no duplicate timestamps
+- 94 sub-1-basis-point OHLC boundary inconsistencies sanitized by high=max(high,open,close), low=min(low,open,close)
+- raw FNV-1a 64 fingerprint: 2f6aba04f4ca730c
+
+Phase A results:
+
+### B0 LEGACY_COUNT_REFERENCE
+- 134 resolved lifecycles
+- 77 Mature / 57 Failure
+- 11.59 resolved per 30 days
+- median hold 68 bars = 17h
+- gross mean +0.230%
+- gross median +0.112%
+- base-friction mean -0.011%
+- base-friction median -0.128%
+- base PF 0.987
+- stress-friction mean -0.071%
+- REJECT
+
+### B1 NATIVE_12H
+- 91 resolved
+- 58 Mature / 33 Failure
+- 7.87 resolved per 30 days
+- median hold 97 bars = 24.25h
+- gross mean +0.412%
+- gross median -0.034%
+- base mean +0.172%
+- base median -0.274%
+- base PF 1.207
+- stress mean +0.112%
+- REJECT because median net < 0
+
+### B2 NATIVE_24H
+- 47 resolved
+- 32 Mature / 15 Failure
+- 4.06 resolved per 30 days
+- median hold 187 bars = 46.75h
+- gross mean +0.833%
+- gross median -0.192%
+- base mean +0.591%
+- base median -0.431%
+- base PF 1.558
+- stress mean +0.531%
+- top-3 positive-return concentration 55.7%
+- REJECT because median net < 0
+
+Interpretation:
+B2 has the strongest positive-skew economics and the best PF, but the typical trade remains negative after realistic friction.
+
+Therefore:
+- E035 Phase B OPEN/ADD/REDUCE/RE-ADD/CLOSE maps were NOT opened;
+- no 15m baseline was accepted;
+- no action trigger was created;
+- no OOS / Frozen OOS / cross-asset 15m holdout was opened.
+
+Research implication:
+15m dynamic-engine research must first repair entry/lifecycle quality rather than layering position actions on a formally accepted baseline.
