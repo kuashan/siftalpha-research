@@ -312,3 +312,29 @@ LOSS_ADD provisional research threshold:
 It remains disabled.
 
 Reference CLOSE remains unchanged.
+
+
+## E040 repeated-pullback update — 2026-09-19
+
+Repeated local pullbacks are now treated separately by action role.
+
+Provisional LOSS_PULLBACK_ADD:
+- 1% local pullback
+- FastLower must remain intact
+- EffectiveState GREEN or RED
+- dsep > 0
+- current position return < 0
+- +10pp exposure
+- local anchor resets after action
+- max exposure 50%
+- Discovery candidate only
+
+Do NOT apply the same rule to profitable positions:
+TREND_PULLBACK_ADD at 1% had negative median economics.
+
+Repeated REDUCE:
+not accepted.
+
+Risk-state reductions still require a discriminator that avoids cutting Mature continuation winners.
+
+Reference CLOSE remains unchanged.
