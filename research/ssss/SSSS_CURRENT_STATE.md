@@ -677,3 +677,22 @@ Therefore:
 Research implication:
 single-snapshot ER / CHOP / CMF / normalized-OBV levels did not solve Mature-vs-Failure discrimination on equities.
 Crypto needs more independent lifecycle history before these features can be judged.
+
+
+## 15m crypto dynamic-position direction
+
+The intended SSSS architecture is reaffirmed as a complete dynamic position state machine:
+
+FLAT -> OPEN -> HOLD -> ADD / REDUCE / RE-ADD -> CLOSE -> FLAT.
+
+The current executable model's lack of validated ADD / REDUCE / RE-ADD actions is a research-maturity limitation, not the intended final design.
+
+For crypto, the next architecture track should be 15-minute native rather than attempting to increase trade frequency only by loosening the daily OPEN rule.
+
+Important:
+daily parameter counts must not be copied directly to 15m bars, and they must not be mechanically time-scaled without validation.
+
+A separate 15m model version should be developed and validated while keeping the frozen daily core unchanged.
+
+See:
+`SSSS_15M_DYNAMIC_POSITION_ARCHITECTURE.md`
