@@ -69,3 +69,7 @@ S067,E041 BTC 15m loss-add ladder depth,Discovery,E041_BTC15_D,"BTC immutable 15
 S068,E041 BTC 15m loss-add ladder depth,OOS,E041_BTC15_OOS,"BTC 2025-09-01..2026-03-31",1,no,not_opened,"E041 Discovery-only"
 S069,E041 BTC 15m loss-add ladder depth,Frozen OOS,E041_BTC15_FOOS,"BTC 2026-04-01..2026-09-17",1,no,not_opened,"E041 Discovery-only"
 S070,E041 BTC 15m loss-add ladder depth,Cross-asset holdout,E041_15M_XASSET,"ETH SOL BNB",3,no,not_opened,"No 15m outcome queries in E041"
+S071,E042 BTC 15m second loss-add risk admission,Discovery,E042_BTC15_D,"BTC immutable 15m snapshot 2024-09-19..2025-08-31",1,no,pre_registered,"Fixed first LOSS_ADD; seven causal second-add admission candidates plus unfiltered control"
+S072,E042 BTC 15m second loss-add risk admission,OOS,E042_BTC15_OOS,"BTC 2025-09-01..2026-03-31",1,no,not_opened,"E042 Discovery-only until one exact candidate passes"
+S073,E042 BTC 15m second loss-add risk admission,Frozen OOS,E042_BTC15_FOOS,"BTC 2026-04-01..2026-09-17",1,no,not_opened,"E042 Discovery-only"
+S074,E042 BTC 15m second loss-add risk admission,Cross-asset holdout,E042_15M_XASSET,"ETH SOL BNB",3,no,not_opened,"No 15m outcome queries in E042"
