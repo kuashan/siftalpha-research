@@ -708,3 +708,15 @@ Frozen candidates:
 
 Full definition:
 `preregistrations/E042.md`
+
+
+E042 final status:
+- NO_SECOND_LOSS_ADD_RISK_GATE;
+- all 17 base second LOSS_ADD signals were already GREEN;
+- C2 above FastMid reduced maxDD to 9.50% but retained only 24.9% of L2 incremental return;
+- C4 >=0.50 ATR FastLower buffer retained 77.4% of L2 incremental return but maxDD remained 10.96%, above the 10.80% cap;
+- C5/C7 were too sparse and weak;
+- C3/C6 did not solve drawdown and preserved little incremental return;
+- no E042 candidate was frozen for OOS;
+- BTC OOS / Frozen OOS remained unopened;
+- ETH / SOL / BNB 15m remained unopened.
