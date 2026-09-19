@@ -480,3 +480,13 @@ BTC OOS / Frozen OOS and ETH / SOL / BNB 15m remain unopened.
 
 Full definition:
 `preregistrations/E037.md`
+
+
+E037 final status:
+- GREEN_TRANSITION starter reference remained economically positive in one-at-a-time lifecycle simulation;
+- 10 ADD opportunity zones passed;
+- direct GRB / FAST_BREAKOUT / FASTMID_RECLAIM ADD events failed;
+- no REDUCE zone passed;
+- no RE-ADD recovery passed;
+- no early CLOSE zone passed;
+- all temporal and cross-asset holdouts remained unopened.
