@@ -1,0 +1,202 @@
+{
+  "experiment": "E041",
+  "name": "BTC 15m Loss-Pullback Ladder Depth & Drawdown Attribution",
+  "status": "NO_LOSS_ADD_DEPTH_CANDIDATE",
+  "discovery_only": true,
+  "holdouts_opened": false,
+  "duplication_classification": "PARTIAL_OVERLAP",
+  "fixed_rule": {
+    "pullback_step": 0.01,
+    "validity_floor": "FAST_LOWER",
+    "allowed_states": [
+      "GREEN",
+      "RED"
+    ],
+    "require_dsep_positive": true,
+    "require_weighted_position_return_negative": true,
+    "local_anchor_reset_after_action": true,
+    "cooldown_bars": 4,
+    "trend_pullback_add": false,
+    "repeated_reduce": false,
+    "readd": false,
+    "reference_close": "UNCHANGED",
+    "starter_exposure": 0.3,
+    "add_delta": 0.1
+  },
+  "continuity_checks": {
+    "e037_reference": {
+      "resolved": 48,
+      "mature": 33,
+      "failure": 15,
+      "base_mean": 0.009479223196369348,
+      "base_median": 0.002055020150498188,
+      "base_pf": 1.968088200541279,
+      "exact_metric_diff": 0
+    },
+    "e040_benchmark_A": {
+      "reproduced_final": 1.1397139383489452,
+      "checkpoint_final": 1.1397139383489474,
+      "reproduced_maxDD": 0.07511515074070696,
+      "checkpoint_maxDD": 0.07511515074070596,
+      "max_abs_per_lifecycle_return_diff": 1.9949319973733282e-16,
+      "drawdown_method": "bar-level completed-close mark-to-market; raw close while open; exit-open friction on liquidation"
+    }
+  },
+  "benchmark_B": {
+    "final": 1.190259097925545,
+    "ret": 0.19025909792554496,
+    "stress_final": 1.1776855325730633,
+    "stress_ret": 0.1776855325730633,
+    "maxDD": 0.09817661758340701,
+    "allowed_maxDD": 0.10799427934174773,
+    "mature_total": 0.24709836537503094
+  },
+  "variants": {
+    "L1_ONE_LOSS_ADD": {
+      "event_gate": false,
+      "event_gate_failure_reasons": [
+        "top3_positive_share > 60%"
+      ],
+      "portfolio_gate": false,
+      "portfolio_gate_failure_reasons": [
+        "portfolio return <= Benchmark B",
+        "stress-friction portfolio return < Benchmark B stress"
+      ],
+      "eligible": false,
+      "events": {
+        "n": 20,
+        "mean": 0.021799031440968508,
+        "median": 0.005669085255983419,
+        "pf": 2.6754645938925967,
+        "stress_median": 0.005065863685502214,
+        "q25": -0.014090396268057831,
+        "positive_rate": 0.55,
+        "top3": 0.6491577008139372
+      },
+      "portfolio": {
+        "final": 1.1860874996976107,
+        "ret": 0.18608749969761074,
+        "stress_final": 1.174401428427451,
+        "stress_ret": 0.1744014284274511,
+        "maxDD": 0.09328781442805889,
+        "maxDD_peak": {
+          "lifecycle_id": 9,
+          "bar_i": 11836
+        },
+        "maxDD_trough": {
+          "lifecycle_id": 21,
+          "bar_i": 18530
+        },
+        "maxDD_lifecycle_span": [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "mature_total": 0.2426990164933313,
+        "failure_total": -0.06260013958367572,
+        "incremental_vs_B": -0.004171598227934226,
+        "stress_incremental_vs_B": -0.003284104145612199,
+        "top_incremental_share": 0.30205785116246003,
+        "add_count": 20
+      }
+    },
+    "L2_TWO_LOSS_ADDS": {
+      "event_gate": true,
+      "portfolio_gate": false,
+      "portfolio_gate_failure_reasons": [
+        "bar-level maxDD exceeds 1.10 x Benchmark B maxDD"
+      ],
+      "eligible": false,
+      "pooled_events": {
+        "n": 37,
+        "mean": 0.025021088479648675,
+        "median": 0.010659700781048276,
+        "pf": 3.0573760477412186,
+        "stress_median": 0.010053485733906742,
+        "q25": -0.012164642363467926,
+        "positive_rate": 0.6486486486486487,
+        "top3": 0.473844268695366
+      },
+      "first_add": {
+        "n": 20,
+        "mean": 0.021799031440968508,
+        "median": 0.005669085255983419,
+        "pf": 2.6754645938925967,
+        "stress_median": 0.005065863685502214,
+        "q25": -0.014090396268057831,
+        "positive_rate": 0.55,
+        "top3": 0.6491577008139372
+      },
+      "second_add": {
+        "n": 17,
+        "mean": 0.02881174381927239,
+        "median": 0.012237628833241976,
+        "pf": 3.5810675502027554,
+        "stress_median": 0.011630467311507964,
+        "q25": 0.00037984096582110993,
+        "positive_rate": 0.7647058823529411,
+        "top3": 0.6725209530751213
+      },
+      "portfolio": {
+        "final": 1.2398116680607612,
+        "ret": 0.23981166806076115,
+        "stress_final": 1.2263355064032277,
+        "stress_ret": 0.22633550640322775,
+        "maxDD": 0.11332088170030319,
+        "maxDD_peak": {
+          "lifecycle_id": 9,
+          "bar_i": 11836
+        },
+        "maxDD_trough": {
+          "lifecycle_id": 17,
+          "bar_i": 15586
+        },
+        "maxDD_lifecycle_span": [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "mature_total": 0.2985435106199582,
+        "failure_total": -0.06946466921753958,
+        "incremental_vs_B": 0.04955257013521619,
+        "stress_incremental_vs_B": 0.04864997383016445,
+        "top_incremental_share": 0.32209846465916203,
+        "add_count": 37
+      }
+    }
+  },
+  "drawdown_attribution": {
+    "benchmark_B_maxDD": 0.09817661758340701,
+    "allowed_maxDD": 0.10799427934174773,
+    "L1_maxDD": 0.09328781442805889,
+    "L2_maxDD": 0.11332088170030319,
+    "first_step_incremental_DD_vs_B": -0.00488880315534812,
+    "first_step_relative_DD_vs_B": -0.04979600311851018,
+    "second_step_incremental_DD_vs_L1": 0.020033067272244298,
+    "L2_incremental_DD_vs_B": 0.01514426411689618,
+    "L2_relative_DD_vs_B": 0.15425530528213804,
+    "L2_excess_over_allowed_maxDD": 0.005326602358555463
+  },
+  "selected": null,
+  "interpretation": {
+    "one_step": "Positive unit economics but too winner-concentrated and does not beat Benchmark B portfolio return.",
+    "two_step": "Strong pooled and second-ADD terminal economics, but second step raises bar-level path drawdown above the pre-registered portfolio limit.",
+    "next_frontier": "Second LOSS_ADD risk-admission discriminator; do not retune the 1% pullback step."
+  }
+}
