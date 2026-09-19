@@ -338,3 +338,33 @@ not accepted.
 Risk-state reductions still require a discriminator that avoids cutting Mature continuation winners.
 
 Reference CLOSE remains unchanged.
+
+
+## E041 loss-add depth update — 2026-09-19
+
+No ADD transition is accepted.
+
+The fixed 1% FastLower LOSS_PULLBACK_ADD was isolated from TREND_ADD and REDUCE.
+
+One-step depth:
+- safer path risk;
+- but failed concentration and Benchmark-B return gates.
+
+Two-step depth:
+- second ADD economics were strong;
+- 17 second-add events;
+- mean +2.88%;
+- median +1.22%;
+- stress median +1.16%;
+- but portfolio maxDD rose to 11.33% versus the 10.80% frozen ceiling.
+
+State-machine consequence:
+- do not activate generic repeated LOSS_ADD;
+- do not discard the second LOSS_ADD economics;
+- treat the second step as a separate risk-admission problem;
+- current reference CLOSE remains unchanged;
+- repeated REDUCE remains rejected.
+
+The next useful transition research is:
+first LOSS_ADD -> risk-qualified SECOND LOSS_ADD,
+not a new pullback-percentage search.
