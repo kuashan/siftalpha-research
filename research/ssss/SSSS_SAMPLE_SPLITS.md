@@ -490,3 +490,34 @@ E037 final status:
 - no RE-ADD recovery passed;
 - no early CLOSE zone passed;
 - all temporal and cross-asset holdouts remained unopened.
+
+
+---
+
+## 20. E038 — BTC 15m Tactical Tranche Reduce / Rebuild
+
+E038 studies REDUCE and RE-ADD as one paired tactical process.
+
+Fixed architecture:
+- 30% GREEN_TRANSITION core
+- +10% first ADD at MFE<1 ATR and Progress<=0
+- REDUCE removes only the 10% tactical tranche
+- RE-ADD restores only the 10% tactical tranche
+- full CLOSE remains the existing reference state close
+
+REDUCE candidates:
+- GREEN->GRAY after ADD
+- post-Red MFE>=4 with giveback>=0.5 ATR
+- RTE after MFE>=2 ATR
+
+RE-ADD candidates:
+- literal reuse of the first ADD rule
+- GREEN recovery
+- dsep recovery
+- FastMid recovery
+
+Discovery only.
+All holdouts remain unopened.
+
+Full definition:
+`preregistrations/E038.md`
