@@ -233,3 +233,28 @@ Do not interpret the current single-position daily implementation as the final p
 The 15m model must be versioned separately; daily parameter counts cannot simply be copied or mechanically rescaled.
 
 Exact exposure percentages remain unfrozen until action triggers are validated.
+
+
+## E037 BTC 15m dynamic-action update — 2026-09-19
+
+Discovery-only result.
+
+15m role structure is becoming clearer:
+
+STARTER OPEN candidate:
+- GREEN_TRANSITION
+
+Direct later confirmation as ADD:
+- GRB after starter: reject
+- FAST_BREAKOUT after starter: reject
+- FASTMID_RECLAIM after starter: reject
+
+ADD opportunity map:
+10 candidate cells passed, concentrated early/pre-Red and near/below starter entry.
+
+No REDUCE / RE-ADD / CLOSE map cell passed.
+
+State-machine consequence:
+do not add executable actions yet.
+
+The strongest next validation target is an exact early ADD rule derived from the pre-registered opportunity cells, while preserving the current close logic until a superior risk action is independently validated.
