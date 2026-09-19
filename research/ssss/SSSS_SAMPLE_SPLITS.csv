@@ -57,3 +57,7 @@ S055,E038 BTC 15m tactical tranche,Discovery,E038_BTC15_D,"BTC immutable 15m sna
 S056,E038 BTC 15m tactical tranche,OOS,E038_BTC15_OOS,"BTC 2025-09-01..2026-03-31",1,no,not_opened,"E038 Discovery-only"
 S057,E038 BTC 15m tactical tranche,Frozen OOS,E038_BTC15_FOOS,"BTC 2026-04-01..2026-09-17",1,no,not_opened,"E038 Discovery-only"
 S058,E038 BTC 15m tactical tranche,Cross-asset holdout,E038_15M_XASSET,"ETH SOL BNB",3,no,not_opened,"No 15m outcomes queried"
+S059,E039 BTC 15m probability sizing,Discovery,E039_BTC15_D,"BTC immutable 15m snapshot 2024-09-19..2025-08-31",1,no,pre_registered,"Chronological OOF probability action model"
+S060,E039 BTC 15m probability sizing,OOS,E039_BTC15_OOS,"BTC 2025-09-01..2026-03-31",1,no,reserved_unopened,"Do not query in E039"
+S061,E039 BTC 15m probability sizing,Frozen OOS,E039_BTC15_FOOS,"BTC 2026-04-01..2026-09-17",1,no,reserved_unopened,"Do not query in E039"
+S062,E039 BTC 15m probability sizing,Cross-asset holdout,E039_15M_XASSET,"ETH SOL BNB",3,no,reserved_unopened,"No 15m outcome queries in E039"
