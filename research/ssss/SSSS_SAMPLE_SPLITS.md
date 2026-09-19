@@ -417,3 +417,12 @@ E035 is Discovery-only and cannot validate a production action.
 
 Full definition:
 `preregistrations/E035.md`
+
+
+E035 final status:
+- Phase A completed;
+- no B0/B1/B2 baseline passed eligibility;
+- B2 was strongest economically but had negative base-friction median return;
+- Phase B dynamic action maps were not opened;
+- BTC OOS / Frozen OOS remained unopened;
+- ETH / SOL / BNB 15m remained unopened.
