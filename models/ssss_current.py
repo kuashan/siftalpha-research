@@ -12,6 +12,7 @@ Status:
 - MATURE CLOSE: validated research rule
 - ADD: not yet validated; E030/E031 trigger families rejected; E032 found early opportunity zones; E033 selective early-entry rules also rejected because they did not distinguish Mature from Failure paths
 - FEATURE DIAGNOSTICS: E034 ER10 / CHOP14 / CMF20 / OBVImpulse10 single-snapshot screen produced no equity diagnostic candidate; crypto sample too sparse
+- BTC 15m: E037 found GREEN_TRANSITION starter economics and 10 early ADD candidate zones; no REDUCE / RE-ADD / CLOSE zone validated
 - REDUCE: RTE is research candidate only
 - RE-ADD: not yet validated
 
