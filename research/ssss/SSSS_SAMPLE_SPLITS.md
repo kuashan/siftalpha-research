@@ -567,3 +567,36 @@ E039 final status:
 - provisional LOSS_ADD band = -6% to -7%;
 - research center = -6%, inactive;
 - all holdouts remained unopened.
+
+
+---
+
+## 22. E040 — BTC 15m Repeated Pullback Ladder
+
+E040 tests a repeated local-reset drawdown ladder.
+
+Pullback step:
+1% through 10%, integer only.
+
+After each ADD / REDUCE:
+local anchor resets to execution price and then tracks new completed-bar highs.
+
+Bullish validity floors:
+- FastLower
+- WhiteLower - 2ATR
+- strict max of the two
+
+Sizing:
+- starter 30%
+- each ADD +10pp
+- max 50%
+- each REDUCE sells 15% of current position quantity
+- never reduce below 30% core
+
+Reference CLOSE unchanged.
+
+Discovery only.
+All holdouts remain unopened.
+
+Full definition:
+`preregistrations/E040.md`
