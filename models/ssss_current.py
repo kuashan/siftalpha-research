@@ -14,6 +14,7 @@ Status:
 - FEATURE DIAGNOSTICS: E034 ER10 / CHOP14 / CMF20 / OBVImpulse10 single-snapshot screen produced no equity diagnostic candidate; crypto sample too sparse
 - BTC 15m: E037 found GREEN_TRANSITION starter economics and 10 early ADD candidate zones; no REDUCE / RE-ADD / CLOSE zone validated
 - BTC 15m E038: paired tactical REDUCE/RE-ADD failed; GREEN->GRAY is risk-classification only; exact first-ADD rule cannot be reused for re-add
+- BTC 15m E039: probability-guided sizing failed Discovery; provisional LOSS_ADD band -6% to -7%, center -6%, disabled
 - REDUCE: RTE is research candidate only
 - RE-ADD: not yet validated
 
