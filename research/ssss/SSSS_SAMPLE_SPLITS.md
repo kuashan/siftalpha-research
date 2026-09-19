@@ -453,3 +453,30 @@ BTC OOS / Frozen OOS and ETH / SOL / BNB 15m remain untouched.
 
 Full definition:
 `preregistrations/E036.md`
+
+
+---
+
+## 19. E037 — BTC 15m Starter-to-Dynamic Action Map
+
+Repository duplication audit re-run after E036.
+
+Fixed Discovery starter:
+GREEN_TRANSITION.
+
+GRB / FAST_BREAKOUT / FASTMID_RECLAIM are no longer OPEN competitors in this round.
+They are post-entry ADD candidates only.
+
+E037 maps:
+- discrete ADD evidence
+- ADD opportunity zones
+- REDUCE zones
+- RE-ADD recovery zones
+- CLOSE zones
+
+Discovery only.
+
+BTC OOS / Frozen OOS and ETH / SOL / BNB 15m remain unopened.
+
+Full definition:
+`preregistrations/E037.md`
