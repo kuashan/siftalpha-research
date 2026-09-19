@@ -881,3 +881,22 @@ Current 15m architecture frontier:
 - CLOSE: B2 reference close remains diagnostic benchmark; no earlier replacement found
 
 Holdouts remain unopened.
+
+
+## Active research round — E038
+
+Status: PRE-REGISTERED.
+
+E038 changes the research unit from isolated REDUCE / RE-ADD signals to a paired tactical tranche cycle.
+
+Architecture:
+- 30% starter core
+- 10% early tactical ADD
+- tactical REDUCE sells only that 10%
+- RE-ADD restores that 10%
+- the 30% core stays invested until the existing reference CLOSE
+
+The exact first-ADD formula is tested literally as one re-add candidate, alongside three recovery-specific alternatives.
+
+No full-close rule is changed in E038.
+All holdouts remain unopened.
