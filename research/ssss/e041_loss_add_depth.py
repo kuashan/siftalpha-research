@@ -115,11 +115,10 @@ def describe_events(events: list[dict]) -> dict:
     }
 
 
-def max_drawdown_from_returns(per: list[float]) -> tuple[float, list[int], list[float]]:
-    equity = [1.0]
-    for r in per:
-        equity.append(equity[-1] * (1.0 + r))
-
+def max_drawdown_from_curve(
+    equity: list[float],
+    meta: list[dict],
+) -> tuple[float, dict, dict]:
     peak_val = equity[0]
     peak_idx = 0
     best_dd = 0.0
@@ -136,10 +135,106 @@ def max_drawdown_from_returns(per: list[float]) -> tuple[float, list[int], list[
             best_peak = peak_idx
             best_trough = idx
 
-    # equity index k means after lifecycle k; drawdown-causing lifecycle IDs
-    # are best_peak+1 ... best_trough.
-    ids = list(range(best_peak + 1, best_trough + 1))
-    return float(best_dd), ids, equity
+    return (
+        float(best_dd),
+        dict(meta[best_peak]),
+        dict(meta[best_trough]),
+    )
+
+
+def bar_level_max_drawdown(
+    df: pd.DataFrame,
+    lifecycles: list[dict],
+    results: list[dict],
+    friction: float = BASE_FRICTION,
+) -> tuple[float, dict, dict]:
+    """Reproduce E040 portfolio drawdown using completed-bar close marks.
+
+    Each lifecycle starts with its then-current account equity. Starter and ADD
+    notionals are fixed fractions of lifecycle-start equity. Entry friction is
+    paid through purchased units. During the lifecycle, open units are marked
+    to the raw completed-bar close, matching the E040 checkpoint convention.
+    Final liquidation uses exit-open friction.
+    """
+    equity = 1.0
+    curve = [equity]
+    meta = [{"type": "start", "lifecycle_id": 0, "bar_i": None}]
+
+    by_id = {int(x["id"]): x for x in results}
+
+    for trade in lifecycles:
+        tid = int(trade["id"])
+        result = by_id[tid]
+        start_equity = equity
+
+        cash = start_equity * (1.0 - STARTER)
+        units = (
+            STARTER
+            * start_equity
+            / apply_entry_cost(float(trade["entry_open"]), friction)
+        )
+
+        # Record immediate starter execution mark at raw open.
+        curve.append(cash + units * float(trade["entry_open"]))
+        meta.append(
+            {
+                "type": "entry",
+                "lifecycle_id": tid,
+                "bar_i": int(trade["entry_i"]),
+            }
+        )
+
+        events = sorted(result["events"], key=lambda x: int(x["exec_i"]))
+        event_cursor = 0
+
+        for i in range(int(trade["entry_i"]), int(trade["exit_i"]) + 1):
+            while (
+                event_cursor < len(events)
+                and int(events[event_cursor]["exec_i"]) == i
+            ):
+                event = events[event_cursor]
+                notional = ADD_DELTA * start_equity
+                cash -= notional
+                units += notional / apply_entry_cost(
+                    float(event["exec_open"]), friction
+                )
+
+                # Record immediate ADD execution mark at raw open.
+                curve.append(cash + units * float(event["exec_open"]))
+                meta.append(
+                    {
+                        "type": "add_execution",
+                        "lifecycle_id": tid,
+                        "bar_i": i,
+                        "ordinal": int(event["ordinal"]),
+                    }
+                )
+                event_cursor += 1
+
+            if i == int(trade["exit_i"]):
+                equity = cash + units * apply_exit_cost(
+                    float(trade["exit_open"]), friction
+                )
+                curve.append(equity)
+                meta.append(
+                    {
+                        "type": "exit",
+                        "lifecycle_id": tid,
+                        "bar_i": i,
+                    }
+                )
+                break
+
+            curve.append(cash + units * float(df.at[i, "close"]))
+            meta.append(
+                {
+                    "type": "bar_close",
+                    "lifecycle_id": tid,
+                    "bar_i": i,
+                }
+            )
+
+    return max_drawdown_from_curve(curve, meta)
 
 
 def build_green_transition_lifecycles(df: pd.DataFrame, cfg) -> list[dict]:
@@ -445,12 +540,19 @@ def simulate_e040_reproduction(df: pd.DataFrame, trade: dict) -> dict:
     }
 
 
-def portfolio_summary(results: list[dict], benchmark_b: dict) -> dict:
+def portfolio_summary(
+    df: pd.DataFrame,
+    lifecycles: list[dict],
+    results: list[dict],
+    benchmark_b: dict,
+) -> dict:
     per = [float(x["base_ret"]) for x in results]
     stress_per = [float(x["stress_ret"]) for x in results]
     final = float(np.prod([1.0 + x for x in per]))
     stress_final = float(np.prod([1.0 + x for x in stress_per]))
-    maxdd, dd_ids, _ = max_drawdown_from_returns(per)
+    maxdd, dd_peak, dd_trough = bar_level_max_drawdown(
+        df, lifecycles, results, BASE_FRICTION
+    )
 
     b_per = {int(x["id"]): float(x["ret"]) for x in benchmark_b["per"]}
     incremental = [
@@ -473,7 +575,14 @@ def portfolio_summary(results: list[dict], benchmark_b: dict) -> dict:
         "stress_final": stress_final,
         "stress_ret": stress_final - 1.0,
         "maxDD": maxdd,
-        "maxDD_lifecycle_ids": dd_ids,
+        "maxDD_peak": dd_peak,
+        "maxDD_trough": dd_trough,
+        "maxDD_lifecycle_span": list(
+            range(
+                int(dd_peak["lifecycle_id"]),
+                int(dd_trough["lifecycle_id"]) + 1,
+            )
+        ),
         "avgExposure": float(np.mean([x["avg_exposure"] for x in results])),
         "turnover": float(sum(x["turnover"] for x in results)),
         "mature_total": float(mature),
@@ -535,11 +644,25 @@ def main() -> dict:
     ]
     a_per = [x["ret"] for x in benchmark_a_per]
     a_final = float(np.prod([1 + x for x in a_per]))
-    a_dd, _, _ = max_drawdown_from_returns(a_per)
+    benchmark_a_results = [
+        {
+            "id": int(t["id"]),
+            "path": t["path"],
+            "base_ret": STARTER * float(t["base_unit_return"]),
+            "stress_ret": STARTER * float(t["stress_unit_return"]),
+            "events": [],
+        }
+        for t in lifecycles
+    ]
+    a_dd, a_dd_peak, a_dd_trough = bar_level_max_drawdown(
+        df, lifecycles, benchmark_a_results, BASE_FRICTION
+    )
     a_expected = e040["benchmark_A"]
     benchmark_a_check = {
         "final": a_final,
         "maxDD": a_dd,
+        "maxDD_peak": a_dd_peak,
+        "maxDD_trough": a_dd_trough,
         "max_abs_per_diff": max(
             abs(x["ret"] - float(y["ret"]))
             for x, y in zip(benchmark_a_per, a_expected["per"])
@@ -552,6 +675,15 @@ def main() -> dict:
     if benchmark_a_check["max_abs_per_diff"] > 1e-12:
         raise RuntimeError(
             f"E040 Benchmark A per-lifecycle mismatch {benchmark_a_check['max_abs_per_diff']}"
+        )
+    if not math.isclose(
+        float(a_dd),
+        float(a_expected["maxDD"]),
+        rel_tol=0,
+        abs_tol=1e-12,
+    ):
+        raise RuntimeError(
+            f"E040 Benchmark A maxDD mismatch: {a_dd} vs {a_expected['maxDD']}"
         )
 
     # Diagnostic E040 D=1/V1 reproduction; not a selection input.
@@ -603,8 +735,8 @@ def main() -> dict:
     l2_first = [e for e in l2_events if int(e["ordinal"]) == 1]
     l2_second = [e for e in l2_events if int(e["ordinal"]) == 2]
 
-    l1_port = portfolio_summary(l1_results, b)
-    l2_port = portfolio_summary(l2_results, b)
+    l1_port = portfolio_summary(df, lifecycles, l1_results, b)
+    l2_port = portfolio_summary(df, lifecycles, l2_results, b)
 
     l1_event = describe_events(l1_events)
     l2_event = describe_events(l2_events)
