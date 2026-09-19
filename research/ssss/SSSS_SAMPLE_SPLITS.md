@@ -600,3 +600,14 @@ All holdouts remain unopened.
 
 Full definition:
 `preregistrations/E040.md`
+
+
+E040 final status:
+- no full repeated ADD/REDUCE ladder passed;
+- 1% / FastLower repeated ADD passed event-level economics;
+- second ADD remained positive at 1%;
+- loss-state 1% pullback ADD was strong;
+- profit-state 1% pullback ADD had negative median;
+- repeated REDUCE failed;
+- 4%-10% local pullbacks were usually too late under the model structure;
+- all holdouts remained unopened.
