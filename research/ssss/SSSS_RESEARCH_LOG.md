@@ -1403,3 +1403,154 @@ It remains a Discovery candidate, not a validated action.
 Repeated profitable-position ADD is rejected under this same 1% rule.
 
 Repeated REDUCE remains unvalidated.
+
+
+## E041 BTC 15m Loss-Pullback Ladder Depth & Drawdown Attribution — 2026-09-19
+
+Status:
+NO_LOSS_ADD_DEPTH_CANDIDATE.
+
+Duplication classification:
+PARTIAL_OVERLAP with E037-E040.
+
+E041 did not re-search the pullback threshold. It froze the E040 provisional rule:
+- 1% local pullback;
+- FastLower validity;
+- Effective GREEN or RED;
+- dsep > 0;
+- weighted current position return < 0;
+- +10pp LOSS_PULLBACK_ADD;
+- local-anchor reset;
+- 4-bar cooldown;
+- no TREND_PULLBACK_ADD;
+- no REDUCE / RE-ADD;
+- reference CLOSE unchanged.
+
+Two exact depths were tested:
+- L1: maximum one LOSS_ADD, max exposure 40%;
+- L2: maximum two LOSS_ADDs, max exposure 50%.
+
+### Continuity audit
+
+The replay exactly reproduced the E037 GREEN_TRANSITION reference:
+- 48 resolved lifecycles;
+- 33 Mature / 15 Failure;
+- mean +0.947922%;
+- median +0.205502%;
+- PF 1.968088.
+
+E040 Benchmark A final equity and every per-lifecycle return also reproduced to floating-point precision.
+
+The E040 max-drawdown convention was independently recovered:
+completed-bar raw close mark-to-market while a position is open, with execution friction charged through entry units and final exit-open liquidation.
+
+Under that convention Benchmark A maxDD reproduced as 7.511515%, matching the E040 checkpoint to approximately 1e-15.
+
+### L1 — one LOSS_ADD maximum
+
+20 first LOSS_ADD events:
+- mean incremental unit return +2.18%;
+- median +0.57%;
+- PF 2.68;
+- stress median +0.51%;
+- q25 -1.41%;
+- positive rate 55.0%;
+- top-3 positive-return share 64.9%.
+
+L1 failed the event gate because winner concentration exceeded the frozen 60% ceiling.
+
+Portfolio:
+- return +18.61%;
+- stress return +17.44%;
+- maxDD 9.33%;
+- Benchmark B return +19.03%;
+- Benchmark B stress +17.77%.
+
+So one-step LOSS_ADD also failed to beat Benchmark B.
+
+### L2 — two LOSS_ADD maximum
+
+37 pooled LOSS_ADD events:
+- mean +2.50%;
+- median +1.07%;
+- PF 3.06;
+- stress median +1.01%;
+- q25 -1.22%;
+- positive rate 64.9%;
+- top-3 share 47.4%.
+
+The second LOSS_ADD itself was economically strong:
+- 17 events;
+- mean +2.88%;
+- median +1.22%;
+- PF 3.58;
+- stress median +1.16%;
+- q25 +0.04%;
+- positive rate 76.5%.
+
+L2 therefore passed the pre-registered event gate.
+
+Portfolio:
+- return +23.98%;
+- stress return +22.63%;
+- incremental return vs Benchmark B +4.96 percentage points;
+- stress incremental +4.86 percentage points;
+- Mature total PnL remained above Benchmark B;
+- largest single-lifecycle incremental share 32.2%, below the 35% cap.
+
+But bar-level maxDD was 11.33%.
+
+Benchmark B maxDD:
+9.82%.
+
+Frozen maximum allowed:
+10.80%.
+
+Therefore L2 exceeded the drawdown ceiling by about 0.53 percentage points and worsened maxDD by about 15.43% relative to Benchmark B.
+
+### Drawdown attribution
+
+L1 maxDD:
+9.33%, about 0.49 percentage points LOWER than Benchmark B.
+
+L2 maxDD:
+11.33%.
+
+Moving from one LOSS_ADD to two LOSS_ADDs therefore added about 2.00 percentage points of max drawdown.
+
+The L1 maximum-drawdown span ran from lifecycle 9 through lifecycle 21.
+The L2 maximum-drawdown span ran from lifecycle 9 through lifecycle 17.
+
+This is the central E041 result:
+
+the second LOSS_ADD has strong terminal-to-reference-close economics, but its interim path risk is too large under the current unconditional second-step admission rule.
+
+### Comparison with E040 full ladder
+
+E040 full 1% / FastLower ladder:
+- return +24.47%;
+- maxDD 12.04%.
+
+E041 L2 LOSS-only ladder:
+- return +23.98%;
+- maxDD 11.33%.
+
+Removing profitable-position TREND_ADD and repeated REDUCE sacrifices only about 0.49 percentage points of Discovery return while improving maxDD by about 0.71 percentage points.
+
+That cleanup is directionally useful, but still insufficient to satisfy the frozen drawdown gate.
+
+### Decision
+
+No E041 depth is accepted.
+
+- L1: safer, but too concentrated and does not outperform Benchmark B.
+- L2: strong economics, but fails portfolio risk.
+- no BTC OOS opened;
+- no BTC Frozen OOS opened;
+- no ETH/SOL/BNB 15m opened;
+- no action is activated in the mutable research model.
+
+Next research frontier:
+do NOT re-optimize the 1% pullback threshold.
+
+Instead, research a causal risk-admission discriminator specifically for the SECOND LOSS_PULLBACK_ADD, with the objective of preserving its strong terminal economics while rejecting the subset that creates excessive interim drawdown.
