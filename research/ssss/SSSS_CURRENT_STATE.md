@@ -1160,3 +1160,61 @@ Seven fixed causal admission candidates use only existing SSSS structure / alrea
 
 E042 is Discovery-only.
 BTC OOS / Frozen OOS and ETH/SOL/BNB 15m remain unopened.
+
+
+## E042 result — second LOSS_ADD risk admission
+
+Status: NO_SECOND_LOSS_ADD_RISK_GATE.
+
+E041 continuity was reproduced:
+- 20 first LOSS_ADD events;
+- 17 second LOSS_ADD signals;
+- L1 +18.61% / maxDD 9.33%;
+- L2 +23.98% / maxDD 11.33%.
+
+Key candidate results:
+
+C1 GREEN_ONLY:
+- all 17 signals were already GREEN;
+- no discrimination;
+- identical to L2;
+- maxDD 11.33%.
+
+C2 ABOVE_FASTMID:
+- 8 events;
+- second-add median +0.82%;
+- PF 12.61;
+- portfolio +20.26%;
+- maxDD 9.50%;
+- but retained only 24.9% of L2 incremental return over Benchmark B;
+- fails the frozen 50% economic-preservation gate.
+
+C3 DSEP_ACCEL:
+- 9 events;
+- portfolio +19.06%;
+- maxDD 10.96%;
+- fails risk and preservation.
+
+C4 FASTLOWER_BUFFER_05ATR:
+- 16 events;
+- portfolio +22.86%;
+- retained 77.4% of L2 incremental return;
+- maxDD 10.96% > 10.80% cap;
+- concentration 35.97% > 35% ceiling.
+
+C5 POST_FIRST_ADD_MAE_LE_1ATR:
+- only 5 events;
+- portfolio +18.64%;
+- maxDD 10.03%;
+- too sparse and economically weak.
+
+C6 duplicated C3 in this sample.
+C7 duplicated C5 in this sample.
+
+No candidate passed all pre-registered gates.
+
+All temporal and cross-asset 15m holdouts remain unopened.
+
+Next frontier:
+local path-shape structure between first LOSS_ADD and the first second-LOSS_ADD signal.
+Do not retune the E042 scalar thresholds.
