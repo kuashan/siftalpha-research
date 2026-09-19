@@ -521,3 +521,12 @@ All holdouts remain unopened.
 
 Full definition:
 `preregistrations/E038.md`
+
+
+E038 final status:
+- no tactical REDUCE-only candidate passed;
+- no REDUCE -> RE-ADD pair passed;
+- exact first-ADD rule reuse for RE-ADD was structurally sparse and empirically rejected;
+- GREEN->GRAY after first ADD is retained as a risk-classification checkpoint, not an action;
+- full CLOSE logic remained unchanged;
+- all holdouts remained unopened.
