@@ -1554,3 +1554,172 @@ Next research frontier:
 do NOT re-optimize the 1% pullback threshold.
 
 Instead, research a causal risk-admission discriminator specifically for the SECOND LOSS_PULLBACK_ADD, with the objective of preserving its strong terminal economics while rejecting the subset that creates excessive interim drawdown.
+
+
+## E042 BTC 15m Second LOSS_ADD Risk Admission — 2026-09-19
+
+Status:
+NO_SECOND_LOSS_ADD_RISK_GATE.
+
+E042 froze the E041 architecture:
+- 30% starter;
+- fixed first 1% FastLower LOSS_PULLBACK_ADD -> 40%;
+- second base 1% LOSS_PULLBACK_ADD -> candidate 50%;
+- no TREND_ADD;
+- no REDUCE / RE-ADD;
+- reference CLOSE unchanged.
+
+Only the FIRST base second-LOSS_ADD signal in each lifecycle was eligible for admission.
+A rejected second signal was not retried later in the same lifecycle.
+
+### Continuity
+
+E041 was reproduced exactly:
+- 20 first LOSS_ADD events;
+- 17 second LOSS_ADD base signals;
+- L1 return +18.61%, maxDD 9.33%;
+- L2 return +23.98%, maxDD 11.33%.
+
+The same bar-level completed-close mark-to-market drawdown convention was preserved.
+
+### C1 — GREEN only
+
+All 17 second LOSS_ADD base signals were already Effective GREEN.
+
+Therefore:
+- admitted 17 / 17;
+- portfolio identical to unfiltered L2;
+- return +23.98%;
+- maxDD 11.33%.
+
+Conclusion:
+Effective GREEN provides zero discrimination for the second LOSS_ADD problem.
+
+### C2 — price above FastMid
+
+Admitted:
+8 / 17.
+
+Admitted second-ADD economics:
+- mean +1.77%;
+- median +0.82%;
+- PF 12.61;
+- stress median +0.76%;
+- q25 +0.26%;
+- positive rate 87.5%.
+
+Portfolio:
+- return +20.26%;
+- stress +19.02%;
+- maxDD 9.50%.
+
+This candidate passed:
+- event evidence;
+- portfolio value;
+- risk.
+
+But it retained only 24.9% of the unfiltered L2 incremental return above Benchmark B.
+
+Frozen minimum:
+50%.
+
+Therefore C2 failed the economic-preservation gate.
+
+Important diagnostic:
+the 9 rejected second signals had strong terminal economics:
+- mean +3.87%;
+- median +3.03%.
+
+So requiring price recovery above FastMid de-risks effectively but discards too much valuable second-add participation.
+
+### C3 — dsep acceleration
+
+Admitted:
+9 / 17.
+
+Portfolio:
+- return +19.06%;
+- stress +17.83%;
+- maxDD 10.96%.
+
+It preserved less than 1% of L2 incremental return above Benchmark B and still exceeded the 10.80% drawdown cap.
+
+Reject.
+
+### C4 — FastLower buffer >= 0.50 ATR
+
+Admitted:
+16 / 17.
+
+Portfolio:
+- return +22.86%;
+- stress +21.53%;
+- maxDD 10.96%.
+
+It retained 77.4% of L2 incremental return, which was economically attractive.
+
+But:
+- maxDD 10.96% > frozen 10.80% cap;
+- largest lifecycle share of incremental positive PnL was 35.97% > frozen 35% ceiling.
+
+The single rejected event itself later returned +9.45% to reference CLOSE.
+
+Conclusion:
+0.50 ATR FastLower buffer is too weak as a path-risk discriminator.
+
+### C5 — post-first-ADD MAE no worse than -1 ATR
+
+Admitted:
+5 / 17.
+
+Portfolio:
+- return +18.64%;
+- stress +17.44%;
+- maxDD 10.03%.
+
+Risk improved, but:
+- sample count below the >=8 gate;
+- PF only 1.10;
+- stress median slightly negative;
+- portfolio failed Benchmark-B return.
+
+The 12 rejected signals had:
+- mean terminal return +4.02%;
+- median +2.51%.
+
+Conclusion:
+this MAE rule filters out too many of the economically valuable second adds.
+
+### C6 / C7
+
+C6 GREEN + dsep acceleration was identical to C3 because every base second signal was already GREEN.
+
+C7 buffer + MAE was identical to C5 inside this Discovery sample.
+
+Neither passed.
+
+### Final interpretation
+
+No pre-registered causal gate separated the second-ADD path-risk problem well enough.
+
+The result is more specific than E041:
+
+1. GREEN is already universal among second LOSS_ADD signals and cannot discriminate.
+2. FastMid recovery is a real risk filter, but it is too late / restrictive and sacrifices too much terminal value.
+3. A 0.50 ATR FastLower buffer preserves value but does not reduce drawdown enough.
+4. A simple post-first-add MAE <=1 ATR screen is too restrictive and selects weak economics.
+5. The unresolved information appears to be the SHAPE of the local path between first ADD and second signal, not merely current state, current band location, or one scalar adverse excursion threshold.
+
+### Decision
+
+No E042 candidate is accepted.
+
+- no BTC OOS opened;
+- no BTC Frozen OOS opened;
+- no ETH/SOL/BNB 15m opened;
+- no action is activated;
+- no threshold is repaired post-result.
+
+Next research frontier:
+study causal pre-second-add local path shape / recovery-versus-continuation structure on the already-GREEN second-signal set under a new Experiment ID.
+Do not retune E042 thresholds.
