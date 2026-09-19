@@ -1137,3 +1137,134 @@ The next RE-ADD question is no longer:
 
 It is:
 "After a validated tactical reduction, can a LOCAL reset / recovery state identify when to rebuild the tactical tranche without chasing?"
+
+
+## E039 BTC 15m Probabilistic Dynamic Sizing — 2026-09-19
+
+Status:
+NO_PROBABILITY_ACTION_MODEL.
+
+Architecture tested:
+- OPEN 30%
+- TREND_ADD +10pp
+- LOSS_ADD +10pp
+- max exposure 50%
+- PROFIT_RISK_REDUCE = sell 15% of current position quantity
+- LOSS_RISK_REDUCE = sell 15% of current position quantity
+- reference CLOSE unchanged
+
+Probability outputs:
+- P_UP
+- P_DD4H
+
+Model:
+regularized causal logistic regression using only existing SSSS state features.
+
+Validation inside Discovery:
+chronological expanding out-of-fold predictions.
+
+OOF model quality improved materially across later folds for P_UP:
+- fold1 logloss 0.980
+- fold2 0.694
+- fold3 0.607
+- fold4 0.549
+
+P_DD4H logloss remained around 0.666-0.714.
+
+### Portfolio threshold search
+
+Frozen grid:
+- P_UP high: 0.60 / 0.65 / 0.70
+- P_DD4H high: 0.60 / 0.65 / 0.70
+- LOSS_ADD threshold: -2% through -8%
+
+63 combinations.
+
+Eligible:
+0.
+
+OOF benchmark:
+30% starter + existing E037 first-ADD benchmark + reference close.
+
+Benchmark final multiplier:
+1.03375 over the OOF evaluation lifecycles.
+
+Best probability combination:
+P_UP >= 0.70
+P_DD4H high = 0.70
+LOSS_ADD threshold = -2%
+
+Candidate final multiplier:
+1.02849.
+
+Incremental return versus benchmark:
+-0.53 percentage points.
+
+Stress-friction incremental:
+-0.46 percentage points.
+
+Max drawdown:
+10.84% candidate
+vs
+8.77% benchmark.
+
+Therefore probability-driven sizing did not improve the existing simpler Discovery architecture.
+
+### LOSS_ADD threshold study
+
+No loss threshold passed the frozen evidence gate.
+
+Best provisional region:
+
+#### -6%
+Best observed configuration:
+- 7 LOSS_ADD events
+- mean incremental unit return +0.40%
+- median +1.14%
+- PF 1.34
+- q25 -1.59%
+
+It failed because the required minimum was 8 events.
+
+#### -7%
+- 4 events
+- mean +1.87%
+- median +2.94%
+- PF 3.23
+- q25 +0.70%
+
+Too sparse for acceptance.
+
+Interpretation:
+the empirical candidate band is around -6% to -7%, but -7% looks better largely because only four events survive.
+
+The conservative provisional center is -6%.
+
+It must remain inactive until a new preregistered validation has enough events.
+
+Other thresholds:
+-2% through -5% had negative average economics despite some positive medians.
+-8% was also negative / sparse.
+
+### Reduce interpretation
+
+The four-action probability engine did not validate either reduce mode.
+
+Profit-risk reduce became too sparse at strict probability thresholds.
+
+Loss-risk reduce became very frequent at lower risk thresholds and contributed to higher turnover / worse mature-trend economics.
+
+No probability reduce rule is activated.
+
+### Model-writing decision
+
+Write:
+LOSS_ADD_CANDIDATE_THRESHOLD = -0.06
+LOSS_ADD_CANDIDATE_BAND = (-0.07, -0.06)
+
+But:
+LOSS_ADD_ENABLED = False.
+
+No E039 probability action is enabled.
+
+This preserves the user's requested architecture without pretending Discovery evidence is validation.
