@@ -994,3 +994,30 @@ Current architecture intent remains:
 - current CLOSE unchanged
 
 but none of the new probability actions is validated.
+
+
+## Active research round — E040
+
+Status: PRE-REGISTERED.
+
+Research target:
+repeated local-reset pullback sizing.
+
+Unlike E039 one-time loss thresholds, E040 allows repeated sizing actions inside one lifecycle.
+
+Candidate pullback steps:
+1% through 10%.
+
+Every sizing action resets the local pullback anchor.
+
+Model bullish validity is tested using three existing structural floors.
+
+Current risk constraints:
+- starter 30%
+- +10pp per ADD
+- max exposure 50%
+- REDUCE = 15% of current position quantity
+- minimum core exposure 30%
+- reference CLOSE unchanged
+
+All holdouts remain unopened.
