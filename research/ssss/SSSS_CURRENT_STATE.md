@@ -834,3 +834,50 @@ E037 maps the full post-entry dynamic action surface:
 No position percentage is assigned and no action can be validated inside E037.
 
 All temporal and cross-asset holdouts remain unopened.
+
+
+## E037 result — 15m dynamic action surface
+
+Status: DYNAMIC_ACTION_ZONES_FOUND.
+
+GREEN_TRANSITION starter reference:
+- 48 resolved one-at-a-time lifecycles
+- base mean +0.95%
+- base median +0.21%
+- base PF 1.97
+
+Direct post-entry confirmation ADD events all failed positive-median gates:
+- GRB
+- FAST_BREAKOUT
+- FASTMID_RECLAIM
+
+However 10 ADD opportunity-map cells passed.
+
+Strongest:
+MFE < 1 EntryATR AND current progress <= 0:
+- 32 events
+- base mean +1.49%
+- base median +0.64%
+- stress median +0.58%
+- PF 2.44
+- median timing 1 bar after starter
+
+Other passing zones cluster:
+- PRE_RED
+- first few bars
+- price at/below starter entry
+- low MFE / limited extension
+
+No REDUCE / RE-ADD / CLOSE zone passed.
+
+Important:
+15m BTC independently reproduces the earlier equity finding that marginal exposure economics are strongest early and weaken with later confirmation.
+
+Current 15m architecture frontier:
+- STARTER OPEN: GREEN_TRANSITION Discovery candidate
+- ADD: early opportunity zones only; no exact validated trigger
+- REDUCE: none accepted
+- RE-ADD: none accepted
+- CLOSE: B2 reference close remains diagnostic benchmark; no earlier replacement found
+
+Holdouts remain unopened.
