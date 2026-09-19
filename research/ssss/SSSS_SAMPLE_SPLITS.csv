@@ -65,7 +65,7 @@ S063,E040 BTC 15m repeated pullback,Discovery,E040_BTC15_D,"BTC immutable 15m sn
 S064,E040 BTC 15m repeated pullback,OOS,E040_BTC15_OOS,"BTC 2025-09-01..2026-03-31",1,no,not_opened,"E040 Discovery-only"
 S065,E040 BTC 15m repeated pullback,Frozen OOS,E040_BTC15_FOOS,"BTC 2026-04-01..2026-09-17",1,no,not_opened,"E040 Discovery-only"
 S066,E040 BTC 15m repeated pullback,Cross-asset holdout,E040_15M_XASSET,"ETH SOL BNB",3,no,not_opened,"No 15m outcomes queried"
-S067,E041 BTC 15m loss-add ladder depth,Discovery,E041_BTC15_D,"BTC immutable 15m snapshot 2024-09-19..2025-08-31",1,no,pre_registered,"Fixed 1% FastLower LOSS_PULLBACK_ADD; depth L1 vs L2 only"
+S067,E041 BTC 15m loss-add ladder depth,Discovery,E041_BTC15_D,"BTC immutable 15m snapshot 2024-09-19..2025-08-31",1,no,completed_no_candidate,"L1 failed concentration/Benchmark-B gates; L2 second ADD strong but maxDD 11.33% exceeded 10.80% cap"
 S068,E041 BTC 15m loss-add ladder depth,OOS,E041_BTC15_OOS,"BTC 2025-09-01..2026-03-31",1,no,not_opened,"E041 Discovery-only"
 S069,E041 BTC 15m loss-add ladder depth,Frozen OOS,E041_BTC15_FOOS,"BTC 2026-04-01..2026-09-17",1,no,not_opened,"E041 Discovery-only"
 S070,E041 BTC 15m loss-add ladder depth,Cross-asset holdout,E041_15M_XASSET,"ETH SOL BNB",3,no,not_opened,"No 15m outcome queries in E041"
