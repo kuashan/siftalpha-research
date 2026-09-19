@@ -1138,3 +1138,25 @@ All BTC temporal holdouts and ETH/SOL/BNB 15m holdouts remain unopened.
 
 Next frontier:
 a causal SECOND LOSS_ADD risk-admission rule; do not retune the 1% pullback step.
+
+
+## Active research round — E042
+
+Status: PRE-REGISTERED.
+
+Research target:
+causal risk admission for the SECOND fixed LOSS_PULLBACK_ADD only.
+
+Frozen:
+- 1% pullback step;
+- FastLower validity;
+- first LOSS_ADD 30% -> 40%;
+- second candidate ADD 40% -> 50%;
+- TREND_ADD disabled;
+- REDUCE / RE-ADD disabled;
+- reference CLOSE unchanged.
+
+Seven fixed causal admission candidates use only existing SSSS structure / already-completed path information.
+
+E042 is Discovery-only.
+BTC OOS / Frozen OOS and ETH/SOL/BNB 15m remain unopened.
