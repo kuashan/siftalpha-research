@@ -933,3 +933,25 @@ Current 15m action frontier:
 - REDUCE: no validated action; GREEN->GRAY becomes priority risk-classification checkpoint
 - RE-ADD: requires a new local-reset/recovery formulation
 - CLOSE: keep current reference close
+
+
+## Active research round — E039
+
+Status: PRE-REGISTERED.
+
+New 15m sizing architecture:
+- OPEN 30%
+- TREND_ADD +10pp
+- LOSS_ADD +10pp
+- max exposure 50%
+- PROFIT_RISK_REDUCE: sell 15% of current position
+- LOSS_RISK_REDUCE: sell 15% of current position
+- reference CLOSE unchanged
+
+Two causal probability outputs:
+- P_UP
+- P_DD4H
+
+Loss-add threshold is selected only from the frozen -2%..-8% grid using chronological OOF Discovery predictions.
+
+Any surviving rule is DISCOVERY_CANDIDATE only.
