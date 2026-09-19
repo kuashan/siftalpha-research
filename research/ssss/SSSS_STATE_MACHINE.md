@@ -368,3 +368,35 @@ State-machine consequence:
 The next useful transition research is:
 first LOSS_ADD -> risk-qualified SECOND LOSS_ADD,
 not a new pullback-percentage search.
+
+
+## E042 second-loss-add risk-admission update — 2026-09-19
+
+No second LOSS_ADD admission transition is accepted.
+
+Important structural findings:
+
+- every observed second LOSS_ADD base signal was already Effective GREEN;
+  GREEN is therefore not a useful discriminator at this stage;
+
+- requiring close >= FastMid reduced maxDD to 9.50%,
+  but discarded too much profitable second-add participation;
+
+- requiring a 0.50 ATR FastLower buffer preserved most of the return,
+  but maxDD remained above the frozen limit;
+
+- a post-first-add MAE >= -1 ATR rule was too restrictive and economically weak.
+
+State-machine consequence:
+
+- first LOSS_ADD -> second LOSS_ADD remains RESEARCH;
+- do not activate unconditional 40% -> 50%;
+- do not use GREEN alone as second-step permission;
+- do not require FastMid recovery as a production gate;
+- do not revive the exact E042 scalar gates under new names;
+- reference CLOSE remains unchanged;
+- REDUCE / RE-ADD remain unvalidated.
+
+Next useful research target:
+causal LOCAL PATH SHAPE between first ADD and second signal,
+with emphasis on distinguishing orderly recovery/continuation from unstable drawdown paths while the state is already GREEN.
