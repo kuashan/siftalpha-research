@@ -815,3 +815,22 @@ for 15m BTC, early state transition appears more suitable as starter exposure.
 Later breakout/reclaim evidence may be better studied as ADD rather than independent OPEN.
 
 E036 action maps remained unopened by rule.
+
+
+## Active research round — E037
+
+Status: PRE-REGISTERED.
+
+GREEN_TRANSITION is fixed as the Discovery starter OPEN reference.
+
+Later GRB / FAST_BREAKOUT / FASTMID_RECLAIM evidence is reclassified to ADD research.
+
+E037 maps the full post-entry dynamic action surface:
+- ADD
+- REDUCE
+- RE-ADD
+- CLOSE
+
+No position percentage is assigned and no action can be validated inside E037.
+
+All temporal and cross-asset holdouts remain unopened.
