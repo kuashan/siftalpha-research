@@ -839,3 +839,161 @@ Therefore:
 Architecture implication:
 O3 is a Discovery starter-OPEN candidate.
 Later O1/O2/O4 events should be investigated as post-entry evidence / ADD candidates rather than forced into independent OPEN roles.
+
+
+## E037 BTC 15m Starter-to-Dynamic Action Map — 2026-09-19
+
+Status:
+DYNAMIC_ACTION_ZONES_FOUND.
+
+Reference:
+GREEN_TRANSITION starter OPEN under B2 structure.
+
+One-at-a-time starter engine:
+- 48 resolved lifecycles
+- 33 Mature / 15 Failure
+- base-friction average +0.95%
+- base-friction median +0.21%
+- base PF 1.97
+
+Discrete post-entry ADD events:
+
+### GRB after starter
+- 35 events
+- base mean +0.74%
+- base median -0.36%
+- fail
+
+### FAST_BREAKOUT after starter
+- 47 events
+- base mean +0.56%
+- base median -0.18%
+- fail
+
+### FASTMID_RECLAIM after starter
+- 47 events
+- base mean +0.68%
+- base median -0.08%
+- fail
+
+These later confirmation events have positive averages but negative medians and are not accepted as direct ADD triggers.
+
+### ADD opportunity maps
+
+10 pre-registered map cells passed the Discovery gate.
+
+Top zones:
+
+1. A3 M_LT_1 | P_LE_0
+- 32 lifecycle events
+- base mean +1.49%
+- base median +0.64%
+- stress median +0.58%
+- PF 2.44
+- q25 -0.77%
+- median timing 1 bar after starter execution
+
+2. A3 M_GE_4 | P_1_2
+- 23 events
+- base mean +0.46%
+- base median +0.52%
+- stress median +0.46%
+- PF 1.46
+- median timing 101 bars
+
+3. A2 P_LE_0 | G_GE_2
+- 41 events
+- base mean +1.06%
+- base median +0.20%
+- stress median +0.14%
+- PF 2.17
+- median timing 15 bars
+
+4. A1 PRE_RED | B00_07
+- 48 events
+- base mean +0.89%
+- base median +0.20%
+- stress median +0.14%
+- PF 1.88
+- median timing 1 bar
+
+5. A2 P_LE_0 | G_1_2
+- 37 events
+- base mean +1.15%
+- base median +0.17%
+- stress median +0.11%
+- PF 2.03
+- median timing 3 bars
+
+6. A4 GREEN | NONPOS | BELOW_MID
+- 47 events
+- base mean +0.90%
+- base median +0.16%
+- stress median +0.10%
+- PF 1.87
+- median timing 1 bar
+
+Additional passing cells existed in:
+- M_LT_1 | P_0_1
+- M_1_2 | P_LE_0
+- M_2_4 | P_1_2
+- P_0_1 | G_LT_05
+
+Main ADD interpretation:
+the strongest incremental exposure economics appear very early, before Red, often while progress is <=0 and MFE <1 EntryATR.
+
+This independently reproduces the broad timing lesson from equity E032:
+late visual confirmation is weaker than early marginal exposure.
+
+### REDUCE
+
+No map cell passed.
+
+Some post-Red cells had positive median reduction edge but negative mean edge.
+
+Example:
+POST_RED | M_GE_4 | G_05_1
+- 23 events
+- median edge +0.63%
+- mean edge -1.02%
+
+Meaning:
+early reduction often looks helpful on a typical event but sacrifices rare large continuation winners badly enough to make average economic value negative.
+
+### RE-ADD
+
+No risk-marker/recovery combination passed.
+
+FastMid-down -> FastMid-up was the densest:
+- 48 events
+- base mean +0.71%
+- base median -0.07%
+- stress median -0.13%
+
+No validated recovery trigger.
+
+### CLOSE
+
+No close zone passed.
+
+GREEN->GRAY:
+- 48 events
+- median early-close edge +0.38%
+- mean edge -0.62%
+- positive edge 68.8%
+- Mature median MFE-sacrifice ratio ~0.81
+
+Interpretation:
+closing at Green->Gray would often look locally favorable but destroys too much later mature-trend upside.
+
+### E037 conclusion
+
+- starter OPEN reference: promising Discovery structure, not validated
+- ADD: candidate zones found
+- REDUCE: none
+- RE-ADD: none
+- CLOSE: no replacement for reference close
+
+No position percentages assigned.
+No action promoted to production.
+All BTC temporal holdouts and ETH/SOL/BNB 15m remain unopened.
