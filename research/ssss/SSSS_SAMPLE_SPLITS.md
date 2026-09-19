@@ -666,3 +666,45 @@ E041 final status:
 - L2 portfolio return +23.98% but maxDD 11.33% versus frozen 10.80% ceiling;
 - BTC OOS / Frozen OOS remained unopened;
 - ETH / SOL / BNB 15m remained unopened.
+
+
+---
+
+## 24. E042 — BTC 15m Second LOSS_ADD Risk Admission
+
+Duplication audit:
+PARTIAL_OVERLAP with E038-E041.
+
+E042 freezes:
+- 1% FastLower LOSS_PULLBACK_ADD;
+- first ADD 30% -> 40%;
+- no TREND_ADD;
+- no REDUCE / RE-ADD;
+- reference CLOSE unchanged.
+
+Only the second 40% -> 50% LOSS_ADD admission is researched.
+
+Discovery:
+BTC immutable 15m snapshot 2024-09-19 through 2025-08-31.
+
+Reserved OOS:
+BTC 2025-09-01 through 2026-03-31 — DO NOT OPEN.
+
+Reserved Frozen OOS:
+BTC 2026-04-01 through 2026-09-17 — DO NOT OPEN.
+
+Cross-asset holdouts:
+ETH / SOL / BNB 15m — DO NOT OPEN.
+
+Frozen candidates:
+- C0 unfiltered control
+- C1 GREEN only
+- C2 above FastMid
+- C3 dsep acceleration over 4 bars
+- C4 >=0.50 ATR FastLower buffer
+- C5 post-first-ADD MAE no worse than -1 ATR
+- C6 GREEN + dsep acceleration
+- C7 FastLower buffer + MAE
+
+Full definition:
+`preregistrations/E042.md`
