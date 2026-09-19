@@ -557,3 +557,13 @@ All holdouts remain unopened.
 
 Full definition:
 `preregistrations/E039.md`
+
+
+E039 final status:
+- 63 pre-registered probability/loss-threshold combinations tested;
+- zero full action engines passed;
+- simpler E037 benchmark remained stronger;
+- no TREND_ADD / LOSS_ADD / PROFIT_RISK_REDUCE / LOSS_RISK_REDUCE action activated;
+- provisional LOSS_ADD band = -6% to -7%;
+- research center = -6%, inactive;
+- all holdouts remained unopened.
