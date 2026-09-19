@@ -771,3 +771,25 @@ It is only the most informative reference for the next Discovery round because p
 E035 stopped before any dynamic action map was opened.
 
 All temporal and cross-asset holdouts remain unopened.
+
+
+## Active research round — E036
+
+Status: PRE-REGISTERED.
+
+E036 uses the failed-but-informative B2 NATIVE_24H structure strictly as a Discovery reference.
+
+Goal:
+repair the 15m engine through multiple distinct OPEN modes first.
+
+Four fixed OPEN modes:
+- GRB
+- FAST_BREAKOUT
+- GREEN_TRANSITION
+- FASTMID_RECLAIM
+
+At least two must pass independently and their union must pass a cost-robust Multi-Open Reference gate.
+
+Only then may the Discovery-only ADD / REDUCE / RE-ADD / CLOSE repair maps be opened.
+
+No holdout period or cross-asset 15m data is opened in E036.
