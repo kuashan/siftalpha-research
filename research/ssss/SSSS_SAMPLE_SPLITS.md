@@ -656,3 +656,13 @@ attribute return and max-drawdown change to the first versus second LOSS_PULLBAC
 
 Full definition:
 `preregistrations/E041.md`
+
+
+E041 final status:
+- NO_LOSS_ADD_DEPTH_CANDIDATE;
+- L1 one-step LOSS_ADD failed concentration and Benchmark-B portfolio gates;
+- L2 two-step LOSS_ADD passed event economics but failed the bar-level max-drawdown gate;
+- second LOSS_ADD: 17 events, mean +2.88%, median +1.22%, stress median +1.16%;
+- L2 portfolio return +23.98% but maxDD 11.33% versus frozen 10.80% ceiling;
+- BTC OOS / Frozen OOS remained unopened;
+- ETH / SOL / BNB 15m remained unopened.
