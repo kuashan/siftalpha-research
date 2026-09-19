@@ -746,3 +746,28 @@ Before any B0/B1/B2 result was computed, sanitation was frozen to:
 - low = min(low, open, close)
 
 No rows are removed and no other field is changed.
+
+
+## E035 result — BTC 15m baseline selection
+
+Status: NO_15M_BASELINE.
+
+All three fixed 15m baseline configurations failed the pre-registered eligibility gate.
+
+Best structural reference:
+B2 NATIVE_24H
+- 47 resolved
+- 32 Mature / 15 Failure
+- 4.06 resolved lifecycles per 30 days
+- median hold 46.75h
+- base-friction average +0.59%
+- base-friction median -0.43%
+- base PF 1.56
+- stress-friction average +0.53%
+
+B2 is NOT a validated baseline.
+It is only the most informative reference for the next Discovery round because positive mean/PF coexist with a negative typical trade.
+
+E035 stopped before any dynamic action map was opened.
+
+All temporal and cross-asset holdouts remain unopened.
