@@ -793,3 +793,25 @@ At least two must pass independently and their union must pass a cost-robust Mul
 Only then may the Discovery-only ADD / REDUCE / RE-ADD / CLOSE repair maps be opened.
 
 No holdout period or cross-asset 15m data is opened in E036.
+
+
+## E036 result — 15m OPEN role discovery
+
+Status: NO_MULTI_OPEN_REFERENCE.
+
+Only GREEN_TRANSITION passed the fixed OPEN-mode gate.
+
+O3 GREEN_TRANSITION:
+- 70 resolved
+- base mean +0.94%
+- base median +0.24%
+- base PF 1.91
+- stress median +0.18%
+
+GRB, FAST_BREAKOUT, and FASTMID_RECLAIM all had positive averages but negative base/stress medians.
+
+Implication:
+for 15m BTC, early state transition appears more suitable as starter exposure.
+Later breakout/reclaim evidence may be better studied as ADD rather than independent OPEN.
+
+E036 action maps remained unopened by rule.
