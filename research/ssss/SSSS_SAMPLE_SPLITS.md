@@ -426,3 +426,30 @@ E035 final status:
 - Phase B dynamic action maps were not opened;
 - BTC OOS / Frozen OOS remained unopened;
 - ETH / SOL / BNB 15m remained unopened.
+
+
+---
+
+## 18. E036 — BTC 15m Multi-Open Dynamic Engine Repair Map
+
+Repository duplication audit re-run after E035 closure.
+
+Discovery:
+same immutable BTC 15m snapshot already seen in E035.
+
+B2 NATIVE_24H is fixed as a diagnostic structural reference, not a validated baseline.
+
+Exactly four OPEN modes:
+- O1 GRB
+- O2 FAST_BREAKOUT
+- O3 GREEN_TRANSITION
+- O4 FASTMID_RECLAIM
+
+At least two modes must independently pass before a Multi-Open Reference can be built.
+
+Only if the Multi-Open Reference passes may ADD / REDUCE / RE-ADD / CLOSE maps be opened.
+
+BTC OOS / Frozen OOS and ETH / SOL / BNB 15m remain untouched.
+
+Full definition:
+`preregistrations/E036.md`
