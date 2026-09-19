@@ -26,6 +26,8 @@ from e035_dynamic_engine import (  # noqa: E402
     BASE_FRICTION,
     STRESS_FRICTION,
     CONFIGS,
+    apply_entry_cost,
+    apply_exit_cost,
     compute_indicators,
     lifecycle_return,
 )
