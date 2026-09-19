@@ -280,3 +280,35 @@ State-machine consequence:
 - do not automatically remove the 10% tactical tranche at GREEN->GRAY;
 - next research should classify GREEN->GRAY into "temporary weakening" vs "true failure-risk";
 - any future RE-ADD rule should use a local post-reduction reset anchor rather than global first-entry MFE.
+
+
+## E039 probability-sizing update — 2026-09-19
+
+The intended action taxonomy is now explicit:
+
+ADD type 1:
+TREND_ADD — high continuation probability while not losing.
+
+ADD type 2:
+LOSS_ADD — meaningful current loss but still high continuation probability.
+
+REDUCE type 1:
+PROFIT_RISK_REDUCE — profitable position, upside probability still high, but near-term drawdown probability high.
+
+REDUCE type 2:
+LOSS_RISK_REDUCE — losing position, upside confidence has weakened into an uncertainty band, and drawdown probability is high.
+
+Sizing intent:
+- starter 30%
+- each ADD +10 percentage points
+- max 50%
+- each REDUCE sells 15% of CURRENT position quantity
+
+E039 did not validate these probability actions.
+
+LOSS_ADD provisional research threshold:
+-6%, with a -6% to -7% candidate band.
+
+It remains disabled.
+
+Reference CLOSE remains unchanged.
