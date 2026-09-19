@@ -774,3 +774,68 @@ Therefore:
 
 Research implication:
 15m dynamic-engine research must first repair entry/lifecycle quality rather than layering position actions on a formally accepted baseline.
+
+
+## E036 BTC 15m Multi-Open Discovery — 2026-09-19
+
+Status:
+NO_MULTI_OPEN_REFERENCE.
+
+Fixed B2 structural reference.
+
+Independent OPEN-mode results:
+
+### O1 GRB
+- 51 resolved
+- base mean +0.35%
+- base median -0.45%
+- base PF 1.28
+- stress median -0.51%
+- REJECT
+
+### O2 FAST_BREAKOUT
+- 68 resolved
+- base mean +0.65%
+- base median -0.21%
+- base PF 1.59
+- stress median -0.27%
+- REJECT
+
+### O3 GREEN_TRANSITION
+- 70 resolved
+- 49 Mature / 21 Failure
+- 6.05 resolved per 30 days
+- base mean +0.94%
+- base median +0.24%
+- base PF 1.91
+- stress mean +0.88%
+- stress median +0.18%
+- q25 -0.96%
+- top-3 positive share 34.3%
+- median hold 70.5h
+- PASS
+
+### O4 FASTMID_RECLAIM
+- 69 resolved
+- base mean +0.80%
+- base median -0.03%
+- base PF 1.74
+- stress median -0.09%
+- REJECT
+
+Overlap:
+nearly all later GREEN-based modes occurred in the same Effective Green episodes as O3.
+
+Interpretation:
+on 15m BTC, the earliest Effective Green transition carries materially better typical economics than waiting for later breakout/reclaim confirmation.
+
+Only one mode passed, so the pre-registered requirement for at least two independent OPEN modes was not met.
+
+Therefore:
+- no Multi-Open Reference was formed;
+- dynamic action maps were not opened;
+- OOS/Frozen OOS/cross-asset holdouts remained unopened.
+
+Architecture implication:
+O3 is a Discovery starter-OPEN candidate.
+Later O1/O2/O4 events should be investigated as post-entry evidence / ADD candidates rather than forced into independent OPEN roles.
