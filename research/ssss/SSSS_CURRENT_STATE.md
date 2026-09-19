@@ -1021,3 +1021,45 @@ Current risk constraints:
 - reference CLOSE unchanged
 
 All holdouts remain unopened.
+
+
+## E040 result — repeated pullback ladder
+
+Status: NO_REPEATED_PULLBACK_LADDER.
+
+A full repeated ADD/REDUCE ladder did not pass all portfolio gates.
+
+But one action family became materially clearer:
+
+LOSS_PULLBACK_ADD provisional Discovery rule:
+- local pullback step = 1%
+- local anchor resets after every sizing action
+- bullish validity floor = FastLower
+- continuation state = Effective GREEN or RED with dsep > 0
+- current position is losing
+- +10pp exposure
+- max total exposure currently 50%
+
+Discovery evidence:
+97 loss-state ADD events,
++2.91% mean incremental unit return,
++1.22% median,
+PF 3.44,
+stress median +1.16%.
+
+Second ADD under the overall 1% ladder also remained positive:
+26 events,
++1.93% mean,
++0.53% median.
+
+By contrast:
+profit-state 1% pullback ADD had negative median economics.
+
+Repeated REDUCE also failed:
+typical edge sometimes positive, but large Mature continuations made mean edge negative.
+
+Therefore:
+- 1% is the current provisional repeated LOSS-ADD step;
+- it is inactive pending OOS;
+- do not reuse it for profitable-position ADD;
+- no repeated REDUCE threshold is active.
