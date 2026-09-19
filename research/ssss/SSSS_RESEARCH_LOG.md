@@ -997,3 +997,143 @@ closing at Green->Gray would often look locally favorable but destroys too much 
 No position percentages assigned.
 No action promoted to production.
 All BTC temporal holdouts and ETH/SOL/BNB 15m remain unopened.
+
+
+## E038 BTC 15m Tactical Tranche Reduce / Rebuild — 2026-09-19
+
+Status:
+NO_TACTICAL_REDUCE_CANDIDATE.
+
+Architecture:
+- 30% core from GREEN_TRANSITION
+- +10% tactical ADD from MFE<1 ATR and Progress<=0
+- REDUCE removes only the tactical 10%
+- optional RE-ADD restores only the tactical 10%
+- reference CLOSE unchanged
+
+Eligible lifecycles with first ADD:
+32.
+
+### R1 GREEN->GRAY after ADD
+
+32 events.
+
+REDUCE_ONLY:
+- incremental tactical mean -1.22%
+- incremental tactical median +0.32%
+- positive incremental rate 68.8%
+- Failure-path mean incremental +1.29%
+- Failure-path median +1.18%
+- Mature-path mean incremental -2.20%
+- Mature-path median +0.05%
+- mean avoided adverse move ~2.32%
+- mean foregone favorable move ~4.10%
+- full-close edge mean -1.22%
+- full-close edge median +0.32%
+
+Interpretation:
+this warning helps every observed Failure path but sacrifices enough large Mature continuation that average economics turn negative.
+
+It is a useful risk-state discriminator candidate, not an unconditional REDUCE.
+
+### R2 post-Red MFE>=4 + Giveback>=0.5 ATR
+
+18 events.
+
+REDUCE_ONLY:
+- incremental mean -1.95%
+- median +0.10%
+- positive 55.6%
+- all events were Mature
+- mean foregone favorable move ~5.34%
+
+This remains too destructive to large mature winners.
+
+### R3 RTE after MFE>=2 ATR
+
+12 events.
+
+Below the required 15-event minimum.
+
+REDUCE_ONLY:
+- incremental mean -1.66%
+- median -0.32%
+
+No candidate.
+
+### Can RE-ADD literally reuse the first ADD formula?
+
+No.
+
+A0 exact reuse:
+RunningMFE<1 ATR AND Progress<=0 after REDUCE.
+
+Observed re-add counts:
+- after R1: 5 / 32
+- after R2: 0 / 18
+- after R3: 0 / 12
+
+Structural reason:
+RunningMFE is cumulative from the original starter and does not reset after a mature trend has already exceeded 1 ATR.
+
+Therefore exact first-ADD reuse is mathematically incompatible with most later-cycle re-entry situations.
+
+### Alternative recovery rules
+
+R1 GREEN->GRAY + FastMid recovery:
+- 21 / 32 re-adds
+- incremental mean -0.22%
+- median approximately 0%
+- stress median negative
+- fail
+
+R1 + dsep recovery:
+- 12 / 32 re-adds
+- incremental mean -1.21%
+- median +0.22%
+- fail because mean is strongly negative
+
+R2 mature giveback + FastMid recovery:
+- 16 / 18 re-adds
+- incremental mean -1.43%
+- median -0.19%
+- fail
+
+R3 RTE + dsep recovery:
+- 10 / 12 re-adds
+- incremental mean ~0.00%
+- median -0.24%
+- fail / too sparse
+
+R3 RTE + FastMid recovery:
+- 9 / 12 re-adds
+- incremental mean +0.09%
+- median -0.07%
+- stress median -0.13%
+- fail / too sparse
+
+### Direct CLOSE interpretation
+
+None of these risk markers justifies replacing the existing full-close rule.
+
+GREEN->GRAY is the clearest example:
+typical exits look locally attractive, but mean full-close edge is negative because large continuation winners dominate the opportunity cost.
+
+Therefore:
+- REDUCE is not yet validated;
+- RE-ADD is not yet validated;
+- existing reference CLOSE remains unchanged.
+
+### Research frontier
+
+The next REDUCE question is no longer:
+"Is GREEN->GRAY a reduce signal?"
+
+The sharper question is:
+"At GREEN->GRAY after an early ADD, can current causal information distinguish the Failure paths that benefit strongly from de-risking from the Mature paths that should keep the tactical tranche?"
+
+The next RE-ADD question is no longer:
+"Can we repeat the first ADD rule?"
+
+It is:
+"After a validated tactical reduction, can a LOCAL reset / recovery state identify when to rebuild the tactical tranche without chasing?"
