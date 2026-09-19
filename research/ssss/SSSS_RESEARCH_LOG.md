@@ -1268,3 +1268,138 @@ LOSS_ADD_ENABLED = False.
 No E039 probability action is enabled.
 
 This preserves the user's requested architecture without pretending Discovery evidence is validation.
+
+
+## E040 BTC 15m Repeated Pullback Ladder — 2026-09-19
+
+Status:
+NO_REPEATED_PULLBACK_LADDER.
+
+The experiment tested:
+- local-reset pullback steps 1% through 10%;
+- three existing-model bullish validity floors;
+- repeated +10pp ADD to max 50%;
+- repeated 15%-of-current-position REDUCE above a 30% core floor.
+
+### Main threshold result
+
+The strongest robust pullback step was 1%.
+
+Using FastLower as the bullish-validity floor:
+
+Portfolio:
+- return +24.47%
+- stress-friction return +22.84%
+- E037 benchmark +19.03%
+- E037 stress benchmark +17.77%
+
+However:
+- max drawdown 12.04%
+- benchmark max drawdown 9.82%
+- this exceeded the pre-registered +10% relative drawdown allowance
+
+Therefore the full ladder failed the portfolio gate.
+
+### Repeated ADD at 1% / FastLower
+
+All ADD events:
+- 150
+- mean incremental unit return +2.24%
+- median +0.38%
+- PF 3.03
+- stress median +0.32%
+- q25 -1.49%
+
+Second ADD:
+- 26 events
+- mean +1.93%
+- median +0.53%
+- PF 2.89
+- stress median +0.47%
+
+Therefore repeated ADD itself passed the pre-registered event gate.
+
+### Critical split: loss-state versus profit-state ADD
+
+LOSS_PULLBACK_ADD:
+- 97 events
+- mean +2.91%
+- median +1.22%
+- PF 3.44
+- stress median +1.16%
+- positive rate 63.9%
+
+TREND_PULLBACK_ADD:
+- 53 events
+- mean +1.01%
+- median -0.46%
+- stress median -0.52%
+- positive rate 43.4%
+
+Interpretation:
+the 1% local pullback ladder is useful primarily when the current position is losing but the SSSS continuation structure remains intact.
+
+The same pullback rule should NOT be used as a generic profitable-position ADD.
+
+### 2% and 3%
+
+2% / FastLower:
+- 35 ADD events
+- second ADD 9 events
+- second-ADD mean +3.37%
+- second-ADD median -0.94%
+- reject repeated-ADD gate
+
+3% / FastLower:
+- only 11 ADD events
+- only 3 second ADD events
+- attractive returns but too sparse and highly winner-concentrated
+
+4%:
+almost no valid actions.
+
+5% through 10%:
+no FastLower-valid ladder actions.
+
+This means that waiting for a 4%-10% local pullback usually allows the 15m model structure to invalidate before an ADD can occur.
+
+### REDUCE
+
+No repeated REDUCE definition passed.
+
+At 1% / FastLower:
+- 60 REDUCE events
+- median edge +0.54%
+- positive rate 56.7%
+- Failure-path mean edge +1.52%
+- Mature-path mean edge -0.91%
+- overall mean edge -0.43%
+
+This reproduces the earlier finding:
+typical reductions may look locally helpful, but rare large Mature continuations make unconditional repeated reduction economically negative.
+
+### Bullish validity floor
+
+For the repeated loss-add use case, FastLower was the most informative floor.
+
+WhiteLower - 2ATR allowed many more risk actions but produced weaker second-add and REDUCE economics.
+
+The strict combined floor reduced sample size and did not improve the full portfolio gate.
+
+### Research conclusion
+
+The user's repeated-pullback concept is supported for one specific action class:
+
+LOSS_PULLBACK_ADD:
+- local reset after every action
+- approximately 1% pullback step
+- only while SSSS continuation structure is strong
+- only while close remains above FastLower
+- +10pp exposure
+- max exposure currently 50%
+
+It remains a Discovery candidate, not a validated action.
+
+Repeated profitable-position ADD is rejected under this same 1% rule.
+
+Repeated REDUCE remains unvalidated.
