@@ -1082,3 +1082,59 @@ Reference CLOSE is unchanged.
 
 E041 is Discovery-only.
 BTC OOS / Frozen OOS and ETH/SOL/BNB 15m remain unopened.
+
+
+## E041 result — loss-add ladder depth / drawdown attribution
+
+Status: NO_LOSS_ADD_DEPTH_CANDIDATE.
+
+The E040 provisional 1% FastLower LOSS_PULLBACK_ADD was isolated from rejected TREND_ADD and REDUCE actions.
+
+L1 — at most one LOSS_ADD:
+- 20 events;
+- mean +2.18%;
+- median +0.57%;
+- PF 2.68;
+- portfolio +18.61%;
+- stress +17.44%;
+- maxDD 9.33%.
+
+L1 failed:
+- top-3 winner concentration 64.9% > 60%;
+- portfolio return and stress return were both below E037 Benchmark B.
+
+L2 — at most two LOSS_ADDs:
+- 37 pooled events;
+- pooled mean +2.50%;
+- pooled median +1.07%;
+- PF 3.06;
+- portfolio +23.98%;
+- stress +22.63%.
+
+Second LOSS_ADD:
+- 17 events;
+- mean +2.88%;
+- median +1.22%;
+- PF 3.58;
+- stress median +1.16%;
+- positive rate 76.5%.
+
+However:
+- L2 bar-level maxDD = 11.33%;
+- Benchmark B maxDD = 9.82%;
+- frozen allowed ceiling = 10.80%.
+
+Thus the second step adds strong terminal economics but raises path drawdown above the pre-registered risk limit.
+
+Drawdown attribution:
+- L1 maxDD is about 0.49pp below Benchmark B;
+- moving L1 -> L2 adds about 2.00pp maxDD;
+- L2 is about 15.43% worse than Benchmark B on maxDD.
+
+No E041 action is activated.
+The existing 1% LOSS_PULLBACK_ADD remains an inactive Discovery research frontier only.
+
+All BTC temporal holdouts and ETH/SOL/BNB 15m holdouts remain unopened.
+
+Next frontier:
+a causal SECOND LOSS_ADD risk-admission rule; do not retune the 1% pullback step.
