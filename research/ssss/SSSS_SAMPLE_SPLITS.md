@@ -530,3 +530,30 @@ E038 final status:
 - GREEN->GRAY after first ADD is retained as a risk-classification checkpoint, not an action;
 - full CLOSE logic remained unchanged;
 - all holdouts remained unopened.
+
+
+---
+
+## 21. E039 — BTC 15m Probabilistic Dynamic Sizing
+
+E039 models two causal probabilities:
+- P_UP: probability an incremental unit is profitable to reference close
+- P_DD4H: probability of >=1 ATR adverse move within 4 hours
+
+Actions:
+- TREND_ADD +10pp
+- LOSS_ADD +10pp
+- PROFIT_RISK_REDUCE = sell 15% of current position
+- LOSS_RISK_REDUCE = sell 15% of current position
+
+LOSS_ADD loss thresholds are frozen to:
+-2%, -3%, -4%, -5%, -6%, -7%, -8%.
+
+Probabilities are chronological out-of-fold only for Discovery threshold selection.
+
+Full CLOSE remains unchanged.
+
+All holdouts remain unopened.
+
+Full definition:
+`preregistrations/E039.md`
