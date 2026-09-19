@@ -696,3 +696,34 @@ A separate 15m model version should be developed and validated while keeping the
 
 See:
 `SSSS_15M_DYNAMIC_POSITION_ARCHITECTURE.md`
+
+
+## Active research round — E035
+
+Status: PRE-REGISTERED.
+
+Target:
+BTC 15m native dynamic position engine Discovery map.
+
+Relationship to prior work:
+- 15m timeframe = NEW
+- dynamic action architecture = PARTIAL_OVERLAP with prior daily ADD / REDUCE / RE-ADD work
+
+E035 first selects one usable 15m structural baseline from three fixed configurations.
+
+Only then, on the selected baseline, it maps the economics of:
+- multiple OPEN modes
+- ADD
+- REDUCE
+- RE-ADD recovery
+- earlier CLOSE
+
+No position percentages are assigned.
+
+No action can be accepted from E035 itself.
+
+Temporal holdouts are frozen and must remain unopened:
+- BTC 15m OOS: 2025-09-01 through 2026-03-31
+- BTC 15m Frozen OOS: 2026-04-01 through 2026-09-17
+
+ETH / SOL / BNB 15m outcomes also remain unopened in E035.
