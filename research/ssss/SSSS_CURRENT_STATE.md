@@ -727,3 +727,22 @@ Temporal holdouts are frozen and must remain unopened:
 - BTC 15m Frozen OOS: 2026-04-01 through 2026-09-17
 
 ETH / SOL / BNB 15m outcomes also remain unopened in E035.
+
+
+## E035 15m Discovery data integrity — pre-result
+
+Raw BTC 15m Discovery snapshot completed:
+- 33,312 continuous bars
+- 2024-09-19 00:00 UTC through 2025-08-31 23:45 UTC
+- no duplicate timestamps
+- no missing 15m intervals
+- no zero-volume bars
+- raw fingerprint: 2f6aba04f4ca730c
+
+94 composite-feed bars had sub-1-basis-point OHLC boundary rounding inconsistencies.
+
+Before any B0/B1/B2 result was computed, sanitation was frozen to:
+- high = max(high, open, close)
+- low = min(low, open, close)
+
+No rows are removed and no other field is changed.
