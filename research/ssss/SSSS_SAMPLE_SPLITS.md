@@ -611,3 +611,48 @@ E040 final status:
 - repeated REDUCE failed;
 - 4%-10% local pullbacks were usually too late under the model structure;
 - all holdouts remained unopened.
+
+
+---
+
+## 23. E041 — BTC 15m Loss-Pullback Ladder Depth & Drawdown Attribution
+
+Duplication audit:
+PARTIAL_OVERLAP with E037-E040.
+
+E041 does not search a new pullback threshold.
+
+Frozen action:
+- 1% local pullback
+- FastLower bullish-validity floor
+- Effective GREEN or RED
+- dsep > 0
+- weighted current position return < 0
+- +10pp per LOSS_PULLBACK_ADD
+- local-anchor reset after action
+- 4-bar cooldown
+- no TREND_PULLBACK_ADD
+- no REDUCE / RE-ADD
+- reference CLOSE unchanged
+
+Discovery:
+BTC immutable 15m snapshot 2024-09-19 through 2025-08-31.
+
+Reserved OOS:
+BTC 2025-09-01 through 2026-03-31 — DO NOT OPEN.
+
+Reserved Frozen OOS:
+BTC 2026-04-01 through 2026-09-17 — DO NOT OPEN.
+
+Cross-asset holdouts:
+ETH / SOL / BNB 15m — DO NOT OPEN.
+
+Exactly two depth variants:
+- L1_ONE_LOSS_ADD: max one +10pp ADD, max exposure 40%
+- L2_TWO_LOSS_ADDS: max two +10pp ADDs, max exposure 50%
+
+Primary purpose:
+attribute return and max-drawdown change to the first versus second LOSS_PULLBACK_ADD step.
+
+Full definition:
+`preregistrations/E041.md`
