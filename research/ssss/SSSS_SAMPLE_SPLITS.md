@@ -747,3 +747,42 @@ Indicator families:
 - F5 existing SSSS structural family
 
 No E035-E042 temporal or cross-asset holdout is opened.
+
+
+---
+
+## 25. E043 — Crypto 5m API Forward Paper Trading
+
+Classification:
+NEW.
+
+Assets:
+BTC / ETH / BNB.
+
+Timeframe:
+5m.
+
+Execution:
+10x instrument leverage, paper trading only.
+
+Seen calibration:
+2026-09-18 00:00 UTC through 2026-09-19 23:55 UTC.
+
+This window was inspected before forward activation and therefore:
+- is not OOS;
+- is not Forward evidence;
+- may be used only for warm-up / implementation verification.
+
+Genuine Forward Paper evidence begins strictly after:
+2026-09-20 18:09 UTC.
+
+Current data state at activation:
+WAIT_STALE_DATA.
+
+No historical paper order may be backfilled from the seen calibration window.
+
+Files:
+- preregistrations/E043.md
+- E043_INDICATOR_FAMILIES.md
+- live/E043_5M_PAPER_TRADES.csv
+- live/E043_5M_TRADING_JOURNAL.md
