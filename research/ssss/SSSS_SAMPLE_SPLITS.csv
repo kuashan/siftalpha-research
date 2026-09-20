@@ -75,3 +75,5 @@ S073,E042 BTC 15m second loss-add risk admission,Frozen OOS,E042_BTC15_FOOS,"BTC
 S074,E042 BTC 15m second loss-add risk admission,Cross-asset holdout,E042_15M_XASSET,"ETH SOL BNB",3,no,not_opened,"No 15m outcome queries in E042"
 S075,E043 5m multi-indicator paper,Warmup,E043_5M_WARMUP,"BTC ETH BNB 5m 2026-09-18T00:00Z..2026-09-20T18:19:59Z",3,no,warmup_only,"Viewed for indicator initialization; no retrospective orders"
 S076,E043 5m multi-indicator paper,Forward Paper,E043_5M_FWD,"BTC ETH BNB 5m from 2026-09-20T18:20:00Z onward",3,no,active_forward,"Only completed bars after frozen boundary can generate paper actions"
+S075,E043 crypto 5m API paper trading,Seen Calibration,E043_CRYPTO5M_CAL,"BTC ETH BNB 2026-09-18T00:00:00Z..2026-09-19T23:55:00Z",3,no,seen_calibration_only,"Inspected before forward activation; warm-up/implementation only; never OOS"
+S076,E043 crypto 5m API paper trading,Forward Paper,E043_CRYPTO5M_FWD,"BTC ETH BNB strictly after 2026-09-20T18:09:00Z",3,no,active_waiting_fresh_data,"10x instrument setting; paper only; Massive current plan lacks fresh bars at activation"
