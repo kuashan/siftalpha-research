@@ -1218,3 +1218,31 @@ All temporal and cross-asset 15m holdouts remain unopened.
 Next frontier:
 local path-shape structure between first LOSS_ADD and the first second-LOSS_ADD signal.
 Do not retune the E042 scalar thresholds.
+
+
+## Active research round — E043
+
+Status: ACTIVE FORWARD PAPER TRADING.
+
+Assets:
+BTC / ETH / BNB.
+
+Timeframe:
+5m.
+
+Forward decision boundary:
+first completed bar starting at or after 2026-09-20 18:20 UTC.
+
+Pre-boundary data:
+WARMUP_ONLY.
+
+Research combines:
+F1 LMD2/LMD3,
+F2 causalized structural support/resistance,
+F3 DXBD,
+F4 KDJ/flow/MACD resonance,
+F5 existing SSSS structural family.
+
+10x is the instrument leverage setting; margin allocation is separately capped by the E043 risk engine.
+
+No live exchange-order connector is attached.
