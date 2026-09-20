@@ -1246,3 +1246,42 @@ F5 existing SSSS structural family.
 10x is the instrument leverage setting; margin allocation is separately capped by the E043 risk engine.
 
 No live exchange-order connector is attached.
+
+
+## E043 active — 5m API forward paper trading
+
+Status:
+ACTIVE_FORWARD_PAPER / WAIT_STALE_DATA.
+
+Assets:
+BTC / ETH / BNB.
+
+Execution:
+- 5m completed bars;
+- 10x instrument leverage;
+- paper trading only;
+- no live exchange order routing connected.
+
+Formula families:
+- F1 LMD2/LMD3;
+- F2 causalized support/resistance / SAR structure;
+- F3 DXBD;
+- F4 KDJ / flow / MACD resonance;
+- F5 existing SSSS structural state.
+
+Critical causality rule:
+BACKSET / retrospective pivot drawing / REFDATE display behavior cannot trigger forward orders.
+
+Seen calibration:
+2026-09-18 through 2026-09-19 23:55 UTC.
+
+True forward start:
+strictly after 2026-09-20 18:09 UTC.
+
+Current API limitation:
+Massive historical 5m endpoint latest available bar at activation = 2026-09-19 23:55 UTC.
+Massive real-time Snapshot = NOT_ENTITLED.
+
+Therefore:
+no paper position is open.
+No trade is backfilled from stale data.
