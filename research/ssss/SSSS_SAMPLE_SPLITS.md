@@ -720,3 +720,30 @@ E042 final status:
 - no E042 candidate was frozen for OOS;
 - BTC OOS / Frozen OOS remained unopened;
 - ETH / SOL / BNB 15m remained unopened.
+
+
+---
+
+## 25. E043 — 5m Multi-Indicator Forward Paper Trading
+
+Classification:
+NEW.
+
+Warmup/context:
+BTC / ETH / BNB 5m from 2026-09-18 00:00 UTC through the forward boundary.
+Warmup bars cannot create retrospective trades.
+
+Forward decision cohort:
+BTC / ETH / BNB 5m,
+first eligible completed decision bar starts at or after 2026-09-20 18:20 UTC.
+
+This cohort is FORWARD PAPER TRADING, not E035-E042 OOS.
+
+Indicator families:
+- F1 LMD2/LMD3
+- F2 causalized support/resistance/cost/SAR family
+- F3 DXBD
+- F4 KDJ + accumulation/distribution + MACD resonance
+- F5 existing SSSS structural family
+
+No E035-E042 temporal or cross-asset holdout is opened.
