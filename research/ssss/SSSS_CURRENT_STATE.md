@@ -1285,3 +1285,20 @@ Massive real-time Snapshot = NOT_ENTITLED.
 Therefore:
 no paper position is open.
 No trade is backfilled from stale data.
+
+
+## E043 automation status
+
+Status:
+ACTIVE_FORWARD / AUTOMATION_BLOCKED.
+
+The 5m paper engine, trade ledger, state file, indicator-family map, Binance public API source, and scheduled workflow are present.
+
+First scheduled/push workflow attempt failed before any step executed:
+runner_id=0,
+steps=[].
+
+This is not a strategy failure.
+No paper order has been generated.
+
+Massive near-real-time 5m data is also unavailable under the connected entitlement, so forward 5m execution currently requires an available external runner or sub-hour API execution service.
