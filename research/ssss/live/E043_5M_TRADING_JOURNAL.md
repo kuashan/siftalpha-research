@@ -121,3 +121,26 @@ Therefore:
 - it is not Forward（前瞻） or OOS（样本外） evidence;
 - genuine forward evidence begins strictly after 2026-09-20 18:09 UTC;
 - no historical trade will be backfilled from the seen interval.
+
+
+## 2026-09-20T18:23:00Z infrastructure status
+
+E043 forward-paper engine has been created and scheduled.
+
+Data/API findings:
+- Massive historical 5m data is available through 2026-09-19 23:55 UTC for BTC / ETH / BNB.
+- Massive near-real-time 2026-09-20 5m data is NOT_ENTITLED under the current connected plan.
+- Binance Public REST API is therefore configured as the intended forward 5m source in the E043 engine.
+
+Cloud-run finding:
+- GitHub Actions run #2 started for commit 4a186c3e5acac1655458eb12e463473b88a55246.
+- It failed before any workflow step executed.
+- runner_id = 0.
+- steps = [].
+- Therefore this is an infrastructure/runner-availability failure, not a strategy, indicator, or API-computation failure.
+
+Trading consequence:
+- no paper trade has been created;
+- no historical trade is backfilled;
+- the forward boundary remains unchanged;
+- E043 remains ACTIVE but AUTOMATION_BLOCKED until a runner or another sub-hour execution service is available.
