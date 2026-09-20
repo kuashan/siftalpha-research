@@ -73,3 +73,5 @@ S071,E042 BTC 15m second loss-add risk admission,Discovery,E042_BTC15_D,"BTC imm
 S072,E042 BTC 15m second loss-add risk admission,OOS,E042_BTC15_OOS,"BTC 2025-09-01..2026-03-31",1,no,not_opened,"E042 Discovery-only until one exact candidate passes"
 S073,E042 BTC 15m second loss-add risk admission,Frozen OOS,E042_BTC15_FOOS,"BTC 2026-04-01..2026-09-17",1,no,not_opened,"E042 Discovery-only"
 S074,E042 BTC 15m second loss-add risk admission,Cross-asset holdout,E042_15M_XASSET,"ETH SOL BNB",3,no,not_opened,"No 15m outcome queries in E042"
+S075,E043 5m multi-indicator paper,Warmup,E043_5M_WARMUP,"BTC ETH BNB 5m 2026-09-18T00:00Z..2026-09-20T18:19:59Z",3,no,warmup_only,"Viewed for indicator initialization; no retrospective orders"
+S076,E043 5m multi-indicator paper,Forward Paper,E043_5M_FWD,"BTC ETH BNB 5m from 2026-09-20T18:20:00Z onward",3,no,active_forward,"Only completed bars after frozen boundary can generate paper actions"
