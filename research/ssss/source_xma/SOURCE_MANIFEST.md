@@ -60,3 +60,14 @@ Therefore SSSS and ADKBY-E do **not** have identical slow 90-period structures e
 Do not decide which source is "correct" by editing one into the other.
 
 Record both variants separately and test what information each contributes.
+
+
+### HYS2.ftindex
+- size: 4713 bytes
+- SHA-256: `40936da053455c2e4d05d4bab3f28757e3c59c6cc92668e7c98dd443743799c3`
+- market switch: `SCQH=0 A-share / 1 US / 2 crypto`
+- extracted formula preserved as `source_indicators/HYS2_formula_extracted.txt`
+- research status: CANDIDATE_FEATURE, not part of the XMA baseline
+- detailed evaluation: `HYS2_EVALUATION.md`
+
+Important: HYS2 was introduced after the January ABT decisions were frozen. January HYS2 analysis is post-hoc and cannot alter the original January paper result.
