@@ -39,3 +39,59 @@ A later ABT history chart was already viewed before this repository track was in
 
 Current next step:
 Obtain point-in-time ABT daily OHLCV and establish an exact, documented XMA reproduction path before populating observations.csv and decisions.csv.
+
+
+## 2026-09-28 — ABT first-month walk-forward completed
+
+Window:
+- 2025-01-02 through 2025-01-31
+- 20 trading sessions
+- source XMA preserved
+- point-in-time first-observed XMA values used for decisions
+- $10,000 paper capital
+- next-open execution
+- 5 bps one-way slippage
+- fractional shares
+
+Key source-system events:
+- 2025-01-15: SSSS LOW_ICON + ADKBY-E 多
+- 2025-01-21: SSSS HIGH_ICON + ADKBY-E 空 while source state was still RANGE
+
+Independent interpretation:
+- Jan-15 lower extreme -> 30% probe only because both momentum components were still down
+- Jan-16 XMA-mid reclaim + BOTH_UP -> target 70%
+- Jan-21 FastUpper breakout + BOTH_UP + RVOL 1.65x -> override the source RANGE short signal; target 100%
+- Jan-28 extreme extension + momentum deceleration -> reduce to 70%
+- Jan-30 slow-momentum turn negative / conflict -> exit remaining position next open
+- Jan-31 BULL regime prevented an automatic short reversal
+
+Paper result:
+- final capital: $11,345.49
+- net return: +13.45%
+- close-to-close equity max drawdown: about -1.58%
+- result is exploratory, not OOS
+
+Source-literal comparison:
+- following Jan-15 long then Jan-21 high-side exit literally would have produced about +2.70% net under the same execution friction
+- reversing the Jan-21 ADKBY-E 空 into a literal short and covering Jan-31 open would have lost about -12.59% before borrow cost
+
+Auxiliary-factor ablation:
+- volume as mandatory entry gate: harmful in this month
+- volume as breakout confirmation: helpful
+- VIX as a hard gate: not supported; retain as context only
+
+Important XMA observation:
+- XMA historical values near the right edge revise materially as later bars arrive
+- decisions remain tied to the first-observed point-in-time XMA values
+- revisions are stored in experiments/abt_2025_walkforward/revisions.csv
+
+Artifacts:
+- observations.csv
+- decisions.csv
+- paper_trades.csv
+- revisions.csv
+- FIRST_MONTH_REPORT.md
+- visual_report.html
+
+Next research step:
+continue the same walk-forward method into February 2025 without retroactively rewriting January decisions.
