@@ -95,3 +95,27 @@ Artifacts:
 
 Next research step:
 continue the same walk-forward method into February 2025 without retroactively rewriting January decisions.
+
+
+## 2026-09-28 — HYS2 candidate + multi-asset expansion
+
+A new source indicator, HYS2.ftindex, was received and inspected.
+
+Source SHA-256:
+`40936da053455c2e4d05d4bab3f28757e3c59c6cc92668e7c98dd443743799c3`
+
+Decision:
+- do NOT merge HYS2 into the XMA baseline;
+- log it as CANDIDATE_FEATURE;
+- evaluate low-side panic/new-low impulse and ★共振 separately;
+- do NOT treat 火焰山顶 as an automatic sell or short;
+- do NOT retroactively change January decisions.
+
+ABT January post-hoc finding:
+- HYS2 new-30-day-low / fire-bottom impulse occurred on Jan-15;
+- HYS2 ★共振 occurred on Jan-16, aligning with the previously frozen XMA confirmation entry;
+- HYS2 fire-top was active during Jan-21 onward breakout and would have been harmful if interpreted as an automatic short.
+
+The research universe is expanded from a single ABT case to a multi-asset Discovery universe including ARM, ORCL, AAPL, AMZN, INTC and other widely recognized liquid names. See MULTI_ASSET_UNIVERSE.md.
+
+No rule requires opening a short position. Exit and short-entry are separate decisions.
