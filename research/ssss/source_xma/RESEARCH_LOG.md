@@ -119,3 +119,30 @@ ABT January post-hoc finding:
 The research universe is expanded from a single ABT case to a multi-asset Discovery universe including ARM, ORCL, AAPL, AMZN, INTC and other widely recognized liquid names. See MULTI_ASSET_UNIVERSE.md.
 
 No rule requires opening a short position. Exit and short-entry are separate decisions.
+
+
+## 2026-09-28 — FIVEGZ5SE candidate state engine
+
+User supplied FIVEGZ5SE.txt and explicitly warned that textual annotations, especially concepts labeled "清" and "抄", are not reliable semantics.
+
+Source:
+- SHA-256: 61bc9f7cad7a2efb6374a187c680fa75789b2468824885e5127c5f70333400c9
+- size: 93,201 bytes
+
+Research decision:
+- evaluate actual boolean logic, not displayed names;
+- do not merge into the XMA baseline;
+- treat the five raw dimensions as auxiliary states;
+- freeze prior January XMA decisions unchanged.
+
+Key findings:
+- "当下清仓" is actually trend-short AND capital-short AND momentum-short; record it as triple-bear confirmation, not mandatory liquidation.
+- "底部双重背离" is not mathematical divergence; it is weak-trend + capital/momentum recovery.
+- several COUNT-based comments overstate dimension counting; the code counts bars after OR aggregation.
+- MOM_CONTINUOUS_DAYS=0 disables the intended continuity gate.
+- ABT Jan-16 composite risk conflicts with the previously frozen XMA confirmation entry.
+- ABT Jan-21 all five dimensions turn LONG and strongly confirm the breakout.
+- ABT Jan-24 reduce-state is earlier than the later price peak; treat as caution, not mandatory reduction.
+- Jan-30/31 triple-bear confirmation still does not occur, so it is too late as a primary exit rule in this case.
+
+See FIVEGZ5SE_EVALUATION.md.
