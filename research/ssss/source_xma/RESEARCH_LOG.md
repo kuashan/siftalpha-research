@@ -211,3 +211,42 @@ Major findings:
 8. ARM remains excluded until verified daily OHLCV is available.
 
 No March–June rule was retroactively changed.
+
+
+## 2026-09-28 — Orthogonal-feature March–June re-test
+
+Frozen before result:
+- protocol commit 9f19b858c611140bc9c4980ac6d60d00ddf36d66
+- breadth retrieval amendment commit 52e1f52965eb0526053c2434f5d9caf8ee29c137
+
+Chronology:
+- stocks start 2025-03-03
+- crypto start 2025-03-01
+- Source-XMA recomputed one bar at a time with end=t
+- no future XMA revision used
+- same-bar close proxy + 5bps
+
+HYS2/FIVEGZ were removed from trade control.
+
+Main results:
+- equities XMA_ONLY +1.786% mean / +2.784% median
+- equities Volume improved 8/11 names but worsened worst-case and drawdown
+- VIX frozen rule produced no sizing changes on recorded XMA decision bars
+- breadth proxy was mixed
+- daily Volume Profile proxy was near-neutral/slightly helpful
+- all-factor additive sizing had highest stock mean but materially worse tail risk
+
+Crypto:
+- XMA_ONLY mean +0.748%
+- Volume Profile proxy +0.887% with slightly better mean drawdown
+- Volume+Breadth interaction was strongly harmful
+- all-factor additive sizing was harmful
+
+Research conclusion:
+- Source-XMA should remain the decision center
+- orthogonal factors should answer specific questions, not vote linearly for larger size
+- stock Volume Structure is the strongest auxiliary candidate, but as breakout-quality/cap logic rather than generic size bonus
+- crypto Volume Profile proxy is the strongest next candidate
+- VIX/Breadth remain context until stronger evidence
+
+No March–June threshold was changed after result.
