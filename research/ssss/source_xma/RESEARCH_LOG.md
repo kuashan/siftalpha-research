@@ -274,3 +274,29 @@ In particular:
 - the same geometry may represent continuation or reversal depending on the band color/state and its transition.
 
 See XMA_GEOMETRY_COLOR_STATE_MODEL.md.
+
+## 2026-09-28 — Full XMA research specification frozen
+
+Created:
+`XMA_FULL_RESEARCH_SPECIFICATION.md`
+
+The master research direction is now formally defined as:
+
+```text
+XMA Geometry
+× Three-Color Band State / Transition
+× Selective HYS2 Confirmation
+× Orthogonal Auxiliary Context
+× Lifecycle Position Management
+```
+
+Important governance:
+- XMA remains primary;
+- HYS2 is an auxiliary research object, not an automatic trade engine;
+- Volume / Volume Profile / Breadth / VIX are tested as orthogonal information;
+- FIVEGZ text labels remain non-authoritative;
+- pure XMA geometry is studied before external confirmation;
+- all future rules must be frozen before a new validation window;
+- each research phase has explicit closure criteria.
+
+This document is now the master specification for the next research phase.
