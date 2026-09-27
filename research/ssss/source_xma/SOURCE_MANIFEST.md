@@ -71,3 +71,13 @@ Record both variants separately and test what information each contributes.
 - detailed evaluation: `HYS2_EVALUATION.md`
 
 Important: HYS2 was introduced after the January ABT decisions were frozen. January HYS2 analysis is post-hoc and cannot alter the original January paper result.
+
+
+### FIVEGZ5SE.txt
+- size: 93,201 bytes
+- SHA-256: `61bc9f7cad7a2efb6374a187c680fa75789b2468824885e5127c5f70333400c9`
+- source: user-supplied formula text
+- comments/display words are not treated as semantic ground truth
+- research status: CANDIDATE_STATE_ENGINE
+- detailed evaluation: `FIVEGZ5SE_EVALUATION.md`
+- ABT January post-hoc state log: `experiments/abt_2025_walkforward/fivegz5se_posthoc_jan2025.csv`
