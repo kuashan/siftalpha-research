@@ -250,3 +250,27 @@ Research conclusion:
 - VIX/Breadth remain context until stronger evidence
 
 No March–June threshold was changed after result.
+
+## 2026-09-28 — Three-color band promoted to core XMA state
+
+Research correction: the Source-XMA three-color band is not decorative and must not be omitted from geometry research.
+
+The underlying state equations are GZB12 / GZB13 / GZB14:
+- upward fast-channel relation
+- downward fast-channel relation
+- contained/range relation
+
+An implicit fourth EXPANSION_STRADDLE topology is also recorded when the fast channel expands outside both slow boundaries.
+
+From this point forward, every candidate rail/candle event is conditioned on:
+- current band state
+- previous band state
+- transition type
+- duration in state
+
+In particular:
+- lower-rail confluence is not treated as one universal buy signal;
+- upper-rail confluence/exceed is not treated as one universal top signal;
+- the same geometry may represent continuation or reversal depending on the band color/state and its transition.
+
+See XMA_GEOMETRY_COLOR_STATE_MODEL.md.
