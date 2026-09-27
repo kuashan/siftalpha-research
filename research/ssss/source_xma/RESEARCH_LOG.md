@@ -179,3 +179,35 @@ Critical findings:
 
 No February rule was retroactively changed.
 Candidate fixes must be frozen before the next month.
+
+
+## 2026-09-28 — March–June 2025 multi-asset run
+
+Frozen protocol:
+`experiments/multi_asset_2025_03_06/PROTOCOL_FROZEN_BEFORE_RUN.md`
+commit:
+`bd58431a8214c76549e624c49422c9a9850e6851`
+
+Primary execution model changed from legacy next-open to:
+`SAME_BAR_CLOSE_PROXY_V2`.
+
+Reason:
+the signal/action belongs to the current K bar once the full rule is satisfied.
+
+Limitation:
+daily bars cannot identify exact intraday first-confirm time; same-bar close is a causal execution proxy, not a minute replay.
+
+Universe:
+11 equities + BTC / ETH / BNB / SOL.
+
+Major findings:
+1. XMA + FIVEGZ had the highest equity mean return (+1.101%) but the result is strongly ORCL-driven; trimmed mean remains negative.
+2. Combined HYS2+FIVEGZ was not robust and worsened median/worst outcomes.
+3. Crypto SCTYPE=2 FIVEGZ was harmful in this window; do not promote it.
+4. HYS2 was only selectively helpful in crypto.
+5. Transition Override was too aggressive. On 2025-04-09 it fired across many assets simultaneously; first override exposure must be smaller in the next preregistered version.
+6. Three-bar cooldown reduced but did not eliminate repeated failed probes.
+7. No automatic shorting was introduced.
+8. ARM remains excluded until verified daily OHLCV is available.
+
+No March–June rule was retroactively changed.
