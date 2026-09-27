@@ -146,3 +146,36 @@ Key findings:
 - Jan-30/31 triple-bear confirmation still does not occur, so it is too late as a primary exit rule in this case.
 
 See FIVEGZ5SE_EVALUATION.md.
+
+
+## 2026-09-28 — February 2025 multi-asset Discovery run
+
+Protocol was frozen before execution:
+`experiments/multi_asset_2025_02/PROTOCOL_FROZEN_BEFORE_RUN.md`
+
+Universe:
+ABT, AAPL, AMZN, ORCL, INTC, MSFT, NVDA, GOOGL, META, JPM, XOM.
+
+ARM was not forced into the batch because a sufficiently verified common OHLCV source was not available.
+
+Four variants:
+- XMA_ONLY
+- XMA_HYS2
+- XMA_FIVEGZ
+- XMA_HYS2_FIVEGZ
+
+Cross-symbol result:
+- combined had the highest mean return (+0.151%)
+- XMA_FIVEGZ had the best downside profile (worst -1.271%, mean max DD -0.233%)
+- HYS2 improved NVDA but worsened multiple losers when used as a global sizing boost
+- FIVEGZ raw color states were the most consistent risk-control addition
+
+Critical findings:
+1. repeated XMA probes are too permissive in persistent declines (GOOGL/AMZN)
+2. slow BEAR regime can miss fast transition rallies (INTC; weaker AAPL example)
+3. next-open execution needs a gap-against-signal re-evaluation rule
+4. FIVEGZ color transitions should be interpreted as a state continuum, not literal text commands
+5. no automatic shorting rule was introduced
+
+No February rule was retroactively changed.
+Candidate fixes must be frozen before the next month.
