@@ -1,0 +1,79 @@
+{
+  "schema": 2,
+  "status": "CANDIDATE_ONLY_NOT_FROZEN",
+  "generated_from_branch": "research/source-xma-walkforward",
+  "blockers": [
+    "GitHub Actions jobs terminate before any step starts; deterministic tests have not obtained a runner execution",
+    "Official 51-series stock/ETF Data Freeze plus authoritative VIX snapshot is not complete",
+    "Official provider selection/parity is not frozen because Massive is not available in the current connector surface"
+  ],
+  "python": "3.12",
+  "dependencies": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "files": [
+    {
+      "path": "XMA_FALSIFICATION_V2_PROTOCOL.md",
+      "blob_sha": "8a24002a7e834f81283b0d3f85416e2a5925be84"
+    },
+    {
+      "path": "V2_HYPOTHESIS_REGISTRY_DRAFT.md",
+      "blob_sha": "ef3eb928d4d45dbe6aaa03cd0f719e406d3274b0"
+    },
+    {
+      "path": "v2_feature_definitions.py",
+      "blob_sha": "89d40ea31ecb3069e3b23acb346c2f074e072272"
+    },
+    {
+      "path": "market_data_panel.py",
+      "blob_sha": "39a82f39339c319d0c123cca6da2f3e0a89a4460"
+    },
+    {
+      "path": "twelve_data_panel_fetch.py",
+      "blob_sha": "e6c6ae492795b381109762e6f9fb4810cca86aaf"
+    },
+    {
+      "path": "v2_protocol_engine.py",
+      "blob_sha": "f9157a46f5cd0eaeee1961d74ab12f056cdce511"
+    },
+    {
+      "path": "v2_statistics.py",
+      "blob_sha": "28dbc8b56b2090252d70982975e65b181d372fda"
+    },
+    {
+      "path": "v2_guards.py",
+      "blob_sha": "8bf31b49f667bacfce5ff7010e1f299dcc41e8d2"
+    },
+    {
+      "path": "freeze_manifests.py",
+      "blob_sha": "cf8c1fcc173653692e386cb378e69e7da72f23f2"
+    },
+    {
+      "path": "requirements_v2.txt",
+      "blob_sha": "2414a351e99c1f64f57db50c5d0920577a55db16"
+    },
+    {
+      "path": "test_v2_infrastructure.py",
+      "blob_sha": "5376986dc22f914c86830c9416b38c17c08c5b0a"
+    },
+    {
+      "path": "test_v2_protocol_engine.py",
+      "blob_sha": "65e9e23c2c9ec5e73e34d7b52305f3a3f93350a0"
+    },
+    {
+      "path": "test_v2_statistics_guards.py",
+      "blob_sha": "dd2099770bdafdd3c021e076d01df9770a57e833"
+    },
+    {
+      "path": "V2_FDR_MANIFEST_v1.json",
+      "blob_sha": "30def4dafa1f914d9665d610230f0234d00fe8ce"
+    },
+    {
+      "path": "V2_GUARD_MANIFEST_v1.json",
+      "blob_sha": "9f68e2186efa23a011f70d45b6362338cec69ddf"
+    }
+  ]
+}
