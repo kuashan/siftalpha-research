@@ -490,3 +490,19 @@ Governance Amendment 2 also freezes:
 - v1 can close with explicit DATA NOT AVAILABLE classifications;
 - Hypothesis Ledger required before closure.
 
+## 2026-09-28 — Falsification v1 state-density audit
+
+Reconstructed daily UP/RANGE/DOWN occupancy directly from the persisted as-of transition sequence without re-downloading data or recalculating XMA.
+
+Aggregate occupancy:
+- Validation A: UP 51.0%, RANGE 25.8%, DOWN 23.2%
+- Validation B: UP 59.9%, RANGE 26.4%, DOWN 13.7%
+
+Strict-event density conditional on eligible state remains similar:
+- Upper: 15.67 vs 15.49 events per 1000 UP bars
+- Lower: 28.59 vs 29.50 events per 1000 DOWN bars
+
+Therefore the A/B outcome disagreement is not explained simply by event rarity within its required state.
+
+No Regime interpretation or trading threshold is introduced.
+
