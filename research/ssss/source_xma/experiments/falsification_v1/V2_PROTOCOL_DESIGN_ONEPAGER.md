@@ -31,47 +31,94 @@ v2 asks:
 
 # 2. Candidate Condition Variable Design
 
-Before Protocol freeze, each candidate variable must provide:
+Candidate variables must be specified at field-name level before Protocol drafting.
 
-- variable name;
-- exact definition;
+Examples of candidate names may include:
+
+- Volatility z-score
+- Volume z-score
+- Market breadth level
+- VIX change
+- Sector relative strength
+- Distance to midpoint
+
+One-Pager specifies variable names only.
+Protocol specifies exact windows, transformations, normalization, and missing-data handling.
+
+Candidate variables cannot be added after Protocol freeze.
+
+Each candidate must provide:
+
 - orthogonality rationale relative to XMA geometry;
 - required data fields;
 - availability status;
 - missing-data treatment.
 
-Candidate count must be frozen before Protocol.
-
 No candidate variable becomes a hypothesis without Protocol registration.
+
+Candidate variables unavailable after freeze are not replaced by new variables.
 
 ---
 
 # 3. Hypothesis Budget
 
-Protocol must define before testing:
+Frozen design limits:
 
-- maximum candidate condition variables;
-- maximum hypotheses per variable;
-- total hypothesis count.
+- candidate condition variables: maximum 6;
+- hypotheses per variable: maximum 2;
+- total hypotheses: maximum 12;
+- hypotheses per FDR family: maximum 4.
 
-No additional hypotheses may be added after outcome inspection.
+These limits cannot be expanded during Protocol drafting or after outcome inspection.
 
 ---
 
 # 4. FDR Family Skeleton
 
-Protocol must define:
+Initial family structure:
 
-- family count;
-- family membership;
-- scalar statistic compatibility;
-- hierarchical correction structure.
+| Family | Scope | Maximum hypotheses |
+|---|---|---:|
+| F1 Risk | MAE / Drawdown / Duration | 3 |
+| F2 Lifecycle | XMA state transition conditional paths | 3 |
+| F3 Cross-sectional | Ranking / IC | 2 |
+| F4 Conditional | XMA × external variable interaction | 2 |
+| F5 Risk-Off | Predefined failure environment tests | 2 |
+| F6 Null / Control | Guard hypotheses | methodological control |
 
-Family size must be frozen before outcome inspection.
+Each family requires:
+
+- frozen membership;
+- comparable scalar statistics;
+- predefined correction procedure.
+
+Each family must contain at least one guard hypothesis.
+
+If guard hypotheses become significant after correction, the family is frozen pending methodology review.
 
 ---
 
-# 5. Primary Statistic Requirements
+# 5. Research Category Boundaries
+
+Lifecycle:
+
+- condition variable = XMA internal state transition.
+
+Conditional:
+
+- condition variable = external variable combined with XMA state.
+
+Risk-Off:
+
+- only tests whether XMA incremental information disappears under predefined risk conditions.
+
+Risk-Off cannot search for environments where XMA is strongest.
+
+That would be Regime Mining and is outside v2.
+
+---
+
+# 6. Primary Statistic Requirements
 
 Every hypothesis must contain:
 
@@ -87,7 +134,22 @@ No TBD values are allowed in Protocol draft.
 
 ---
 
-# 6. Sealed Window Input
+# 7. MDE and Sample Requirements
+
+MDE must be based on economic significance, not statistical significance alone.
+
+Protocol must define:
+
+- raw event minimum;
+- market-wave cluster minimum;
+- symbol cluster minimum;
+- ESS calculation method.
+
+Minimum floors must be satisfied simultaneously.
+
+---
+
+# 8. Sealed Window Input
 
 Protocol must define:
 
@@ -97,11 +159,24 @@ Protocol must define:
 - minimum event count;
 - minimum cluster count.
 
-Insufficient sample size does not permit lowering standards.
+Required minimum rules:
+
+- duration >= 12 months;
+- raw events >= 100 per hypothesis;
+- market-wave clusters >= 30;
+- symbol clusters >= 20.
+
+If insufficient at expiry:
+
+- do not lower standards;
+- do not substitute sensitivity windows;
+- do not redefine the start date.
+
+Continue waiting.
 
 ---
 
-# 7. Required Freeze Artifacts
+# 9. Required Freeze Artifacts
 
 Protocol freeze requires:
 
@@ -115,7 +190,17 @@ Protocol freeze requires:
 
 ---
 
-# 8. Failure Mode Registration
+# 10. Cross-Family Interference Rules
+
+Rules:
+
+- one hypothesis belongs to one family only;
+- one variable cannot be duplicated across families without explicit justification;
+- overlapping hypotheses must be resolved before Protocol freeze.
+
+---
+
+# 11. Failure Mode Registration
 
 Protocol must define handling for:
 
@@ -127,7 +212,7 @@ Protocol must define handling for:
 
 ---
 
-# 9. Non-Goals
+# 12. Non-Goals
 
 v2 will not:
 
@@ -143,8 +228,11 @@ v2 will not:
 
 # Current State
 
-Protocol Design One-Pager: DRAFT
+Protocol Design One-Pager: FINAL REVIEW READY
 
 Next step:
 
-Review candidate variables, hypothesis budget, FDR family structure, and sealed-window minimum requirements before Protocol drafting.
+Review this frozen-design skeleton before drafting `XMA_FALSIFICATION_V2_PROTOCOL.md`.
+
+No experiment is authorized.
+No data access is authorized.
