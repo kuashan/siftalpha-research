@@ -412,3 +412,37 @@ See:
 
 Stage 2 remains:
 state transitions, analytic midpoint, survival/time-stop distributions, Below-VAL interaction, HYS2 interaction regression, Volume interaction, and multiple-testing control.
+
+## 2026-09-28 — Falsification v1 stock time-to-confirm survival
+
+Completed the frozen time-to-event analysis over the corrected full stock confluence population.
+
+Event source:
+- EQUITY_EVENTS_CHUNK1/2/3
+- not the older partial EVENTS_ENRICHED event set.
+
+Kaplan-Meier right-censored results show:
+- lower confluence -> FAST_MID_ANALYTIC reclaim is much faster than leaving DOWN;
+- upper confluence -> FAST_MID_ANALYTIC loss is much faster than leaving UP;
+- formal state departure is slow in both directions.
+
+Key Validation A timing:
+- lower midpoint reclaim KM median: 7 bars;
+- lower leave-DOWN KM median: 33 bars;
+- upper midpoint loss KM median: 9 bars;
+- upper leave-UP does not reach 50% by 40 bars.
+
+This does not rescue midpoint crossing as a directional signal because the independent midpoint study already failed directional validation.
+
+No time-stop and no new conditional threshold is promoted.
+
+See:
+- experiments/falsification_v1/TIME_TO_CONFIRM_SURVIVAL_STOCK_v1.md
+- experiments/falsification_v1/TIME_TO_CONFIRM_SURVIVAL_STOCK_v1.json
+
+Next frozen tasks remain:
+- expanded-holdout Below-VAL interaction;
+- HYS2 2x2 interaction/logistic regression;
+- Volume/Breadth/VIX falsification;
+- registered-family multiple-testing control after the family is complete.
+
