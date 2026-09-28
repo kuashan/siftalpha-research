@@ -300,3 +300,22 @@ Important governance:
 - each research phase has explicit closure criteria.
 
 This document is now the master specification for the next research phase.
+
+
+## 2026-09-28 — Formula canonicalization gate before further research
+
+A source-formula audit identified issues that must be resolved before the next run.
+
+Canonical decisions:
+- SSSS GZB2 lag-11 term: H -> L
+- weighted high/low channels: lags 0..19 only, weights 20..1, denominator 210
+- SSSS and ADKBY-E share the same canonical weighted definition
+- HYS2 SCQH is confirmed as external .ftindex parameter metadata; do not hard-code SCQH:=0 in the cross-market formula
+- research three-color classification is expanded to four mutually exclusive states, adding EXPANSION_STRADDLE and removing equality ambiguity
+
+Governance:
+all earlier raw-source runs remain preserved but are marked LEGACY_RAW_SOURCE_EXPLORATORY relative to the corrected canonical model.
+
+See:
+- FORMULA_CORRECTION_AUDIT_v1.md
+- CANONICAL_WEIGHTED_CHANNEL_v1.md
