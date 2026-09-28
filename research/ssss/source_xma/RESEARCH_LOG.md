@@ -506,3 +506,22 @@ Therefore the A/B outcome disagreement is not explained simply by event rarity w
 
 No Regime interpretation or trading threshold is introduced.
 
+## 2026-09-28 — Falsification v1 transition-path study
+
+Completed the preregistered 3-state / 2-transition path study with 60 bars per transition step.
+
+Validation A:
+- DOWN->RANGE anchors: n=284, wave n=104
+  - target UP: 62.3%
+  - conditional same-origin random controls after RANGE entry: 61.6%
+- UP->RANGE anchors: n=338, wave n=143
+  - target DOWN: 49.7%
+  - conditional same-origin random controls after RANGE entry: 47.7%
+
+The transition-path split is therefore close to the same-origin random-path baseline.
+
+Decision:
+common transition paths remain DESCRIPTIVE LIFECYCLE CONTEXT / NOT PROMOTED.
+
+No deeper path subdivision is opened in v1.
+
