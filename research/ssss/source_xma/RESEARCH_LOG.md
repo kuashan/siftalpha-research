@@ -340,3 +340,49 @@ See:
 `experiments/canonical_geometry_2025_01_06/PHASE1_5_SYNTHESIS.md`
 
 No trading rule or position size is promoted yet.
+
+
+## 2026-09-28 — Falsification v1 overturns broad canonical geometry rules
+
+A preregistered falsification protocol was frozen before holdout outcome analysis.
+
+Universe:
+- 39 US equities across 11 sectors
+- BTC / ETH / BNB / SOL
+
+Holdouts:
+- Validation A: 2020–2024 untouched historical holdout
+- Validation B: 2025H2 forward holdout
+- 2026H1 remains sealed
+
+Primary results:
+1. The Jan–Jun 2025 strict upper-confluence bearish effect did not replicate.
+   - equities combined n=438
+   - 5-bar raw ≈ +0.05%
+   - sector excess ≈ +0.11%
+   - matched-control excess ≈ +0.08%
+   - clustered CIs span zero
+   - crypto sign was positive
+   => REJECT AS GENERAL RULE.
+
+2. Lower strict confluence showed positive raw 10-bar rebound in historical data but negative matched excess.
+   - Validation A n=325
+   - raw +0.82%
+   - matched excess -3.29%
+   - symbol-cluster 95% CI roughly [-4.63%, -1.78%]
+   - combined matched excess -3.22%
+   => the raw rebound is largely generic DOWN-state mean reversion; REJECT GENERAL BUY RULE.
+
+3. Deep-pierce reclaim, shallow interaction and deep no-reclaim all had negative matched excess.
+   => no penetration subtype is promoted.
+
+4. Common state transitions did not show strong standalone matched excess.
+   => keep as descriptive lifecycle states, not directional signals.
+
+5. FAST_MID_ANALYTIC up/down crossings both had positive absolute forward drift.
+   => midpoint crossing alone is not directional evidence.
+
+See:
+`experiments/falsification_v1/FALSIFICATION_V1_INTERIM_REPORT.md`
+
+This negative result is preserved without threshold repair.
