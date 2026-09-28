@@ -209,10 +209,12 @@ def market_breadth20(close_by_symbol: Mapping[str, pd.Series]) -> pd.Series:
 
 
 def breadth_risk_off(breadth20: pd.Series) -> pd.Series:
-    """Risk-Off iff current breadth < prior-20-valid-observation 10th pct."""
-    prior_q10 = breadth20.shift(1).rolling(20, min_periods=20).quantile(
+    """Risk-Off iff current breadth < 10th pct of the prior 20 valid observations."""
+    valid = breadth20.dropna()
+    prior_q10_valid = valid.shift(1).rolling(20, min_periods=20).quantile(
         0.10, interpolation="linear"
     )
+    prior_q10 = prior_q10_valid.reindex(breadth20.index)
     out = breadth20 < prior_q10
     return out.where(breadth20.notna() & prior_q10.notna())
 
