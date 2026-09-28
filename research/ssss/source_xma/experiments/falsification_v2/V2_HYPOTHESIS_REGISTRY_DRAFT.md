@@ -398,8 +398,9 @@ One deterministic guard realization is used per family. No seed searching and no
 
 A guard passes only when:
 1. it satisfies the same raw/wave/symbol sample floor as its linked family test; and
-2. its absolute effect remains below the linked MDE; and
-3. it does not produce a promoted/significant false-positive result under the frozen family correction.
+2. its absolute effect remains below the linked MDE.
+
+Guard p-values, if reported diagnostically, do not enter BH or any scientific FDR family.
 
 If a guard is INSUFFICIENT or fails, the entire linked family is **NOT ELIGIBLE FOR PROMOTION** until a formal Amendment resolves the methodological problem.
 
