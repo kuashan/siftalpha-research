@@ -954,20 +954,69 @@ No vendor may be changed after outcome inspection.
 
 # 11. Code Freeze Requirements
 
-Before experiment authorization, freeze and record commit hashes for:
+Before experiment authorization, freeze and record commit/blob hashes for every executable artifact that can change a primary result.
 
-- Source-XMA point-in-time implementation;
-- XMA state classification;
-- Episode builder;
-- market-wave clustering;
-- `v2_feature_definitions.py`;
-- matched-control builder;
-- F5 pair builder;
-- ESS implementation;
-- statistical tests/bootstrap;
-- BH-FDR implementation;
-- Guard generation;
-- result-classification code.
+Current required implementation set:
+
+- `v2_feature_definitions.py`
+  - Source-XMA point-in-time endpoint;
+  - ATR/dev20/prior20;
+  - VOL_Z/VOLUME_Z;
+  - Sector RS;
+  - Breadth/VIX;
+  - H4 quantiles.
+
+- `market_data_panel.py`
+  - normalized stock/ETF panel;
+  - 51-series completeness gate;
+  - hashes and coverage metadata.
+
+- official provider retrieval adapter(s)
+  - currently development adapter: `twelve_data_panel_fetch.py`;
+  - final official provider adapter is frozen at F1 Data Freeze.
+
+- `v2_protocol_engine.py`
+  - F1 continuous-state Episodes;
+  - F2/F4/F5 debounced Episodes;
+  - exact trading-session market waves;
+  - design-effect ESS;
+  - matched-control selection;
+  - deterministic F5 A/B pairing;
+  - BH implementation and Guard gate primitive.
+
+- `v2_statistics.py`
+  - median quantile-regression coefficient;
+  - H3 touch-probability difference;
+  - H4 Kaplan-Meier median difference;
+  - F3 rank statistics;
+  - 10,000 market-wave cluster bootstrap;
+  - Student-t raw p-value interface.
+
+- `v2_guards.py`
+  - G-F1..G-F5 deterministic permutations;
+  - fixed seeds;
+  - fixed-seed rejection-sampling primitive.
+
+- `freeze_manifests.py`
+  - deterministic Data/Code manifest hashing.
+
+- exact dependency lock:
+  - `requirements_v2.txt`.
+
+- deterministic tests:
+  - `test_v2_infrastructure.py`;
+  - `test_v2_protocol_engine.py`;
+  - `test_v2_statistics_guards.py`.
+
+- CI execution definition:
+  - `.github/workflows/v2-research-infra.yml`.
+
+Before F2 Code Freeze:
+1. all deterministic tests must pass in an execution environment whose Python and dependency versions are recorded;
+2. all above source/test files must have blob SHA-1 and/or SHA-256 recorded in the Code Freeze manifest;
+3. exact dependency versions must be recorded;
+4. result reproduction must use the frozen trading calendar/session-index source;
+5. any code mismatch after F2 follows Section 13 Amendment Procedure.
 
 A text-only Protocol is not sufficient.
 
