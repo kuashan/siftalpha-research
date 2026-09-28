@@ -446,3 +446,47 @@ Next frozen tasks remain:
 - Volume/Breadth/VIX falsification;
 - registered-family multiple-testing control after the family is complete.
 
+## 2026-09-28 — Falsification v1 matching + independence audit
+
+Match Quality Audit completed for coverage and missingness without changing the frozen matching variables.
+
+Coverage:
+- Validation A Upper: 392/392
+- Validation A Lower: 325/325
+- Validation B Upper: 39/46
+- Validation B Lower: 12/20
+
+Validation B missingness is systematic:
+- all 7 unmatchable Upper events are PLD / Real Estate;
+- Lower unmatchable events are concentrated in NFLX/MSFT and have materially different ATR% distribution.
+
+Therefore:
+- B Upper matched estimates exclude PLD / Real Estate;
+- B Lower matched estimates are explicitly CONDITIONAL ON MATCHABILITY.
+
+The v1 artifacts did not persist selected control identities and their matching covariates, so true event-vs-control pre/post SMD balance cannot be reconstructed from repository artifacts alone.
+This is recorded as DATA NOT PERSISTED rather than regenerated post hoc from a new vendor.
+
+Independence Audit:
+- Upper combined: raw 438, frozen +/-2-day market waves 192;
+- Lower combined: raw 345, frozen +/-2-day market waves 130.
+- +/-5-day sensitivity collapses these to 72 and 60, showing wave-count sensitivity to linkage width.
+
+Market-wave count is not called ESS.
+
+Supplemental ICC-based ESS is reported separately and cluster bootstrap remains primary.
+
+A Transition Path protocol was frozen before path outcomes are inspected:
+- max 3 states / 2 transitions;
+- max 60 bars;
+- STALLED_60 separated from WINDOW_CENSORED;
+- same-origin-state random-path baseline;
+- no confluence/HYS/Regime rescue split.
+
+Governance Amendment 2 also freezes:
+- Upper general-top rule = REJECT;
+- Lower incremental-buy rule = REJECT;
+- no Regime mining or same-window repair;
+- v1 can close with explicit DATA NOT AVAILABLE classifications;
+- Hypothesis Ledger required before closure.
+
