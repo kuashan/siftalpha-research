@@ -573,3 +573,103 @@ See:
 - experiments/falsification_v1/HYPOTHESIS_LEDGER_v1.md
 - experiments/falsification_v1/FALSIFICATION_V1_CLOSURE_REPORT.md
 
+
+
+## 2026-09-28 — Falsification v1 post-closure integrity correction
+
+A post-closure integrity audit was performed after re-reading the real remote branch rather than relying on the earlier handoff HEAD.
+
+Audit reference:
+- pre-audit closure HEAD: `98ce8ec7e357ed6cf8774cf68cafe7355bd4ce70`
+- earlier transition-path frozen-baseline reference: `a827b995f4325263a47c74f00beb81b9d1eb9160`
+
+The audit found three material integrity qualifications.
+
+### 1. 2026H1 is not an untouched sealed holdout
+
+The previous closure check tested only whether event dates entered 2026.
+
+That was insufficient.
+
+The frozen protocol states that 2026-01-01 through 2026-06-30 is not used in Validation A/B, but late-2025 Validation B events have persisted forward outcomes in January 2026.
+
+Confirmed examples include:
+- BAC Upper 2025-12-29 -> 5-bar outcome 2026-01-06;
+- COST Lower 2025-12-17 -> 10-bar outcome 2026-01-02;
+- multiple 20-bar Upper/Lower outcomes in January 2026;
+- transition/midpoint records with 2026 forward outcomes, including PLD MID_DOWN 2025-12-31 -> 5-bar 2026-01-08 and 10-bar 2026-01-15.
+
+Therefore the earlier statement:
+`2026H1 remains sealed and unused`
+is retracted.
+
+2026H1 must not be used as an untouched v2 validation window.
+
+Event-horizon-only sensitivity does not rescue the rejected hypotheses:
+- Upper B raw 5-bar remains negative after removing the one event whose own 5-bar horizon crosses into 2026;
+- Lower B raw 10/20-bar remains negative under own-event-horizon restriction.
+
+Matched-control boundary compliance cannot be completely reconstructed because selected control identities/dates were not persisted.
+
+### 2. State Density B is one trading day short
+
+The persisted State Density artifact uses:
+- 2025-07-01..2025-12-30
+- 127 trading bars
+- 4,953 symbol-state bars
+
+The frozen Validation B window ends 2025-12-31, and other persisted artifacts contain 2025-12-31 records.
+
+Therefore Validation B State Density is now explicitly labeled:
+`PARTIAL-WINDOW RECONSTRUCTION THROUGH 2025-12-30`.
+
+No final-day state was guessed or backfilled.
+
+### 3. Transition Path protocol changed after the documented freeze
+
+The transition-path protocol at `a827b995...` was already labeled frozen before path outcome analysis.
+
+The later version materially changed random-control methodology, including:
+- 60 bars per transition step;
+- excluding any state-transition bar from controls;
+- adding NO_RANGE_ENTRY_60 / DIRECT_EXIT_NO_RANGE;
+- unconditional plus RANGE-entry-conditional baselines.
+
+No separate preserved amendment demonstrates that these changes were frozen before path outcomes were computed.
+
+Therefore Transition Path remains:
+`OBSERVE / NOT PROMOTED`
+with a
+`PROTOCOL-INTEGRITY CAVEAT`.
+
+No same-window rerun, deeper subdivision, Regime rescue, or favorable-path search is opened.
+
+### Multiple-testing qualification
+
+The original protocol required Benjamini-Hochberg FDR q=0.10.
+
+The complete BH vector is not fully computable as preregistered because some holdout features were not preserved and some family items did not freeze one unique scalar test statistic.
+
+Terminal classification:
+`BH-FDR FAMILY = INCONCLUSIVE / NOT FULLY COMPUTABLE AS PREREGISTERED`.
+
+No positive result is promoted.
+
+### Core v1 decisions remain unchanged
+
+- Upper strict confluence => general top/decline rule: REJECT
+- Lower strict confluence => incremental buy/rebound rule: REJECT
+- common state transitions / midpoint / transition paths: OBSERVE / NOT PROMOTED
+- unavailable auxiliary expanded-holdout tests: INCONCLUSIVE / DATA NOT AVAILABLE
+- HYS2 fire-bottom/top: REDUNDANT WITHIN STRICT XMA EVENT SAMPLE only
+
+The corrected terminal status is:
+
+`FALSIFICATION v1 = CLOSED WITH INTEGRITY QUALIFICATIONS`
+
+No v2 hypothesis is opened by this correction.
+
+See:
+- `experiments/falsification_v1/POST_CLOSURE_INTEGRITY_AUDIT_v1.md`
+- `experiments/falsification_v1/POST_CLOSURE_INTEGRITY_AUDIT_v1.json`
+- `experiments/falsification_v1/FALSIFICATION_V1_CLOSURE_REPORT.md`
