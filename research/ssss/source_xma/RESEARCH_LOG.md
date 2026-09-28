@@ -525,3 +525,27 @@ common transition paths remain DESCRIPTIVE LIFECYCLE CONTEXT / NOT PROMOTED.
 
 No deeper path subdivision is opened in v1.
 
+## 2026-09-28 — Crypto robustness + auxiliary data closure
+
+Crypto robustness is now reported separately from equities.
+
+Key extreme:
+- BNB upper-confluence event on 2021-02-01;
+- +20-bar return about +473.6%;
+- contributes about 39.8% of total absolute 20-bar movement in the Validation A Upper crypto set.
+
+Therefore crypto reports now include median, 10% trimmed/winsorized mean, drop-top-1/2/5, event contribution, symbol decomposition and leave-one-symbol-out.
+
+No crypto rule is promoted.
+
+Auxiliary expanded-holdout audit:
+the repository preserves Discovery/Exploratory HYS2/Volume/Profile/Breadth/VIX studies, but not the 2020-2024 + 2025H2 feature panel or full raw 39-symbol OHLCV needed to reproduce them without post-outcome vendor reconstruction.
+
+Terminal v1 classifications:
+- Below-VAL: INCONCLUSIVE / DATA NOT AVAILABLE
+- HYS2 2x2/logistic: INCONCLUSIVE / DATA NOT AVAILABLE
+- Volume interaction: INCONCLUSIVE / DATA NOT AVAILABLE
+- Breadth interaction: INCONCLUSIVE / DATA NOT AVAILABLE
+- VIX expanded dimensions: INCONCLUSIVE / DATA NOT AVAILABLE
+- HYS2 fire-bottom/top: REDUNDANT WITHIN STRICT XMA EVENT SAMPLE only; global redundancy not established.
+
