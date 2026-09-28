@@ -204,7 +204,8 @@ def build_panel(
         "missing_raw_symbols": missing_raw,
         "symbols": [asdict(a) for a in audits],
         "official_freeze_ready": (
-            not missing_raw
+            set(REQUIRED_STOCK_PANEL).issubset(present)
+            and not missing_raw
             and all(a.duplicate_dates == 0 for a in audits)
             and all(a.missing_ohlcv_rows == 0 for a in audits)
         ),
