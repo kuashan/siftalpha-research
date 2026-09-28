@@ -386,3 +386,29 @@ See:
 `experiments/falsification_v1/FALSIFICATION_V1_INTERIM_REPORT.md`
 
 This negative result is preserved without threshold repair.
+
+
+## 2026-09-28 — Falsification v1 Stage 1
+
+The research direction was explicitly switched from effect discovery to effect falsification.
+
+Frozen protocol:
+`experiments/falsification_v1/PROTOCOL_FROZEN_BEFORE_VALIDATION.md`
+
+Major result:
+the Jan–Jun 2025 strict upper-confluence bearish effect did NOT generalize to 2020–2024 equities and was positive in crypto.
+
+Forward 2025 H2 equities again showed a bearish upper-confluence effect, including negative matched-control and SPY-relative returns, but n=28 and temporal/symbol concentration remain material.
+
+Therefore the universal upper-top hypothesis is rejected and retained only as a regime-dependent candidate.
+
+The lower strict-confluence delayed-rebound interpretation also failed geometry-specific controls:
+2020–2024 absolute returns rebounded, but matched same-state controls did better; 2025 H2 was outright negative.
+
+Therefore lower confluence is rejected as a standalone buy/rebound rule.
+
+See:
+`experiments/falsification_v1/STAGE1_FALSIFICATION_REPORT.md`
+
+Stage 2 remains:
+state transitions, analytic midpoint, survival/time-stop distributions, Below-VAL interaction, HYS2 interaction regression, Volume interaction, and multiple-testing control.
