@@ -1,0 +1,1299 @@
+{
+  "meta": {
+    "generatedDate": "2026-09-28",
+    "method": "Reconstruct daily exclusive UP/RANGE/DOWN state from persisted as-of transition sequence. Transition idx aligns one-to-one with SPY trading-date index.",
+    "warning": "This audit reports the three-state validation engine persisted in TRANS_MID_CHUNK*. EXPANSION is not present in this persisted validation-state artifact and is not retro-inferred."
+  },
+  "bounds": {
+    "A": {
+      "start": "2020-01-02",
+      "end": "2024-12-31",
+      "bars": 1258
+    },
+    "B": {
+      "start": "2025-07-01",
+      "end": "2025-12-30",
+      "bars": 127
+    }
+  },
+  "aggregate": {
+    "A": {
+      "totalStateBars": 49062,
+      "counts": {
+        "UP": 25011,
+        "RANGE": 12682,
+        "DOWN": 11369
+      },
+      "shares": {
+        "UP": 0.509783539195304,
+        "RANGE": 0.25848925848925847,
+        "DOWN": 0.2317272023154376
+      },
+      "eventCounts": {
+        "UPPER": 392,
+        "LOWER": 325
+      },
+      "eventDensityPer1000EligibleStateBars": {
+        "UPPER": 15.6731038343129,
+        "LOWER": 28.586507168616414
+      }
+    },
+    "B": {
+      "totalStateBars": 4953,
+      "counts": {
+        "UP": 2969,
+        "RANGE": 1306,
+        "DOWN": 678
+      },
+      "shares": {
+        "UP": 0.5994346860488593,
+        "RANGE": 0.26367857863920857,
+        "DOWN": 0.13688673531193216
+      },
+      "eventCounts": {
+        "UPPER": 46,
+        "LOWER": 20
+      },
+      "eventDensityPer1000EligibleStateBars": {
+        "UPPER": 15.493432132030987,
+        "LOWER": 29.49852507374631
+      }
+    }
+  },
+  "perSymbolSummary": {
+    "A": {
+      "UP": {
+        "p10": 0.3942766295707472,
+        "p25": 0.4455484896661367,
+        "p50": 0.5103338632750397,
+        "p75": 0.593402225755167,
+        "p90": 0.6443561208267091,
+        "min": 0.23052464228934816,
+        "max": 0.7360890302066773
+      },
+      "RANGE": {
+        "p10": 0.18012718600953895,
+        "p25": 0.21462639109697934,
+        "p50": 0.2647058823529412,
+        "p75": 0.3020667726550079,
+        "p90": 0.3357710651828299,
+        "min": 0.13036565977742448,
+        "max": 0.37042925278219396
+      },
+      "DOWN": {
+        "p10": 0.1327503974562798,
+        "p25": 0.17965023847376788,
+        "p50": 0.23211446740858505,
+        "p75": 0.2730524642289348,
+        "p90": 0.3135135135135136,
+        "min": 0.10095389507154214,
+        "max": 0.5190779014308426
+      }
+    },
+    "B": {
+      "UP": {
+        "p10": 0.16220472440944886,
+        "p25": 0.38976377952755903,
+        "p50": 0.6062992125984252,
+        "p75": 0.8818897637795275,
+        "p90": 1,
+        "min": 0,
+        "max": 1
+      },
+      "RANGE": {
+        "p10": 0,
+        "p25": 0.051181102362204724,
+        "p50": 0.2283464566929134,
+        "p75": 0.43700787401574803,
+        "p90": 0.5385826771653545,
+        "min": 0,
+        "max": 0.8031496062992126
+      },
+      "DOWN": {
+        "p10": 0,
+        "p25": 0,
+        "p50": 0,
+        "p75": 0.2204724409448819,
+        "p90": 0.32913385826771674,
+        "min": 0,
+        "max": 0.84251968503937
+      }
+    }
+  },
+  "perSymbol": {
+    "A": {
+      "AAPL": {
+        "total": 1258,
+        "counts": {
+          "UP": 743,
+          "RANGE": 288,
+          "DOWN": 227
+        },
+        "shares": {
+          "UP": 0.5906200317965024,
+          "RANGE": 0.2289348171701113,
+          "DOWN": 0.18044515103338632
+        },
+        "initial": "RANGE",
+        "transitionN": 33
+      },
+      "ABT": {
+        "total": 1258,
+        "counts": {
+          "UP": 564,
+          "RANGE": 270,
+          "DOWN": 424
+        },
+        "shares": {
+          "UP": 0.4483306836248013,
+          "RANGE": 0.21462639109697934,
+          "DOWN": 0.3370429252782194
+        },
+        "initial": "RANGE",
+        "transitionN": 40
+      },
+      "AMD": {
+        "total": 1258,
+        "counts": {
+          "UP": 582,
+          "RANGE": 347,
+          "DOWN": 329
+        },
+        "shares": {
+          "UP": 0.4626391096979332,
+          "RANGE": 0.2758346581875994,
+          "DOWN": 0.2615262321144674
+        },
+        "initial": "RANGE",
+        "transitionN": 37
+      },
+      "AMZN": {
+        "total": 1258,
+        "counts": {
+          "UP": 663,
+          "RANGE": 348,
+          "DOWN": 247
+        },
+        "shares": {
+          "UP": 0.527027027027027,
+          "RANGE": 0.2766295707472178,
+          "DOWN": 0.19634340222575516
+        },
+        "initial": "RANGE",
+        "transitionN": 37
+      },
+      "AVGO": {
+        "total": 1258,
+        "counts": {
+          "UP": 891,
+          "RANGE": 227,
+          "DOWN": 140
+        },
+        "shares": {
+          "UP": 0.7082670906200318,
+          "RANGE": 0.18044515103338632,
+          "DOWN": 0.11128775834658187
+        },
+        "initial": "RANGE",
+        "transitionN": 17
+      },
+      "BA": {
+        "total": 1258,
+        "counts": {
+          "UP": 350,
+          "RANGE": 364,
+          "DOWN": 544
+        },
+        "shares": {
+          "UP": 0.27821939586645467,
+          "RANGE": 0.2893481717011129,
+          "DOWN": 0.43243243243243246
+        },
+        "initial": "RANGE",
+        "transitionN": 45
+      },
+      "BAC": {
+        "total": 1258,
+        "counts": {
+          "UP": 547,
+          "RANGE": 336,
+          "DOWN": 375
+        },
+        "shares": {
+          "UP": 0.43481717011128773,
+          "RANGE": 0.2670906200317965,
+          "DOWN": 0.29809220985691576
+        },
+        "initial": "RANGE",
+        "transitionN": 29
+      },
+      "CAT": {
+        "total": 1258,
+        "counts": {
+          "UP": 677,
+          "RANGE": 270,
+          "DOWN": 311
+        },
+        "shares": {
+          "UP": 0.5381558028616852,
+          "RANGE": 0.21462639109697934,
+          "DOWN": 0.24721780604133545
+        },
+        "initial": "RANGE",
+        "transitionN": 34
+      },
+      "COST": {
+        "total": 1258,
+        "counts": {
+          "UP": 833,
+          "RANGE": 298,
+          "DOWN": 127
+        },
+        "shares": {
+          "UP": 0.6621621621621622,
+          "RANGE": 0.2368839427662957,
+          "DOWN": 0.10095389507154214
+        },
+        "initial": "RANGE",
+        "transitionN": 23
+      },
+      "CVX": {
+        "total": 1258,
+        "counts": {
+          "UP": 492,
+          "RANGE": 414,
+          "DOWN": 352
+        },
+        "shares": {
+          "UP": 0.39109697933227344,
+          "RANGE": 0.32909379968203495,
+          "DOWN": 0.27980922098569155
+        },
+        "initial": "RANGE",
+        "transitionN": 33
+      },
+      "GE": {
+        "total": 1258,
+        "counts": {
+          "UP": 689,
+          "RANGE": 225,
+          "DOWN": 344
+        },
+        "shares": {
+          "UP": 0.5476947535771065,
+          "RANGE": 0.17885532591414943,
+          "DOWN": 0.27344992050874406
+        },
+        "initial": "RANGE",
+        "transitionN": 25
+      },
+      "GOOGL": {
+        "total": 1258,
+        "counts": {
+          "UP": 750,
+          "RANGE": 210,
+          "DOWN": 298
+        },
+        "shares": {
+          "UP": 0.5961844197138315,
+          "RANGE": 0.1669316375198728,
+          "DOWN": 0.2368839427662957
+        },
+        "initial": "RANGE",
+        "transitionN": 25
+      },
+      "GS": {
+        "total": 1258,
+        "counts": {
+          "UP": 642,
+          "RANGE": 309,
+          "DOWN": 307
+        },
+        "shares": {
+          "UP": 0.5103338632750397,
+          "RANGE": 0.24562798092209856,
+          "DOWN": 0.24403815580286167
+        },
+        "initial": "RANGE",
+        "transitionN": 31
+      },
+      "HD": {
+        "total": 1258,
+        "counts": {
+          "UP": 707,
+          "RANGE": 266,
+          "DOWN": 285
+        },
+        "shares": {
+          "UP": 0.5620031796502385,
+          "RANGE": 0.21144674085850557,
+          "DOWN": 0.22655007949125597
+        },
+        "initial": "RANGE",
+        "transitionN": 31
+      },
+      "INTC": {
+        "total": 1258,
+        "counts": {
+          "UP": 290,
+          "RANGE": 315,
+          "DOWN": 653
+        },
+        "shares": {
+          "UP": 0.23052464228934816,
+          "RANGE": 0.2503974562798092,
+          "DOWN": 0.5190779014308426
+        },
+        "initial": "RANGE",
+        "transitionN": 41
+      },
+      "JNJ": {
+        "total": 1258,
+        "counts": {
+          "UP": 434,
+          "RANGE": 453,
+          "DOWN": 371
+        },
+        "shares": {
+          "UP": 0.3449920508744038,
+          "RANGE": 0.3600953895071542,
+          "DOWN": 0.294912559618442
+        },
+        "initial": "RANGE",
+        "transitionN": 41
+      },
+      "JPM": {
+        "total": 1258,
+        "counts": {
+          "UP": 662,
+          "RANGE": 290,
+          "DOWN": 306
+        },
+        "shares": {
+          "UP": 0.5262321144674086,
+          "RANGE": 0.23052464228934816,
+          "DOWN": 0.24324324324324326
+        },
+        "initial": "RANGE",
+        "transitionN": 25
+      },
+      "KO": {
+        "total": 1258,
+        "counts": {
+          "UP": 657,
+          "RANGE": 372,
+          "DOWN": 229
+        },
+        "shares": {
+          "UP": 0.5222575516693164,
+          "RANGE": 0.2957074721780604,
+          "DOWN": 0.1820349761526232
+        },
+        "initial": "RANGE",
+        "transitionN": 45
+      },
+      "LIN": {
+        "total": 1258,
+        "counts": {
+          "UP": 805,
+          "RANGE": 285,
+          "DOWN": 168
+        },
+        "shares": {
+          "UP": 0.6399046104928457,
+          "RANGE": 0.22655007949125597,
+          "DOWN": 0.13354531001589826
+        },
+        "initial": "RANGE",
+        "transitionN": 28
+      },
+      "LLY": {
+        "total": 1258,
+        "counts": {
+          "UP": 856,
+          "RANGE": 268,
+          "DOWN": 134
+        },
+        "shares": {
+          "UP": 0.6804451510333863,
+          "RANGE": 0.21303656597774245,
+          "DOWN": 0.10651828298887123
+        },
+        "initial": "RANGE",
+        "transitionN": 25
+      },
+      "MA": {
+        "total": 1258,
+        "counts": {
+          "UP": 621,
+          "RANGE": 406,
+          "DOWN": 231
+        },
+        "shares": {
+          "UP": 0.49364069952305245,
+          "RANGE": 0.32273449920508746,
+          "DOWN": 0.1836248012718601
+        },
+        "initial": "RANGE",
+        "transitionN": 42
+      },
+      "MCD": {
+        "total": 1258,
+        "counts": {
+          "UP": 626,
+          "RANGE": 395,
+          "DOWN": 237
+        },
+        "shares": {
+          "UP": 0.49761526232114467,
+          "RANGE": 0.3139904610492846,
+          "DOWN": 0.18839427662957076
+        },
+        "initial": "RANGE",
+        "transitionN": 32
+      },
+      "META": {
+        "total": 1258,
+        "counts": {
+          "UP": 751,
+          "RANGE": 164,
+          "DOWN": 343
+        },
+        "shares": {
+          "UP": 0.5969793322734499,
+          "RANGE": 0.13036565977742448,
+          "DOWN": 0.2726550079491256
+        },
+        "initial": "RANGE",
+        "transitionN": 21
+      },
+      "MSFT": {
+        "total": 1258,
+        "counts": {
+          "UP": 782,
+          "RANGE": 268,
+          "DOWN": 208
+        },
+        "shares": {
+          "UP": 0.6216216216216216,
+          "RANGE": 0.21303656597774245,
+          "DOWN": 0.16534181240063592
+        },
+        "initial": "RANGE",
+        "transitionN": 29
+      },
+      "MU": {
+        "total": 1258,
+        "counts": {
+          "UP": 509,
+          "RANGE": 362,
+          "DOWN": 387
+        },
+        "shares": {
+          "UP": 0.404610492845787,
+          "RANGE": 0.287758346581876,
+          "DOWN": 0.307631160572337
+        },
+        "initial": "RANGE",
+        "transitionN": 35
+      },
+      "NEE": {
+        "total": 1258,
+        "counts": {
+          "UP": 530,
+          "RANGE": 342,
+          "DOWN": 386
+        },
+        "shares": {
+          "UP": 0.42130365659777425,
+          "RANGE": 0.2718600953895072,
+          "DOWN": 0.3068362480127186
+        },
+        "initial": "RANGE",
+        "transitionN": 35
+      },
+      "NFLX": {
+        "total": 1258,
+        "counts": {
+          "UP": 778,
+          "RANGE": 293,
+          "DOWN": 187
+        },
+        "shares": {
+          "UP": 0.6184419713831478,
+          "RANGE": 0.2329093799682035,
+          "DOWN": 0.14864864864864866
+        },
+        "initial": "RANGE",
+        "transitionN": 29
+      },
+      "NVDA": {
+        "total": 1258,
+        "counts": {
+          "UP": 926,
+          "RANGE": 169,
+          "DOWN": 163
+        },
+        "shares": {
+          "UP": 0.7360890302066773,
+          "RANGE": 0.1343402225755167,
+          "DOWN": 0.12957074721780604
+        },
+        "initial": "RANGE",
+        "transitionN": 21
+      },
+      "ORCL": {
+        "total": 1258,
+        "counts": {
+          "UP": 779,
+          "RANGE": 261,
+          "DOWN": 218
+        },
+        "shares": {
+          "UP": 0.6192368839427663,
+          "RANGE": 0.20747217806041335,
+          "DOWN": 0.17329093799682035
+        },
+        "initial": "RANGE",
+        "transitionN": 31
+      },
+      "PEP": {
+        "total": 1258,
+        "counts": {
+          "UP": 557,
+          "RANGE": 466,
+          "DOWN": 235
+        },
+        "shares": {
+          "UP": 0.44276629570747217,
+          "RANGE": 0.37042925278219396,
+          "DOWN": 0.18680445151033387
+        },
+        "initial": "RANGE",
+        "transitionN": 41
+      },
+      "PG": {
+        "total": 1258,
+        "counts": {
+          "UP": 582,
+          "RANGE": 424,
+          "DOWN": 252
+        },
+        "shares": {
+          "UP": 0.4626391096979332,
+          "RANGE": 0.3370429252782194,
+          "DOWN": 0.20031796502384738
+        },
+        "initial": "RANGE",
+        "transitionN": 40
+      },
+      "PLD": {
+        "total": 1258,
+        "counts": {
+          "UP": 540,
+          "RANGE": 426,
+          "DOWN": 292
+        },
+        "shares": {
+          "UP": 0.4292527821939587,
+          "RANGE": 0.3386327503974563,
+          "DOWN": 0.23211446740858505
+        },
+        "initial": "RANGE",
+        "transitionN": 31
+      },
+      "QCOM": {
+        "total": 1258,
+        "counts": {
+          "UP": 497,
+          "RANGE": 333,
+          "DOWN": 428
+        },
+        "shares": {
+          "UP": 0.39507154213036566,
+          "RANGE": 0.2647058823529412,
+          "DOWN": 0.34022257551669316
+        },
+        "initial": "RANGE",
+        "transitionN": 33
+      },
+      "TMO": {
+        "total": 1258,
+        "counts": {
+          "UP": 575,
+          "RANGE": 340,
+          "DOWN": 343
+        },
+        "shares": {
+          "UP": 0.45707472178060415,
+          "RANGE": 0.2702702702702703,
+          "DOWN": 0.2726550079491256
+        },
+        "initial": "RANGE",
+        "transitionN": 35
+      },
+      "TSLA": {
+        "total": 1258,
+        "counts": {
+          "UP": 605,
+          "RANGE": 337,
+          "DOWN": 316
+        },
+        "shares": {
+          "UP": 0.4809220985691574,
+          "RANGE": 0.26788553259141495,
+          "DOWN": 0.25119236883942764
+        },
+        "initial": "RANGE",
+        "transitionN": 37
+      },
+      "UNH": {
+        "total": 1258,
+        "counts": {
+          "UP": 649,
+          "RANGE": 421,
+          "DOWN": 188
+        },
+        "shares": {
+          "UP": 0.5158982511923689,
+          "RANGE": 0.33465818759936405,
+          "DOWN": 0.1494435612082671
+        },
+        "initial": "RANGE",
+        "transitionN": 35
+      },
+      "V": {
+        "total": 1258,
+        "counts": {
+          "UP": 602,
+          "RANGE": 422,
+          "DOWN": 234
+        },
+        "shares": {
+          "UP": 0.4785373608903021,
+          "RANGE": 0.3354531001589825,
+          "DOWN": 0.18600953895071543
+        },
+        "initial": "RANGE",
+        "transitionN": 43
+      },
+      "WMT": {
+        "total": 1258,
+        "counts": {
+          "UP": 645,
+          "RANGE": 388,
+          "DOWN": 225
+        },
+        "shares": {
+          "UP": 0.5127186009538951,
+          "RANGE": 0.30842607313195547,
+          "DOWN": 0.17885532591414943
+        },
+        "initial": "RANGE",
+        "transitionN": 27
+      },
+      "XOM": {
+        "total": 1258,
+        "counts": {
+          "UP": 623,
+          "RANGE": 310,
+          "DOWN": 325
+        },
+        "shares": {
+          "UP": 0.49523052464228934,
+          "RANGE": 0.246422893481717,
+          "DOWN": 0.25834658187599363
+        },
+        "initial": "RANGE",
+        "transitionN": 39
+      }
+    },
+    "B": {
+      "AAPL": {
+        "total": 127,
+        "counts": {
+          "UP": 97,
+          "RANGE": 26,
+          "DOWN": 4
+        },
+        "shares": {
+          "UP": 0.7637795275590551,
+          "RANGE": 0.2047244094488189,
+          "DOWN": 0.031496062992125984
+        },
+        "initial": "DOWN",
+        "transitionN": 2
+      },
+      "ABT": {
+        "total": 127,
+        "counts": {
+          "UP": 11,
+          "RANGE": 80,
+          "DOWN": 36
+        },
+        "shares": {
+          "UP": 0.08661417322834646,
+          "RANGE": 0.6299212598425197,
+          "DOWN": 0.28346456692913385
+        },
+        "initial": "UP",
+        "transitionN": 7
+      },
+      "AMD": {
+        "total": 127,
+        "counts": {
+          "UP": 124,
+          "RANGE": 3,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 0.9763779527559056,
+          "RANGE": 0.023622047244094488,
+          "DOWN": 0
+        },
+        "initial": "UP",
+        "transitionN": 1
+      },
+      "AMZN": {
+        "total": 127,
+        "counts": {
+          "UP": 91,
+          "RANGE": 36,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 0.7165354330708661,
+          "RANGE": 0.28346456692913385,
+          "DOWN": 0
+        },
+        "initial": "UP",
+        "transitionN": 3
+      },
+      "AVGO": {
+        "total": 127,
+        "counts": {
+          "UP": 127,
+          "RANGE": 0,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 1,
+          "RANGE": 0,
+          "DOWN": 0
+        },
+        "initial": "UP",
+        "transitionN": 0
+      },
+      "BA": {
+        "total": 127,
+        "counts": {
+          "UP": 62,
+          "RANGE": 35,
+          "DOWN": 30
+        },
+        "shares": {
+          "UP": 0.4881889763779528,
+          "RANGE": 0.2755905511811024,
+          "DOWN": 0.23622047244094488
+        },
+        "initial": "UP",
+        "transitionN": 3
+      },
+      "BAC": {
+        "total": 127,
+        "counts": {
+          "UP": 127,
+          "RANGE": 0,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 1,
+          "RANGE": 0,
+          "DOWN": 0
+        },
+        "initial": "UP",
+        "transitionN": 0
+      },
+      "CAT": {
+        "total": 127,
+        "counts": {
+          "UP": 127,
+          "RANGE": 0,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 1,
+          "RANGE": 0,
+          "DOWN": 0
+        },
+        "initial": "UP",
+        "transitionN": 0
+      },
+      "COST": {
+        "total": 127,
+        "counts": {
+          "UP": 0,
+          "RANGE": 55,
+          "DOWN": 72
+        },
+        "shares": {
+          "UP": 0,
+          "RANGE": 0.4330708661417323,
+          "DOWN": 0.5669291338582677
+        },
+        "initial": "RANGE",
+        "transitionN": 3
+      },
+      "CVX": {
+        "total": 127,
+        "counts": {
+          "UP": 59,
+          "RANGE": 68,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 0.4645669291338583,
+          "RANGE": 0.5354330708661418,
+          "DOWN": 0
+        },
+        "initial": "RANGE",
+        "transitionN": 2
+      },
+      "GE": {
+        "total": 127,
+        "counts": {
+          "UP": 119,
+          "RANGE": 8,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 0.937007874015748,
+          "RANGE": 0.06299212598425197,
+          "DOWN": 0
+        },
+        "initial": "UP",
+        "transitionN": 2
+      },
+      "GOOGL": {
+        "total": 127,
+        "counts": {
+          "UP": 124,
+          "RANGE": 3,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 0.9763779527559056,
+          "RANGE": 0.023622047244094488,
+          "DOWN": 0
+        },
+        "initial": "RANGE",
+        "transitionN": 1
+      },
+      "GS": {
+        "total": 127,
+        "counts": {
+          "UP": 127,
+          "RANGE": 0,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 1,
+          "RANGE": 0,
+          "DOWN": 0
+        },
+        "initial": "UP",
+        "transitionN": 0
+      },
+      "HD": {
+        "total": 127,
+        "counts": {
+          "UP": 43,
+          "RANGE": 45,
+          "DOWN": 39
+        },
+        "shares": {
+          "UP": 0.33858267716535434,
+          "RANGE": 0.3543307086614173,
+          "DOWN": 0.30708661417322836
+        },
+        "initial": "RANGE",
+        "transitionN": 5
+      },
+      "INTC": {
+        "total": 127,
+        "counts": {
+          "UP": 99,
+          "RANGE": 28,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 0.7795275590551181,
+          "RANGE": 0.2204724409448819,
+          "DOWN": 0
+        },
+        "initial": "RANGE",
+        "transitionN": 3
+      },
+      "JNJ": {
+        "total": 127,
+        "counts": {
+          "UP": 112,
+          "RANGE": 15,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 0.8818897637795275,
+          "RANGE": 0.11811023622047244,
+          "DOWN": 0
+        },
+        "initial": "RANGE",
+        "transitionN": 1
+      },
+      "JPM": {
+        "total": 127,
+        "counts": {
+          "UP": 127,
+          "RANGE": 0,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 1,
+          "RANGE": 0,
+          "DOWN": 0
+        },
+        "initial": "UP",
+        "transitionN": 0
+      },
+      "KO": {
+        "total": 127,
+        "counts": {
+          "UP": 29,
+          "RANGE": 70,
+          "DOWN": 28
+        },
+        "shares": {
+          "UP": 0.2283464566929134,
+          "RANGE": 0.5511811023622047,
+          "DOWN": 0.2204724409448819
+        },
+        "initial": "RANGE",
+        "transitionN": 4
+      },
+      "LIN": {
+        "total": 127,
+        "counts": {
+          "UP": 30,
+          "RANGE": 48,
+          "DOWN": 49
+        },
+        "shares": {
+          "UP": 0.23622047244094488,
+          "RANGE": 0.3779527559055118,
+          "DOWN": 0.3858267716535433
+        },
+        "initial": "RANGE",
+        "transitionN": 5
+      },
+      "LLY": {
+        "total": 127,
+        "counts": {
+          "UP": 57,
+          "RANGE": 45,
+          "DOWN": 25
+        },
+        "shares": {
+          "UP": 0.44881889763779526,
+          "RANGE": 0.3543307086614173,
+          "DOWN": 0.1968503937007874
+        },
+        "initial": "RANGE",
+        "transitionN": 3
+      },
+      "MA": {
+        "total": 127,
+        "counts": {
+          "UP": 35,
+          "RANGE": 66,
+          "DOWN": 26
+        },
+        "shares": {
+          "UP": 0.2755905511811024,
+          "RANGE": 0.5196850393700787,
+          "DOWN": 0.2047244094488189
+        },
+        "initial": "UP",
+        "transitionN": 5
+      },
+      "MCD": {
+        "total": 127,
+        "counts": {
+          "UP": 23,
+          "RANGE": 87,
+          "DOWN": 17
+        },
+        "shares": {
+          "UP": 0.18110236220472442,
+          "RANGE": 0.6850393700787402,
+          "DOWN": 0.13385826771653545
+        },
+        "initial": "DOWN",
+        "transitionN": 4
+      },
+      "META": {
+        "total": 127,
+        "counts": {
+          "UP": 73,
+          "RANGE": 17,
+          "DOWN": 37
+        },
+        "shares": {
+          "UP": 0.5748031496062992,
+          "RANGE": 0.13385826771653545,
+          "DOWN": 0.29133858267716534
+        },
+        "initial": "UP",
+        "transitionN": 2
+      },
+      "MSFT": {
+        "total": 127,
+        "counts": {
+          "UP": 100,
+          "RANGE": 4,
+          "DOWN": 23
+        },
+        "shares": {
+          "UP": 0.7874015748031497,
+          "RANGE": 0.031496062992125984,
+          "DOWN": 0.18110236220472442
+        },
+        "initial": "UP",
+        "transitionN": 2
+      },
+      "MU": {
+        "total": 127,
+        "counts": {
+          "UP": 127,
+          "RANGE": 0,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 1,
+          "RANGE": 0,
+          "DOWN": 0
+        },
+        "initial": "UP",
+        "transitionN": 0
+      },
+      "NEE": {
+        "total": 127,
+        "counts": {
+          "UP": 66,
+          "RANGE": 61,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 0.5196850393700787,
+          "RANGE": 0.48031496062992124,
+          "DOWN": 0
+        },
+        "initial": "RANGE",
+        "transitionN": 4
+      },
+      "NFLX": {
+        "total": 127,
+        "counts": {
+          "UP": 64,
+          "RANGE": 23,
+          "DOWN": 40
+        },
+        "shares": {
+          "UP": 0.5039370078740157,
+          "RANGE": 0.18110236220472442,
+          "DOWN": 0.31496062992125984
+        },
+        "initial": "UP",
+        "transitionN": 2
+      },
+      "NVDA": {
+        "total": 127,
+        "counts": {
+          "UP": 112,
+          "RANGE": 15,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 0.8818897637795275,
+          "RANGE": 0.11811023622047244,
+          "DOWN": 0
+        },
+        "initial": "UP",
+        "transitionN": 1
+      },
+      "ORCL": {
+        "total": 127,
+        "counts": {
+          "UP": 94,
+          "RANGE": 5,
+          "DOWN": 28
+        },
+        "shares": {
+          "UP": 0.7401574803149606,
+          "RANGE": 0.03937007874015748,
+          "DOWN": 0.2204724409448819
+        },
+        "initial": "UP",
+        "transitionN": 2
+      },
+      "PEP": {
+        "total": 127,
+        "counts": {
+          "UP": 56,
+          "RANGE": 57,
+          "DOWN": 14
+        },
+        "shares": {
+          "UP": 0.4409448818897638,
+          "RANGE": 0.44881889763779526,
+          "DOWN": 0.11023622047244094
+        },
+        "initial": "DOWN",
+        "transitionN": 7
+      },
+      "PG": {
+        "total": 127,
+        "counts": {
+          "UP": 0,
+          "RANGE": 20,
+          "DOWN": 107
+        },
+        "shares": {
+          "UP": 0,
+          "RANGE": 0.15748031496062992,
+          "DOWN": 0.84251968503937
+        },
+        "initial": "RANGE",
+        "transitionN": 3
+      },
+      "PLD": {
+        "total": 127,
+        "counts": {
+          "UP": 77,
+          "RANGE": 50,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 0.6062992125984252,
+          "RANGE": 0.3937007874015748,
+          "DOWN": 0
+        },
+        "initial": "RANGE",
+        "transitionN": 1
+      },
+      "QCOM": {
+        "total": 127,
+        "counts": {
+          "UP": 63,
+          "RANGE": 64,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 0.49606299212598426,
+          "RANGE": 0.5039370078740157,
+          "DOWN": 0
+        },
+        "initial": "RANGE",
+        "transitionN": 3
+      },
+      "TMO": {
+        "total": 127,
+        "counts": {
+          "UP": 100,
+          "RANGE": 9,
+          "DOWN": 18
+        },
+        "shares": {
+          "UP": 0.7874015748031497,
+          "RANGE": 0.07086614173228346,
+          "DOWN": 0.14173228346456693
+        },
+        "initial": "DOWN",
+        "transitionN": 2
+      },
+      "TSLA": {
+        "total": 127,
+        "counts": {
+          "UP": 84,
+          "RANGE": 43,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 0.6614173228346457,
+          "RANGE": 0.33858267716535434,
+          "DOWN": 0
+        },
+        "initial": "UP",
+        "transitionN": 4
+      },
+      "UNH": {
+        "total": 127,
+        "counts": {
+          "UP": 28,
+          "RANGE": 33,
+          "DOWN": 66
+        },
+        "shares": {
+          "UP": 0.2204724409448819,
+          "RANGE": 0.25984251968503935,
+          "DOWN": 0.5196850393700787
+        },
+        "initial": "DOWN",
+        "transitionN": 5
+      },
+      "V": {
+        "total": 127,
+        "counts": {
+          "UP": 6,
+          "RANGE": 102,
+          "DOWN": 19
+        },
+        "shares": {
+          "UP": 0.047244094488188976,
+          "RANGE": 0.8031496062992126,
+          "DOWN": 0.14960629921259844
+        },
+        "initial": "UP",
+        "transitionN": 3
+      },
+      "WMT": {
+        "total": 127,
+        "counts": {
+          "UP": 98,
+          "RANGE": 29,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 0.7716535433070866,
+          "RANGE": 0.2283464566929134,
+          "DOWN": 0
+        },
+        "initial": "RANGE",
+        "transitionN": 3
+      },
+      "XOM": {
+        "total": 127,
+        "counts": {
+          "UP": 71,
+          "RANGE": 56,
+          "DOWN": 0
+        },
+        "shares": {
+          "UP": 0.5590551181102362,
+          "RANGE": 0.4409448818897638,
+          "DOWN": 0
+        },
+        "initial": "RANGE",
+        "transitionN": 5
+      }
+    }
+  }
+}
