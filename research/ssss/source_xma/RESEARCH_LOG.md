@@ -549,3 +549,27 @@ Terminal v1 classifications:
 - VIX expanded dimensions: INCONCLUSIVE / DATA NOT AVAILABLE
 - HYS2 fire-bottom/top: REDUNDANT WITHIN STRICT XMA EVENT SAMPLE only; global redundancy not established.
 
+## 2026-09-28 — Falsification v1 CLOSED
+
+Falsification v1 is formally CLOSED.
+
+Final core classifications:
+- Upper strict confluence => general top/decline rule: REJECT
+- Lower strict confluence => incremental buy/rebound rule: REJECT
+- common state transitions / midpoint / transition paths: OBSERVE / NOT PROMOTED
+- Below-VAL / HYS2 interaction / Volume / Breadth / VIX expanded holdout: INCONCLUSIVE / DATA NOT AVAILABLE
+- HYS2 fire-bottom/top: REDUNDANT WITHIN STRICT XMA EVENT SAMPLE only
+
+Independence:
+- Upper 438 episodes -> 192 frozen +/-2-day market-wave clusters
+- Lower 345 -> 130
+
+2026H1 remains sealed:
+max persisted v1 event date = 2025-12-29.
+
+No Regime rescue, threshold repair, matching expansion, or v2 hypothesis is opened automatically.
+
+See:
+- experiments/falsification_v1/HYPOTHESIS_LEDGER_v1.md
+- experiments/falsification_v1/FALSIFICATION_V1_CLOSURE_REPORT.md
+
