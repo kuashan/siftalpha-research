@@ -481,16 +481,18 @@ Let:
 - m_bar = n/K;
 - CV_m = sample_sd(m_k)/m_bar.
 
-For ESS only, define an event-level analysis value `Y_i`:
+For ESS only, define one scalar analysis value `Y_i` for each hypothesis primary unit:
 
-- H1: ATR-normalized MAE;
-- H2: ATR-normalized max drawdown;
-- H3: touch indicator 0/1;
-- H4: `min(first_touch_bar,20)`, with no-touch coded 20;
-- H5: adjusted 10-bar future-return rank;
-- H6: 10-bar future-return rank;
-- H7-H10: event-level matched excess;
-- H11-H14: event-pair direction-normalized DiD contribution.
+- H1: Episode-level ATR-normalized MAE;
+- H2: Episode-level ATR-normalized max drawdown;
+- H3: Episode-level touch indicator 0/1;
+- H4: Episode-level `min(first_touch_bar,20)`, with no-touch coded 20;
+- H5: snapshot-level H5 rank-biserial correlation after the frozen within-snapshot adjustment;
+- H6: snapshot-level H6 partial-Spearman correlation after the frozen within-snapshot adjustment;
+- H7-H10: Episode-level matched excess;
+- H11-H14: matched A/B-pair direction-normalized DiD contribution.
+
+For F3, `n` in the ESS formula is therefore the number of eligible date×state snapshots, not the number of symbol rows inside those snapshots.
 
 Estimate one-way ICC using ANOVA:
 
@@ -866,7 +868,7 @@ A hypothesis may be SUPPORT only if all are true:
 - absolute/directional effect reaches MDE;
 - BH-adjusted q <=0.10.
 
-Otherwise classification follows Section 14.
+Otherwise classification follows Section 15.
 
 ---
 
