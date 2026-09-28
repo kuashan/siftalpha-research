@@ -176,14 +176,14 @@ Frozen valid-date threshold:
 
 Because the development Twelve Data connection is limited to 8 requests/minute, the 39 symbols were retrieved in fixed batches.
 
-The implementation test reached:
+The initial implementation-path test reached:
 - 32 distinct real breadth-universe members with valid daily history
 - exactly the frozen minimum valid membership threshold.
 
 Test dates:
 - 2025-05-20 through 2025-06-27 trading sessions.
 
-For every sampled date the 32 retrieved members had enough history for their own SMA20.
+For every sampled date the first 32 retrieved members had enough history for their own SMA20.
 
 Example combined development breadth:
 - 2025-06-20: 46.875%
@@ -192,11 +192,25 @@ Example combined development breadth:
 
 This is an implementation example only; it is not evidence for H11/H12.
 
+A subsequent development-availability check fetched the seven members not needed for the initial 32/39 path test:
+
+- BA
+- GE
+- XOM
+- CVX
+- LIN
+- NEE
+- PLD
+
+All seven returned 5,000 daily rows from the development provider.
+
+Therefore development-provider history availability has now been checked for **39/39 frozen Breadth symbols**.
+
+This does not waive the later Data Freeze requirement to cache and hash all 39 symbols.
+
 Result:
 
-**PASS — the 80%-availability Breadth path and prior-20-valid-observation Q10 rule are operational on real data.**
-
-The remaining seven members were not declared unavailable. They were simply unnecessary for exercising the frozen 80% path in this sanity test.
+**PASS — the 80%-availability Breadth path, prior-20-valid-observation Q10 rule, and 39/39 development-provider symbol availability are operational/confirmed.**
 
 ## 8. Implementation discrepancy found and fixed
 
