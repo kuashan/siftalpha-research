@@ -43,8 +43,12 @@ No fourth state is added in v1.
 
 ## Waiting window
 
-Maximum waiting time from the anchor transition to the next transition out of RANGE:
+Maximum waiting time per transition step:
 **60 trading bars.**
+
+For a registered anchor transition (DOWN -> RANGE or UP -> RANGE), the first step has already occurred, so the 60-bar clock applies to the next exit from RANGE.
+
+For a same-origin-state random control, allow up to 60 bars for origin -> RANGE. If RANGE is entered, restart a new 60-bar clock for the next exit from RANGE.
 
 The first transition out of RANGE determines the completed path.
 
@@ -74,7 +78,7 @@ For every anchor transition, sample same-origin-state control anchors:
 - deterministic seed: 20260928;
 - sample up to 20 eligible control anchors.
 
-Each control anchor is followed for the same 60-bar maximum observation window.
+Each control anchor uses the same 60-bar maximum **per-step** rule.
 
 Because an ordinary DOWN/UP control bar has not yet entered RANGE, random controls add explicit non-RANGE-entry categories:
 - NO_RANGE_ENTRY_60: no transition out of the origin state is observed within 60 bars;
