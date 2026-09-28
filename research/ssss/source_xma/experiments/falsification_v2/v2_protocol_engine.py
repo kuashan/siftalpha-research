@@ -88,31 +88,24 @@ def build_continuous_state_runs(
     return out
 
 
-def market_wave_ids(anchor_dates: Sequence[pd.Timestamp], max_gap_days: int = 2) -> np.ndarray:
-    """Cluster sorted unique trading dates by <=2 observed trading-date steps.
+def market_wave_ids(anchor_session_idx: Sequence[int], max_gap_sessions: int = 2) -> np.ndarray:
+    """Cluster anchors by exact trading-session distance with transitive closure.
 
-    Input must already be market trading dates. Difference is measured in the
-    ordinal position among unique anchor dates, not calendar days.
+    Caller must supply exchange-calendar/session ordinals. Calendar-day or
+    business-day approximations are intentionally rejected by this API.
     """
-    dates = [pd.Timestamp(x) for x in anchor_dates]
-    unique = sorted(set(dates))
-    pos = {d: i for i, d in enumerate(unique)}
-    # Protocol links anchors separated by <=2 trading dates. Since only anchor
-    # dates are supplied here, caller must pass a complete trading-calendar
-    # ordinal when exact exchange-calendar distance is needed.
-    # This helper therefore uses business-day distance as deterministic fallback.
-    def bdist(a: pd.Timestamp, b: pd.Timestamp) -> int:
-        return int(np.busday_count(a.date(), b.date()))
-
-    wave_by_date = {}
+    idx = np.asarray(anchor_session_idx, dtype=int)
+    order = np.argsort(idx, kind="mergesort")
+    out = np.empty(len(idx), dtype=int)
     wave = 0
     prev = None
-    for d in unique:
-        if prev is None or bdist(prev, d) > max_gap_days:
+    for pos in order:
+        cur = int(idx[pos])
+        if prev is None or cur - prev > max_gap_sessions:
             wave += 1
-        wave_by_date[d] = wave
-        prev = d
-    return np.array([wave_by_date[d] for d in dates], dtype=int)
+        out[pos] = wave
+        prev = cur
+    return out
 
 
 def design_effect_ess(values: Sequence[float], cluster_ids: Sequence[int]) -> dict:
@@ -175,27 +168,41 @@ def select_nearest_controls(event: pd.Series, controls: pd.DataFrame, cols: Sequ
 
 
 def pair_f5_a_to_b(a: pd.DataFrame, b: pd.DataFrame) -> pd.DataFrame:
-    """Deterministic same-symbol, same-quarter, one-use B pairing."""
-    a = a.copy().sort_values(["date", "symbol", "event_id"], kind="mergesort")
+    """Deterministic same-symbol, same-quarter, one-use B pairing.
+
+    Required columns include integer session_idx from the frozen trading
+    calendar. Calendar-day distance is never used.
+    """
+    for frame_name, frame in (("A", a), ("B", b)):
+        missing = {"date","symbol","event_id","session_idx"} - set(frame.columns)
+        if missing:
+            raise ValueError(f"{frame_name} missing columns: {sorted(missing)}")
+
+    a = a.copy().sort_values(["session_idx", "symbol", "event_id"], kind="mergesort")
     b = b.copy()
     used: set[str] = set()
     pairs = []
+    b_dates = pd.to_datetime(b["date"])
+
     for _, ar in a.iterrows():
         ad = pd.Timestamp(ar["date"])
         q = ad.to_period("Q")
         cand = b[
             (b["symbol"] == ar["symbol"]) &
-            (pd.to_datetime(b["date"]).dt.to_period("Q") == q) &
+            (b_dates.dt.to_period("Q") == q) &
             (~b["event_id"].isin(used))
         ].copy()
+
         if cand.empty:
             pairs.append({"a_event_id": ar["event_id"], "b_event_id": None, "status": "UNMATCHABLE_FOR_DID"})
             continue
-        cand["_dist"] = (pd.to_datetime(cand["date"]) - ad).abs().dt.days
-        cand = cand.sort_values(["_dist", "date", "event_id"], kind="mergesort")
+
+        cand["_dist"] = (cand["session_idx"].astype(int) - int(ar["session_idx"])).abs()
+        cand = cand.sort_values(["_dist", "session_idx", "event_id"], kind="mergesort")
         br = cand.iloc[0]
         used.add(str(br["event_id"]))
         pairs.append({"a_event_id": ar["event_id"], "b_event_id": br["event_id"], "status": "MATCHED"})
+
     return pd.DataFrame(pairs)
 
 
