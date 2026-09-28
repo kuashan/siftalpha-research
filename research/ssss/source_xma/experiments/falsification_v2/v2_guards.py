@@ -13,6 +13,31 @@ SEEDS = {
 }
 
 
+
+
+
+def deterministic_rejection_permutation(
+    values: np.ndarray,
+    seed: int,
+    validator,
+    max_attempts: int = 100_000,
+) -> tuple[np.ndarray, int]:
+    """Permute from one fixed RNG stream until validator(candidate) is true.
+
+    This is the only allowed rejection-sampling pattern for guards that must
+    preserve downstream raw/wave/sample structure. It never searches alternate
+    seeds. Returns (accepted_values, attempts_used).
+    """
+    rng = np.random.default_rng(seed)
+    base = np.asarray(values)
+    for attempt in range(1, max_attempts + 1):
+        candidate = base[rng.permutation(len(base))]
+        if bool(validator(candidate)):
+            return candidate.copy(), attempt
+    raise ValueError(
+        f"GUARD_INSUFFICIENT: no valid permutation after {max_attempts} attempts"
+    )
+
 def _permute_within_groups(
     frame: pd.DataFrame,
     value_col: str,
