@@ -33,9 +33,10 @@ jobs:
           set -euo pipefail
           python3 -m pip install --upgrade pip
           python3 -m pip install -r research/ssss/source_xma/experiments/falsification_v2/requirements_v2.txt
+          python3 -m pip install -r research/ssss/source_xma/experiments/falsification_v2/requirements_yfinance.txt
 
       - name: Run deterministic infrastructure and protocol-engine tests
         working-directory: research/ssss/source_xma/experiments/falsification_v2
         run: |
           set -euo pipefail
-          python3 -m unittest -v test_v2_infrastructure.py test_v2_protocol_engine.py test_v2_statistics_guards.py
+          python3 -m unittest -v test_v2_infrastructure.py test_v2_protocol_engine.py test_v2_statistics_guards.py test_provider_parity.py
