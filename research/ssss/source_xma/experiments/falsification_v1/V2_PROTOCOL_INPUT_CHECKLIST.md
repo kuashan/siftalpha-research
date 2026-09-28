@@ -7,23 +7,30 @@ Date: 2026-09-28
 
 This document does not define v2 hypotheses.
 
-It defines the questions that must be answered before writing and freezing the v2 Protocol.
+It defines the questions and constraints that must be resolved before writing and freezing the v2 Protocol.
 
-No experiment, data analysis, or sealed-window access is authorized by this document.
+No experiment, data analysis, strategy logic, or sealed-window access is authorized by this document.
 
 ---
 
-# 1. Candidate Condition Variables
+# 1. Candidate Condition Variable Scope
 
 Before protocol writing, identify candidate XMA condition variables.
 
-For each candidate:
+A candidate variable must answer:
+
+1. Why can this variable provide orthogonal information relative to XMA geometry?
+2. What part of XMA information is not already contained in this variable?
+3. Why is this a condition variable rather than a standalone signal?
+
+Required fields:
 
 - definition;
-- intended interpretation;
-- why it is a condition variable rather than a standalone signal;
+- theoretical interpretation;
+- orthogonality rationale;
 - required data fields;
-- availability status.
+- availability status;
+- missing-data treatment.
 
 Candidate classes may include:
 
@@ -34,11 +41,47 @@ Candidate classes may include:
 - lifecycle variables;
 - other preregisterable context dimensions.
 
+Candidate variable count must be bounded before Protocol freeze. Range expansion after seeing results is prohibited.
+
+If a candidate variable is unavailable during v2 implementation, it cannot remain permanently INCONCLUSIVE. It must be classified according to the frozen protocol decision, with unavailable candidates excluded from testing.
+
 No candidate becomes a hypothesis until protocol freeze.
 
 ---
 
-# 2. Data Availability Audit Requirements
+# 2. Research Category Boundaries
+
+v2 research categories are separated as follows:
+
+## Risk Management
+
+XMA as a risk/context variable.
+
+## Position Lifecycle
+
+Condition variable is XMA's own lifecycle state transition.
+
+## Conditional Information
+
+Condition variable is external context × XMA state interaction.
+
+Lifecycle and Conditional Information share the same statistical design discipline but must not be mixed into one hypothesis family.
+
+## Cross-sectional Ranking
+
+XMA state as a relative ranking/context feature across assets.
+
+## Risk-Off Overlay
+
+Optional category:
+
+Study when XMA information fails or degrades under predefined extreme risk conditions.
+
+This is not Regime Mining and cannot be used to rescue failed directional hypotheses.
+
+---
+
+# 3. Data Availability Audit Requirements
 
 Before any v2 hypothesis is accepted, record:
 
@@ -51,9 +94,19 @@ Before any v2 hypothesis is accepted, record:
 
 Unknown availability is not an acceptable basis for hypothesis testing.
 
+Product data schema and research data schema must use the same specification.
+
+Event logs must be designed before strategy integration and include future execution requirements such as:
+
+- timestamp;
+- state;
+- signal context;
+- confidence fields;
+- execution result fields.
+
 ---
 
-# 3. Sealed Window Rule Input
+# 4. Sealed Window Rule Input
 
 The sealed window is not selected here.
 
@@ -62,11 +115,12 @@ Required rule:
 - sealed window begins only after v2 Protocol freeze;
 - pre-freeze data cannot be considered untouched holdout;
 - no v1 forward-horizon exposed data may become v2 sealed data;
-- sealed data cannot be used for Discovery, Validation, Sensitivity, or Robustness before final unlock.
+- sealed data cannot be used for Discovery, Validation, Sensitivity, or Robustness before final unlock;
+- once unlocked, it cannot be resealed.
 
 ---
 
-# 4. FDR Family Design Questions
+# 5. FDR Family Design Questions
 
 Before Protocol freeze determine:
 
@@ -75,15 +129,22 @@ Before Protocol freeze determine:
 - correction method;
 - whether families are separated by research category or statistic type.
 
+Requirements:
+
+- family membership must correspond to comparable primary statistics;
+- family size must be frozen before outcome inspection;
+- hierarchical FDR structure should be considered (category level then within-family correction);
+- any guard/null hypothesis design must be preregistered.
+
 The final family structure must be frozen before outcome inspection.
 
 ---
 
-# 5. Primary Statistic Design Questions
+# 6. Primary Statistic Design Questions
 
 Every hypothesis must specify one primary statistic before testing.
 
-Open decisions:
+Required decisions:
 
 - absolute metric or relative metric;
 - matched or unmatched comparison;
@@ -94,7 +155,7 @@ No post-result statistic selection is allowed.
 
 ---
 
-# 6. Sample Size and Statistical Power Inputs
+# 7. Sample Size, MDE and ESS Inputs
 
 Before Protocol freeze determine:
 
@@ -104,69 +165,61 @@ Before Protocol freeze determine:
 - ESS reporting method;
 - minimum detectable effect (MDE).
 
-Sample size rules must exist before testing.
+Requirements:
+
+- MDE must be based on economic significance, not statistical significance alone;
+- sample floor must include raw events, wave clusters, and symbol clusters;
+- ESS methodology must be frozen before testing.
+
+Examples of economic MDE categories:
+
+- MAE improvement;
+- drawdown reduction;
+- holding duration change;
+- cross-sectional IC improvement;
+- risk-adjusted return improvement.
 
 ---
 
-# 7. Research Category Inputs
+# 8. Research Category Inputs
 
 For each v2 category define:
 
 ## Risk Management
 
-Potential inputs:
-
-- MAE;
-- drawdown;
-- holding duration.
-
 Required:
 
-primary statistic;
-MDE;
-data fields.
+- primary statistic;
+- MDE;
+- data fields.
 
 ## Position Lifecycle
 
-Potential inputs:
-
-- conditional transition probability;
-- lifecycle outcome distribution.
-
 Required:
 
-primary statistic;
-MDE;
-data fields.
+- primary statistic;
+- MDE;
+- data fields.
 
 ## Cross-sectional Ranking
 
-Potential inputs:
-
-- relative return ranking;
-- information coefficient.
-
 Required:
 
-primary statistic;
-MDE;
-data fields.
+- primary statistic;
+- MDE;
+- data fields.
 
 ## Conditional Information
 
-Potential inputs:
-
-- interaction effects between XMA state and frozen context variables.
-
 Required:
 
-primary statistic;
-MDE;
-data fields.
+- primary statistic;
+- MDE;
+- data fields.
 
 ---
 
-# 8. Decay Assumption Input
+# 9. Decay Assumption Input
 
 Before Protocol freeze determine:
 
@@ -178,7 +231,7 @@ The decay coefficient belongs to Protocol, not this checklist.
 
 ---
 
-# 9. Product Infrastructure Boundary
+# 10. Product Infrastructure Boundary
 
 Allowed before v2 Protocol freeze:
 
@@ -188,7 +241,7 @@ Allowed before v2 Protocol freeze:
 - risk controls;
 - monitoring;
 - logging;
-- kill switch.
+- independent kill switch infrastructure.
 
 Not allowed:
 
@@ -196,9 +249,29 @@ Not allowed:
 - strategy logic;
 - execution rules derived from rejected v1 hypotheses.
 
+Kill switch must be independent from strategy logic.
+
 ---
 
-# 10. Completion Criteria Before Protocol Writing
+# 11. Non-Goals
+
+v2 will not:
+
+- perform parameter optimization;
+- perform Regime Mining;
+- switch signal families;
+- build multi-signal portfolios;
+- create position-sizing rules;
+- optimize execution costs;
+- design short-selling systems.
+
+v2 answers only one class of question:
+
+**Does XMA geometry provide incremental information as a condition variable?**
+
+---
+
+# 12. Completion Criteria Before Protocol Writing
 
 All items above must have explicit answers before creating:
 
@@ -206,12 +279,12 @@ All items above must have explicit answers before creating:
 
 Current status:
 
-CHECKLIST DRAFTED
+CHECKLIST UPDATED AFTER REVIEW
 
 Next steps:
 
-1. Review checklist.
-2. Resolve open design questions.
+1. Review final checklist.
+2. Resolve remaining design questions.
 3. Freeze v2 Protocol.
 4. Select sealed window.
 5. Authorize experiments only after freeze.
