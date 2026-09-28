@@ -946,9 +946,27 @@ For every date on which Breadth is computed, persist the exact valid/missing mem
 
 VIX is frozen separately as the VIX Index source/snapshot and may not be replaced by a VIX futures ETF.
 
+Provider selection follows `SSSS_DATA_SOURCE_POLICY.md`.
+
+Provider roles at Protocol Draft time:
+
+- Massive: primary research source when available;
+- yfinance: policy-approved fallback candidate;
+- Twelve Data: development/sanity source only unless a future formal policy amendment explicitly changes its role.
+
 The development Twelve Data data used during sanity testing is not automatically the final frozen provider.
 
-No vendor may be changed after outcome inspection.
+If Massive is unavailable at F1:
+1. the preregistered `V2_PROVIDER_PARITY_PLAN_v1.md` governs fallback review;
+2. yfinance 1.7.0 is the pinned fallback client candidate;
+3. both `auto_adjust=False` and `auto_adjust=True` semantics are characterized before one official mode is selected;
+4. the parity review may not use H1-H14 outcomes;
+5. once a yfinance adjustment mode is admitted, the complete 51-series stock/ETF stage must be downloaded under that one mode;
+6. no ticker-by-ticker provider mixing is permitted.
+
+If primary-provider overlap remains unavailable, an explicit pre-outcome governance decision is required before yfinance can become the replacement official stage provider. That decision must document corporate-action/adjustment semantics and trigger a full-stage download before scientific outcome interpretation.
+
+No vendor or adjustment mode may be changed after scientific outcome inspection.
 
 ---
 
@@ -971,9 +989,12 @@ Current required implementation set:
   - 51-series completeness gate;
   - hashes and coverage metadata.
 
-- official provider retrieval adapter(s)
-  - currently development adapter: `twelve_data_panel_fetch.py`;
-  - final official provider adapter is frozen at F1 Data Freeze.
+- provider retrieval / parity layer
+  - development adapter: `twelve_data_panel_fetch.py`;
+  - policy-approved fallback adapter: `yfinance_panel_fetch.py`;
+  - parity implementation: `provider_parity_audit.py`;
+  - parity preregistration: `V2_PROVIDER_PARITY_PLAN_v1.md`;
+  - final official provider adapter + adjustment mode are frozen at F1 Data Freeze.
 
 - `v2_protocol_engine.py`
   - F1 continuous-state Episodes;
@@ -1000,16 +1021,22 @@ Current required implementation set:
 - `freeze_manifests.py`
   - deterministic Data/Code manifest hashing.
 
-- exact dependency lock:
-  - `requirements_v2.txt`.
+- exact dependency locks:
+  - `requirements_v2.txt`;
+  - `requirements_yfinance.txt` when yfinance participates in F1 Data Freeze.
 
 - deterministic tests:
   - `test_v2_infrastructure.py`;
   - `test_v2_protocol_engine.py`;
-  - `test_v2_statistics_guards.py`.
+  - `test_v2_statistics_guards.py`;
+  - `test_provider_parity.py`.
 
-- CI execution definition:
-  - `.github/workflows/v2-research-infra.yml`.
+- CI execution definitions:
+  - hosted: `.github/workflows/v2-research-infra.yml`;
+  - optional self-hosted recovery: `.github/workflows/v2-research-infra-selfhosted.yml`;
+  - self-hosted bootstrap: `setup_self_hosted_runner.sh`.
+
+The runner location is not scientifically meaningful, but the exact Python/dependency environment and source hashes used for F2 Code Freeze are.
 
 Before F2 Code Freeze:
 1. all deterministic tests must pass in an execution environment whose Python and dependency versions are recorded;
@@ -1043,6 +1070,13 @@ Before any full Protocol Freeze:
 Current infrastructure artifacts:
 - `market_data_panel.py`
 - `twelve_data_panel_fetch.py`
+- `yfinance_panel_fetch.py`
+- `provider_parity_audit.py`
+- `V2_PROVIDER_PARITY_PLAN_v1.md`
+- hosted deterministic workflow;
+- optional self-hosted deterministic workflow/bootstrap.
+
+P0 may be satisfied by either GitHub-hosted or approved self-hosted execution, provided the execution environment and hashes are recorded.
 
 P0 is infrastructure readiness only. It is not Data Freeze.
 
