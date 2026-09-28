@@ -5,28 +5,37 @@ on:
     branches:
       - research/source-xma-walkforward
     paths:
-      - "research/ssss/source_xma/experiments/falsification_v2/market_data_panel.py"
-      - "research/ssss/source_xma/experiments/falsification_v2/twelve_data_panel_fetch.py"
-      - "research/ssss/source_xma/experiments/falsification_v2/v2_feature_definitions.py"
-      - "research/ssss/source_xma/experiments/falsification_v2/test_v2_infrastructure.py"
-      - "research/ssss/source_xma/experiments/falsification_v2/v2_protocol_engine.py"
-      - "research/ssss/source_xma/experiments/falsification_v2/test_v2_protocol_engine.py"
-      - "research/ssss/source_xma/experiments/falsification_v2/freeze_manifests.py"
+      - "research/ssss/source_xma/experiments/falsification_v2/**"
       - ".github/workflows/v2-research-infra.yml"
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: research/ssss/source_xma/experiments/falsification_v2
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Install test dependencies
-        run: python -m pip install --upgrade pip pandas numpy
+      - name: Checkout exact commit without external actions
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          git init .
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
+          git fetch --depth=1 origin "${SHA}"
+          git checkout --detach FETCH_HEAD
+
+      - name: Install deterministic test dependencies
+        run: |
+          set -euo pipefail
+          python3 -m pip install --upgrade pip
+          python3 -m pip install pandas numpy
+
       - name: Run deterministic infrastructure and protocol-engine tests
-        run: python -m unittest -v test_v2_infrastructure.py test_v2_protocol_engine.py
+        working-directory: research/ssss/source_xma/experiments/falsification_v2
+        run: |
+          set -euo pipefail
+          python3 -m unittest -v test_v2_infrastructure.py test_v2_protocol_engine.py
