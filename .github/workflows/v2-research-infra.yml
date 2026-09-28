@@ -1,0 +1,29 @@
+name: V2 Research Infra
+
+on:
+  push:
+    branches:
+      - research/source-xma-walkforward
+    paths:
+      - "research/ssss/source_xma/experiments/falsification_v2/market_data_panel.py"
+      - "research/ssss/source_xma/experiments/falsification_v2/twelve_data_panel_fetch.py"
+      - "research/ssss/source_xma/experiments/falsification_v2/v2_feature_definitions.py"
+      - "research/ssss/source_xma/experiments/falsification_v2/test_v2_infrastructure.py"
+      - ".github/workflows/v2-research-infra.yml"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: research/ssss/source_xma/experiments/falsification_v2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test dependencies
+        run: python -m pip install --upgrade pip pandas numpy
+      - name: Run deterministic infrastructure tests
+        run: python -m unittest -v test_v2_infrastructure.py
