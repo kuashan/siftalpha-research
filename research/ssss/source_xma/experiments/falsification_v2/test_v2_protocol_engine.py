@@ -19,13 +19,14 @@ from v2_protocol_engine import (
 class EpisodeTests(unittest.TestCase):
     def test_debounce_gap_rule(self) -> None:
         dates = pd.bdate_range("2025-01-02", periods=8)
-        qualifying = [1, 0, 1, 0, 0, 1, 0, 1]
+        qualifying = [1, 0, 1, 0, 0, 0, 1, 1]
         arm = ["A"] * 8
         eps = build_debounced_episodes("X", dates, qualifying, arm)
-        # q idx: 0,2 => same episode (gap=2); 5,7 => same second episode.
+        # q idx: 0,2 => same episode (gap=2); 2->6 gap=4 opens a new
+        # episode; 6,7 remain together (gap=1).
         self.assertEqual(len(eps), 2)
         self.assertEqual((eps[0].anchor_idx, eps[0].last_qualifying_idx), (0,2))
-        self.assertEqual((eps[1].anchor_idx, eps[1].last_qualifying_idx), (5,7))
+        self.assertEqual((eps[1].anchor_idx, eps[1].last_qualifying_idx), (6,7))
 
     def test_f1_continuous_state_runs_do_not_bridge_interruptions(self) -> None:
         dates = pd.bdate_range("2025-01-02", periods=6)
