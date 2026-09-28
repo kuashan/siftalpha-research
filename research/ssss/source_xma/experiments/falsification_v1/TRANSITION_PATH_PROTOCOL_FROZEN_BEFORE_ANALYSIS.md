@@ -69,17 +69,18 @@ For every anchor transition, sample same-origin-state control anchors:
 - same exclusive starting state:
   - DOWN for DOWN -> RANGE anchors;
   - UP for UP -> RANGE anchors;
-- control bar is not itself the anchor transition;
+- control bar is not any state-transition bar;
 - exclude +/-20 bars around the same anchor-transition family;
 - deterministic seed: 20260928;
 - sample up to 20 eligible control anchors.
 
 Each control anchor is followed for the same 60-bar maximum observation window.
 
-Because an ordinary DOWN/UP control bar has not yet entered RANGE, random controls add one explicit category:
-- NO_RANGE_ENTRY_60: no transition from the origin state into RANGE is observed within 60 bars.
+Because an ordinary DOWN/UP control bar has not yet entered RANGE, random controls add explicit non-RANGE-entry categories:
+- NO_RANGE_ENTRY_60: no transition out of the origin state is observed within 60 bars;
+- DIRECT_EXIT_NO_RANGE: the origin state exits directly to the target/opposite state without entering RANGE.
 
-If RANGE is entered, the control is then classified using the same maximum 3-state sequence:
+If RANGE is entered as the first transition, the control is then classified using the same maximum 3-state sequence:
 - origin -> RANGE -> target;
 - origin -> RANGE -> origin;
 - origin -> RANGE -> STALLED_60;
@@ -102,6 +103,7 @@ For each anchor family and validation window report:
 - STALLED_60 n/rate;
 - WINDOW_CENSORED n/rate;
 - random-control NO_RANGE_ENTRY_60 n/rate;
+- random-control DIRECT_EXIT_NO_RANGE n/rate;
 - unconditional random-path rates;
 - RANGE-entry-conditional random-path rates;
 - time-to-next-transition p25/p50/p75/p90;
