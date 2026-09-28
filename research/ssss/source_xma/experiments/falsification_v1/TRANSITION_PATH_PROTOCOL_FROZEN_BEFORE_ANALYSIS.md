@@ -74,10 +74,20 @@ For every anchor transition, sample same-origin-state control anchors:
 - deterministic seed: 20260928;
 - sample up to 20 eligible control anchors.
 
-Each control anchor is followed using the same:
-- maximum 3-state sequence;
-- 60-bar waiting window;
-- STALLED_60 / WINDOW_CENSORED rules.
+Each control anchor is followed for the same 60-bar maximum observation window.
+
+Because an ordinary DOWN/UP control bar has not yet entered RANGE, random controls add one explicit category:
+- NO_RANGE_ENTRY_60: no transition from the origin state into RANGE is observed within 60 bars.
+
+If RANGE is entered, the control is then classified using the same maximum 3-state sequence:
+- origin -> RANGE -> target;
+- origin -> RANGE -> origin;
+- origin -> RANGE -> STALLED_60;
+- WINDOW_CENSORED where follow-up is insufficient.
+
+Report random-path comparisons in two ways:
+1. unconditional across all same-origin-state control anchors;
+2. conditional on controls that actually enter RANGE within the observation window.
 
 The baseline comparison is path-distribution versus same-origin-state random paths, not path return versus zero.
 
@@ -91,6 +101,9 @@ For each anchor family and validation window report:
 - reversal-back path n/rate;
 - STALLED_60 n/rate;
 - WINDOW_CENSORED n/rate;
+- random-control NO_RANGE_ENTRY_60 n/rate;
+- unconditional random-path rates;
+- RANGE-entry-conditional random-path rates;
 - time-to-next-transition p25/p50/p75/p90;
 - same-origin-state random-path distribution;
 - difference versus random baseline;
