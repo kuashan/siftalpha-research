@@ -1,0 +1,584 @@
+{
+  "lowerTransition20": {
+    "total": 28,
+    "transitioned": 5,
+    "noTransition": 23,
+    "lagMedian": 19,
+    "lagMean": 16.6,
+    "eventRet5": {
+      "n": 28,
+      "positive": 0.5,
+      "mean": -0.0007348171713069436,
+      "median": 0.00041514168578515864
+    },
+    "eventRet10": {
+      "n": 28,
+      "positive": 0.6071428571428571,
+      "mean": 0.014973302838942567,
+      "median": 0.025365238811422386
+    },
+    "eventRet20": {
+      "n": 28,
+      "positive": 0.5714285714285714,
+      "mean": 0.04524506522706966,
+      "median": 0.028042752219096356
+    },
+    "transitionedEventRet10": {
+      "n": 5,
+      "positive": 1,
+      "mean": 0.0878610512099538,
+      "median": 0.09103421643147414
+    },
+    "noTransitionEventRet10": {
+      "n": 23,
+      "positive": 0.5217391304347826,
+      "mean": -0.0008718598504076998,
+      "median": 0.008118198934167209
+    },
+    "fromConfirm5": {
+      "n": 5,
+      "positive": 0.4,
+      "mean": -0.0038275482186594266,
+      "median": -0.010089155743546852
+    },
+    "fromConfirm10": {
+      "n": 5,
+      "positive": 0.6,
+      "mean": 0.018552421610367808,
+      "median": 0.025282513371218007
+    }
+  },
+  "upperTransition20": {
+    "total": 10,
+    "transitioned": 6,
+    "noTransition": 4,
+    "lagMedian": 17,
+    "lagMean": 13.333333333333334,
+    "eventRet5": {
+      "n": 10,
+      "positive": 0.3,
+      "mean": -0.04315974368808463,
+      "median": -0.05159729893534015
+    },
+    "eventRet10": {
+      "n": 10,
+      "positive": 0.2,
+      "mean": -0.0635699842364857,
+      "median": -0.06480199314819052
+    },
+    "eventRet20": {
+      "n": 10,
+      "positive": 0.2,
+      "mean": -0.0912367208691577,
+      "median": -0.11306080304453059
+    },
+    "transitionedEventRet10": {
+      "n": 6,
+      "positive": 0,
+      "mean": -0.10992535959750917,
+      "median": -0.11900875363862073
+    },
+    "noTransitionEventRet10": {
+      "n": 4,
+      "positive": 0.5,
+      "mean": 0.00596307880504951,
+      "median": -0.0035727475067776626
+    },
+    "fromConfirm5": {
+      "n": 6,
+      "positive": 0.3333333333333333,
+      "mean": -0.005129383680709069,
+      "median": -0.014703820567389003
+    },
+    "fromConfirm10": {
+      "n": 6,
+      "positive": 0.3333333333333333,
+      "mean": -0.028533047419191642,
+      "median": -0.030593013652427614
+    }
+  },
+  "lowerReclaim5": {
+    "n": 10,
+    "positive": 0.1,
+    "mean": -0.057014664081999254,
+    "median": -0.04548015482034756
+  },
+  "lowerNoReclaim5": {
+    "n": 18,
+    "positive": 0.7222222222222222,
+    "mean": 0.03053176444574434,
+    "median": 0.03891821122911299
+  },
+  "upperReject5": {
+    "n": 3,
+    "positive": 0.3333333333333333,
+    "mean": -0.02498156462201599,
+    "median": -0.030655906970812108
+  },
+  "upperNoReject5": {
+    "n": 7,
+    "positive": 0.2857142857142857,
+    "mean": -0.050950391859256906,
+    "median": -0.057220754773995686
+  },
+  "lowerEpisodeList": [
+    {
+      "symbol": "AAPL",
+      "date": "2025-04-11",
+      "assetClass": "stock",
+      "reclaim": true,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": -2.52,
+      "ret10": 6.05,
+      "ret20": 6.38
+    },
+    {
+      "symbol": "AMZN",
+      "date": "2025-04-08",
+      "assetClass": "stock",
+      "reclaim": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": 5.23,
+      "ret10": 5.82,
+      "ret20": 10.58
+    },
+    {
+      "symbol": "AMZN",
+      "date": "2025-04-16",
+      "assetClass": "stock",
+      "reclaim": false,
+      "transitionDate": "2025-05-15",
+      "transitionState": "RANGE",
+      "lag": 20,
+      "ret5": 7,
+      "ret10": 9.1,
+      "ret20": 17.69
+    },
+    {
+      "symbol": "ORCL",
+      "date": "2025-01-27",
+      "assetClass": "stock",
+      "reclaim": false,
+      "transitionDate": "2025-02-05",
+      "transitionState": "RANGE",
+      "lag": 7,
+      "ret5": 6.52,
+      "ret10": 13.04,
+      "ret20": 6.48
+    },
+    {
+      "symbol": "ORCL",
+      "date": "2025-03-27",
+      "assetClass": "stock",
+      "reclaim": true,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": -5.87,
+      "ret10": -8.53,
+      "ret20": -5
+    },
+    {
+      "symbol": "ORCL",
+      "date": "2025-04-02",
+      "assetClass": "stock",
+      "reclaim": true,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": -4.23,
+      "ret10": -11.04,
+      "ret20": -0.25
+    },
+    {
+      "symbol": "ORCL",
+      "date": "2025-04-09",
+      "assetClass": "stock",
+      "reclaim": true,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": -7.11,
+      "ret10": -1.56,
+      "ret20": 7.6
+    },
+    {
+      "symbol": "ORCL",
+      "date": "2025-04-16",
+      "assetClass": "stock",
+      "reclaim": false,
+      "transitionDate": "2025-05-15",
+      "transitionState": "RANGE",
+      "lag": 20,
+      "ret5": 5.97,
+      "ret10": 12.12,
+      "ret20": 22.84
+    },
+    {
+      "symbol": "INTC",
+      "date": "2025-01-10",
+      "assetClass": "stock",
+      "reclaim": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": 12.22,
+      "ret10": 5.95,
+      "ret20": 3.24
+    },
+    {
+      "symbol": "MSFT",
+      "date": "2025-02-26",
+      "assetClass": "stock",
+      "reclaim": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": 0.32,
+      "ret10": -4.12,
+      "ret20": -2.44
+    },
+    {
+      "symbol": "MSFT",
+      "date": "2025-03-05",
+      "assetClass": "stock",
+      "reclaim": true,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": -4.43,
+      "ret10": -3.29,
+      "ret20": -4.71
+    },
+    {
+      "symbol": "MSFT",
+      "date": "2025-03-14",
+      "assetClass": "stock",
+      "reclaim": true,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": 0.69,
+      "ret10": -2.51,
+      "ret20": -0.03
+    },
+    {
+      "symbol": "MSFT",
+      "date": "2025-03-31",
+      "assetClass": "stock",
+      "reclaim": true,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": -4.67,
+      "ret10": 3.31,
+      "ret20": 4.97
+    },
+    {
+      "symbol": "MSFT",
+      "date": "2025-04-04",
+      "assetClass": "stock",
+      "reclaim": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": 7.95,
+      "ret10": -0.2,
+      "ret20": 21.21
+    },
+    {
+      "symbol": "NVDA",
+      "date": "2025-04-08",
+      "assetClass": "stock",
+      "reclaim": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": 16.51,
+      "ret10": 6.66,
+      "ret20": 21.56
+    },
+    {
+      "symbol": "GOOGL",
+      "date": "2025-03-06",
+      "assetClass": "stock",
+      "reclaim": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": -5.56,
+      "ret10": -5.54,
+      "ret20": -12.55
+    },
+    {
+      "symbol": "META",
+      "date": "2025-03-28",
+      "assetClass": "stock",
+      "reclaim": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": -12.49,
+      "ret10": -5.75,
+      "ret20": -4.68
+    },
+    {
+      "symbol": "META",
+      "date": "2025-04-09",
+      "assetClass": "stock",
+      "reclaim": true,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": -14.25,
+      "ret10": -8.98,
+      "ret20": 2.09
+    },
+    {
+      "symbol": "META",
+      "date": "2025-04-15",
+      "assetClass": "stock",
+      "reclaim": false,
+      "transitionDate": "2025-05-13",
+      "transitionState": "RANGE",
+      "lag": 19,
+      "ret5": -0.24,
+      "ret10": 5.27,
+      "ret20": 26.43
+    },
+    {
+      "symbol": "JPM",
+      "date": "2025-04-03",
+      "assetClass": "stock",
+      "reclaim": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": -0.69,
+      "ret10": 1.43,
+      "ret20": 10.42
+    },
+    {
+      "symbol": "JPM",
+      "date": "2025-04-09",
+      "assetClass": "stock",
+      "reclaim": true,
+      "transitionDate": "2025-05-05",
+      "transitionState": "RANGE",
+      "lag": 17,
+      "ret5": -2.02,
+      "ret10": 4.4,
+      "ret20": 8.16
+    },
+    {
+      "symbol": "BTC",
+      "date": "2025-03-09",
+      "assetClass": "crypto",
+      "reclaim": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": 4.02,
+      "ret10": 7.57,
+      "ret20": 2.37
+    },
+    {
+      "symbol": "ETH",
+      "date": "2025-02-09",
+      "assetClass": "crypto",
+      "reclaim": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": 3.76,
+      "ret10": 3.36,
+      "ret20": -15.6
+    },
+    {
+      "symbol": "ETH",
+      "date": "2025-03-09",
+      "assetClass": "crypto",
+      "reclaim": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": -5.38,
+      "ret10": 1.76,
+      "ret20": -9.52
+    },
+    {
+      "symbol": "ETH",
+      "date": "2025-03-13",
+      "assetClass": "crypto",
+      "reclaim": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": 3.59,
+      "ret10": 7.58,
+      "ret20": -3.72
+    },
+    {
+      "symbol": "ETH",
+      "date": "2025-04-11",
+      "assetClass": "crypto",
+      "reclaim": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": 0.66,
+      "ret10": 0.81,
+      "ret20": 17.31
+    },
+    {
+      "symbol": "SOL",
+      "date": "2025-03-04",
+      "assetClass": "crypto",
+      "reclaim": true,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": -12.63,
+      "ret10": -7.77,
+      "ret20": -2.61
+    },
+    {
+      "symbol": "SOL",
+      "date": "2025-03-09",
+      "assetClass": "crypto",
+      "reclaim": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": 5.56,
+      "ret10": 6.97,
+      "ret20": -1.53
+    }
+  ],
+  "upperEpisodeList": [
+    {
+      "symbol": "AMZN",
+      "date": "2025-01-21",
+      "assetClass": "stock",
+      "reject": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": 3.22,
+      "ret10": 4.92,
+      "ret20": -1.77
+    },
+    {
+      "symbol": "AMZN",
+      "date": "2025-01-30",
+      "assetClass": "stock",
+      "reject": false,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": 1.79,
+      "ret10": -1.82,
+      "ret20": -9.53
+    },
+    {
+      "symbol": "AMZN",
+      "date": "2025-02-05",
+      "assetClass": "stock",
+      "reject": true,
+      "transitionDate": "2025-03-06",
+      "transitionState": "RANGE",
+      "lag": 20,
+      "ret5": -3.07,
+      "ret10": -5.63,
+      "ret20": -15.02
+    },
+    {
+      "symbol": "INTC",
+      "date": "2025-03-17",
+      "assetClass": "stock",
+      "reject": false,
+      "transitionDate": "2025-03-20",
+      "transitionState": "RANGE",
+      "lag": 3,
+      "ret5": -5.72,
+      "ret10": -11.6,
+      "ret20": -20.94
+    },
+    {
+      "symbol": "GOOGL",
+      "date": "2025-01-30",
+      "assetClass": "stock",
+      "reject": false,
+      "transitionDate": "2025-02-26",
+      "transitionState": "RANGE",
+      "lag": 18,
+      "ret5": -4.61,
+      "ret10": -7.33,
+      "ret20": -15.23
+    },
+    {
+      "symbol": "META",
+      "date": "2025-01-06",
+      "assetClass": "stock",
+      "reject": true,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": -5.7,
+      "ret10": -1.06,
+      "ret20": 11.85
+    },
+    {
+      "symbol": "JPM",
+      "date": "2025-05-21",
+      "assetClass": "stock",
+      "reject": true,
+      "transitionDate": null,
+      "transitionState": null,
+      "lag": null,
+      "ret5": 1.28,
+      "ret10": 0.35,
+      "ret20": 5.35
+    },
+    {
+      "symbol": "XOM",
+      "date": "2025-04-02",
+      "assetClass": "stock",
+      "reject": false,
+      "transitionDate": "2025-04-09",
+      "transitionState": "RANGE",
+      "lag": 5,
+      "ret5": -10.85,
+      "ret10": -12.2,
+      "ret20": -10.86
+    },
+    {
+      "symbol": "ETH",
+      "date": "2025-06-10",
+      "assetClass": "crypto",
+      "reject": false,
+      "transitionDate": "2025-06-27",
+      "transitionState": "RANGE",
+      "lag": 17,
+      "ret5": -9.54,
+      "ret10": -14.55,
+      "ret20": -11.75
+    },
+    {
+      "symbol": "SOL",
+      "date": "2025-01-24",
+      "assetClass": "crypto",
+      "reject": false,
+      "transitionDate": "2025-02-10",
+      "transitionState": "RANGE",
+      "lag": 17,
+      "ret5": -9.95,
+      "ret10": -14.64,
+      "ret20": -23.33
+    }
+  ]
+}
