@@ -319,3 +319,24 @@ all earlier raw-source runs remain preserved but are marked LEGACY_RAW_SOURCE_EX
 See:
 - FORMULA_CORRECTION_AUDIT_v1.md
 - CANONICAL_WEIGHTED_CHANNEL_v1.md
+
+
+## 2026-09-28 — Canonical geometry Phase 1–5 first synthesis
+
+The corrected canonical v1 formulas were used to restart XMA geometry research point-in-time from the first evaluation day.
+
+Key preliminary findings:
+- strict UP-state upper fast/outer confluence (ZK1 + BS within 0.25 ATR and candle overlap) is strongly different from ordinary rail riding;
+- deduplicated strict upper episodes had negative 5/10-bar forward distribution, while far-gap UP rail riding was mildly positive;
+- DOWN-state lower confluence is not an immediate universal buy; it behaves more like an early dislocation precursor;
+- the current same-bar full-reclaim definition was harmful and is dropped;
+- HYS2 fire-bottom/fire-top were largely redundant with strict XMA geometry in this window;
+- recent HYS2 resonance did not improve strict lower confluence and is not promoted;
+- lower confluence below rolling Value Area showed the cleanest auxiliary separation so far;
+- negative volume / negative breadth around lower confluence may reflect capitulation, but samples remain small;
+- VIX frozen rule was neutral.
+
+See:
+`experiments/canonical_geometry_2025_01_06/PHASE1_5_SYNTHESIS.md`
+
+No trading rule or position size is promoted yet.
