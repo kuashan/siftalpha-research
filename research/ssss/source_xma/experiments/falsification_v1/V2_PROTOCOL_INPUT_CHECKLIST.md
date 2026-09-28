@@ -13,7 +13,43 @@ No experiment, data analysis, strategy logic, or sealed-window access is authori
 
 ---
 
-# 1. Candidate Condition Variable Scope
+# Additional Governance Constraints Before Protocol Freeze
+
+## Data Freeze and Code Freeze
+
+Protocol freeze must include both data freeze and code freeze.
+
+### Data freeze
+
+Before Protocol freeze:
+
+- v2 historical datasets must be exported;
+- dataset hashes (SHA-256 or equivalent) must be recorded;
+- data versions and preprocessing specifications must be recorded in the Protocol appendix.
+
+After Protocol freeze:
+
+- historical data cannot silently change;
+- preprocessing changes require Amendment.
+
+### Code freeze
+
+Before Protocol freeze:
+
+- XMA calculation code commit hash must be recorded;
+- event detection code commit hash must be recorded;
+- state classification code commit hash must be recorded.
+
+After Protocol freeze:
+
+- code changes require Amendment;
+- Amendment must document the reason and scope of change.
+
+A text-only Protocol freeze is not sufficient research freeze.
+
+---
+
+# Candidate Condition Variable Scope
 
 Before protocol writing, identify candidate XMA condition variables.
 
@@ -43,13 +79,16 @@ Candidate classes may include:
 
 Candidate variable count must be bounded before Protocol freeze. Range expansion after seeing results is prohibited.
 
-If a candidate variable is unavailable during v2 implementation, it cannot remain permanently INCONCLUSIVE. It must be classified according to the frozen protocol decision, with unavailable candidates excluded from testing.
+Unavailable candidate handling:
+
+- Structurally unavailable: data source cannot provide the required history or feature definition; classify as REJECT before testing.
+- Temporarily unavailable: data can theoretically be obtained before freeze; if still unavailable after Protocol freeze, classify according to frozen decision and do not keep permanently INCONCLUSIVE.
 
 No candidate becomes a hypothesis until protocol freeze.
 
 ---
 
-# 2. Research Category Boundaries
+# Research Category Boundaries
 
 v2 research categories are separated as follows:
 
@@ -73,40 +112,19 @@ XMA state as a relative ranking/context feature across assets.
 
 ## Risk-Off Overlay
 
-Optional category:
+Study only whether XMA information disappears or degrades under predefined extreme risk conditions.
 
-Study when XMA information fails or degrades under predefined extreme risk conditions.
+Rules:
 
-This is not Regime Mining and cannot be used to rescue failed directional hypotheses.
+- must use predefined risk environments;
+- cannot search for environments where XMA works best;
+- cannot rescue failed directional hypotheses.
 
----
-
-# 3. Data Availability Audit Requirements
-
-Before any v2 hypothesis is accepted, record:
-
-- required features;
-- current availability;
-- historical coverage;
-- universe coverage;
-- frequency;
-- missing-data handling.
-
-Unknown availability is not an acceptable basis for hypothesis testing.
-
-Product data schema and research data schema must use the same specification.
-
-Event logs must be designed before strategy integration and include future execution requirements such as:
-
-- timestamp;
-- state;
-- signal context;
-- confidence fields;
-- execution result fields.
+Searching for optimal regimes is Regime Mining and is outside v2 scope.
 
 ---
 
-# 4. Sealed Window Rule Input
+# Sealed Window Rule Input
 
 The sealed window is not selected here.
 
@@ -118,160 +136,21 @@ Required rule:
 - sealed data cannot be used for Discovery, Validation, Sensitivity, or Robustness before final unlock;
 - once unlocked, it cannot be resealed.
 
----
+Protocol must additionally define:
 
-# 5. FDR Family Design Questions
+- minimum sealed window duration;
+- minimum event count;
+- minimum cluster count.
 
-Before Protocol freeze determine:
+If the sealed window expires with insufficient samples:
 
-- hypothesis family structure;
-- primary statistic grouping;
-- correction method;
-- whether families are separated by research category or statistic type.
-
-Requirements:
-
-- family membership must correspond to comparable primary statistics;
-- family size must be frozen before outcome inspection;
-- hierarchical FDR structure should be considered (category level then within-family correction);
-- any guard/null hypothesis design must be preregistered.
-
-The final family structure must be frozen before outcome inspection.
+- do not lower standards;
+- do not substitute sensitivity windows;
+- extend observation until requirements are met.
 
 ---
 
-# 6. Primary Statistic Design Questions
-
-Every hypothesis must specify one primary statistic before testing.
-
-Required decisions:
-
-- absolute metric or relative metric;
-- matched or unmatched comparison;
-- return-based or risk-based statistic;
-- single horizon definition.
-
-No post-result statistic selection is allowed.
-
----
-
-# 7. Sample Size, MDE and ESS Inputs
-
-Before Protocol freeze determine:
-
-- raw event minimum;
-- market-wave cluster minimum;
-- symbol cluster minimum;
-- ESS reporting method;
-- minimum detectable effect (MDE).
-
-Requirements:
-
-- MDE must be based on economic significance, not statistical significance alone;
-- sample floor must include raw events, wave clusters, and symbol clusters;
-- ESS methodology must be frozen before testing.
-
-Examples of economic MDE categories:
-
-- MAE improvement;
-- drawdown reduction;
-- holding duration change;
-- cross-sectional IC improvement;
-- risk-adjusted return improvement.
-
----
-
-# 8. Research Category Inputs
-
-For each v2 category define:
-
-## Risk Management
-
-Required:
-
-- primary statistic;
-- MDE;
-- data fields.
-
-## Position Lifecycle
-
-Required:
-
-- primary statistic;
-- MDE;
-- data fields.
-
-## Cross-sectional Ranking
-
-Required:
-
-- primary statistic;
-- MDE;
-- data fields.
-
-## Conditional Information
-
-Required:
-
-- primary statistic;
-- MDE;
-- data fields.
-
----
-
-# 9. Decay Assumption Input
-
-Before Protocol freeze determine:
-
-- how discovery effect decay is modeled;
-- how promotion thresholds incorporate decay;
-- how discovery results are prevented from overstating expected future performance.
-
-The decay coefficient belongs to Protocol, not this checklist.
-
----
-
-# 10. Product Infrastructure Boundary
-
-Allowed before v2 Protocol freeze:
-
-- market data connection;
-- execution infrastructure;
-- order lifecycle framework;
-- risk controls;
-- monitoring;
-- logging;
-- independent kill switch infrastructure.
-
-Not allowed:
-
-- XMA trading rules;
-- strategy logic;
-- execution rules derived from rejected v1 hypotheses.
-
-Kill switch must be independent from strategy logic.
-
----
-
-# 11. Non-Goals
-
-v2 will not:
-
-- perform parameter optimization;
-- perform Regime Mining;
-- switch signal families;
-- build multi-signal portfolios;
-- create position-sizing rules;
-- optimize execution costs;
-- design short-selling systems.
-
-v2 answers only one class of question:
-
-**Does XMA geometry provide incremental information as a condition variable?**
-
----
-
-# 12. Completion Criteria Before Protocol Writing
+# Completion Criteria Before Protocol Writing
 
 All items above must have explicit answers before creating:
 
@@ -279,12 +158,12 @@ All items above must have explicit answers before creating:
 
 Current status:
 
-CHECKLIST UPDATED AFTER REVIEW
+CHECKLIST UPDATED AFTER FINAL GOVERNANCE REVIEW
 
 Next steps:
 
 1. Review final checklist.
 2. Resolve remaining design questions.
-3. Freeze v2 Protocol.
+3. Freeze v2 Protocol with data hash and code hash.
 4. Select sealed window.
 5. Authorize experiments only after freeze.
