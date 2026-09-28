@@ -304,34 +304,64 @@ Normal:
 
 No VIX futures ETF may substitute for the VIX Index.
 
+## 3.11 Return and risk-outcome conventions
+
+Forward close return:
+
+`RET_h(t) = CLOSE_{t+h}/CLOSE_t - 1`
+
+where `t+h` means the h-th subsequent trading bar for that symbol.
+
+H1 long-exposure adverse excursion is a **positive risk magnitude**:
+
+`MAE10_ATR(t) = max(0, CLOSE_t - min(LOW_{t+1},...,LOW_{t+10})) / ATR14_t`
+
+Larger is worse.
+
+H2 closing-path maximum drawdown is a **positive risk magnitude**:
+
+`MAX_DD10_ATR(t) = max_{t <= i < j <= t+10}(CLOSE_i - CLOSE_j) / ATR14_t`
+
+The anchor close at t is part of the closing-price path. Intraday high/low drawdown is not substituted for H2.
+
+F4/F5 10-bar event/control returns use `RET_10` exactly.
+
 ---
 
 # 4. Episode and Event Construction
 
-## 4.1 General Episode rule
+## 4.1 Trading-bar indexing and general Episode debounce
 
-A hypothesis first defines a qualifying bar/observation from its registered condition.
+For each symbol, trading bars are assigned consecutive integer session indices.
 
-For time-series hypotheses F1, F2, F4, F5:
+For time-series hypotheses F2, F4, and F5:
 
-- same symbol;
-- same hypothesis condition identity;
-- qualifying anchors separated by <=3 trading bars are linked into one Episode by transitive closure;
-- Episode anchor = first qualifying bar in the linked Episode;
-- Episode closes after 3 consecutive trading bars without a qualifying observation;
+- a hypothesis first defines a qualifying bar from its registered condition;
+- Episode identity includes symbol, hypothesis id, and registered arm/condition identity;
+- let successive qualifying session indices be `q_(j-1)` and `q_j`;
+- if `q_j - q_(j-1) <= 3`, they belong to the same Episode;
+- equivalently, at most 2 intervening non-qualifying trading bars may occur without opening a new Episode;
+- Episode anchor = first qualifying bar in the Episode;
+- after 3 consecutive non-qualifying trading bars following the last qualifying bar, the Episode is closed;
 - only the anchor contributes one raw Episode to the primary analysis.
 
-A new qualifying observation after >3 trading bars begins a new Episode.
+A later qualifying bar with session-index difference >=4 starts a new Episode.
+
+No calendar-day distance substitutes for trading-bar distance.
 
 No Episode is created or removed using future outcome information.
 
-## 4.2 F1 Episode identity
+## 4.2 F1 Episode identity — continuous state run override
 
-Qualifying condition:
-- UP_STATE for the UP arm;
-- DOWN_STATE for the DOWN arm.
+F1 does **not** use the 3-bar debounce.
 
-One continuous state run is therefore one Episode unless a state interruption creates a >3-bar separation under the rule above.
+For each symbol:
+- a DOWN_STATE Episode is one maximal consecutive run of DOWN_STATE bars;
+- an UP_STATE Episode is one maximal consecutive run of UP_STATE bars;
+- any bar not in the current state ends that state Episode immediately;
+- Episode anchor = first bar of the continuous state run.
+
+This prevents a short state interruption from being silently merged into one risk-state Episode.
 
 ## 4.3 F2 Episode identity
 
@@ -341,7 +371,9 @@ H3:
 H4:
 - Extreme or Neutral distance group.
 
-Episode identity includes the registered arm. Crossing from one registered arm to another ends the old arm's qualification.
+Episode identity includes the registered arm.
+
+If an observation changes to the opposite registered arm, it is no longer qualifying for the prior arm. Re-entry follows the general Section 4.1 debounce rule.
 
 ## 4.4 F3 cross-sectional observation unit
 
@@ -361,7 +393,7 @@ Within a date/state snapshot:
 
 For Registry/sample-count terminology, one eligible date/state snapshot is one **F3 cross-sectional Episode**.
 
-Adjacent F3 snapshots are not deleted; temporal dependence is handled by market-wave clustering.
+Adjacent F3 snapshots are retained; temporal dependence is handled by market-wave clustering.
 
 ## 4.5 F4 Episode identity
 
@@ -370,7 +402,7 @@ Condition identity includes:
 - external field identity;
 - `z > +1`.
 
-Thus H7-H10 each create their own Episode set.
+Thus H7-H10 each create their own Episode set under Section 4.1.
 
 ## 4.6 F5 Episode identity
 
@@ -380,16 +412,19 @@ A/B event arms use the tested XMA state under:
 
 Risk-Off definition is Breadth or VIX according to H11-H14.
 
+A and B are Episode anchors under Section 4.1.
+
 C/D are controls, not additional raw Episodes.
 
 ## 4.7 Forward-window completeness
 
-A primary outcome requires all registered forward bars through its horizon.
+A primary outcome with horizon h requires exactly h subsequent trading bars for that symbol.
 
 If the required forward horizon is incomplete:
 - that Episode/snapshot is ineligible for that hypothesis primary statistic;
 - it remains in an audit table with reason `INCOMPLETE_FORWARD_WINDOW`;
-- no shorter horizon substitutes.
+- no shorter horizon substitutes;
+- no calendar-day approximation substitutes.
 
 ## 4.8 Horizon overlap
 
@@ -400,7 +435,7 @@ They are not removed solely because outcomes overlap.
 Dependence is handled by:
 - market-wave clustering;
 - ESS;
-- cluster-robust uncertainty.
+- cluster bootstrap uncertainty.
 
 No post-outcome overlap filter is allowed.
 
@@ -488,74 +523,137 @@ No relaxation of the ±2-day wave rule is permitted.
 
 # 6. Matched-Control Pipeline
 
-## 6.1 Distance covariates
+## 6.1 Matching covariates and distance
 
 Exactly:
 - dev20;
 - prior20 return;
 - ATR14/close.
 
-Standardization:
-- for each event, standardize each matching covariate using mean and sample std calculated from that event's eligible control pool;
-- zero-variance covariate in the eligible pool makes the event unmatchable;
-- no global normalization.
+For one event e and one covariate j, calculate from that event's eligible control pool:
+
+`mu_j = mean(x_control,j)`
+
+`s_j = sample_std(x_control,j, ddof=1)`
+
+Then:
+
+`z_event,j = (x_event,j-mu_j)/s_j`
+
+`z_control,j = (x_control,j-mu_j)/s_j`
 
 Distance:
-standardized Euclidean distance.
+
+`D(event,control) = sqrt(sum_j((z_event,j-z_control,j)^2))`
+
+Rules:
+- all 3 event covariates must be finite;
+- all 3 control covariates must be finite;
+- control must have a complete registered forward outcome;
+- zero variance in any matching covariate makes the event `UNMATCHABLE`;
+- no global normalization;
+- no post-outcome caliper.
 
 Tie-break:
 1. lower distance;
-2. earlier control date;
-3. lexical symbol, although same-symbol rules normally make symbol tie-break unnecessary.
+2. earlier control trading date;
+3. lexical symbol.
 
-Persist every selected control row and pool metadata.
+## 6.2 Control reuse and persistence
 
-## 6.2 F4 controls
+Within one event/source event:
+- the selected 5 controls must be 5 distinct rows.
+
+Across different events/pairs:
+- a historical control row **may be reused**;
+- this avoids order-dependent depletion of the control pool;
+- reuse count is persisted and reported.
+
+For every event and every selected control persist at minimum:
+- hypothesis id;
+- event id;
+- event symbol/date;
+- control symbol/date;
+- event raw dev20/prior20/ATR14-close;
+- control raw dev20/prior20/ATR14-close;
+- eligible-pool means and sample stds for all 3 covariates;
+- standardized event/control covariates;
+- Euclidean distance;
+- selected rank 1..5;
+- eligible pool size;
+- control forward return;
+- event forward return;
+- control reuse count;
+- exclusion/eligibility audit reason for non-selected candidate rows in the pool audit artifact.
+
+## 6.3 F4 controls
 
 Eligible:
 - same symbol;
 - same exclusive XMA state;
-- same analysis window;
+- same frozen analysis window;
 - tested external condition is false;
-- not within ±20 trading bars of a same-hypothesis event.
+- outside ±20 trading bars, by session index, of every same-hypothesis Episode anchor;
+- complete matching covariates;
+- complete 10-bar forward return.
 
-Select exactly 5 nearest controls.
+Select exactly 5 nearest controls under Section 6.1.
 
 Fewer than 5:
 event is `UNMATCHABLE`.
 
 Event matched excess:
 
-`R_event,10 - mean(R_control1..5,10)`
+`ME10 = RET_10(event) - mean(RET_10(control_1..control_5))`
 
-## 6.3 F5 four-cell design
+## 6.4 F5 four-cell design
 
 A:
-Risk-Off event in tested XMA state.
+Risk-Off Episode in tested XMA state.
 
 B:
-Normal event in same tested XMA state.
+Normal Episode in the same tested XMA state.
 
-B-to-A pairing:
-- same symbol;
-- same calendar quarter;
-- nearest Episode-anchor date;
-- tie -> earlier B date;
-- one B may be used only once within a hypothesis;
-- matching is deterministic in chronological A order.
+### A-to-B deterministic pairing
 
-If no unused B exists:
-A is primary-statistic unmatchable.
+B is **not randomly sampled**.
+
+For each hypothesis:
+1. sort A Episodes by anchor trading date, then symbol;
+2. for each A, eligible B must be:
+   - same symbol;
+   - same calendar quarter;
+   - Normal environment;
+   - same tested XMA state;
+   - complete 10-bar forward outcome;
+   - not previously assigned as B within that hypothesis;
+3. choose B with minimum absolute trading-session distance from A;
+4. tie -> earlier B date;
+5. if still tied -> lexical event id.
+
+If no unused eligible B exists:
+A is `UNMATCHABLE_FOR_DID`.
+
+There is therefore no B-sampling random seed.
+
+### C and D controls
 
 C controls A.
 D controls B.
 
-C/D:
-- same symbol as source event;
+C/D eligibility:
+- same symbol as source A/B;
 - same Risk-Off/Normal environment as source;
-- do not belong to tested XMA state;
-- outside ±20 bars of tested-state Episodes;
-- 5 nearest by the frozen distance covariates.
+- do not belong to the tested XMA state;
+- outside ±20 trading bars, by session index, of every tested-state Episode anchor in the same hypothesis;
+- complete matching covariates;
+- complete 10-bar forward outcome;
+- 5 nearest eligible controls under Section 6.1.
+
+C/D controls may be reused across different A/B pairs, but the 5 controls within one source event must be distinct.
+
+If either source event lacks 5 eligible controls:
+the A/B pair is `UNMATCHABLE_FOR_DID`.
 
 DOWN multiplier:
 `s=+1`
@@ -565,10 +663,10 @@ UP multiplier:
 
 Pair contribution:
 
-`d_i=s*((A-C)-(B-D))`
+`d_i = s * ((RET_A - mean(RET_C1..5)) - (RET_B - mean(RET_D1..5)))`
 
 F5 primary statistic:
-mean of `d_i`.
+mean of all matchable `d_i`.
 
 ---
 
@@ -576,39 +674,40 @@ mean of `d_i`.
 
 No secondary outcome can replace a failed primary statistic.
 
+All hypotheses first pass the raw/wave/symbol/ESS gates in Section 5.
+
 ## 7.1 F1
 
 Model:
 median quantile regression, tau=0.50.
 
 H1 outcome:
-ATR-normalized MAE.
+`MAE10_ATR` from Section 3.11.
 
 H2 outcome:
-ATR-normalized maximum drawdown.
+`MAX_DD10_ATR` from Section 3.11.
 
 Predictors:
 - intercept;
 - `I(DOWN_STATE)`;
-- SPY same-horizon 10-bar return;
+- SPY 10-bar forward return over the identical horizon;
 - anchor ATR14/close.
+
+UP_STATE is the reference.
 
 Primary effect:
 coefficient on `I(DOWN_STATE)`.
 
-Uncertainty:
-CR2 cluster-robust covariance by market wave.
-
-Raw p-value:
-coefficient t/Wald test using CR2 small-sample degrees of freedom.
+Uncertainty and raw p-value:
+the common market-wave cluster bootstrap in Section 7.7.
 
 ## 7.2 H3
 
 Primary:
-difference in midpoint-touch probability.
+`P(touch by 20 | distance<0) - P(touch by 20 | distance>=0)`.
 
-Uncertainty:
-market-wave cluster bootstrap.
+Uncertainty and raw p-value:
+Section 7.7 market-wave cluster bootstrap.
 
 ## 7.3 H4
 
@@ -617,81 +716,117 @@ Compute Kaplan-Meier curves separately for Extreme and Neutral.
 Right-censor at 20.
 
 Primary:
-KM median first-touch wait difference, Extreme-Neutral.
+KM median first-touch waiting-time difference, `Extreme - Neutral`.
 
-If the KM median is not estimable for either arm by horizon 20:
-`INSUFFICIENT STATISTIC`
+If the observed KM median is not estimable for either arm by horizon 20:
+`INSUFFICIENT STATISTIC`.
 
 No alternate survival statistic may replace it.
 
-Uncertainty:
-market-wave cluster bootstrap.
+Bootstrap validity rule:
+- each resample recomputes both KM medians and their difference;
+- at least 9,500 of 10,000 resamples must yield an estimable difference;
+- otherwise `INSUFFICIENT STATISTIC`.
 
-## 7.4 F3 controls and partial ranking
+## 7.4 F3 cross-sectional adjustment
 
-H5/H6 use pooled eligible symbol-date observations from F3 snapshots.
+F3 is conditioned exactly on `trading date × XMA state`.
 
-Create control matrix:
-- SPY_RET_1D;
-- IND_RET_1D;
-- ATR14/close;
-- date fixed effects;
-- XMA-state fixed effects.
+Therefore SPY same-day return is constant within a snapshot and is controlled by exact date conditioning; it is recorded but no separate within-snapshot coefficient is estimated for this constant.
+
+For each eligible date/state snapshot:
+
+1. rank future 10-bar symbol return within the snapshot;
+2. construct varying controls:
+   - mapped sector ETF same-day return;
+   - symbol ATR14/close;
+3. if the within-snapshot control matrix is rank-deficient, mark that snapshot `CONTROL_MATRIX_RANK_DEFICIENT` and exclude it with audit record.
 
 H5:
-- residualize future 10-bar return rank on control matrix;
-- rank-biserial correlation between High/Low RS membership and residualized rank.
+- residualize future-return rank on intercept + industry return + ATR14/close within each snapshot;
+- pool eligible snapshot residuals with their frozen High/Low Sector-RS labels;
+- primary statistic = rank-biserial correlation between High/Low membership and residualized future-return rank.
 
 H6:
-- rank Sector RS and future 10-bar return;
-- residualize both rank variables on the control matrix;
-- Pearson correlation of the two residual series = frozen partial Spearman statistic.
+- rank Sector RS within the snapshot;
+- residualize both Sector-RS rank and future-return rank on intercept + industry return + ATR14/close within each snapshot;
+- pool the two residual series across eligible snapshots;
+- primary statistic = Pearson correlation of pooled residual ranks, which is the frozen partial-Spearman implementation.
 
-Uncertainty:
-market-wave cluster bootstrap over F3 date/state snapshots.
+The exact date/state snapshot conditioning is the market-context control; no additional date fixed-effect column is added, avoiding collinearity with same-day SPY return.
+
+Uncertainty and raw p-value:
+Section 7.7, resampling whole F3 snapshots through their market-wave clusters and recomputing the full statistic.
 
 ## 7.5 F4
 
 Primary:
-mean event-level 10-bar matched excess.
+mean event-level `ME10`.
 
-Uncertainty:
-market-wave cluster bootstrap.
+Uncertainty and raw p-value:
+Section 7.7 market-wave cluster bootstrap.
 
 ## 7.6 F5
 
 Primary:
 mean direction-normalized pair contribution `d_i`.
 
-Each pair is assigned to the market wave of its A Risk-Off Episode for the primary cluster analysis.
+Each pair is assigned to the market wave of its A Risk-Off Episode.
 
-Uncertainty:
-market-wave cluster bootstrap of A-wave clusters.
+Uncertainty and raw p-value:
+Section 7.7, resampling A-wave clusters and carrying each selected A/B/C/D pair as an indivisible primary unit.
 
-## 7.7 Cluster bootstrap
+## 7.7 Common market-wave cluster bootstrap
 
-For H3-H14 except F1 CR2:
+Applies to H1-H14.
 
-- B = 10,000 resamples;
-- sample market-wave clusters with replacement;
-- include all primary units belonging to sampled clusters;
-- recompute the full primary statistic.
+Resamples:
+- B = 10,000.
 
-Seeds:
-`2026092810 + H_number`
+Seed:
+`2026092810 + H_number`.
+
+Procedure:
+1. determine the K market-wave clusters for the hypothesis;
+2. sample K clusters with replacement;
+3. include all primary units belonging to each sampled cluster;
+4. recompute the **entire** primary estimator on that resample;
+5. repeat B times.
+
+No observation-level bootstrap is substituted.
 
 No alternate seed may be selected.
 
-95% interval:
-bootstrap percentile interval.
+Let:
+- `T_obs` = observed primary statistic;
+- `T_b` = valid bootstrap estimates.
 
-Raw bootstrap tail probability:
-- positive one-sided: `(1 + count(T_b <= 0))/(B+1)`
-- negative one-sided: `(1 + count(T_b >= 0))/(B+1)`
-- two-sided: `min(1, 2*min(P_b(T_b<=0), P_b(T_b>=0)))`
-with +1 finite-sample correction in each empirical tail count.
+Bootstrap standard error:
 
-These raw tail probabilities are the frozen p-like inputs to BH for non-F1 families.
+`SE_boot = sample_std(T_b, ddof=1)`
+
+If `SE_boot = 0` or is non-finite:
+`INSUFFICIENT STATISTIC`.
+
+For H4, the 9,500-valid-replicate rule in Section 7.3 also applies.
+
+95% descriptive interval:
+2.5th and 97.5th percentiles of valid `T_b`.
+
+Raw inferential p-value for BH:
+
+`t_obs = T_obs / SE_boot`
+
+Degrees of freedom:
+
+`df = K - 1`
+
+Using the Student-t distribution:
+- registered positive one-sided: `p = 1 - F_t(t_obs; df)`;
+- registered negative one-sided: `p = F_t(t_obs; df)`;
+- two-sided: `p = 2 * min(F_t(t_obs;df), 1-F_t(t_obs;df))`.
+
+This replaces the earlier draft's bootstrap-sign tail count. The bootstrap estimates cluster-robust uncertainty; the frozen t reference with `K-1` degrees of freedom supplies the raw p-value.
 
 ---
 
@@ -717,9 +852,12 @@ Families:
 No cross-family pooling.
 
 For each family:
-1. compute frozen raw p/p-like values;
-2. apply BH to all registered and testable members;
-3. a member that is `INSUFFICIENT SAMPLE` or `INSUFFICIENT STATISTIC` is not treated as evidence; it cannot be promoted.
+1. family membership and family size remain exactly as registered;
+2. compute the frozen raw p-values for estimable members;
+3. assign `p=1.0` to a registered member classified `INSUFFICIENT SAMPLE` or `INSUFFICIENT STATISTIC`;
+4. apply BH to the full frozen family, including those p=1.0 placeholders.
+
+Thus sample insufficiency never shrinks multiplicity after freeze.
 
 A hypothesis may be SUPPORT only if all are true:
 - sample floors including ESS pass;
@@ -793,6 +931,19 @@ It must record:
 
 Required raw data must be persisted, not merely retrievable by API.
 
+The official frozen stock/ETF Market Data Panel must cache all:
+- 39 frozen equities;
+- 11 frozen sector ETFs;
+- SPY.
+
+That is 51 stock/ETF series before Data Freeze acceptance.
+
+The Breadth feature's per-date 32/39 rule is a **daily feature-eligibility rule**, not permission to omit 7 universe members from the frozen panel.
+
+For every date on which Breadth is computed, persist the exact valid/missing member list so sector- or time-concentrated missingness is auditable.
+
+VIX is frozen separately as the VIX Index source/snapshot and may not be replaced by a VIX futures ETF.
+
 The development Twelve Data data used during sanity testing is not automatically the final frozen provider.
 
 No vendor may be changed after outcome inspection.
@@ -824,53 +975,77 @@ A text-only Protocol is not sufficient.
 
 Freeze is a process, not one commit.
 
-Order is mandatory:
+Order is mandatory.
 
-## F0 — Protocol approval
+## P0 — Market Data Panel readiness prerequisite
 
-1. Protocol Draft review.
-2. Resolve all contradictions.
-3. user explicitly approves freeze.
-4. commit final Protocol.
-5. record Protocol commit SHA.
+Before any full Protocol Freeze:
 
-Until F0 completes:
-Protocol wording may change through reviewed commits.
+1. provider-agnostic cache/normalization code is committed;
+2. provider-specific retrieval adapter is resumable and rate-limited;
+3. raw snapshots are never silently overwritten;
+4. normalized schema matches `SSSS_DATA_SOURCE_POLICY.md`;
+5. manifest generation includes per-symbol raw/normalized hashes, row counts, first/last dates, duplicate count, and missing-OHLCV count;
+6. development dry-run demonstrates cache reuse without refetching;
+7. official freeze policy requires all 51 stock/ETF series, even though a single Breadth date may remain calculable with 32/39 equities.
+
+Current infrastructure artifacts:
+- `market_data_panel.py`
+- `twelve_data_panel_fetch.py`
+
+P0 is infrastructure readiness only. It is not Data Freeze.
+
+## F0 — Protocol content lock
+
+1. review this Protocol Draft;
+2. resolve all implementation ambiguities and contradictions;
+3. user/research owner explicitly approves the text for freezing;
+4. commit the approved Protocol text;
+5. record the Protocol commit SHA.
+
+F0 locks Protocol content but **does not yet authorize the experiment** and is not the final Protocol Freeze.
 
 ## F1 — Data Freeze
 
-1. retrieve all required non-sealed historical/calibration data;
-2. persist raw snapshots;
-3. create SHA-256 manifest;
-4. freeze preprocessing/data-source specification;
-5. commit Data Freeze manifest.
+1. choose the official provider under `SSSS_DATA_SOURCE_POLICY.md`;
+2. retrieve and persist all required raw/calibration snapshots through the Market Data Panel;
+3. require all 39 equities + 11 sector ETFs + SPY to exist in the frozen stock/ETF panel;
+4. persist the authoritative VIX Index snapshot separately;
+5. create SHA-256 manifest;
+6. freeze adjustment, timezone, corporate-action, missing-bar, duplicate, and preprocessing semantics;
+7. record per-date Breadth member availability;
+8. commit `V2_DATA_FREEZE_MANIFEST.*`.
 
 After F1:
-data/vendor/preprocessing change requires Amendment or restart according to Section 13.
+data/vendor/preprocessing change follows Section 13.
 
 ## F2 — Code Freeze
 
-1. run deterministic tests;
-2. record all code commit hashes;
-3. commit Code Freeze manifest;
-4. require clean reproducibility on frozen historical/dev data.
+1. run deterministic unit/integration tests on the frozen development/calibration data;
+2. record commit/blob hashes for every code artifact in Section 11;
+3. verify Market Data Panel cache reproducibility;
+4. verify event/control/statistic reproduction from frozen inputs;
+5. commit `V2_CODE_FREEZE_MANIFEST.*`.
 
-## F3 — Freeze Acceptance
+## F3 — Full Protocol Freeze Acceptance
 
 Create:
 `V2_PROTOCOL_FREEZE_ACCEPTANCE.md`
 
 It must contain:
-- Protocol SHA;
-- Data manifest SHA;
-- code commit/hash manifest;
+- approved Protocol commit SHA;
+- Data Freeze manifest SHA;
+- Code Freeze manifest SHA;
 - Registry SHA;
-- FDR manifest;
+- FDR family manifest;
 - Guard manifest;
+- Market Data Panel manifest SHA;
 - freeze timestamp;
-- explicit user approval reference.
+- explicit user/research-owner approval reference.
 
-Only after F3 is committed is the experiment design frozen.
+**F3 is the moment called Protocol Freeze for experiment authorization.**
+
+Only after F3 is committed is the scientific v2 experiment authorized to begin collecting its sealed window.
 
 ## F4 — Sealed Window Start
 
