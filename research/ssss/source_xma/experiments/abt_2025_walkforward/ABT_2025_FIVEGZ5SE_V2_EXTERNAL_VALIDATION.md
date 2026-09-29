@@ -1,200 +1,186 @@
-# ABT 2025 FIVEGZ5SE V2 External Validation
+# ABT 2025 FIVEGZ5SE V2 External Validation — Corrected No-Time-Cap Run
 
 Status: **OOS_FAIL / V2_NOT_ADMITTED**
 
 Date: 2026-09-29
 
-Rule under test:
-`FIVEGZ5SE_TRADING_PATH_V2`
+This report supersedes the earlier ABT run that imposed a 30-session forced
+exit.
 
-Origin of rule:
-- developed and pruned on AMZN 2023-2025;
-- no ABT-2025 parameter tuning was performed before this run.
+## 1. Corrected rule under test
 
-## 1. Test scope
+Entry:
 
-- Symbol: ABT
-- Period: 2025-01-02 through 2025-12-31
-- Sessions: 250
-- SCTYPE=1
-- next-session-open execution
-- 5 bps adverse slippage each side
-- long/cash only
-- max hold 30 trading sessions
-- no original formula action labels used
-
-Frozen path:
-
-### Entry
-
-BUY-A onset OR BUY-B onset.
+```
+onset(BUY-A) OR onset(BUY-B)
+```
 
 Same-bar SELL onset vetoes a new entry.
 
-### Exit
+Exit:
 
-First onset of SELL-A / SELL-B / SELL-C exits 100%.
+```
+onset(SELL-A)
+OR onset(SELL-B)
+OR onset(SELL-C)
+```
 
-Otherwise time exit at 30 trading sessions.
+Execution:
+- signal at close t;
+- trade at next-session open;
+- 5 bps adverse slippage each side.
 
-## 2. Engine parity gate
+**There is no maximum holding period.**
 
-Before accepting the annual result, the replay was checked against the
-previously archived ABT January 2025 five-dimension calibration table.
+A position remains open until a SELL signal actually occurs.
 
-Calibration dates checked: 14
+If the sample ends while still holding:
+- the portfolio is marked to the final close;
+- that is not treated as an active strategy exit.
 
-Five-dimensional state mismatches:
+No original formula action labels are used.
+
+## 2. Engine parity
+
+Before accepting the annual result, the replay was checked against the archived
+ABT January 2025 five-dimension calibration table.
+
+Calibration rows checked: 14
+
+State mismatches:
 **0**
 
 Therefore:
 
 `ABT_2025_ENGINE_PARITY = PASS`
 
-The annual strategy result is not rejected because of a replay mismatch.
-
 ## 3. Signal counts
 
-During ABT 2025:
+ABT 2025:
 
 - BUY-A onsets: 6
 - BUY-B onsets: 5
 - SELL-A onsets: 6
 - SELL-B onsets: 3
 - SELL-C onsets: 3
-- same-bar buy/sell conflicts: 1
+- same-bar BUY/SELL conflicts: 1
 
-Only five entries were actually taken because signals can occur while already
-holding and same-bar SELL has priority.
-
-## 4. V2 annual result
+## 4. Corrected annual result
 
 Initial capital:
 $10,000.00
 
-Final capital:
-**$9,123.84**
+Final marked portfolio value:
+**$8,587.82**
 
 Cumulative return:
-**-8.76%**
+**-14.12%**
 
 Maximum drawdown:
-**-16.20%**
+**-17.16%**
 
 Annualized daily Sharpe:
-**-0.47**
+**-0.79**
 
-Trades:
+Closed trades:
 **5**
 
-Win rate:
+Closed-trade win rate:
 **40.0%**
 
-Mean trade:
-**-1.77%**
-
-Median trade:
-**-2.30%**
+Average closed trade:
+**-2.92%**
 
 Exposure:
-**39.6%**
+**48.0%**
 
-## 5. ABT buy-and-hold benchmark
+Open position at year end:
+**none**
 
-Same 2025 period and same 5 bps entry/exit slippage:
+## 5. Buy-and-hold benchmark
+
+ABT 2025 buy-and-hold, with the same 5 bps entry/exit slippage:
 
 - return: **+10.09%**
-- maximum drawdown: **-14.06%**
 
-Thus V2:
-- underperformed buy-and-hold by about **18.85 percentage points**;
-- had a worse maximum drawdown;
-- had negative Sharpe.
+Thus the corrected V2 underperformed buy-and-hold by about:
 
-This is a substantive external-validation failure.
+**24.21 percentage points**
 
 ## 6. Trade ledger
 
 | Signal | Entry | Exit | Hold | Return | Exit |
 |---|---|---|---:|---:|---|
 | 2025-01-10 | 2025-01-13 | 2025-01-22 | 6 | +1.26% | SELL-C |
-| 2025-03-10 | 2025-03-11 | 2025-04-23 | 30 | -3.64% | TIME |
-| 2025-06-09 | 2025-06-10 | 2025-07-24 | 30 | -6.29% | TIME |
+| 2025-03-10 | 2025-03-11 | 2025-05-13 | 44 | -3.97% | SELL-A |
+| 2025-06-09 | 2025-06-10 | 2025-08-01 | 36 | -6.15% | SELL-A |
 | 2025-09-15 | 2025-09-16 | 2025-09-19 | 3 | +2.13% | SELL-C |
-| 2025-10-07 | 2025-10-08 | 2025-11-19 | 30 | -2.30% | TIME |
+| 2025-10-07 | 2025-10-08 | 2025-11-20 | 31 | -7.86% | SELL-A |
 
-Key diagnostic fact:
+## 7. Key correction and interpretation
 
-All three losing trades ended because of the **30-session time cap**.
+The earlier 30-session rule was not part of the five-dimension signal logic and
+could force an exit without a SELL signal.
 
-SELL-A/B/C did not fire soon enough to protect those losing ABT positions.
+Removing it was the correct research correction.
 
-The two profitable trades both exited through SELL-C.
+However the corrected ABT result is **worse**, not better:
 
-This does not justify modifying SELL-A/B/C on ABT; it is diagnostic evidence
-only.
+- old 30-day-cap run: -8.76%
+- corrected signal-only exit run: **-14.12%**
 
-## 7. Interpretation
+Therefore the ABT failure was **not caused by the artificial time cap**.
 
-This test directly challenges the strongest concern about the AMZN result:
-stock-specific overfitting.
+The real problem is that SELL-A/B/C did not identify deterioration early
+enough in the three losing ABT positions.
 
-AMZN 2023-2025 development:
-- +259.67%
-- MDD -13.88%
+Those losing positions eventually did receive SELL-A, but only after:
 
-ABT 2025 external test:
-- **-8.76%**
-- MDD **-16.20%**
+- 44 sessions: -3.97%
+- 36 sessions: -6.15%
+- 31 sessions: -7.86%
 
-The magnitude and sign reversal are too large to describe as normal
-performance variation.
+This is direct evidence that the current exit families are not sufficiently
+portable from AMZN to ABT.
+
+## 8. AMZN comparison under the same corrected holding rule
+
+For reference, the same no-time-cap rule on AMZN 2023-2025 produced:
+
+- marked cumulative return: **+280.26%**
+- MDD: **-13.88%**
+- 18 closed trades
+- closed-trade win rate: **94.44%**
+- one open position at 2025-12-31, unrealized +2.69%
+
+The gap between AMZN and ABT therefore becomes even clearer after removing the
+time cap.
+
+## 9. Research conclusion
 
 The correct conclusion is:
 
-`FIVEGZ5SE_TRADING_PATH_V2` has **not generalized from AMZN to ABT**.
+`FIVEGZ5SE_TRADING_PATH_V2` does not generalize from AMZN to ABT 2025.
 
-It must not be promoted to the overall multi-stock validation stage as a
-frozen trading rule.
+The complete path remains:
 
-## 8. What is rejected
+`REJECTED_NOT_ADMITTED`
 
-Rejected:
+This rejection is about the current combined BUY/SELL path.
 
-`FIVEGZ5SE_TRADING_PATH_V2 = REJECTED_NOT_ADMITTED`
+It does **not** reject the entire FIVEGZ5SE research program.
 
-for general use.
+## 10. OOS contamination rule
 
-This rejection applies to the **complete V2 trading path**, not to the entire
-FIVEGZ5SE indicator research.
+ABT 2025 has now been opened and analyzed.
 
-BUY-A, BUY-B and SELL-A/B/C remain research hypotheses whose portability must
-be re-examined.
+Any future rule change based on these ABT failures makes ABT 2025 part of
+development/diagnostic data.
 
-## 9. OOS contamination rule
-
-ABT 2025 has now been opened as an external validation set.
-
-If the research uses these ABT results to change:
-- BUY-A/B definitions;
-- SELL-A/B/C definitions;
-- max holding period;
-- conflict logic;
-- any threshold;
-
-then ABT 2025 becomes development/diagnostic data and must **not** later be
-presented as untouched OOS evidence.
-
-Any revised version will require a different untouched symbol/period for final
-validation.
-
-## 10. Research state
-
-`ABT_2025_FIVEGZ5SE_V2_ENGINE_PARITY = PASS`
-
-`ABT_2025_FIVEGZ5SE_V2_EXTERNAL_VALIDATION = FAIL`
-
-`FIVEGZ5SE_TRADING_PATH_V2 = REJECTED_NOT_ADMITTED`
+A later revised V3 must be validated on a different untouched symbol/period.
 
 Closure:
-`ABT_2025_V2_TEST = CLOSED`
+
+`ABT_2025_FIVEGZ5SE_V2_NO_TIME_CAP = FAIL`
+
+`FIVEGZ5SE_TRADING_PATH_V2 = REJECTED_NOT_ADMITTED`
