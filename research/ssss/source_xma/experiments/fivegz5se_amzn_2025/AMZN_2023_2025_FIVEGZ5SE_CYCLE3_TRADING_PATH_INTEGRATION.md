@@ -1,3 +1,28 @@
+> **RULE CORRECTION — 2026-09-29**
+>
+> The 30-trading-session forced exit used in the original Cycle-3 integration
+> is **superseded**.
+>
+> Correct holding rule:
+> - after BUY-A / BUY-B entry, remain invested until SELL-A / SELL-B / SELL-C
+>   actually fires;
+> - there is no arbitrary maximum holding period;
+> - if the sample ends while a position is still open, mark the position to
+>   the final close for portfolio valuation, but do **not** classify that as a
+>   strategy exit.
+>
+> The original 30-day results below are retained only as historical development
+> diagnostics. They are not the current strategy rule.
+>
+> Re-run under the corrected no-time-cap rule:
+> - AMZN 2023-2025 marked return: **+280.26%**
+> - MDD: **-13.88%**
+> - 18 closed trades, 94.44% closed-trade win rate
+> - one open position at 2025-12-31, unrealized +2.69%
+>
+> Current candidate path definition is therefore:
+> `BUY_A_OR_BUY_B -> HOLD_UNTIL_SELL_A_OR_SELL_B_OR_SELL_C`.
+>
 # AMZN 2023-2025 FIVEGZ5SE Cycle 3 — Trading Path Integration
 
 Status: **CYCLE3_COMPLETE / V2_PATH_CANDIDATE_IDENTIFIED**
