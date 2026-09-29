@@ -17,12 +17,37 @@ FIVEGZ5SE work is restricted to:
 
 This development scope applies to:
 - formula-engine reproduction checks;
+- five-dimension combination discovery;
 - W1 / W3 / W5 path-feature research;
 - candidate buy/sell discovery;
 - statistical comparisons;
 - controlled rule iteration;
 - sensitivity analysis;
 - preliminary trading backtests.
+
+## Primary research principle: combination-first
+
+The primary task is **not** to optimize W1/W3/W5 as three standalone systems.
+
+The primary task is to search for the strongest repeatable buy/sell structure
+across combinations of the five dimensions:
+
+- Trend
+- Capital
+- Momentum
+- Acceleration
+- Anomaly
+
+Candidate rules may combine:
+- current five-color states;
+- cross-dimension combinations;
+- internal numerical strength / distance-to-threshold variables;
+- transition direction;
+- persistence;
+- weakening / strengthening;
+- interaction effects.
+
+W1/W3/W5 are temporal context features inside this broader combination search.
 
 ## Rationale
 
@@ -49,6 +74,11 @@ The development study retains:
 - W1: t-1 -> t
 - W3: t-3 ... t
 - W5: t-5 ... t
+
+These windows are **supporting context**, not the main optimization target.
+
+A candidate may use one, multiple, or none of them if the broader
+five-dimension combination is statistically stronger.
 
 W1 is not treated as the sole causal boundary.
 
