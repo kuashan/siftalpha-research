@@ -132,13 +132,14 @@
 
     // Position-sizing / exit-policy simulator.
     function simulate({buyPolicy="FULL_FIRST",sellPolicy="FULL_FIRST"}={}){
-      let cash=10000,shares=0,baseCap=0,seenBuy=new Set(),firstSellSet=null,pending=[],peak=10000,mdd=0,exposure=0,trades=0,wins=0,realizedRets=[],entryBasis=0,entryValue=0;
+      let cash=10000,shares=0,baseCap=0,seenBuy=new Set(),firstSellSet=null,pending=[],peak=10000,mdd=0,exposure=0,investedWeightSum=0,trades=0,wins=0,realizedRets=[],entryBasis=0,entryValue=0;
       function schedule(type,fraction,reason){pending.push({type,fraction,reason});}
-      function allocForNew(nDistinct){
-        if(buyPolicy==="FULL_FIRST")return nDistinct===1?1:0;
+      function allocForNew(nDistinct,fam){
+        if(buyPolicy==="FULL_FIRST"||buyPolicy==="STATIC_HALF"||buyPolicy==="STATIC_THIRD")return 0;
         if(buyPolicy==="HALF_CROSS")return nDistinct<=2?.5:0;
         if(buyPolicy==="THIRDS_DISTINCT")return nDistinct<=3?1/3:0;
-        if(buyPolicy==="HALF_QUARTERS")return nDistinct===1?.5:(nDistinct<=3?.25:0);
+        if(buyPolicy==="HALF_QUARTERS")return nDistinct===2?.25:(nDistinct===3?.25:0);
+        if(buyPolicy==="C_ANCHORED")return fam==="C"?.5:0;
         return 0;
       }
       for(let i=start;i<=end;i++){
@@ -159,7 +160,7 @@
           }
         }
         if(shares>0)exposure++;
-        const eq=cash+shares*raw[i].close;peak=Math.max(peak,eq);mdd=Math.min(mdd,eq/peak-1);
+        const eq=cash+shares*raw[i].close;if(eq>0)investedWeightSum+=(shares*raw[i].close)/eq;peak=Math.max(peak,eq);mdd=Math.min(mdd,eq/peak-1);
         if(i===end)break;
         const bs=active(BUY,i),ss=active(SELL,i);
         if(shares===0&&baseCap===0){
@@ -167,16 +168,19 @@
             baseCap=eq;seenBuy=new Set(bs);
             let frac=0;
             if(buyPolicy==="FULL_FIRST")frac=1;
+            else if(buyPolicy==="STATIC_HALF")frac=.5;
+            else if(buyPolicy==="STATIC_THIRD")frac=1/3;
             else if(buyPolicy==="HALF_CROSS")frac=Math.min(1,.5*seenBuy.size);
             else if(buyPolicy==="THIRDS_DISTINCT")frac=Math.min(1,(1/3)*seenBuy.size);
             else if(buyPolicy==="HALF_QUARTERS")frac=Math.min(1,.5+.25*Math.max(0,seenBuy.size-1));
+            else if(buyPolicy==="C_ANCHORED")frac=seenBuy.has("C")?1:.5;
             schedule("BUY",frac,"ENTRY");
           }
         } else if(shares>0){
           const newF=bs.filter(f=>!seenBuy.has(f));
           for(const f of newF){
             seenBuy.add(f);
-            const frac=allocForNew(seenBuy.size);
+            const frac=allocForNew(seenBuy.size,f);
             if(frac>0)schedule("BUY",frac,"CONFIRM_"+f);
           }
           if(ss.length){
@@ -190,23 +194,32 @@
             } else if(sellPolicy==="WAIT_DISTINCT"){
               if(firstSellSet==null)firstSellSet=new Set(ss);
               else if(ss.some(f=>!firstSellSet.has(f)))schedule("SELL",1,"SECOND_DISTINCT");
+            } else if(sellPolicy==="AB_HALF_C_FULL"){
+              if(firstSellSet==null){
+                if(ss.length===1&&(ss[0]==="A"||ss[0]==="B")){firstSellSet=new Set(ss);schedule("SELL",.5,"AB_FIRST_HALF");}
+                else schedule("SELL",1,"C_OR_CONFLUENCE_FULL");
+              } else if(ss.some(f=>!firstSellSet.has(f)))schedule("SELL",1,"NEXT_DISTINCT");
             }
           }
         }
       }
       const final=cash+shares*raw[end].close;
       const avg=mean(realizedRets),med=median(realizedRets);
-      return {return:final/10000-1,mdd,trades,win:trades?wins/trades:null,avg_trade:avg,median_trade:med,exposure:exposure/(end-start+1),open_at_end:shares>0};
+      return {return:final/10000-1,mdd,trades,win:trades?wins/trades:null,avg_trade:avg,median_trade:med,exposure:exposure/(end-start+1),avg_invested_weight:investedWeightSum/(end-start+1),open_at_end:shares>0};
     }
 
     const strategies={
       BUY_FULL_SELL_FULL:simulate({buyPolicy:"FULL_FIRST",sellPolicy:"FULL_FIRST"}),
+      BUY_STATIC_HALF_SELL_FULL:simulate({buyPolicy:"STATIC_HALF",sellPolicy:"FULL_FIRST"}),
+      BUY_STATIC_THIRD_SELL_FULL:simulate({buyPolicy:"STATIC_THIRD",sellPolicy:"FULL_FIRST"}),
       BUY_HALF_CROSS_SELL_FULL:simulate({buyPolicy:"HALF_CROSS",sellPolicy:"FULL_FIRST"}),
       BUY_THIRDS_DISTINCT_SELL_FULL:simulate({buyPolicy:"THIRDS_DISTINCT",sellPolicy:"FULL_FIRST"}),
       BUY_HALF_QUARTERS_SELL_FULL:simulate({buyPolicy:"HALF_QUARTERS",sellPolicy:"FULL_FIRST"}),
+      BUY_C_ANCHORED_SELL_FULL:simulate({buyPolicy:"C_ANCHORED",sellPolicy:"FULL_FIRST"}),
       BUY_FULL_SELL_HALF_ANY:simulate({buyPolicy:"FULL_FIRST",sellPolicy:"HALF_ANY"}),
       BUY_FULL_SELL_HALF_DISTINCT:simulate({buyPolicy:"FULL_FIRST",sellPolicy:"HALF_DISTINCT"}),
-      BUY_FULL_SELL_WAIT_DISTINCT:simulate({buyPolicy:"FULL_FIRST",sellPolicy:"WAIT_DISTINCT"})
+      BUY_FULL_SELL_WAIT_DISTINCT:simulate({buyPolicy:"FULL_FIRST",sellPolicy:"WAIT_DISTINCT"}),
+      BUY_FULL_SELL_AB_HALF_C_FULL:simulate({buyPolicy:"FULL_FIRST",sellPolicy:"AB_HALF_C_FULL"})
     };
 
     const posSummary={};
