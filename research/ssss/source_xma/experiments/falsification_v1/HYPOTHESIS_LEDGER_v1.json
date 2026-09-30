@@ -1,0 +1,191 @@
+{
+  "meta": {
+    "date": "2026-09-28",
+    "status": "FINAL",
+    "closureRule": "Every preregistered v1 hypothesis receives a terminal classification. No significance is required for closure.",
+    "fdrNote": "The preregistered BH q=0.10 family cannot be reconstructed as one complete scalar p-value vector without post-hoc choices because several registered auxiliary tests lack preserved Validation A/B features and some family items did not freeze one unique scalar test statistic. No result is promoted; no FDR-based positive claim is made.",
+    "sealedFutureWindow": "2026H1 untouched; latest v1 event date 2025-12-29."
+  },
+  "hypotheses": [
+    {
+      "id": "H-UPPER-GENERAL-TOP",
+      "hypothesis": "Upper strict confluence is a general top/decline rule",
+      "rawN": 438,
+      "waveN": 192,
+      "matchableN": 431,
+      "primaryEffect": "5-bar matched excess +0.08%; sector excess +0.11%",
+      "clusteredCI": "symbol [-0.41%, +0.51%]; month [-0.57%, +0.69%]",
+      "fdrP": "N/A — support already fails preregistered A/B direction-consistency criterion; no positive claim tested",
+      "finalStatus": "REJECT",
+      "reason": "Validation A is neutral/slightly positive while Validation B is negative. Direction is not consistent."
+    },
+    {
+      "id": "H-LOWER-INCREMENTAL-BUY",
+      "hypothesis": "Lower strict confluence provides incremental buy/rebound information",
+      "rawN": 345,
+      "waveN": 130,
+      "matchableN": 337,
+      "primaryEffect": "10-bar matched excess -3.22%; 20-bar matched excess -3.77%",
+      "clusteredCI": "10-bar symbol [-4.56%, -1.74%]; month [-4.60%, -1.63%]",
+      "fdrP": "N/A — observed effect is opposite the preregistered positive-increment hypothesis",
+      "finalStatus": "REJECT",
+      "reason": "Raw rebound does not survive same-DOWN and overextension-matched controls."
+    },
+    {
+      "id": "H-LOWER-PENETRATION-SUBTYPES",
+      "hypothesis": "Shallow/deep-reclaim/deep-no-reclaim lower subtypes rescue lower-confluence buy information",
+      "rawN": 345,
+      "waveN": 130,
+      "matchableN": 337,
+      "primaryEffect": "10-bar matched excess: shallow -3.35%, deep-reclaim -3.44%, deep-no-reclaim -2.99%",
+      "clusteredCI": "not promoted as separate primary family tests",
+      "fdrP": "N/A",
+      "finalStatus": "REJECT",
+      "reason": "All frozen penetration subtypes retain negative matched excess."
+    },
+    {
+      "id": "H-STATE-TRANSITIONS",
+      "hypothesis": "Common independent XMA state transitions are standalone directional signals",
+      "rawN": "large; e.g. DOWN->RANGE 301 combined, RANGE->UP 400 combined",
+      "waveN": "reported separately in transition-path audit for anchor families",
+      "matchableN": "transition matched controls available in transition summary",
+      "primaryEffect": "common transitions show small/mixed matched excess",
+      "clusteredCI": "no promotion",
+      "fdrP": "N/A — no unique scalar family statistic was preregistered for standalone transition promotion",
+      "finalStatus": "OBSERVE / NOT PROMOTED",
+      "reason": "Transitions remain lifecycle descriptors, not validated directional signals."
+    },
+    {
+      "id": "H-TRANSITION-PATH",
+      "hypothesis": "DOWN->RANGE or UP->RANGE meaningfully changes the next state path versus same-origin random paths",
+      "rawN": "A: 284 DOWN->RANGE; 338 UP->RANGE",
+      "waveN": "A: 104 and 143",
+      "matchableN": "random-path baseline available",
+      "primaryEffect": "A target path 62.3% vs conditional random 61.6%; 49.7% vs 47.7%",
+      "clusteredCI": "not used for promotion",
+      "fdrP": "N/A",
+      "finalStatus": "OBSERVE / NOT PROMOTED",
+      "reason": "Path split is close to same-origin random-path baseline."
+    },
+    {
+      "id": "H-FAST-MID",
+      "hypothesis": "FAST_MID_ANALYTIC reclaim/loss is a standalone directional signal",
+      "rawN": "thousands of independent midpoint crossings",
+      "waveN": "not used as confluence episode count",
+      "matchableN": "independent midpoint study completed",
+      "primaryEffect": "both cross-above and cross-below show positive absolute market drift",
+      "clusteredCI": "no directional promotion",
+      "fdrP": "N/A",
+      "finalStatus": "OBSERVE / NOT PROMOTED",
+      "reason": "Midpoint is useful as a fast lifecycle marker but not validated directionally."
+    },
+    {
+      "id": "H-TIME-TO-CONFIRM",
+      "hypothesis": "Confluence-to-midpoint/state timing yields a promotable time-stop/confirmation rule",
+      "rawN": "Upper 438; Lower 345",
+      "waveN": "Upper 192; Lower 130",
+      "matchableN": "right-censored survival completed",
+      "primaryEffect": "midpoint moves much earlier than formal state departure",
+      "clusteredCI": "descriptive survival only",
+      "fdrP": "N/A — no time-stop threshold was preregistered for promotion",
+      "finalStatus": "OBSERVE / NOT PROMOTED",
+      "reason": "Timing is descriptive; choosing N bars from these outcomes would be post-hoc tuning."
+    },
+    {
+      "id": "H-BELOW-VAL",
+      "hypothesis": "Lower confluence BELOW_VAL has incremental holdout value versus INSIDE_VALUE",
+      "rawN": "not available for expanded holdout feature split",
+      "waveN": "N/A",
+      "matchableN": "N/A",
+      "primaryEffect": "Discovery evidence exists only",
+      "clusteredCI": "N/A",
+      "fdrP": "N/A",
+      "finalStatus": "INCONCLUSIVE / DATA NOT AVAILABLE",
+      "reason": "Validation A/B Volume Profile labels were not preserved."
+    },
+    {
+      "id": "H-HYS2-INTERACTION",
+      "hypothesis": "HYS2 provides incremental 2x2/logistic interaction value beyond XMA geometry",
+      "rawN": "not available for expanded holdout feature panel",
+      "waveN": "N/A",
+      "matchableN": "N/A",
+      "primaryEffect": "Discovery-only HYS2 results exist",
+      "clusteredCI": "N/A",
+      "fdrP": "N/A",
+      "finalStatus": "INCONCLUSIVE / DATA NOT AVAILABLE",
+      "reason": "Expanded holdout HYS2 features/raw components were not persisted."
+    },
+    {
+      "id": "H-HYS2-FIRE-REDUNDANCY",
+      "hypothesis": "HYS2 fire-bottom/fire-top are redundant",
+      "rawN": "Discovery strict sample only",
+      "waveN": "N/A",
+      "matchableN": "N/A",
+      "primaryEffect": "near-universal within strict XMA event sample",
+      "clusteredCI": "N/A",
+      "fdrP": "N/A",
+      "finalStatus": "REDUNDANT WITHIN STRICT XMA EVENT SAMPLE",
+      "reason": "Reverse containment was not validated; global redundancy is not established."
+    },
+    {
+      "id": "H-VOLUME",
+      "hypothesis": "Volume capitulation/structure has expanded-holdout incremental value",
+      "rawN": "N/A",
+      "waveN": "N/A",
+      "matchableN": "N/A",
+      "primaryEffect": "Discovery-only auxiliary evidence",
+      "clusteredCI": "N/A",
+      "fdrP": "N/A",
+      "finalStatus": "INCONCLUSIVE / DATA NOT AVAILABLE",
+      "reason": "Expanded holdout Volume feature panel was not preserved."
+    },
+    {
+      "id": "H-BREADTH",
+      "hypothesis": "Breadth has expanded-holdout incremental value",
+      "rawN": "N/A",
+      "waveN": "N/A",
+      "matchableN": "N/A",
+      "primaryEffect": "Discovery-only auxiliary evidence",
+      "clusteredCI": "N/A",
+      "fdrP": "N/A",
+      "finalStatus": "INCONCLUSIVE / DATA NOT AVAILABLE",
+      "reason": "Expanded holdout Breadth features were not preserved."
+    },
+    {
+      "id": "H-VIX",
+      "hypothesis": "Frozen VIX dimensions have expanded-holdout incremental/descriptive value",
+      "rawN": "N/A",
+      "waveN": "N/A",
+      "matchableN": "N/A",
+      "primaryEffect": "Discovery VIX rule was neutral",
+      "clusteredCI": "N/A",
+      "fdrP": "N/A",
+      "finalStatus": "INCONCLUSIVE / DATA NOT AVAILABLE",
+      "reason": "Expanded holdout VIX feature panel was not preserved."
+    },
+    {
+      "id": "H-CRYPTO-UPPER-TOP",
+      "hypothesis": "Upper strict confluence is a general crypto top/decline rule",
+      "rawN": "A 41; B 5",
+      "waveN": "reported separately from equities",
+      "matchableN": "crypto matched controls available",
+      "primaryEffect": "A raw 5-bar +2.95%; 20-bar mean +22.55% but extreme-value sensitive",
+      "clusteredCI": "four-symbol structure is too thin for strong cluster inference",
+      "fdrP": "N/A",
+      "finalStatus": "REJECT",
+      "reason": "Sign contradicts universal top interpretation; raw mean is also dominated by extreme events."
+    },
+    {
+      "id": "H-CRYPTO-LOWER-BUY",
+      "hypothesis": "Lower strict confluence provides incremental crypto buy/rebound information",
+      "rawN": "A 37; B 7",
+      "waveN": "reported separately from equities",
+      "matchableN": "crypto matched controls available",
+      "primaryEffect": "A raw 10-bar +2.29% but matched excess -6.17%; 20-bar matched excess -9.37%",
+      "clusteredCI": "four-symbol structure is too thin for strong cluster inference",
+      "fdrP": "N/A",
+      "finalStatus": "REJECT",
+      "reason": "Positive raw rebound is not incremental versus matched controls."
+    }
+  ]
+}

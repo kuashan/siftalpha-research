@@ -1,0 +1,146 @@
+{
+  "experiment": "E034",
+  "track": "equity",
+  "provider": "Massive Stocks",
+  "tickers": [
+    "ADBE",
+    "WFC",
+    "MRK",
+    "FDX",
+    "NEE"
+  ],
+  "coverage": [
+    {
+      "ticker": "ADBE",
+      "bars": 501,
+      "warning": null
+    },
+    {
+      "ticker": "WFC",
+      "bars": 501,
+      "warning": null
+    },
+    {
+      "ticker": "MRK",
+      "bars": 501,
+      "warning": null
+    },
+    {
+      "ticker": "FDX",
+      "bars": 501,
+      "warning": null
+    },
+    {
+      "ticker": "NEE",
+      "bars": 501,
+      "warning": null
+    }
+  ],
+  "records": [
+    {
+      "ticker": "ADBE",
+      "trade_id": "ADBE-1",
+      "path": "FAILURE",
+      "signal_date": "2025-08-22",
+      "entry_date": "2025-08-25",
+      "exit_date": "2026-01-16",
+      "final_ret": -0.1616519,
+      "S0": {
+        "ER10": 0.37558015,
+        "CHOP14": 47.27388806,
+        "CMF20": -0.0904839,
+        "OBVImpulse10": 0.24859563
+      },
+      "S1": {
+        "ER10": 0.59429031,
+        "CHOP14": 46.13679511,
+        "CMF20": -0.0636126,
+        "OBVImpulse10": 0.46822751
+      }
+    },
+    {
+      "ticker": "MRK",
+      "trade_id": "MRK-1",
+      "path": "FAILURE",
+      "signal_date": "2025-07-01",
+      "entry_date": "2025-07-02",
+      "exit_date": "2025-08-07",
+      "final_ret": -0.03130808,
+      "S0": {
+        "ER10": 0.0880829,
+        "CHOP14": 57.95391645,
+        "CMF20": 0.1502554,
+        "OBVImpulse10": 0.34775781
+      },
+      "S1": {
+        "ER10": 0.54437086,
+        "CHOP14": 56.97887193,
+        "CMF20": 0.10768467,
+        "OBVImpulse10": 0.47512374
+      }
+    },
+    {
+      "ticker": "FDX",
+      "trade_id": "FDX-1",
+      "path": "FAILURE",
+      "signal_date": "2025-06-16",
+      "entry_date": "2025-06-17",
+      "exit_date": "2025-08-13",
+      "final_ret": 0.01963601,
+      "S0": {
+        "ER10": 0.36785418,
+        "CHOP14": 50.87880011,
+        "CMF20": 0.03439294,
+        "OBVImpulse10": 0.24832514
+      },
+      "S1": {
+        "ER10": 0.10381276,
+        "CHOP14": 52.05766857,
+        "CMF20": -0.00460551,
+        "OBVImpulse10": 0.03409875
+      }
+    },
+    {
+      "ticker": "NEE",
+      "trade_id": "NEE-1",
+      "path": "MATURE",
+      "signal_date": "2025-05-08",
+      "entry_date": "2025-05-09",
+      "exit_date": "2025-06-27",
+      "final_ret": 0.0390526,
+      "S0": {
+        "ER10": 0.286754,
+        "CHOP14": 56.70247295,
+        "CMF20": 0.05534299,
+        "OBVImpulse10": 0.17864179
+      },
+      "S1": {
+        "ER10": 0.49069767,
+        "CHOP14": 59.30352512,
+        "CMF20": 0.09785392,
+        "OBVImpulse10": 0.41135244
+      }
+    },
+    {
+      "ticker": "NEE",
+      "trade_id": "NEE-2",
+      "path": "FAILURE",
+      "signal_date": "2026-06-18",
+      "entry_date": "2026-06-22",
+      "exit_date": "2026-08-11",
+      "final_ret": -0.02956395,
+      "S0": {
+        "ER10": 0.17011129,
+        "CHOP14": 66.18194413,
+        "CMF20": 0.04616824,
+        "OBVImpulse10": 0.49890947
+      },
+      "S1": {
+        "ER10": 0.03529412,
+        "CHOP14": 62.79421633,
+        "CMF20": -0.03711387,
+        "OBVImpulse10": 0.28885206
+      }
+    }
+  ]
+}

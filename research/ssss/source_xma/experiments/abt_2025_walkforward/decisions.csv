@@ -1,0 +1,21 @@
+date,decision,setup_id,prior_decision,regime,price_zone,momentum_state,confirmation_state,reason,invalidated_by,next_review_date,rule_version
+2025-01-02,NO_TRADE,,,RANGE,LOWER_BAND,BOTH_DOWN,NONE,No complete XMA setup; wait.,,NEXT_TRADING_DAY,JAN25_v1
+2025-01-03,NO_TRADE,,,RANGE,LOWER_BAND,CONFLICT,NONE,No complete XMA setup; wait.,,NEXT_TRADING_DAY,JAN25_v1
+2025-01-06,NO_TRADE,,,RANGE,LOWER_BAND,BOTH_DOWN,NONE,No complete XMA setup; wait.,,NEXT_TRADING_DAY,JAN25_v1
+2025-01-07,NO_TRADE,,,RANGE,LOWER_BAND,BOTH_DOWN,NONE,No complete XMA setup; wait.,,NEXT_TRADING_DAY,JAN25_v1
+2025-01-08,NO_TRADE,,,RANGE,MID_UPPER,BOTH_UP,NONE,No complete XMA setup; wait.,,NEXT_TRADING_DAY,JAN25_v1
+2025-01-10,NO_TRADE,,,RANGE,LOWER_BAND,BOTH_DOWN,NONE,No complete XMA setup; wait.,,NEXT_TRADING_DAY,JAN25_v1
+2025-01-13,NO_TRADE,,,RANGE,LOWER_BAND,BOTH_DOWN,NONE,No complete XMA setup; wait.,,NEXT_TRADING_DAY,JAN25_v1
+2025-01-14,NO_TRADE,,,RANGE,LOWER_BAND,BOTH_DOWN,NONE,No complete XMA setup; wait.,,NEXT_TRADING_DAY,JAN25_v1
+2025-01-15,PROBE_LONG,L1,,RANGE,LOWER_BAND,BOTH_DOWN,LOW_EXTREME_UNCONFIRMED,"RANGE regime; low pierced first-observed XMA lower boundary (loPos<20k); source LOW/多 appears, but momentum still BOTH_DOWN, so only 30% probe.",,NEXT_TRADING_DAY,JAN25_v1
+2025-01-16,ENTER_LONG,L1,,RANGE,MID_UPPER,BOTH_UP,MID_RECLAIM_CONFIRMED,Price reclaimed XMA mid after lower extreme; both momentum components turned up. Raise target from 30% to 70% next open.,,NEXT_TRADING_DAY,JAN25_v1
+2025-01-17,HOLD_LONG,L1,,RANGE,MID_UPPER,BOTH_UP,NONE,Both momentum components remain up; close holds around XMA mid; no failure condition.,,NEXT_TRADING_DAY,JAN25_v1
+2025-01-21,ADD_LONG,L1,,RANGE,EXTREME_HIGH,BOTH_UP,BREAKOUT_CONFIRMED,Close broke above XMA FastUpper with BOTH_UP momentum and RVOL>1.5. This overrides the source RANGE upper-band 空/HIGH_ICON mean-reversion signal. Raise to 100% next open.,,NEXT_TRADING_DAY,JAN25_v1
+2025-01-22,HOLD_LONG,L1,,RANGE,EXTREME_HIGH,BOTH_UP,NONE,Breakout follow-through; RVOL>2.4 and both momentum components continue rising.,,NEXT_TRADING_DAY,JAN25_v1
+2025-01-23,HOLD_LONG,L1,,RANGE,EXTREME_HIGH_PLUS,BOTH_UP,NONE,"Price is extreme-high, but momentum acceleration remains positive; do not short a strengthening breakout.",,NEXT_TRADING_DAY,JAN25_v1
+2025-01-24,HOLD_LONG,L1,,RANGE,EXTREME_HIGH_PLUS,BOTH_UP,NONE,Still extreme-high with BOTH_UP momentum; no confirmed decay.,,NEXT_TRADING_DAY,JAN25_v1
+2025-01-27,HOLD_LONG,L1,,RANGE,EXTREME_HIGH_PLUS,BOTH_UP,NONE,Trend extension continues; both momentum components still accelerate despite elevated VIX.,,NEXT_TRADING_DAY,JAN25_v1
+2025-01-28,REDUCE_LONG,L1,,BULL,EXTREME_HIGH_PLUS,BOTH_UP,EXTREME_DECELERATION,"Price remains >130k normalized extreme while both momentum increments decelerate sharply from prior session. Reduce 30% next open, do not reverse short.",,NEXT_TRADING_DAY,JAN25_v1
+2025-01-29,HOLD_LONG,L1,,BULL,EXTREME_HIGH_PLUS,BOTH_UP,NONE,"After reduction, momentum still positive but weak; retain 70% while waiting for confirmation.",,NEXT_TRADING_DAY,JAN25_v1
+2025-01-30,EXIT_LONG,L1,,BULL,EXTREME_HIGH_PLUS,CONFLICT,MOMENTUM_CONFLICT,Extended price plus momentum conflict: fast component barely positive while slower component turns negative. Exit remaining 70% next open.,,NEXT_TRADING_DAY,JAN25_v1
+2025-01-31,NO_TRADE,,,BULL,EXTREME_HIGH_PLUS,BOTH_DOWN,NONE,"After exit, both momentum components are down but regime is BULL; insufficient evidence to initiate a short.",,NEXT_TRADING_DAY,JAN25_v1

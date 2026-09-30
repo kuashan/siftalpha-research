@@ -1,0 +1,180 @@
+{
+  "experiment": "E033",
+  "provider": "Massive",
+  "tickers": [
+    "ORCL",
+    "WMT",
+    "GS",
+    "TMO",
+    "RTX"
+  ],
+  "coverage": [
+    {
+      "ticker": "ORCL",
+      "bars": 501,
+      "warning": null
+    },
+    {
+      "ticker": "WMT",
+      "bars": 501,
+      "warning": null
+    },
+    {
+      "ticker": "GS",
+      "bars": 501,
+      "warning": null
+    },
+    {
+      "ticker": "TMO",
+      "bars": 501,
+      "warning": null
+    },
+    {
+      "ticker": "RTX",
+      "bars": 0,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    }
+  ],
+  "trades": [
+    {
+      "ticker": "ORCL",
+      "trade_id": "ORCL-1",
+      "path": "OPEN_UNRESOLVED",
+      "entry_date": "2026-08-27",
+      "resolved": false,
+      "entry_atr": 6.243921428571426,
+      "entry_px": 152.106,
+      "candidates": {
+        "C04": {
+          "triggered": false
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2026-08-27",
+          "exec_date": "2026-08-28",
+          "bars": 1,
+          "entry_dist_atr": 0.239273,
+          "resolved": false
+        },
+        "S10": {
+          "triggered": true,
+          "signal_date": "2026-09-01",
+          "exec_date": "2026-09-02",
+          "bars": 4,
+          "entry_dist_atr": -1.897205,
+          "resolved": false
+        },
+        "R10": {
+          "triggered": true,
+          "signal_date": "2026-09-03",
+          "exec_date": "2026-09-04",
+          "bars": 6,
+          "entry_dist_atr": 1.176985,
+          "resolved": false
+        }
+      }
+    },
+    {
+      "ticker": "WMT",
+      "trade_id": "WMT-1",
+      "path": "OPEN_UNRESOLVED",
+      "entry_date": "2026-07-20",
+      "resolved": false,
+      "entry_atr": 2.900349999999999,
+      "entry_px": 113.96,
+      "candidates": {
+        "C04": {
+          "triggered": false
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2026-07-20",
+          "exec_date": "2026-07-21",
+          "bars": 1,
+          "entry_dist_atr": -0.844726,
+          "resolved": false
+        },
+        "S10": {
+          "triggered": true,
+          "signal_date": "2026-07-20",
+          "exec_date": "2026-07-21",
+          "bars": 1,
+          "entry_dist_atr": -0.844726,
+          "resolved": false
+        },
+        "R10": {
+          "triggered": true,
+          "signal_date": "2026-07-29",
+          "exec_date": "2026-07-30",
+          "bars": 8,
+          "entry_dist_atr": -0.810247,
+          "resolved": false
+        }
+      }
+    },
+    {
+      "ticker": "GS",
+      "trade_id": "GS-1",
+      "path": "MATURE",
+      "entry_date": "2025-05-09",
+      "resolved": true,
+      "entry_atr": 15.389742857142855,
+      "entry_px": 570.25,
+      "candidates": {
+        "C04": {
+          "triggered": false
+        },
+        "D10": {
+          "triggered": false
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": false
+        }
+      },
+      "exit_date": "2026-08-25",
+      "base_ret": 0.83761876,
+      "nextday_ret": 0.75747306
+    },
+    {
+      "ticker": "TMO",
+      "trade_id": "TMO-1",
+      "path": "OPEN_UNRESOLVED",
+      "entry_date": "2025-07-11",
+      "resolved": false,
+      "entry_atr": 12.17300714285714,
+      "entry_px": 430.245,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2025-07-11",
+          "exec_date": "2025-07-14",
+          "bars": 1,
+          "entry_dist_atr": -0.102275,
+          "resolved": false
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2025-07-14",
+          "exec_date": "2025-07-15",
+          "bars": 2,
+          "entry_dist_atr": -0.148279,
+          "resolved": false
+        },
+        "S10": {
+          "triggered": true,
+          "signal_date": "2025-07-15",
+          "exec_date": "2025-07-16",
+          "bars": 3,
+          "entry_dist_atr": -0.980448,
+          "resolved": false
+        },
+        "R10": {
+          "triggered": false
+        }
+      }
+    }
+  ]
+}

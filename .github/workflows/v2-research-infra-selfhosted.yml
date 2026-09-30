@@ -1,0 +1,41 @@
+name: V2 Research Infra (Self Hosted)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: [self-hosted, linux, siftalpha-research, v2]
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact commit without marketplace actions
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          rm -rf source
+          mkdir source
+          cd source
+          git init .
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
+          git fetch --depth=1 origin "${SHA}"
+          git checkout --detach FETCH_HEAD
+
+      - name: Create isolated Python environment
+        run: |
+          set -euo pipefail
+          python3 -m venv venv
+          ./venv/bin/python -m pip install --upgrade pip
+          ./venv/bin/python -m pip install             -r source/research/ssss/source_xma/experiments/falsification_v2/requirements_v2.txt
+          ./venv/bin/python -m pip install             -r source/research/ssss/source_xma/experiments/falsification_v2/requirements_yfinance.txt
+
+      - name: Run deterministic v2 suite
+        working-directory: source/research/ssss/source_xma/experiments/falsification_v2
+        run: |
+          set -euo pipefail
+          "${GITHUB_WORKSPACE}/venv/bin/python" -m unittest -v             test_v2_infrastructure.py             test_v2_protocol_engine.py             test_v2_statistics_guards.py             test_provider_parity.py

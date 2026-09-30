@@ -1,0 +1,4355 @@
+{
+  "benchmark_A": {
+    "final": 1.1397139383489474,
+    "ret": 0.1397139383489474,
+    "maxDD": 0.07511515074070596,
+    "avgExposure": 0.30280868109221226,
+    "turnover": 28.905053230979235,
+    "per": [
+      {
+        "id": 1,
+        "path": "MATURE",
+        "ret": -0.011577973163842792
+      },
+      {
+        "id": 2,
+        "path": "FAILURE",
+        "ret": -0.002036345654652827
+      },
+      {
+        "id": 3,
+        "path": "MATURE",
+        "ret": 0.010454133576248692
+      },
+      {
+        "id": 4,
+        "path": "MATURE",
+        "ret": 0.0797091674778978
+      },
+      {
+        "id": 5,
+        "path": "MATURE",
+        "ret": 0.0007170975860104623
+      },
+      {
+        "id": 6,
+        "path": "MATURE",
+        "ret": 0.010101959103181901
+      },
+      {
+        "id": 7,
+        "path": "MATURE",
+        "ret": 0.016684044937380182
+      },
+      {
+        "id": 8,
+        "path": "MATURE",
+        "ret": -0.015372051446216117
+      },
+      {
+        "id": 9,
+        "path": "MATURE",
+        "ret": 0.026860564771062023
+      },
+      {
+        "id": 10,
+        "path": "FAILURE",
+        "ret": 0.003959964432263208
+      },
+      {
+        "id": 11,
+        "path": "FAILURE",
+        "ret": -0.002277688555325841
+      },
+      {
+        "id": 12,
+        "path": "MATURE",
+        "ret": -0.011109730277680918
+      },
+      {
+        "id": 13,
+        "path": "FAILURE",
+        "ret": -0.003075349844142261
+      },
+      {
+        "id": 14,
+        "path": "FAILURE",
+        "ret": 0.0003261797840423686
+      },
+      {
+        "id": 15,
+        "path": "MATURE",
+        "ret": 0.003233431164781031
+      },
+      {
+        "id": 16,
+        "path": "MATURE",
+        "ret": 0.0042598040917443125
+      },
+      {
+        "id": 17,
+        "path": "MATURE",
+        "ret": -0.032020603762987765
+      },
+      {
+        "id": 18,
+        "path": "MATURE",
+        "ret": 0.01353880008707753
+      },
+      {
+        "id": 19,
+        "path": "FAILURE",
+        "ret": -0.019736012352813304
+      },
+      {
+        "id": 20,
+        "path": "FAILURE",
+        "ret": -0.005643140579972394
+      },
+      {
+        "id": 21,
+        "path": "MATURE",
+        "ret": -0.006785685720072987
+      },
+      {
+        "id": 22,
+        "path": "FAILURE",
+        "ret": -0.005469653604673108
+      },
+      {
+        "id": 23,
+        "path": "MATURE",
+        "ret": 0.0038686669281835506
+      },
+      {
+        "id": 24,
+        "path": "MATURE",
+        "ret": 0.031039264898756525
+      },
+      {
+        "id": 25,
+        "path": "MATURE",
+        "ret": 0.004585718988526555
+      },
+      {
+        "id": 26,
+        "path": "MATURE",
+        "ret": 0.020893332563887368
+      },
+      {
+        "id": 27,
+        "path": "MATURE",
+        "ret": 0.004454254077216113
+      },
+      {
+        "id": 28,
+        "path": "MATURE",
+        "ret": 0.0017921430544256545
+      },
+      {
+        "id": 29,
+        "path": "MATURE",
+        "ret": 0.013968565927117371
+      },
+      {
+        "id": 30,
+        "path": "FAILURE",
+        "ret": -0.000859319783915069
+      },
+      {
+        "id": 31,
+        "path": "FAILURE",
+        "ret": -0.0009430962150289712
+      },
+      {
+        "id": 32,
+        "path": "MATURE",
+        "ret": 0.0033470226638927514
+      },
+      {
+        "id": 33,
+        "path": "MATURE",
+        "ret": 0.008325443816790346
+      },
+      {
+        "id": 34,
+        "path": "MATURE",
+        "ret": -0.004863549001461576
+      },
+      {
+        "id": 35,
+        "path": "FAILURE",
+        "ret": -0.004400200231834073
+      },
+      {
+        "id": 36,
+        "path": "MATURE",
+        "ret": 0.0014440535486339723
+      },
+      {
+        "id": 37,
+        "path": "MATURE",
+        "ret": -0.000017323495213550366
+      },
+      {
+        "id": 38,
+        "path": "MATURE",
+        "ret": 0.0005159145042883395
+      },
+      {
+        "id": 39,
+        "path": "MATURE",
+        "ret": 0.0021609062236034315
+      },
+      {
+        "id": 40,
+        "path": "FAILURE",
+        "ret": -0.0006496816217741452
+      },
+      {
+        "id": 41,
+        "path": "MATURE",
+        "ret": 0.0011785566733708563
+      },
+      {
+        "id": 42,
+        "path": "MATURE",
+        "ret": 0.0033570613569338104
+      },
+      {
+        "id": 43,
+        "path": "MATURE",
+        "ret": 0.006725151993895784
+      },
+      {
+        "id": 44,
+        "path": "MATURE",
+        "ret": -0.0011995607517240048
+      },
+      {
+        "id": 45,
+        "path": "FAILURE",
+        "ret": -0.00006974271314874603
+      },
+      {
+        "id": 46,
+        "path": "FAILURE",
+        "ret": -0.009992013846792047
+      },
+      {
+        "id": 47,
+        "path": "FAILURE",
+        "ret": -0.0007179166393531666
+      },
+      {
+        "id": 48,
+        "path": "MATURE",
+        "ret": -0.002183750940868978
+      }
+    ]
+  },
+  "benchmark_B": {
+    "final": 1.190259097925545,
+    "ret": 0.19025909792554496,
+    "maxDD": 0.09817661758340701,
+    "avgExposure": 0.3795986603449542,
+    "turnover": 35.31828466103611,
+    "per": [
+      {
+        "id": 1,
+        "path": "MATURE",
+        "ret": -0.015239689265491796
+      },
+      {
+        "id": 2,
+        "path": "FAILURE",
+        "ret": -0.0023610190187687286
+      },
+      {
+        "id": 3,
+        "path": "MATURE",
+        "ret": 0.010454133576248692
+      },
+      {
+        "id": 4,
+        "path": "MATURE",
+        "ret": 0.10649993371140987
+      },
+      {
+        "id": 5,
+        "path": "MATURE",
+        "ret": 0.0013024099415119839
+      },
+      {
+        "id": 6,
+        "path": "MATURE",
+        "ret": 0.01361806950826483
+      },
+      {
+        "id": 7,
+        "path": "MATURE",
+        "ret": 0.022286839078897946
+      },
+      {
+        "id": 8,
+        "path": "MATURE",
+        "ret": -0.015372051446216117
+      },
+      {
+        "id": 9,
+        "path": "MATURE",
+        "ret": 0.03617869443558974
+      },
+      {
+        "id": 10,
+        "path": "FAILURE",
+        "ret": 0.005222842662797156
+      },
+      {
+        "id": 11,
+        "path": "FAILURE",
+        "ret": -0.0022776885553257298
+      },
+      {
+        "id": 12,
+        "path": "MATURE",
+        "ret": -0.014688888971065017
+      },
+      {
+        "id": 13,
+        "path": "FAILURE",
+        "ret": -0.00307534984414215
+      },
+      {
+        "id": 14,
+        "path": "FAILURE",
+        "ret": 0.0005694241983351667
+      },
+      {
+        "id": 15,
+        "path": "MATURE",
+        "ret": 0.0045679556599100835
+      },
+      {
+        "id": 16,
+        "path": "MATURE",
+        "ret": 0.0042598040917440905
+      },
+      {
+        "id": 17,
+        "path": "MATURE",
+        "ret": -0.04264985420111056
+      },
+      {
+        "id": 18,
+        "path": "MATURE",
+        "ret": 0.01353880008707753
+      },
+      {
+        "id": 19,
+        "path": "FAILURE",
+        "ret": -0.025881553478692698
+      },
+      {
+        "id": 20,
+        "path": "FAILURE",
+        "ret": -0.005643140579972394
+      },
+      {
+        "id": 21,
+        "path": "MATURE",
+        "ret": -0.006785685720072987
+      },
+      {
+        "id": 22,
+        "path": "FAILURE",
+        "ret": -0.007322564693233891
+      },
+      {
+        "id": 23,
+        "path": "MATURE",
+        "ret": 0.005359650034215235
+      },
+      {
+        "id": 24,
+        "path": "MATURE",
+        "ret": 0.041527755714276804
+      },
+      {
+        "id": 25,
+        "path": "MATURE",
+        "ret": 0.006135215981809106
+      },
+      {
+        "id": 26,
+        "path": "MATURE",
+        "ret": 0.02787611711629756
+      },
+      {
+        "id": 27,
+        "path": "MATURE",
+        "ret": 0.004454254077216113
+      },
+      {
+        "id": 28,
+        "path": "MATURE",
+        "ret": 0.0026861027461699827
+      },
+      {
+        "id": 29,
+        "path": "MATURE",
+        "ret": 0.01867440272212506
+      },
+      {
+        "id": 30,
+        "path": "FAILURE",
+        "ret": -0.000859319783914958
+      },
+      {
+        "id": 31,
+        "path": "FAILURE",
+        "ret": -0.0012028203849748786
+      },
+      {
+        "id": 32,
+        "path": "MATURE",
+        "ret": 0.0033470226638927514
+      },
+      {
+        "id": 33,
+        "path": "MATURE",
+        "ret": 0.011169073772708815
+      },
+      {
+        "id": 34,
+        "path": "MATURE",
+        "ret": -0.006381674824854189
+      },
+      {
+        "id": 35,
+        "path": "FAILURE",
+        "ret": -0.005661194369950606
+      },
+      {
+        "id": 36,
+        "path": "MATURE",
+        "ret": 0.0014440535486339723
+      },
+      {
+        "id": 37,
+        "path": "MATURE",
+        "ret": 6.612198295563587e-7
+      },
+      {
+        "id": 38,
+        "path": "MATURE",
+        "ret": 0.0007113988559597217
+      },
+      {
+        "id": 39,
+        "path": "MATURE",
+        "ret": 0.0030179663920997246
+      },
+      {
+        "id": 40,
+        "path": "FAILURE",
+        "ret": -0.0007432320539374482
+      },
+      {
+        "id": 41,
+        "path": "MATURE",
+        "ret": 0.0018744013630525025
+      },
+      {
+        "id": 42,
+        "path": "MATURE",
+        "ret": 0.004491176991315404
+      },
+      {
+        "id": 43,
+        "path": "MATURE",
+        "ret": 0.006725151993896006
+      },
+      {
+        "id": 44,
+        "path": "MATURE",
+        "ret": -0.0011995607517240048
+      },
+      {
+        "id": 45,
+        "path": "FAILURE",
+        "ret": -0.00006974271314874603
+      },
+      {
+        "id": 46,
+        "path": "FAILURE",
+        "ret": -0.013076210859870652
+      },
+      {
+        "id": 47,
+        "path": "FAILURE",
+        "ret": -0.0007179166393532777
+      },
+      {
+        "id": 48,
+        "path": "MATURE",
+        "ret": -0.0027852747285874724
+      }
+    ]
+  },
+  "benchmark_B_stress": {
+    "final": 1.1776855325730633,
+    "ret": 0.1776855325730633,
+    "maxDD": 0.10063583583828706,
+    "avgExposure": 0.37952186632796037,
+    "turnover": 35.31667853030844,
+    "per": [
+      {
+        "id": 1,
+        "path": "MATURE",
+        "ret": -0.01547008535794947
+      },
+      {
+        "id": 2,
+        "path": "FAILURE",
+        "ret": -0.0025994115198220147
+      },
+      {
+        "id": 3,
+        "path": "MATURE",
+        "ret": 0.010267916625997353
+      },
+      {
+        "id": 4,
+        "path": "MATURE",
+        "ret": 0.10619378537125956
+      },
+      {
+        "id": 5,
+        "path": "MATURE",
+        "ret": 0.0010617368320078313
+      },
+      {
+        "id": 6,
+        "path": "MATURE",
+        "ret": 0.013369710715966487
+      },
+      {
+        "id": 7,
+        "path": "MATURE",
+        "ret": 0.022033074349385062
+      },
+      {
+        "id": 8,
+        "path": "MATURE",
+        "ret": -0.01554277730489717
+      },
+      {
+        "id": 9,
+        "path": "MATURE",
+        "ret": 0.03591632010062851
+      },
+      {
+        "id": 10,
+        "path": "FAILURE",
+        "ret": 0.004979684929022454
+      },
+      {
+        "id": 11,
+        "path": "FAILURE",
+        "ret": -0.0024562686895963637
+      },
+      {
+        "id": 12,
+        "path": "MATURE",
+        "ret": -0.014919636239670075
+      },
+      {
+        "id": 13,
+        "path": "FAILURE",
+        "ret": -0.0032534515243146656
+      },
+      {
+        "id": 14,
+        "path": "FAILURE",
+        "ret": 0.00032918348094024275
+      },
+      {
+        "id": 15,
+        "path": "MATURE",
+        "ret": 0.004325240444312151
+      },
+      {
+        "id": 16,
+        "path": "MATURE",
+        "ret": 0.004077302631224633
+      },
+      {
+        "id": 17,
+        "path": "MATURE",
+        "ret": -0.042863212030682774
+      },
+      {
+        "id": 18,
+        "path": "MATURE",
+        "ret": 0.01335073288866373
+      },
+      {
+        "id": 19,
+        "path": "FAILURE",
+        "ret": -0.026105300029153344
+      },
+      {
+        "id": 20,
+        "path": "FAILURE",
+        "ret": -0.0058197020449954895
+      },
+      {
+        "id": 21,
+        "path": "MATURE",
+        "ret": -0.006961561862375398
+      },
+      {
+        "id": 22,
+        "path": "FAILURE",
+        "ret": -0.00755791318416299
+      },
+      {
+        "id": 23,
+        "path": "MATURE",
+        "ret": 0.005116436006574077
+      },
+      {
+        "id": 24,
+        "path": "MATURE",
+        "ret": 0.041262029098541486
+      },
+      {
+        "id": 25,
+        "path": "MATURE",
+        "ret": 0.005891499241200249
+      },
+      {
+        "id": 26,
+        "path": "MATURE",
+        "ret": 0.027618871982857618
+      },
+      {
+        "id": 27,
+        "path": "MATURE",
+        "ret": 0.004271635981485833
+      },
+      {
+        "id": 28,
+        "path": "MATURE",
+        "ret": 0.0024445630225711223
+      },
+      {
+        "id": 29,
+        "path": "MATURE",
+        "ret": 0.018422886713632458
+      },
+      {
+        "id": 30,
+        "path": "FAILURE",
+        "ret": -0.0010387506857498785
+      },
+      {
+        "id": 31,
+        "path": "FAILURE",
+        "ret": -0.0014419672931874628
+      },
+      {
+        "id": 32,
+        "path": "MATURE",
+        "ret": 0.003165068708963714
+      },
+      {
+        "id": 33,
+        "path": "MATURE",
+        "ret": 0.010922230014907885
+      },
+      {
+        "id": 34,
+        "path": "MATURE",
+        "ret": -0.006617593714779657
+      },
+      {
+        "id": 35,
+        "path": "FAILURE",
+        "ret": -0.0058975499614767335
+      },
+      {
+        "id": 36,
+        "path": "MATURE",
+        "ret": 0.0012632410347963585
+      },
+      {
+        "id": 37,
+        "path": "MATURE",
+        "ret": -0.00023923802259762095
+      },
+      {
+        "id": 38,
+        "path": "MATURE",
+        "ret": 0.0004710573345585445
+      },
+      {
+        "id": 39,
+        "path": "MATURE",
+        "ret": 0.0027762022952064758
+      },
+      {
+        "id": 40,
+        "path": "FAILURE",
+        "ret": -0.0009826572513437215
+      },
+      {
+        "id": 41,
+        "path": "MATURE",
+        "ret": 0.0016333674666568765
+      },
+      {
+        "id": 42,
+        "path": "MATURE",
+        "ret": 0.004248482590276881
+      },
+      {
+        "id": 43,
+        "path": "MATURE",
+        "ret": 0.00654117176560387
+      },
+      {
+        "id": 44,
+        "path": "MATURE",
+        "ret": -0.001378787569835782
+      },
+      {
+        "id": 45,
+        "path": "FAILURE",
+        "ret": -0.00024964721999676254
+      },
+      {
+        "id": 46,
+        "path": "FAILURE",
+        "ret": -0.013307947636558182
+      },
+      {
+        "id": 47,
+        "path": "FAILURE",
+        "ret": -0.0008974323577823906
+      },
+      {
+        "id": 48,
+        "path": "MATURE",
+        "ret": -0.0030234288663552045
+      }
+    ]
+  },
+  "eligible_count": 0,
+  "selected": null,
+  "best_by_D": [
+    {
+      "D": 1,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": true,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.2447201508366834,
+      "ret": 0.24472015083668341,
+      "stress_final": 1.2283725289757537,
+      "stress_ret": 0.22837252897575366,
+      "maxDD": 0.12039576543043828,
+      "avgExposure": 0.43882431126739396,
+      "turnover": 44.11788779842297,
+      "incremental_vs_B": 0.05446105291113845,
+      "stress_incremental_vs_B": 0.050686996402690365,
+      "top_incremental_share": 0.17271836923639874,
+      "mature_total": 0.3022341300894591,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 150,
+        "reduce": 60,
+        "trend_add": 53,
+        "loss_add": 97,
+        "first_add": 35,
+        "second_add": 26
+      },
+      "add_all": {
+        "n": 150,
+        "mean": 0.02241412803018783,
+        "median": 0.003800143334119044,
+        "pf": 3.031648304626929,
+        "stress_median": 0.003198042794499645,
+        "q25": -0.014927978571537381,
+        "positive_rate": 0.5666666666666667,
+        "top3": 0.17941566068050627
+      },
+      "add_first": {
+        "n": 35,
+        "mean": 0.012113904747569935,
+        "median": 0.0006784697309185628,
+        "pf": 2.1114630407478265,
+        "stress_median": 0.00007824163709768683,
+        "q25": -0.010845017627613196,
+        "positive_rate": 0.5142857142857142,
+        "top3": 0.5404251651356148
+      },
+      "add_second": {
+        "n": 26,
+        "mean": 0.019254089257351677,
+        "median": 0.0053283518193042445,
+        "pf": 2.889654693992116,
+        "stress_median": 0.004725334627939226,
+        "q25": -0.012219646389736216,
+        "positive_rate": 0.6153846153846154,
+        "top3": 0.572016973833834
+      },
+      "add_trend": {
+        "n": 53,
+        "mean": 0.010101389220626148,
+        "median": -0.0046405392301590576,
+        "pf": 2.0762846249873244,
+        "stress_median": -0.005237576869996707,
+        "q25": -0.017122043231709627,
+        "positive_rate": 0.4339622641509434,
+        "top3": 0.4744873677829878
+      },
+      "add_loss": {
+        "n": 97,
+        "mean": 0.029141706967371003,
+        "median": 0.012237628833241976,
+        "pf": 3.4422286614848647,
+        "stress_median": 0.011630467311507964,
+        "q25": -0.013678366566498346,
+        "positive_rate": 0.6391752577319587,
+        "top3": 0.22592465637787346
+      },
+      "reduce": {
+        "n": 60,
+        "mean": -0.004272295986915793,
+        "median": 0.0053920506927158315,
+        "positive_rate": 0.5666666666666667,
+        "mature_median": -0.00024910320733944686,
+        "mature_mean": -0.009131125929701592,
+        "failure_median": 0.015228651431726425,
+        "failure_mean": 0.015163023784227405,
+        "avoided_adverse_mean": 0.02700806460748896,
+        "foregone_favorable_mean": 0.03798484441358047
+      }
+    },
+    {
+      "D": 2,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.2158523331535998,
+      "ret": 0.21585233315359975,
+      "stress_final": 1.2034401004342732,
+      "stress_ret": 0.20344010043427319,
+      "maxDD": 0.10315845623367292,
+      "avgExposure": 0.36429091097435434,
+      "turnover": 34.11867741986278,
+      "incremental_vs_B": 0.02559323522805479,
+      "stress_incremental_vs_B": 0.025754567861209887,
+      "top_incremental_share": 0.38588903477891273,
+      "mature_total": 0.2638754434853785,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 35,
+        "reduce": 6,
+        "trend_add": 13,
+        "loss_add": 22,
+        "first_add": 16,
+        "second_add": 9
+      },
+      "add_all": {
+        "n": 35,
+        "mean": 0.022881451493316208,
+        "median": 0.000019074823117470885,
+        "pf": 3.7926480513515126,
+        "stress_median": -0.0005807577517026319,
+        "q25": -0.01923609564294948,
+        "positive_rate": 0.5142857142857142,
+        "top3": 0.6401429716692544
+      },
+      "add_first": {
+        "n": 16,
+        "mean": 0.025410958340093458,
+        "median": 0.002041889584700751,
+        "pf": 7.3546159911106175,
+        "stress_median": 0.0014408436828378113,
+        "q25": -0.006443444400465015,
+        "positive_rate": 0.6875,
+        "top3": 0.8539854547025463
+      },
+      "add_second": {
+        "n": 9,
+        "mean": 0.03368384061916688,
+        "median": -0.009438895709766637,
+        "pf": 3.445429254158608,
+        "stress_median": -0.010033055193982565,
+        "q25": -0.02323233152533999,
+        "positive_rate": 0.3333333333333333,
+        "top3": 1
+      },
+      "add_trend": {
+        "n": 13,
+        "mean": -0.008235099190943852,
+        "median": -0.005608659459501397,
+        "pf": 0.295770342934243,
+        "stress_median": -0.006205116400365807,
+        "q25": -0.021352167733032057,
+        "positive_rate": 0.38461538461538464,
+        "top3": 0.9442528083928002
+      },
+      "add_loss": {
+        "n": 22,
+        "mean": 0.04126850417037897,
+        "median": 0.0067688760350961275,
+        "pf": 7.737609181913954,
+        "stress_median": 0.006164994786863276,
+        "q25": -0.010932513704820374,
+        "positive_rate": 0.5909090909090909,
+        "top3": 0.6677479302714022
+      },
+      "reduce": {
+        "n": 6,
+        "mean": 0.00035507367646525346,
+        "median": -0.004376446461326729,
+        "positive_rate": 0.3333333333333333,
+        "mature_median": 0.00045414240393368537,
+        "mature_mean": 0.0027208337453612447,
+        "failure_median": -0.004376446461326729,
+        "failure_mean": -0.004376446461326729,
+        "avoided_adverse_mean": 0.023746209464205453,
+        "foregone_favorable_mean": 0.03125164383356179
+      }
+    },
+    {
+      "D": 3,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.2011281920738697,
+      "ret": 0.20112819207386967,
+      "stress_final": 1.1899619448338101,
+      "stress_ret": 0.18996194483381013,
+      "maxDD": 0.08684556159935186,
+      "avgExposure": 0.3294159430623721,
+      "turnover": 31.09919403448364,
+      "incremental_vs_B": 0.01086909414832471,
+      "stress_incremental_vs_B": 0.012276412260746827,
+      "top_incremental_share": 0.3800919215585345,
+      "mature_total": 0.2445745020840432,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 11,
+        "reduce": 1,
+        "trend_add": 3,
+        "loss_add": 8,
+        "first_add": 8,
+        "second_add": 3
+      },
+      "add_all": {
+        "n": 11,
+        "mean": 0.05437387641994049,
+        "median": 0.015137901206611293,
+        "pf": 5.775899606440778,
+        "stress_median": 0.014529000040215179,
+        "q25": -0.012245863648129907,
+        "positive_rate": 0.6363636363636364,
+        "top3": 0.8887603809656452
+      },
+      "add_first": {
+        "n": 8,
+        "mean": 0.054513333383248486,
+        "median": 0.017643973738945995,
+        "pf": 8.701620428546175,
+        "stress_median": 0.017033569377283286,
+        "q25": -0.011845245372055918,
+        "positive_rate": 0.625,
+        "top3": 0.9283830786140027
+      },
+      "add_second": {
+        "n": 3,
+        "mean": 0.05400199118445248,
+        "median": 0.009018372378823303,
+        "pf": 3.361249114986535,
+        "stress_median": 0.008413141835144078,
+        "q25": -0.029795956060325368,
+        "positive_rate": 0.6666666666666666,
+        "top3": 1
+      },
+      "add_trend": {
+        "n": 3,
+        "mean": 0.05880573326997803,
+        "median": -0.013047100200277884,
+        "pf": 4.9047038891947,
+        "stress_median": -0.013639095407186885,
+        "q25": -0.022590342932037044,
+        "positive_rate": 0.3333333333333333,
+        "top3": 1
+      },
+      "add_loss": {
+        "n": 8,
+        "mean": 0.052711930101176405,
+        "median": 0.017643973738945995,
+        "pf": 6.267577371646829,
+        "stress_median": 0.017033569377283286,
+        "q25": 0.0039026225101219947,
+        "positive_rate": 0.75,
+        "top3": 0.9116964848268525
+      },
+      "reduce": {
+        "n": 1,
+        "mean": -0.0067870519238535714,
+        "median": -0.0067870519238535714,
+        "positive_rate": 0,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": -0.0067870519238535714,
+        "failure_mean": -0.0067870519238535714,
+        "avoided_adverse_mean": 0.010286592974022013,
+        "foregone_favorable_mean": 0.01367713082605948
+      }
+    },
+    {
+      "D": 4,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1366853125168754,
+      "ret": 0.13668531251687543,
+      "stress_final": 1.1267826735369224,
+      "stress_ret": 0.1267826735369224,
+      "maxDD": 0.07757289917380594,
+      "avgExposure": 0.3029560004787278,
+      "turnover": 29.10432628987074,
+      "incremental_vs_B": -0.05357378540866953,
+      "stress_incremental_vs_B": -0.05090285903614089,
+      "top_incremental_share": 0.3219875960725645,
+      "mature_total": 0.18544550729831288,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 1,
+        "reduce": 0,
+        "trend_add": 1,
+        "loss_add": 0,
+        "first_add": 1,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 1,
+        "mean": -0.026372261445507195,
+        "median": -0.026372261445507195,
+        "pf": 0,
+        "stress_median": -0.026956263939096337,
+        "q25": -0.026372261445507195,
+        "positive_rate": 0,
+        "top3": null
+      },
+      "add_first": {
+        "n": 1,
+        "mean": -0.026372261445507195,
+        "median": -0.026372261445507195,
+        "pf": 0,
+        "stress_median": -0.026956263939096337,
+        "q25": -0.026372261445507195,
+        "positive_rate": 0,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 1,
+        "mean": -0.026372261445507195,
+        "median": -0.026372261445507195,
+        "pf": 0,
+        "stress_median": -0.026956263939096337,
+        "q25": -0.026372261445507195,
+        "positive_rate": 0,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 5,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 6,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 7,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 8,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 9,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 10,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    }
+  ],
+  "combos": [
+    {
+      "D": 1,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": true,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.2447201508366834,
+      "ret": 0.24472015083668341,
+      "stress_final": 1.2283725289757537,
+      "stress_ret": 0.22837252897575366,
+      "maxDD": 0.12039576543043828,
+      "avgExposure": 0.43882431126739396,
+      "turnover": 44.11788779842297,
+      "incremental_vs_B": 0.05446105291113845,
+      "stress_incremental_vs_B": 0.050686996402690365,
+      "top_incremental_share": 0.17271836923639874,
+      "mature_total": 0.3022341300894591,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 150,
+        "reduce": 60,
+        "trend_add": 53,
+        "loss_add": 97,
+        "first_add": 35,
+        "second_add": 26
+      },
+      "add_all": {
+        "n": 150,
+        "mean": 0.02241412803018783,
+        "median": 0.003800143334119044,
+        "pf": 3.031648304626929,
+        "stress_median": 0.003198042794499645,
+        "q25": -0.014927978571537381,
+        "positive_rate": 0.5666666666666667,
+        "top3": 0.17941566068050627
+      },
+      "add_first": {
+        "n": 35,
+        "mean": 0.012113904747569935,
+        "median": 0.0006784697309185628,
+        "pf": 2.1114630407478265,
+        "stress_median": 0.00007824163709768683,
+        "q25": -0.010845017627613196,
+        "positive_rate": 0.5142857142857142,
+        "top3": 0.5404251651356148
+      },
+      "add_second": {
+        "n": 26,
+        "mean": 0.019254089257351677,
+        "median": 0.0053283518193042445,
+        "pf": 2.889654693992116,
+        "stress_median": 0.004725334627939226,
+        "q25": -0.012219646389736216,
+        "positive_rate": 0.6153846153846154,
+        "top3": 0.572016973833834
+      },
+      "add_trend": {
+        "n": 53,
+        "mean": 0.010101389220626148,
+        "median": -0.0046405392301590576,
+        "pf": 2.0762846249873244,
+        "stress_median": -0.005237576869996707,
+        "q25": -0.017122043231709627,
+        "positive_rate": 0.4339622641509434,
+        "top3": 0.4744873677829878
+      },
+      "add_loss": {
+        "n": 97,
+        "mean": 0.029141706967371003,
+        "median": 0.012237628833241976,
+        "pf": 3.4422286614848647,
+        "stress_median": 0.011630467311507964,
+        "q25": -0.013678366566498346,
+        "positive_rate": 0.6391752577319587,
+        "top3": 0.22592465637787346
+      },
+      "reduce": {
+        "n": 60,
+        "mean": -0.004272295986915793,
+        "median": 0.0053920506927158315,
+        "positive_rate": 0.5666666666666667,
+        "mature_median": -0.00024910320733944686,
+        "mature_mean": -0.009131125929701592,
+        "failure_median": 0.015228651431726425,
+        "failure_mean": 0.015163023784227405,
+        "avoided_adverse_mean": 0.02700806460748896,
+        "foregone_favorable_mean": 0.03798484441358047
+      }
+    },
+    {
+      "D": 1,
+      "v": "V2_WHITE2ATR",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": true,
+      "final": 1.2247936215992548,
+      "ret": 0.22479362159925476,
+      "stress_final": 1.2093341890897125,
+      "stress_ret": 0.20933418908971246,
+      "maxDD": 0.09725202955486945,
+      "avgExposure": 0.3802141598310796,
+      "turnover": 47.36648036539507,
+      "incremental_vs_B": 0.034534523673709794,
+      "stress_incremental_vs_B": 0.031648656516649165,
+      "top_incremental_share": 0.24669862185724525,
+      "mature_total": 0.2710051882752451,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 133,
+        "reduce": 131,
+        "trend_add": 90,
+        "loss_add": 43,
+        "first_add": 31,
+        "second_add": 26
+      },
+      "add_all": {
+        "n": 133,
+        "mean": 0.02023272236509613,
+        "median": 0.00037984096582110993,
+        "pf": 3.235170871178232,
+        "stress_median": -0.00022020800415545327,
+        "q25": -0.013981635896087918,
+        "positive_rate": 0.5112781954887218,
+        "top3": 0.224974178919993
+      },
+      "add_first": {
+        "n": 31,
+        "mean": 0.014335115776932028,
+        "median": 0.0022103342346067034,
+        "pf": 2.7340249880820515,
+        "stress_median": 0.0016091872960830589,
+        "q25": -0.007294391746156315,
+        "positive_rate": 0.5483870967741935,
+        "top3": 0.6015603208150991
+      },
+      "add_second": {
+        "n": 26,
+        "mean": 0.014324564914774737,
+        "median": -0.002550609597380571,
+        "pf": 2.3788030229026846,
+        "stress_median": -0.0031489008211791347,
+        "q25": -0.012219646389736216,
+        "positive_rate": 0.38461538461538464,
+        "top3": 0.6988278829271488
+      },
+      "add_trend": {
+        "n": 90,
+        "mean": 0.015144165656841414,
+        "median": -0.0015335065484384236,
+        "pf": 3.0657227185989977,
+        "stress_median": -0.002132407852140583,
+        "q25": -0.012982108529599135,
+        "positive_rate": 0.4666666666666667,
+        "top3": 0.2956913162935285
+      },
+      "add_loss": {
+        "n": 43,
+        "mean": 0.03088318989400136,
+        "median": 0.006060601883379091,
+        "pf": 3.4406499247761104,
+        "stress_median": 0.005457145472950842,
+        "q25": -0.01723276045547284,
+        "positive_rate": 0.6046511627906976,
+        "top3": 0.4680578460339997
+      },
+      "reduce": {
+        "n": 131,
+        "mean": -0.005920503778405322,
+        "median": -0.00039158474920526054,
+        "positive_rate": 0.48854961832061067,
+        "mature_median": -0.0014669605626357034,
+        "mature_mean": -0.007880703689072868,
+        "failure_median": 0.016712718562425285,
+        "failure_mean": 0.0154634952470589,
+        "avoided_adverse_mean": 0.030579605970482517,
+        "foregone_favorable_mean": 0.04070607547954593
+      }
+    },
+    {
+      "D": 1,
+      "v": "V3_STRICT",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.2236371189055593,
+      "ret": 0.22363711890555926,
+      "stress_final": 1.2085995430015717,
+      "stress_ret": 0.20859954300157169,
+      "maxDD": 0.12519510990873195,
+      "avgExposure": 0.40192209699221226,
+      "turnover": 41.21626124075764,
+      "incremental_vs_B": 0.0333780209800143,
+      "stress_incremental_vs_B": 0.030914010428508387,
+      "top_incremental_share": 0.25996860785677633,
+      "mature_total": 0.27332895988754713,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 90,
+        "reduce": 53,
+        "trend_add": 56,
+        "loss_add": 34,
+        "first_add": 29,
+        "second_add": 20
+      },
+      "add_all": {
+        "n": 90,
+        "mean": 0.024002507907389444,
+        "median": 0.0037528404887285927,
+        "pf": 3.4155432480927415,
+        "stress_median": 0.0031507683223555016,
+        "q25": -0.01359054454574471,
+        "positive_rate": 0.5777777777777777,
+        "top3": 0.28686729019164187
+      },
+      "add_first": {
+        "n": 29,
+        "mean": 0.016241742018449336,
+        "median": 0.0025190535688310867,
+        "pf": 3.0509585963400196,
+        "stress_median": 0.0019177214539263243,
+        "q25": -0.005599526540972399,
+        "positive_rate": 0.5862068965517241,
+        "top3": 0.6015603208150991
+      },
+      "add_second": {
+        "n": 20,
+        "mean": 0.018969788395905025,
+        "median": -0.0017003441522246976,
+        "pf": 2.4513104803637704,
+        "stress_median": -0.002299145383206136,
+        "q25": -0.019698828483150715,
+        "positive_rate": 0.5,
+        "top3": 0.700730135000911
+      },
+      "add_trend": {
+        "n": 56,
+        "mean": 0.014937684251312136,
+        "median": 0.001114035663642432,
+        "pf": 3.0558182751376037,
+        "stress_median": 0.0005135463081702429,
+        "q25": -0.01240575195166635,
+        "positive_rate": 0.5178571428571429,
+        "top3": 0.3941189143341556
+      },
+      "add_loss": {
+        "n": 34,
+        "mean": 0.0389328056938697,
+        "median": 0.010442004765993551,
+        "pf": 3.715852512722179,
+        "stress_median": 0.00983592029752256,
+        "q25": -0.020480210699512752,
+        "positive_rate": 0.6764705882352942,
+        "top3": 0.4838137727759893
+      },
+      "reduce": {
+        "n": 53,
+        "mean": -0.0014237509567479186,
+        "median": 0.008016154530609478,
+        "positive_rate": 0.6037735849056604,
+        "mature_median": 0.0017683592671544248,
+        "mature_mean": -0.005846601152983035,
+        "failure_median": 0.016712718562425285,
+        "failure_mean": 0.0154634952470589,
+        "avoided_adverse_mean": 0.026410023280256104,
+        "foregone_favorable_mean": 0.033442802384761224
+      }
+    },
+    {
+      "D": 2,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.2158523331535998,
+      "ret": 0.21585233315359975,
+      "stress_final": 1.2034401004342732,
+      "stress_ret": 0.20344010043427319,
+      "maxDD": 0.10315845623367292,
+      "avgExposure": 0.36429091097435434,
+      "turnover": 34.11867741986278,
+      "incremental_vs_B": 0.02559323522805479,
+      "stress_incremental_vs_B": 0.025754567861209887,
+      "top_incremental_share": 0.38588903477891273,
+      "mature_total": 0.2638754434853785,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 35,
+        "reduce": 6,
+        "trend_add": 13,
+        "loss_add": 22,
+        "first_add": 16,
+        "second_add": 9
+      },
+      "add_all": {
+        "n": 35,
+        "mean": 0.022881451493316208,
+        "median": 0.000019074823117470885,
+        "pf": 3.7926480513515126,
+        "stress_median": -0.0005807577517026319,
+        "q25": -0.01923609564294948,
+        "positive_rate": 0.5142857142857142,
+        "top3": 0.6401429716692544
+      },
+      "add_first": {
+        "n": 16,
+        "mean": 0.025410958340093458,
+        "median": 0.002041889584700751,
+        "pf": 7.3546159911106175,
+        "stress_median": 0.0014408436828378113,
+        "q25": -0.006443444400465015,
+        "positive_rate": 0.6875,
+        "top3": 0.8539854547025463
+      },
+      "add_second": {
+        "n": 9,
+        "mean": 0.03368384061916688,
+        "median": -0.009438895709766637,
+        "pf": 3.445429254158608,
+        "stress_median": -0.010033055193982565,
+        "q25": -0.02323233152533999,
+        "positive_rate": 0.3333333333333333,
+        "top3": 1
+      },
+      "add_trend": {
+        "n": 13,
+        "mean": -0.008235099190943852,
+        "median": -0.005608659459501397,
+        "pf": 0.295770342934243,
+        "stress_median": -0.006205116400365807,
+        "q25": -0.021352167733032057,
+        "positive_rate": 0.38461538461538464,
+        "top3": 0.9442528083928002
+      },
+      "add_loss": {
+        "n": 22,
+        "mean": 0.04126850417037897,
+        "median": 0.0067688760350961275,
+        "pf": 7.737609181913954,
+        "stress_median": 0.006164994786863276,
+        "q25": -0.010932513704820374,
+        "positive_rate": 0.5909090909090909,
+        "top3": 0.6677479302714022
+      },
+      "reduce": {
+        "n": 6,
+        "mean": 0.00035507367646525346,
+        "median": -0.004376446461326729,
+        "positive_rate": 0.3333333333333333,
+        "mature_median": 0.00045414240393368537,
+        "mature_mean": 0.0027208337453612447,
+        "failure_median": -0.004376446461326729,
+        "failure_mean": -0.004376446461326729,
+        "avoided_adverse_mean": 0.023746209464205453,
+        "foregone_favorable_mean": 0.03125164383356179
+      }
+    },
+    {
+      "D": 2,
+      "v": "V2_WHITE2ATR",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.170933208573937,
+      "ret": 0.170933208573937,
+      "stress_final": 1.1586805302851448,
+      "stress_ret": 0.15868053028514484,
+      "maxDD": 0.09028646225099879,
+      "avgExposure": 0.3260661546348418,
+      "turnover": 34.99405503858451,
+      "incremental_vs_B": -0.01932588935160795,
+      "stress_incremental_vs_B": -0.01900500228791846,
+      "top_incremental_share": 0.21469186343826005,
+      "mature_total": 0.2209341648050719,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 36,
+        "reduce": 49,
+        "trend_add": 23,
+        "loss_add": 13,
+        "first_add": 16,
+        "second_add": 9
+      },
+      "add_all": {
+        "n": 36,
+        "mean": 0.013753153752884249,
+        "median": -0.005256725644075311,
+        "pf": 2.092770373934931,
+        "stress_median": -0.005853393682279773,
+        "q25": -0.019749004962156202,
+        "positive_rate": 0.4444444444444444,
+        "top3": 0.7331588915817949
+      },
+      "add_first": {
+        "n": 16,
+        "mean": 0.02410560334455744,
+        "median": 0.00125327246847462,
+        "pf": 4.616256487139728,
+        "stress_median": 0.0006526995958242576,
+        "q25": -0.010979112877086306,
+        "positive_rate": 0.5625,
+        "top3": 0.8285448914682981
+      },
+      "add_second": {
+        "n": 9,
+        "mean": 0.0141430623440745,
+        "median": -0.009438895709766637,
+        "pf": 1.7362018632027933,
+        "stress_median": -0.010033055193982565,
+        "q25": -0.030851209110554167,
+        "positive_rate": 0.2222222222222222,
+        "top3": 1
+      },
+      "add_trend": {
+        "n": 23,
+        "mean": 0.0008579839239677471,
+        "median": -0.00021910559446580713,
+        "pf": 1.0905468422671682,
+        "stress_median": -0.0008187953036379314,
+        "q25": -0.02038283915207062,
+        "positive_rate": 0.4782608695652174,
+        "top3": 0.8241295177801117
+      },
+      "add_loss": {
+        "n": 13,
+        "mean": 0.036567684988659595,
+        "median": -0.009188357130229585,
+        "pf": 3.0216657735221877,
+        "stress_median": -0.009782666892780179,
+        "q25": -0.019058680714789777,
+        "positive_rate": 0.38461538461538464,
+        "top3": 0.9322046015488229
+      },
+      "reduce": {
+        "n": 49,
+        "mean": -0.0064152505329943725,
+        "median": -0.0011579493427127622,
+        "positive_rate": 0.4897959183673469,
+        "mature_median": -0.0001900172662553438,
+        "mature_mean": -0.007115794321708215,
+        "failure_median": -0.0019658409987998865,
+        "failure_mean": 0.004326420893951217,
+        "avoided_adverse_mean": 0.025882920087234824,
+        "foregone_favorable_mean": 0.035344046915183044
+      }
+    },
+    {
+      "D": 2,
+      "v": "V3_STRICT",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1866519045106472,
+      "ret": 0.18665190451064717,
+      "stress_final": 1.1750602601866584,
+      "stress_ret": 0.17506026018665843,
+      "maxDD": 0.09365529634446135,
+      "avgExposure": 0.32931717225076584,
+      "turnover": 32.592073457648844,
+      "incremental_vs_B": -0.0036071934148977913,
+      "stress_incremental_vs_B": -0.0026252723864048644,
+      "top_incremental_share": 0.5375235142908306,
+      "mature_total": 0.23635723913761664,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 22,
+        "reduce": 6,
+        "trend_add": 13,
+        "loss_add": 9,
+        "first_add": 12,
+        "second_add": 6
+      },
+      "add_all": {
+        "n": 22,
+        "mean": 0.017093878983927845,
+        "median": -0.0072782293414286325,
+        "pf": 2.0935349912898524,
+        "stress_median": -0.007873684838994255,
+        "q25": -0.021202997833598358,
+        "positive_rate": 0.4090909090909091,
+        "top3": 0.9199797813202865
+      },
+      "add_first": {
+        "n": 12,
+        "mean": 0.027622042298043336,
+        "median": 0.00125327246847462,
+        "pf": 4.831772989168227,
+        "stress_median": 0.0006526995958242576,
+        "q25": -0.011475519596214345,
+        "positive_rate": 0.5833333333333334,
+        "top3": 0.9577131717802025
+      },
+      "add_second": {
+        "n": 6,
+        "mean": 0.024904235248538225,
+        "median": -0.017288153063238276,
+        "pf": 2.0387440432326063,
+        "stress_median": -0.01787760439701258,
+        "q25": -0.03159282445006442,
+        "positive_rate": 0.16666666666666666,
+        "top3": 1
+      },
+      "add_trend": {
+        "n": 13,
+        "mean": -0.008235099190943852,
+        "median": -0.005608659459501397,
+        "pf": 0.295770342934243,
+        "stress_median": -0.006205116400365807,
+        "q25": -0.021352167733032057,
+        "positive_rate": 0.38461538461538464,
+        "top3": 0.9442528083928002
+      },
+      "add_loss": {
+        "n": 9,
+        "mean": 0.05368018079207585,
+        "median": -0.008947799223355868,
+        "pf": 3.5178351706617486,
+        "stress_median": -0.009542253277622703,
+        "q25": -0.020755488135297262,
+        "positive_rate": 0.4444444444444444,
+        "top3": 0.9812608194714574
+      },
+      "reduce": {
+        "n": 6,
+        "mean": 0.00035507367646525346,
+        "median": -0.004376446461326729,
+        "positive_rate": 0.3333333333333333,
+        "mature_median": 0.00045414240393368537,
+        "mature_mean": 0.0027208337453612447,
+        "failure_median": -0.004376446461326729,
+        "failure_mean": -0.004376446461326729,
+        "avoided_adverse_mean": 0.023746209464205453,
+        "foregone_favorable_mean": 0.03125164383356179
+      }
+    },
+    {
+      "D": 3,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.2011281920738697,
+      "ret": 0.20112819207386967,
+      "stress_final": 1.1899619448338101,
+      "stress_ret": 0.18996194483381013,
+      "maxDD": 0.08684556159935186,
+      "avgExposure": 0.3294159430623721,
+      "turnover": 31.09919403448364,
+      "incremental_vs_B": 0.01086909414832471,
+      "stress_incremental_vs_B": 0.012276412260746827,
+      "top_incremental_share": 0.3800919215585345,
+      "mature_total": 0.2445745020840432,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 11,
+        "reduce": 1,
+        "trend_add": 3,
+        "loss_add": 8,
+        "first_add": 8,
+        "second_add": 3
+      },
+      "add_all": {
+        "n": 11,
+        "mean": 0.05437387641994049,
+        "median": 0.015137901206611293,
+        "pf": 5.775899606440778,
+        "stress_median": 0.014529000040215179,
+        "q25": -0.012245863648129907,
+        "positive_rate": 0.6363636363636364,
+        "top3": 0.8887603809656452
+      },
+      "add_first": {
+        "n": 8,
+        "mean": 0.054513333383248486,
+        "median": 0.017643973738945995,
+        "pf": 8.701620428546175,
+        "stress_median": 0.017033569377283286,
+        "q25": -0.011845245372055918,
+        "positive_rate": 0.625,
+        "top3": 0.9283830786140027
+      },
+      "add_second": {
+        "n": 3,
+        "mean": 0.05400199118445248,
+        "median": 0.009018372378823303,
+        "pf": 3.361249114986535,
+        "stress_median": 0.008413141835144078,
+        "q25": -0.029795956060325368,
+        "positive_rate": 0.6666666666666666,
+        "top3": 1
+      },
+      "add_trend": {
+        "n": 3,
+        "mean": 0.05880573326997803,
+        "median": -0.013047100200277884,
+        "pf": 4.9047038891947,
+        "stress_median": -0.013639095407186885,
+        "q25": -0.022590342932037044,
+        "positive_rate": 0.3333333333333333,
+        "top3": 1
+      },
+      "add_loss": {
+        "n": 8,
+        "mean": 0.052711930101176405,
+        "median": 0.017643973738945995,
+        "pf": 6.267577371646829,
+        "stress_median": 0.017033569377283286,
+        "q25": 0.0039026225101219947,
+        "positive_rate": 0.75,
+        "top3": 0.9116964848268525
+      },
+      "reduce": {
+        "n": 1,
+        "mean": -0.0067870519238535714,
+        "median": -0.0067870519238535714,
+        "positive_rate": 0,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": -0.0067870519238535714,
+        "failure_mean": -0.0067870519238535714,
+        "avoided_adverse_mean": 0.010286592974022013,
+        "foregone_favorable_mean": 0.01367713082605948
+      }
+    },
+    {
+      "D": 3,
+      "v": "V2_WHITE2ATR",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1406980486190972,
+      "ret": 0.14069804861909718,
+      "stress_final": 1.1302958149933762,
+      "stress_ret": 0.13029581499337617,
+      "maxDD": 0.08685021605158527,
+      "avgExposure": 0.30719175366569273,
+      "turnover": 30.504524448113386,
+      "incremental_vs_B": -0.04956104930644778,
+      "stress_incremental_vs_B": -0.04738971757968713,
+      "top_incremental_share": 0.2245381498726498,
+      "mature_total": 0.19033996025687916,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 8,
+        "reduce": 21,
+        "trend_add": 6,
+        "loss_add": 2,
+        "first_add": 7,
+        "second_add": 1
+      },
+      "add_all": {
+        "n": 8,
+        "mean": 0.011070513720310524,
+        "median": -0.009820452158379567,
+        "pf": 1.6382760479469682,
+        "stress_median": -0.01041438277697404,
+        "q25": -0.017818721566157464,
+        "positive_rate": 0.25,
+        "top3": 1
+      },
+      "add_first": {
+        "n": 7,
+        "mean": 0.014331393197369646,
+        "median": -0.007885261697655799,
+        "pf": 1.789922169587556,
+        "stress_median": -0.008480353084385772,
+        "q25": -0.022590342932037044,
+        "positive_rate": 0.2857142857142857,
+        "top3": 1
+      },
+      "add_second": {
+        "n": 1,
+        "mean": -0.011755642619103335,
+        "median": -0.011755642619103335,
+        "pf": 0,
+        "stress_median": -0.012348412469562309,
+        "q25": -0.011755642619103335,
+        "positive_rate": 0,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 6,
+        "mean": 0.02750994265993567,
+        "median": -0.00853947541071326,
+        "pf": 3.6511503238189325,
+        "stress_median": -0.009134174386232263,
+        "q25": -0.012724235804984246,
+        "positive_rate": 0.3333333333333333,
+        "top3": 1
+      },
+      "add_loss": {
+        "n": 2,
+        "mean": -0.03824777309856492,
+        "median": -0.03824777309856492,
+        "pf": 0,
+        "stress_median": -0.038824652409295335,
+        "q25": -0.05342902879901948,
+        "positive_rate": 0,
+        "top3": null
+      },
+      "reduce": {
+        "n": 21,
+        "mean": -0.005531354634133282,
+        "median": -0.005732383727825368,
+        "positive_rate": 0.38095238095238093,
+        "mature_median": -0.0050775987249010845,
+        "mature_mean": -0.0054685697696472664,
+        "failure_median": -0.0067870519238535714,
+        "failure_mean": -0.0067870519238535714,
+        "avoided_adverse_mean": 0.029585219413477075,
+        "foregone_favorable_mean": 0.03753444114428332
+      }
+    },
+    {
+      "D": 3,
+      "v": "V3_STRICT",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1493861498670148,
+      "ret": 0.14938614986701482,
+      "stress_final": 1.1391368059642575,
+      "stress_ret": 0.13913680596425748,
+      "maxDD": 0.08577563194250593,
+      "avgExposure": 0.3105990813921721,
+      "turnover": 29.788251273404935,
+      "incremental_vs_B": -0.040872948058530145,
+      "stress_incremental_vs_B": -0.03854872660880582,
+      "top_incremental_share": 0.23423223174514576,
+      "mature_total": 0.1986214423018795,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 5,
+        "reduce": 1,
+        "trend_add": 4,
+        "loss_add": 1,
+        "first_add": 4,
+        "second_add": 1
+      },
+      "add_all": {
+        "n": 5,
+        "mean": 0.019210254538271344,
+        "median": -0.013047100200277884,
+        "pf": 1.7650646274673254,
+        "stress_median": -0.013639095407186885,
+        "q25": -0.032133585663796205,
+        "positive_rate": 0.2,
+        "top3": 1
+      },
+      "add_first": {
+        "n": 4,
+        "mean": 0.026951728827615012,
+        "median": -0.022590342932037044,
+        "pf": 1.9474118637536022,
+        "stress_median": -0.023176613900275034,
+        "q25": -0.04125276037271566,
+        "positive_rate": 0.25,
+        "top3": 1
+      },
+      "add_second": {
+        "n": 1,
+        "mean": -0.011755642619103335,
+        "median": -0.011755642619103335,
+        "pf": 0,
+        "stress_median": -0.012348412469562309,
+        "q25": -0.011755642619103335,
+        "positive_rate": 0,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 4,
+        "mean": 0.04116538929770769,
+        "median": -0.01240137140969061,
+        "pf": 3.892029773916352,
+        "stress_median": -0.012993753938374597,
+        "q25": -0.017818721566157464,
+        "positive_rate": 0.25,
+        "top3": 1
+      },
+      "add_loss": {
+        "n": 1,
+        "mean": -0.06861028449947404,
+        "median": -0.06861028449947404,
+        "pf": 0,
+        "stress_median": -0.0691689517342049,
+        "q25": -0.06861028449947404,
+        "positive_rate": 0,
+        "top3": null
+      },
+      "reduce": {
+        "n": 1,
+        "mean": -0.0067870519238535714,
+        "median": -0.0067870519238535714,
+        "positive_rate": 0,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": -0.0067870519238535714,
+        "failure_mean": -0.0067870519238535714,
+        "avoided_adverse_mean": 0.010286592974022013,
+        "foregone_favorable_mean": 0.01367713082605948
+      }
+    },
+    {
+      "D": 4,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1366853125168754,
+      "ret": 0.13668531251687543,
+      "stress_final": 1.1267826735369224,
+      "stress_ret": 0.1267826735369224,
+      "maxDD": 0.07757289917380594,
+      "avgExposure": 0.3029560004787278,
+      "turnover": 29.10432628987074,
+      "incremental_vs_B": -0.05357378540866953,
+      "stress_incremental_vs_B": -0.05090285903614089,
+      "top_incremental_share": 0.3219875960725645,
+      "mature_total": 0.18544550729831288,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 1,
+        "reduce": 0,
+        "trend_add": 1,
+        "loss_add": 0,
+        "first_add": 1,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 1,
+        "mean": -0.026372261445507195,
+        "median": -0.026372261445507195,
+        "pf": 0,
+        "stress_median": -0.026956263939096337,
+        "q25": -0.026372261445507195,
+        "positive_rate": 0,
+        "top3": null
+      },
+      "add_first": {
+        "n": 1,
+        "mean": -0.026372261445507195,
+        "median": -0.026372261445507195,
+        "pf": 0,
+        "stress_median": -0.026956263939096337,
+        "q25": -0.026372261445507195,
+        "positive_rate": 0,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 1,
+        "mean": -0.026372261445507195,
+        "median": -0.026372261445507195,
+        "pf": 0,
+        "stress_median": -0.026956263939096337,
+        "q25": -0.026372261445507195,
+        "positive_rate": 0,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 4,
+      "v": "V2_WHITE2ATR",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1314813902981402,
+      "ret": 0.1314813902981402,
+      "stress_final": 1.1214926038843545,
+      "stress_ret": 0.12149260388435446,
+      "maxDD": 0.07934917718676415,
+      "avgExposure": 0.3029597045684631,
+      "turnover": 29.50310465600285,
+      "incremental_vs_B": -0.05877770762740475,
+      "stress_incremental_vs_B": -0.05619292868870884,
+      "top_incremental_share": 0.3176982530983003,
+      "mature_total": 0.18062876037774445,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 3,
+        "reduce": 9,
+        "trend_add": 3,
+        "loss_add": 0,
+        "first_add": 3,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 3,
+        "mean": -0.008461035737399572,
+        "median": -0.005323308202323185,
+        "pf": 0.1991591413490737,
+        "stress_median": -0.005919936302902218,
+        "q25": -0.01584778482391519,
+        "positive_rate": 0.3333333333333333,
+        "top3": 1
+      },
+      "add_first": {
+        "n": 3,
+        "mean": -0.008461035737399572,
+        "median": -0.005323308202323185,
+        "pf": 0.1991591413490737,
+        "stress_median": -0.005919936302902218,
+        "q25": -0.01584778482391519,
+        "positive_rate": 0.3333333333333333,
+        "top3": 1
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 3,
+        "mean": -0.008461035737399572,
+        "median": -0.005323308202323185,
+        "pf": 0.1991591413490737,
+        "stress_median": -0.005919936302902218,
+        "q25": -0.01584778482391519,
+        "positive_rate": 0.3333333333333333,
+        "top3": 1
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 9,
+        "mean": -0.009056248010382021,
+        "median": -0.00030903515843400727,
+        "positive_rate": 0.3333333333333333,
+        "mature_median": -0.00030903515843400727,
+        "mature_mean": -0.009056248010382021,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": 0.027310028259971815,
+        "foregone_favorable_mean": 0.035283909663438404
+      }
+    },
+    {
+      "D": 4,
+      "v": "V3_STRICT",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1366853125168754,
+      "ret": 0.13668531251687543,
+      "stress_final": 1.1267826735369224,
+      "stress_ret": 0.1267826735369224,
+      "maxDD": 0.07757289917380594,
+      "avgExposure": 0.3029560004787278,
+      "turnover": 29.10432628987074,
+      "incremental_vs_B": -0.05357378540866953,
+      "stress_incremental_vs_B": -0.05090285903614089,
+      "top_incremental_share": 0.3219875960725645,
+      "mature_total": 0.18544550729831288,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 1,
+        "reduce": 0,
+        "trend_add": 1,
+        "loss_add": 0,
+        "first_add": 1,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 1,
+        "mean": -0.026372261445507195,
+        "median": -0.026372261445507195,
+        "pf": 0,
+        "stress_median": -0.026956263939096337,
+        "q25": -0.026372261445507195,
+        "positive_rate": 0,
+        "top3": null
+      },
+      "add_first": {
+        "n": 1,
+        "mean": -0.026372261445507195,
+        "median": -0.026372261445507195,
+        "pf": 0,
+        "stress_median": -0.026956263939096337,
+        "q25": -0.026372261445507195,
+        "positive_rate": 0,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 1,
+        "mean": -0.026372261445507195,
+        "median": -0.026372261445507195,
+        "pf": 0,
+        "stress_median": -0.026956263939096337,
+        "q25": -0.026372261445507195,
+        "positive_rate": 0,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 5,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 5,
+      "v": "V2_WHITE2ATR",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.136723880938327,
+      "ret": 0.1367238809383271,
+      "stress_final": 1.1266850861981283,
+      "stress_ret": 0.12668508619812835,
+      "maxDD": 0.07637760201691324,
+      "avgExposure": 0.30485780076854513,
+      "turnover": 29.5046440669243,
+      "incremental_vs_B": -0.05353521698721786,
+      "stress_incremental_vs_B": -0.05100044637493495,
+      "top_incremental_share": 0.32036418239748177,
+      "mature_total": 0.1853779591117889,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 3,
+        "reduce": 3,
+        "trend_add": 2,
+        "loss_add": 1,
+        "first_add": 3,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 3,
+        "mean": -0.0029676088863362557,
+        "median": 0.0015621292073830784,
+        "pf": 0.4693565780657083,
+        "stress_median": 0.0009613710759333038,
+        "q25": -0.007607644547320214,
+        "positive_rate": 0.6666666666666666,
+        "top3": 1
+      },
+      "add_first": {
+        "n": 3,
+        "mean": -0.0029676088863362557,
+        "median": 0.0015621292073830784,
+        "pf": 0.4693565780657083,
+        "stress_median": 0.0009613710759333038,
+        "q25": -0.007607644547320214,
+        "positive_rate": 0.6666666666666666,
+        "top3": 1
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 2,
+        "mean": 0.0039372958215073695,
+        "median": 0.0039372958215073695,
+        "pf": null,
+        "stress_median": 0.0033351130149272823,
+        "q25": 0.002749712514445224,
+        "positive_rate": 1,
+        "top3": 1
+      },
+      "add_loss": {
+        "n": 1,
+        "mean": -0.016777418302023506,
+        "median": -0.016777418302023506,
+        "pf": 0,
+        "stress_median": -0.01736717598530102,
+        "q25": -0.016777418302023506,
+        "positive_rate": 0,
+        "top3": null
+      },
+      "reduce": {
+        "n": 3,
+        "mean": -0.005417282262209469,
+        "median": -0.0009065890935637927,
+        "positive_rate": 0.3333333333333333,
+        "mature_median": -0.0009065890935637927,
+        "mature_mean": -0.005417282262209469,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": 0.04846213866282149,
+        "foregone_favorable_mean": 0.03417181354667109
+      }
+    },
+    {
+      "D": 5,
+      "v": "V3_STRICT",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 6,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 6,
+      "v": "V2_WHITE2ATR",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.138195641743804,
+      "ret": 0.13819564174380394,
+      "stress_final": 1.1283512900190031,
+      "stress_ret": 0.12835129001900314,
+      "maxDD": 0.07549104013793206,
+      "avgExposure": 0.3019545405343296,
+      "turnover": 28.904546944150777,
+      "incremental_vs_B": -0.05206345618174102,
+      "stress_incremental_vs_B": -0.04933424255406016,
+      "top_incremental_share": 0.3219875960725635,
+      "mature_total": 0.18666768378798715,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 3,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 3,
+        "mean": -0.01963081005390179,
+        "median": -0.019610195588733486,
+        "positive_rate": 0,
+        "mature_median": -0.019610195588733486,
+        "mature_mean": -0.01963081005390179,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": 0.015549349725822522,
+        "foregone_favorable_mean": 0.04608625009975357
+      }
+    },
+    {
+      "D": 6,
+      "v": "V3_STRICT",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 7,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 7,
+      "v": "V2_WHITE2ATR",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1392630860098518,
+      "ret": 0.13926308600985182,
+      "stress_final": 1.129407716959733,
+      "stress_ret": 0.12940771695973297,
+      "maxDD": 0.07548102017833669,
+      "avgExposure": 0.3027071694184403,
+      "turnover": 28.904897989336444,
+      "incremental_vs_B": -0.05099601191569314,
+      "stress_incremental_vs_B": -0.04827781561333033,
+      "top_incremental_share": 0.32198759607256566,
+      "mature_total": 0.18767862207898078,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 1,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 1,
+        "mean": -0.03812428523025913,
+        "median": -0.03812428523025913,
+        "positive_rate": 0,
+        "mature_median": -0.03812428523025913,
+        "mature_mean": -0.03812428523025913,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": 0.006181676914829404,
+        "foregone_favorable_mean": 0.06641947773059664
+      }
+    },
+    {
+      "D": 7,
+      "v": "V3_STRICT",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 8,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 8,
+      "v": "V2_WHITE2ATR",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1392630860098518,
+      "ret": 0.13926308600985182,
+      "stress_final": 1.129407716959733,
+      "stress_ret": 0.12940771695973297,
+      "maxDD": 0.07548102017833669,
+      "avgExposure": 0.3027071694184403,
+      "turnover": 28.904897989336444,
+      "incremental_vs_B": -0.05099601191569314,
+      "stress_incremental_vs_B": -0.04827781561333033,
+      "top_incremental_share": 0.32198759607256566,
+      "mature_total": 0.18767862207898078,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 1,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 1,
+        "mean": -0.03812428523025913,
+        "median": -0.03812428523025913,
+        "positive_rate": 0,
+        "mature_median": -0.03812428523025913,
+        "mature_mean": -0.03812428523025913,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": 0.006181676914829404,
+        "foregone_favorable_mean": 0.06641947773059664
+      }
+    },
+    {
+      "D": 8,
+      "v": "V3_STRICT",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 9,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 9,
+      "v": "V2_WHITE2ATR",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 9,
+      "v": "V3_STRICT",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 10,
+      "v": "V1_FASTLOWER",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 10,
+      "v": "V2_WHITE2ATR",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    },
+    {
+      "D": 10,
+      "v": "V3_STRICT",
+      "eligible": false,
+      "addGate": false,
+      "reduceGate": false,
+      "portfolioGate": false,
+      "final": 1.1397139383489474,
+      "ret": 0.1397139383489474,
+      "stress_final": 1.1298518467460217,
+      "stress_ret": 0.12985184674602168,
+      "maxDD": 0.07511515074070596,
+      "avgExposure": 0.30280868109221226,
+      "turnover": 28.905053230979235,
+      "incremental_vs_B": -0.050545159576597554,
+      "stress_incremental_vs_B": -0.04783368582704162,
+      "top_incremental_share": 0.32198759607257205,
+      "mature_total": 0.18808483145483768,
+      "benchmark_mature_total": 0.24709836537503094,
+      "counts": {
+        "add": 0,
+        "reduce": 0,
+        "trend_add": 0,
+        "loss_add": 0,
+        "first_add": 0,
+        "second_add": 0
+      },
+      "add_all": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_first": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_second": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_trend": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "add_loss": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "pf": null,
+        "stress_median": null,
+        "q25": null,
+        "positive_rate": null,
+        "top3": null
+      },
+      "reduce": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "positive_rate": null,
+        "mature_median": null,
+        "mature_mean": null,
+        "failure_median": null,
+        "failure_mean": null,
+        "avoided_adverse_mean": null,
+        "foregone_favorable_mean": null
+      }
+    }
+  ]
+}

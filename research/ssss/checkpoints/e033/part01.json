@@ -1,0 +1,524 @@
+{
+  "experiment": "E033",
+  "provider": "Massive",
+  "tickers": [
+    "AAPL",
+    "MSFT",
+    "NVDA",
+    "JPM",
+    "XOM"
+  ],
+  "coverage": [
+    {
+      "ticker": "AAPL",
+      "bars": 501,
+      "first": "2024-09-18",
+      "last": "2026-09-17",
+      "warning": null
+    },
+    {
+      "ticker": "MSFT",
+      "bars": 501,
+      "first": "2024-09-18",
+      "last": "2026-09-17",
+      "warning": null
+    },
+    {
+      "ticker": "NVDA",
+      "bars": 501,
+      "first": "2024-09-18",
+      "last": "2026-09-17",
+      "warning": null
+    },
+    {
+      "ticker": "JPM",
+      "bars": 501,
+      "first": "2024-09-18",
+      "last": "2026-09-17",
+      "warning": null
+    },
+    {
+      "ticker": "XOM",
+      "bars": 501,
+      "first": "2024-09-18",
+      "last": "2026-09-17",
+      "warning": null
+    }
+  ],
+  "trades": [
+    {
+      "ticker": "AAPL",
+      "trade_id": "AAPL-1",
+      "path": "MATURE",
+      "entry_date": "2025-05-13",
+      "resolved": true,
+      "entry_atr": 6.2469714285714275,
+      "entry_px": 210.43,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2025-05-13",
+          "exec_date": "2025-05-14",
+          "bars": 1,
+          "entry_dist_atr": 0.320155,
+          "resolved": true,
+          "add_ret": 0.21162131,
+          "immediate_ret": 0.22313698,
+          "delay_cost": -0.01151567
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2025-05-19",
+          "exec_date": "2025-05-20",
+          "bars": 5,
+          "entry_dist_atr": -0.441814,
+          "resolved": true,
+          "add_ret": 0.23939286,
+          "immediate_ret": 0.22313698,
+          "delay_cost": 0.01625588
+        },
+        "S10": {
+          "triggered": true,
+          "signal_date": "2025-05-21",
+          "exec_date": "2025-05-22",
+          "bars": 7,
+          "entry_dist_atr": -1.555954,
+          "resolved": true,
+          "add_ret": 0.28237116,
+          "immediate_ret": 0.22313698,
+          "delay_cost": 0.05923418
+        },
+        "R10": {
+          "triggered": false
+        }
+      },
+      "exit_date": "2026-01-16",
+      "base_ret": 0.22313698,
+      "nextday_ret": 0.21162131
+    },
+    {
+      "ticker": "AAPL",
+      "trade_id": "AAPL-2",
+      "path": "MATURE",
+      "entry_date": "2026-02-03",
+      "resolved": true,
+      "entry_atr": 6.336421428571431,
+      "entry_px": 269.2,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2026-02-03",
+          "exec_date": "2026-02-04",
+          "bars": 1,
+          "entry_dist_atr": 0.486868,
+          "resolved": true,
+          "add_ret": -0.05565777,
+          "immediate_ret": -0.04483572,
+          "delay_cost": -0.01082205
+        },
+        "D10": {
+          "triggered": false
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": false
+        }
+      },
+      "exit_date": "2026-03-10",
+      "base_ret": -0.04483572,
+      "nextday_ret": -0.05565777
+    },
+    {
+      "ticker": "AAPL",
+      "trade_id": "AAPL-3",
+      "path": "OPEN_UNRESOLVED",
+      "entry_date": "2026-04-07",
+      "resolved": false,
+      "entry_atr": 5.309849999999999,
+      "entry_px": 256.155,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2026-04-08",
+          "exec_date": "2026-04-09",
+          "bars": 2,
+          "entry_dist_atr": 0.535797,
+          "resolved": false
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2026-04-07",
+          "exec_date": "2026-04-08",
+          "bars": 1,
+          "entry_dist_atr": 0.432216,
+          "resolved": false
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": true,
+          "signal_date": "2026-04-08",
+          "exec_date": "2026-04-09",
+          "bars": 2,
+          "entry_dist_atr": 0.535797,
+          "resolved": false
+        }
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "trade_id": "MSFT-1",
+      "path": "MATURE",
+      "entry_date": "2025-04-28",
+      "resolved": true,
+      "entry_atr": 15.919035714285712,
+      "entry_px": 391.955,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2025-04-29",
+          "exec_date": "2025-04-30",
+          "bars": 2,
+          "entry_dist_atr": -0.103964,
+          "resolved": true,
+          "add_ret": 0.01460979,
+          "immediate_ret": 0.01032568,
+          "delay_cost": 0.00428411
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2025-04-28",
+          "exec_date": "2025-04-29",
+          "bars": 1,
+          "entry_dist_atr": -0.041146,
+          "resolved": true,
+          "add_ret": 0.01201687,
+          "immediate_ret": 0.01032568,
+          "delay_cost": 0.00169119
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": true,
+          "signal_date": "2025-04-29",
+          "exec_date": "2025-04-30",
+          "bars": 2,
+          "entry_dist_atr": -0.103964,
+          "resolved": true,
+          "add_ret": 0.01460979,
+          "immediate_ret": 0.01032568,
+          "delay_cost": 0.00428411
+        }
+      },
+      "exit_date": "2026-06-15",
+      "base_ret": 0.01032568,
+      "nextday_ret": 0.01201687
+    },
+    {
+      "ticker": "MSFT",
+      "trade_id": "MSFT-2",
+      "path": "OPEN_UNRESOLVED",
+      "entry_date": "2026-07-08",
+      "resolved": false,
+      "entry_atr": 12.997142857142864,
+      "entry_px": 384.03,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2026-07-09",
+          "exec_date": "2026-07-10",
+          "bars": 2,
+          "entry_dist_atr": 0.290064,
+          "resolved": false
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2026-07-08",
+          "exec_date": "2026-07-09",
+          "bars": 1,
+          "entry_dist_atr": -0.737085,
+          "resolved": false
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": true,
+          "signal_date": "2026-07-09",
+          "exec_date": "2026-07-10",
+          "bars": 2,
+          "entry_dist_atr": 0.290064,
+          "resolved": false
+        }
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "trade_id": "NVDA-1",
+      "path": "MATURE",
+      "entry_date": "2025-04-28",
+      "resolved": true,
+      "entry_atr": 8.169707142857142,
+      "entry_px": 109.69,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2025-05-01",
+          "exec_date": "2025-05-02",
+          "bars": 4,
+          "entry_dist_atr": 0.549591,
+          "resolved": true,
+          "add_ret": 0.62190621,
+          "immediate_ret": 0.68829657,
+          "delay_cost": -0.06639036
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2025-04-28",
+          "exec_date": "2025-04-29",
+          "bars": 1,
+          "entry_dist_atr": -0.247255,
+          "resolved": true,
+          "add_ret": 0.71997075,
+          "immediate_ret": 0.68829657,
+          "delay_cost": 0.03167418
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": true,
+          "signal_date": "2025-05-01",
+          "exec_date": "2025-05-02",
+          "bars": 4,
+          "entry_dist_atr": 0.549591,
+          "resolved": true,
+          "add_ret": 0.62190621,
+          "immediate_ret": 0.68829657,
+          "delay_cost": -0.06639036
+        }
+      },
+      "exit_date": "2025-12-09",
+      "base_ret": 0.68829657,
+      "nextday_ret": 0.71997075
+    },
+    {
+      "ticker": "NVDA",
+      "trade_id": "NVDA-2",
+      "path": "MATURE",
+      "entry_date": "2026-04-09",
+      "resolved": true,
+      "entry_atr": 5.331071428571434,
+      "entry_px": 181.84,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2026-04-09",
+          "exec_date": "2026-04-10",
+          "bars": 1,
+          "entry_dist_atr": 0.463321,
+          "resolved": true,
+          "add_ret": 0.06238398,
+          "immediate_ret": 0.07681474,
+          "delay_cost": -0.01443076
+        },
+        "D10": {
+          "triggered": false
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": false
+        }
+      },
+      "exit_date": "2026-07-01",
+      "base_ret": 0.07681474,
+      "nextday_ret": 0.06238398
+    },
+    {
+      "ticker": "JPM",
+      "trade_id": "JPM-1",
+      "path": "MATURE",
+      "entry_date": "2025-05-02",
+      "resolved": true,
+      "entry_atr": 6.725149999999999,
+      "entry_px": 251.26,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2025-05-02",
+          "exec_date": "2025-05-05",
+          "bars": 1,
+          "entry_dist_atr": -0.011896,
+          "resolved": true,
+          "add_ret": 0.19304905,
+          "immediate_ret": 0.19266919,
+          "delay_cost": 0.00037986
+        },
+        "D10": {
+          "triggered": false
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": false
+        }
+      },
+      "exit_date": "2026-01-28",
+      "base_ret": 0.19266919,
+      "nextday_ret": 0.19304905
+    },
+    {
+      "ticker": "JPM",
+      "trade_id": "JPM-2",
+      "path": "MATURE",
+      "entry_date": "2026-03-26",
+      "resolved": true,
+      "entry_atr": 6.799635714285715,
+      "entry_px": 292.58,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2026-03-31",
+          "exec_date": "2026-04-01",
+          "bars": 4,
+          "entry_dist_atr": 0.413257,
+          "resolved": true,
+          "add_ret": 0.01426991,
+          "immediate_ret": 0.02401118,
+          "delay_cost": -0.00974127
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2026-03-26",
+          "exec_date": "2026-03-27",
+          "bars": 1,
+          "entry_dist_atr": -0.505909,
+          "resolved": true,
+          "add_ret": 0.0361942,
+          "immediate_ret": 0.02401118,
+          "delay_cost": 0.01218302
+        },
+        "S10": {
+          "triggered": true,
+          "signal_date": "2026-03-27",
+          "exec_date": "2026-03-30",
+          "bars": 2,
+          "entry_dist_atr": -1.153003,
+          "resolved": true,
+          "add_ret": 0.05220619,
+          "immediate_ret": 0.02401118,
+          "delay_cost": 0.02819501
+        },
+        "R10": {
+          "triggered": true,
+          "signal_date": "2026-03-31",
+          "exec_date": "2026-04-01",
+          "bars": 4,
+          "entry_dist_atr": 0.413257,
+          "resolved": true,
+          "add_ret": 0.01426991,
+          "immediate_ret": 0.02401118,
+          "delay_cost": -0.00974127
+        }
+      },
+      "exit_date": "2026-05-15",
+      "base_ret": 0.02401118,
+      "nextday_ret": 0.0361942
+    },
+    {
+      "ticker": "XOM",
+      "trade_id": "XOM-1",
+      "path": "MATURE",
+      "entry_date": "2025-05-13",
+      "resolved": true,
+      "entry_atr": 2.443814285714287,
+      "entry_px": 109.32,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2025-05-13",
+          "exec_date": "2025-05-14",
+          "bars": 1,
+          "entry_dist_atr": -0.18823,
+          "resolved": true,
+          "add_ret": -0.00869046,
+          "immediate_ret": -0.01286173,
+          "delay_cost": 0.00417127
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2025-05-14",
+          "exec_date": "2025-05-15",
+          "bars": 2,
+          "entry_dist_atr": -1.158026,
+          "resolved": true,
+          "add_ret": 0.01337173,
+          "immediate_ret": -0.01286173,
+          "delay_cost": 0.02623346
+        },
+        "S10": {
+          "triggered": true,
+          "signal_date": "2025-05-19",
+          "exec_date": "2025-05-20",
+          "bars": 5,
+          "entry_dist_atr": -1.198945,
+          "resolved": true,
+          "add_ret": 0.01432424,
+          "immediate_ret": -0.01286173,
+          "delay_cost": 0.02718597
+        },
+        "R10": {
+          "triggered": false
+        }
+      },
+      "exit_date": "2025-07-01",
+      "base_ret": -0.01286173,
+      "nextday_ret": -0.00869046
+    },
+    {
+      "ticker": "XOM",
+      "trade_id": "XOM-2",
+      "path": "OPEN_UNRESOLVED",
+      "entry_date": "2026-07-14",
+      "resolved": false,
+      "entry_atr": 3.039821428571429,
+      "entry_px": 145.505,
+      "candidates": {
+        "C04": {
+          "triggered": true,
+          "signal_date": "2026-07-16",
+          "exec_date": "2026-07-17",
+          "bars": 3,
+          "entry_dist_atr": 1.159608,
+          "resolved": false
+        },
+        "D10": {
+          "triggered": true,
+          "signal_date": "2026-07-14",
+          "exec_date": "2026-07-15",
+          "bars": 1,
+          "entry_dist_atr": -0.136521,
+          "resolved": false
+        },
+        "S10": {
+          "triggered": false
+        },
+        "R10": {
+          "triggered": true,
+          "signal_date": "2026-07-16",
+          "exec_date": "2026-07-17",
+          "bars": 3,
+          "entry_dist_atr": 1.159608,
+          "resolved": false
+        }
+      }
+    }
+  ]
+}

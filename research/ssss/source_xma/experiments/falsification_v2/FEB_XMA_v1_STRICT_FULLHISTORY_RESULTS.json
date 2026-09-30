@@ -1,0 +1,7346 @@
+{
+  "schema": 1,
+  "status": "STRICT_REPLAY_COMPLETE",
+  "strategy": "FEB_XMA_v1",
+  "window": {
+    "start": "2020-01-02",
+    "end": "2025-12-30"
+  },
+  "freeze_commit": "9e0e81af515fdc619be405f2884f07dc7920ad2a",
+  "engine_commit": "9b2aaf5769bc0fff49b85c164c9fb5c7465be6b6",
+  "symbols": [
+    "AAPL",
+    "MSFT",
+    "NVDA",
+    "AMD",
+    "AVGO",
+    "ORCL",
+    "INTC",
+    "QCOM",
+    "MU",
+    "GOOGL",
+    "META",
+    "NFLX",
+    "AMZN",
+    "TSLA",
+    "HD",
+    "MCD",
+    "WMT",
+    "COST",
+    "PG",
+    "KO",
+    "PEP",
+    "ABT",
+    "LLY",
+    "UNH",
+    "JNJ",
+    "TMO",
+    "JPM",
+    "BAC",
+    "GS",
+    "V",
+    "MA",
+    "CAT",
+    "BA",
+    "GE",
+    "XOM",
+    "CVX",
+    "LIN",
+    "NEE",
+    "PLD"
+  ],
+  "aggregate": {
+    "initial_capital": 390000,
+    "final_capital": 430091.40125307784,
+    "total_return": 0.10279846475148169,
+    "cagr": 0.016461142760848757,
+    "max_drawdown": -0.04495678237902734,
+    "sharpe_annualized": 0.7208786983200969,
+    "positive_symbols": 23,
+    "mean_sleeve_return": 0.10279846475148176,
+    "median_sleeve_return": 0.06506211152664587,
+    "mean_symbol_max_drawdown": -0.17358071278611753,
+    "median_symbol_max_drawdown": -0.1570894394498742,
+    "average_target_exposure": 0.11260697939530076,
+    "average_gross_exposure": 0.11253854210641673,
+    "annual_returns": {
+      "2020": 0.0005627791367466273,
+      "2021": 0.023745862027756415,
+      "2022": -0.029487519583152544,
+      "2023": 0.02117581518931666,
+      "2024": 0.04999715915662195,
+      "2025": 0.03459382253716026
+    },
+    "activity": {
+      "probe": 5543,
+      "confirm": 667,
+      "breakout": 425,
+      "add": 320,
+      "reduce": 707,
+      "exit": 5956,
+      "terminal_liquidation": 12,
+      "executions": 13630
+    },
+    "best5": [
+      {
+        "symbol": "AVGO",
+        "return": 0.8847418181856928
+      },
+      {
+        "symbol": "AMD",
+        "return": 0.8283571133915022
+      },
+      {
+        "symbol": "ORCL",
+        "return": 0.7523832854038774
+      },
+      {
+        "symbol": "NVDA",
+        "return": 0.49366477627934446
+      },
+      {
+        "symbol": "META",
+        "return": 0.3809009087746158
+      }
+    ],
+    "worst5": [
+      {
+        "symbol": "AMZN",
+        "return": -0.2896463329948037
+      },
+      {
+        "symbol": "MCD",
+        "return": -0.24658653585737178
+      },
+      {
+        "symbol": "TMO",
+        "return": -0.2425197456511865
+      },
+      {
+        "symbol": "BA",
+        "return": -0.20175418667616662
+      },
+      {
+        "symbol": "KO",
+        "return": -0.17860878982475337
+      }
+    ]
+  },
+  "per_symbol": {
+    "AAPL": {
+      "symbol": "AAPL",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 11626.825231276249,
+      "total_return": 0.162682523127625,
+      "cagr": 0.025469271141768113,
+      "max_drawdown": -0.12146352738452937,
+      "sharpe_annualized": 0.5022668247580423,
+      "average_target_exposure": 0.10199071001990723,
+      "average_gross_exposure": 0.09693356483276515,
+      "counts": {
+        "probe": 128,
+        "confirm": 10,
+        "breakout": 15,
+        "add": 10,
+        "reduce": 22,
+        "exit": 142
+      },
+      "terminal_liquidation": 1,
+      "executions": 328,
+      "annual_returns": {
+        "2020": 0.07280608119403653,
+        "2021": 0.016500179228120526,
+        "2022": -0.036872598864582495,
+        "2023": -0.022053390696724295,
+        "2024": 0.051744921507924424,
+        "2025": 0.07627474732661543
+      }
+    },
+    "MSFT": {
+      "symbol": "MSFT",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 9188.889754280219,
+      "total_return": -0.08111102457197816,
+      "cagr": -0.014015288773842172,
+      "max_drawdown": -0.16860806875393441,
+      "sharpe_annualized": -0.1769700053371723,
+      "average_target_exposure": 0.1142667551426678,
+      "average_gross_exposure": 0.12341908947354781,
+      "counts": {
+        "probe": 143,
+        "confirm": 15,
+        "breakout": 12,
+        "add": 8,
+        "reduce": 18,
+        "exit": 155
+      },
+      "terminal_liquidation": 0,
+      "executions": 351,
+      "annual_returns": {
+        "2020": -0.10280180922714666,
+        "2021": 0.07995273373095002,
+        "2022": -0.11133752951446818,
+        "2023": 0.05360779017751405,
+        "2024": 0.06744539137370054,
+        "2025": -0.05112626712393886
+      }
+    },
+    "NVDA": {
+      "symbol": "NVDA",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 14936.647762793444,
+      "total_return": 0.49366477627934446,
+      "cagr": 0.069240396431693,
+      "max_drawdown": -0.1909262982595633,
+      "sharpe_annualized": 0.707674045336943,
+      "average_target_exposure": 0.12196416721964196,
+      "average_gross_exposure": 0.10330350634315626,
+      "counts": {
+        "probe": 145,
+        "confirm": 17,
+        "breakout": 19,
+        "add": 15,
+        "reduce": 32,
+        "exit": 163
+      },
+      "terminal_liquidation": 1,
+      "executions": 392,
+      "annual_returns": {
+        "2020": -0.04993533701716879,
+        "2021": 0.2380563023355824,
+        "2022": 0.0032690471641354524,
+        "2023": 0.1418034319581074,
+        "2024": 0.09787188464983232,
+        "2025": 0.009715813899118908
+      }
+    },
+    "AMD": {
+      "symbol": "AMD",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 18283.571133915022,
+      "total_return": 0.8283571133915022,
+      "cagr": 0.10592765901356249,
+      "max_drawdown": -0.0948809677855863,
+      "sharpe_annualized": 0.8831372456094532,
+      "average_target_exposure": 0.13427339084273404,
+      "average_gross_exposure": 0.09173548455751332,
+      "counts": {
+        "probe": 155,
+        "confirm": 18,
+        "breakout": 13,
+        "add": 18,
+        "reduce": 37,
+        "exit": 167
+      },
+      "terminal_liquidation": 1,
+      "executions": 409,
+      "annual_returns": {
+        "2020": 0.3748780696013261,
+        "2021": 0.12307817632488227,
+        "2022": -0.04856727272973438,
+        "2023": 0.18982252360580532,
+        "2024": 0.033079679188989575,
+        "2025": 0.01249470777511652
+      }
+    },
+    "AVGO": {
+      "symbol": "AVGO",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 18847.418181856927,
+      "total_return": 0.8847418181856928,
+      "cagr": 0.11154667556157571,
+      "max_drawdown": -0.17490919358159684,
+      "sharpe_annualized": 0.8581238246698141,
+      "average_target_exposure": 0.14296615792966189,
+      "average_gross_exposure": 0.12738730209670632,
+      "counts": {
+        "probe": 147,
+        "confirm": 28,
+        "breakout": 11,
+        "add": 20,
+        "reduce": 28,
+        "exit": 157
+      },
+      "terminal_liquidation": 1,
+      "executions": 392,
+      "annual_returns": {
+        "2020": 0.004635762200229543,
+        "2021": -0.03477283035459555,
+        "2022": -0.012772314870348134,
+        "2023": 0.24563812566029242,
+        "2024": 0.5235791906263254,
+        "2025": 0.03738375821647022
+      }
+    },
+    "ORCL": {
+      "symbol": "ORCL",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 17523.832854038774,
+      "total_return": 0.7523832854038774,
+      "cagr": 0.09812359732765574,
+      "max_drawdown": -0.09781293877512998,
+      "sharpe_annualized": 0.8677020350895626,
+      "average_target_exposure": 0.13895155938951576,
+      "average_gross_exposure": 0.12293264575407005,
+      "counts": {
+        "probe": 151,
+        "confirm": 22,
+        "breakout": 11,
+        "add": 16,
+        "reduce": 32,
+        "exit": 162
+      },
+      "terminal_liquidation": 0,
+      "executions": 394,
+      "annual_returns": {
+        "2020": 0.016078209047101,
+        "2021": 0.07364331247293565,
+        "2022": -0.023950152803801417,
+        "2023": 0.03849018536679605,
+        "2024": 0.3473707051621924,
+        "2025": 0.17619802677933016
+      }
+    },
+    "INTC": {
+      "symbol": "INTC",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 9415.852775597441,
+      "total_return": -0.05841472244025592,
+      "cagr": -0.009992919071979078,
+      "max_drawdown": -0.35346483589841926,
+      "sharpe_annualized": 0.004708738084781485,
+      "average_target_exposure": 0.08566688785666904,
+      "average_gross_exposure": 0.10912639142186871,
+      "counts": {
+        "probe": 109,
+        "confirm": 12,
+        "breakout": 11,
+        "add": 8,
+        "reduce": 17,
+        "exit": 119
+      },
+      "terminal_liquidation": 1,
+      "executions": 277,
+      "annual_returns": {
+        "2020": -0.12344655178750308,
+        "2021": -0.08048942446552654,
+        "2022": -0.028795420577168107,
+        "2023": 0.08514569292486263,
+        "2024": -0.11924242839588572,
+        "2025": 0.2585468019272852
+      }
+    },
+    "QCOM": {
+      "symbol": "QCOM",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 9506.978269747282,
+      "total_return": -0.049302173025271845,
+      "cagr": -0.008400640992230701,
+      "max_drawdown": -0.2586786451071058,
+      "sharpe_annualized": -0.042097285733312735,
+      "average_target_exposure": 0.09114134041141358,
+      "average_gross_exposure": 0.0938043517409395,
+      "counts": {
+        "probe": 133,
+        "confirm": 16,
+        "breakout": 9,
+        "add": 6,
+        "reduce": 15,
+        "exit": 142
+      },
+      "terminal_liquidation": 0,
+      "executions": 321,
+      "annual_returns": {
+        "2020": 0.15159551750072886,
+        "2021": -0.0639477696710381,
+        "2022": -0.14996818207407858,
+        "2023": 0.007240243058784346,
+        "2024": -0.04806338242707475,
+        "2025": 0.082096939571072
+      }
+    },
+    "MU": {
+      "symbol": "MU",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 13232.219846200616,
+      "total_return": 0.3232219846200617,
+      "cagr": 0.047840716939221206,
+      "max_drawdown": -0.3037488126623028,
+      "sharpe_annualized": 0.47469162848287083,
+      "average_target_exposure": 0.12584605175846073,
+      "average_gross_exposure": 0.10898161642736627,
+      "counts": {
+        "probe": 142,
+        "confirm": 18,
+        "breakout": 10,
+        "add": 20,
+        "reduce": 37,
+        "exit": 151
+      },
+      "terminal_liquidation": 1,
+      "executions": 379,
+      "annual_returns": {
+        "2020": 0.15359714383516265,
+        "2021": 0.056934095987977607,
+        "2022": -0.029336131203404947,
+        "2023": 0.023304155977966756,
+        "2024": -0.11387385944803607,
+        "2025": 0.23299545903805075
+      }
+    },
+    "GOOGL": {
+      "symbol": "GOOGL",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 11162.625038744753,
+      "total_return": 0.11626250387447534,
+      "cagr": 0.018521376320863814,
+      "max_drawdown": -0.12493260510214133,
+      "sharpe_annualized": 0.30866134963478364,
+      "average_target_exposure": 0.10925680159256818,
+      "average_gross_exposure": 0.111355896739199,
+      "counts": {
+        "probe": 127,
+        "confirm": 18,
+        "breakout": 17,
+        "add": 11,
+        "reduce": 25,
+        "exit": 143
+      },
+      "terminal_liquidation": 1,
+      "executions": 342,
+      "annual_returns": {
+        "2020": -0.020209825224159816,
+        "2021": -0.008669598052710503,
+        "2022": -0.04137913697978912,
+        "2023": 0.0781532300387704,
+        "2024": 0.0398838789028102,
+        "2025": 0.06930751982591388
+      }
+    },
+    "META": {
+      "symbol": "META",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 13809.009087746159,
+      "total_return": 0.3809009087746158,
+      "cagr": 0.05532711926750644,
+      "max_drawdown": -0.09521567425321176,
+      "sharpe_annualized": 0.7266988109975846,
+      "average_target_exposure": 0.12146648971466521,
+      "average_gross_exposure": 0.1061278314235218,
+      "counts": {
+        "probe": 116,
+        "confirm": 16,
+        "breakout": 13,
+        "add": 11,
+        "reduce": 28,
+        "exit": 129
+      },
+      "terminal_liquidation": 0,
+      "executions": 313,
+      "annual_returns": {
+        "2020": 0.02071728509306814,
+        "2021": 0.0434331950781337,
+        "2022": -0.005158722415990025,
+        "2023": 0.18166858514618367,
+        "2024": 0.0978257398168465,
+        "2025": 0.004637769789528345
+      }
+    },
+    "NFLX": {
+      "symbol": "NFLX",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 12230.481957090853,
+      "total_return": 0.2230481957090853,
+      "cagr": 0.03416675620253673,
+      "max_drawdown": -0.23045522434778376,
+      "sharpe_annualized": 0.34211846122148787,
+      "average_target_exposure": 0.14455872594558755,
+      "average_gross_exposure": 0.14903736041966928,
+      "counts": {
+        "probe": 155,
+        "confirm": 19,
+        "breakout": 18,
+        "add": 17,
+        "reduce": 31,
+        "exit": 173
+      },
+      "terminal_liquidation": 0,
+      "executions": 413,
+      "annual_returns": {
+        "2020": -0.08194550704989556,
+        "2021": -0.07896682600172045,
+        "2022": 0.10339108445356926,
+        "2023": 0.09341988201662121,
+        "2024": 0.14056089902627167,
+        "2025": 0.051150550163482356
+      }
+    },
+    "AMZN": {
+      "symbol": "AMZN",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 7103.536670051963,
+      "total_return": -0.2896463329948037,
+      "cagr": -0.05546620813090897,
+      "max_drawdown": -0.34734674282676414,
+      "sharpe_annualized": -0.6316109569645745,
+      "average_target_exposure": 0.11526211015262113,
+      "average_gross_exposure": 0.14355576072366477,
+      "counts": {
+        "probe": 139,
+        "confirm": 11,
+        "breakout": 19,
+        "add": 7,
+        "reduce": 17,
+        "exit": 158
+      },
+      "terminal_liquidation": 0,
+      "executions": 351,
+      "annual_returns": {
+        "2020": -0.10174004970948003,
+        "2021": -0.09493369147399955,
+        "2022": -0.07398173669602726,
+        "2023": -0.05899658252503481,
+        "2024": 0.09250232616740806,
+        "2025": -0.08217672126894882
+      }
+    },
+    "TSLA": {
+      "symbol": "TSLA",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 12517.46216664253,
+      "total_return": 0.251746216664253,
+      "cagr": 0.03817669684222946,
+      "max_drawdown": -0.29431803615622254,
+      "sharpe_annualized": 0.31245425475299465,
+      "average_target_exposure": 0.09701393497013948,
+      "average_gross_exposure": 0.09845952415123592,
+      "counts": {
+        "probe": 147,
+        "confirm": 9,
+        "breakout": 15,
+        "add": 10,
+        "reduce": 20,
+        "exit": 162
+      },
+      "terminal_liquidation": 0,
+      "executions": 363,
+      "annual_returns": {
+        "2020": -0.12092266551760822,
+        "2021": 0.22280145272230367,
+        "2022": 0.029274602374117942,
+        "2023": -0.023494164233711423,
+        "2024": 0.1584931558596725,
+        "2025": 0.00007756960334814877
+      }
+    },
+    "HD": {
+      "symbol": "HD",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 9320.200256006941,
+      "total_return": -0.06797997439930592,
+      "cagr": -0.011678171400552606,
+      "max_drawdown": -0.1570894394498742,
+      "sharpe_annualized": -0.18153708112933384,
+      "average_target_exposure": 0.09601857996018597,
+      "average_gross_exposure": 0.10600894955635118,
+      "counts": {
+        "probe": 140,
+        "confirm": 18,
+        "breakout": 9,
+        "add": 2,
+        "reduce": 13,
+        "exit": 149
+      },
+      "terminal_liquidation": 0,
+      "executions": 331,
+      "annual_returns": {
+        "2020": -0.14223672707434198,
+        "2021": 0.17139967782794563,
+        "2022": -0.07512939235476335,
+        "2023": -0.04659047168276986,
+        "2024": 0.07840453751794918,
+        "2025": -0.024537621395869236
+      }
+    },
+    "MCD": {
+      "symbol": "MCD",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 7534.1346414262825,
+      "total_return": -0.24658653585737178,
+      "cagr": -0.04614544777355711,
+      "max_drawdown": -0.31135735828607025,
+      "sharpe_annualized": -0.881769558843551,
+      "average_target_exposure": 0.12783676177836784,
+      "average_gross_exposure": 0.13672472289105395,
+      "counts": {
+        "probe": 165,
+        "confirm": 27,
+        "breakout": 8,
+        "add": 6,
+        "reduce": 7,
+        "exit": 172
+      },
+      "terminal_liquidation": 1,
+      "executions": 386,
+      "annual_returns": {
+        "2020": -0.02295632875738407,
+        "2021": 0.0739966951562061,
+        "2022": -0.027932023849011056,
+        "2023": -0.038793208684142155,
+        "2024": -0.12235255108651233,
+        "2025": -0.12444608385546918
+      }
+    },
+    "WMT": {
+      "symbol": "WMT",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 10650.621115266458,
+      "total_return": 0.06506211152664587,
+      "cagr": 0.010573021277218375,
+      "max_drawdown": -0.1388354191063098,
+      "sharpe_annualized": 0.20764351295792896,
+      "average_target_exposure": 0.12869940278699427,
+      "average_gross_exposure": 0.13472347530628703,
+      "counts": {
+        "probe": 153,
+        "confirm": 16,
+        "breakout": 15,
+        "add": 11,
+        "reduce": 21,
+        "exit": 168
+      },
+      "terminal_liquidation": 0,
+      "executions": 384,
+      "annual_returns": {
+        "2020": -0.025879666399427292,
+        "2021": -0.041645334701938985,
+        "2022": 0.013669275321319452,
+        "2023": 0.004374911485464539,
+        "2024": 0.037508799315750796,
+        "2025": 0.08007058264836098
+      }
+    },
+    "COST": {
+      "symbol": "COST",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 11134.21514023986,
+      "total_return": 0.11342151402398604,
+      "cagr": 0.01808838531635959,
+      "max_drawdown": -0.12322266053729425,
+      "sharpe_annualized": 0.35987852429664235,
+      "average_target_exposure": 0.11692103516921057,
+      "average_gross_exposure": 0.11282700521682075,
+      "counts": {
+        "probe": 152,
+        "confirm": 22,
+        "breakout": 10,
+        "add": 6,
+        "reduce": 16,
+        "exit": 162
+      },
+      "terminal_liquidation": 0,
+      "executions": 368,
+      "annual_returns": {
+        "2020": 0.05114613363877685,
+        "2021": 0.02872139606425983,
+        "2022": -0.07996138523888241,
+        "2023": 0.06215544764084657,
+        "2024": 0.008582767566913896,
+        "2025": 0.04470352205662853
+      }
+    },
+    "PG": {
+      "symbol": "PG",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 8412.462539502958,
+      "total_return": -0.15875374604970416,
+      "cagr": -0.028432676167366,
+      "max_drawdown": -0.16478925517610254,
+      "sharpe_annualized": -0.6431216870862878,
+      "average_target_exposure": 0.10149303251493051,
+      "average_gross_exposure": 0.10991247081142325,
+      "counts": {
+        "probe": 148,
+        "confirm": 18,
+        "breakout": 7,
+        "add": 2,
+        "reduce": 10,
+        "exit": 155
+      },
+      "terminal_liquidation": 0,
+      "executions": 340,
+      "annual_returns": {
+        "2020": -0.03479587797540151,
+        "2021": 0.007839701951061206,
+        "2022": -0.06113620487228466,
+        "2023": -0.05474083196040702,
+        "2024": 0.024283425603092823,
+        "2025": -0.04865316569849165
+      }
+    },
+    "KO": {
+      "symbol": "KO",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 8213.912101752467,
+      "total_return": -0.17860878982475337,
+      "cagr": -0.03229702361379361,
+      "max_drawdown": -0.18366087946950982,
+      "sharpe_annualized": -0.5741380504775407,
+      "average_target_exposure": 0.10806237558062401,
+      "average_gross_exposure": 0.12073025030832403,
+      "counts": {
+        "probe": 154,
+        "confirm": 20,
+        "breakout": 5,
+        "add": 4,
+        "reduce": 8,
+        "exit": 159
+      },
+      "terminal_liquidation": 0,
+      "executions": 350,
+      "annual_returns": {
+        "2020": -0.044972447703316765,
+        "2021": -0.020101045765907877,
+        "2022": -0.03608528687601065,
+        "2023": -0.03534200874606008,
+        "2024": 0.017310347010205174,
+        "2025": -0.07212939078274239
+      }
+    },
+    "PEP": {
+      "symbol": "PEP",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 9750.5597736522,
+      "total_return": -0.024944022634780016,
+      "cagr": -0.004206004249027395,
+      "max_drawdown": -0.08344704962695215,
+      "sharpe_annualized": -0.08948044365124257,
+      "average_target_exposure": 0.08925016589250183,
+      "average_gross_exposure": 0.09292614173562544,
+      "counts": {
+        "probe": 146,
+        "confirm": 18,
+        "breakout": 3,
+        "add": 2,
+        "reduce": 6,
+        "exit": 149
+      },
+      "terminal_liquidation": 0,
+      "executions": 324,
+      "annual_returns": {
+        "2020": -0.016699212532420793,
+        "2021": 0.02524091300710629,
+        "2022": -0.0688761169579204,
+        "2023": 0.011991483539623982,
+        "2024": -0.00837431564398372,
+        "2025": 0.03510675392320439
+      }
+    },
+    "ABT": {
+      "symbol": "ABT",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 8888.466599701158,
+      "total_return": -0.1111533400298842,
+      "cagr": -0.019468838470623306,
+      "max_drawdown": -0.15946441093293284,
+      "sharpe_annualized": -0.34039772309198624,
+      "average_target_exposure": 0.08676177836761799,
+      "average_gross_exposure": 0.09540491340187379,
+      "counts": {
+        "probe": 128,
+        "confirm": 13,
+        "breakout": 8,
+        "add": 2,
+        "reduce": 8,
+        "exit": 136
+      },
+      "terminal_liquidation": 0,
+      "executions": 295,
+      "annual_returns": {
+        "2020": -0.07588695527777911,
+        "2021": -0.01388683272664648,
+        "2022": 0.003169143498340521,
+        "2023": -0.05181628046272546,
+        "2024": -0.01984305392592134,
+        "2025": 0.04619515599299828
+      }
+    },
+    "LLY": {
+      "symbol": "LLY",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 12263.418532156207,
+      "total_return": 0.22634185321562073,
+      "cagr": 0.034630932785917556,
+      "max_drawdown": -0.11270804031551118,
+      "sharpe_annualized": 0.4232095970392646,
+      "average_target_exposure": 0.14522229595222325,
+      "average_gross_exposure": 0.13961216895061818,
+      "counts": {
+        "probe": 156,
+        "confirm": 20,
+        "breakout": 17,
+        "add": 22,
+        "reduce": 37,
+        "exit": 173
+      },
+      "terminal_liquidation": 0,
+      "executions": 425,
+      "annual_returns": {
+        "2020": -0.0481619683911908,
+        "2021": 0.07187141217316784,
+        "2022": 0.028839609442976144,
+        "2023": 0.0277251574670776,
+        "2024": 0.01709611558840063,
+        "2025": 0.11768429778068712
+      }
+    },
+    "UNH": {
+      "symbol": "UNH",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 10101.694109256234,
+      "total_return": 0.010169410925623401,
+      "cagr": 0.001689693582762164,
+      "max_drawdown": -0.07940978184771053,
+      "sharpe_annualized": 0.058339464207724234,
+      "average_target_exposure": 0.10431320504313214,
+      "average_gross_exposure": 0.10295693419615265,
+      "counts": {
+        "probe": 143,
+        "confirm": 11,
+        "breakout": 5,
+        "add": 7,
+        "reduce": 12,
+        "exit": 148
+      },
+      "terminal_liquidation": 0,
+      "executions": 326,
+      "annual_returns": {
+        "2020": 0.004724823988844884,
+        "2021": 0.03320376790758384,
+        "2022": 0.0024884561000733108,
+        "2023": -0.011945705743172441,
+        "2024": -0.025308020220239924,
+        "2025": 0.00793729902182072
+      }
+    },
+    "JNJ": {
+      "symbol": "JNJ",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 10289.73880838144,
+      "total_return": 0.028973880838144117,
+      "cagr": 0.004777156648695158,
+      "max_drawdown": -0.10859726297062222,
+      "sharpe_annualized": 0.14042652767384975,
+      "average_target_exposure": 0.10348374253483765,
+      "average_gross_exposure": 0.10860419307642044,
+      "counts": {
+        "probe": 145,
+        "confirm": 14,
+        "breakout": 6,
+        "add": 3,
+        "reduce": 9,
+        "exit": 150
+      },
+      "terminal_liquidation": 1,
+      "executions": 328,
+      "annual_returns": {
+        "2020": -0.0048633266946231934,
+        "2021": -0.03711032648528312,
+        "2022": 0.0051571819706079935,
+        "2023": -0.04224526993255229,
+        "2024": 0.015121283744854885,
+        "2025": 0.09885116048755238
+      }
+    },
+    "TMO": {
+      "symbol": "TMO",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 7574.802543488135,
+      "total_return": -0.2425197456511865,
+      "cagr": -0.045288270628420224,
+      "max_drawdown": -0.33456967599922116,
+      "sharpe_annualized": -0.7464339857481815,
+      "average_target_exposure": 0.08852023888520257,
+      "average_gross_exposure": 0.10087756740736105,
+      "counts": {
+        "probe": 131,
+        "confirm": 16,
+        "breakout": 10,
+        "add": 3,
+        "reduce": 12,
+        "exit": 140
+      },
+      "terminal_liquidation": 1,
+      "executions": 313,
+      "annual_returns": {
+        "2020": -0.0016526708280302227,
+        "2021": -0.052839540070147906,
+        "2022": -0.09209262336380353,
+        "2023": -0.032770533760405174,
+        "2024": -0.09320608948641396,
+        "2025": 0.005973262342871877
+      }
+    },
+    "JPM": {
+      "symbol": "JPM",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 11700.094002723003,
+      "total_return": 0.17000940027230027,
+      "cagr": 0.026544714871338693,
+      "max_drawdown": -0.1025744068774258,
+      "sharpe_annualized": 0.4554731597511144,
+      "average_target_exposure": 0.11386861313868639,
+      "average_gross_exposure": 0.10815747039923906,
+      "counts": {
+        "probe": 133,
+        "confirm": 20,
+        "breakout": 10,
+        "add": 6,
+        "reduce": 15,
+        "exit": 143
+      },
+      "terminal_liquidation": 0,
+      "executions": 327,
+      "annual_returns": {
+        "2020": 0.031751242653736966,
+        "2021": 0.038491650524684395,
+        "2022": -0.01941753564846549,
+        "2023": -0.002025441016797802,
+        "2024": 0.0527548448101367,
+        "2025": 0.05993809148733242
+      }
+    },
+    "BAC": {
+      "symbol": "BAC",
+      "start": "2020-01-02",
+      "end": "2025-12-30",
+      "initial_capital": 10000,
+      "final_capital": 10496.038719752998,
+      "total_return": 0.04960387197529981,
+      "cagr": 0.008110735107036637,
+      "max_drawdown": -0.08949087889776985,
+      "sharpe_annualized": 0.14419248297666987,
+      "average_target_exposure": 0.11765096217650997,
+      "average_gross_exposure": 0.11867337393732544,
+      "counts": {
+        "probe": 134,
+        "confirm": 20,
+        "breakout": 10,
+        "add": 4,
+        "reduce": 14,
+        "exit": 144
+      },
+      "terminal_liquidation": 0,
+      "executions": 326,
+      "annual_returns": {
+        "2020": 0.020606431504239575,
+        "2021": -0.045887006117393714,
+        "2022": 0.023902766719812396,
+        "2023": -0.03693975378995629,
+        "2024": 0.07937765013438791,
+        "2025": 0.012702119712502125
+      }
+    },
+    "GS": {
+      "symbol": "GS",
+      "final_capital": 12064.286530559737,
+      "total_return": 0.2064286530559738,
+      "cagr": 0.03180854619509832,
+      "max_drawdown": -0.2039753998984677,
+      "sharpe_annualized": 0.484447015151796,
+      "average_target_exposure": 0.11738553417385554,
+      "average_gross_exposure": 0.1191199254197461,
+      "counts": {
+        "probe": 144,
+        "confirm": 18,
+        "breakout": 13,
+        "add": 6,
+        "reduce": 18,
+        "exit": 157
+      },
+      "terminal_liquidation": 0,
+      "executions": 356,
+      "annual_returns": {
+        "2020": 0.0039724480113880745,
+        "2021": 0.017209473695692035,
+        "2022": -0.05803745750650069,
+        "2023": -0.05088562498444249,
+        "2024": 0.09626892642913965,
+        "2025": 0.20531389636546704
+      }
+    },
+    "V": {
+      "symbol": "V",
+      "final_capital": 9543.606548817343,
+      "total_return": -0.04563934511826573,
+      "cagr": -0.007764199085012247,
+      "max_drawdown": -0.1220002874663515,
+      "sharpe_annualized": -0.1344704371857764,
+      "average_target_exposure": 0.11871267418712693,
+      "average_gross_exposure": 0.12024141850135349,
+      "counts": {
+        "probe": 159,
+        "confirm": 15,
+        "breakout": 8,
+        "add": 2,
+        "reduce": 5,
+        "exit": 167
+      },
+      "terminal_liquidation": 0,
+      "executions": 356,
+      "annual_returns": {
+        "2020": 0.04520249187838199,
+        "2021": -0.0008794871078787736,
+        "2022": -0.07599987666677499,
+        "2023": 0.02660746657298363,
+        "2024": 0.01379247184231347,
+        "2025": -0.04968254821035001
+      }
+    },
+    "MA": {
+      "symbol": "MA",
+      "final_capital": 10753.269772427866,
+      "total_return": 0.0753269772427867,
+      "cagr": 0.012191673726733132,
+      "max_drawdown": -0.06894552007428467,
+      "sharpe_annualized": 0.2468509682076086,
+      "average_target_exposure": 0.12471798274718006,
+      "average_gross_exposure": 0.12363351495562204,
+      "counts": {
+        "probe": 149,
+        "confirm": 21,
+        "breakout": 8,
+        "add": 4,
+        "reduce": 12,
+        "exit": 157
+      },
+      "terminal_liquidation": 0,
+      "executions": 351,
+      "annual_returns": {
+        "2020": 0.0024188086284833155,
+        "2021": -0.009809977021739358,
+        "2022": -0.016668583202265497,
+        "2023": 0.05843787510949405,
+        "2024": 0.02831469134007003,
+        "2025": 0.012235258576913433
+      }
+    },
+    "CAT": {
+      "symbol": "CAT",
+      "final_capital": 11160.489117760188,
+      "total_return": 0.11604891177601884,
+      "cagr": 0.01848885500743247,
+      "max_drawdown": -0.1950093454214833,
+      "sharpe_annualized": 0.31751802320091704,
+      "average_target_exposure": 0.12833443928334448,
+      "average_gross_exposure": 0.12183803706786765,
+      "counts": {
+        "probe": 136,
+        "confirm": 18,
+        "breakout": 16,
+        "add": 15,
+        "reduce": 30,
+        "exit": 151
+      },
+      "terminal_liquidation": 1,
+      "executions": 367,
+      "annual_returns": {
+        "2020": 0.0391014327089414,
+        "2021": 0.11938416380327377,
+        "2022": -0.09623098896819271,
+        "2023": -0.05943081434283737,
+        "2024": 0.10212888977360057,
+        "2025": 0.0241546640376884
+      }
+    },
+    "BA": {
+      "symbol": "BA",
+      "final_capital": 7982.458133238334,
+      "total_return": -0.20175418667616662,
+      "cagr": -0.03690126217227829,
+      "max_drawdown": -0.29915788653475117,
+      "sharpe_annualized": -0.37052572641082937,
+      "average_target_exposure": 0.100331785003318,
+      "average_gross_exposure": 0.11584677091913209,
+      "counts": {
+        "probe": 143,
+        "confirm": 11,
+        "breakout": 13,
+        "add": 7,
+        "reduce": 17,
+        "exit": 156
+      },
+      "terminal_liquidation": 0,
+      "executions": 347,
+      "annual_returns": {
+        "2020": -0.011758230428031702,
+        "2021": -0.04332386871478555,
+        "2022": -0.10893471799023069,
+        "2023": -0.07117170698729591,
+        "2024": -0.049354976212834134,
+        "2025": 0.07311228498090072
+      }
+    },
+    "GE": {
+      "symbol": "GE",
+      "final_capital": 12006.950814760898,
+      "total_return": 0.20069508147608972,
+      "cagr": 0.030988707090103373,
+      "max_drawdown": -0.10005836833164572,
+      "sharpe_annualized": 0.45426133176862166,
+      "average_target_exposure": 0.11712010617120126,
+      "average_gross_exposure": 0.10861529876225556,
+      "counts": {
+        "probe": 118,
+        "confirm": 19,
+        "breakout": 18,
+        "add": 6,
+        "reduce": 23,
+        "exit": 136
+      },
+      "terminal_liquidation": 0,
+      "executions": 320,
+      "annual_returns": {
+        "2020": 0.03269569342172196,
+        "2021": -0.012241686107379746,
+        "2022": -0.04185696942996686,
+        "2023": 0.07897968298193114,
+        "2024": 0.22794194332738504,
+        "2025": -0.07276839583943118
+      }
+    },
+    "XOM": {
+      "symbol": "XOM",
+      "final_capital": 10683.376121359044,
+      "total_return": 0.0683376121359045,
+      "cagr": 0.011090937140828094,
+      "max_drawdown": -0.12009086682472903,
+      "sharpe_annualized": 0.20008219063121563,
+      "average_target_exposure": 0.09462508294625101,
+      "average_gross_exposure": 0.08793936644099165,
+      "counts": {
+        "probe": 149,
+        "confirm": 17,
+        "breakout": 6,
+        "add": 4,
+        "reduce": 11,
+        "exit": 155
+      },
+      "terminal_liquidation": 0,
+      "executions": 342,
+      "annual_returns": {
+        "2020": -0.012793507958607342,
+        "2021": 0.0388957375279988,
+        "2022": 0.1269074892556974,
+        "2023": -0.030017062363664526,
+        "2024": -0.01207399381390084,
+        "2025": -0.03538997003197131
+      }
+    },
+    "CVX": {
+      "symbol": "CVX",
+      "final_capital": 9953.561219161676,
+      "total_return": -0.004643878083832376,
+      "cagr": -0.0007763668695849324,
+      "max_drawdown": -0.22640331193148466,
+      "sharpe_annualized": 0.015451787382571833,
+      "average_target_exposure": 0.10152621101526232,
+      "average_gross_exposure": 0.09532427331729768,
+      "counts": {
+        "probe": 154,
+        "confirm": 18,
+        "breakout": 5,
+        "add": 5,
+        "reduce": 11,
+        "exit": 159
+      },
+      "terminal_liquidation": 0,
+      "executions": 352,
+      "annual_returns": {
+        "2020": -0.041275911350959205,
+        "2021": 0.09368780862209158,
+        "2022": 0.13483853731370732,
+        "2023": -0.09047367948466245,
+        "2024": -0.019103432163164236,
+        "2025": -0.06239714818525566
+      }
+    },
+    "LIN": {
+      "symbol": "LIN",
+      "final_capital": 11495.067717102065,
+      "total_return": 0.14950677171020654,
+      "cagr": 0.023521037924538524,
+      "max_drawdown": -0.08440822682794624,
+      "sharpe_annualized": 0.4622825509001405,
+      "average_target_exposure": 0.12418712674187156,
+      "average_gross_exposure": 0.11546259819869743,
+      "counts": {
+        "probe": 155,
+        "confirm": 22,
+        "breakout": 5,
+        "add": 7,
+        "reduce": 11,
+        "exit": 160
+      },
+      "terminal_liquidation": 0,
+      "executions": 360,
+      "annual_returns": {
+        "2020": 0.10521604941798968,
+        "2021": -0.022369670731957614,
+        "2022": -0.010256564635037768,
+        "2023": 0.04886481126705711,
+        "2024": 0.009873932168619426,
+        "2025": 0.014799810861362062
+      }
+    },
+    "NEE": {
+      "symbol": "NEE",
+      "final_capital": 9289.654405735675,
+      "total_return": -0.07103455942643244,
+      "cagr": -0.012219378563627314,
+      "max_drawdown": -0.18999327250279496,
+      "sharpe_annualized": -0.14111310173015218,
+      "average_target_exposure": 0.09913735899137383,
+      "average_gross_exposure": 0.11208246189805013,
+      "counts": {
+        "probe": 127,
+        "confirm": 15,
+        "breakout": 7,
+        "add": 4,
+        "reduce": 10,
+        "exit": 133
+      },
+      "terminal_liquidation": 1,
+      "executions": 297,
+      "annual_returns": {
+        "2020": -0.02928256135471441,
+        "2021": -0.029200904268374073,
+        "2022": -0.07853511116192624,
+        "2023": -0.031146637937730537,
+        "2024": -0.01615707330993965,
+        "2025": 0.12231496250479412
+      }
+    },
+    "PLD": {
+      "symbol": "PLD",
+      "final_capital": 9442.971258866495,
+      "total_return": -0.05570287411335051,
+      "cagr": -0.009517728239424206,
+      "max_drawdown": -0.15362722245704485,
+      "sharpe_annualized": -0.14842114288626446,
+      "average_target_exposure": 0.09286662242866633,
+      "average_gross_exposure": 0.09459951336913737,
+      "counts": {
+        "probe": 144,
+        "confirm": 11,
+        "breakout": 10,
+        "add": 3,
+        "reduce": 12,
+        "exit": 154
+      },
+      "terminal_liquidation": 0,
+      "executions": 334,
+      "annual_returns": {
+        "2020": 0.0050219002681513025,
+        "2021": 0.04173675578400404,
+        "2022": -0.09585256510787155,
+        "2023": 0.050065415702282845,
+        "2024": -0.0549003683157786,
+        "2025": 0.005175630773082585
+      }
+    }
+  },
+  "aggregate_equity": [
+    [
+      "2020-01-02",
+      390000
+    ],
+    [
+      "2020-01-03",
+      390000
+    ],
+    [
+      "2020-01-06",
+      390000
+    ],
+    [
+      "2020-01-07",
+      390000
+    ],
+    [
+      "2020-01-08",
+      390000
+    ],
+    [
+      "2020-01-09",
+      390000
+    ],
+    [
+      "2020-01-10",
+      390000
+    ],
+    [
+      "2020-01-13",
+      390000
+    ],
+    [
+      "2020-01-14",
+      390000
+    ],
+    [
+      "2020-01-15",
+      390000
+    ],
+    [
+      "2020-01-16",
+      390000
+    ],
+    [
+      "2020-01-17",
+      390000
+    ],
+    [
+      "2020-01-21",
+      390000
+    ],
+    [
+      "2020-01-22",
+      390000
+    ],
+    [
+      "2020-01-23",
+      390000
+    ],
+    [
+      "2020-01-24",
+      390000
+    ],
+    [
+      "2020-01-27",
+      390000
+    ],
+    [
+      "2020-01-28",
+      390000
+    ],
+    [
+      "2020-01-29",
+      390000
+    ],
+    [
+      "2020-01-30",
+      390000
+    ],
+    [
+      "2020-01-31",
+      390000
+    ],
+    [
+      "2020-02-03",
+      390156.2201115961
+    ],
+    [
+      "2020-02-04",
+      391219.3072368314
+    ],
+    [
+      "2020-02-05",
+      390265.7329165639
+    ],
+    [
+      "2020-02-06",
+      390482.3161094549
+    ],
+    [
+      "2020-02-07",
+      389481.21515772725
+    ],
+    [
+      "2020-02-10",
+      390500.6057684543
+    ],
+    [
+      "2020-02-11",
+      391108.1108602499
+    ],
+    [
+      "2020-02-12",
+      392060.17695134727
+    ],
+    [
+      "2020-02-13",
+      391935.3062608817
+    ],
+    [
+      "2020-02-14",
+      392385.3078765654
+    ],
+    [
+      "2020-02-18",
+      392598.38565313094
+    ],
+    [
+      "2020-02-19",
+      393873.32581772725
+    ],
+    [
+      "2020-02-20",
+      393332.0562745485
+    ],
+    [
+      "2020-02-21",
+      392547.7620553458
+    ],
+    [
+      "2020-02-24",
+      391210.8617269314
+    ],
+    [
+      "2020-02-25",
+      389881.82269778446
+    ],
+    [
+      "2020-02-26",
+      389933.8162452449
+    ],
+    [
+      "2020-02-27",
+      388112.8741890051
+    ],
+    [
+      "2020-02-28",
+      387580.49705980514
+    ],
+    [
+      "2020-03-02",
+      389536.6294575399
+    ],
+    [
+      "2020-03-03",
+      388277.3349598029
+    ],
+    [
+      "2020-03-04",
+      389944.7241759766
+    ],
+    [
+      "2020-03-05",
+      388598.54288192897
+    ],
+    [
+      "2020-03-06",
+      387740.114887159
+    ],
+    [
+      "2020-03-09",
+      385639.03553852375
+    ],
+    [
+      "2020-03-10",
+      386413.34549157455
+    ],
+    [
+      "2020-03-11",
+      385964.9234928211
+    ],
+    [
+      "2020-03-12",
+      384665.21435143525
+    ],
+    [
+      "2020-03-13",
+      385281.75293038966
+    ],
+    [
+      "2020-03-16",
+      383963.4854771314
+    ],
+    [
+      "2020-03-17",
+      384401.3135928503
+    ],
+    [
+      "2020-03-18",
+      383993.8685885663
+    ],
+    [
+      "2020-03-19",
+      384221.9984088171
+    ],
+    [
+      "2020-03-20",
+      383984.51692609425
+    ],
+    [
+      "2020-03-23",
+      384049.75146520074
+    ],
+    [
+      "2020-03-24",
+      384049.75146520074
+    ],
+    [
+      "2020-03-25",
+      384049.75146520074
+    ],
+    [
+      "2020-03-26",
+      384049.75146520074
+    ],
+    [
+      "2020-03-27",
+      384036.47471065284
+    ],
+    [
+      "2020-03-30",
+      384086.94590759714
+    ],
+    [
+      "2020-03-31",
+      384086.94590759714
+    ],
+    [
+      "2020-04-01",
+      384086.94590759714
+    ],
+    [
+      "2020-04-02",
+      384086.94590759714
+    ],
+    [
+      "2020-04-03",
+      384086.94590759714
+    ],
+    [
+      "2020-04-06",
+      384086.94590759714
+    ],
+    [
+      "2020-04-07",
+      384086.94590759714
+    ],
+    [
+      "2020-04-08",
+      384086.94590759714
+    ],
+    [
+      "2020-04-09",
+      384086.94590759714
+    ],
+    [
+      "2020-04-13",
+      384086.94590759714
+    ],
+    [
+      "2020-04-14",
+      384086.94590759714
+    ],
+    [
+      "2020-04-15",
+      384086.94590759714
+    ],
+    [
+      "2020-04-16",
+      384086.94590759714
+    ],
+    [
+      "2020-04-17",
+      383957.30943568505
+    ],
+    [
+      "2020-04-20",
+      384224.2713033433
+    ],
+    [
+      "2020-04-21",
+      384227.0454531954
+    ],
+    [
+      "2020-04-22",
+      384187.0203277095
+    ],
+    [
+      "2020-04-23",
+      384187.0203277095
+    ],
+    [
+      "2020-04-24",
+      384187.0203277095
+    ],
+    [
+      "2020-04-27",
+      384187.0203277095
+    ],
+    [
+      "2020-04-28",
+      384187.0203277095
+    ],
+    [
+      "2020-04-29",
+      384187.0203277095
+    ],
+    [
+      "2020-04-30",
+      384154.709006556
+    ],
+    [
+      "2020-05-01",
+      384119.7217073388
+    ],
+    [
+      "2020-05-04",
+      384343.7711569137
+    ],
+    [
+      "2020-05-05",
+      384499.5383899258
+    ],
+    [
+      "2020-05-06",
+      384538.7861081125
+    ],
+    [
+      "2020-05-07",
+      384542.28926276654
+    ],
+    [
+      "2020-05-08",
+      384790.8378115944
+    ],
+    [
+      "2020-05-11",
+      384919.83238944144
+    ],
+    [
+      "2020-05-12",
+      384636.86112211226
+    ],
+    [
+      "2020-05-13",
+      384556.4329746933
+    ],
+    [
+      "2020-05-14",
+      384897.6158091563
+    ],
+    [
+      "2020-05-15",
+      385010.24223149905
+    ],
+    [
+      "2020-05-18",
+      385619.7518489833
+    ],
+    [
+      "2020-05-19",
+      384987.5947352895
+    ],
+    [
+      "2020-05-20",
+      385906.0617591918
+    ],
+    [
+      "2020-05-21",
+      385278.0239950849
+    ],
+    [
+      "2020-05-22",
+      385582.48182247044
+    ],
+    [
+      "2020-05-26",
+      385204.9174215982
+    ],
+    [
+      "2020-05-27",
+      385607.8369741596
+    ],
+    [
+      "2020-05-28",
+      384930.618957513
+    ],
+    [
+      "2020-05-29",
+      385638.84538142546
+    ],
+    [
+      "2020-06-01",
+      385407.7797318868
+    ],
+    [
+      "2020-06-02",
+      385620.42707506777
+    ],
+    [
+      "2020-06-03",
+      386066.61296227324
+    ],
+    [
+      "2020-06-04",
+      385948.1138774747
+    ],
+    [
+      "2020-06-05",
+      386845.884732709
+    ],
+    [
+      "2020-06-08",
+      386601.8771558149
+    ],
+    [
+      "2020-06-09",
+      386571.64121382724
+    ],
+    [
+      "2020-06-10",
+      386691.133327568
+    ],
+    [
+      "2020-06-11",
+      385998.30378029513
+    ],
+    [
+      "2020-06-12",
+      385394.4980911149
+    ],
+    [
+      "2020-06-15",
+      384869.1788541614
+    ],
+    [
+      "2020-06-16",
+      384897.79737828695
+    ],
+    [
+      "2020-06-17",
+      384317.9840956031
+    ],
+    [
+      "2020-06-18",
+      384360.7872335842
+    ],
+    [
+      "2020-06-19",
+      383961.2759348223
+    ],
+    [
+      "2020-06-22",
+      384190.21595750813
+    ],
+    [
+      "2020-06-23",
+      384444.43876464805
+    ],
+    [
+      "2020-06-24",
+      383129.32144202304
+    ],
+    [
+      "2020-06-25",
+      383940.5647698097
+    ],
+    [
+      "2020-06-26",
+      382472.5113992645
+    ],
+    [
+      "2020-06-29",
+      383328.5974560764
+    ],
+    [
+      "2020-06-30",
+      384300.43805068225
+    ],
+    [
+      "2020-07-01",
+      384283.33032042417
+    ],
+    [
+      "2020-07-02",
+      384247.8513860812
+    ],
+    [
+      "2020-07-06",
+      385680.7111490939
+    ],
+    [
+      "2020-07-07",
+      384843.3914052972
+    ],
+    [
+      "2020-07-08",
+      385401.27033674705
+    ],
+    [
+      "2020-07-09",
+      385899.307179008
+    ],
+    [
+      "2020-07-10",
+      386713.0038259059
+    ],
+    [
+      "2020-07-13",
+      384251.4567603133
+    ],
+    [
+      "2020-07-14",
+      385321.7060481781
+    ],
+    [
+      "2020-07-15",
+      385244.760200727
+    ],
+    [
+      "2020-07-16",
+      384926.0992878203
+    ],
+    [
+      "2020-07-17",
+      384785.5318074369
+    ],
+    [
+      "2020-07-20",
+      385344.6507269955
+    ],
+    [
+      "2020-07-21",
+      385198.0884137238
+    ],
+    [
+      "2020-07-22",
+      386201.19176130113
+    ],
+    [
+      "2020-07-23",
+      385516.6297952806
+    ],
+    [
+      "2020-07-24",
+      385971.15888140013
+    ],
+    [
+      "2020-07-27",
+      386174.47050883516
+    ],
+    [
+      "2020-07-28",
+      385804.15604301775
+    ],
+    [
+      "2020-07-29",
+      387006.7035988618
+    ],
+    [
+      "2020-07-30",
+      387730.10006897215
+    ],
+    [
+      "2020-07-31",
+      387500.53429120296
+    ],
+    [
+      "2020-08-03",
+      388202.8048824992
+    ],
+    [
+      "2020-08-04",
+      388667.37368786626
+    ],
+    [
+      "2020-08-05",
+      388710.73482591717
+    ],
+    [
+      "2020-08-06",
+      389706.3440847782
+    ],
+    [
+      "2020-08-07",
+      389126.14948692586
+    ],
+    [
+      "2020-08-10",
+      389161.6516037389
+    ],
+    [
+      "2020-08-11",
+      388358.0332184371
+    ],
+    [
+      "2020-08-12",
+      388526.24125650723
+    ],
+    [
+      "2020-08-13",
+      388222.98219402914
+    ],
+    [
+      "2020-08-14",
+      388331.71560629236
+    ],
+    [
+      "2020-08-17",
+      388579.1879786589
+    ],
+    [
+      "2020-08-18",
+      388361.5624361166
+    ],
+    [
+      "2020-08-19",
+      388282.5952078211
+    ],
+    [
+      "2020-08-20",
+      388215.8813014315
+    ],
+    [
+      "2020-08-21",
+      388341.40769744443
+    ],
+    [
+      "2020-08-24",
+      388139.8162177694
+    ],
+    [
+      "2020-08-25",
+      388110.19642686227
+    ],
+    [
+      "2020-08-26",
+      388888.66440832417
+    ],
+    [
+      "2020-08-27",
+      388145.39155429805
+    ],
+    [
+      "2020-08-28",
+      388493.33143747324
+    ],
+    [
+      "2020-08-31",
+      387884.2069122308
+    ],
+    [
+      "2020-09-01",
+      388476.04848719755
+    ],
+    [
+      "2020-09-02",
+      389234.3500839183
+    ],
+    [
+      "2020-09-03",
+      385859.17938751075
+    ],
+    [
+      "2020-09-04",
+      385625.028091422
+    ],
+    [
+      "2020-09-08",
+      384809.9262674354
+    ],
+    [
+      "2020-09-09",
+      385963.87055082154
+    ],
+    [
+      "2020-09-10",
+      384810.2825358723
+    ],
+    [
+      "2020-09-11",
+      385001.07455310086
+    ],
+    [
+      "2020-09-14",
+      385294.9538635103
+    ],
+    [
+      "2020-09-15",
+      385673.0903923673
+    ],
+    [
+      "2020-09-16",
+      384445.2308918616
+    ],
+    [
+      "2020-09-17",
+      383629.08843217016
+    ],
+    [
+      "2020-09-18",
+      383152.1665549462
+    ],
+    [
+      "2020-09-21",
+      382855.79107121704
+    ],
+    [
+      "2020-09-22",
+      382810.27721887216
+    ],
+    [
+      "2020-09-23",
+      380799.4879776487
+    ],
+    [
+      "2020-09-24",
+      380877.2958553297
+    ],
+    [
+      "2020-09-25",
+      381627.2279230115
+    ],
+    [
+      "2020-09-28",
+      382678.49068336695
+    ],
+    [
+      "2020-09-29",
+      382428.63806257065
+    ],
+    [
+      "2020-09-30",
+      383246.69727780425
+    ],
+    [
+      "2020-10-01",
+      383994.60810978105
+    ],
+    [
+      "2020-10-02",
+      383053.35035584576
+    ],
+    [
+      "2020-10-05",
+      384802.94566115364
+    ],
+    [
+      "2020-10-06",
+      383674.67242922954
+    ],
+    [
+      "2020-10-07",
+      385313.96110441396
+    ],
+    [
+      "2020-10-08",
+      385841.2711546281
+    ],
+    [
+      "2020-10-09",
+      386385.5336009943
+    ],
+    [
+      "2020-10-12",
+      387018.91494106915
+    ],
+    [
+      "2020-10-13",
+      386409.99330975045
+    ],
+    [
+      "2020-10-14",
+      386047.8117359117
+    ],
+    [
+      "2020-10-15",
+      385857.3771409245
+    ],
+    [
+      "2020-10-16",
+      386091.4728601567
+    ],
+    [
+      "2020-10-19",
+      385968.11183219927
+    ],
+    [
+      "2020-10-20",
+      386077.92416412296
+    ],
+    [
+      "2020-10-21",
+      386018.76394675113
+    ],
+    [
+      "2020-10-22",
+      386078.7092326112
+    ],
+    [
+      "2020-10-23",
+      386199.52424389776
+    ],
+    [
+      "2020-10-26",
+      385959.5531045541
+    ],
+    [
+      "2020-10-27",
+      385677.91296439007
+    ],
+    [
+      "2020-10-28",
+      384731.09023035574
+    ],
+    [
+      "2020-10-29",
+      385309.21430461993
+    ],
+    [
+      "2020-10-30",
+      384814.8330443782
+    ],
+    [
+      "2020-11-02",
+      384954.8229789274
+    ],
+    [
+      "2020-11-03",
+      385807.0825261654
+    ],
+    [
+      "2020-11-04",
+      385828.24568971945
+    ],
+    [
+      "2020-11-05",
+      388193.11618309794
+    ],
+    [
+      "2020-11-06",
+      388112.1548038332
+    ],
+    [
+      "2020-11-09",
+      387385.8496143677
+    ],
+    [
+      "2020-11-10",
+      385673.75938770233
+    ],
+    [
+      "2020-11-11",
+      386513.25173789036
+    ],
+    [
+      "2020-11-12",
+      385223.37117537146
+    ],
+    [
+      "2020-11-13",
+      386461.0483109969
+    ],
+    [
+      "2020-11-16",
+      387702.0784023923
+    ],
+    [
+      "2020-11-17",
+      388327.095533068
+    ],
+    [
+      "2020-11-18",
+      387622.3579286403
+    ],
+    [
+      "2020-11-19",
+      387729.53949415765
+    ],
+    [
+      "2020-11-20",
+      387380.0733317601
+    ],
+    [
+      "2020-11-23",
+      387883.7447387748
+    ],
+    [
+      "2020-11-24",
+      388394.3634410693
+    ],
+    [
+      "2020-11-25",
+      388601.60964933893
+    ],
+    [
+      "2020-11-27",
+      388922.63940465054
+    ],
+    [
+      "2020-11-30",
+      388742.39149564656
+    ],
+    [
+      "2020-12-01",
+      389651.79665830557
+    ],
+    [
+      "2020-12-02",
+      389544.04433523695
+    ],
+    [
+      "2020-12-03",
+      389304.4261658739
+    ],
+    [
+      "2020-12-04",
+      389462.94943698635
+    ],
+    [
+      "2020-12-07",
+      389480.79872784106
+    ],
+    [
+      "2020-12-08",
+      389695.35198161635
+    ],
+    [
+      "2020-12-09",
+      389300.6505477768
+    ],
+    [
+      "2020-12-10",
+      388987.61782304104
+    ],
+    [
+      "2020-12-11",
+      389161.51753728744
+    ],
+    [
+      "2020-12-14",
+      389094.024933771
+    ],
+    [
+      "2020-12-15",
+      389779.8271161284
+    ],
+    [
+      "2020-12-16",
+      389769.1615689263
+    ],
+    [
+      "2020-12-17",
+      390209.8873842534
+    ],
+    [
+      "2020-12-18",
+      389878.82563837076
+    ],
+    [
+      "2020-12-21",
+      389151.37109475053
+    ],
+    [
+      "2020-12-22",
+      388461.86817824
+    ],
+    [
+      "2020-12-23",
+      388809.57390403596
+    ],
+    [
+      "2020-12-24",
+      388985.48172594205
+    ],
+    [
+      "2020-12-28",
+      389662.43397589505
+    ],
+    [
+      "2020-12-29",
+      389512.99464974133
+    ],
+    [
+      "2020-12-30",
+      389585.24023924983
+    ],
+    [
+      "2020-12-31",
+      390219.48386333114
+    ],
+    [
+      "2021-01-04",
+      389161.95254262275
+    ],
+    [
+      "2021-01-05",
+      389798.3751784372
+    ],
+    [
+      "2021-01-06",
+      390413.61404518865
+    ],
+    [
+      "2021-01-07",
+      391186.78460228204
+    ],
+    [
+      "2021-01-08",
+      391299.65890224633
+    ],
+    [
+      "2021-01-11",
+      391884.9973031882
+    ],
+    [
+      "2021-01-12",
+      392302.05687515886
+    ],
+    [
+      "2021-01-13",
+      392241.7072124651
+    ],
+    [
+      "2021-01-14",
+      392418.63207823795
+    ],
+    [
+      "2021-01-15",
+      391206.5912001956
+    ],
+    [
+      "2021-01-19",
+      391951.19911856775
+    ],
+    [
+      "2021-01-20",
+      393176.3031985648
+    ],
+    [
+      "2021-01-21",
+      393260.55346477305
+    ],
+    [
+      "2021-01-22",
+      392769.77725807106
+    ],
+    [
+      "2021-01-25",
+      393045.5134926763
+    ],
+    [
+      "2021-01-26",
+      393305.0562001801
+    ],
+    [
+      "2021-01-27",
+      391538.8365769823
+    ],
+    [
+      "2021-01-28",
+      391615.6818335845
+    ],
+    [
+      "2021-01-29",
+      390940.3273267864
+    ],
+    [
+      "2021-02-01",
+      391270.965685472
+    ],
+    [
+      "2021-02-02",
+      391920.7913364769
+    ],
+    [
+      "2021-02-03",
+      391682.6595773285
+    ],
+    [
+      "2021-02-04",
+      392503.2623379048
+    ],
+    [
+      "2021-02-05",
+      392744.3303737255
+    ],
+    [
+      "2021-02-08",
+      394005.19165930076
+    ],
+    [
+      "2021-02-09",
+      393531.3907804858
+    ],
+    [
+      "2021-02-10",
+      393334.046801802
+    ],
+    [
+      "2021-02-11",
+      393859.40082269337
+    ],
+    [
+      "2021-02-12",
+      393970.4530115123
+    ],
+    [
+      "2021-02-16",
+      394453.42620197736
+    ],
+    [
+      "2021-02-17",
+      394330.5990914897
+    ],
+    [
+      "2021-02-18",
+      393366.7912397842
+    ],
+    [
+      "2021-02-19",
+      393529.0344493427
+    ],
+    [
+      "2021-02-22",
+      393866.0792487981
+    ],
+    [
+      "2021-02-23",
+      394335.18889419956
+    ],
+    [
+      "2021-02-24",
+      394789.45414429274
+    ],
+    [
+      "2021-02-25",
+      393039.94417057245
+    ],
+    [
+      "2021-02-26",
+      392544.7253152441
+    ],
+    [
+      "2021-03-01",
+      394272.6330705606
+    ],
+    [
+      "2021-03-02",
+      393786.03331632836
+    ],
+    [
+      "2021-03-03",
+      392241.5527262151
+    ],
+    [
+      "2021-03-04",
+      391545.9061413264
+    ],
+    [
+      "2021-03-05",
+      391993.05443592
+    ],
+    [
+      "2021-03-08",
+      391313.3625204982
+    ],
+    [
+      "2021-03-09",
+      392492.2010937652
+    ],
+    [
+      "2021-03-10",
+      392346.70497072913
+    ],
+    [
+      "2021-03-11",
+      392725.2560306888
+    ],
+    [
+      "2021-03-12",
+      393289.7962728396
+    ],
+    [
+      "2021-03-15",
+      393195.408656166
+    ],
+    [
+      "2021-03-16",
+      393138.09502855514
+    ],
+    [
+      "2021-03-17",
+      393601.48907418014
+    ],
+    [
+      "2021-03-18",
+      392616.55152473913
+    ],
+    [
+      "2021-03-19",
+      393029.6250786474
+    ],
+    [
+      "2021-03-22",
+      393175.26986247476
+    ],
+    [
+      "2021-03-23",
+      392798.8409045081
+    ],
+    [
+      "2021-03-24",
+      392442.61150280485
+    ],
+    [
+      "2021-03-25",
+      392196.29591095715
+    ],
+    [
+      "2021-03-26",
+      392599.0836968387
+    ],
+    [
+      "2021-03-29",
+      392820.88954980497
+    ],
+    [
+      "2021-03-30",
+      392997.85995756724
+    ],
+    [
+      "2021-03-31",
+      392739.26233571995
+    ],
+    [
+      "2021-04-01",
+      393065.6927378121
+    ],
+    [
+      "2021-04-05",
+      393629.1645217165
+    ],
+    [
+      "2021-04-06",
+      393477.18699378404
+    ],
+    [
+      "2021-04-07",
+      393480.64179617487
+    ],
+    [
+      "2021-04-08",
+      393914.62461378356
+    ],
+    [
+      "2021-04-09",
+      394164.78023640346
+    ],
+    [
+      "2021-04-12",
+      393920.0302550645
+    ],
+    [
+      "2021-04-13",
+      393976.0280640684
+    ],
+    [
+      "2021-04-14",
+      393994.735634784
+    ],
+    [
+      "2021-04-15",
+      394597.77867002005
+    ],
+    [
+      "2021-04-16",
+      394571.30566000927
+    ],
+    [
+      "2021-04-19",
+      394267.3103051919
+    ],
+    [
+      "2021-04-20",
+      393671.3465869884
+    ],
+    [
+      "2021-04-21",
+      393688.3630046781
+    ],
+    [
+      "2021-04-22",
+      393082.5559590033
+    ],
+    [
+      "2021-04-23",
+      393159.9158694018
+    ],
+    [
+      "2021-04-26",
+      393150.16986520763
+    ],
+    [
+      "2021-04-27",
+      393167.20563183026
+    ],
+    [
+      "2021-04-28",
+      392768.0342230078
+    ],
+    [
+      "2021-04-29",
+      393083.8081705604
+    ],
+    [
+      "2021-04-30",
+      392769.5488318021
+    ],
+    [
+      "2021-05-03",
+      392511.8103570508
+    ],
+    [
+      "2021-05-04",
+      391678.6851849513
+    ],
+    [
+      "2021-05-05",
+      391701.36109611794
+    ],
+    [
+      "2021-05-06",
+      392193.1521678295
+    ],
+    [
+      "2021-05-07",
+      392649.2001448348
+    ],
+    [
+      "2021-05-10",
+      392012.3421130393
+    ],
+    [
+      "2021-05-11",
+      391074.38850428106
+    ],
+    [
+      "2021-05-12",
+      390048.40358020674
+    ],
+    [
+      "2021-05-13",
+      390825.73681785126
+    ],
+    [
+      "2021-05-14",
+      391384.5867089369
+    ],
+    [
+      "2021-05-17",
+      391127.46677889605
+    ],
+    [
+      "2021-05-18",
+      390854.0193090981
+    ],
+    [
+      "2021-05-19",
+      390833.8759365777
+    ],
+    [
+      "2021-05-20",
+      391574.0374564222
+    ],
+    [
+      "2021-05-21",
+      391430.3641839915
+    ],
+    [
+      "2021-05-24",
+      392242.19552606344
+    ],
+    [
+      "2021-05-25",
+      392229.71516362386
+    ],
+    [
+      "2021-05-26",
+      392411.3263770405
+    ],
+    [
+      "2021-05-27",
+      393116.75949694257
+    ],
+    [
+      "2021-05-28",
+      393261.7929462683
+    ],
+    [
+      "2021-06-01",
+      393368.4358933392
+    ],
+    [
+      "2021-06-02",
+      393800.01055926457
+    ],
+    [
+      "2021-06-03",
+      393804.30792730284
+    ],
+    [
+      "2021-06-04",
+      394392.2222066709
+    ],
+    [
+      "2021-06-07",
+      394259.61867538793
+    ],
+    [
+      "2021-06-08",
+      394119.99789350404
+    ],
+    [
+      "2021-06-09",
+      394295.4545391456
+    ],
+    [
+      "2021-06-10",
+      394467.83140963264
+    ],
+    [
+      "2021-06-11",
+      394341.713094529
+    ],
+    [
+      "2021-06-14",
+      394596.4191714137
+    ],
+    [
+      "2021-06-15",
+      394510.8045530908
+    ],
+    [
+      "2021-06-16",
+      394444.0555462047
+    ],
+    [
+      "2021-06-17",
+      394440.8105258111
+    ],
+    [
+      "2021-06-18",
+      393856.317419342
+    ],
+    [
+      "2021-06-21",
+      393998.3476344393
+    ],
+    [
+      "2021-06-22",
+      394167.6285154471
+    ],
+    [
+      "2021-06-23",
+      394041.7788824315
+    ],
+    [
+      "2021-06-24",
+      394648.25867748
+    ],
+    [
+      "2021-06-25",
+      394577.70028045203
+    ],
+    [
+      "2021-06-28",
+      394857.3238936521
+    ],
+    [
+      "2021-06-29",
+      394915.5152554518
+    ],
+    [
+      "2021-06-30",
+      395838.7368715112
+    ],
+    [
+      "2021-07-01",
+      395508.533894866
+    ],
+    [
+      "2021-07-02",
+      396001.29734487407
+    ],
+    [
+      "2021-07-06",
+      395635.54238196794
+    ],
+    [
+      "2021-07-07",
+      395519.60570573906
+    ],
+    [
+      "2021-07-08",
+      395461.264239551
+    ],
+    [
+      "2021-07-09",
+      396061.6097219914
+    ],
+    [
+      "2021-07-12",
+      396346.60900917405
+    ],
+    [
+      "2021-07-13",
+      395901.7177914243
+    ],
+    [
+      "2021-07-14",
+      395997.3721041059
+    ],
+    [
+      "2021-07-15",
+      395726.77658147545
+    ],
+    [
+      "2021-07-16",
+      394799.014470581
+    ],
+    [
+      "2021-07-19",
+      393485.98515224666
+    ],
+    [
+      "2021-07-20",
+      393814.24311189837
+    ],
+    [
+      "2021-07-21",
+      394165.3198280671
+    ],
+    [
+      "2021-07-22",
+      393818.22521572275
+    ],
+    [
+      "2021-07-23",
+      394050.389883984
+    ],
+    [
+      "2021-07-26",
+      394419.31838686776
+    ],
+    [
+      "2021-07-27",
+      394245.39725557045
+    ],
+    [
+      "2021-07-28",
+      394392.2071822214
+    ],
+    [
+      "2021-07-29",
+      395208.20371972665
+    ],
+    [
+      "2021-07-30",
+      395219.77860308596
+    ],
+    [
+      "2021-08-02",
+      394976.19377719844
+    ],
+    [
+      "2021-08-03",
+      395169.69116543984
+    ],
+    [
+      "2021-08-04",
+      395523.4383545665
+    ],
+    [
+      "2021-08-05",
+      395277.7610842471
+    ],
+    [
+      "2021-08-06",
+      394744.6083812589
+    ],
+    [
+      "2021-08-09",
+      394899.77561530215
+    ],
+    [
+      "2021-08-10",
+      394949.07982734946
+    ],
+    [
+      "2021-08-11",
+      394877.17462116486
+    ],
+    [
+      "2021-08-12",
+      394807.91196618835
+    ],
+    [
+      "2021-08-13",
+      394895.5670134432
+    ],
+    [
+      "2021-08-16",
+      395017.6843064833
+    ],
+    [
+      "2021-08-17",
+      394885.12609731796
+    ],
+    [
+      "2021-08-18",
+      394506.93358299567
+    ],
+    [
+      "2021-08-19",
+      394589.6243472177
+    ],
+    [
+      "2021-08-20",
+      394879.9133182519
+    ],
+    [
+      "2021-08-23",
+      395744.6728983264
+    ],
+    [
+      "2021-08-24",
+      395624.7118236148
+    ],
+    [
+      "2021-08-25",
+      395704.2661032644
+    ],
+    [
+      "2021-08-26",
+      395381.92390674923
+    ],
+    [
+      "2021-08-27",
+      395766.98633099813
+    ],
+    [
+      "2021-08-30",
+      395777.3342755252
+    ],
+    [
+      "2021-08-31",
+      395666.9012316138
+    ],
+    [
+      "2021-09-01",
+      395512.9891986834
+    ],
+    [
+      "2021-09-02",
+      395766.01827327197
+    ],
+    [
+      "2021-09-03",
+      395913.3443712003
+    ],
+    [
+      "2021-09-07",
+      395645.86007115734
+    ],
+    [
+      "2021-09-08",
+      395644.75941928214
+    ],
+    [
+      "2021-09-09",
+      395169.118465704
+    ],
+    [
+      "2021-09-10",
+      395053.64195743203
+    ],
+    [
+      "2021-09-13",
+      395053.33163367584
+    ],
+    [
+      "2021-09-14",
+      394643.69272719853
+    ],
+    [
+      "2021-09-15",
+      394756.8710123687
+    ],
+    [
+      "2021-09-16",
+      394798.80142585485
+    ],
+    [
+      "2021-09-17",
+      394490.34414954134
+    ],
+    [
+      "2021-09-20",
+      393623.4348839597
+    ],
+    [
+      "2021-09-21",
+      393574.1493956369
+    ],
+    [
+      "2021-09-22",
+      393979.4457398901
+    ],
+    [
+      "2021-09-23",
+      394426.8982960144
+    ],
+    [
+      "2021-09-24",
+      394721.43355522305
+    ],
+    [
+      "2021-09-27",
+      394810.67439463816
+    ],
+    [
+      "2021-09-28",
+      393176.98501245916
+    ],
+    [
+      "2021-09-29",
+      393445.64367535047
+    ],
+    [
+      "2021-09-30",
+      392596.08464988467
+    ],
+    [
+      "2021-10-01",
+      393064.5239671306
+    ],
+    [
+      "2021-10-04",
+      392713.4746387428
+    ],
+    [
+      "2021-10-05",
+      393052.49781439395
+    ],
+    [
+      "2021-10-06",
+      393589.69857754745
+    ],
+    [
+      "2021-10-07",
+      393952.74917342985
+    ],
+    [
+      "2021-10-08",
+      393770.7710748491
+    ],
+    [
+      "2021-10-11",
+      393281.33604114363
+    ],
+    [
+      "2021-10-12",
+      393243.0843396435
+    ],
+    [
+      "2021-10-13",
+      393800.34724619274
+    ],
+    [
+      "2021-10-14",
+      394902.13749837334
+    ],
+    [
+      "2021-10-15",
+      395178.0235482459
+    ],
+    [
+      "2021-10-18",
+      395779.34638203727
+    ],
+    [
+      "2021-10-19",
+      395957.0234189093
+    ],
+    [
+      "2021-10-20",
+      395946.7057415233
+    ],
+    [
+      "2021-10-21",
+      396312.2028899492
+    ],
+    [
+      "2021-10-22",
+      396658.07976260217
+    ],
+    [
+      "2021-10-25",
+      397852.8039124649
+    ],
+    [
+      "2021-10-26",
+      397824.84290814074
+    ],
+    [
+      "2021-10-27",
+      397887.1395318521
+    ],
+    [
+      "2021-10-28",
+      398182.97176632856
+    ],
+    [
+      "2021-10-29",
+      398680.308665329
+    ],
+    [
+      "2021-11-01",
+      398927.1155739083
+    ],
+    [
+      "2021-11-02",
+      398986.0137780438
+    ],
+    [
+      "2021-11-03",
+      399456.18563753786
+    ],
+    [
+      "2021-11-04",
+      399896.47332580027
+    ],
+    [
+      "2021-11-05",
+      399596.8658911581
+    ],
+    [
+      "2021-11-08",
+      399878.18208333163
+    ],
+    [
+      "2021-11-09",
+      399880.99874625553
+    ],
+    [
+      "2021-11-10",
+      398652.16444574937
+    ],
+    [
+      "2021-11-11",
+      398722.3383666943
+    ],
+    [
+      "2021-11-12",
+      398841.65791405726
+    ],
+    [
+      "2021-11-15",
+      398777.5728529511
+    ],
+    [
+      "2021-11-16",
+      398903.41129420977
+    ],
+    [
+      "2021-11-17",
+      398773.5332594003
+    ],
+    [
+      "2021-11-18",
+      398899.4612512422
+    ],
+    [
+      "2021-11-19",
+      398780.04426888365
+    ],
+    [
+      "2021-11-22",
+      398683.8608031997
+    ],
+    [
+      "2021-11-23",
+      399145.4500700566
+    ],
+    [
+      "2021-11-24",
+      399316.0068397559
+    ],
+    [
+      "2021-11-26",
+      397637.6390751363
+    ],
+    [
+      "2021-11-29",
+      398297.7615240099
+    ],
+    [
+      "2021-11-30",
+      397487.7163639562
+    ],
+    [
+      "2021-12-01",
+      397468.53969406255
+    ],
+    [
+      "2021-12-02",
+      397890.49853635684
+    ],
+    [
+      "2021-12-03",
+      397804.95633166574
+    ],
+    [
+      "2021-12-06",
+      398324.06657628884
+    ],
+    [
+      "2021-12-07",
+      399529.75858839555
+    ],
+    [
+      "2021-12-08",
+      399436.45188609493
+    ],
+    [
+      "2021-12-09",
+      398820.2610856352
+    ],
+    [
+      "2021-12-10",
+      400167.09142403223
+    ],
+    [
+      "2021-12-13",
+      399232.05520572315
+    ],
+    [
+      "2021-12-14",
+      398560.60697800526
+    ],
+    [
+      "2021-12-15",
+      399894.03792928695
+    ],
+    [
+      "2021-12-16",
+      399359.1408707393
+    ],
+    [
+      "2021-12-17",
+      398142.6235509896
+    ],
+    [
+      "2021-12-20",
+      397785.21302508784
+    ],
+    [
+      "2021-12-21",
+      398498.38227332185
+    ],
+    [
+      "2021-12-22",
+      399006.715705337
+    ],
+    [
+      "2021-12-23",
+      399678.194454943
+    ],
+    [
+      "2021-12-27",
+      400638.3546385211
+    ],
+    [
+      "2021-12-28",
+      400179.2923205405
+    ],
+    [
+      "2021-12-29",
+      400299.0720398035
+    ],
+    [
+      "2021-12-30",
+      399677.99642536126
+    ],
+    [
+      "2021-12-31",
+      399485.58188769215
+    ],
+    [
+      "2022-01-03",
+      400903.06330579764
+    ],
+    [
+      "2022-01-04",
+      400758.5110413213
+    ],
+    [
+      "2022-01-05",
+      399923.40679006465
+    ],
+    [
+      "2022-01-06",
+      400161.1786685191
+    ],
+    [
+      "2022-01-07",
+      399925.6100875216
+    ],
+    [
+      "2022-01-10",
+      399894.6471562796
+    ],
+    [
+      "2022-01-11",
+      400377.85285700875
+    ],
+    [
+      "2022-01-12",
+      400418.58331343526
+    ],
+    [
+      "2022-01-13",
+      399504.11476742255
+    ],
+    [
+      "2022-01-14",
+      399582.1116043886
+    ],
+    [
+      "2022-01-18",
+      398706.146505842
+    ],
+    [
+      "2022-01-19",
+      398830.9886818792
+    ],
+    [
+      "2022-01-20",
+      398024.7172908322
+    ],
+    [
+      "2022-01-21",
+      397819.28213994956
+    ],
+    [
+      "2022-01-24",
+      398446.6290708717
+    ],
+    [
+      "2022-01-25",
+      397187.23597798124
+    ],
+    [
+      "2022-01-26",
+      396845.26395156706
+    ],
+    [
+      "2022-01-27",
+      396545.8914463678
+    ],
+    [
+      "2022-01-28",
+      397721.7509978843
+    ],
+    [
+      "2022-01-31",
+      399213.796931585
+    ],
+    [
+      "2022-02-01",
+      399317.26982337737
+    ],
+    [
+      "2022-02-02",
+      400957.53630128206
+    ],
+    [
+      "2022-02-03",
+      399924.06136875536
+    ],
+    [
+      "2022-02-04",
+      399576.24514216935
+    ],
+    [
+      "2022-02-07",
+      399365.3899648193
+    ],
+    [
+      "2022-02-08",
+      399788.94875547005
+    ],
+    [
+      "2022-02-09",
+      399948.44778463023
+    ],
+    [
+      "2022-02-10",
+      399766.2320337116
+    ],
+    [
+      "2022-02-11",
+      399124.9063374265
+    ],
+    [
+      "2022-02-14",
+      399072.2500269931
+    ],
+    [
+      "2022-02-15",
+      399833.08220899134
+    ],
+    [
+      "2022-02-16",
+      399821.3619566324
+    ],
+    [
+      "2022-02-17",
+      399460.63523790264
+    ],
+    [
+      "2022-02-18",
+      399535.478751241
+    ],
+    [
+      "2022-02-22",
+      399438.56661846174
+    ],
+    [
+      "2022-02-23",
+      399065.24791234935
+    ],
+    [
+      "2022-02-24",
+      398880.021237067
+    ],
+    [
+      "2022-02-25",
+      399621.37743989326
+    ],
+    [
+      "2022-02-28",
+      399861.9769004411
+    ],
+    [
+      "2022-03-01",
+      399796.55121363443
+    ],
+    [
+      "2022-03-02",
+      400854.2734586757
+    ],
+    [
+      "2022-03-03",
+      400694.6148457733
+    ],
+    [
+      "2022-03-04",
+      400773.81738495146
+    ],
+    [
+      "2022-03-07",
+      400235.30516944535
+    ],
+    [
+      "2022-03-08",
+      400101.5225344912
+    ],
+    [
+      "2022-03-09",
+      400172.3642456847
+    ],
+    [
+      "2022-03-10",
+      400477.6257732189
+    ],
+    [
+      "2022-03-11",
+      399924.38626575575
+    ],
+    [
+      "2022-03-14",
+      399653.65698555694
+    ],
+    [
+      "2022-03-15",
+      399848.6113764468
+    ],
+    [
+      "2022-03-16",
+      400008.9632093687
+    ],
+    [
+      "2022-03-17",
+      399990.3689167233
+    ],
+    [
+      "2022-03-18",
+      400061.89117081085
+    ],
+    [
+      "2022-03-21",
+      399989.98394155386
+    ],
+    [
+      "2022-03-22",
+      400092.07589237386
+    ],
+    [
+      "2022-03-23",
+      399862.7013070259
+    ],
+    [
+      "2022-03-24",
+      400187.92175591685
+    ],
+    [
+      "2022-03-25",
+      400237.87689580227
+    ],
+    [
+      "2022-03-28",
+      400298.24031976523
+    ],
+    [
+      "2022-03-29",
+      400402.3652409495
+    ],
+    [
+      "2022-03-30",
+      400290.9236413013
+    ],
+    [
+      "2022-03-31",
+      400271.9197507068
+    ],
+    [
+      "2022-04-01",
+      400284.55886196013
+    ],
+    [
+      "2022-04-04",
+      400284.55886196013
+    ],
+    [
+      "2022-04-05",
+      400284.55886196013
+    ],
+    [
+      "2022-04-06",
+      400284.55886196013
+    ],
+    [
+      "2022-04-07",
+      400350.68967382493
+    ],
+    [
+      "2022-04-08",
+      400177.5831675922
+    ],
+    [
+      "2022-04-11",
+      399650.24717046233
+    ],
+    [
+      "2022-04-12",
+      399337.16410129046
+    ],
+    [
+      "2022-04-13",
+      399564.1787453251
+    ],
+    [
+      "2022-04-14",
+      399188.3488112131
+    ],
+    [
+      "2022-04-18",
+      399363.6180205677
+    ],
+    [
+      "2022-04-19",
+      400056.22818953276
+    ],
+    [
+      "2022-04-20",
+      399949.75223520794
+    ],
+    [
+      "2022-04-21",
+      399532.133741668
+    ],
+    [
+      "2022-04-22",
+      398485.313750564
+    ],
+    [
+      "2022-04-25",
+      398508.4337299571
+    ],
+    [
+      "2022-04-26",
+      397560.06178848527
+    ],
+    [
+      "2022-04-27",
+      397871.9413378931
+    ],
+    [
+      "2022-04-28",
+      398467.45469126705
+    ],
+    [
+      "2022-04-29",
+      397567.98945473664
+    ],
+    [
+      "2022-05-02",
+      397519.42495286005
+    ],
+    [
+      "2022-05-03",
+      397546.6039633654
+    ],
+    [
+      "2022-05-04",
+      398627.24244345527
+    ],
+    [
+      "2022-05-05",
+      397000.83551956294
+    ],
+    [
+      "2022-05-06",
+      397186.38134219736
+    ],
+    [
+      "2022-05-09",
+      395155.1049755101
+    ],
+    [
+      "2022-05-10",
+      395456.59358793637
+    ],
+    [
+      "2022-05-11",
+      395292.7133397303
+    ],
+    [
+      "2022-05-12",
+      395384.94564673724
+    ],
+    [
+      "2022-05-13",
+      395588.4211201967
+    ],
+    [
+      "2022-05-16",
+      395848.03883240593
+    ],
+    [
+      "2022-05-17",
+      396159.6229817248
+    ],
+    [
+      "2022-05-18",
+      394418.3898597302
+    ],
+    [
+      "2022-05-19",
+      393833.94779353647
+    ],
+    [
+      "2022-05-20",
+      393814.60010248027
+    ],
+    [
+      "2022-05-23",
+      394028.8428807069
+    ],
+    [
+      "2022-05-24",
+      394225.666643038
+    ],
+    [
+      "2022-05-25",
+      394126.2031975538
+    ],
+    [
+      "2022-05-26",
+      394335.26953842875
+    ],
+    [
+      "2022-05-27",
+      394604.0669804254
+    ],
+    [
+      "2022-05-31",
+      394123.95451668947
+    ],
+    [
+      "2022-06-01",
+      393865.4378878557
+    ],
+    [
+      "2022-06-02",
+      393816.18936607876
+    ],
+    [
+      "2022-06-03",
+      393676.6178972992
+    ],
+    [
+      "2022-06-06",
+      393769.65478287806
+    ],
+    [
+      "2022-06-07",
+      393769.65478287806
+    ],
+    [
+      "2022-06-08",
+      393768.2544970596
+    ],
+    [
+      "2022-06-09",
+      393758.8681520591
+    ],
+    [
+      "2022-06-10",
+      393801.0785943722
+    ],
+    [
+      "2022-06-13",
+      393721.83187978534
+    ],
+    [
+      "2022-06-14",
+      393456.5970734469
+    ],
+    [
+      "2022-06-15",
+      393518.1896933554
+    ],
+    [
+      "2022-06-16",
+      393123.4418157514
+    ],
+    [
+      "2022-06-17",
+      393244.4550801101
+    ],
+    [
+      "2022-06-21",
+      393757.2150663636
+    ],
+    [
+      "2022-06-22",
+      393670.1013425548
+    ],
+    [
+      "2022-06-23",
+      393586.5924467993
+    ],
+    [
+      "2022-06-24",
+      394384.49780237966
+    ],
+    [
+      "2022-06-27",
+      394401.8620851508
+    ],
+    [
+      "2022-06-28",
+      393887.0336847276
+    ],
+    [
+      "2022-06-29",
+      394023.49249132996
+    ],
+    [
+      "2022-06-30",
+      393873.26391489164
+    ],
+    [
+      "2022-07-01",
+      394345.1981733387
+    ],
+    [
+      "2022-07-05",
+      394037.2490783913
+    ],
+    [
+      "2022-07-06",
+      393982.3267436725
+    ],
+    [
+      "2022-07-07",
+      394092.8748280336
+    ],
+    [
+      "2022-07-08",
+      394084.44286794093
+    ],
+    [
+      "2022-07-11",
+      394071.5656553537
+    ],
+    [
+      "2022-07-12",
+      394038.20217118104
+    ],
+    [
+      "2022-07-13",
+      394048.15258215583
+    ],
+    [
+      "2022-07-14",
+      393998.4000807148
+    ],
+    [
+      "2022-07-15",
+      394040.59878724854
+    ],
+    [
+      "2022-07-18",
+      393935.40534106677
+    ],
+    [
+      "2022-07-19",
+      394042.60577717336
+    ],
+    [
+      "2022-07-20",
+      394121.50966948085
+    ],
+    [
+      "2022-07-21",
+      394002.50820392097
+    ],
+    [
+      "2022-07-22",
+      393958.47285664635
+    ],
+    [
+      "2022-07-25",
+      394198.03241458785
+    ],
+    [
+      "2022-07-26",
+      394228.3310865694
+    ],
+    [
+      "2022-07-27",
+      394364.07764872396
+    ],
+    [
+      "2022-07-28",
+      394574.8446869771
+    ],
+    [
+      "2022-07-29",
+      394858.86691564857
+    ],
+    [
+      "2022-08-01",
+      394681.337333419
+    ],
+    [
+      "2022-08-02",
+      394344.6027776806
+    ],
+    [
+      "2022-08-03",
+      394555.0296172449
+    ],
+    [
+      "2022-08-04",
+      394518.55298454163
+    ],
+    [
+      "2022-08-05",
+      394467.1842410423
+    ],
+    [
+      "2022-08-08",
+      394424.69543232577
+    ],
+    [
+      "2022-08-09",
+      394441.2407028356
+    ],
+    [
+      "2022-08-10",
+      394464.0335456986
+    ],
+    [
+      "2022-08-11",
+      394452.6460914186
+    ],
+    [
+      "2022-08-12",
+      394475.3461162367
+    ],
+    [
+      "2022-08-15",
+      394533.1902834566
+    ],
+    [
+      "2022-08-16",
+      394503.0588114925
+    ],
+    [
+      "2022-08-17",
+      394503.911162261
+    ],
+    [
+      "2022-08-18",
+      394487.5821702068
+    ],
+    [
+      "2022-08-19",
+      394490.3990041161
+    ],
+    [
+      "2022-08-22",
+      394451.84040192794
+    ],
+    [
+      "2022-08-23",
+      394348.6976351478
+    ],
+    [
+      "2022-08-24",
+      394341.9512971925
+    ],
+    [
+      "2022-08-25",
+      395183.4150157822
+    ],
+    [
+      "2022-08-26",
+      393658.6740554745
+    ],
+    [
+      "2022-08-29",
+      393514.97733562894
+    ],
+    [
+      "2022-08-30",
+      393050.158979824
+    ],
+    [
+      "2022-08-31",
+      392412.61685780936
+    ],
+    [
+      "2022-09-01",
+      392140.6581973622
+    ],
+    [
+      "2022-09-02",
+      391545.0763225772
+    ],
+    [
+      "2022-09-06",
+      391326.22166573437
+    ],
+    [
+      "2022-09-07",
+      392197.10483630945
+    ],
+    [
+      "2022-09-08",
+      392868.16312611435
+    ],
+    [
+      "2022-09-09",
+      393940.51298732474
+    ],
+    [
+      "2022-09-12",
+      394884.59187068127
+    ],
+    [
+      "2022-09-13",
+      390024.8447743581
+    ],
+    [
+      "2022-09-14",
+      390193.9486044365
+    ],
+    [
+      "2022-09-15",
+      389559.2239573664
+    ],
+    [
+      "2022-09-16",
+      389053.3639536864
+    ],
+    [
+      "2022-09-19",
+      389581.3577524876
+    ],
+    [
+      "2022-09-20",
+      389345.2716650026
+    ],
+    [
+      "2022-09-21",
+      388716.2551521611
+    ],
+    [
+      "2022-09-22",
+      388727.32372220117
+    ],
+    [
+      "2022-09-23",
+      387971.69875267183
+    ],
+    [
+      "2022-09-26",
+      387755.2078418309
+    ],
+    [
+      "2022-09-27",
+      387614.8595202161
+    ],
+    [
+      "2022-09-28",
+      388415.38816985744
+    ],
+    [
+      "2022-09-29",
+      387940.6642117771
+    ],
+    [
+      "2022-09-30",
+      387628.7798313589
+    ],
+    [
+      "2022-10-03",
+      387816.3267595326
+    ],
+    [
+      "2022-10-04",
+      388154.06050596666
+    ],
+    [
+      "2022-10-05",
+      388380.6594648186
+    ],
+    [
+      "2022-10-06",
+      388675.45125386666
+    ],
+    [
+      "2022-10-07",
+      388336.78007499065
+    ],
+    [
+      "2022-10-10",
+      388143.2482417081
+    ],
+    [
+      "2022-10-11",
+      388018.3289307216
+    ],
+    [
+      "2022-10-12",
+      388020.8588371349
+    ],
+    [
+      "2022-10-13",
+      387807.081522941
+    ],
+    [
+      "2022-10-14",
+      387591.24030782474
+    ],
+    [
+      "2022-10-17",
+      387868.4370041727
+    ],
+    [
+      "2022-10-18",
+      387819.9990209509
+    ],
+    [
+      "2022-10-19",
+      388613.196279117
+    ],
+    [
+      "2022-10-20",
+      388463.6590208348
+    ],
+    [
+      "2022-10-21",
+      389356.0086334193
+    ],
+    [
+      "2022-10-24",
+      389305.81097458827
+    ],
+    [
+      "2022-10-25",
+      389597.8373528212
+    ],
+    [
+      "2022-10-26",
+      389773.8944986835
+    ],
+    [
+      "2022-10-27",
+      389718.8010148612
+    ],
+    [
+      "2022-10-28",
+      389818.5569385871
+    ],
+    [
+      "2022-10-31",
+      389844.1047011446
+    ],
+    [
+      "2022-11-01",
+      390043.73447396903
+    ],
+    [
+      "2022-11-02",
+      389998.59589681734
+    ],
+    [
+      "2022-11-03",
+      389940.93419085484
+    ],
+    [
+      "2022-11-04",
+      389940.93419085484
+    ],
+    [
+      "2022-11-07",
+      389916.13875881577
+    ],
+    [
+      "2022-11-08",
+      389927.529290958
+    ],
+    [
+      "2022-11-09",
+      389878.16409759776
+    ],
+    [
+      "2022-11-10",
+      389985.91483635426
+    ],
+    [
+      "2022-11-11",
+      390189.663091188
+    ],
+    [
+      "2022-11-14",
+      390201.1995399143
+    ],
+    [
+      "2022-11-15",
+      390590.98208545963
+    ],
+    [
+      "2022-11-16",
+      390568.77057137224
+    ],
+    [
+      "2022-11-17",
+      390293.8711382939
+    ],
+    [
+      "2022-11-18",
+      390384.80631184904
+    ],
+    [
+      "2022-11-21",
+      390278.8470491698
+    ],
+    [
+      "2022-11-22",
+      390461.838820124
+    ],
+    [
+      "2022-11-23",
+      390565.4642763127
+    ],
+    [
+      "2022-11-25",
+      390485.8470812906
+    ],
+    [
+      "2022-11-28",
+      390279.44989638537
+    ],
+    [
+      "2022-11-29",
+      390267.6878087098
+    ],
+    [
+      "2022-11-30",
+      390436.0220822382
+    ],
+    [
+      "2022-12-01",
+      390512.5075051391
+    ],
+    [
+      "2022-12-02",
+      390598.16935650306
+    ],
+    [
+      "2022-12-05",
+      390117.9339975345
+    ],
+    [
+      "2022-12-06",
+      389295.2521623907
+    ],
+    [
+      "2022-12-07",
+      389320.9857808693
+    ],
+    [
+      "2022-12-08",
+      389655.5692840989
+    ],
+    [
+      "2022-12-09",
+      389395.80007013463
+    ],
+    [
+      "2022-12-12",
+      390164.67140324455
+    ],
+    [
+      "2022-12-13",
+      390024.67251759785
+    ],
+    [
+      "2022-12-14",
+      389655.4300416351
+    ],
+    [
+      "2022-12-15",
+      387824.4581039722
+    ],
+    [
+      "2022-12-16",
+      387371.3643233497
+    ],
+    [
+      "2022-12-19",
+      387261.98424442497
+    ],
+    [
+      "2022-12-20",
+      387456.863061924
+    ],
+    [
+      "2022-12-21",
+      387940.84104503074
+    ],
+    [
+      "2022-12-22",
+      387361.97151380754
+    ],
+    [
+      "2022-12-23",
+      387619.43118764984
+    ],
+    [
+      "2022-12-27",
+      387518.016948816
+    ],
+    [
+      "2022-12-28",
+      387070.868825693
+    ],
+    [
+      "2022-12-29",
+      387718.7100284092
+    ],
+    [
+      "2022-12-30",
+      387705.74296859175
+    ],
+    [
+      "2023-01-03",
+      387588.3549537883
+    ],
+    [
+      "2023-01-04",
+      388076.5496686775
+    ],
+    [
+      "2023-01-05",
+      387681.4581954258
+    ],
+    [
+      "2023-01-06",
+      388599.9898916798
+    ],
+    [
+      "2023-01-09",
+      388645.8779169649
+    ],
+    [
+      "2023-01-10",
+      389041.5261961262
+    ],
+    [
+      "2023-01-11",
+      390004.3407630747
+    ],
+    [
+      "2023-01-12",
+      390236.41827298957
+    ],
+    [
+      "2023-01-13",
+      390663.35451418615
+    ],
+    [
+      "2023-01-17",
+      390520.2228947631
+    ],
+    [
+      "2023-01-18",
+      389513.8991041856
+    ],
+    [
+      "2023-01-19",
+      389155.2852158172
+    ],
+    [
+      "2023-01-20",
+      389171.82248374796
+    ],
+    [
+      "2023-01-23",
+      389166.0797346178
+    ],
+    [
+      "2023-01-24",
+      389214.5411146977
+    ],
+    [
+      "2023-01-25",
+      389228.3010875535
+    ],
+    [
+      "2023-01-26",
+      389141.71082931396
+    ],
+    [
+      "2023-01-27",
+      388799.2913506509
+    ],
+    [
+      "2023-01-30",
+      388404.5414920721
+    ],
+    [
+      "2023-01-31",
+      388393.0031487657
+    ],
+    [
+      "2023-02-01",
+      388513.70757122146
+    ],
+    [
+      "2023-02-02",
+      388702.55102859205
+    ],
+    [
+      "2023-02-03",
+      388789.98146585276
+    ],
+    [
+      "2023-02-06",
+      387761.2482957494
+    ],
+    [
+      "2023-02-07",
+      388272.21868822584
+    ],
+    [
+      "2023-02-08",
+      387511.53397159814
+    ],
+    [
+      "2023-02-09",
+      387548.2034145243
+    ],
+    [
+      "2023-02-10",
+      387658.1484821462
+    ],
+    [
+      "2023-02-13",
+      387878.47975573567
+    ],
+    [
+      "2023-02-14",
+      388019.9876512122
+    ],
+    [
+      "2023-02-15",
+      387824.5462536943
+    ],
+    [
+      "2023-02-16",
+      386938.6736767734
+    ],
+    [
+      "2023-02-17",
+      386747.75898858474
+    ],
+    [
+      "2023-02-21",
+      386198.64761764713
+    ],
+    [
+      "2023-02-22",
+      385897.3892165346
+    ],
+    [
+      "2023-02-23",
+      385678.48805057217
+    ],
+    [
+      "2023-02-24",
+      384923.62988018536
+    ],
+    [
+      "2023-02-27",
+      384777.91131309804
+    ],
+    [
+      "2023-02-28",
+      384585.2263257573
+    ],
+    [
+      "2023-03-01",
+      384260.4934115605
+    ],
+    [
+      "2023-03-02",
+      385021.68075486
+    ],
+    [
+      "2023-03-03",
+      386297.9968909027
+    ],
+    [
+      "2023-03-06",
+      386130.90877935244
+    ],
+    [
+      "2023-03-07",
+      384720.70444538543
+    ],
+    [
+      "2023-03-08",
+      384964.8656492181
+    ],
+    [
+      "2023-03-09",
+      383844.8418477532
+    ],
+    [
+      "2023-03-10",
+      383304.9212098962
+    ],
+    [
+      "2023-03-13",
+      382931.77559855435
+    ],
+    [
+      "2023-03-14",
+      383734.00018420495
+    ],
+    [
+      "2023-03-15",
+      383563.17696648714
+    ],
+    [
+      "2023-03-16",
+      384631.6831879846
+    ],
+    [
+      "2023-03-17",
+      384325.76000293955
+    ],
+    [
+      "2023-03-20",
+      384778.57979928306
+    ],
+    [
+      "2023-03-21",
+      385561.5713877089
+    ],
+    [
+      "2023-03-22",
+      384801.98514402926
+    ],
+    [
+      "2023-03-23",
+      385779.83156968886
+    ],
+    [
+      "2023-03-24",
+      385945.5291019066
+    ],
+    [
+      "2023-03-27",
+      386225.28342700645
+    ],
+    [
+      "2023-03-28",
+      385956.01160269853
+    ],
+    [
+      "2023-03-29",
+      386887.0968146506
+    ],
+    [
+      "2023-03-30",
+      387276.468138241
+    ],
+    [
+      "2023-03-31",
+      388103.04231349344
+    ],
+    [
+      "2023-04-03",
+      388562.52162655996
+    ],
+    [
+      "2023-04-04",
+      388414.560809742
+    ],
+    [
+      "2023-04-05",
+      388219.3263858093
+    ],
+    [
+      "2023-04-06",
+      388217.82615000947
+    ],
+    [
+      "2023-04-10",
+      388482.80968871753
+    ],
+    [
+      "2023-04-11",
+      388498.2364825105
+    ],
+    [
+      "2023-04-12",
+      388351.33679587854
+    ],
+    [
+      "2023-04-13",
+      388525.32452110393
+    ],
+    [
+      "2023-04-14",
+      388425.15410140826
+    ],
+    [
+      "2023-04-17",
+      388486.7678179515
+    ],
+    [
+      "2023-04-18",
+      388473.46212506935
+    ],
+    [
+      "2023-04-19",
+      388404.20031121606
+    ],
+    [
+      "2023-04-20",
+      388092.2830103851
+    ],
+    [
+      "2023-04-21",
+      388009.59974977816
+    ],
+    [
+      "2023-04-24",
+      387968.4480354967
+    ],
+    [
+      "2023-04-25",
+      387376.13014743954
+    ],
+    [
+      "2023-04-26",
+      387698.14691116294
+    ],
+    [
+      "2023-04-27",
+      389111.40321587917
+    ],
+    [
+      "2023-04-28",
+      389756.93035170843
+    ],
+    [
+      "2023-05-01",
+      389397.83608643187
+    ],
+    [
+      "2023-05-02",
+      388478.9693928114
+    ],
+    [
+      "2023-05-03",
+      388465.7577237313
+    ],
+    [
+      "2023-05-04",
+      388117.7079913722
+    ],
+    [
+      "2023-05-05",
+      388556.821829944
+    ],
+    [
+      "2023-05-08",
+      389064.27228537074
+    ],
+    [
+      "2023-05-09",
+      388913.2476879117
+    ],
+    [
+      "2023-05-10",
+      389107.40968308697
+    ],
+    [
+      "2023-05-11",
+      389279.3892566467
+    ],
+    [
+      "2023-05-12",
+      389212.01988335
+    ],
+    [
+      "2023-05-15",
+      389246.67445052974
+    ],
+    [
+      "2023-05-16",
+      388998.85978656664
+    ],
+    [
+      "2023-05-17",
+      389412.7090350876
+    ],
+    [
+      "2023-05-18",
+      390181.17976868345
+    ],
+    [
+      "2023-05-19",
+      390219.34511595115
+    ],
+    [
+      "2023-05-22",
+      389407.83697598637
+    ],
+    [
+      "2023-05-23",
+      388686.2553565987
+    ],
+    [
+      "2023-05-24",
+      388210.6493555031
+    ],
+    [
+      "2023-05-25",
+      388601.3061324617
+    ],
+    [
+      "2023-05-26",
+      389799.7661213181
+    ],
+    [
+      "2023-05-30",
+      389483.1369182751
+    ],
+    [
+      "2023-05-31",
+      389066.87975243386
+    ],
+    [
+      "2023-06-01",
+      389458.16737491323
+    ],
+    [
+      "2023-06-02",
+      389713.8688062468
+    ],
+    [
+      "2023-06-05",
+      389228.5743064644
+    ],
+    [
+      "2023-06-06",
+      389277.0646880736
+    ],
+    [
+      "2023-06-07",
+      389191.7358422017
+    ],
+    [
+      "2023-06-08",
+      389017.5656494783
+    ],
+    [
+      "2023-06-09",
+      388850.5672867072
+    ],
+    [
+      "2023-06-12",
+      388985.7405922058
+    ],
+    [
+      "2023-06-13",
+      388697.7580934696
+    ],
+    [
+      "2023-06-14",
+      389197.21778679866
+    ],
+    [
+      "2023-06-15",
+      389857.0447109486
+    ],
+    [
+      "2023-06-16",
+      389752.2998658811
+    ],
+    [
+      "2023-06-20",
+      389120.446447658
+    ],
+    [
+      "2023-06-21",
+      388994.17406526476
+    ],
+    [
+      "2023-06-22",
+      389233.0573526571
+    ],
+    [
+      "2023-06-23",
+      389040.62488986715
+    ],
+    [
+      "2023-06-26",
+      388358.2450794047
+    ],
+    [
+      "2023-06-27",
+      389114.5645217952
+    ],
+    [
+      "2023-06-28",
+      388910.3545030525
+    ],
+    [
+      "2023-06-29",
+      389128.39124951104
+    ],
+    [
+      "2023-06-30",
+      389398.1205788619
+    ],
+    [
+      "2023-07-03",
+      389644.8933327724
+    ],
+    [
+      "2023-07-05",
+      389451.0114758998
+    ],
+    [
+      "2023-07-06",
+      389314.0430707448
+    ],
+    [
+      "2023-07-07",
+      389073.6025228433
+    ],
+    [
+      "2023-07-10",
+      389193.9923575466
+    ],
+    [
+      "2023-07-11",
+      389439.52041964314
+    ],
+    [
+      "2023-07-12",
+      389670.3404394267
+    ],
+    [
+      "2023-07-13",
+      389979.38879816484
+    ],
+    [
+      "2023-07-14",
+      389759.4165669374
+    ],
+    [
+      "2023-07-17",
+      390251.77264321916
+    ],
+    [
+      "2023-07-18",
+      390386.087314191
+    ],
+    [
+      "2023-07-19",
+      390361.71253167157
+    ],
+    [
+      "2023-07-20",
+      389535.5572261909
+    ],
+    [
+      "2023-07-21",
+      389889.8719496429
+    ],
+    [
+      "2023-07-24",
+      390179.3585874322
+    ],
+    [
+      "2023-07-25",
+      390210.9660975216
+    ],
+    [
+      "2023-07-26",
+      390114.8883200033
+    ],
+    [
+      "2023-07-27",
+      389538.89587221853
+    ],
+    [
+      "2023-07-28",
+      390168.0185421101
+    ],
+    [
+      "2023-07-31",
+      389830.4455703394
+    ],
+    [
+      "2023-08-01",
+      389656.0878016692
+    ],
+    [
+      "2023-08-02",
+      388879.98133575544
+    ],
+    [
+      "2023-08-03",
+      388917.8494113272
+    ],
+    [
+      "2023-08-04",
+      389049.0750014663
+    ],
+    [
+      "2023-08-07",
+      389539.0173396823
+    ],
+    [
+      "2023-08-08",
+      389150.6051626158
+    ],
+    [
+      "2023-08-09",
+      388630.664095928
+    ],
+    [
+      "2023-08-10",
+      388595.9715362402
+    ],
+    [
+      "2023-08-11",
+      388825.9293332039
+    ],
+    [
+      "2023-08-14",
+      389256.9466882826
+    ],
+    [
+      "2023-08-15",
+      388568.21852904314
+    ],
+    [
+      "2023-08-16",
+      388082.96030621056
+    ],
+    [
+      "2023-08-17",
+      387755.73313372786
+    ],
+    [
+      "2023-08-18",
+      387762.188490157
+    ],
+    [
+      "2023-08-21",
+      387910.6891356991
+    ],
+    [
+      "2023-08-22",
+      387172.8078127974
+    ],
+    [
+      "2023-08-23",
+      388336.77015511086
+    ],
+    [
+      "2023-08-24",
+      386353.7635822366
+    ],
+    [
+      "2023-08-25",
+      386826.95666034764
+    ],
+    [
+      "2023-08-28",
+      387453.7952374809
+    ],
+    [
+      "2023-08-29",
+      388795.36372742796
+    ],
+    [
+      "2023-08-30",
+      389222.3155912606
+    ],
+    [
+      "2023-08-31",
+      389142.6437923239
+    ],
+    [
+      "2023-09-01",
+      389230.7598290486
+    ],
+    [
+      "2023-09-05",
+      389154.4023246651
+    ],
+    [
+      "2023-09-06",
+      388714.9871209074
+    ],
+    [
+      "2023-09-07",
+      388210.9554120975
+    ],
+    [
+      "2023-09-08",
+      388227.5966580597
+    ],
+    [
+      "2023-09-11",
+      388671.56083288195
+    ],
+    [
+      "2023-09-12",
+      388261.17749028036
+    ],
+    [
+      "2023-09-13",
+      388176.8079963807
+    ],
+    [
+      "2023-09-14",
+      388420.06908849056
+    ],
+    [
+      "2023-09-15",
+      388197.63487245224
+    ],
+    [
+      "2023-09-18",
+      388334.2967236598
+    ],
+    [
+      "2023-09-19",
+      388223.5156868069
+    ],
+    [
+      "2023-09-20",
+      387727.928213691
+    ],
+    [
+      "2023-09-21",
+      387133.2777019051
+    ],
+    [
+      "2023-09-22",
+      387100.68921244645
+    ],
+    [
+      "2023-09-25",
+      387171.179333696
+    ],
+    [
+      "2023-09-26",
+      386559.5380968986
+    ],
+    [
+      "2023-09-27",
+      386575.53915852617
+    ],
+    [
+      "2023-09-28",
+      387049.0477564899
+    ],
+    [
+      "2023-09-29",
+      386645.9039191004
+    ],
+    [
+      "2023-10-02",
+      386992.96669354546
+    ],
+    [
+      "2023-10-03",
+      385892.0087896858
+    ],
+    [
+      "2023-10-04",
+      386983.95824019786
+    ],
+    [
+      "2023-10-05",
+      386842.5164063626
+    ],
+    [
+      "2023-10-06",
+      387779.93807454075
+    ],
+    [
+      "2023-10-09",
+      388036.7473954456
+    ],
+    [
+      "2023-10-10",
+      388596.0640599948
+    ],
+    [
+      "2023-10-11",
+      389405.19968002994
+    ],
+    [
+      "2023-10-12",
+      389452.3785619506
+    ],
+    [
+      "2023-10-13",
+      388767.087595425
+    ],
+    [
+      "2023-10-16",
+      389388.546337272
+    ],
+    [
+      "2023-10-17",
+      389137.5694739172
+    ],
+    [
+      "2023-10-18",
+      388780.1831573984
+    ],
+    [
+      "2023-10-19",
+      388579.3511755641
+    ],
+    [
+      "2023-10-20",
+      388184.8576702855
+    ],
+    [
+      "2023-10-23",
+      387844.5407274219
+    ],
+    [
+      "2023-10-24",
+      388146.1491083595
+    ],
+    [
+      "2023-10-25",
+      387744.424692378
+    ],
+    [
+      "2023-10-26",
+      387089.2768834748
+    ],
+    [
+      "2023-10-27",
+      387045.86886050063
+    ],
+    [
+      "2023-10-30",
+      387280.49926083145
+    ],
+    [
+      "2023-10-31",
+      387480.6693013902
+    ],
+    [
+      "2023-11-01",
+      388316.27122869104
+    ],
+    [
+      "2023-11-02",
+      388548.3717016386
+    ],
+    [
+      "2023-11-03",
+      389416.5432162231
+    ],
+    [
+      "2023-11-06",
+      389718.70232473005
+    ],
+    [
+      "2023-11-07",
+      390095.8168289888
+    ],
+    [
+      "2023-11-08",
+      390419.7675802004
+    ],
+    [
+      "2023-11-09",
+      390115.29089671705
+    ],
+    [
+      "2023-11-10",
+      391058.64225878887
+    ],
+    [
+      "2023-11-13",
+      391247.65230141795
+    ],
+    [
+      "2023-11-14",
+      391803.73176158866
+    ],
+    [
+      "2023-11-15",
+      391458.5366078073
+    ],
+    [
+      "2023-11-16",
+      391222.5323438608
+    ],
+    [
+      "2023-11-17",
+      391314.43509867
+    ],
+    [
+      "2023-11-20",
+      391525.40311309503
+    ],
+    [
+      "2023-11-21",
+      391322.3703498743
+    ],
+    [
+      "2023-11-22",
+      391362.7368724936
+    ],
+    [
+      "2023-11-24",
+      391474.4979357662
+    ],
+    [
+      "2023-11-27",
+      391324.16313511884
+    ],
+    [
+      "2023-11-28",
+      391402.66638744395
+    ],
+    [
+      "2023-11-29",
+      391311.6552023085
+    ],
+    [
+      "2023-11-30",
+      391487.28250515513
+    ],
+    [
+      "2023-12-01",
+      391376.594494483
+    ],
+    [
+      "2023-12-04",
+      391266.9362613189
+    ],
+    [
+      "2023-12-05",
+      391126.4322606549
+    ],
+    [
+      "2023-12-06",
+      391167.8943783148
+    ],
+    [
+      "2023-12-07",
+      391486.99204950134
+    ],
+    [
+      "2023-12-08",
+      391610.56843107974
+    ],
+    [
+      "2023-12-11",
+      391840.8421976177
+    ],
+    [
+      "2023-12-12",
+      392521.3068047186
+    ],
+    [
+      "2023-12-13",
+      392962.34962238034
+    ],
+    [
+      "2023-12-14",
+      392788.2324395094
+    ],
+    [
+      "2023-12-15",
+      393178.4575949479
+    ],
+    [
+      "2023-12-18",
+      394113.0659886108
+    ],
+    [
+      "2023-12-19",
+      395376.82814996754
+    ],
+    [
+      "2023-12-20",
+      393642.97426549933
+    ],
+    [
+      "2023-12-21",
+      395151.39603308094
+    ],
+    [
+      "2023-12-22",
+      395422.9704292045
+    ],
+    [
+      "2023-12-26",
+      395872.4769997416
+    ],
+    [
+      "2023-12-27",
+      395977.8142888884
+    ],
+    [
+      "2023-12-28",
+      395936.0751868111
+    ],
+    [
+      "2023-12-29",
+      395915.7281295313
+    ],
+    [
+      "2024-01-02",
+      395945.1725151943
+    ],
+    [
+      "2024-01-03",
+      396183.9822974398
+    ],
+    [
+      "2024-01-04",
+      396047.18243787537
+    ],
+    [
+      "2024-01-05",
+      395957.026177505
+    ],
+    [
+      "2024-01-08",
+      396326.70392675285
+    ],
+    [
+      "2024-01-09",
+      396474.59906497534
+    ],
+    [
+      "2024-01-10",
+      397075.9803393011
+    ],
+    [
+      "2024-01-11",
+      397235.4266432752
+    ],
+    [
+      "2024-01-12",
+      397252.22918958985
+    ],
+    [
+      "2024-01-16",
+      397256.1468187326
+    ],
+    [
+      "2024-01-17",
+      397012.4305302826
+    ],
+    [
+      "2024-01-18",
+      397970.37855947023
+    ],
+    [
+      "2024-01-19",
+      400092.02226970164
+    ],
+    [
+      "2024-01-22",
+      399865.6434740967
+    ],
+    [
+      "2024-01-23",
+      399788.8278142893
+    ],
+    [
+      "2024-01-24",
+      400155.021153693
+    ],
+    [
+      "2024-01-25",
+      400334.5791736544
+    ],
+    [
+      "2024-01-26",
+      399129.2397996751
+    ],
+    [
+      "2024-01-29",
+      399542.86779429624
+    ],
+    [
+      "2024-01-30",
+      399866.11717229337
+    ],
+    [
+      "2024-01-31",
+      399426.50081429724
+    ],
+    [
+      "2024-02-01",
+      399862.69415441697
+    ],
+    [
+      "2024-02-02",
+      399900.94780742156
+    ],
+    [
+      "2024-02-05",
+      399250.78585781285
+    ],
+    [
+      "2024-02-06",
+      399040.6918668505
+    ],
+    [
+      "2024-02-07",
+      399270.1657025053
+    ],
+    [
+      "2024-02-08",
+      399221.0275746064
+    ],
+    [
+      "2024-02-09",
+      399409.39232767513
+    ],
+    [
+      "2024-02-12",
+      399570.81548311707
+    ],
+    [
+      "2024-02-13",
+      398898.8846500027
+    ],
+    [
+      "2024-02-14",
+      399153.6268285556
+    ],
+    [
+      "2024-02-15",
+      399183.32069341606
+    ],
+    [
+      "2024-02-16",
+      398973.5059379297
+    ],
+    [
+      "2024-02-20",
+      398787.2238425836
+    ],
+    [
+      "2024-02-21",
+      398898.855305006
+    ],
+    [
+      "2024-02-22",
+      399511.53417265986
+    ],
+    [
+      "2024-02-23",
+      399401.45296886266
+    ],
+    [
+      "2024-02-26",
+      399485.03660267964
+    ],
+    [
+      "2024-02-27",
+      399721.4907777298
+    ],
+    [
+      "2024-02-28",
+      399337.6531819289
+    ],
+    [
+      "2024-02-29",
+      399946.6900513029
+    ],
+    [
+      "2024-03-01",
+      401413.1523355827
+    ],
+    [
+      "2024-03-04",
+      401499.82250497834
+    ],
+    [
+      "2024-03-05",
+      400658.4768791118
+    ],
+    [
+      "2024-03-06",
+      400961.5355382279
+    ],
+    [
+      "2024-03-07",
+      401334.8159129749
+    ],
+    [
+      "2024-03-08",
+      400603.90236604604
+    ],
+    [
+      "2024-03-11",
+      400504.98929025256
+    ],
+    [
+      "2024-03-12",
+      401505.991026921
+    ],
+    [
+      "2024-03-13",
+      401081.3748028973
+    ],
+    [
+      "2024-03-14",
+      401369.8990510881
+    ],
+    [
+      "2024-03-15",
+      401095.0754606847
+    ],
+    [
+      "2024-03-18",
+      401319.83599590836
+    ],
+    [
+      "2024-03-19",
+      401475.21488886327
+    ],
+    [
+      "2024-03-20",
+      401734.9753673526
+    ],
+    [
+      "2024-03-21",
+      402140.3672142254
+    ],
+    [
+      "2024-03-22",
+      401902.7046620104
+    ],
+    [
+      "2024-03-25",
+      402090.5916540315
+    ],
+    [
+      "2024-03-26",
+      402093.6357846428
+    ],
+    [
+      "2024-03-27",
+      402479.4790987894
+    ],
+    [
+      "2024-03-28",
+      402619.9102601985
+    ],
+    [
+      "2024-04-01",
+      402890.9929192917
+    ],
+    [
+      "2024-04-02",
+      402395.56223402993
+    ],
+    [
+      "2024-04-03",
+      401951.9016748647
+    ],
+    [
+      "2024-04-04",
+      401646.31048088876
+    ],
+    [
+      "2024-04-05",
+      402367.4490400463
+    ],
+    [
+      "2024-04-08",
+      402318.9867558955
+    ],
+    [
+      "2024-04-09",
+      402264.9864775239
+    ],
+    [
+      "2024-04-10",
+      402024.4198346991
+    ],
+    [
+      "2024-04-11",
+      402214.79170412594
+    ],
+    [
+      "2024-04-12",
+      401618.398897768
+    ],
+    [
+      "2024-04-15",
+      401453.6925098227
+    ],
+    [
+      "2024-04-16",
+      401369.41944828065
+    ],
+    [
+      "2024-04-17",
+      401268.94862132415
+    ],
+    [
+      "2024-04-18",
+      401029.2463884642
+    ],
+    [
+      "2024-04-19",
+      400829.5477977529
+    ],
+    [
+      "2024-04-22",
+      401506.6392372906
+    ],
+    [
+      "2024-04-23",
+      402108.1339580186
+    ],
+    [
+      "2024-04-24",
+      402250.01610206853
+    ],
+    [
+      "2024-04-25",
+      402091.4106443199
+    ],
+    [
+      "2024-04-26",
+      402543.2156557039
+    ],
+    [
+      "2024-04-29",
+      402593.5868572353
+    ],
+    [
+      "2024-04-30",
+      400964.4444530078
+    ],
+    [
+      "2024-05-01",
+      400090.3243061145
+    ],
+    [
+      "2024-05-02",
+      400951.41684478684
+    ],
+    [
+      "2024-05-03",
+      400923.7216945888
+    ],
+    [
+      "2024-05-06",
+      401694.70542768895
+    ],
+    [
+      "2024-05-07",
+      401607.31201487296
+    ],
+    [
+      "2024-05-08",
+      401739.2120954046
+    ],
+    [
+      "2024-05-09",
+      401967.55554922804
+    ],
+    [
+      "2024-05-10",
+      402281.80597943644
+    ],
+    [
+      "2024-05-13",
+      402324.81827760045
+    ],
+    [
+      "2024-05-14",
+      402370.82255470793
+    ],
+    [
+      "2024-05-15",
+      402749.02546583314
+    ],
+    [
+      "2024-05-16",
+      402545.14598967374
+    ],
+    [
+      "2024-05-17",
+      402711.768864554
+    ],
+    [
+      "2024-05-20",
+      402715.48986669286
+    ],
+    [
+      "2024-05-21",
+      402883.0992478616
+    ],
+    [
+      "2024-05-22",
+      402839.78510320844
+    ],
+    [
+      "2024-05-23",
+      402873.08773070655
+    ],
+    [
+      "2024-05-24",
+      403017.57955450745
+    ],
+    [
+      "2024-05-28",
+      403528.2104308231
+    ],
+    [
+      "2024-05-29",
+      403452.6482017794
+    ],
+    [
+      "2024-05-30",
+      403052.7716596172
+    ],
+    [
+      "2024-05-31",
+      403644.2692884552
+    ],
+    [
+      "2024-06-03",
+      403267.4280277763
+    ],
+    [
+      "2024-06-04",
+      403316.967313648
+    ],
+    [
+      "2024-06-05",
+      403947.10622684
+    ],
+    [
+      "2024-06-06",
+      403895.91630289494
+    ],
+    [
+      "2024-06-07",
+      403574.5435426417
+    ],
+    [
+      "2024-06-10",
+      403983.4519061534
+    ],
+    [
+      "2024-06-11",
+      403860.3586025117
+    ],
+    [
+      "2024-06-12",
+      405501.1014168894
+    ],
+    [
+      "2024-06-13",
+      406091.37389584235
+    ],
+    [
+      "2024-06-14",
+      406019.6829081487
+    ],
+    [
+      "2024-06-17",
+      407452.13758953917
+    ],
+    [
+      "2024-06-18",
+      407457.37310645345
+    ],
+    [
+      "2024-06-20",
+      406302.5420383525
+    ],
+    [
+      "2024-06-21",
+      405509.4259879713
+    ],
+    [
+      "2024-06-24",
+      405386.580272501
+    ],
+    [
+      "2024-06-25",
+      405090.575250105
+    ],
+    [
+      "2024-06-26",
+      405230.0944021707
+    ],
+    [
+      "2024-06-27",
+      405377.3823467474
+    ],
+    [
+      "2024-06-28",
+      405212.07749725535
+    ],
+    [
+      "2024-07-01",
+      405523.3530051767
+    ],
+    [
+      "2024-07-02",
+      406488.96846888214
+    ],
+    [
+      "2024-07-03",
+      407121.8477146726
+    ],
+    [
+      "2024-07-05",
+      407324.68648287025
+    ],
+    [
+      "2024-07-08",
+      407500.30473195435
+    ],
+    [
+      "2024-07-09",
+      407502.9983106811
+    ],
+    [
+      "2024-07-10",
+      408130.6051710499
+    ],
+    [
+      "2024-07-11",
+      407473.0401084602
+    ],
+    [
+      "2024-07-12",
+      407460.67827250005
+    ],
+    [
+      "2024-07-15",
+      407507.3150612323
+    ],
+    [
+      "2024-07-16",
+      407899.1787420221
+    ],
+    [
+      "2024-07-17",
+      407575.11000766006
+    ],
+    [
+      "2024-07-18",
+      406724.4547864979
+    ],
+    [
+      "2024-07-19",
+      406530.7852302806
+    ],
+    [
+      "2024-07-22",
+      406663.4413083894
+    ],
+    [
+      "2024-07-23",
+      406878.8670825004
+    ],
+    [
+      "2024-07-24",
+      405599.0482566692
+    ],
+    [
+      "2024-07-25",
+      405272.5382117075
+    ],
+    [
+      "2024-07-26",
+      405809.0745491229
+    ],
+    [
+      "2024-07-29",
+      405838.94693205296
+    ],
+    [
+      "2024-07-30",
+      405364.1415020884
+    ],
+    [
+      "2024-07-31",
+      406438.2036969572
+    ],
+    [
+      "2024-08-01",
+      405661.828554255
+    ],
+    [
+      "2024-08-02",
+      404575.0078576965
+    ],
+    [
+      "2024-08-05",
+      402639.7794087428
+    ],
+    [
+      "2024-08-06",
+      403253.2398537241
+    ],
+    [
+      "2024-08-07",
+      403209.49882178183
+    ],
+    [
+      "2024-08-08",
+      404396.1611828927
+    ],
+    [
+      "2024-08-09",
+      404845.2699895527
+    ],
+    [
+      "2024-08-12",
+      404643.558858011
+    ],
+    [
+      "2024-08-13",
+      405840.4012154056
+    ],
+    [
+      "2024-08-14",
+      406117.3840365843
+    ],
+    [
+      "2024-08-15",
+      407347.96143711125
+    ],
+    [
+      "2024-08-16",
+      407672.6135010003
+    ],
+    [
+      "2024-08-19",
+      408311.7684468351
+    ],
+    [
+      "2024-08-20",
+      408383.4691157032
+    ],
+    [
+      "2024-08-21",
+      408593.40516335785
+    ],
+    [
+      "2024-08-22",
+      408421.1187625132
+    ],
+    [
+      "2024-08-23",
+      408783.53661034704
+    ],
+    [
+      "2024-08-26",
+      408804.6133329035
+    ],
+    [
+      "2024-08-27",
+      408787.4870057106
+    ],
+    [
+      "2024-08-28",
+      408780.73784128955
+    ],
+    [
+      "2024-08-29",
+      408780.73784128955
+    ],
+    [
+      "2024-08-30",
+      408780.73784128955
+    ],
+    [
+      "2024-09-03",
+      408854.2855647181
+    ],
+    [
+      "2024-09-04",
+      409113.5855903136
+    ],
+    [
+      "2024-09-05",
+      409025.0879180021
+    ],
+    [
+      "2024-09-06",
+      407812.0461520945
+    ],
+    [
+      "2024-09-09",
+      408097.71375048644
+    ],
+    [
+      "2024-09-10",
+      409015.81451946433
+    ],
+    [
+      "2024-09-11",
+      409192.14234408864
+    ],
+    [
+      "2024-09-12",
+      409868.87240628107
+    ],
+    [
+      "2024-09-13",
+      410593.6152785316
+    ],
+    [
+      "2024-09-16",
+      411149.98759825114
+    ],
+    [
+      "2024-09-17",
+      410995.16808498255
+    ],
+    [
+      "2024-09-18",
+      410674.72466859646
+    ],
+    [
+      "2024-09-19",
+      412653.26099273696
+    ],
+    [
+      "2024-09-20",
+      412528.94174305716
+    ],
+    [
+      "2024-09-23",
+      412814.75446245424
+    ],
+    [
+      "2024-09-24",
+      413364.9661516258
+    ],
+    [
+      "2024-09-25",
+      412889.19642411324
+    ],
+    [
+      "2024-09-26",
+      413324.4793527012
+    ],
+    [
+      "2024-09-27",
+      413343.33875999897
+    ],
+    [
+      "2024-09-30",
+      413409.09332243685
+    ],
+    [
+      "2024-10-01",
+      413229.42474030633
+    ],
+    [
+      "2024-10-02",
+      413241.98633114365
+    ],
+    [
+      "2024-10-03",
+      413037.6450468816
+    ],
+    [
+      "2024-10-04",
+      413070.16537588066
+    ],
+    [
+      "2024-10-07",
+      412770.2233660785
+    ],
+    [
+      "2024-10-08",
+      412978.50600989815
+    ],
+    [
+      "2024-10-09",
+      413225.8609362717
+    ],
+    [
+      "2024-10-10",
+      413014.33450049185
+    ],
+    [
+      "2024-10-11",
+      413645.64243428205
+    ],
+    [
+      "2024-10-14",
+      413780.14747517667
+    ],
+    [
+      "2024-10-15",
+      413758.7768070273
+    ],
+    [
+      "2024-10-16",
+      414038.1417890095
+    ],
+    [
+      "2024-10-17",
+      413959.31329132034
+    ],
+    [
+      "2024-10-18",
+      414198.5259552776
+    ],
+    [
+      "2024-10-21",
+      413744.34057887277
+    ],
+    [
+      "2024-10-22",
+      413632.2316054835
+    ],
+    [
+      "2024-10-23",
+      413315.1754989792
+    ],
+    [
+      "2024-10-24",
+      413612.78123529715
+    ],
+    [
+      "2024-10-25",
+      414194.87872011866
+    ],
+    [
+      "2024-10-28",
+      413899.2253734136
+    ],
+    [
+      "2024-10-29",
+      413872.98790318496
+    ],
+    [
+      "2024-10-30",
+      413370.802016914
+    ],
+    [
+      "2024-10-31",
+      412348.5718518716
+    ],
+    [
+      "2024-11-01",
+      412531.72191621765
+    ],
+    [
+      "2024-11-04",
+      412317.12621218356
+    ],
+    [
+      "2024-11-05",
+      412901.6338217011
+    ],
+    [
+      "2024-11-06",
+      414763.8728570755
+    ],
+    [
+      "2024-11-07",
+      415046.860583538
+    ],
+    [
+      "2024-11-08",
+      416150.4302315522
+    ],
+    [
+      "2024-11-11",
+      416635.34778018534
+    ],
+    [
+      "2024-11-12",
+      415099.3764604021
+    ],
+    [
+      "2024-11-13",
+      415010.38746365556
+    ],
+    [
+      "2024-11-14",
+      414553.18604929704
+    ],
+    [
+      "2024-11-15",
+      413939.1224643207
+    ],
+    [
+      "2024-11-18",
+      414152.85558418673
+    ],
+    [
+      "2024-11-19",
+      414136.31900067505
+    ],
+    [
+      "2024-11-20",
+      414173.15085052326
+    ],
+    [
+      "2024-11-21",
+      414290.98292606196
+    ],
+    [
+      "2024-11-22",
+      414277.911115891
+    ],
+    [
+      "2024-11-25",
+      414476.0785720543
+    ],
+    [
+      "2024-11-26",
+      414971.25980969873
+    ],
+    [
+      "2024-11-27",
+      414472.98943837686
+    ],
+    [
+      "2024-11-29",
+      414774.56762243505
+    ],
+    [
+      "2024-12-02",
+      415166.53577363107
+    ],
+    [
+      "2024-12-03",
+      415511.40487215057
+    ],
+    [
+      "2024-12-04",
+      415812.9822575586
+    ],
+    [
+      "2024-12-05",
+      415735.7213286818
+    ],
+    [
+      "2024-12-06",
+      415968.04584982316
+    ],
+    [
+      "2024-12-09",
+      415793.7615184294
+    ],
+    [
+      "2024-12-10",
+      415791.89950693137
+    ],
+    [
+      "2024-12-11",
+      416538.7497965814
+    ],
+    [
+      "2024-12-12",
+      416049.7871520009
+    ],
+    [
+      "2024-12-13",
+      418324.39203066425
+    ],
+    [
+      "2024-12-16",
+      419857.42455930257
+    ],
+    [
+      "2024-12-17",
+      419117.9089452252
+    ],
+    [
+      "2024-12-18",
+      417089.4683950788
+    ],
+    [
+      "2024-12-19",
+      416035.1311339834
+    ],
+    [
+      "2024-12-20",
+      416140.81449584174
+    ],
+    [
+      "2024-12-23",
+      416243.9942946457
+    ],
+    [
+      "2024-12-24",
+      416595.0996574225
+    ],
+    [
+      "2024-12-26",
+      416679.1632211843
+    ],
+    [
+      "2024-12-27",
+      416254.5411831726
+    ],
+    [
+      "2024-12-30",
+      415885.13112202624
+    ],
+    [
+      "2024-12-31",
+      415710.38980143337
+    ],
+    [
+      "2025-01-02",
+      415748.5230265569
+    ],
+    [
+      "2025-01-03",
+      416235.31728835177
+    ],
+    [
+      "2025-01-06",
+      416352.9070458472
+    ],
+    [
+      "2025-01-07",
+      415900.2664233173
+    ],
+    [
+      "2025-01-08",
+      415892.2614734406
+    ],
+    [
+      "2025-01-10",
+      415367.3690528098
+    ],
+    [
+      "2025-01-13",
+      415243.3841384322
+    ],
+    [
+      "2025-01-14",
+      414942.74547912617
+    ],
+    [
+      "2025-01-15",
+      415923.1233980477
+    ],
+    [
+      "2025-01-16",
+      415529.5755991356
+    ],
+    [
+      "2025-01-17",
+      416342.3241457433
+    ],
+    [
+      "2025-01-21",
+      417077.18588848086
+    ],
+    [
+      "2025-01-22",
+      417603.85785954783
+    ],
+    [
+      "2025-01-23",
+      418785.4561492061
+    ],
+    [
+      "2025-01-24",
+      418542.49707749527
+    ],
+    [
+      "2025-01-27",
+      419442.2124676274
+    ],
+    [
+      "2025-01-28",
+      419781.0475158905
+    ],
+    [
+      "2025-01-29",
+      419872.55638722307
+    ],
+    [
+      "2025-01-30",
+      420641.83696849947
+    ],
+    [
+      "2025-01-31",
+      420439.8611491547
+    ],
+    [
+      "2025-02-03",
+      420525.66469540837
+    ],
+    [
+      "2025-02-04",
+      420886.6322825204
+    ],
+    [
+      "2025-02-05",
+      421265.41223633196
+    ],
+    [
+      "2025-02-06",
+      421386.665444371
+    ],
+    [
+      "2025-02-07",
+      420943.3456140146
+    ],
+    [
+      "2025-02-10",
+      421408.8556320203
+    ],
+    [
+      "2025-02-11",
+      421369.98314664967
+    ],
+    [
+      "2025-02-12",
+      421098.7656213035
+    ],
+    [
+      "2025-02-13",
+      421352.20982498897
+    ],
+    [
+      "2025-02-14",
+      421233.78176786663
+    ],
+    [
+      "2025-02-18",
+      420987.7448236374
+    ],
+    [
+      "2025-02-19",
+      420981.20768034644
+    ],
+    [
+      "2025-02-20",
+      420833.4248123788
+    ],
+    [
+      "2025-02-21",
+      420335.0578341766
+    ],
+    [
+      "2025-02-24",
+      420000.4345889151
+    ],
+    [
+      "2025-02-25",
+      419773.21914150426
+    ],
+    [
+      "2025-02-26",
+      419871.5206250631
+    ],
+    [
+      "2025-02-27",
+      419521.911866339
+    ],
+    [
+      "2025-02-28",
+      420017.6791362518
+    ],
+    [
+      "2025-03-03",
+      419122.36824314424
+    ],
+    [
+      "2025-03-04",
+      417705.49967434944
+    ],
+    [
+      "2025-03-05",
+      418112.1006707695
+    ],
+    [
+      "2025-03-06",
+      416970.92637254257
+    ],
+    [
+      "2025-03-07",
+      416857.5879333588
+    ],
+    [
+      "2025-03-10",
+      416055.56259377475
+    ],
+    [
+      "2025-03-11",
+      415661.24212907266
+    ],
+    [
+      "2025-03-12",
+      415690.5991955068
+    ],
+    [
+      "2025-03-13",
+      415173.3274370557
+    ],
+    [
+      "2025-03-14",
+      415638.7202491498
+    ],
+    [
+      "2025-03-17",
+      416411.1382677718
+    ],
+    [
+      "2025-03-18",
+      416064.87512517296
+    ],
+    [
+      "2025-03-19",
+      416087.00184455625
+    ],
+    [
+      "2025-03-20",
+      415958.2516927764
+    ],
+    [
+      "2025-03-21",
+      415954.24701395904
+    ],
+    [
+      "2025-03-24",
+      416529.18846270343
+    ],
+    [
+      "2025-03-25",
+      416599.1574891073
+    ],
+    [
+      "2025-03-26",
+      416448.5981198347
+    ],
+    [
+      "2025-03-27",
+      416609.0193481313
+    ],
+    [
+      "2025-03-28",
+      416369.92574620654
+    ],
+    [
+      "2025-03-31",
+      416659.6085589
+    ],
+    [
+      "2025-04-01",
+      416253.7612872268
+    ],
+    [
+      "2025-04-02",
+      416113.62783832353
+    ],
+    [
+      "2025-04-03",
+      415789.52665981674
+    ],
+    [
+      "2025-04-04",
+      413596.9927225176
+    ],
+    [
+      "2025-04-07",
+      412887.6676245103
+    ],
+    [
+      "2025-04-08",
+      412666.8937646033
+    ],
+    [
+      "2025-04-09",
+      413665.7201766285
+    ],
+    [
+      "2025-04-10",
+      413381.2949631362
+    ],
+    [
+      "2025-04-11",
+      413609.43529084686
+    ],
+    [
+      "2025-04-14",
+      413719.7968158582
+    ],
+    [
+      "2025-04-15",
+      413755.50390341505
+    ],
+    [
+      "2025-04-16",
+      413742.75256437494
+    ],
+    [
+      "2025-04-17",
+      413973.91626096296
+    ],
+    [
+      "2025-04-21",
+      413676.6192483837
+    ],
+    [
+      "2025-04-22",
+      414300.69910670305
+    ],
+    [
+      "2025-04-23",
+      414223.1559989266
+    ],
+    [
+      "2025-04-24",
+      414456.7469031699
+    ],
+    [
+      "2025-04-25",
+      414376.89258577244
+    ],
+    [
+      "2025-04-28",
+      414435.7143676238
+    ],
+    [
+      "2025-04-29",
+      414598.96845080657
+    ],
+    [
+      "2025-04-30",
+      414574.62143969943
+    ],
+    [
+      "2025-05-01",
+      414465.7441628389
+    ],
+    [
+      "2025-05-02",
+      414580.66319924337
+    ],
+    [
+      "2025-05-05",
+      414569.4425678266
+    ],
+    [
+      "2025-05-06",
+      414592.9033220706
+    ],
+    [
+      "2025-05-07",
+      414624.94455180527
+    ],
+    [
+      "2025-05-08",
+      414588.74908891483
+    ],
+    [
+      "2025-05-09",
+      414490.7890422952
+    ],
+    [
+      "2025-05-12",
+      414380.23004984926
+    ],
+    [
+      "2025-05-13",
+      414118.6165007176
+    ],
+    [
+      "2025-05-14",
+      414103.7616477617
+    ],
+    [
+      "2025-05-15",
+      414423.2139299806
+    ],
+    [
+      "2025-05-16",
+      414688.1965224402
+    ],
+    [
+      "2025-05-19",
+      414787.48339470825
+    ],
+    [
+      "2025-05-20",
+      414709.68109617516
+    ],
+    [
+      "2025-05-21",
+      414361.9057529548
+    ],
+    [
+      "2025-05-22",
+      414191.97584470134
+    ],
+    [
+      "2025-05-23",
+      414194.4697990246
+    ],
+    [
+      "2025-05-27",
+      414301.8246018648
+    ],
+    [
+      "2025-05-28",
+      414128.67576105543
+    ],
+    [
+      "2025-05-29",
+      414186.87610131165
+    ],
+    [
+      "2025-05-30",
+      414484.14488334866
+    ],
+    [
+      "2025-06-02",
+      414758.96454843634
+    ],
+    [
+      "2025-06-03",
+      414955.83719858463
+    ],
+    [
+      "2025-06-04",
+      414840.3104487357
+    ],
+    [
+      "2025-06-05",
+      414759.7864149588
+    ],
+    [
+      "2025-06-06",
+      414613.95368290576
+    ],
+    [
+      "2025-06-09",
+      414855.4446522791
+    ],
+    [
+      "2025-06-10",
+      415649.4302119833
+    ],
+    [
+      "2025-06-11",
+      415294.2761514784
+    ],
+    [
+      "2025-06-12",
+      415942.2907187935
+    ],
+    [
+      "2025-06-13",
+      415650.83922086103
+    ],
+    [
+      "2025-06-16",
+      415522.5150469521
+    ],
+    [
+      "2025-06-17",
+      414951.396071093
+    ],
+    [
+      "2025-06-18",
+      414944.426130546
+    ],
+    [
+      "2025-06-20",
+      415200.0954844797
+    ],
+    [
+      "2025-06-23",
+      416029.1232275148
+    ],
+    [
+      "2025-06-24",
+      416604.7067543994
+    ],
+    [
+      "2025-06-25",
+      416499.27811347967
+    ],
+    [
+      "2025-06-26",
+      416801.6428303359
+    ],
+    [
+      "2025-06-27",
+      417159.3772029946
+    ],
+    [
+      "2025-06-30",
+      417362.7489679124
+    ],
+    [
+      "2025-07-01",
+      417400.9449418604
+    ],
+    [
+      "2025-07-02",
+      417652.8017792437
+    ],
+    [
+      "2025-07-03",
+      418217.76726126095
+    ],
+    [
+      "2025-07-07",
+      418066.96288604254
+    ],
+    [
+      "2025-07-08",
+      417797.0191342201
+    ],
+    [
+      "2025-07-09",
+      418160.9640611048
+    ],
+    [
+      "2025-07-10",
+      418358.6837862345
+    ],
+    [
+      "2025-07-11",
+      418243.26020653296
+    ],
+    [
+      "2025-07-14",
+      418384.2339991603
+    ],
+    [
+      "2025-07-15",
+      418127.59541111416
+    ],
+    [
+      "2025-07-16",
+      418354.7407382927
+    ],
+    [
+      "2025-07-17",
+      417837.98033307854
+    ],
+    [
+      "2025-07-18",
+      417913.1232029675
+    ],
+    [
+      "2025-07-21",
+      418036.2405287482
+    ],
+    [
+      "2025-07-22",
+      418060.8668982106
+    ],
+    [
+      "2025-07-23",
+      418285.73348363664
+    ],
+    [
+      "2025-07-24",
+      418137.828638971
+    ],
+    [
+      "2025-07-25",
+      418266.87918733
+    ],
+    [
+      "2025-07-28",
+      418199.8605185938
+    ],
+    [
+      "2025-07-29",
+      417971.08162595634
+    ],
+    [
+      "2025-07-30",
+      418068.8348063009
+    ],
+    [
+      "2025-07-31",
+      417072.1503432149
+    ],
+    [
+      "2025-08-01",
+      416287.6611775222
+    ],
+    [
+      "2025-08-04",
+      416891.03860058857
+    ],
+    [
+      "2025-08-05",
+      416686.67304831836
+    ],
+    [
+      "2025-08-06",
+      416909.7958802769
+    ],
+    [
+      "2025-08-07",
+      416950.21675082337
+    ],
+    [
+      "2025-08-08",
+      417626.2568601223
+    ],
+    [
+      "2025-08-11",
+      417667.26261218643
+    ],
+    [
+      "2025-08-12",
+      418347.1752176031
+    ],
+    [
+      "2025-08-13",
+      418452.8241275333
+    ],
+    [
+      "2025-08-14",
+      419110.30459264613
+    ],
+    [
+      "2025-08-15",
+      418594.71774920606
+    ],
+    [
+      "2025-08-18",
+      418245.9119900254
+    ],
+    [
+      "2025-08-19",
+      418398.6999003952
+    ],
+    [
+      "2025-08-20",
+      417741.2265937815
+    ],
+    [
+      "2025-08-21",
+      417524.2089293365
+    ],
+    [
+      "2025-08-22",
+      418323.9603072642
+    ],
+    [
+      "2025-08-25",
+      418158.2868755469
+    ],
+    [
+      "2025-08-26",
+      418418.19186353567
+    ],
+    [
+      "2025-08-27",
+      418566.90663286776
+    ],
+    [
+      "2025-08-28",
+      418672.6015564966
+    ],
+    [
+      "2025-08-29",
+      418091.28677078703
+    ],
+    [
+      "2025-09-02",
+      417725.1688544542
+    ],
+    [
+      "2025-09-03",
+      417890.99781503045
+    ],
+    [
+      "2025-09-04",
+      418340.1158234897
+    ],
+    [
+      "2025-09-05",
+      418962.0203196139
+    ],
+    [
+      "2025-09-08",
+      419524.98032541375
+    ],
+    [
+      "2025-09-09",
+      419719.6039637921
+    ],
+    [
+      "2025-09-10",
+      422886.01097056054
+    ],
+    [
+      "2025-09-11",
+      422520.53044583555
+    ],
+    [
+      "2025-09-12",
+      422457.54209326947
+    ],
+    [
+      "2025-09-15",
+      422564.91096912127
+    ],
+    [
+      "2025-09-16",
+      422620.0936484648
+    ],
+    [
+      "2025-09-17",
+      422724.7993751389
+    ],
+    [
+      "2025-09-18",
+      422749.23117584176
+    ],
+    [
+      "2025-09-19",
+      422921.5953441411
+    ],
+    [
+      "2025-09-22",
+      423159.21519692603
+    ],
+    [
+      "2025-09-23",
+      422870.59918648505
+    ],
+    [
+      "2025-09-24",
+      423033.9897647197
+    ],
+    [
+      "2025-09-25",
+      423565.3009695978
+    ],
+    [
+      "2025-09-26",
+      424380.6771934503
+    ],
+    [
+      "2025-09-29",
+      424116.0880682304
+    ],
+    [
+      "2025-09-30",
+      423980.6999442518
+    ],
+    [
+      "2025-10-01",
+      424996.0337290255
+    ],
+    [
+      "2025-10-02",
+      424876.1498616817
+    ],
+    [
+      "2025-10-03",
+      425563.6863695558
+    ],
+    [
+      "2025-10-06",
+      425678.8807919639
+    ],
+    [
+      "2025-10-07",
+      425657.80018444493
+    ],
+    [
+      "2025-10-08",
+      426982.7031156047
+    ],
+    [
+      "2025-10-09",
+      426697.14561970986
+    ],
+    [
+      "2025-10-10",
+      425560.71333439776
+    ],
+    [
+      "2025-10-13",
+      426429.79910702584
+    ],
+    [
+      "2025-10-14",
+      426247.9146267321
+    ],
+    [
+      "2025-10-15",
+      426537.36091049446
+    ],
+    [
+      "2025-10-16",
+      425998.63630268857
+    ],
+    [
+      "2025-10-17",
+      426047.303795783
+    ],
+    [
+      "2025-10-20",
+      426712.7663106446
+    ],
+    [
+      "2025-10-21",
+      426395.574727159
+    ],
+    [
+      "2025-10-22",
+      426227.3021221144
+    ],
+    [
+      "2025-10-23",
+      426663.35940512485
+    ],
+    [
+      "2025-10-24",
+      427045.22634983517
+    ],
+    [
+      "2025-10-27",
+      428231.9709723961
+    ],
+    [
+      "2025-10-28",
+      427785.6815161856
+    ],
+    [
+      "2025-10-29",
+      427437.69992565823
+    ],
+    [
+      "2025-10-30",
+      426751.7577494652
+    ],
+    [
+      "2025-10-31",
+      426826.19631216116
+    ],
+    [
+      "2025-11-03",
+      427061.5540264749
+    ],
+    [
+      "2025-11-04",
+      426644.1483138527
+    ],
+    [
+      "2025-11-05",
+      427037.46280398744
+    ],
+    [
+      "2025-11-06",
+      426745.1343666962
+    ],
+    [
+      "2025-11-07",
+      426794.6797544997
+    ],
+    [
+      "2025-11-10",
+      427392.2454083118
+    ],
+    [
+      "2025-11-11",
+      427866.5929005405
+    ],
+    [
+      "2025-11-12",
+      428075.9975259285
+    ],
+    [
+      "2025-11-13",
+      427386.1224235426
+    ],
+    [
+      "2025-11-14",
+      427553.0539973503
+    ],
+    [
+      "2025-11-17",
+      427144.56219056103
+    ],
+    [
+      "2025-11-18",
+      426827.518144642
+    ],
+    [
+      "2025-11-19",
+      426952.8257663786
+    ],
+    [
+      "2025-11-20",
+      425746.384748888
+    ],
+    [
+      "2025-11-21",
+      425720.76514459087
+    ],
+    [
+      "2025-11-24",
+      426560.2765368295
+    ],
+    [
+      "2025-11-25",
+      427061.8579986101
+    ],
+    [
+      "2025-11-26",
+      427615.65229668544
+    ],
+    [
+      "2025-11-28",
+      428968.9639114707
+    ],
+    [
+      "2025-12-01",
+      428613.794818283
+    ],
+    [
+      "2025-12-02",
+      429194.34758343594
+    ],
+    [
+      "2025-12-03",
+      430039.12180981925
+    ],
+    [
+      "2025-12-04",
+      429295.9903171468
+    ],
+    [
+      "2025-12-05",
+      429510.7748400071
+    ],
+    [
+      "2025-12-08",
+      429397.291417405
+    ],
+    [
+      "2025-12-09",
+      429136.58509387705
+    ],
+    [
+      "2025-12-10",
+      429266.7001022712
+    ],
+    [
+      "2025-12-11",
+      429369.72634794546
+    ],
+    [
+      "2025-12-12",
+      429096.6075585274
+    ],
+    [
+      "2025-12-15",
+      429266.62768627494
+    ],
+    [
+      "2025-12-16",
+      428927.84722108307
+    ],
+    [
+      "2025-12-17",
+      428542.2736252236
+    ],
+    [
+      "2025-12-18",
+      428728.97250885615
+    ],
+    [
+      "2025-12-19",
+      429054.35649458325
+    ],
+    [
+      "2025-12-22",
+      429255.9492261285
+    ],
+    [
+      "2025-12-23",
+      429596.1241329779
+    ],
+    [
+      "2025-12-24",
+      429955.1630994157
+    ],
+    [
+      "2025-12-26",
+      430031.81020360155
+    ],
+    [
+      "2025-12-29",
+      430173.6320079902
+    ],
+    [
+      "2025-12-30",
+      430091.40125307784
+    ]
+  ],
+  "source_batches": [
+    "research/ssss/source_xma/experiments/falsification_v2/FEB_XMA_v1_STRICT_BATCH1.json",
+    "research/ssss/source_xma/experiments/falsification_v2/FEB_XMA_v1_STRICT_BATCH2.json",
+    "research/ssss/source_xma/experiments/falsification_v2/FEB_XMA_v1_STRICT_BATCH3.json",
+    "research/ssss/source_xma/experiments/falsification_v2/FEB_XMA_v1_STRICT_BATCH4.json",
+    "research/ssss/source_xma/experiments/falsification_v2/FEB_XMA_v1_STRICT_BATCH5A.json",
+    "research/ssss/source_xma/experiments/falsification_v2/FEB_XMA_v1_STRICT_BATCH5B.json",
+    "research/ssss/source_xma/experiments/falsification_v2/FEB_XMA_v1_STRICT_BATCH6.json"
+  ]
+}

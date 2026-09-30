@@ -1,0 +1,219 @@
+{
+  "experiment": "E034",
+  "track": "equity",
+  "provider": "Massive Stocks",
+  "tickers": [
+    "AAPL",
+    "MSFT",
+    "NVDA",
+    "JPM",
+    "XOM"
+  ],
+  "coverage": [
+    {
+      "ticker": "AAPL",
+      "bars": 501,
+      "first": "2024-09-18",
+      "last": "2026-09-17",
+      "warning": null
+    },
+    {
+      "ticker": "MSFT",
+      "bars": 501,
+      "first": "2024-09-18",
+      "last": "2026-09-17",
+      "warning": null
+    },
+    {
+      "ticker": "NVDA",
+      "bars": 501,
+      "first": "2024-09-18",
+      "last": "2026-09-17",
+      "warning": null
+    },
+    {
+      "ticker": "JPM",
+      "bars": 501,
+      "first": "2024-09-18",
+      "last": "2026-09-17",
+      "warning": null
+    },
+    {
+      "ticker": "XOM",
+      "bars": 501,
+      "first": "2024-09-18",
+      "last": "2026-09-17",
+      "warning": null
+    }
+  ],
+  "records": [
+    {
+      "ticker": "AAPL",
+      "trade_id": "AAPL-1",
+      "path": "MATURE",
+      "signal_date": "2025-05-12",
+      "entry_date": "2025-05-13",
+      "exit_date": "2026-01-16",
+      "final_ret": 0.22313698,
+      "S0": {
+        "ER10": 0.01868353,
+        "CHOP14": 53.50310668,
+        "CMF20": 0.1057416,
+        "OBVImpulse10": 0.01247911
+      },
+      "S1": {
+        "ER10": 0.04796431,
+        "CHOP14": 51.79267423,
+        "CMF20": 0.22067759,
+        "OBVImpulse10": 0.03721369
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "trade_id": "AAPL-2",
+      "path": "MATURE",
+      "signal_date": "2026-02-02",
+      "entry_date": "2026-02-03",
+      "exit_date": "2026-03-10",
+      "final_ret": -0.04483572,
+      "S0": {
+        "ER10": 0.39758375,
+        "CHOP14": 44.97611243,
+        "CMF20": 0.01673475,
+        "OBVImpulse10": 0.45295414
+      },
+      "S1": {
+        "ER10": 0.81009957,
+        "CHOP14": 43.44460198,
+        "CMF20": 0.0335097,
+        "OBVImpulse10": 0.49265218
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "trade_id": "MSFT-1",
+      "path": "MATURE",
+      "signal_date": "2025-04-25",
+      "entry_date": "2025-04-28",
+      "exit_date": "2026-06-15",
+      "final_ret": 0.01032568,
+      "S0": {
+        "ER10": 0.15182186,
+        "CHOP14": 56.73820885,
+        "CMF20": 0.06357177,
+        "OBVImpulse10": 0.02302015
+      },
+      "S1": {
+        "ER10": 0.04318725,
+        "CHOP14": 57.54996765,
+        "CMF20": 0.10620406,
+        "OBVImpulse10": -0.18010445
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "trade_id": "NVDA-1",
+      "path": "MATURE",
+      "signal_date": "2025-04-25",
+      "entry_date": "2025-04-28",
+      "exit_date": "2025-12-09",
+      "final_ret": 0.68829657,
+      "S0": {
+        "ER10": 0.09982589,
+        "CHOP14": 52.68124683,
+        "CMF20": 0.12294442,
+        "OBVImpulse10": 0.09471892
+      },
+      "S1": {
+        "ER10": 0.06590773,
+        "CHOP14": 61.36379233,
+        "CMF20": 0.15443172,
+        "OBVImpulse10": -0.09889727
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "trade_id": "NVDA-2",
+      "path": "MATURE",
+      "signal_date": "2026-04-08",
+      "entry_date": "2026-04-09",
+      "exit_date": "2026-07-01",
+      "final_ret": 0.07681474,
+      "S0": {
+        "ER10": 0.20294985,
+        "CHOP14": 48.06880919,
+        "CMF20": -0.22375753,
+        "OBVImpulse10": 0.31397067
+      },
+      "S1": {
+        "ER10": 0.16217054,
+        "CHOP14": 47.47782901,
+        "CMF20": -0.19454268,
+        "OBVImpulse10": 0.29429233
+      }
+    },
+    {
+      "ticker": "JPM",
+      "trade_id": "JPM-1",
+      "path": "MATURE",
+      "signal_date": "2025-05-01",
+      "entry_date": "2025-05-02",
+      "exit_date": "2026-01-28",
+      "final_ret": 0.19266919,
+      "S0": {
+        "ER10": 0.66308519,
+        "CHOP14": 52.6718783,
+        "CMF20": 0.00932414,
+        "OBVImpulse10": 0.35706105
+      },
+      "S1": {
+        "ER10": 0.7006478,
+        "CHOP14": 44.07498403,
+        "CMF20": 0.06308953,
+        "OBVImpulse10": 0.34080576
+      }
+    },
+    {
+      "ticker": "JPM",
+      "trade_id": "JPM-2",
+      "path": "MATURE",
+      "signal_date": "2026-03-25",
+      "entry_date": "2026-03-26",
+      "exit_date": "2026-05-15",
+      "final_ret": 0.02401118,
+      "S0": {
+        "ER10": 0.3953954,
+        "CHOP14": 61.99167371,
+        "CMF20": 0.05595961,
+        "OBVImpulse10": 0.38153046
+      },
+      "S1": {
+        "ER10": 0.45892203,
+        "CHOP14": 59.88418125,
+        "CMF20": 0.03638087,
+        "OBVImpulse10": 0.44435346
+      }
+    },
+    {
+      "ticker": "XOM",
+      "trade_id": "XOM-1",
+      "path": "MATURE",
+      "signal_date": "2025-05-12",
+      "entry_date": "2025-05-13",
+      "exit_date": "2025-07-01",
+      "final_ret": -0.01286173,
+      "S0": {
+        "ER10": 0.04203013,
+        "CHOP14": 58.1722745,
+        "CMF20": -0.06454761,
+        "OBVImpulse10": 0.21620424
+      },
+      "S1": {
+        "ER10": 0.08702532,
+        "CHOP14": 56.30014,
+        "CMF20": -0.05753352,
+        "OBVImpulse10": 0.35231317
+      }
+    }
+  ]
+}

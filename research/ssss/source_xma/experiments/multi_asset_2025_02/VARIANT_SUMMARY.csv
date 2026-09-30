@@ -1,0 +1,5 @@
+variant,mean_return_pct,median_return_pct,positive_symbols,total_symbols,worst_symbol_return_pct,best_symbol_return_pct,mean_max_drawdown_pct,median_max_drawdown_pct,total_executions,average_exposure_pct
+XMA_ONLY,-0.063,0.000,3,11,-3.087,4.897,-0.670,-0.377,44,5.000
+XMA_HYS2,-0.019,0.000,3,11,-3.548,6.276,-0.770,-0.403,44,6.148
+XMA_FIVEGZ,0.106,0.000,3,11,-1.271,2.938,-0.233,-0.075,44,2.297
+XMA_HYS2_FIVEGZ,0.151,0.000,3,11,-1.733,4.318,-0.338,-0.081,44,3.445

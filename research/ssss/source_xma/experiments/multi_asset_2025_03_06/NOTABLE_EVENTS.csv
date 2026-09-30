@@ -1,0 +1,17 @@
+symbol,asset_class,date,action,target_pct,execution_price,regime,xma_momentum,rvol,fivegz_score,hys2_resonance,interpretation
+ABT,stock,2025-06-24,BREAKOUT_ENTRY,100,138.149,BULL,BOTH_UP,1.72,9,0,strong breakout but later outcome warns against full-size certainty
+AMZN,stock,2025-04-09,TRANSITION_PROBE,40,191.196,BEAR,BOTH_UP,1.98,7,1,override fired during broad rebound and proved too aggressive
+ORCL,stock,2025-05-30,BREAKOUT_ENTRY,100,165.613,RANGE,BOTH_UP,2.16,8,0,strong successful breakout candidate
+MSFT,stock,2025-04-09,TRANSITION_PROBE,40,390.685,BEAR,BOTH_UP,1.88,8,1,override was constructive in this symbol
+NVDA,stock,2025-04-09,TRANSITION_PROBE,40,114.387,BEAR,BOTH_UP,1.92,9,1,override fired but combined variant later underperformed
+GOOGL,stock,2025-04-09,TRANSITION_PROBE,40,158.789,BEAR,BOTH_UP,1.73,8,1,override fired but combined variant underperformed
+META,stock,2025-04-09,TRANSITION_PROBE,40,586.063,BEAR,BOTH_UP,1.82,7,1,override fired but combined variant underperformed
+JPM,stock,2025-06-20,BREAKOUT_ENTRY,100,275.138,BULL,BOTH_UP,1.83,7,0,strong positive breakout
+XOM,stock,2025-03-21,BREAKOUT_ENTRY,100,115.558,RANGE,BOTH_UP,2.20,7,0,breakout candidate with modest final gain
+BTC,crypto,2025-05-08,BREAKOUT_ENTRY,100,103313.231,BULL,BOTH_UP,1.81,9,0,breakout valid but FIVEGZ later over-reduced
+BTC,crypto,2025-05-23,COLOR_RISK_REDUCE,65,107264.641,BULL,CONFLICT,1.39,-6,0,FIVEGZ deterioration triggered de-risk
+ETH,crypto,2025-04-09,TRANSITION_PROBE,40,1670.345,BEAR,CONFLICT,3.11,6,1,override too aggressive in crypto
+ETH,crypto,2025-05-13,BREAKOUT_ENTRY,100,2681.050,RANGE,BOTH_UP,1.59,7,0,breakout followed by later weakness
+BNB,crypto,2025-05-08,BREAKOUT_ENTRY,100,629.485,RANGE,BOTH_UP,2.01,10,0,best crypto candidate for FIVEGZ support
+SOL,crypto,2025-04-09,TRANSITION_PROBE,40,119.110,BEAR,BOTH_UP,2.14,6,1,override did not improve combined outcome
+SOL,crypto,2025-05-08,BREAKOUT_ENTRY,100,164.542,RANGE,BOTH_UP,1.95,9,0,strong breakout but later volatility high

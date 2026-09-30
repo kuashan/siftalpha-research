@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "CANDIDATE_FOR_PROTOCOL_FREEZE",
+  "method": "Benjamini-Hochberg",
+  "q": 0.1,
+  "guard_controls_in_bh": false,
+  "families": {
+    "F1": [
+      "H1",
+      "H2"
+    ],
+    "F2": [
+      "H3",
+      "H4"
+    ],
+    "F3": [
+      "H5",
+      "H6"
+    ],
+    "F4": [
+      "H7",
+      "H8",
+      "H9",
+      "H10"
+    ],
+    "F5": [
+      "H11",
+      "H12",
+      "H13",
+      "H14"
+    ]
+  },
+  "insufficient_rule": "registered member remains in frozen family with p=1.0",
+  "no_cross_family_pooling": true
+}

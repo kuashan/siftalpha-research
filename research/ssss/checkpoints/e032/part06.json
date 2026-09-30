@@ -1,0 +1,49 @@
+{
+  "experiment": "E032",
+  "provider": "Massive",
+  "tickers": [
+    "LLY",
+    "GE",
+    "V",
+    "TGT",
+    "COP"
+  ],
+  "coverage": [
+    {
+      "ticker": "LLY",
+      "bars": 0,
+      "first": null,
+      "last": null,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    },
+    {
+      "ticker": "GE",
+      "bars": 0,
+      "first": null,
+      "last": null,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    },
+    {
+      "ticker": "V",
+      "bars": 0,
+      "first": null,
+      "last": null,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    },
+    {
+      "ticker": "TGT",
+      "bars": 0,
+      "first": null,
+      "last": null,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    },
+    {
+      "ticker": "COP",
+      "bars": 0,
+      "first": null,
+      "last": null,
+      "warning": "Warning [RATE_LIMIT]: You've hit the rate limit for your current plan. Slow down or upgrade at https://massive.com/prici"
+    }
+  ],
+  "events": []
+}
