@@ -1,4 +1,0 @@
-variant,return_pct,mdd_pct,sharpe,closed_trades,win_pct,avg_trade_pct,median_trade_pct,exposure_pct,2020_pct,2021_pct,2022_pct,2023_pct
-V2_TWO_BUY_THREE_SELL,20.62,-43.91,0.31,25,60.00,1.34,1.71,36.98,29.16,2.20,-32.21,30.62
-THREE_BUY_THREE_SELL,19.24,-43.91,0.30,26,57.69,1.25,1.53,37.38,29.16,2.20,-32.21,29.13
-BUY_AND_HOLD,214.26,-65.45,,,,,,,86.78,55.90,-56.89,130.26

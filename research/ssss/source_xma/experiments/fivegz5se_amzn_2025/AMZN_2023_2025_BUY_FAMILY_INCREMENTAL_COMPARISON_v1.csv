@@ -1,6 +1,0 @@
-family_id,family_name,representative,rep_n,rep_mean10_pct,rep_win10_pct,exact_overlap_with_v2_pct,near3_overlap_with_v2_pct,near5_overlap_with_v2_pct,novel3_n,novel3_mean10_pct,novel3_win10_pct,v2_plus_family_return_pct,delta_vs_v2_pp,status
-B-F1,弱势中的趋势先拐,B001,15,6.64,93.33,66.67,100,100,0,,,280.26,0,MOSTLY_V2_VARIANT
-B-F2,资金先修复,B005,15,5.76,93.33,33.33,73.33,80,4,2.28,75,265.79,-14.47,MOSTLY_V2_VARIANT
-B-F3,资金走弱、加速先修复的背离反转,B004,16,5.57,93.75,100,100,100,0,,,280.26,0,MOSTLY_V2_VARIANT
-B-F5,中性区恢复,B007,15,4.92,93.33,6.67,53.33,66.67,7,4.37,85.71,284.57,4.31,INCREMENTAL_FAMILY_CANDIDATE
-B-F6,多维复合恢复,B077,22,4.59,86.36,0,59.09,68.18,9,2.33,66.67,239.19,-41.07,INCREMENTAL_BUT_THIN
