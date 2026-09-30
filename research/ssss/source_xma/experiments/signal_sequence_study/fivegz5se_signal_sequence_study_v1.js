@@ -199,6 +199,11 @@
                 if(ss.length===1&&(ss[0]==="A"||ss[0]==="B")){firstSellSet=new Set(ss);schedule("SELL",.5,"AB_FIRST_HALF");}
                 else schedule("SELL",1,"C_OR_CONFLUENCE_FULL");
               } else if(ss.some(f=>!firstSellSet.has(f)))schedule("SELL",1,"NEXT_DISTINCT");
+            } else if(sellPolicy==="AB_HALF_C_FULL_ANY"){
+              if(firstSellSet==null){
+                if(ss.length===1&&(ss[0]==="A"||ss[0]==="B")){firstSellSet=new Set(ss);schedule("SELL",.5,"AB_FIRST_HALF");}
+                else schedule("SELL",1,"C_OR_CONFLUENCE_FULL");
+              } else schedule("SELL",1,"NEXT_ANY");
             }
           }
         }
@@ -219,7 +224,8 @@
       BUY_FULL_SELL_HALF_ANY:simulate({buyPolicy:"FULL_FIRST",sellPolicy:"HALF_ANY"}),
       BUY_FULL_SELL_HALF_DISTINCT:simulate({buyPolicy:"FULL_FIRST",sellPolicy:"HALF_DISTINCT"}),
       BUY_FULL_SELL_WAIT_DISTINCT:simulate({buyPolicy:"FULL_FIRST",sellPolicy:"WAIT_DISTINCT"}),
-      BUY_FULL_SELL_AB_HALF_C_FULL:simulate({buyPolicy:"FULL_FIRST",sellPolicy:"AB_HALF_C_FULL"})
+      BUY_FULL_SELL_AB_HALF_C_FULL:simulate({buyPolicy:"FULL_FIRST",sellPolicy:"AB_HALF_C_FULL"}),
+      BUY_FULL_SELL_AB_HALF_C_FULL_ANY:simulate({buyPolicy:"FULL_FIRST",sellPolicy:"AB_HALF_C_FULL_ANY"})
     };
 
     const posSummary={};
