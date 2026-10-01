@@ -427,6 +427,108 @@ class BinanceUsdMTestnetAdapter:
             )
         )
 
+    def max_allowed_leverage(self, symbol: str) -> int:
+        data = self.leverage_brackets(symbol)
+        rows = data if isinstance(data, list) else [data]
+        values: list[int] = []
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            for bracket in (_first(row, "brackets", default=[]) or []):
+                if not isinstance(bracket, dict):
+                    continue
+                try:
+                    values.append(int(_first(bracket, "initialLeverage", "initial_leverage")))
+                except (TypeError, ValueError):
+                    pass
+        if not values:
+            raise RuntimeError(f"{symbol} leverage bracket missing")
+        return max(values)
+
+    def available_usdt(self) -> float:
+        balances = self.balances()
+        rows = balances if isinstance(balances, list) else [balances]
+        for row in rows:
+            if isinstance(row, dict) and str(_first(row, "asset", default="")).upper() == "USDT":
+                return float(_first(row, "availableBalance", "available_balance", default=0))
+        raise RuntimeError("USDT available balance missing")
+
+    def position_amount(self, symbol: str) -> float:
+        symbol = self._check_symbol(symbol)
+        data = self.positions(symbol)
+        rows = data if isinstance(data, list) else [data]
+        for row in rows:
+            if isinstance(row, dict) and str(_first(row, "symbol", default="")).upper() == symbol:
+                return float(_first(row, "positionAmt", "position_amt", default=0))
+        return 0.0
+
+    def income_history(
+        self,
+        symbol: str,
+        *,
+        start_time: int | None = None,
+        end_time: int | None = None,
+        limit: int = 1000,
+    ) -> Any:
+        symbol = self._check_symbol(symbol)
+        return _response_data(
+            self._signed_rest().get_income_history(
+                symbol=symbol,
+                start_time=start_time,
+                end_time=end_time,
+                limit=int(limit),
+            )
+        )
+
+    def submit_market_buy(
+        self,
+        symbol: str,
+        *,
+        quantity: Decimal,
+        client_order_id: str,
+    ) -> Any:
+        symbol = self._check_symbol(symbol)
+        if quantity <= 0:
+            raise ValueError("quantity must be > 0")
+        if not client_order_id or len(client_order_id) > 36:
+            raise ValueError("client_order_id must be 1..36 chars")
+        return _response_data(
+            self._signed_rest().new_order(
+                symbol=symbol,
+                side="BUY",
+                type="MARKET",
+                position_side="BOTH",
+                quantity=float(quantity),
+                new_client_order_id=client_order_id,
+                new_order_resp_type="RESULT",
+            )
+        )
+
+    def submit_market_sell_reduce_only(
+        self,
+        symbol: str,
+        *,
+        quantity: Decimal,
+        client_order_id: str,
+    ) -> Any:
+        symbol = self._check_symbol(symbol)
+        if quantity <= 0:
+            raise ValueError("quantity must be > 0")
+        if not client_order_id or len(client_order_id) > 36:
+            raise ValueError("client_order_id must be 1..36 chars")
+        return _response_data(
+            self._signed_rest().new_order(
+                symbol=symbol,
+                side="SELL",
+                type="MARKET",
+                position_side="BOTH",
+                reduce_only="true",
+                quantity=float(quantity),
+                new_client_order_id=client_order_id,
+                new_order_resp_type="RESULT",
+            )
+        )
+
     def cancel_order(
         self,
         symbol: str,

@@ -91,6 +91,7 @@ class StateStore:
             self._ensure_column(conn, "runtime_state", "run_state", "TEXT NOT NULL DEFAULT 'STOPPED'")
             self._ensure_column(conn, "runtime_state", "entry_signal_open_time", "INTEGER")
             self._ensure_column(conn, "runtime_state", "entry_family", "TEXT")
+            self._ensure_column(conn, "runtime_state", "accounting_start_time_ms", "INTEGER")
 
             if "capital_budget_usdt" not in old_symbol_columns:
                 row = conn.execute("SELECT value FROM app_settings WHERE key='capital_budget_usdt'").fetchone()
@@ -186,7 +187,7 @@ class StateStore:
                 """
                 SELECT symbol, last_closed_bar_open_time, current_fraction, c_confirmed,
                        pending_action, last_signal, last_order_id, run_state,
-                       entry_signal_open_time, entry_family
+                       entry_signal_open_time, entry_family, accounting_start_time_ms
                 FROM runtime_state ORDER BY symbol
                 """
             ).fetchall()
@@ -226,8 +227,9 @@ class StateStore:
         bar_open_time: int,
         signal: str,
         pending_action: str | None,
+        run_state: str | None = None,
     ) -> None:
-        run_state = "SIGNAL_READY" if pending_action else "MONITORING"
+        run_state = run_state or ("SIGNAL_READY" if pending_action else "MONITORING")
         with self._connect() as conn:
             cur = conn.execute(
                 """
@@ -287,6 +289,70 @@ class StateStore:
                 "INSERT INTO audit_events(event_type, symbol, detail) VALUES(?, ?, ?)",
                 (event_type, symbol, str(detail)),
             )
+
+    def set_accounting_start_if_missing(self, symbol: str, start_time_ms: int) -> int:
+        with self._connect() as conn:
+            conn.execute(
+                """
+                UPDATE runtime_state
+                SET accounting_start_time_ms=COALESCE(accounting_start_time_ms, ?),
+                    updated_at=CURRENT_TIMESTAMP
+                WHERE symbol=?
+                """,
+                (int(start_time_ms), symbol),
+            )
+            row = conn.execute(
+                "SELECT accounting_start_time_ms FROM runtime_state WHERE symbol=?",
+                (symbol,),
+            ).fetchone()
+            if row is None:
+                raise KeyError(f"unknown symbol: {symbol}")
+            return int(row[0])
+
+    def begin_order(self, symbol: str, client_order_id: str, *, side: str, quantity: float, price: float) -> bool:
+        with self._connect() as conn:
+            cur = conn.execute(
+                """
+                INSERT OR IGNORE INTO orders(
+                    symbol, client_order_id, side, quantity, price, status
+                ) VALUES(?, ?, ?, ?, ?, 'PENDING')
+                """,
+                (symbol, client_order_id, side, float(quantity), float(price)),
+            )
+            return cur.rowcount == 1
+
+    def get_order(self, symbol: str, client_order_id: str) -> dict[str, object] | None:
+        with self._connect() as conn:
+            row = conn.execute(
+                """
+                SELECT symbol, client_order_id, binance_order_id, side, quantity, price, status
+                FROM orders WHERE symbol=? AND client_order_id=?
+                """,
+                (symbol, client_order_id),
+            ).fetchone()
+            return dict(row) if row is not None else None
+
+    def complete_order(
+        self,
+        symbol: str,
+        client_order_id: str,
+        *,
+        binance_order_id: str,
+        status: str,
+        quantity: float,
+        price: float,
+    ) -> None:
+        with self._connect() as conn:
+            cur = conn.execute(
+                """
+                UPDATE orders
+                SET binance_order_id=?, status=?, quantity=?, price=?, updated_at=CURRENT_TIMESTAMP
+                WHERE symbol=? AND client_order_id=?
+                """,
+                (str(binance_order_id), str(status), float(quantity), float(price), symbol, client_order_id),
+            )
+            if cur.rowcount != 1:
+                raise KeyError(f"unknown order: {symbol}/{client_order_id}")
 
     def get_pnl(self) -> dict[str, dict[str, float]]:
         with self._connect() as conn:
