@@ -42,6 +42,10 @@ class M3Executor:
         self._last_pnl_refresh: dict[str, float] = {}
         self._lock = RLock()
 
+    @property
+    def operation_lock(self) -> RLock:
+        return self._lock
+
     @staticmethod
     def _client_order_id(symbol: str, bar_open_time: int, action: str) -> str:
         base = symbol[:-4] if symbol.endswith("USDT") else symbol

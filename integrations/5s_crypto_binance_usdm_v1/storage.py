@@ -332,6 +332,60 @@ class StateStore:
             ).fetchone()
             return dict(row) if row is not None else None
 
+    def list_orders(self, symbol: str) -> list[dict[str, object]]:
+        with self._connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT id, symbol, client_order_id, binance_order_id, side,
+                       quantity, price, status, created_at, updated_at
+                FROM orders WHERE symbol=? ORDER BY id ASC
+                """,
+                (symbol,),
+            ).fetchall()
+            return [dict(row) for row in rows]
+
+    def mark_order_status(self, symbol: str, client_order_id: str, status: str) -> None:
+        with self._connect() as conn:
+            cur = conn.execute(
+                """
+                UPDATE orders SET status=?, updated_at=CURRENT_TIMESTAMP
+                WHERE symbol=? AND client_order_id=?
+                """,
+                (str(status), symbol, client_order_id),
+            )
+            if cur.rowcount != 1:
+                raise KeyError(f"unknown order: {symbol}/{client_order_id}")
+
+    def set_recovery_runtime(
+        self,
+        symbol: str,
+        *,
+        current_fraction: float,
+        c_confirmed: bool,
+        entry_signal_open_time: int | None,
+        entry_family: str | None,
+        last_order_id: str | None,
+        last_closed_bar_open_time: int | None,
+        run_state: str,
+    ) -> None:
+        with self._connect() as conn:
+            cur = conn.execute(
+                """
+                UPDATE runtime_state
+                SET current_fraction=?, c_confirmed=?, entry_signal_open_time=?,
+                    entry_family=?, last_order_id=?, last_closed_bar_open_time=?,
+                    pending_action=NULL, run_state=?, updated_at=CURRENT_TIMESTAMP
+                WHERE symbol=?
+                """,
+                (
+                    float(current_fraction), 1 if c_confirmed else 0,
+                    entry_signal_open_time, entry_family, last_order_id,
+                    last_closed_bar_open_time, str(run_state), symbol,
+                ),
+            )
+            if cur.rowcount != 1:
+                raise KeyError(f"unknown symbol: {symbol}")
+
     def complete_order(
         self,
         symbol: str,

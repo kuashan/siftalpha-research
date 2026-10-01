@@ -63,6 +63,8 @@ class TestnetSession:
         self._api_secret = initial_api_secret.strip()
         self._snapshot: TestnetAccountSnapshot | None = None
         self._last_error: str | None = None
+        self._recovery_ready = False
+        self._recovery_summary: dict[str, Any] | None = None
 
     def _adapter(self, api_key: str, api_secret: str) -> BinanceUsdMTestnetAdapter:
         return self._adapter_factory(
@@ -132,6 +134,8 @@ class TestnetSession:
             self._api_secret = api_secret
             self._snapshot = snapshot
             self._last_error = None
+            self._recovery_ready = False
+            self._recovery_summary = None
         return snapshot
 
     def test_existing_credentials(self) -> TestnetAccountSnapshot:
@@ -147,10 +151,28 @@ class TestnetSession:
             self._api_secret = ""
             self._snapshot = None
             self._last_error = None
+            self._recovery_ready = False
+            self._recovery_summary = None
 
     def credentials(self) -> tuple[str, str]:
         with self._lock:
             return self._api_key, self._api_secret
+
+    def adapter(self) -> BinanceUsdMTestnetAdapter:
+        with self._lock:
+            api_key, api_secret = self._api_key, self._api_secret
+        if not api_key or not api_secret:
+            raise ValueError("当前进程没有模拟交易凭据")
+        return self._adapter(api_key, api_secret)
+
+    def set_recovery_status(self, summary: dict[str, Any], ready: bool) -> None:
+        with self._lock:
+            self._recovery_summary = summary
+            self._recovery_ready = bool(ready)
+
+    def recovery_ready(self) -> bool:
+        with self._lock:
+            return bool(self._snapshot is not None and self._recovery_ready)
 
     def public_status(self) -> dict[str, Any]:
         with self._lock:
@@ -161,6 +183,8 @@ class TestnetSession:
                 "connected": snapshot is not None,
                 "masked_api_key": _mask_key(self._api_key) if self._api_key else None,
                 "last_error": self._last_error,
+                "recovery_ready": self._recovery_ready,
+                "recovery": self._recovery_summary,
                 "account": None if snapshot is None else {
                     "usdt_balance": snapshot.usdt_balance,
                     "usdt_available_balance": snapshot.usdt_available_balance,
