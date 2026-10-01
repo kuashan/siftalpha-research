@@ -1,0 +1,2 @@
+# M1 intentionally uses only the Python standard library.
+# M2 will add Binance's official modular USDⓈ-M Futures SDK after Testnet integration starts.
