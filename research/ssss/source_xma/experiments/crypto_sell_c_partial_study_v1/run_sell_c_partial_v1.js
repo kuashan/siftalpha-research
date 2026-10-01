@@ -157,7 +157,7 @@ const baseRows=results.map(x=>x.configs.find(c=>c.config==="C_SELL_100"));
 const summary=[];
 for(const frac of policies){
  const name="C_SELL_"+Math.round(frac*100),rows=results.map(x=>x.configs.find(c=>c.config===name));
- const deltas=rows.map((r,i)=>({symbol:results[i].symbol,ret:r.return-baseRows[i].return,mdd:baseRows[i].intra_mdd-r.intra_mdd,p5:r.p5-baseRows[i].p5,cvar:r.cvar10-baseRows[i].cvar10}));
+ const deltas=rows.map((r,i)=>({symbol:results[i].symbol,ret:r.return-baseRows[i].return,mdd:r.intra_mdd-baseRows[i].intra_mdd,p5:r.p5-baseRows[i].p5,cvar:r.cvar10-baseRows[i].cvar10}));
  const positives=deltas.filter(x=>x.ret>0),sumPos=positives.reduce((s,x)=>s+x.ret,0),maxPos=positives.length?Math.max(...positives.map(x=>x.ret)):0;
  const retBoot=bootstrap(deltas.map(x=>x.ret)),mddBoot=bootstrap(deltas.map(x=>x.mdd)),p5Boot=bootstrap(deltas.map(x=>x.p5)),cvarBoot=bootstrap(deltas.map(x=>x.cvar));
  const gate={
