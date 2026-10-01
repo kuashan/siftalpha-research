@@ -20,42 +20,56 @@ Status: **CLOSED**
 Added only:
 - selectable intervals: 15m / 1h / 2h / 4h / 6h / 12h / 1d
 - SQLite persistence for selected interval
-- status endpoint exposes interval and validation state
-- 1d is explicitly labeled the validated 5s-crypto V1 baseline
-- all sub-daily intervals are explicitly labeled experimental / unvalidated
-
-No strategy rule is optimized or changed by M1.1.
+- 1d = validated 5s-crypto V1 baseline
+- sub-daily = experimental / unvalidated
 
 ## M2 — Binance Futures Testnet adapter
-Scope only:
-- official Binance modular USDⓈ-M SDK
-- Testnet credentials
-- exchange information / filters
-- current leverage bracket
-- isolated margin validation
-- one-way validation
-- change initial leverage
-- account / position / order readback
-- testnet order submit/cancel only
-- use the persisted selected K-line interval for market-data subscription/polling
+Status: **IMPLEMENTED_AWAITING_TESTNET_ACCEPTANCE**
+
+Implemented:
+- official Binance modular USDⓈ-M SDK pinned at 17.5.0
+- hard TESTNET-only authenticated adapter
+- Testnet credential loading from environment only
+- exchange information / symbol filters
+- selected-timeframe K-line retrieval
+- notional and leverage brackets
+- position-mode read and One-way enforcement
+- position read and Isolated enforcement
+- leverage mutation
+- balance / position / open-order / order readback
+- Testnet LIMIT BUY submit + cancel primitives
+- bounded M2 acceptance CLI
+- mock-backed deterministic unit tests
+
+Still required before M2 may be CLOSED:
+- real Binance Futures Testnet credentials
+- authenticated balance/position/bracket reads PASS
+- One-way validation/apply PASS
+- Isolated validation/apply PASS on all four symbols
+- requested leverage apply/readback PASS on all four symbols
+- selected K-line interval read PASS
+- one Testnet submit/cancel probe PASS and no orphan order remains
 
 No LIVE.
 
 ## M3 — Frozen 5s-crypto V1 signal engine + execution
+Status: **NOT_STARTED**
+
+M3 must not start before M2 is CLOSED.
+
 Scope only:
-- Python port of the frozen three-buy/three-sell equations
-- deterministic parity against existing daily research fixtures
+- Python port of frozen three-buy/three-sell equations
+- deterministic parity against daily research fixtures
 - completed-bar gating
-- next-bar-open intent generation for the selected interval
+- next-bar-open intent generation
 - 60% initial / +40% W3 C confirmation
 - SELL-A/B/C full exit
 - funding-fee ledger fields
 - idempotent client order IDs
 
-No strategy optimization. No new indicators. No timeframe-specific parameter tuning.
-Sub-daily intervals remain experimental until separately validated.
-
 ## M4 — Recovery + end-to-end Testnet acceptance
+Status: **NOT_STARTED**
+
 Scope only:
 - restart recovery
 - pending-order reconciliation
@@ -68,4 +82,4 @@ M4 closure state: `5S_CRYPTO_BINANCE_USDM_V1_INTEGRATION = CLOSED_TESTNET_READY`
 
 ## Hard stop boundary
 This development round ends at M4.
-LIVE deployment, other exchanges, Hedge Mode, short selling, Cross Margin, portfolio margin, strategy optimization, timeframe-specific optimization, and automatic leverage optimization are explicitly out of scope and require a new separately approved round/version.
+LIVE deployment, other exchanges, Hedge Mode, short selling, Cross Margin, portfolio margin, strategy optimization, timeframe-specific optimization, and automatic leverage optimization are out of scope.

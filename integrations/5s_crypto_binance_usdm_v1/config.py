@@ -23,11 +23,21 @@ class Settings:
     db_path: Path = Path("data/5s_crypto_v1.db")
     binance_public_base_url: str = "https://fapi.binance.com"
     request_timeout_seconds: float = 3.0
+    testnet_api_key: str = ""
+    testnet_api_secret: str = ""
+
+    @property
+    def testnet_credentials_present(self) -> bool:
+        return bool(self.testnet_api_key and self.testnet_api_secret)
 
     @classmethod
     def from_env(cls) -> "Settings":
-        mode = os.getenv("FIVES_MODE", "PAPER").upper().strip()
-        if mode != "PAPER":
-            mode = "PAPER"
+        requested_mode = os.getenv("FIVES_MODE", "PAPER").upper().strip()
+        mode = requested_mode if requested_mode in {"PAPER", "TESTNET"} else "PAPER"
         db_path = Path(os.getenv("FIVES_DB_PATH", "data/5s_crypto_v1.db"))
-        return cls(mode=mode, db_path=db_path)
+        return cls(
+            mode=mode,
+            db_path=db_path,
+            testnet_api_key=os.getenv("BINANCE_TESTNET_API_KEY", "").strip(),
+            testnet_api_secret=os.getenv("BINANCE_TESTNET_API_SECRET", "").strip(),
+        )

@@ -1,57 +1,72 @@
 # 5s-crypto V1 · Binance USDⓈ-M Futures integration
 
-This directory is the bounded execution-integration project for the frozen `5s-crypto V1` research baseline.
+Bounded execution-integration project for frozen `5s-crypto V1`.
 
-## Current status
+## Status
 
-`M1 = CLOSED`
-`M1.1 = CLOSED`
+- M1: CLOSED
+- M1.1: CLOSED
+- M2: **IMPLEMENTED_AWAITING_TESTNET_ACCEPTANCE**
+- M3: NOT_STARTED
+- M4: NOT_STARTED
 
-The console is intentionally PAPER-only at this stage. It does not accept or use Binance credentials and cannot place orders.
+## Install M2 dependency
 
-## Selectable K-line intervals
-
-- 15m
-- 1h
-- 2h
-- 4h
-- 6h
-- 12h
-- 1d
-
-The execution invariant is always:
-
-`completed bar close -> next bar open`
-
-Important validation boundary:
-- `1d` = current validated 5s-crypto V1 research baseline
-- all sub-daily intervals = selectable for PAPER/Testnet integration testing, but **experimental / unvalidated** until separately validated
-
-## Run
+Requires Python 3.10+.
 
 ```bash
-python -m venv .venv
-. .venv/bin/activate
-python app.py
+pip install -r requirements.txt
 ```
 
-Open `http://127.0.0.1:8080`.
+Official SDK is pinned:
+`binance-sdk-derivatives-trading-usds-futures==17.5.0`
 
-## Frozen deployment semantics
+## PAPER console
 
-- Universe: BTCUSDT, ETHUSDT, BNBUSDT, SOLUSDT
-- Product: Binance USDⓈ-M perpetual futures
-- Position mode: One-way
-- Direction: Long-only
-- Margin: Isolated
-- Initial target: 60%
-- W3 BUY-C confirmation target: 100%
-- SELL-A/B/C: 0% target (full exit)
+```bash
+FIVES_MODE=PAPER python app.py
+```
 
-Leverage and timeframe are execution/configuration parameters. They do not alter the frozen BUY/SELL equations.
+## Binance Futures Testnet acceptance
 
-For a configured bot capital budget `B`, target fraction `f`, and leverage `L`:
+Provide credentials only as environment variables:
 
-`target_notional = B × f × L`
+```bash
+export FIVES_MODE=TESTNET
+export BINANCE_TESTNET_API_KEY='...'
+export BINANCE_TESTNET_API_SECRET='...'
+python m2_testnet_check.py
+```
 
-The futures wrapper changes risk mechanics relative to the unlevered research baseline; future performance must account for funding, liquidation mechanics, exchange fees, and actual fills.
+To explicitly apply the frozen execution account settings on Testnet:
+
+```bash
+python m2_testnet_check.py --apply-account-settings
+```
+
+To perform the bounded Testnet order submit/cancel probe:
+
+```bash
+python m2_testnet_check.py --order-probe BTCUSDT
+```
+
+The script is hard-guarded against PAPER/LIVE authenticated use. M2 contains no production URL for authenticated mutations.
+
+## Frozen boundaries
+
+Universe:
+BTCUSDT / ETHUSDT / BNBUSDT / SOLUSDT.
+
+Product:
+Binance USDⓈ-M perpetual futures.
+
+Account semantics:
+One-way + Long-only + Isolated.
+
+Selectable intervals:
+15m / 1h / 2h / 4h / 6h / 12h / 1d.
+
+Validation boundary:
+1d remains the validated 5s-crypto V1 baseline; sub-daily intervals remain experimental.
+
+M3 cannot start until M2's real Testnet acceptance is CLOSED.
