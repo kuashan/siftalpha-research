@@ -72,6 +72,15 @@ UI-only scope:
 - no external front-end framework/runtime dependency
 - no strategy/execution semantic changes
 
+## M2.3.1 — Dynamic local Web port
+Status: **IMPLEMENTED_AND_VERIFIED**
+
+Fixes Android/SiftAlpha local port collisions:
+- Web server defaults to port 0 so the OS allocates a free loopback port
+- SIFTALPHA_WEB_URL is printed only after bind succeeds
+- no fixed 8080 dependency remains
+- Web UI stays loopback-only on 127.0.0.1
+
 ## M3 — Frozen 5s-crypto V1 signal engine + execution
 Status: **NOT_STARTED**
 
