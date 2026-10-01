@@ -243,11 +243,18 @@ class Handler(BaseHTTPRequestHandler):
         print(f"[web] {self.address_string()} {fmt % args}")
 
 
-def main(host: str = "0.0.0.0", port: int = 8080) -> None:
+def main(host: str = "127.0.0.1", port: int = 8080) -> None:
     enabled = [s for s, cfg in store.get_symbol_configs().items() if cfg["enabled"]]
-    print(f"{settings.app_name}")
-    print(f"environment=TESTNET_READY enabled_symbols={','.join(enabled) or 'none'} live_enabled=false")
-    print(f"web=http://127.0.0.1:{port}")
+    url = f"http://127.0.0.1:{port}"
+    print(f"{settings.app_name}", flush=True)
+    print(
+        f"environment=TESTNET_READY enabled_symbols={','.join(enabled) or 'none'} live_enabled=false",
+        flush=True,
+    )
+    # Explicit SiftAlpha Web URL protocol. This remains discoverable even when
+    # PID/socket ownership inspection is unavailable inside Internal Alpine.
+    print(f"SIFTALPHA_WEB_URL={url}", flush=True)
+    print(f"server listening on {url}", flush=True)
     ThreadingHTTPServer((host, port), Handler).serve_forever()
 
 
