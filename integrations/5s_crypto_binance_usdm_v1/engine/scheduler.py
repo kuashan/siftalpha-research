@@ -14,6 +14,7 @@ class M3Decision:
     signal: str
     actions: tuple[str, ...]
     c_eligible: bool = False
+    bar_open_time: int | None = None
 
     @property
     def pending_action(self) -> str | None:
@@ -64,8 +65,22 @@ def decide_actions(
             labels.append(f"BUY_{family}")
 
     if not actions:
-        return M3Decision(signal="HOLD", actions=(), c_eligible=False)
-    return M3Decision(signal="+".join(labels), actions=tuple(actions), c_eligible=c_eligible)
+        return M3Decision(
+            signal="HOLD",
+            actions=(),
+            c_eligible=False,
+            bar_open_time=latest.open_time,
+        )
+    return M3Decision(
+        signal="+".join(labels),
+        actions=tuple(actions),
+        c_eligible=c_eligible,
+        bar_open_time=latest.open_time,
+    )
+
+
+class TerminalDecisionError(RuntimeError):
+    terminal = True
 
 
 class StrategyScheduler:
@@ -87,7 +102,8 @@ class StrategyScheduler:
         poll_seconds: float = 5.0,
         fetch_limit: int = 220,
         minimum_closed_bars: int = 80,
-        on_decision: Callable[[str, M3Decision, dict[str, Any], dict[str, Any]], None] | None = None,
+        on_decision: Callable[..., Any] | None = None,
+        on_poll: Callable[..., Any] | None = None,
     ):
         self.store = store
         self.session = session
@@ -99,6 +115,7 @@ class StrategyScheduler:
         self.fetch_limit = max(100, int(fetch_limit))
         self.minimum_closed_bars = max(64, int(minimum_closed_bars))
         self.on_decision = on_decision
+        self.on_poll = on_poll
         self._stop = Event()
         self._thread: Thread | None = None
 
@@ -141,6 +158,15 @@ class StrategyScheduler:
             timeframe = str(cfg["timeframe"])
             try:
                 rows = adapter.klines(symbol, timeframe, limit=self.fetch_limit)
+                if self.on_poll is not None:
+                    try:
+                        self.on_poll(symbol, adapter)
+                    except Exception as exc:
+                        self.store.append_audit(
+                            "M3_ACCOUNTING_REFRESH_ERROR",
+                            symbol,
+                            f"{type(exc).__name__}:{exc}",
+                        )
                 closed = self._closed_rows(rows)
                 if len(closed) < self.minimum_closed_bars:
                     self.store.set_run_state(symbol, "WAITING_HISTORY")
@@ -177,22 +203,70 @@ class StrategyScheduler:
                 latest = evaluations[-1]
                 closed_times = [int(row[0]) for row in closed]
                 decision = decide_actions(state, latest, closed_times)
-                self.store.record_strategy_observation(
-                    symbol,
-                    bar_open_time=latest_open_time,
-                    signal=decision.signal,
-                    pending_action=decision.pending_action,
-                )
+                execution_context = {
+                    "signal_bar_open_time": latest_open_time,
+                    "execution_bar_open_time": int(rows[-1][0]),
+                    "reference_price": float(rows[-1][1]),
+                    "timeframe": timeframe,
+                }
+
+                if decision.actions and self.on_decision is not None:
+                    try:
+                        self.on_decision(
+                            symbol,
+                            decision,
+                            cfg,
+                            state,
+                            adapter,
+                            execution_context,
+                        )
+                    except TerminalDecisionError as exc:
+                        self.store.record_strategy_observation(
+                            symbol,
+                            bar_open_time=latest_open_time,
+                            signal=decision.signal,
+                            pending_action=None,
+                            run_state="BLOCKED",
+                        )
+                        self.store.append_audit(
+                            "M3_EXECUTION_BLOCKED",
+                            symbol,
+                            str(exc),
+                        )
+                        result[symbol] = {
+                            "state": "BLOCKED",
+                            "new_bar": True,
+                            "timeframe": timeframe,
+                            "signal": decision.signal,
+                            "actions": list(decision.actions),
+                            "blocked": str(exc),
+                        }
+                        continue
+
+                    self.store.record_strategy_observation(
+                        symbol,
+                        bar_open_time=latest_open_time,
+                        signal=decision.signal,
+                        pending_action=None,
+                        run_state="MONITORING",
+                    )
+                    state_name = "MONITORING"
+                else:
+                    self.store.record_strategy_observation(
+                        symbol,
+                        bar_open_time=latest_open_time,
+                        signal=decision.signal,
+                        pending_action=decision.pending_action,
+                    )
+                    state_name = "SIGNAL_READY" if decision.actions else "MONITORING"
+
                 result[symbol] = {
-                    "state": "SIGNAL_READY" if decision.actions else "MONITORING",
+                    "state": state_name,
                     "new_bar": True,
                     "timeframe": timeframe,
                     "signal": decision.signal,
                     "actions": list(decision.actions),
                 }
-
-                if decision.actions and self.on_decision is not None:
-                    self.on_decision(symbol, decision, cfg, state)
             except Exception as exc:
                 self.store.set_run_state(symbol, "ERROR")
                 self.store.append_audit(
