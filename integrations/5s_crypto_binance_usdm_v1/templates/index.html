@@ -132,7 +132,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
   .exposure-row{grid-template-columns:1fr 1fr}.exposure-row div:last-child{grid-column:1/-1}
 }
 @media(max-width:380px){
-  .badges .badge.test,.badges .badge.locked{display:none}.brand p{display:none}
+  .badges .badge.structural,.badges .badge.test,.badges .badge.locked{display:none}.brand p{display:none}
   .coin-tab small{font-size:9px}.coin-tab{padding:6px 4px}
 }
 </style>
@@ -148,6 +148,8 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       <div class="badges">
         <span class="badge __TOP_CONNECTION_CLASS__">● __TOP_CONNECTION_STATUS__</span>
         <span class="badge __TOP_RECOVERY_CLASS__">● __TOP_RECOVERY_STATUS__</span>
+        <span class="badge structural">逐仓</span>
+        <span class="badge structural">单向持仓</span>
         <span class="badge test">虚拟测试</span>
         <span class="badge locked">实盘锁定</span>
       </div>
