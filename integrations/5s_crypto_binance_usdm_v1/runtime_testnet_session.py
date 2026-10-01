@@ -170,9 +170,15 @@ class TestnetSession:
             self._recovery_summary = summary
             self._recovery_ready = bool(ready)
 
-    def recovery_ready(self) -> bool:
+    def recovery_ready(self, symbol: str | None = None) -> bool:
         with self._lock:
-            return bool(self._snapshot is not None and self._recovery_ready)
+            if self._snapshot is None:
+                return False
+            if symbol is None:
+                return bool(self._recovery_ready)
+            summary = self._recovery_summary or {}
+            item = (summary.get("symbols") or {}).get(symbol)
+            return bool(isinstance(item, dict) and item.get("status") == "PASS")
 
     def public_status(self) -> dict[str, Any]:
         with self._lock:

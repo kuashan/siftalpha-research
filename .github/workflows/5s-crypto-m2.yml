@@ -1,4 +1,4 @@
-name: 5s-crypto M2
+name: 5s-crypto M3-M4
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  m2-offline:
+  m3-m4-offline:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -31,7 +31,7 @@ jobs:
 
       - name: Compile
         run: |
-          python -m py_compile             app.py config.py storage.py m2_testnet_check.py             engine/paper.py engine/scheduler.py             exchange/binance_usdm_public.py             exchange/binance_usdm_testnet.py             strategy/frozen_contract.py strategy/frozen_signal_engine.py
+          python -m py_compile app.py config.py storage.py m2_testnet_check.py engine/paper.py engine/scheduler.py engine/execution.py engine/recovery.py exchange/binance_usdm_public.py exchange/binance_usdm_testnet.py strategy/frozen_contract.py strategy/frozen_signal_engine.py
 
       - name: Unit tests
         run: python -m unittest discover -s tests -v
@@ -40,6 +40,11 @@ jobs:
         run: |
           command -v node
           python -m unittest tests.test_m3_signal_engine_parity -v
+
+      - name: M4 recovery gate tests
+        run: |
+          python -m unittest tests.test_m4_recovery -v
+          python -m unittest tests.test_m4_scheduler_gate -v
 
       - name: PAPER app import
         env:
@@ -61,9 +66,9 @@ jobs:
           echo "$output" | grep -q "Demo API credentials missing"
           echo "DEMO_CREDENTIAL_GUARD_PASS"
 
-      - name: Upload M2.3 package
+      - name: Upload M3+M4 test package
         uses: actions/upload-artifact@v4
         with:
-          name: 5s-crypto-v1-binance-usdm-m2.3
+          name: 5s-crypto-v1-binance-usdm-m3-m4-test
           path: integrations/5s_crypto_binance_usdm_v1
           if-no-files-found: error

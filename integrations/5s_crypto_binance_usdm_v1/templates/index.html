@@ -91,6 +91,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 .control-block{display:flex;flex-direction:column;justify-content:space-between}
 .control-block p{color:var(--muted);font-size:11px;line-height:1.5;margin:8px 0 12px}
 .control-button{width:100%}
+.control-actions{display:grid;gap:7px}
 
 .primary,.secondary,.danger{
   min-height:42px;border:0;border-radius:9px;font-weight:750;padding:9px 13px
@@ -155,6 +156,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
         <div><small>虚拟账户总额</small><b>__VIRTUAL_BALANCE__ USDT</b></div>
         <div><small>当前持仓数</small><b>__POSITION_COUNT__</b></div>
         <div><small>单向持仓状态</small><b>__ONE_WAY_STATUS__</b></div>
+        <div><small>恢复对账状态</small><b class="__RECOVERY_CLASS__">__RECOVERY_STATUS__</b></div>
       </div>
       <form class="connect-form" method="post" action="/testnet-connect" autocomplete="off">
         <label>连接环境
@@ -171,6 +173,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       __CONNECT_ERROR__
       <div class="connect-actions">
         <form method="post" action="/testnet-retest"><button class="secondary" type="submit">重新检测</button></form>
+        <form method="post" action="/reconcile"><button class="secondary" type="submit">重新对账</button></form>
         <form method="post" action="/testnet-disconnect"><button class="danger" type="submit">断开连接</button></form>
       </div>
     </div>

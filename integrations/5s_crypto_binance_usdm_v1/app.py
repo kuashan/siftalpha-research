@@ -9,6 +9,7 @@ from urllib.parse import parse_qs, urlencode, urlparse
 from config import Settings
 from engine.paper import preview_exposure
 from engine.execution import M3Executor
+from engine.recovery import M4Recovery
 from engine.scheduler import StrategyScheduler
 from exchange.binance_usdm_public import BinanceUsdMPublicProbe
 from runtime_testnet_session import TestnetSession
@@ -31,6 +32,7 @@ testnet_session = TestnetSession(
     initial_api_secret=settings.testnet_api_secret,
 )
 m3_executor = M3Executor(store)
+m4_recovery = M4Recovery(store, execution_lock=m3_executor.operation_lock)
 strategy_scheduler = StrategyScheduler(
     store=store,
     session=testnet_session,
@@ -56,6 +58,8 @@ _RUN_STATE_LABELS = {
     "ARMED": "已启动",
     "WAITING_DEMO": "等待模拟账户",
     "WAITING_HISTORY": "历史数据不足",
+    "WAITING_RECONCILE": "等待恢复对账",
+    "RECOVERY_BLOCKED": "恢复对账已阻止",
     "MONITORING": "监测中",
     "SIGNAL_READY": "发现信号",
     "ERROR": "检测异常",
@@ -102,6 +106,19 @@ def _short_symbol(symbol: str) -> str:
     return symbol[:-4] if symbol.endswith("USDT") else symbol
 
 
+def run_m4_recovery() -> dict[str, object]:
+    adapter = testnet_session.adapter()
+    summary = m4_recovery.reconcile_all(adapter, settings.symbols)
+    testnet_session.set_recovery_status(summary, summary.get("status") == "PASS")
+    for symbol, item in (summary.get("symbols") or {}).items():
+        if isinstance(item, dict) and item.get("status") == "PASS":
+            try:
+                m3_executor.refresh_accounting(symbol, adapter, force=True)
+            except Exception as exc:
+                store.append_audit("M4_ACCOUNTING_REFRESH_ERROR", symbol, f"{type(exc).__name__}:{exc}")
+    return summary
+
+
 def render_index(selected_symbol: str | None = None) -> str:
     configs = store.get_symbol_configs()
     runtime = store.get_runtime_states()
@@ -131,7 +148,7 @@ def render_index(selected_symbol: str | None = None) -> str:
         validation = "已验证基线" if timeframe in settings.validated_timeframes else "实验周期"
         run_state = str(rt.get("run_state") or ("ARMED" if enabled else "STOPPED"))
         status_label = _RUN_STATE_LABELS.get(run_state, "运行中" if enabled else "未启动")
-        status_class = "running" if enabled and run_state != "ERROR" else "stopped"
+        status_class = "running" if enabled and run_state in {"ARMED", "MONITORING", "SIGNAL_READY"} else "stopped"
         action = "stop" if enabled else "start"
         action_label = "停止" if enabled else "启动"
         action_class = "danger" if enabled else "primary"
@@ -224,11 +241,21 @@ def render_index(selected_symbol: str | None = None) -> str:
                     <strong>{'策略已启用' if enabled else '策略未启动'}</strong>
                     <p>{'停止只影响当前币种，不影响其他币种。' if enabled else '启动后仅启用当前币种，并按该币设置自动监测模拟交易。'}</p>
                   </div>
-                  <form method="post" action="/symbol-action">
-                    <input type="hidden" name="symbol" value="{html.escape(symbol)}">
-                    <input type="hidden" name="action" value="{action}">
-                    <button class="{action_class} control-button" type="submit">{action_label} {html.escape(base)}</button>
-                  </form>
+                  <div class="control-actions">
+                    <form method="post" action="/symbol-action">
+                      <input type="hidden" name="symbol" value="{html.escape(symbol)}">
+                      <input type="hidden" name="action" value="{action}">
+                      <button class="{action_class} control-button" type="submit">{action_label} {html.escape(base)}</button>
+                    </form>
+                    <form method="post" action="/cancel-strategy-orders">
+                      <input type="hidden" name="symbol" value="{html.escape(symbol)}">
+                      <button class="secondary control-button" type="submit">取消本策略挂单</button>
+                    </form>
+                    <form method="post" action="/emergency-flatten" onsubmit="return confirm('确认停止当前币种并紧急平掉模拟仓位？');">
+                      <input type="hidden" name="symbol" value="{html.escape(symbol)}">
+                      <button class="danger control-button" type="submit">紧急平仓</button>
+                    </form>
+                  </div>
                 </section>
               </div>
             </article>
@@ -245,6 +272,24 @@ def render_index(selected_symbol: str | None = None) -> str:
     connection_label = "已连接虚拟资金" if connected else "等待连接"
     connection_class = "positive" if connected else "neutral"
     connection_open = "" if connected else " open"
+    recovery = testnet.get("recovery") or {}
+    recovery_ready = bool(testnet.get("recovery_ready"))
+    if not connected:
+        recovery_label = "未连接"
+        recovery_class = "neutral"
+    elif recovery_ready:
+        recovery_label = "全部对账通过"
+        recovery_class = "positive"
+    elif recovery.get("status") == "BLOCKED":
+        passed = sum(
+            1 for item in (recovery.get("symbols") or {}).values()
+            if isinstance(item, dict) and item.get("status") == "PASS"
+        )
+        recovery_label = f"部分阻止（{passed}/4 通过）"
+        recovery_class = "negative"
+    else:
+        recovery_label = "等待对账"
+        recovery_class = "neutral"
     last_error = str(testnet.get("last_error") or "").lower()
     if last_error:
         if any(token in last_error for token in ("-2015", "invalid api-key", "unauthorized", "401")):
@@ -270,6 +315,8 @@ def render_index(selected_symbol: str | None = None) -> str:
         .replace("__VIRTUAL_AVAILABLE__", available_label)
         .replace("__POSITION_COUNT__", str(int(account.get("nonzero_position_count", 0))) if connected else "—")
         .replace("__ONE_WAY_STATUS__", "正常" if account.get("one_way") else ("异常" if connected else "—"))
+        .replace("__RECOVERY_STATUS__", html.escape(recovery_label))
+        .replace("__RECOVERY_CLASS__", recovery_class)
         .replace("__CONNECT_ERROR__", error_html)
         .replace("__ACTIVE_COUNT__", str(len(active_symbols)))
         .replace("__CONFIGURED_BUDGET__", f"{configured_budget:.2f}")
@@ -363,17 +410,41 @@ class Handler(BaseHTTPRequestHandler):
                 api_key = form.get("api_key", [""])[0]
                 api_secret = form.get("api_secret", [""])[0]
                 testnet_session.connect_and_test(api_key, api_secret)
+                run_m4_recovery()
                 self._redirect_home()
                 return
 
             if self.path == "/testnet-retest":
                 testnet_session.test_existing_credentials()
+                run_m4_recovery()
+                self._redirect_home()
+                return
+
+            if self.path == "/reconcile":
+                run_m4_recovery()
                 self._redirect_home()
                 return
 
             if self.path == "/testnet-disconnect":
                 testnet_session.disconnect()
                 self._redirect_home()
+                return
+
+            if self.path == "/cancel-strategy-orders":
+                symbol = self._symbol_from_form(form)
+                adapter = testnet_session.adapter()
+                m4_recovery.cancel_strategy_orders(adapter, symbol)
+                run_m4_recovery()
+                self._redirect_home(symbol)
+                return
+
+            if self.path == "/emergency-flatten":
+                symbol = self._symbol_from_form(form)
+                adapter = testnet_session.adapter()
+                m4_recovery.emergency_flatten(adapter, symbol)
+                m3_executor.refresh_accounting(symbol, adapter, force=True)
+                run_m4_recovery()
+                self._redirect_home(symbol)
                 return
 
             if self.path == "/symbol-settings":
@@ -407,7 +478,7 @@ class Handler(BaseHTTPRequestHandler):
 
             self._send(404, "页面不存在".encode("utf-8"), "text/plain; charset=utf-8")
         except Exception:
-            if self.path.startswith("/testnet-"):
+            if self.path.startswith("/testnet-") or self.path == "/reconcile":
                 self._redirect_home()
                 return
             body = (

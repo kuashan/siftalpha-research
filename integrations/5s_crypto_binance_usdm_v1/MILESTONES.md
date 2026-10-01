@@ -104,7 +104,7 @@ Fixes Binance error -1021 / timestamp outside recvWindow:
 - strategy logic remains unchanged
 
 ## M3 — Frozen 5s-crypto V1 signal engine + execution
-Status: **IN_PROGRESS**
+Status: **IMPLEMENTED_AWAITING_DEVICE_ACCEPTANCE**
 
 User accepted the M2 Demo connection path on 2026-10-01 and authorized entry into M3.
 
@@ -120,10 +120,34 @@ Scope:
 Status: **IMPLEMENTED_AND_VERIFIED**
 
 ### M3.3 — Binance Demo execution + idempotent order loop
-Status: **NOT_STARTED**
+Status: **IMPLEMENTED_AND_VERIFIED**
 
-## M4 — Recovery + end-to-end Testnet acceptance
-Status: **NOT_STARTED**
+Implemented:
+- 60% initial BUY-A/B Demo MARKET entry
+- eligible W3 BUY-C remaining 40% top-up
+- SELL-A/B/C and multi-family full reduce-only exit
+- per-symbol configured budget/leverage/timeframe
+- available-margin and symbol-filter checks
+- One-way + Isolated enforcement
+- deterministic clientOrderId and local order ledger
+- crash-safe remote order lookup path
+- realized/unrealized PnL + funding + commission accounting
+- wired into the running Web app scheduler
+
+## M4 — Recovery + end-to-end Demo acceptance
+Status: **IMPLEMENTED_AWAITING_DEVICE_ACCEPTANCE**
+
+Implemented:
+- per-symbol startup/reconnect reconciliation gate
+- SQLite filled-order ledger vs Binance Demo position reconciliation
+- pending-order crash recovery by clientOrderId
+- strategy-owned orphan order cleanup
+- external/manual order and unknown-position blocking
+- no stale signal backfill after downtime; recovery rebases at latest closed bar
+- PnL/funding/fee refresh after recovery
+- explicit re-reconcile, strategy-order cancel, and emergency-flat controls
+
+M3 and M4 will be accepted together on the user's real SiftAlpha + Binance Demo environment.
 
 ## Hard stop boundary
 This development round ends at M4.

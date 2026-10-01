@@ -151,15 +151,19 @@ class StrategyScheduler:
             return result
 
         recovery_ready = getattr(self.session, "recovery_ready", None)
-        if callable(recovery_ready) and not recovery_ready():
-            for symbol in enabled:
+        ready_symbols: list[str] = []
+        for symbol in enabled:
+            if callable(recovery_ready) and not recovery_ready(symbol):
                 self.store.set_run_state(symbol, "WAITING_RECONCILE")
                 result[symbol] = {"state": "WAITING_RECONCILE"}
+            else:
+                ready_symbols.append(symbol)
+        if not ready_symbols:
             return result
 
         adapter = self._adapter(api_key, api_secret)
 
-        for symbol in enabled:
+        for symbol in ready_symbols:
             cfg = configs[symbol]
             state = runtime[symbol]
             timeframe = str(cfg["timeframe"])
