@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>5s-crypto V1 · Binance USDⓈ-M</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    body { margin:0; background:#0b1020; color:#edf2f7; }
+    main { max-width:980px; margin:0 auto; padding:20px; }
+    .top { display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between; }
+    h1 { font-size:22px; margin:0; }
+    .badges { display:flex; gap:8px; flex-wrap:wrap; }
+    .badge { border:1px solid #35405c; border-radius:999px; padding:6px 10px; font-size:13px; }
+    .paper { background:#21304f; }
+    .locked { background:#40202a; }
+    .card { background:#121a2c; border:1px solid #26314b; border-radius:14px; padding:16px; margin-top:16px; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+    .metric { background:#0e1526; border-radius:10px; padding:12px; }
+    .metric small { color:#9eabc5; display:block; margin-bottom:6px; }
+    table { width:100%; border-collapse:collapse; margin-top:8px; }
+    th,td { padding:10px 8px; border-bottom:1px solid #26314b; text-align:left; }
+    input { box-sizing:border-box; width:100%; max-width:160px; padding:10px; border-radius:8px; border:1px solid #394866; background:#0b1020; color:inherit; font-size:16px; }
+    button { padding:11px 16px; border-radius:9px; border:0; font-weight:700; cursor:pointer; }
+    .primary { background:#e6edf7; color:#101622; }
+    .note { color:#aab6cd; line-height:1.55; font-size:14px; }
+    .status-dot { display:inline-block; width:9px; height:9px; border-radius:50%; background:#8a94a6; margin-right:6px; }
+    .ok { background:#54c58a; } .bad { background:#e16f75; }
+    @media(max-width:720px){ .grid{grid-template-columns:1fr 1fr;} table{font-size:13px;} th:nth-child(4),td:nth-child(4){display:none;} }
+  </style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <div>
+      <h1>5s-crypto V1 · USDⓈ-M Futures</h1>
+      <div class="note">M1 控制台 · 策略冻结 · 合约执行层独立</div>
+    </div>
+    <div class="badges">
+      <span class="badge paper">PAPER</span>
+      <span class="badge">1D</span>
+      <span class="badge">ISOLATED</span>
+      <span class="badge">ONE-WAY</span>
+      <span class="badge locked">LIVE LOCKED</span>
+    </div>
+  </div>
+
+  <section class="card">
+    <div class="grid">
+      <div class="metric"><small>Binance USDⓈ-M</small><strong id="api-status"><span class="status-dot"></span>检测中</strong></div>
+      <div class="metric"><small>策略方向</small><strong>Long only</strong></div>
+      <div class="metric"><small>入场</small><strong>60% → 100%</strong></div>
+      <div class="metric"><small>卖出</small><strong>A/B/C 全退</strong></div>
+    </div>
+  </section>
+
+  <form class="card" method="post" action="/settings">
+    <h2 style="font-size:18px;margin-top:0">合约参数</h2>
+    <p class="note">“资金预算”是本机器人允许使用的保证金预算。例：1000 USDT、5x 时，60% 阶段预览名义价值为 3000 USDT；100% 阶段为 5000 USDT。M1 不会真实下单。</p>
+    <label>机器人资金预算（USDT）<br><input name="capital_budget_usdt" type="number" min="1" step="0.01" value="__BUDGET__" required></label>
+
+    <table>
+      <thead><tr><th>合约</th><th>杠杆</th><th>60% 名义价值</th><th>100% 名义价值</th></tr></thead>
+      <tbody>
+__ROWS__
+      </tbody>
+    </table>
+    <p style="margin-bottom:0"><button class="primary" type="submit">保存 PAPER 参数</button></p>
+  </form>
+
+  <section class="card">
+    <h2 style="font-size:18px;margin-top:0">本阶段边界</h2>
+    <p class="note">M1 只完成 UI、SQLite 状态、U 本位永续配置和公开 API 连通检查。不会使用 API Key，不会改 Binance 账户，不会发送订单。Testnet 属于 M2；5s-crypto V1 信号公式的 Python 等价性验证属于 M3；重启恢复与端到端验收属于 M4。M4 完成后本轮关闭。</p>
+  </section>
+</main>
+<script>
+fetch('/api/status').then(r=>r.json()).then(s=>{
+  const el=document.getElementById('api-status');
+  const ok=s.binance_public.ok;
+  el.innerHTML='<span class="status-dot '+(ok?'ok':'bad')+'"></span>'+(ok?'已连接 · '+s.binance_public.latency_ms+' ms':'不可达');
+}).catch(()=>{document.getElementById('api-status').innerHTML='<span class="status-dot bad"></span>检测失败';});
+</script>
+</body>
+</html>
