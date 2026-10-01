@@ -149,6 +149,19 @@ Implemented:
 
 M3 and M4 will be accepted together on the user's real SiftAlpha + Binance Demo environment.
 
+### M4.1 — Visualization and compact dashboard
+Status: **IMPLEMENTED_AWAITING_CI**
+
+- exact title: `5s crypto v 1`
+- top connection + reconciliation status
+- four summary metrics in one mobile row
+- four symbol tabs in one mobile row
+- per-symbol 300-bar candlestick + volume visualization
+- chart timeframe follows the saved symbol timeframe
+- B/S markers come from real M3 signal audit events
+- 300-bar display is isolated from the strategy scheduler's 220-bar default fetch window
+- trade settings are collapsible
+
 ## Hard stop boundary
 This development round ends at M4.
 No LIVE, cross-symbol capital rebalancing, dynamic leverage, automatic budget optimization, Hedge Mode, short selling, Cross Margin, other exchanges, or strategy optimization.
