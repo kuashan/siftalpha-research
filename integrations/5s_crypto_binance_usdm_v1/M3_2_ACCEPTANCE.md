@@ -1,6 +1,6 @@
 # M3.2 — 四币独立调度
 
-状态：**IMPLEMENTED_AWAITING_CI**
+状态：**IMPLEMENTED_AND_VERIFIED**
 
 范围：
 - 单 Python 进程调度 BTCUSDT / ETHUSDT / BNBUSDT / SOLUSDT
@@ -17,3 +17,10 @@
 
 本小项仍然不下单。
 真正的 Binance Demo 下单、幂等 clientOrderId、保证金检查属于 M3.3。
+
+
+CI evidence:
+- Run: 36827114886
+- scheduler unit tests: PASS
+- frozen JS/Python parity regression: PASS
+- full unit test suite: PASS
