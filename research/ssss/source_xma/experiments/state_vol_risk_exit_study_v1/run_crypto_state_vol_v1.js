@@ -1,5 +1,5 @@
 const fs=require("fs"),vm=require("vm"),path=require("path");
-const root=path.resolve(__dirname,"../../../../../../");
+const root=path.resolve(__dirname,"../../../../../");
 function load(p){vm.runInThisContext(fs.readFileSync(path.join(root,p),"utf8"),{filename:p});}
 load("research/ssss/source_xma/experiments/fivegz5se_cross_symbol/fivegz5se_v1_engine.js");
 let staged=fs.readFileSync(path.join(root,"research/ssss/source_xma/experiments/staged_entry_crypto_study/fivegz5se_staged_entry_experiment_v1.js"),"utf8");
