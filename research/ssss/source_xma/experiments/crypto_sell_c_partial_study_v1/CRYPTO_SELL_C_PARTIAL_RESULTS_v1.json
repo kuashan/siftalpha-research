@@ -390,7 +390,7 @@
       "return_improve_n": 4,
       "mdd_improve_n": 2,
       "mean_return_delta": 1.6434704217183462,
-      "mean_mdd_improvement": -0.010354396147765343,
+      "mean_mdd_improvement": 0.010354396147765343,
       "mean_p5_delta": -0.034975023860974945,
       "mean_cvar_delta": -0.01939456199420537,
       "return_bootstrap": {
@@ -399,9 +399,9 @@
         "hi": 2.978932011128288
       },
       "mdd_bootstrap": {
-        "mean": -0.010354396147765343,
-        "lo": -0.052296954370027626,
-        "hi": 0.03158816207449694
+        "mean": 0.010354396147765343,
+        "lo": -0.03158816207449694,
+        "hi": 0.052296954370027626
       },
       "p5_bootstrap": {
         "mean": -0.034975023860974945,
@@ -417,7 +417,7 @@
       "gate": {
         "mean_return_higher": true,
         "return_improve_ge_3_of_4": true,
-        "mean_intraday_mdd_no_worse": false,
+        "mean_intraday_mdd_no_worse": true,
         "mean_p5_no_worse": false,
         "mean_cvar_no_worse": false,
         "positive_uplift_concentration_le_60pct": true,
@@ -430,28 +430,28 @@
         {
           "symbol": "BTC",
           "ret": 1.3769027174546902,
-          "mdd": -0.04088701690717078,
+          "mdd": 0.04088701690717078,
           "p5": -0.012832857268833042,
           "cvar": -0.010738793069720975
         },
         {
           "symbol": "ETH",
           "ret": 3.512941775686154,
-          "mdd": -0.06370689183288447,
+          "mdd": 0.06370689183288447,
           "p5": -0.004428145126423089,
           "cvar": -0.01244408131741892
         },
         {
           "symbol": "BNB",
           "ret": 1.6496296745398984,
-          "mdd": 0.01924480222082614,
+          "mdd": -0.01924480222082614,
           "p5": -0.07756019173120729,
           "cvar": -0.025607541318813154
         },
         {
           "symbol": "SOL",
           "ret": 0.03440751919264251,
-          "mdd": 0.04393152192816774,
+          "mdd": -0.04393152192816774,
           "p5": -0.04507890131743636,
           "cvar": -0.028787832270868424
         }
@@ -468,9 +468,9 @@
       "mean_exposure": 0.4825793351441567,
       "total_trades": 219,
       "return_improve_n": 3,
-      "mdd_improve_n": 1,
+      "mdd_improve_n": 3,
       "mean_return_delta": 0.8621319507455428,
-      "mean_mdd_improvement": -0.027860616666609828,
+      "mean_mdd_improvement": 0.027860616666609828,
       "mean_p5_delta": -0.020746160424676037,
       "mean_cvar_delta": -0.014067117247643264,
       "return_bootstrap": {
@@ -479,9 +479,9 @@
         "hi": 1.540901404651162
       },
       "mdd_bootstrap": {
-        "mean": -0.027860616666609828,
-        "lo": -0.06041461129906123,
-        "hi": 0.004693377965841572
+        "mean": 0.027860616666609828,
+        "lo": -0.004693377965841572,
+        "hi": 0.06041461129906123
       },
       "p5_bootstrap": {
         "mean": -0.020746160424676037,
@@ -497,7 +497,7 @@
       "gate": {
         "mean_return_higher": true,
         "return_improve_ge_3_of_4": true,
-        "mean_intraday_mdd_no_worse": false,
+        "mean_intraday_mdd_no_worse": true,
         "mean_p5_no_worse": false,
         "mean_cvar_no_worse": false,
         "positive_uplift_concentration_le_60pct": true,
@@ -510,28 +510,28 @@
         {
           "symbol": "BTC",
           "ret": 0.7202918800978324,
-          "mdd": -0.06842797955354052,
+          "mdd": 0.06842797955354052,
           "p5": -0.011431269675420852,
           "cvar": -0.008820975723281
         },
         {
           "symbol": "ETH",
           "ret": 1.814437912835605,
-          "mdd": -0.052401243044581935,
+          "mdd": 0.052401243044581935,
           "p5": -0.004428145126423089,
           "cvar": -0.01103052230951132
         },
         {
           "symbol": "BNB",
           "ret": 1.074299770526715,
-          "mdd": -0.007776111894030491,
+          "mdd": 0.007776111894030491,
           "p5": -0.058944336292898886,
           "cvar": -0.0183251961494324
         },
         {
           "symbol": "SOL",
           "ret": -0.16050176047798148,
-          "mdd": 0.017162867825713635,
+          "mdd": -0.017162867825713635,
           "p5": -0.008180890603961322,
           "cvar": -0.018091774808348338
         }
@@ -548,9 +548,9 @@
       "mean_exposure": 0.4825793351441567,
       "total_trades": 219,
       "return_improve_n": 3,
-      "mdd_improve_n": 0,
+      "mdd_improve_n": 4,
       "mean_return_delta": 0.22274449097737448,
-      "mean_mdd_improvement": -0.04124175024471169,
+      "mean_mdd_improvement": 0.04124175024471169,
       "mean_p5_delta": -0.014812975964805492,
       "mean_cvar_delta": -0.00930199066189917,
       "return_bootstrap": {
@@ -559,9 +559,9 @@
         "hi": 0.5528870178145904
       },
       "mdd_bootstrap": {
-        "mean": -0.04124175024471169,
-        "lo": -0.0668682207553408,
-        "hi": -0.01810066447959302
+        "mean": 0.04124175024471169,
+        "lo": 0.01810066447959302,
+        "hi": 0.0668682207553408
       },
       "p5_bootstrap": {
         "mean": -0.014812975964805492,
@@ -577,7 +577,7 @@
       "gate": {
         "mean_return_higher": true,
         "return_improve_ge_3_of_4": true,
-        "mean_intraday_mdd_no_worse": false,
+        "mean_intraday_mdd_no_worse": true,
         "mean_p5_no_worse": false,
         "mean_cvar_no_worse": false,
         "positive_uplift_concentration_le_60pct": true,
@@ -590,28 +590,28 @@
         {
           "symbol": "BTC",
           "ret": 0.22346218142329577,
-          "mdd": -0.07624609506286795,
+          "mdd": 0.07624609506286795,
           "p5": -0.01002968208200869,
           "cvar": -0.00815685313972786
         },
         {
           "symbol": "ETH",
           "ret": 0.6293654233882948,
-          "mdd": -0.03873459783275934,
+          "mdd": 0.03873459783275934,
           "p5": -0.004428145126423089,
           "cvar": -0.009616963301603665
         },
         {
           "symbol": "BNB",
           "ret": 0.47640861224088593,
-          "mdd": -0.03877813316564316,
+          "mdd": 0.03877813316564316,
           "p5": -0.04398259763039303,
           "cvar": -0.011042850980051588
         },
         {
           "symbol": "SOL",
           "ret": -0.4382582531429786,
-          "mdd": -0.011208174917576308,
+          "mdd": 0.011208174917576308,
           "p5": -0.00081147902039716,
           "cvar": -0.008391295226213569
         }
