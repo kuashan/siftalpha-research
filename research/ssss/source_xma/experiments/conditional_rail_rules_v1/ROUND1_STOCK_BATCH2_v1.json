@@ -1,0 +1,62 @@
+{
+  "schema": 2,
+  "method": "STRICT_FIRST_OBSERVED_XMA25_XMA60",
+  "window": [
+    "2020-01-01",
+    "2025-12-31"
+  ],
+  "provider": "Twelve Data",
+  "symbols": [
+    "MU",
+    "GOOGL",
+    "META",
+    "NFLX",
+    "AMZN",
+    "TSLA",
+    "HD",
+    "MCD"
+  ],
+  "coverage": {
+    "MU": {
+      "rows": 0,
+      "events": 0
+    },
+    "GOOGL": {
+      "rows": 0,
+      "events": 0
+    },
+    "META": {
+      "rows": 0,
+      "events": 0
+    },
+    "NFLX": {
+      "rows": 0,
+      "events": 0
+    },
+    "AMZN": {
+      "rows": 0,
+      "events": 0
+    },
+    "TSLA": {
+      "rows": 0,
+      "events": 0
+    },
+    "HD": {
+      "rows": 0,
+      "events": 0
+    },
+    "MCD": {
+      "rows": 0,
+      "events": 0
+    }
+  },
+  "event_total": 0,
+  "summary": {
+    "LOWER_FAST": {},
+    "UPPER_FAST": {},
+    "LOWER_OUTER": {},
+    "UPPER_OUTER": {},
+    "GRAY_SUPPORT": {},
+    "GRAY_RESIST": {}
+  }
+}
