@@ -91,6 +91,18 @@ Fixes the virtual-account environment mismatch:
 - Futures Testnet remains available only for lower-level compatibility
 - connection failures return safe Chinese diagnostics without exposing secrets
 
+## M2.3.3 — Binance server clock synchronization
+Status: **IMPLEMENTED_AND_VERIFIED**
+
+Fixes Binance error -1021 / timestamp outside recvWindow:
+- fetch Binance Futures Demo server time before signed requests
+- estimate offset using the midpoint of request round-trip time
+- patch only the current Python process SDK timestamp generator
+- refresh the offset at most every 5 minutes while signed calls continue
+- do not change Android or Alpine system time
+- public market-data calls remain unchanged
+- strategy logic remains unchanged
+
 ## M3 — Frozen 5s-crypto V1 signal engine + execution
 Status: **NOT_STARTED**
 

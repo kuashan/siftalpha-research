@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from decimal import Decimal, ROUND_DOWN
+from threading import RLock
+import time
 from typing import Any, Iterable
 
 
@@ -15,6 +17,49 @@ class TestnetDependencyError(RuntimeError):
 
 class TestnetConfigurationError(RuntimeError):
     pass
+
+
+_CLOCK_PATCH_LOCK = RLock()
+_CLOCK_SYNC_TTL_SECONDS = 300.0
+
+
+def compute_clock_offset_ms(
+    server_time_ms: int,
+    local_before_ms: int,
+    local_after_ms: int,
+) -> int:
+    """Estimate Binance clock offset using the midpoint of one round trip."""
+    before = int(local_before_ms)
+    after = max(before, int(local_after_ms))
+    midpoint = before + ((after - before) // 2)
+    return int(server_time_ms) - midpoint
+
+
+def _install_binance_clock_offset(offset_ms: int) -> None:
+    """Make the official SDK timestamp generator use Binance server time.
+
+    The patch is process-local only. It does not change Android/Alpine system
+    time and disappears when this Python process exits.
+    """
+    try:
+        import binance_common.utils as binance_utils
+    except Exception as exc:
+        raise TestnetDependencyError(
+            "Install binance-sdk-derivatives-trading-usds-futures==17.5.0"
+        ) from exc
+
+    with _CLOCK_PATCH_LOCK:
+        if not hasattr(binance_utils, "_siftalpha_original_get_timestamp"):
+            binance_utils._siftalpha_original_get_timestamp = binance_utils.get_timestamp
+
+            def _siftalpha_synced_timestamp() -> int:
+                base = int(binance_utils._siftalpha_original_get_timestamp())
+                offset = int(getattr(binance_utils, "_siftalpha_time_offset_ms", 0))
+                return base + offset
+
+            binance_utils.get_timestamp = _siftalpha_synced_timestamp
+
+        binance_utils._siftalpha_time_offset_ms = int(offset_ms)
 
 
 @dataclass(frozen=True)
@@ -113,6 +158,10 @@ class BinanceUsdMTestnetAdapter:
         self.allowed_symbols = tuple(allowed_symbols)
         self.allowed_timeframes = tuple(allowed_timeframes)
         self._client = client
+        self._client_injected = client is not None
+        self._clock_lock = RLock()
+        self._clock_offset_ms: int | None = None
+        self._clock_synced_at_monotonic = 0.0
 
     @property
     def credentials_present(self) -> bool:
@@ -158,6 +207,60 @@ class BinanceUsdMTestnetAdapter:
             )
             self._client = DerivativesTradingUsdsFutures(config_rest_api=configuration)
         return self._client.rest_api if hasattr(self._client, "rest_api") else self._client
+
+    def _sync_clock(self, rest: Any, *, force: bool = False) -> None:
+        # Existing unit-test mocks from earlier milestones may not expose the
+        # public server-time endpoint. Real Binance SDK clients always do.
+        if self._client_injected and not hasattr(rest, "check_server_time"):
+            return
+
+        now = time.monotonic()
+        if (
+            not force
+            and self._clock_offset_ms is not None
+            and now - self._clock_synced_at_monotonic < _CLOCK_SYNC_TTL_SECONDS
+        ):
+            return
+
+        with self._clock_lock:
+            now = time.monotonic()
+            if (
+                not force
+                and self._clock_offset_ms is not None
+                and now - self._clock_synced_at_monotonic < _CLOCK_SYNC_TTL_SECONDS
+            ):
+                return
+
+            local_before = int(time.time() * 1000)
+            data = _response_data(rest.check_server_time())
+            local_after = int(time.time() * 1000)
+            if not isinstance(data, dict):
+                raise RuntimeError("币安服务器时间响应格式异常")
+            server_time = _first(data, "serverTime", "server_time")
+            try:
+                server_time_ms = int(server_time)
+            except (TypeError, ValueError) as exc:
+                raise RuntimeError("币安服务器时间不可用") from exc
+            if server_time_ms <= 0:
+                raise RuntimeError("币安服务器时间不可用")
+
+            offset_ms = compute_clock_offset_ms(
+                server_time_ms,
+                local_before,
+                local_after,
+            )
+            _install_binance_clock_offset(offset_ms)
+            self._clock_offset_ms = offset_ms
+            self._clock_synced_at_monotonic = time.monotonic()
+
+    def _signed_rest(self):
+        rest = self._rest()
+        self._sync_clock(rest)
+        return rest
+
+    @property
+    def clock_offset_ms(self) -> int | None:
+        return self._clock_offset_ms
 
     def _check_symbol(self, symbol: str) -> str:
         symbol = symbol.upper().strip()
@@ -219,10 +322,10 @@ class BinanceUsdMTestnetAdapter:
 
     def leverage_brackets(self, symbol: str) -> Any:
         symbol = self._check_symbol(symbol)
-        return _response_data(self._rest().notional_and_leverage_brackets(symbol=symbol))
+        return _response_data(self._signed_rest().notional_and_leverage_brackets(symbol=symbol))
 
     def position_mode(self) -> dict[str, Any]:
-        data = _response_data(self._rest().get_current_position_mode())
+        data = _response_data(self._signed_rest().get_current_position_mode())
         if not isinstance(data, dict):
             raise RuntimeError("unexpected position mode response")
         return data
@@ -232,15 +335,15 @@ class BinanceUsdMTestnetAdapter:
         return not bool(_first(data, "dualSidePosition", "dual_side_position", default=True))
 
     def balances(self) -> Any:
-        return _response_data(self._rest().futures_account_balance_v3())
+        return _response_data(self._signed_rest().futures_account_balance_v3())
 
     def positions(self, symbol: str | None = None) -> Any:
         checked = self._check_symbol(symbol) if symbol else None
-        return _response_data(self._rest().position_information_v2(symbol=checked))
+        return _response_data(self._signed_rest().position_information_v2(symbol=checked))
 
     def open_orders(self, symbol: str | None = None) -> Any:
         checked = self._check_symbol(symbol) if symbol else None
-        return _response_data(self._rest().current_all_open_orders(symbol=checked))
+        return _response_data(self._signed_rest().current_all_open_orders(symbol=checked))
 
     def query_order(
         self,
@@ -253,7 +356,7 @@ class BinanceUsdMTestnetAdapter:
         if order_id is None and not client_order_id:
             raise ValueError("order_id or client_order_id is required")
         return _response_data(
-            self._rest().query_order(
+            self._signed_rest().query_order(
                 symbol=symbol,
                 order_id=order_id,
                 orig_client_order_id=client_order_id,
@@ -265,7 +368,7 @@ class BinanceUsdMTestnetAdapter:
     def ensure_one_way(self) -> dict[str, Any]:
         if self.is_one_way():
             return {"changed": False, "one_way": True}
-        data = _response_data(self._rest().change_position_mode(dual_side_position="false"))
+        data = _response_data(self._signed_rest().change_position_mode(dual_side_position="false"))
         return {"changed": True, "one_way": True, "response": data}
 
     def margin_type(self, symbol: str) -> str | None:
@@ -285,7 +388,7 @@ class BinanceUsdMTestnetAdapter:
         if current == "ISOLATED":
             return {"changed": False, "margin_type": "ISOLATED"}
         data = _response_data(
-            self._rest().change_margin_type(symbol=symbol, margin_type="ISOLATED")
+            self._signed_rest().change_margin_type(symbol=symbol, margin_type="ISOLATED")
         )
         return {"changed": True, "margin_type": "ISOLATED", "response": data}
 
@@ -295,7 +398,7 @@ class BinanceUsdMTestnetAdapter:
         if not 1 <= leverage <= 125:
             raise ValueError("leverage must be 1..125")
         return _response_data(
-            self._rest().change_initial_leverage(symbol=symbol, leverage=leverage)
+            self._signed_rest().change_initial_leverage(symbol=symbol, leverage=leverage)
         )
 
     def submit_limit_buy(
@@ -312,7 +415,7 @@ class BinanceUsdMTestnetAdapter:
         if not client_order_id or len(client_order_id) > 36:
             raise ValueError("client_order_id must be 1..36 chars")
         return _response_data(
-            self._rest().new_order(
+            self._signed_rest().new_order(
                 symbol=symbol,
                 side="BUY",
                 type="LIMIT",
@@ -335,7 +438,7 @@ class BinanceUsdMTestnetAdapter:
         if order_id is None and not client_order_id:
             raise ValueError("order_id or client_order_id is required")
         return _response_data(
-            self._rest().cancel_order(
+            self._signed_rest().cancel_order(
                 symbol=symbol,
                 order_id=order_id,
                 orig_client_order_id=client_order_id,

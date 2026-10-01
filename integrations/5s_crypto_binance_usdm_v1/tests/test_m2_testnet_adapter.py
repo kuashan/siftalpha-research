@@ -6,6 +6,7 @@ import unittest
 from exchange.binance_usdm_testnet import (
     BinanceUsdMTestnetAdapter,
     TestnetGuardError,
+    compute_clock_offset_ms,
     floor_to_step,
 )
 
@@ -137,6 +138,16 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(order["orderId"], 123)
         canceled = a.cancel_order("BTCUSDT", order_id=123)
         self.assertEqual(canceled["status"], "CANCELED")
+
+    def test_clock_offset_uses_round_trip_midpoint(self):
+        self.assertEqual(
+            compute_clock_offset_ms(
+                server_time_ms=10_500,
+                local_before_ms=9_900,
+                local_after_ms=10_100,
+            ),
+            500,
+        )
 
     def test_floor_to_step(self):
         self.assertEqual(floor_to_step(Decimal("1.23456"), Decimal("0.001")), Decimal("1.234"))

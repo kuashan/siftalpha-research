@@ -413,7 +413,7 @@ def main(host: str = "127.0.0.1", port: int = 0) -> None:
     url = f"http://127.0.0.1:{actual_port}"
     print(f"{settings.app_name}", flush=True)
     print(
-        f"environment=TESTNET_READY enabled_symbols={','.join(enabled) or 'none'} live_enabled=false",
+        f"environment=DEMO_READY enabled_symbols={','.join(enabled) or 'none'} live_enabled=false",
         flush=True,
     )
     # Publish only after bind succeeds, so SiftAlpha never receives a stale/invalid URL.
