@@ -1407,3 +1407,29 @@ The stock rules are structurally defined. Remaining work is genuine future OOS v
 
 No new stock optimization round is opened.
 
+## Crypto V1 baseline freeze — 2026-10-01
+
+Status: **FROZEN_BASELINE**.
+
+The current SSSS Crypto framework is now formally named:
+
+`Crypto V1`
+
+Frozen core:
+- BTC / ETH / BNB / SOL development evidence;
+- BUY-A / BUY-B -> 60%;
+- W3 BUY-C -> +40% to 100%;
+- SELL-A -> full exit;
+- SELL-B -> full exit;
+- SELL-C -> full exit;
+- no independent Risk Exit layer;
+- execution = `Close Confirmed -> Next Bar Open`;
+- no fixed 24-hour delay.
+
+Canonical baseline:
+`research/ssss/CRYPTO_V1_BASELINE.md`
+
+`CRYPTO_V1 = FROZEN_BASELINE`
+
+Future changes must not overwrite Crypto V1; they require a new experiment/version.
+

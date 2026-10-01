@@ -1824,3 +1824,28 @@ Stock open-issues audit performed in the same closure:
 
 `STOCK_THREE_BUY_THREE_SELL_STRUCTURAL_OPEN_ISSUES = NONE_IDENTIFIED`
 
+## Crypto V1 frozen baseline — 2026-10-01
+
+The user designated the completed Crypto three-buy / three-sell research state as the first frozen Crypto baseline.
+
+Name:
+`Crypto V1`
+
+Frozen behavior:
+- initial BUY-A/B allocation 60%;
+- W3 BUY-C top-up +40% to 100%;
+- SELL-A/B/C all full exit;
+- multi-family SELL full exit;
+- no independent Risk Exit layer;
+- signal confirmed only on completed bar close;
+- execution at the next bar open, with no additional 24-hour wait.
+
+The current evidence base is BTC / ETH / BNB / SOL Binance Spot UTC daily OHLCV. The execution principle can be applied to other timeframes, but those timeframes are not automatically validated by the daily Crypto V1 evidence.
+
+Canonical file:
+`research/ssss/CRYPTO_V1_BASELINE.md`
+
+`CRYPTO_V1 = FROZEN_BASELINE`
+
+Crypto V1 must remain an immutable reference control. Any later change requires a new experiment/version.
+
