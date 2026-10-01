@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlparse
 
+from charting import DISPLAY_KLINE_LIMIT, normalize_chart_klines
 from config import Settings
 from engine.paper import preview_exposure
 from engine.execution import M3Executor
@@ -119,6 +120,50 @@ def run_m4_recovery() -> dict[str, object]:
     return summary
 
 
+def chart_payload(symbol: str) -> dict[str, object]:
+    symbol = symbol.upper().strip()
+    if symbol not in settings.symbols:
+        raise ValueError("不支持这个币种")
+    cfg = store.get_symbol_configs()[symbol]
+    timeframe = str(cfg["timeframe"])
+
+    source = "币安公开行情"
+    try:
+        api_key, api_secret = testnet_session.credentials()
+        if api_key and api_secret:
+            rows = testnet_session.adapter().klines(
+                symbol, timeframe, limit=DISPLAY_KLINE_LIMIT
+            )
+            source = "币安模拟交易行情"
+        else:
+            rows = probe.klines(symbol, timeframe, limit=DISPLAY_KLINE_LIMIT)
+    except Exception:
+        rows = probe.klines(symbol, timeframe, limit=DISPLAY_KLINE_LIMIT)
+        source = "币安公开行情"
+
+    candles = normalize_chart_klines(rows if isinstance(rows, list) else [])
+    markers = store.list_signal_markers(symbol)
+    if candles:
+        first_time = int(candles[0]["open_time"])
+        last_time = int(candles[-1]["open_time"])
+        markers = [
+            marker for marker in markers
+            if first_time <= int(marker["open_time"]) <= last_time
+        ]
+    else:
+        markers = []
+
+    return {
+        "symbol": symbol,
+        "timeframe": timeframe,
+        "timeframe_label": _TIMEFRAME_LABELS.get(timeframe, timeframe),
+        "display_limit": DISPLAY_KLINE_LIMIT,
+        "source": source,
+        "candles": candles,
+        "markers": markers,
+    }
+
+
 def render_index(selected_symbol: str | None = None) -> str:
     configs = store.get_symbol_configs()
     runtime = store.get_runtime_states()
@@ -192,6 +237,30 @@ def render_index(selected_symbol: str | None = None) -> str:
                 </div>
               </div>
 
+              <section
+                class="market-chart"
+                data-chart-symbol="{html.escape(symbol)}"
+                data-chart-timeframe="{html.escape(timeframe)}"
+              >
+                <div class="chart-head">
+                  <div>
+                    <small>行情图</small>
+                    <strong>{html.escape(base)} / USDT · {_TIMEFRAME_LABELS.get(timeframe, timeframe)}</strong>
+                  </div>
+                  <span>最近 {DISPLAY_KLINE_LIMIT} 根</span>
+                </div>
+                <div class="chart-readout">触摸或移动到 K 线查看开高低收与成交量</div>
+                <div class="chart-scroll">
+                  <canvas class="kline-canvas" aria-label="{html.escape(base)} K 线蜡烛图与成交量"></canvas>
+                </div>
+                <div class="chart-legend">
+                  <span><b class="legend-buy">B</b> 买入信号</span>
+                  <span><b class="legend-sell">S</b> 卖出信号</span>
+                  <span>下方柱状图为成交量</span>
+                </div>
+                <div class="chart-message">正在加载 {_TIMEFRAME_LABELS.get(timeframe, timeframe)} K 线…</div>
+              </section>
+
               <div class="snapshot-grid">
                 <div class="snapshot"><small>当前仓位</small><b>{current_fraction * 100:.0f}%</b></div>
                 <div class="snapshot"><small>最新信号</small><b>{html.escape(last_signal)}</b></div>
@@ -200,13 +269,15 @@ def render_index(selected_symbol: str | None = None) -> str:
               </div>
 
               <div class="panel-body">
-                <section class="settings-block">
-                  <div class="section-title">
+                <details class="settings-block trade-settings">
+                  <summary class="trade-settings-summary">
                     <div>
                       <small>交易设置</small>
                       <strong>{validation}</strong>
                     </div>
-                  </div>
+                    <span>点击展开</span>
+                  </summary>
+                  <div class="trade-settings-body">
                   <form method="post" action="/symbol-settings">
                     <input type="hidden" name="symbol" value="{html.escape(symbol)}">
                     <div class="field-grid">
@@ -233,7 +304,8 @@ def render_index(selected_symbol: str | None = None) -> str:
                     </div>
                     <button class="secondary save-button" type="submit">保存设置</button>
                   </form>
-                </section>
+                  </div>
+                </details>
 
                 <section class="control-block">
                   <div>
@@ -290,6 +362,21 @@ def render_index(selected_symbol: str | None = None) -> str:
     else:
         recovery_label = "等待对账"
         recovery_class = "neutral"
+    top_connection_status = "已连接" if connected else "未连接"
+    top_connection_class = "positive" if connected else "neutral"
+    if not connected:
+        top_recovery_status = "未对账"
+        top_recovery_class = "neutral"
+    elif recovery_ready:
+        top_recovery_status = "对账通过"
+        top_recovery_class = "positive"
+    elif recovery.get("status") == "BLOCKED":
+        top_recovery_status = "对账阻止"
+        top_recovery_class = "negative"
+    else:
+        top_recovery_status = "等待对账"
+        top_recovery_class = "neutral"
+
     last_error = str(testnet.get("last_error") or "").lower()
     if last_error:
         if any(token in last_error for token in ("-2015", "invalid api-key", "unauthorized", "401")):
@@ -308,6 +395,10 @@ def render_index(selected_symbol: str | None = None) -> str:
         TEMPLATE
         .replace("__INITIAL_SYMBOL__", html.escape(initial_symbol))
         .replace("__CONNECTION_OPEN__", connection_open)
+        .replace("__TOP_CONNECTION_STATUS__", top_connection_status)
+        .replace("__TOP_CONNECTION_CLASS__", top_connection_class)
+        .replace("__TOP_RECOVERY_STATUS__", top_recovery_status)
+        .replace("__TOP_RECOVERY_CLASS__", top_recovery_class)
         .replace("__CONNECTION_LABEL__", connection_label)
         .replace("__CONNECTION_CLASS__", connection_class)
         .replace("__MASKED_API_KEY__", html.escape(str(testnet.get("masked_api_key") or "未连接")))
@@ -369,6 +460,23 @@ class Handler(BaseHTTPRequestHandler):
                 render_index(selected).encode("utf-8"),
                 "text/html; charset=utf-8",
             )
+            return
+        if parsed.path == "/api/chart":
+            query = parse_qs(parsed.query)
+            symbol = str(query.get("symbol", [""])[0]).upper().strip()
+            try:
+                payload = chart_payload(symbol)
+                self._send(
+                    200,
+                    json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+                    "application/json; charset=utf-8",
+                )
+            except Exception as exc:
+                self._send(
+                    400,
+                    json.dumps({"error": str(exc)}, ensure_ascii=False).encode("utf-8"),
+                    "application/json; charset=utf-8",
+                )
             return
         if parsed.path == "/api/status":
             result = probe.probe()
