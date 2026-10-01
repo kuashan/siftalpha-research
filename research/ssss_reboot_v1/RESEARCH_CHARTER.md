@@ -47,3 +47,27 @@ During SSSS discovery:
 
 Only after an SSSS candidate is independently frozen may 5s be used as an external
 comparison benchmark.
+
+
+## XMA immutability boundary
+
+The original XMA structure is authoritative and must not be altered.
+
+Hard constraints:
+- preserve `XMA(XMA(L,25),25)` exactly;
+- preserve `XMA(XMA(H,25),25)` exactly;
+- preserve `XMA(XMA(L,60),60)` exactly;
+- preserve `XMA(XMA(H,60),60)` exactly;
+- do not replace XMA with EMA, DEMA, SMA, WMA, or any causal substitute;
+- do not modify centered/repainting behavior to make the formula easier to backtest;
+- do not treat repainting as a defect to be repaired.
+
+Repainting is a native property of the source XMA and is itself part of the
+object being researched.
+
+The only source corrections currently authorized are the user-confirmed
+non-XMA typos in the slow weighted structure:
+- the H/L typo in the low weighted series;
+- the intended 20..1 weighting with total denominator 210.
+
+Those corrections must not be generalized into permission to alter XMA.
