@@ -1,0 +1,59 @@
+name: Crypto SELL-C Partial Study v1
+
+on:
+  push:
+    branches:
+      - research/source-xma-walkforward
+    paths:
+      - "research/ssss/source_xma/experiments/crypto_sell_c_partial_study_v1/run_sell_c_partial_v1.js"
+      - ".github/workflows/crypto-sell-c-partial-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact trigger commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          git init .
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
+          git fetch --depth=1 origin "${SHA}"
+          git checkout --detach FETCH_HEAD
+      - name: Fetch frozen Binance daily OHLCV
+        run: python3 research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/fetch_binance_crypto_v1.py
+      - name: Reproduce control and compute frozen SELL-C fractions
+        run: node research/ssss/source_xma/experiments/crypto_sell_c_partial_study_v1/run_sell_c_partial_v1.js
+      - name: Verify branch did not drift
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          BRANCH: research/source-xma-walkforward
+          SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          remote_sha="$(git ls-remote "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" "refs/heads/${BRANCH}" | awk '{print $1}')"
+          test "${remote_sha}" = "${SHA}"
+      - name: Commit verified outputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          BRANCH: research/source-xma-walkforward
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ssss/source_xma/experiments/crypto_sell_c_partial_study_v1/BASELINE_REPRO_v1.json
+          git add research/ssss/source_xma/experiments/crypto_sell_c_partial_study_v1/CRYPTO_SELL_C_PARTIAL_RESULTS_v1.json
+          git add research/ssss/source_xma/experiments/crypto_sell_c_partial_study_v1/CRYPTO_SELL_C_PARTIAL_PER_COIN_v1.csv
+          git add research/ssss/source_xma/experiments/crypto_sell_c_partial_study_v1/CRYPTO_SELL_C_PARTIAL_SUMMARY_v1.csv
+          git commit -m "research: compute crypto sell c partial study v1"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" HEAD:"refs/heads/${BRANCH}"
