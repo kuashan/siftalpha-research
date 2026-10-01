@@ -161,6 +161,7 @@ Status: **IMPLEMENTED_AND_VERIFIED**
 - B/S markers come from real M3 signal audit events
 - 300-bar display is isolated from the strategy scheduler's 220-bar default fetch window
 - trade settings are collapsible
+- 3m / 5m are available as experimental monitoring/trading timeframes; frozen strategy equations and the 220-bar scheduler fetch window remain unchanged
 - CI Run 36832764258 PASS
 
 ## Hard stop boundary

@@ -10,7 +10,7 @@ class Settings:
     app_name: str = "5s-crypto V1 · Binance USDⓈ-M"
     mode: str = "PAPER"
     default_timeframe: str = "1d"
-    allowed_timeframes: tuple[str, ...] = ("15m", "1h", "2h", "4h", "6h", "12h", "1d")
+    allowed_timeframes: tuple[str, ...] = ("3m", "5m", "15m", "1h", "2h", "4h", "6h", "12h", "1d")
     validated_timeframes: tuple[str, ...] = ("1d",)
     symbols: tuple[str, ...] = ("BTCUSDT", "ETHUSDT", "BNBUSDT", "SOLUSDT")
     margin_type: str = "ISOLATED"

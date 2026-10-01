@@ -46,6 +46,8 @@ TEMPLATE = (Path(__file__).parent / "templates" / "index.html").read_text(encodi
 
 
 _TIMEFRAME_LABELS = {
+    "3m": "3 分钟",
+    "5m": "5 分钟",
     "15m": "15 分钟",
     "1h": "1 小时",
     "2h": "2 小时",
