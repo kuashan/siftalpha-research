@@ -35,7 +35,8 @@ class ChineseUiTests(unittest.TestCase):
         text = (pathlib.Path(__file__).parents[1] / "templates" / "index.html").read_text(encoding="utf-8")
         self.assertIn(".coin-panel{display:none", text)
         self.assertIn(".coin-panel.active{display:block}", text)
-        self.assertIn("data-symbol", text)
+        self.assertIn("__COIN_TABS__", text)
+        self.assertIn("tab.dataset.symbol", text)
         self.assertIn("activate(symbol)", text)
 
 
