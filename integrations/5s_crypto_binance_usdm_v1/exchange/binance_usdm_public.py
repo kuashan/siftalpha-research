@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import json
 import time
+from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 
@@ -21,13 +22,23 @@ class BinanceUsdMPublicProbe:
         self.base_url = base_url.rstrip("/")
         self.timeout_seconds = timeout_seconds
 
-    def _get_json(self, path: str) -> dict:
+    def _get_json(self, path: str):
         req = Request(
             f"{self.base_url}{path}",
             headers={"User-Agent": "5s-crypto-v1-m1/1.0"},
         )
         with urlopen(req, timeout=self.timeout_seconds) as response:
             return json.loads(response.read().decode("utf-8"))
+
+    def klines(self, symbol: str, timeframe: str, limit: int = 300):
+        params = urlencode(
+            {
+                "symbol": symbol.upper().strip(),
+                "interval": timeframe.strip(),
+                "limit": int(limit),
+            }
+        )
+        return self._get_json(f"/fapi/v1/klines?{params}")
 
     def probe(self) -> ProbeResult:
         started = time.perf_counter()
