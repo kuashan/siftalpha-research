@@ -126,14 +126,9 @@ def render_snapshot(bars: list[Bar], asof: Optional[int] = None) -> list[dict]:
     # Repainting centered XMA structures.
     vh25 = double_xma_snapshot(H, len(bars) - 1, 25)
     vl25 = double_xma_snapshot(L, len(bars) - 1, 25)
-    vh60 = double_xma_snapshot(H, len(bars) - 1, 60 if False else 59)
-    vl60 = double_xma_snapshot(L, len(bars) - 1, 60 if False else 59)
-
-    # IMPORTANT:
-    # The source formula specifies XMA(...,60). Public TDX-like references
-    # normalize XMA to an odd centered window. Phase 0 keeps period-60 behavior
-    # explicitly unresolved until Futu values are independently calibrated.
-    # Therefore BS/BD below are left None rather than silently assuming period 59.
+    # XMA(...,60) is intentionally not computed yet.
+    # The exact Futu semantics for even-period XMA(60) remain a Phase-0 gate.
+    # BS/BD must stay None until period-60 behavior is independently calibrated.
 
     wh = canonical_weighted_20_210(H)
     wl = canonical_weighted_20_210(L)
