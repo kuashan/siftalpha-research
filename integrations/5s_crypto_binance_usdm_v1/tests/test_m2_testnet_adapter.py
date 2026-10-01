@@ -88,7 +88,7 @@ class FakeRest:
 class AdapterTests(unittest.TestCase):
     def adapter(self, rest=None):
         return BinanceUsdMTestnetAdapter(
-            mode="TESTNET",
+            mode="DEMO",
             api_key="x",
             api_secret="y",
             allowed_symbols=("BTCUSDT",),
