@@ -56,9 +56,9 @@ jobs:
           echo "$output" | grep -q "Testnet API credentials missing"
           echo "TESTNET_CREDENTIAL_GUARD_PASS"
 
-      - name: Upload M2.2 package
+      - name: Upload M2.3 package
         uses: actions/upload-artifact@v4
         with:
-          name: 5s-crypto-v1-binance-usdm-m2.2
+          name: 5s-crypto-v1-binance-usdm-m2.3
           path: integrations/5s_crypto_binance_usdm_v1
           if-no-files-found: error
