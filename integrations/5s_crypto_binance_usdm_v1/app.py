@@ -85,11 +85,19 @@ _SIGNAL_LABELS = {
 def _timeframe_options(selected_timeframe: str) -> str:
     options = []
     for interval in settings.allowed_timeframes:
-        selected = " selected" if interval == selected_timeframe else ""
-        suffix = " · 已验证基线" if interval in settings.validated_timeframes else " · 实验周期"
-        label = _TIMEFRAME_LABELS.get(interval, interval) + suffix
+        selected = interval == selected_timeframe
+        label = _TIMEFRAME_LABELS.get(interval, interval)
+        status = "已验证基线" if interval in settings.validated_timeframes else "实验周期"
         options.append(
-            f'<option value="{html.escape(interval)}"{selected}>{html.escape(label)}</option>'
+            '<button '
+            'type="button" '
+            f'class="timeframe-option{" selected" if selected else ""}" '
+            f'data-timeframe-option="{html.escape(interval)}" '
+            'role="option" '
+            f'aria-selected="{"true" if selected else "false"}">'
+            f'<span>{html.escape(label)}</span>'
+            f'<small>{html.escape(status)}</small>'
+            '</button>'
         )
     return "\n".join(options)
 
@@ -229,6 +237,7 @@ def render_index(selected_symbol: str | None = None) -> str:
                   <div class="eyebrow">当前币种</div>
                   <div class="coin-title-row">
                     <h2>{html.escape(base)} <span>/ USDT</span></h2>
+                    <span class="market-badge">U本位永续</span>
                     <span class="status-pill {status_class}">{status_label}</span>
                   </div>
                 </div>
@@ -247,7 +256,7 @@ def render_index(selected_symbol: str | None = None) -> str:
                 <div class="chart-head">
                   <div class="chart-identity">
                     <small>行情图</small>
-                    <strong>{html.escape(base)} / USDT · {_TIMEFRAME_LABELS.get(timeframe, timeframe)}</strong>
+                    <strong>{html.escape(base)} / USDT · U本位永续 · {_TIMEFRAME_LABELS.get(timeframe, timeframe)}</strong>
                     <span class="chart-candle-meta">最新 K 线</span>
                   </div>
                   <div class="live-price" aria-live="polite">
@@ -305,9 +314,25 @@ def render_index(selected_symbol: str | None = None) -> str:
                           <span>倍</span>
                         </div>
                       </label>
-                      <label>K 线周期
-                        <select name="timeframe" required>{_timeframe_options(timeframe)}</select>
-                      </label>
+                      <div class="timeframe-field">
+                        <span class="field-label">K 线周期</span>
+                        <div class="timeframe-picker" data-timeframe-picker>
+                          <input type="hidden" name="timeframe" value="{html.escape(timeframe)}">
+                          <button
+                            class="timeframe-trigger"
+                            type="button"
+                            aria-haspopup="listbox"
+                            aria-expanded="false"
+                          >
+                            <span class="timeframe-current" data-timeframe-current>{html.escape(_TIMEFRAME_LABELS.get(timeframe, timeframe))}</span>
+                            <small data-timeframe-current-status>{html.escape(validation)}</small>
+                            <span class="timeframe-chevron" aria-hidden="true">⌄</span>
+                          </button>
+                          <div class="timeframe-menu" role="listbox" hidden>
+                            {_timeframe_options(timeframe)}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div class="exposure-row">
                       <div><small>首次买入 60% 名义价值</small><b>{initial.target_notional_usdt:.2f} USDT</b></div>

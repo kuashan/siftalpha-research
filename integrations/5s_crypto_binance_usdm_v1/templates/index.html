@@ -75,6 +75,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 .eyebrow{font-size:10px;color:var(--muted);margin-bottom:3px}
 .coin-title-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .coin-title-row h2{font-size:21px;margin:0}.coin-title-row h2 span{font-size:13px;color:var(--muted);font-weight:600}
+.market-badge{padding:4px 7px;border-radius:999px;font-size:10px;font-weight:700;color:#a9c6ff;border:1px solid #36568d;background:#12203a;white-space:nowrap}
 .status-pill{padding:4px 7px;border-radius:999px;font-size:10px;border:1px solid var(--line)}
 .status-pill.running{color:#8ce6bc;border-color:#285945;background:#122b23}.status-pill.stopped{color:#aab6c9;background:#1a2230}
 .hero-pnl{text-align:right}.hero-pnl small{display:block;color:var(--muted);font-size:10px}.hero-pnl strong{font-size:23px}.hero-pnl span{font-size:10px;color:var(--muted)}
@@ -113,6 +114,32 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 .trade-settings-body{padding:11px}
 .field-grid{display:grid;grid-template-columns:1.35fr .75fr 1fr;gap:8px}
 .input-with-unit{position:relative}.input-with-unit input{padding-right:52px}.input-with-unit span{position:absolute;right:10px;bottom:13px;color:var(--muted);font-size:11px}
+.field-label{display:block;color:var(--muted);font-size:11px}
+.timeframe-picker{position:relative;margin-top:5px}
+.timeframe-picker input[type="hidden"]{display:none}
+.timeframe-trigger{
+  width:100%;min-height:42px;display:grid;grid-template-columns:minmax(0,1fr) auto 18px;align-items:center;gap:7px;
+  padding:8px 10px;border:1px solid #33415d;border-radius:9px;background:#0a1120;color:var(--text);text-align:left;outline:none
+}
+.timeframe-trigger:focus,.timeframe-picker.open .timeframe-trigger{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,255,.12)}
+.timeframe-current{font-size:14px;font-weight:700;white-space:nowrap}
+.timeframe-trigger small{color:var(--muted);font-size:9px;white-space:nowrap}
+.timeframe-chevron{color:#8fa0ba;font-size:16px;line-height:1;transition:transform .16s ease;text-align:center}
+.timeframe-picker.open .timeframe-chevron{transform:rotate(180deg)}
+.timeframe-menu{
+  margin-top:7px;padding:7px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;
+  border:1px solid #2b3953;border-radius:10px;background:#0a1120;box-shadow:0 12px 30px rgba(0,0,0,.26)
+}
+.timeframe-menu[hidden]{display:none}
+.timeframe-option{
+  min-width:0;min-height:50px;padding:7px 6px;border:1px solid #26344d;border-radius:8px;
+  background:#10192a;color:var(--text);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;text-align:left
+}
+.timeframe-option span{font-size:12px;font-weight:700;white-space:nowrap}
+.timeframe-option small{font-size:8px;color:var(--muted);white-space:nowrap}
+.timeframe-option.selected{border-color:#5b8cff;background:#162746;box-shadow:inset 0 0 0 1px rgba(91,140,255,.18)}
+.timeframe-option.selected span{color:#d9e6ff}
+.timeframe-option.selected small{color:#9dbbff}
 .exposure-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:8px}
 .save-button{width:100%;margin-top:8px}
 .control-block{display:flex;flex-direction:column;justify-content:space-between}
@@ -136,12 +163,14 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
   .coin-tabs{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.coin-tab{min-width:0;min-height:50px;padding:7px 5px}.coin-tab strong{font-size:12px}
   .coin-hero{padding:12px}.market-chart{margin:8px 12px 0;padding:8px}.chart-head{grid-template-columns:minmax(0,1fr) minmax(88px,.72fr) minmax(88px,auto);gap:7px}.chart-identity strong{font-size:11px}.chart-candle-meta{font-size:8px}.live-price{padding:2px 6px}.live-price-value{font-size:16px}.live-price-status{font-size:8px}.chart-ohlc{min-width:84px}.chart-ohlc div{gap:5px}.chart-ohlc small{font-size:8px}.chart-ohlc b{font-size:9px}.kline-canvas{height:300px}.snapshot-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px 12px 0}.snapshot{padding:7px 5px}.snapshot small{font-size:8px}.snapshot b{font-size:11px}
   .panel-body{grid-template-columns:1fr;padding:8px 12px 12px}
-  .field-grid{grid-template-columns:1fr 1fr}.budget-field{grid-column:1/-1}
+  .field-grid{grid-template-columns:1fr 1fr}.budget-field{grid-column:1/-1}.timeframe-field{grid-column:1/-1}
+  .timeframe-menu{grid-template-columns:repeat(3,minmax(0,1fr))}
   .exposure-row{grid-template-columns:1fr 1fr}.exposure-row div:last-child{grid-column:1/-1}
 }
 @media(max-width:380px){
   .badges .badge.structural,.badges .badge.test,.badges .badge.locked{display:none}.brand p{display:none}
   .coin-tab small{font-size:9px}.coin-tab{padding:6px 4px}
+  .timeframe-menu{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 </style>
 </head>
@@ -537,6 +566,64 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       if (message) message.textContent = 'K 线加载失败，请稍后重试';
     }
   }
+
+  function closeTimeframePicker(picker) {
+    if (!picker) return;
+    picker.classList.remove('open');
+    const menu = picker.querySelector('.timeframe-menu');
+    const trigger = picker.querySelector('.timeframe-trigger');
+    if (menu) menu.hidden = true;
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  root.querySelectorAll('[data-timeframe-picker]').forEach((picker) => {
+    const trigger = picker.querySelector('.timeframe-trigger');
+    const menu = picker.querySelector('.timeframe-menu');
+    const hidden = picker.querySelector('input[name="timeframe"]');
+    const current = picker.querySelector('[data-timeframe-current]');
+    const currentStatus = picker.querySelector('[data-timeframe-current-status]');
+    const options = Array.from(picker.querySelectorAll('[data-timeframe-option]'));
+    if (!trigger || !menu || !hidden) return;
+
+    trigger.addEventListener('click', () => {
+      const opening = !picker.classList.contains('open');
+      root.querySelectorAll('[data-timeframe-picker].open').forEach((other) => {
+        if (other !== picker) closeTimeframePicker(other);
+      });
+      picker.classList.toggle('open', opening);
+      menu.hidden = !opening;
+      trigger.setAttribute('aria-expanded', opening ? 'true' : 'false');
+    });
+
+    options.forEach((option) => {
+      option.addEventListener('click', () => {
+        const value = option.dataset.timeframeOption || '';
+        if (!value) return;
+        hidden.value = value;
+        options.forEach((item) => {
+          const selected = item === option;
+          item.classList.toggle('selected', selected);
+          item.setAttribute('aria-selected', selected ? 'true' : 'false');
+        });
+        const label = option.querySelector('span');
+        const status = option.querySelector('small');
+        if (current && label) current.textContent = label.textContent || value;
+        if (currentStatus && status) currentStatus.textContent = status.textContent || '';
+        closeTimeframePicker(picker);
+      });
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    root.querySelectorAll('[data-timeframe-picker].open').forEach((picker) => {
+      if (!picker.contains(event.target)) closeTimeframePicker(picker);
+    });
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    root.querySelectorAll('[data-timeframe-picker].open').forEach(closeTimeframePicker);
+  });
 
   function activate(symbol) {
     tabs.forEach((tab) => {

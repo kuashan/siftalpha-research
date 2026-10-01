@@ -56,6 +56,11 @@ class ChineseUiTests(unittest.TestCase):
         self.assertIn("@ticker", text)
         self.assertIn("data-ohlc", app_text)
         self.assertNotIn("最近 {DISPLAY_KLINE_LIMIT} 根", app_text)
+        self.assertIn("U本位永续", app_text)
+        self.assertIn("data-timeframe-picker", app_text)
+        self.assertIn('type="hidden" name="timeframe"', app_text)
+        self.assertNotIn('<select name="timeframe"', app_text)
+        self.assertIn("data-timeframe-option", text)
 
 
 if __name__ == "__main__":
