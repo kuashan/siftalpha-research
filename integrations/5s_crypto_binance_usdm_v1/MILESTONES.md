@@ -109,7 +109,7 @@ Status: **IN_PROGRESS**
 User accepted the M2 Demo connection path on 2026-10-01 and authorized entry into M3.
 
 ### M3.1 — Frozen signal engine parity
-Status: **IMPLEMENTED_AWAITING_CI**
+Status: **IMPLEMENTED_AND_VERIFIED**
 
 Scope:
 - exact Python port of the frozen research state/signal equations
