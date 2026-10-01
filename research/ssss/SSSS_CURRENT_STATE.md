@@ -1407,29 +1407,41 @@ The stock rules are structurally defined. Remaining work is genuine future OOS v
 
 No new stock optimization round is opened.
 
-## Crypto V1 baseline freeze — 2026-10-01
+## 5s-crypto V1 baseline freeze — 2026-10-01
 
 Status: **FROZEN_BASELINE**.
 
-The current SSSS Crypto framework is now formally named:
+The former `Crypto V1` baseline has been renamed to:
 
-`Crypto V1`
+`5s-crypto V1`
 
-Frozen core:
-- BTC / ETH / BNB / SOL development evidence;
-- BUY-A / BUY-B -> 60%;
-- W3 BUY-C -> +40% to 100%;
-- SELL-A -> full exit;
-- SELL-B -> full exit;
-- SELL-C -> full exit;
-- no independent Risk Exit layer;
-- execution = `Close Confirmed -> Next Bar Open`;
-- no fixed 24-hour delay.
+Core logic is unchanged.
 
 Canonical baseline:
-`research/ssss/CRYPTO_V1_BASELINE.md`
+`research/ssss/5S_CRYPTO_V1_BASELINE.md`
 
-`CRYPTO_V1 = FROZEN_BASELINE`
+`5S_CRYPTO_V1 = FROZEN_BASELINE`
 
-Future changes must not overwrite Crypto V1; they require a new experiment/version.
+## 5s-stocks V1 baseline freeze — 2026-10-01
 
+Status: **FROZEN_BASELINE**.
+
+Frozen core:
+- BUY-A / BUY-B -> 60%;
+- W3 BUY-C -> +40% to 100%;
+- isolated SELL-A -> sell 50%;
+- isolated SELL-B -> sell 50%;
+- SELL-C -> full exit;
+- same-bar multi SELL -> full exit;
+- after A/B half exit, next distinct SELL -> exit remainder;
+- no independent Risk Exit layer;
+- Regular Session close confirms the signal;
+- next actual Regular Session open executes the trade;
+- pre-market / after-hours are not used in V1.
+
+Canonical baseline:
+`research/ssss/5S_STOCKS_V1_BASELINE.md`
+
+`5S_STOCKS_V1 = FROZEN_BASELINE`
+
+Future changes must use a new experiment/version; neither V1 baseline is modified in place.

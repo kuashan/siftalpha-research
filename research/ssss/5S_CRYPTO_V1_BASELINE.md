@@ -1,4 +1,4 @@
-# SSSS Crypto V1 Baseline
+# SSSS 5s-crypto V1 Baseline
 
 Status: **FROZEN_BASELINE**
 
@@ -8,7 +8,7 @@ Parent research state: `699c4f7a65ae22b9613006a2c4185207e162378a`
 
 ## Name
 
-**Crypto V1**
+**5s-crypto V1**
 
 This is the first frozen Crypto baseline for the current SSSS three-buy / three-sell framework.
 
@@ -22,8 +22,8 @@ This is the first frozen Crypto baseline for the current SSSS three-buy / three-
 Current evidence base uses Binance Spot UTC **1d OHLCV**.
 
 Important:
-Crypto V1 is frozen from the daily-bar research evidence above.
-The execution principle is timeframe-independent, but 4h / 1h / 15m are **not automatically validated by Crypto V1** and require their own validation before being called Crypto V1-equivalent.
+5s-crypto V1 is frozen from the daily-bar research evidence above.
+The execution principle is timeframe-independent, but 4h / 1h / 15m are **not automatically validated by 5s-crypto V1** and require their own validation before being called 5s-crypto V1-equivalent.
 
 ## Frozen BUY rules
 
@@ -62,7 +62,7 @@ For the current daily Binance baseline:
 
 ## Risk Exit
 
-No independent Risk Exit layer is part of Crypto V1.
+No independent Risk Exit layer is part of 5s-crypto V1.
 
 Rejected / not admitted:
 - universal fixed Hard Stop;
@@ -74,29 +74,29 @@ Rejected / not admitted:
 
 ## Frozen state
 
-`CRYPTO_V1 = FROZEN_BASELINE`
+`5S_CRYPTO_V1 = FROZEN_BASELINE`
 
-`CRYPTO_V1_BUY = 60_INITIAL_PLUS_W3_C_TO_100`
+`5S_CRYPTO_V1_BUY = 60_INITIAL_PLUS_W3_C_TO_100`
 
-`CRYPTO_V1_SELL_A = FULL_EXIT`
+`5S_CRYPTO_V1_SELL_A = FULL_EXIT`
 
-`CRYPTO_V1_SELL_B = FULL_EXIT`
+`5S_CRYPTO_V1_SELL_B = FULL_EXIT`
 
-`CRYPTO_V1_SELL_C = FULL_EXIT`
+`5S_CRYPTO_V1_SELL_C = FULL_EXIT`
 
-`CRYPTO_V1_RISK_EXIT = NONE`
+`5S_CRYPTO_V1_RISK_EXIT = NONE`
 
-`CRYPTO_V1_EXECUTION = CLOSE_CONFIRMED_NEXT_BAR_OPEN`
+`5S_CRYPTO_V1_EXECUTION = CLOSE_CONFIRMED_NEXT_BAR_OPEN`
 
 ## Governance
 
-Crypto V1 is now the reference baseline.
+5s-crypto V1 is now the reference baseline.
 
-Do not modify Crypto V1 in place.
+Do not modify 5s-crypto V1 in place.
 
 Any future Crypto change must:
 1. use a new experiment / version;
-2. preserve Crypto V1 as the control;
+2. preserve 5s-crypto V1 as the control;
 3. be preregistered before inspecting results;
 4. use genuinely new evidence where required;
 5. receive an explicit new version name if promoted.

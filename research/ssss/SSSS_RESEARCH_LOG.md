@@ -1849,3 +1849,40 @@ Canonical file:
 
 Crypto V1 must remain an immutable reference control. Any later change requires a new experiment/version.
 
+
+
+## 5s baseline naming/freeze — 2026-10-01
+
+The Crypto baseline previously named `Crypto V1` is renamed, with no logic change, to:
+
+`5s-crypto V1`
+
+Canonical file:
+`research/ssss/5S_CRYPTO_V1_BASELINE.md`
+
+The current U.S.-stock three-buy / three-sell control is frozen as:
+
+`5s-stocks V1`
+
+Frozen stock execution:
+- Regular Session bar close confirms the signal;
+- next actual Regular Session bar open executes;
+- pre-market and after-hours are excluded from V1;
+- no fixed 24-hour delay.
+
+Stock frozen trading logic:
+- BUY-A/B 60%;
+- W3 BUY-C +40% to 100%;
+- isolated SELL-A/B half exit;
+- SELL-C / multi SELL full exit;
+- next distinct SELL closes the remainder after an A/B half exit;
+- no independent Risk Exit layer.
+
+Canonical file:
+`research/ssss/5S_STOCKS_V1_BASELINE.md`
+
+States:
+`5S_CRYPTO_V1 = FROZEN_BASELINE`
+`5S_STOCKS_V1 = FROZEN_BASELINE`
+
+The stock baseline remains subject to future untouched OOS confirmation for the already-defined sizing / half-exit rules, but it is frozen as the current V1 reference and must not be retuned in place.
