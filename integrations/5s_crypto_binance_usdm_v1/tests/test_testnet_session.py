@@ -23,7 +23,7 @@ class FakeAdapter:
 
 class FailingAdapter(FakeAdapter):
     def balances(self):
-        raise RuntimeError("invalid testnet credentials")
+        raise RuntimeError("invalid demo credentials")
 
 
 class TestnetSessionTests(unittest.TestCase):
@@ -34,10 +34,14 @@ class TestnetSessionTests(unittest.TestCase):
             adapter_factory=factory,
         )
 
+    def test_demo_mode_is_used_for_web_credentials(self):
+        s = self.session()
+        self.assertEqual(s._adapter("k", "s").kwargs["mode"], "DEMO")
+
     def test_successful_connection_exposes_only_safe_status(self):
         s = self.session()
         snap = s.connect_and_test("abcdefgh12345678", "super-secret")
-        self.assertEqual(snap.environment, "TESTNET")
+        self.assertEqual(snap.environment, "DEMO")
         self.assertEqual(snap.usdt_balance, 10000.50)
         self.assertEqual(snap.usdt_available_balance, 8765.25)
         self.assertEqual(snap.nonzero_position_count, 1)
