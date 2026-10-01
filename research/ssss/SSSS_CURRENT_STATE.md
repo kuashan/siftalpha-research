@@ -1367,3 +1367,43 @@ Canonical final report:
 
 Round CLOSED. No post-result threshold tuning is allowed inside v1.
 
+## Crypto SELL-C Partial Exit Study v1 — 2026-10-01
+
+Status: **IMPLEMENTED_AND_VERIFIED / CLOSED**.
+
+Tested on frozen BTC / ETH / BNB / SOL:
+- SELL-C 25%
+- SELL-C 50%
+- SELL-C 75%
+- SELL-C 100% control
+
+Baseline reproduction: PASS.
+
+Corrected final result:
+- 25% partial: mean return +233.09%, MDD +1.04pp better, but P5 -3.50pp and CVaR -1.94pp worse.
+- 50% partial: mean return +154.96%, MDD +2.79pp better, but P5 -2.07pp and CVaR -1.41pp worse.
+- 75% partial: mean return +91.02%, MDD +4.12pp better, but P5 -1.48pp and CVaR -0.93pp worse; SOL return also fell materially.
+- 100% control: mean return +68.74%, retained because no partial policy passed all preregistered gates.
+
+Decisions:
+- `CRYPTO_SELL_C_25 = REJECTED_NOT_ADMITTED`
+- `CRYPTO_SELL_C_50 = REJECTED_NOT_ADMITTED`
+- `CRYPTO_SELL_C_75 = REJECTED_NOT_ADMITTED`
+- `CRYPTO_SELL_C_FULL = RETAINED`
+- `CRYPTO_SELL_C_PARTIAL_STUDY_V1 = IMPLEMENTED_AND_VERIFIED`
+
+Canonical report:
+`research/ssss/source_xma/experiments/crypto_sell_c_partial_study_v1/FIVEGZ5SE_CRYPTO_SELL_C_PARTIAL_FINAL_v1.md`
+
+Round CLOSED. Do not tune further percentages on the same development data.
+
+## Stock three-buy / three-sell open-issues audit — 2026-10-01
+
+`STOCK_THREE_BUY_THREE_SELL_STRUCTURAL_OPEN_ISSUES = NONE_IDENTIFIED`
+
+The stock rules are structurally defined. Remaining work is genuine future OOS validation for:
+- 60% initial + W3 BUY-C top-up to 100%;
+- isolated SELL-A / SELL-B half exit.
+
+No new stock optimization round is opened.
+

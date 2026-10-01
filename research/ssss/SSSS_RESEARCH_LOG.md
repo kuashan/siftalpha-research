@@ -1793,3 +1793,34 @@ The current SSSS candidate therefore uses the existing signal-driven SELL contro
 
 Round CLOSED.
 
+## Crypto SELL-C Partial Exit Study v1 — CLOSED — 2026-10-01
+
+A preregistered 25% / 50% / 75% / 100% SELL-C study was completed on BTC / ETH / BNB / SOL using the frozen Binance daily windows.
+
+The first summary pass exposed an MDD-improvement sign-direction bug. The underlying paths were unaffected. The sign was corrected and the complete computation was rerun before interpretation.
+
+Final corrected results:
+- SELL 25%: mean return +233.09%, return improved 4/4, mean MDD +1.04pp better, but P5 -3.50pp and CVaR -1.94pp worse.
+- SELL 50%: mean return +154.96%, return improved 3/4, mean MDD +2.79pp better, but P5 -2.07pp and CVaR -1.41pp worse.
+- SELL 75%: mean return +91.02%, return improved 3/4, MDD improved 4/4 by +4.12pp, but P5 -1.48pp and CVaR -0.93pp worse; SOL return materially underperformed the full-exit control.
+- SELL 100% control: mean return +68.74%.
+
+The partial policies capture the known right-tail behavior after SELL-C, but each worsens the loss-tail distribution. None passed the frozen admission gate.
+
+Final:
+- `CRYPTO_SELL_C_25 = REJECTED_NOT_ADMITTED`
+- `CRYPTO_SELL_C_50 = REJECTED_NOT_ADMITTED`
+- `CRYPTO_SELL_C_75 = REJECTED_NOT_ADMITTED`
+- `CRYPTO_SELL_C_FULL = RETAINED`
+- `CRYPTO_SELL_C_PARTIAL_STUDY_V1 = IMPLEMENTED_AND_VERIFIED`
+
+Round CLOSED.
+
+Stock open-issues audit performed in the same closure:
+- no additional structurally undefined stock three-buy / three-sell rule was identified;
+- stock 60% + BUY-C top-up and isolated A/B half exit remain clearly defined candidates awaiting genuine future OOS validation;
+- SELL-C / multi full exit remains retained;
+- no independent Risk Exit layer is used.
+
+`STOCK_THREE_BUY_THREE_SELL_STRUCTURAL_OPEN_ISSUES = NONE_IDENTIFIED`
+
