@@ -6,6 +6,8 @@
 - M1.1: CLOSED
 - M2: IMPLEMENTED_AWAITING_TESTNET_ACCEPTANCE
 - M2.1: IMPLEMENTED_AND_VERIFIED
+- M2.2: IMPLEMENTED_AND_VERIFIED
+- M2.3: IMPLEMENTED_AND_VERIFIED
 - M3: NOT_STARTED
 - M4: NOT_STARTED
 
@@ -26,7 +28,7 @@ Each slot has its own:
 
 Only enabled slots will be scheduled once M3 attaches the frozen 5s-crypto V1 signal engine.
 
-The dashboard also displays total PnL across all four slots.
+The dashboard uses a mobile-first Chinese interface with four symbol tabs and displays total PnL across all four slots.
 
 ## Capital meaning
 
