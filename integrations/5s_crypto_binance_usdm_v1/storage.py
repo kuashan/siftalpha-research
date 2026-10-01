@@ -408,6 +408,51 @@ class StateStore:
             if cur.rowcount != 1:
                 raise KeyError(f"unknown order: {symbol}/{client_order_id}")
 
+    def list_signal_markers(self, symbol: str) -> list[dict[str, object]]:
+        with self._connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT id, detail
+                FROM audit_events
+                WHERE symbol=? AND event_type='M3_SIGNAL_BAR'
+                ORDER BY id ASC
+                """,
+                (symbol,),
+            ).fetchall()
+
+        markers: list[dict[str, object]] = []
+        seen: set[tuple[int, str, str]] = set()
+        for row in rows:
+            fields: dict[str, str] = {}
+            for part in str(row["detail"] or "").split(";"):
+                if "=" not in part:
+                    continue
+                key, value = part.split("=", 1)
+                fields[key.strip()] = value.strip()
+            try:
+                open_time = int(fields.get("bar_open_time", ""))
+            except ValueError:
+                continue
+            signal = fields.get("signal", "").upper()
+            sides: list[str] = []
+            if "BUY_" in signal:
+                sides.append("B")
+            if "SELL_" in signal or "MULTI_SELL" in signal:
+                sides.append("S")
+            for side in sides:
+                key = (open_time, side, signal)
+                if key in seen:
+                    continue
+                seen.add(key)
+                markers.append(
+                    {
+                        "open_time": open_time,
+                        "side": side,
+                        "signal": signal,
+                    }
+                )
+        return markers
+
     def get_pnl(self) -> dict[str, dict[str, float]]:
         with self._connect() as conn:
             rows = conn.execute(
