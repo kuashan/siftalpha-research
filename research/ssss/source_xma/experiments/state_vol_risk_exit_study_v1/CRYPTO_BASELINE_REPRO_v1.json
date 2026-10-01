@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "tolerance": 1e-9,
+  "audit": [
+    {
+      "symbol": "BTC",
+      "return": 0,
+      "close_mdd": 0,
+      "intra_mdd": 0,
+      "trades": 0,
+      "win": 0,
+      "p5": 0,
+      "cvar10": 0,
+      "exposure": 0
+    },
+    {
+      "symbol": "ETH",
+      "return": 0,
+      "close_mdd": 0,
+      "intra_mdd": 0,
+      "trades": 0,
+      "win": 0,
+      "p5": 0,
+      "cvar10": 0,
+      "exposure": 0
+    },
+    {
+      "symbol": "BNB",
+      "return": 0,
+      "close_mdd": 0,
+      "intra_mdd": 0,
+      "trades": 0,
+      "win": 0,
+      "p5": 0,
+      "cvar10": 0,
+      "exposure": 0
+    },
+    {
+      "symbol": "SOL",
+      "return": 0,
+      "close_mdd": 0,
+      "intra_mdd": 0,
+      "trades": 0,
+      "win": 0,
+      "p5": 0,
+      "cvar10": 0,
+      "exposure": 0
+    }
+  ]
+}
