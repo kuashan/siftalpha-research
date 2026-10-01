@@ -150,7 +150,7 @@ Implemented:
 M3 and M4 will be accepted together on the user's real SiftAlpha + Binance Demo environment.
 
 ### M4.1 — Visualization and compact dashboard
-Status: **IMPLEMENTED_AWAITING_CI**
+Status: **IMPLEMENTED_AND_VERIFIED**
 
 - exact title: `5s crypto v 1`
 - top connection + reconciliation status
@@ -161,6 +161,7 @@ Status: **IMPLEMENTED_AWAITING_CI**
 - B/S markers come from real M3 signal audit events
 - 300-bar display is isolated from the strategy scheduler's 220-bar default fetch window
 - trade settings are collapsible
+- CI Run 36832764258 PASS
 
 ## Hard stop boundary
 This development round ends at M4.
