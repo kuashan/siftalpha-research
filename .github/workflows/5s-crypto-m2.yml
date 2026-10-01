@@ -42,9 +42,9 @@ jobs:
           FIVES_DB_PATH: /tmp/5s_crypto_m2_ci.db
         run: python -c "import app; assert app.settings.mode == 'PAPER'; print('PAPER_IMPORT_PASS')"
 
-      - name: Testnet credential guard
+      - name: Demo credential guard
         env:
-          FIVES_MODE: TESTNET
+          FIVES_MODE: DEMO
           FIVES_DB_PATH: /tmp/5s_crypto_m2_ci_guard.db
         run: |
           set +e
@@ -53,8 +53,8 @@ jobs:
           set -e
           echo "$output"
           test "$code" -eq 2
-          echo "$output" | grep -q "Testnet API credentials missing"
-          echo "TESTNET_CREDENTIAL_GUARD_PASS"
+          echo "$output" | grep -q "Demo API credentials missing"
+          echo "DEMO_CREDENTIAL_GUARD_PASS"
 
       - name: Upload M2.3 package
         uses: actions/upload-artifact@v4
