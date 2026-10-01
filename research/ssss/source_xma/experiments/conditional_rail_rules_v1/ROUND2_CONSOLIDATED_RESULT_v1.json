@@ -1,0 +1,612 @@
+{
+  "schema": 1,
+  "status": "ROUND2_COMPLETE_DISCOVERY_ONLY",
+  "method": "STRICT_FIRST_OBSERVED_POINT_IN_TIME_XMA",
+  "symbol_count": 39,
+  "fast_events": 5619,
+  "gray_events": 5781,
+  "lower": {
+    "UP": {
+      "event": {
+        "n": 1343,
+        "symbols": 39,
+        "mean_pct": 1.293,
+        "median_pct": 1.259,
+        "positive_pct": 56.81
+      },
+      "confirm20_pct": 85.03,
+      "confirm10_pct": 57.26,
+      "confirm_post20": {
+        "n": 1142,
+        "symbols": 39,
+        "mean_pct": 1.758,
+        "median_pct": 1.329,
+        "positive_pct": 58.06
+      },
+      "order_counts": {
+        "UPPER_FIRST": 789,
+        "NO_DECISION": 244,
+        "LOWER_OUTER_FIRST": 109
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 665,
+          "symbols": 39,
+          "mean_pct": 0.325,
+          "median_pct": 0.819,
+          "positive_pct": 53.98
+        },
+        "B_2023_2024": {
+          "n": 470,
+          "symbols": 39,
+          "mean_pct": 2.233,
+          "median_pct": 1.401,
+          "positive_pct": 60.21
+        },
+        "C_2025": {
+          "n": 208,
+          "symbols": 39,
+          "mean_pct": 2.354,
+          "median_pct": 2.533,
+          "positive_pct": 58.17
+        }
+      }
+    },
+    "DOWN": {
+      "event": {
+        "n": 629,
+        "symbols": 39,
+        "mean_pct": 2.975,
+        "median_pct": 2.707,
+        "positive_pct": 60.73
+      },
+      "confirm20_pct": 89.03,
+      "confirm10_pct": 66.14,
+      "confirm_post20": {
+        "n": 560,
+        "symbols": 39,
+        "mean_pct": 2.864,
+        "median_pct": 2.778,
+        "positive_pct": 61.43
+      },
+      "order_counts": {
+        "UPPER_FIRST": 378,
+        "NO_DECISION": 84,
+        "LOWER_OUTER_FIRST": 98
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 327,
+          "symbols": 37,
+          "mean_pct": 2.513,
+          "median_pct": 2.552,
+          "positive_pct": 61.47
+        },
+        "B_2023_2024": {
+          "n": 190,
+          "symbols": 32,
+          "mean_pct": 3.332,
+          "median_pct": 2.934,
+          "positive_pct": 62.11
+        },
+        "C_2025": {
+          "n": 112,
+          "symbols": 35,
+          "mean_pct": 3.786,
+          "median_pct": 2.576,
+          "positive_pct": 56.25
+        }
+      }
+    },
+    "RANGE": {
+      "event": {
+        "n": 607,
+        "symbols": 39,
+        "mean_pct": 1.099,
+        "median_pct": 1.185,
+        "positive_pct": 57.33
+      },
+      "confirm20_pct": 87.15,
+      "confirm10_pct": 57.66,
+      "confirm_post20": {
+        "n": 529,
+        "symbols": 39,
+        "mean_pct": 1.287,
+        "median_pct": 1.471,
+        "positive_pct": 59.17
+      },
+      "order_counts": {
+        "UPPER_FIRST": 385,
+        "NO_DECISION": 88,
+        "LOWER_OUTER_FIRST": 56
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 329,
+          "symbols": 39,
+          "mean_pct": 0.454,
+          "median_pct": 1.208,
+          "positive_pct": 55.32
+        },
+        "B_2023_2024": {
+          "n": 176,
+          "symbols": 37,
+          "mean_pct": 0.99,
+          "median_pct": 0.745,
+          "positive_pct": 56.25
+        },
+        "C_2025": {
+          "n": 102,
+          "symbols": 31,
+          "mean_pct": 3.459,
+          "median_pct": 2.623,
+          "positive_pct": 65.69
+        }
+      }
+    }
+  },
+  "upper": {
+    "UP": {
+      "event": {
+        "n": 1654,
+        "symbols": 39,
+        "mean_pct": 1.241,
+        "median_pct": 0.893,
+        "positive_pct": 53.75
+      },
+      "confirm20_pct": 78.72,
+      "confirm10_pct": 53.57,
+      "confirm_post20": {
+        "n": 1302,
+        "symbols": 39,
+        "mean_pct": 0.596,
+        "median_pct": 0.542,
+        "positive_pct": 53.15
+      },
+      "order_counts": {
+        "SAME_BAR": 11,
+        "LOWER_FIRST": 725,
+        "NO_DECISION": 143,
+        "UPPER_OUTER_FIRST": 423
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 767,
+          "symbols": 39,
+          "mean_pct": 0.716,
+          "median_pct": 0.911,
+          "positive_pct": 53.98
+        },
+        "B_2023_2024": {
+          "n": 617,
+          "symbols": 39,
+          "mean_pct": 1.891,
+          "median_pct": 1.167,
+          "positive_pct": 55.59
+        },
+        "C_2025": {
+          "n": 270,
+          "symbols": 38,
+          "mean_pct": 1.248,
+          "median_pct": 0.243,
+          "positive_pct": 48.89
+        }
+      }
+    },
+    "DOWN": {
+      "event": {
+        "n": 742,
+        "symbols": 39,
+        "mean_pct": 2.13,
+        "median_pct": 2.057,
+        "positive_pct": 59.43
+      },
+      "confirm20_pct": 71.29,
+      "confirm10_pct": 45.82,
+      "confirm_post20": {
+        "n": 529,
+        "symbols": 39,
+        "mean_pct": 0.575,
+        "median_pct": 1.226,
+        "positive_pct": 54.25
+      },
+      "order_counts": {
+        "LOWER_FIRST": 323,
+        "UPPER_OUTER_FIRST": 87,
+        "NO_DECISION": 119
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 413,
+          "symbols": 39,
+          "mean_pct": 1.48,
+          "median_pct": 1.843,
+          "positive_pct": 56.66
+        },
+        "B_2023_2024": {
+          "n": 205,
+          "symbols": 35,
+          "mean_pct": 3.071,
+          "median_pct": 1.853,
+          "positive_pct": 61.95
+        },
+        "C_2025": {
+          "n": 124,
+          "symbols": 39,
+          "mean_pct": 2.779,
+          "median_pct": 2.973,
+          "positive_pct": 64.52
+        }
+      }
+    },
+    "RANGE": {
+      "event": {
+        "n": 638,
+        "symbols": 39,
+        "mean_pct": 1.024,
+        "median_pct": 1.263,
+        "positive_pct": 56.11
+      },
+      "confirm20_pct": 76.8,
+      "confirm10_pct": 51.41,
+      "confirm_post20": {
+        "n": 490,
+        "symbols": 39,
+        "mean_pct": 1.142,
+        "median_pct": 1.274,
+        "positive_pct": 55.92
+      },
+      "order_counts": {
+        "NO_DECISION": 64,
+        "LOWER_FIRST": 306,
+        "UPPER_OUTER_FIRST": 119,
+        "SAME_BAR": 1
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 328,
+          "symbols": 39,
+          "mean_pct": 0.977,
+          "median_pct": 1.426,
+          "positive_pct": 59.15
+        },
+        "B_2023_2024": {
+          "n": 191,
+          "symbols": 37,
+          "mean_pct": 1.126,
+          "median_pct": 0.851,
+          "positive_pct": 53.93
+        },
+        "C_2025": {
+          "n": 119,
+          "symbols": 36,
+          "mean_pct": 0.986,
+          "median_pct": 0.826,
+          "positive_pct": 51.26
+        }
+      }
+    }
+  },
+  "key_conditions": {
+    "lower_down": {
+      "overall": {
+        "n": 629,
+        "symbols": 39,
+        "mean_pct": 2.975,
+        "median_pct": 2.707,
+        "positive_pct": 60.73
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 327,
+          "symbols": 37,
+          "mean_pct": 2.513,
+          "median_pct": 2.552,
+          "positive_pct": 61.47
+        },
+        "B_2023_2024": {
+          "n": 190,
+          "symbols": 32,
+          "mean_pct": 3.332,
+          "median_pct": 2.934,
+          "positive_pct": 62.11
+        },
+        "C_2025": {
+          "n": 112,
+          "symbols": 35,
+          "mean_pct": 3.786,
+          "median_pct": 2.576,
+          "positive_pct": 56.25
+        }
+      }
+    },
+    "lower_range_to_up": {
+      "overall": {
+        "n": 25,
+        "symbols": 20,
+        "mean_pct": 10.581,
+        "median_pct": 8.509,
+        "positive_pct": 96
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 9,
+          "symbols": 8,
+          "mean_pct": 10.904,
+          "median_pct": 10.39,
+          "positive_pct": 88.89
+        },
+        "B_2023_2024": {
+          "n": 9,
+          "symbols": 9,
+          "mean_pct": 9.151,
+          "median_pct": 7.695,
+          "positive_pct": 100
+        },
+        "C_2025": {
+          "n": 7,
+          "symbols": 6,
+          "mean_pct": 12.003,
+          "median_pct": 14.134,
+          "positive_pct": 100
+        }
+      }
+    },
+    "lower_down_to_range": {
+      "overall": {
+        "n": 33,
+        "symbols": 24,
+        "mean_pct": 6.573,
+        "median_pct": 7.569,
+        "positive_pct": 75.76
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 13,
+          "symbols": 12,
+          "mean_pct": 6.674,
+          "median_pct": 2.752,
+          "positive_pct": 61.54
+        },
+        "B_2023_2024": {
+          "n": 13,
+          "symbols": 11,
+          "mean_pct": 11.295,
+          "median_pct": 8.915,
+          "positive_pct": 100
+        },
+        "C_2025": {
+          "n": 7,
+          "symbols": 5,
+          "mean_pct": -2.386,
+          "median_pct": 3.49,
+          "positive_pct": 57.14
+        }
+      }
+    },
+    "lower_up_to_range": {
+      "overall": {
+        "n": 367,
+        "symbols": 39,
+        "mean_pct": -1.495,
+        "median_pct": -1.075,
+        "positive_pct": 43.05
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 182,
+          "symbols": 39,
+          "mean_pct": -1.665,
+          "median_pct": -0.603,
+          "positive_pct": 46.15
+        },
+        "B_2023_2024": {
+          "n": 131,
+          "symbols": 39,
+          "mean_pct": -0.994,
+          "median_pct": -1.935,
+          "positive_pct": 39.69
+        },
+        "C_2025": {
+          "n": 54,
+          "symbols": 31,
+          "mean_pct": -2.216,
+          "median_pct": -0.632,
+          "positive_pct": 40.74
+        }
+      }
+    },
+    "upper_up": {
+      "overall": {
+        "n": 1654,
+        "symbols": 39,
+        "mean_pct": 1.241,
+        "median_pct": 0.893,
+        "positive_pct": 53.75
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 767,
+          "symbols": 39,
+          "mean_pct": 0.716,
+          "median_pct": 0.911,
+          "positive_pct": 53.98
+        },
+        "B_2023_2024": {
+          "n": 617,
+          "symbols": 39,
+          "mean_pct": 1.891,
+          "median_pct": 1.167,
+          "positive_pct": 55.59
+        },
+        "C_2025": {
+          "n": 270,
+          "symbols": 38,
+          "mean_pct": 1.248,
+          "median_pct": 0.243,
+          "positive_pct": 48.89
+        }
+      }
+    },
+    "upper_up_to_range": {
+      "overall": {
+        "n": 39,
+        "symbols": 24,
+        "mean_pct": -7.572,
+        "median_pct": -4.752,
+        "positive_pct": 20.51
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 14,
+          "symbols": 11,
+          "mean_pct": -8.66,
+          "median_pct": -3.646,
+          "positive_pct": 21.43
+        },
+        "B_2023_2024": {
+          "n": 15,
+          "symbols": 13,
+          "mean_pct": -6.313,
+          "median_pct": -6.437,
+          "positive_pct": 26.67
+        },
+        "C_2025": {
+          "n": 10,
+          "symbols": 8,
+          "mean_pct": -7.936,
+          "median_pct": -4.798,
+          "positive_pct": 10
+        }
+      }
+    },
+    "upper_range_to_down": {
+      "overall": {
+        "n": 27,
+        "symbols": 18,
+        "mean_pct": -9.553,
+        "median_pct": -8.052,
+        "positive_pct": 7.41
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 13,
+          "symbols": 10,
+          "mean_pct": -8.635,
+          "median_pct": -7.659,
+          "positive_pct": 7.69
+        },
+        "B_2023_2024": {
+          "n": 7,
+          "symbols": 6,
+          "mean_pct": -10.224,
+          "median_pct": -7.284,
+          "positive_pct": 0
+        },
+        "C_2025": {
+          "n": 7,
+          "symbols": 6,
+          "mean_pct": -10.588,
+          "median_pct": -10.953,
+          "positive_pct": 14.29
+        }
+      }
+    },
+    "lower_range_confluence_025_050": {
+      "overall": {
+        "n": 37,
+        "symbols": 20,
+        "mean_pct": 4.519,
+        "median_pct": 6.719,
+        "positive_pct": 78.38
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 22,
+          "symbols": 11,
+          "mean_pct": 5.144,
+          "median_pct": 7.162,
+          "positive_pct": 81.82
+        },
+        "B_2023_2024": {
+          "n": 13,
+          "symbols": 12,
+          "mean_pct": 3.496,
+          "median_pct": 1.489,
+          "positive_pct": 76.92
+        },
+        "C_2025": {
+          "n": 2,
+          "symbols": 2,
+          "mean_pct": 4.299,
+          "median_pct": 4.299,
+          "positive_pct": 50
+        }
+      }
+    },
+    "gray_range_above_rising": {
+      "overall": {
+        "n": 775,
+        "symbols": 39,
+        "mean_pct": 1.195,
+        "median_pct": 1.032,
+        "positive_pct": 56.13
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 405,
+          "symbols": 38,
+          "mean_pct": 1.072,
+          "median_pct": 0.857,
+          "positive_pct": 56.54
+        },
+        "B_2023_2024": {
+          "n": 238,
+          "symbols": 37,
+          "mean_pct": 0.756,
+          "median_pct": 0.849,
+          "positive_pct": 54.62
+        },
+        "C_2025": {
+          "n": 132,
+          "symbols": 29,
+          "mean_pct": 2.422,
+          "median_pct": 1.733,
+          "positive_pct": 57.58
+        }
+      }
+    },
+    "gray_range_below_full_cross": {
+      "overall": {
+        "n": 145,
+        "symbols": 37,
+        "mean_pct": 2.867,
+        "median_pct": 2.698,
+        "positive_pct": 62.07
+      },
+      "blocks": {
+        "A_2020_2022": {
+          "n": 66,
+          "symbols": 30,
+          "mean_pct": 3.485,
+          "median_pct": 3.543,
+          "positive_pct": 69.7
+        },
+        "B_2023_2024": {
+          "n": 54,
+          "symbols": 25,
+          "mean_pct": 2.58,
+          "median_pct": 2.772,
+          "positive_pct": 57.41
+        },
+        "C_2025": {
+          "n": 25,
+          "symbols": 13,
+          "mean_pct": 1.816,
+          "median_pct": 0.718,
+          "positive_pct": 52
+        }
+      }
+    }
+  }
+}
