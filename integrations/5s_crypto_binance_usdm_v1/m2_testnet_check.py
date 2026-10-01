@@ -12,17 +12,17 @@ from storage import StateStore
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="M2 Binance USDⓈ-M Futures Testnet acceptance")
+    parser = argparse.ArgumentParser(description="M2 Binance USDⓈ-M Futures Demo acceptance")
     parser.add_argument("--apply-account-settings", action="store_true")
     parser.add_argument("--order-probe", choices=("BTCUSDT", "ETHUSDT", "BNBUSDT", "SOLUSDT"))
     args = parser.parse_args()
 
     settings = Settings.from_env()
-    if settings.mode != "TESTNET":
-        print(json.dumps({"status": "BLOCKED", "reason": "FIVES_MODE must be TESTNET"}))
+    if settings.mode != "DEMO":
+        print(json.dumps({"status": "BLOCKED", "reason": "FIVES_MODE must be DEMO"}))
         return 2
     if not settings.testnet_credentials_present:
-        print(json.dumps({"status": "BLOCKED", "reason": "Testnet API credentials missing"}))
+        print(json.dumps({"status": "BLOCKED", "reason": "Demo API credentials missing"}))
         return 2
 
     store = StateStore(settings.db_path)
@@ -36,7 +36,7 @@ def main() -> int:
         allowed_timeframes=settings.allowed_timeframes,
     )
 
-    result = {"status": "M2_TESTNET_PROBE", "credentials_present": True, "one_way": adapter.is_one_way(), "symbols": {}}
+    result = {"status": "M2_DEMO_PROBE", "credentials_present": True, "one_way": adapter.is_one_way(), "symbols": {}}
 
     for symbol in settings.symbols:
         cfg = configs[symbol]
