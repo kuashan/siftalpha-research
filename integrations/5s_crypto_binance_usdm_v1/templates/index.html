@@ -37,7 +37,7 @@
       <div class="note">M1.1 控制台 · 策略冻结 · K 线周期可调</div>
     </div>
     <div class="badges">
-      <span class="badge paper">PAPER</span>
+      <span class="badge paper">__MODE__</span>
       <span class="badge">__TIMEFRAME__</span>
       <span class="badge">ISOLATED</span>
       <span class="badge">ONE-WAY</span>
@@ -48,6 +48,8 @@
   <section class="card">
     <div class="grid">
       <div class="metric"><small>Binance USDⓈ-M</small><strong id="api-status"><span class="status-dot"></span>检测中</strong></div>
+      <div class="metric"><small>运行模式</small><strong>__MODE__</strong></div>
+      <div class="metric"><small>Testnet 凭据</small><strong>__TESTNET_CREDENTIAL_STATUS__</strong></div>
       <div class="metric"><small>K 线状态</small><strong>__TIMEFRAME_VALIDATION__</strong></div>
       <div class="metric"><small>入场</small><strong>60% → 100%</strong></div>
       <div class="metric"><small>卖出</small><strong>A/B/C 全退</strong></div>
@@ -72,12 +74,12 @@ __TIMEFRAME_OPTIONS__
 __ROWS__
       </tbody>
     </table>
-    <p style="margin-bottom:0"><button class="primary" type="submit">保存 PAPER 参数</button></p>
+    <p style="margin-bottom:0"><button class="primary" type="submit">__SAVE_LABEL__</button></p>
   </form>
 
   <section class="card">
     <h2 style="font-size:18px;margin-top:0">本阶段边界</h2>
-    <p class="note">M1.1 只增加 Binance 支持周期的选择和持久化：15m / 1h / 2h / 4h / 6h / 12h / 1d。不会针对不同周期重新优化 BUY/SELL 规则。Testnet 属于 M2；信号公式 Python 等价性与完成 K 线门禁属于 M3；M4 完成后本轮关闭。</p>
+    <p class="note">M2 只接 Binance U 本位合约 Testnet：账户读取、交易规则、杠杆/逐仓/单向校验，以及测试网下单/撤单。LIVE 仍然锁定。5s-crypto V1 信号自动执行仍属于 M3。</p>
   </section>
 </main>
 <script>

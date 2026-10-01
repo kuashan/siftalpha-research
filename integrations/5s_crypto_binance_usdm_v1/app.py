@@ -61,6 +61,15 @@ def render_index() -> str:
         .replace("__TIMEFRAME__", html.escape(timeframe))
         .replace("__TIMEFRAME_OPTIONS__", "\n".join(options))
         .replace("__TIMEFRAME_VALIDATION__", html.escape(validation_label))
+        .replace("__MODE__", html.escape(settings.mode))
+        .replace(
+            "__TESTNET_CREDENTIAL_STATUS__",
+            "已配置（密钥不会显示）" if settings.testnet_credentials_present else "未配置",
+        )
+        .replace(
+            "__SAVE_LABEL__",
+            "保存 TESTNET 参数" if settings.mode == "TESTNET" else "保存 PAPER 参数",
+        )
     )
 
 
@@ -92,6 +101,10 @@ class Handler(BaseHTTPRequestHandler):
                 "position_mode": settings.position_mode,
                 "direction": settings.direction,
                 "live_enabled": False,
+                "testnet_credentials_present": settings.testnet_credentials_present,
+                "authenticated_testnet_ready": (
+                    settings.mode == "TESTNET" and settings.testnet_credentials_present
+                ),
                 "binance_public": {
                     "ok": result.ok,
                     "latency_ms": result.latency_ms,
