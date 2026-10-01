@@ -1,0 +1,267 @@
+{
+  "seed": 20261001,
+  "bootstrap_n": 5000,
+  "formal_candidates": [
+    "LOSS2_MOD",
+    "LOSS3_MOD",
+    "LOSS2_SEV",
+    "PEAK2_MOD",
+    "PEAK3_MOD",
+    "HYBRID25_MOD",
+    "CONFIRM_ADAPT",
+    "LOSS4_SEV"
+  ],
+  "stock": {
+    "LOSS2_MOD": {
+      "mean_mdd_improvement_positive": true,
+      "mdd_bootstrap_ci_low_positive": false,
+      "return_preservation_ge_90pct": false,
+      "p5_not_worse": true,
+      "cvar_not_worse": true,
+      "mdd_improve_ge_24_of_39": false,
+      "killed_not_gt_saved": true,
+      "confirmed_no_negative_penalty": false,
+      "pass": false
+    },
+    "LOSS3_MOD": {
+      "mean_mdd_improvement_positive": true,
+      "mdd_bootstrap_ci_low_positive": false,
+      "return_preservation_ge_90pct": false,
+      "p5_not_worse": true,
+      "cvar_not_worse": true,
+      "mdd_improve_ge_24_of_39": false,
+      "killed_not_gt_saved": true,
+      "confirmed_no_negative_penalty": false,
+      "pass": false
+    },
+    "LOSS2_SEV": {
+      "mean_mdd_improvement_positive": true,
+      "mdd_bootstrap_ci_low_positive": false,
+      "return_preservation_ge_90pct": false,
+      "p5_not_worse": true,
+      "cvar_not_worse": true,
+      "mdd_improve_ge_24_of_39": true,
+      "killed_not_gt_saved": true,
+      "confirmed_no_negative_penalty": false,
+      "pass": false
+    },
+    "PEAK2_MOD": {
+      "mean_mdd_improvement_positive": true,
+      "mdd_bootstrap_ci_low_positive": false,
+      "return_preservation_ge_90pct": false,
+      "p5_not_worse": true,
+      "cvar_not_worse": true,
+      "mdd_improve_ge_24_of_39": false,
+      "killed_not_gt_saved": false,
+      "confirmed_no_negative_penalty": false,
+      "pass": false
+    },
+    "PEAK3_MOD": {
+      "mean_mdd_improvement_positive": true,
+      "mdd_bootstrap_ci_low_positive": false,
+      "return_preservation_ge_90pct": false,
+      "p5_not_worse": true,
+      "cvar_not_worse": true,
+      "mdd_improve_ge_24_of_39": false,
+      "killed_not_gt_saved": false,
+      "confirmed_no_negative_penalty": false,
+      "pass": false
+    },
+    "HYBRID25_MOD": {
+      "mean_mdd_improvement_positive": true,
+      "mdd_bootstrap_ci_low_positive": false,
+      "return_preservation_ge_90pct": false,
+      "p5_not_worse": true,
+      "cvar_not_worse": true,
+      "mdd_improve_ge_24_of_39": true,
+      "killed_not_gt_saved": false,
+      "confirmed_no_negative_penalty": false,
+      "pass": false
+    },
+    "CONFIRM_ADAPT": {
+      "mean_mdd_improvement_positive": true,
+      "mdd_bootstrap_ci_low_positive": true,
+      "return_preservation_ge_90pct": false,
+      "p5_not_worse": true,
+      "cvar_not_worse": true,
+      "mdd_improve_ge_24_of_39": true,
+      "killed_not_gt_saved": false,
+      "confirmed_no_negative_penalty": false,
+      "pass": false
+    },
+    "LOSS4_SEV": {
+      "mean_mdd_improvement_positive": false,
+      "mdd_bootstrap_ci_low_positive": false,
+      "return_preservation_ge_90pct": false,
+      "p5_not_worse": false,
+      "cvar_not_worse": false,
+      "mdd_improve_ge_24_of_39": false,
+      "killed_not_gt_saved": true,
+      "confirmed_no_negative_penalty": false,
+      "pass": false
+    }
+  },
+  "crypto": {
+    "LOSS2_MOD": {
+      "mean_mdd_improvement_positive": false,
+      "mdd_improve_ge_3_of_4": false,
+      "return_preservation_ge_90pct": false,
+      "p5_not_worse": true,
+      "cvar_not_worse": true,
+      "killed_not_gt_saved": true,
+      "confirmed_no_negative_penalty": true,
+      "single_coin_dominance_gate": false,
+      "dominance_detail": {
+        "omitted_coin": "ETH",
+        "remaining_return_preservation_ratio": 0.44447951564931243,
+        "remaining_mean_mdd_improvement": -0.04593958319301857,
+        "remaining_mean_p5_delta": 0.004196163318807886,
+        "remaining_mean_cvar_delta": 0.026159121103596677,
+        "pass": false
+      },
+      "pass": false
+    },
+    "LOSS3_MOD": {
+      "mean_mdd_improvement_positive": false,
+      "mdd_improve_ge_3_of_4": false,
+      "return_preservation_ge_90pct": false,
+      "p5_not_worse": true,
+      "cvar_not_worse": true,
+      "killed_not_gt_saved": true,
+      "confirmed_no_negative_penalty": true,
+      "single_coin_dominance_gate": false,
+      "dominance_detail": {
+        "omitted_coin": "ETH",
+        "remaining_return_preservation_ratio": 0.7794351167229298,
+        "remaining_mean_mdd_improvement": -0.012041688701367273,
+        "remaining_mean_p5_delta": -0.0009138843905450907,
+        "remaining_mean_cvar_delta": 0.01068277306498272,
+        "pass": false
+      },
+      "pass": false
+    },
+    "LOSS2_SEV": {
+      "mean_mdd_improvement_positive": false,
+      "mdd_improve_ge_3_of_4": false,
+      "return_preservation_ge_90pct": false,
+      "p5_not_worse": true,
+      "cvar_not_worse": true,
+      "killed_not_gt_saved": true,
+      "confirmed_no_negative_penalty": true,
+      "single_coin_dominance_gate": false,
+      "dominance_detail": {
+        "omitted_coin": "ETH",
+        "remaining_return_preservation_ratio": 0.44371660974455523,
+        "remaining_mean_mdd_improvement": -0.041176161830037285,
+        "remaining_mean_p5_delta": 0.008912134794929158,
+        "remaining_mean_cvar_delta": 0.03097547888646841,
+        "pass": false
+      },
+      "pass": false
+    },
+    "PEAK2_MOD": {
+      "mean_mdd_improvement_positive": false,
+      "mdd_improve_ge_3_of_4": false,
+      "return_preservation_ge_90pct": false,
+      "p5_not_worse": true,
+      "cvar_not_worse": true,
+      "killed_not_gt_saved": true,
+      "confirmed_no_negative_penalty": false,
+      "single_coin_dominance_gate": false,
+      "dominance_detail": {
+        "omitted_coin": "ETH",
+        "remaining_return_preservation_ratio": 0.22811854511215174,
+        "remaining_mean_mdd_improvement": -0.07413531718015105,
+        "remaining_mean_p5_delta": 0.012190718154859814,
+        "remaining_mean_cvar_delta": 0.03784565448733935,
+        "pass": false
+      },
+      "pass": false
+    },
+    "PEAK3_MOD": {
+      "mean_mdd_improvement_positive": false,
+      "mdd_improve_ge_3_of_4": false,
+      "return_preservation_ge_90pct": false,
+      "p5_not_worse": true,
+      "cvar_not_worse": true,
+      "killed_not_gt_saved": true,
+      "confirmed_no_negative_penalty": true,
+      "single_coin_dominance_gate": false,
+      "dominance_detail": {
+        "omitted_coin": "SOL",
+        "remaining_return_preservation_ratio": 0.3619248639392859,
+        "remaining_mean_mdd_improvement": -0.029422833131647213,
+        "remaining_mean_p5_delta": 0.009399527240935504,
+        "remaining_mean_cvar_delta": 0.023205004470392716,
+        "pass": false
+      },
+      "pass": false
+    },
+    "HYBRID25_MOD": {
+      "mean_mdd_improvement_positive": false,
+      "mdd_improve_ge_3_of_4": false,
+      "return_preservation_ge_90pct": false,
+      "p5_not_worse": true,
+      "cvar_not_worse": true,
+      "killed_not_gt_saved": true,
+      "confirmed_no_negative_penalty": true,
+      "single_coin_dominance_gate": false,
+      "dominance_detail": {
+        "omitted_coin": "ETH",
+        "remaining_return_preservation_ratio": 0.3612613580058256,
+        "remaining_mean_mdd_improvement": -0.04185275380073272,
+        "remaining_mean_p5_delta": 0.006817736960654815,
+        "remaining_mean_cvar_delta": 0.027096555923136284,
+        "pass": false
+      },
+      "pass": false
+    },
+    "CONFIRM_ADAPT": {
+      "mean_mdd_improvement_positive": true,
+      "mdd_improve_ge_3_of_4": false,
+      "return_preservation_ge_90pct": false,
+      "p5_not_worse": true,
+      "cvar_not_worse": true,
+      "killed_not_gt_saved": true,
+      "confirmed_no_negative_penalty": true,
+      "single_coin_dominance_gate": false,
+      "dominance_detail": {
+        "omitted_coin": "ETH",
+        "remaining_return_preservation_ratio": 0.4344150756490306,
+        "remaining_mean_mdd_improvement": -0.026662391549285958,
+        "remaining_mean_p5_delta": 0.01450048793901878,
+        "remaining_mean_cvar_delta": 0.03777213941834746,
+        "pass": false
+      },
+      "pass": false
+    },
+    "LOSS4_SEV": {
+      "mean_mdd_improvement_positive": true,
+      "mdd_improve_ge_3_of_4": false,
+      "return_preservation_ge_90pct": true,
+      "p5_not_worse": false,
+      "cvar_not_worse": true,
+      "killed_not_gt_saved": true,
+      "confirmed_no_negative_penalty": true,
+      "single_coin_dominance_gate": false,
+      "dominance_detail": {
+        "omitted_coin": "SOL",
+        "remaining_return_preservation_ratio": 1.0405177313515934,
+        "remaining_mean_mdd_improvement": -0.007506314734499179,
+        "remaining_mean_p5_delta": -0.006630497798960577,
+        "remaining_mean_cvar_delta": 0.0099156497713222,
+        "pass": false
+      },
+      "pass": false
+    }
+  },
+  "universal": [],
+  "stock_pass": [],
+  "crypto_pass": [],
+  "decision": {
+    "STOCK_RISK_EXIT": "NOT_USED_RETAIN_BASELINE",
+    "CRYPTO_RISK_EXIT": "NOT_USED_RETAIN_BASELINE",
+    "UNIVERSAL_STATE_VOL_RISK_EXIT": "REJECTED_NOT_ADMITTED",
+    "RISK_EXIT_LAYER": "NOT_USED_RETAIN_BASELINES"
+  }
+}
