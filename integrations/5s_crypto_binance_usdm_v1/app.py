@@ -9,6 +9,7 @@ from urllib.parse import parse_qs
 from config import Settings
 from engine.paper import preview_exposure
 from exchange.binance_usdm_public import BinanceUsdMPublicProbe
+from runtime_testnet_session import TestnetSession
 from storage import StateStore
 
 
@@ -16,6 +17,12 @@ settings = Settings.from_env()
 store = StateStore(settings.db_path)
 store.seed(settings.symbols, settings.default_leverage, settings.default_capital_budget_usdt, settings.default_timeframe)
 probe = BinanceUsdMPublicProbe(settings.binance_public_base_url, settings.request_timeout_seconds)
+testnet_session = TestnetSession(
+    allowed_symbols=settings.symbols,
+    allowed_timeframes=settings.allowed_timeframes,
+    initial_api_key=settings.testnet_api_key,
+    initial_api_secret=settings.testnet_api_secret,
+)
 TEMPLATE = (Path(__file__).parent / "templates" / "index.html").read_text(encoding="utf-8")
 
 
@@ -37,6 +44,8 @@ def render_index() -> str:
     runtime = store.get_runtime_states()
     pnl = store.get_pnl()
     summary = store.pnl_summary()
+    testnet = testnet_session.public_status()
+    account = testnet.get("account") or {}
     cards = []
 
     for symbol in settings.symbols:
@@ -89,11 +98,22 @@ def render_index() -> str:
     active = [cfg for cfg in configs.values() if bool(cfg["enabled"])]
     configured_budget = sum(float(cfg["capital_budget_usdt"]) for cfg in configs.values())
     active_budget = sum(float(cfg["capital_budget_usdt"]) for cfg in active)
+    connection_label = "已连接 · 虚拟资金" if testnet["connected"] else "未连接"
+    connection_class = "positive" if testnet["connected"] else "neutral"
+    error = testnet.get("last_error") or ""
+    error_html = f'<div class="connect-error">{html.escape(error)}</div>' if error else ""
 
     return (
         TEMPLATE
-        .replace("__MODE__", html.escape(settings.mode))
-        .replace("__TESTNET_CREDENTIAL_STATUS__", "已配置（密钥不会显示）" if settings.testnet_credentials_present else "未配置")
+        .replace("__MODE__", "TESTNET" if testnet["connected"] else "PAPER")
+        .replace("__CONNECTION_LABEL__", connection_label)
+        .replace("__CONNECTION_CLASS__", connection_class)
+        .replace("__MASKED_API_KEY__", html.escape(str(testnet.get("masked_api_key") or "—")))
+        .replace("__VIRTUAL_BALANCE__", f"{float(account.get('usdt_balance', 0)):.2f}")
+        .replace("__VIRTUAL_AVAILABLE__", f"{float(account.get('usdt_available_balance', 0)):.2f}")
+        .replace("__POSITION_COUNT__", str(int(account.get("nonzero_position_count", 0))))
+        .replace("__ONE_WAY_STATUS__", "是" if account.get("one_way") else ("否" if testnet["connected"] else "—"))
+        .replace("__CONNECT_ERROR__", error_html)
         .replace("__ACTIVE_COUNT__", str(len(active)))
         .replace("__CONFIGURED_BUDGET__", f"{configured_budget:.2f}")
         .replace("__ACTIVE_BUDGET__", f"{active_budget:.2f}")
@@ -106,7 +126,7 @@ def render_index() -> str:
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "5sCryptoM2_1/1.0"
+    server_version = "5sCryptoM2_2/1.0"
 
     def _send(self, status: int, body: bytes, content_type: str) -> None:
         self.send_response(status)
@@ -139,13 +159,12 @@ class Handler(BaseHTTPRequestHandler):
             result = probe.probe()
             payload = {
                 "app": settings.app_name,
-                "mode": settings.mode,
+                "environment": testnet_session.public_status(),
                 "market": "BINANCE_USDS_M_PERPETUAL",
                 "margin_type": settings.margin_type,
                 "position_mode": settings.position_mode,
                 "direction": settings.direction,
                 "live_enabled": False,
-                "testnet_credentials_present": settings.testnet_credentials_present,
                 "symbols": store.get_symbol_configs(),
                 "runtime": store.get_runtime_states(),
                 "pnl": store.get_pnl(),
@@ -164,6 +183,27 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:
         try:
             form = self._read_form()
+
+            if self.path == "/testnet-connect":
+                environment = form.get("environment", ["TESTNET"])[0].upper().strip()
+                if environment != "TESTNET":
+                    raise ValueError("M2.2 只允许 TESTNET")
+                api_key = form.get("api_key", [""])[0]
+                api_secret = form.get("api_secret", [""])[0]
+                testnet_session.connect_and_test(api_key, api_secret)
+                self._redirect_home()
+                return
+
+            if self.path == "/testnet-retest":
+                testnet_session.test_existing_credentials()
+                self._redirect_home()
+                return
+
+            if self.path == "/testnet-disconnect":
+                testnet_session.disconnect()
+                self._redirect_home()
+                return
+
             if self.path == "/symbol-settings":
                 symbol = self._symbol_from_form(form)
                 budget = float(form.get("capital_budget_usdt", ["0"])[0])
@@ -190,16 +230,23 @@ class Handler(BaseHTTPRequestHandler):
 
             self._send(404, b"Not found", "text/plain; charset=utf-8")
         except Exception as exc:
-            self._send(400, str(exc).encode("utf-8"), "text/plain; charset=utf-8")
+            body = (
+                "<!doctype html><meta charset='utf-8'><title>Testnet 连接失败</title>"
+                "<body style='font-family:system-ui;background:#0b1020;color:#edf2f7;padding:24px'>"
+                f"<h2>操作失败</h2><p>{html.escape(str(exc))}</p><p><a style='color:#9ecbff' href='/'>返回控制台</a></p>"
+                "</body>"
+            )
+            self._send(400, body.encode("utf-8"), "text/html; charset=utf-8")
 
     def log_message(self, fmt: str, *args) -> None:
+        # Request bodies (including secrets) are never logged.
         print(f"[web] {self.address_string()} {fmt % args}")
 
 
 def main(host: str = "0.0.0.0", port: int = 8080) -> None:
     enabled = [s for s, cfg in store.get_symbol_configs().items() if cfg["enabled"]]
     print(f"{settings.app_name}")
-    print(f"mode={settings.mode} enabled_symbols={','.join(enabled) or 'none'} live_enabled=false")
+    print(f"environment=TESTNET_READY enabled_symbols={','.join(enabled) or 'none'} live_enabled=false")
     print(f"web=http://127.0.0.1:{port}")
     ThreadingHTTPServer((host, port), Handler).serve_forever()
 

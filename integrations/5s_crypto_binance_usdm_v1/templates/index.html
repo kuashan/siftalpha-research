@@ -1,27 +1,56 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>5s-crypto V1 · Binance USDⓈ-M</title>
-  <style>
-    :root{color-scheme:dark;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{margin:0;background:#0b1020;color:#edf2f7}main{max-width:1120px;margin:0 auto;padding:20px}.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}h1{margin:0;font-size:24px}h2{margin:0;font-size:19px}.note{color:#aab6cd;font-size:14px;line-height:1.55}.badges{display:flex;gap:8px;flex-wrap:wrap}.badge,.status{border:1px solid #35405c;border-radius:999px;padding:5px 9px;font-size:12px}.paper{background:#21304f}.locked{background:#40202a}.running{background:#153b2e}.stopped{background:#252d3e}.summary{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:16px}.metric,.coin-card{background:#121a2c;border:1px solid #26314b;border-radius:14px}.metric{padding:13px}.metric small,.mini-grid small{color:#9eabc5;display:block;margin-bottom:5px}.metric b{font-size:18px}.coins{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}.coin-card{padding:16px}.coin-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}.coin-head h2{display:inline-block;margin-right:8px}.pnl{font-size:20px}.positive{color:#64d6a0}.negative{color:#ff858b}.neutral{color:#edf2f7}.fields{display:grid;grid-template-columns:1.4fr .8fr 1fr;gap:9px}.fields label{color:#aab6cd;font-size:12px}input,select{width:100%;box-sizing:border-box;margin-top:5px;padding:9px;border-radius:8px;border:1px solid #394866;background:#0b1020;color:inherit;font-size:15px}.mini-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0}.mini-grid div{background:#0e1526;border-radius:9px;padding:9px;font-size:12px}button{padding:10px 14px;border-radius:9px;border:0;font-weight:700;cursor:pointer}.primary{background:#e6edf7;color:#101622}.secondary{background:#27334c;color:#edf2f7}.danger{background:#6a2934;color:#fff}.action-form{margin-top:8px}.action-form button{width:100%}.boundary{margin-top:16px;padding:16px;background:#121a2c;border:1px solid #26314b;border-radius:14px}@media(max-width:820px){.summary{grid-template-columns:1fr 1fr}.coins{grid-template-columns:1fr}.mini-grid{grid-template-columns:1fr 1fr}.fields{grid-template-columns:1fr 1fr}.fields label:first-child{grid-column:1/-1}}
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>5s-crypto V1 · Binance USDⓈ-M</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{margin:0;background:#0b1020;color:#edf2f7}main{max-width:1120px;margin:0 auto;padding:20px}.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}h1{margin:0;font-size:24px}h2{margin:0;font-size:19px}.note{color:#aab6cd;font-size:14px;line-height:1.55}.badges{display:flex;gap:8px;flex-wrap:wrap}.badge,.status{border:1px solid #35405c;border-radius:999px;padding:5px 9px;font-size:12px}.paper{background:#21304f}.locked{background:#40202a}.running{background:#153b2e}.stopped{background:#252d3e}.summary{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:16px}.metric,.coin-card,.connect-card{background:#121a2c;border:1px solid #26314b;border-radius:14px}.metric{padding:13px}.metric small,.mini-grid small{color:#9eabc5;display:block;margin-bottom:5px}.metric b{font-size:18px}.connect-card{margin-top:16px;padding:16px}.connect-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.connect-fields{display:grid;grid-template-columns:.8fr 1.4fr 1.4fr auto;gap:9px;margin-top:12px;align-items:end}.connect-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px}.connect-stats div{background:#0e1526;border-radius:9px;padding:10px}.connect-error{margin-top:10px;padding:9px;border-radius:8px;background:#4b2329;color:#ffbdc1}.coins{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}.coin-card{padding:16px}.coin-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}.coin-head h2{display:inline-block;margin-right:8px}.pnl{font-size:20px}.positive{color:#64d6a0}.negative{color:#ff858b}.neutral{color:#edf2f7}.fields{display:grid;grid-template-columns:1.4fr .8fr 1fr;gap:9px}.fields label,.connect-fields label{color:#aab6cd;font-size:12px}input,select{width:100%;box-sizing:border-box;margin-top:5px;padding:9px;border-radius:8px;border:1px solid #394866;background:#0b1020;color:inherit;font-size:15px}.mini-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0}.mini-grid div{background:#0e1526;border-radius:9px;padding:9px;font-size:12px}button{padding:10px 14px;border-radius:9px;border:0;font-weight:700;cursor:pointer}.primary{background:#e6edf7;color:#101622}.secondary{background:#27334c;color:#edf2f7}.danger{background:#6a2934;color:#fff}.action-form{margin-top:8px}.action-form button{width:100%}.button-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.boundary{margin-top:16px;padding:16px;background:#121a2c;border:1px solid #26314b;border-radius:14px}@media(max-width:820px){.summary{grid-template-columns:1fr 1fr}.coins{grid-template-columns:1fr}.mini-grid,.connect-stats{grid-template-columns:1fr 1fr}.fields,.connect-fields{grid-template-columns:1fr 1fr}.fields label:first-child{grid-column:1/-1}}
+</style>
 </head>
 <body><main>
-  <div class="top">
-    <div><h1>5s-crypto V1 · USDⓈ-M Futures</h1><div class="note">单实例 · 四币独立 Strategy Slot（策略槽位）</div></div>
-    <div class="badges"><span class="badge paper">__MODE__</span><span class="badge">ISOLATED</span><span class="badge">ONE-WAY</span><span class="badge locked">LIVE LOCKED</span></div>
+<div class="top">
+  <div><h1>5s-crypto V1 · USDⓈ-M Futures</h1><div class="note">单实例 · 四币独立 Strategy Slot（策略槽位）</div></div>
+  <div class="badges"><span class="badge paper">__MODE__</span><span class="badge">ISOLATED</span><span class="badge">ONE-WAY</span><span class="badge locked">LIVE LOCKED</span></div>
+</div>
+
+<section class="connect-card">
+  <div class="connect-head">
+    <div><h2>Binance Futures Testnet（虚拟资金）</h2><div class="note">API Secret 只保存在当前 Python 进程内存；不会写入 SQLite、页面状态或日志。</div></div>
+    <strong class="__CONNECTION_CLASS__">__CONNECTION_LABEL__</strong>
   </div>
-  <section class="summary">
-    <div class="metric"><small>已启动币种</small><b>__ACTIVE_COUNT__ / 4</b></div>
-    <div class="metric"><small>全部配置资金</small><b>__CONFIGURED_BUDGET__ USDT</b></div>
-    <div class="metric"><small>已启动策略资金</small><b>__ACTIVE_BUDGET__ USDT</b></div>
-    <div class="metric"><small>总盈亏</small><b class="__TOTAL_PNL_CLASS__">__TOTAL_PNL__ USDT</b></div>
-    <div class="metric"><small>已实现 / 浮动</small><b>__REALIZED_PNL__ / __UNREALIZED_PNL__</b></div>
-  </section>
-  <section class="coins">__COIN_CARDS__</section>
-  <section class="boundary">
-    <b>M2.1 边界</b>
-    <p class="note">每个币独立保存资金、杠杆、周期、启停和 PnL。点击“启动”只把该 Strategy Slot 标记为启用；自动读取已闭合 K 线并执行 5s-crypto V1 属于 M3。未启动币种在 M3 不进入调度。Testnet 凭据：__TESTNET_CREDENTIAL_STATUS__。</p>
-  </section>
+  <form method="post" action="/testnet-connect" autocomplete="off">
+    <div class="connect-fields">
+      <label>Environment（环境）
+        <select name="environment"><option value="TESTNET">TESTNET · 虚拟资金</option></select>
+      </label>
+      <label>API Key<input name="api_key" type="password" autocomplete="off" placeholder="Binance Futures Testnet API Key" required></label>
+      <label>API Secret<input name="api_secret" type="password" autocomplete="new-password" placeholder="Binance Futures Testnet API Secret" required></label>
+      <button class="primary" type="submit">连接测试</button>
+    </div>
+  </form>
+  <div class="connect-stats">
+    <div><small>API Key</small><b>__MASKED_API_KEY__</b></div>
+    <div><small>虚拟 USDT 总余额</small><b>__VIRTUAL_BALANCE__</b></div>
+    <div><small>虚拟可用余额</small><b>__VIRTUAL_AVAILABLE__</b></div>
+    <div><small>持仓数 / 单向模式</small><b>__POSITION_COUNT__ / __ONE_WAY_STATUS__</b></div>
+  </div>
+  __CONNECT_ERROR__
+  <div class="button-row">
+    <form method="post" action="/testnet-retest"><button class="secondary" type="submit">重新检测</button></form>
+    <form method="post" action="/testnet-disconnect"><button class="danger" type="submit">断开并清除内存凭据</button></form>
+  </div>
+</section>
+
+<section class="summary">
+  <div class="metric"><small>已启动币种</small><b>__ACTIVE_COUNT__ / 4</b></div>
+  <div class="metric"><small>全部配置资金</small><b>__CONFIGURED_BUDGET__ USDT</b></div>
+  <div class="metric"><small>已启动策略资金</small><b>__ACTIVE_BUDGET__ USDT</b></div>
+  <div class="metric"><small>总盈亏</small><b class="__TOTAL_PNL_CLASS__">__TOTAL_PNL__ USDT</b></div>
+  <div class="metric"><small>已实现 / 浮动</small><b>__REALIZED_PNL__ / __UNREALIZED_PNL__</b></div>
+</section>
+<section class="coins">__COIN_CARDS__</section>
+<section class="boundary">
+  <b>M2.2 边界</b>
+  <p class="note">当前只允许 TESTNET（测试网/虚拟资金）。连接测试会真实读取 Binance Futures Testnet 的虚拟余额、持仓与账户模式，但不会自动下单。策略自动交易仍属于 M3；LIVE（实盘）仍然没有入口。</p>
+</section>
 </main></body></html>
