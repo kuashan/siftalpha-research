@@ -56,15 +56,26 @@ def canonical_weighted_20_210(values: list[float]) -> list[Optional[float]]:
 
 
 def xma_snapshot(values: list[float], asof: int, period: int) -> list[float]:
-    """Centered/truncated XMA for the finite history [0..asof].
+    """Centered/truncated XMA for finite history [0..asof].
 
-    Historical values near the right edge may revise when asof advances.
+    Matches the independently audited HQChart/TDX-style implementation:
+
+        p = int((n - 2) / 2)
+        start = i - p - 1
+        end   = i + (n - p) - 1   # exclusive
+
+    Consequences:
+    - N=25 -> i-12 .. i+12 (25 values when fully available)
+    - N=60 -> i-30 .. i+29 (60 values when fully available)
+
+    At finite-series boundaries the window is truncated to available values.
+    Historical values near the right edge therefore revise as new bars arrive.
     """
-    if period % 2 != 1:
-        raise ValueError("SSSS reboot expects odd XMA periods")
+    if period < 1:
+        raise ValueError(period)
     if asof < 0 or asof >= len(values):
         raise IndexError(asof)
-    radius = (period - 1) // 2
+
     src = values[: asof + 1]
     pref = [0.0]
     total = 0.0
@@ -72,12 +83,18 @@ def xma_snapshot(values: list[float], asof: int, period: int) -> list[float]:
         total += value
         pref.append(total)
 
-    def mean(left: int, right: int) -> float:
-        left = max(0, left)
-        right = min(len(src) - 1, right)
-        return (pref[right + 1] - pref[left]) / (right - left + 1)
-
-    return [mean(i - radius, i + radius) for i in range(len(src))]
+    p = int((period - 2) / 2)
+    out: list[float] = []
+    for i in range(len(src)):
+        start = i - p - 1
+        end = i + (period - p) - 1  # exclusive
+        left = max(0, start)
+        right_exclusive = min(len(src), end)
+        out.append(
+            (pref[right_exclusive] - pref[left])
+            / (right_exclusive - left)
+        )
+    return out
 
 
 def double_xma_snapshot(values: list[float], asof: int, period: int) -> list[float]:
@@ -126,9 +143,10 @@ def render_snapshot(bars: list[Bar], asof: Optional[int] = None) -> list[dict]:
     # Repainting centered XMA structures.
     vh25 = double_xma_snapshot(H, len(bars) - 1, 25)
     vl25 = double_xma_snapshot(L, len(bars) - 1, 25)
-    # XMA(...,60) is intentionally not computed yet.
-    # The exact Futu semantics for even-period XMA(60) remain a Phase-0 gate.
-    # BS/BD must stay None until period-60 behavior is independently calibrated.
+    # Exact even-period XMA(60) semantics are now frozen from independent
+    # implementation evidence and Futu visual rail validation.
+    vh60 = double_xma_snapshot(H, len(bars) - 1, 60)
+    vl60 = double_xma_snapshot(L, len(bars) - 1, 60)
 
     wh = canonical_weighted_20_210(H)
     wl = canonical_weighted_20_210(L)
@@ -156,6 +174,8 @@ def render_snapshot(bars: list[Bar], asof: Optional[int] = None) -> list[dict]:
     fast_lower: list[Optional[float]] = []
     fast_mid: list[Optional[float]] = []
     fast_upper: list[Optional[float]] = []
+    outer_bs: list[Optional[float]] = []
+    outer_bd: list[Optional[float]] = []
     slow_lower: list[Optional[float]] = []
     slow_upper: list[Optional[float]] = []
 
@@ -164,6 +184,10 @@ def render_snapshot(bars: list[Bar], asof: Optional[int] = None) -> list[dict]:
         fast_lower.append(vl25[i] - width25)  # ZD1
         fast_mid.append((vh25[i] + vl25[i]) / 2.0)  # GZB18
         fast_upper.append(vh25[i] + width25)  # ZK1
+
+        width60 = vh60[i] - vl60[i]
+        outer_bs.append(vh60[i] + 2.2 * width60)  # BS
+        outer_bd.append(vl60[i] - 2.8 * width60)  # BD
 
         if d90h[i] is None or d90l[i] is None:
             slow_lower.append(None)
@@ -247,8 +271,8 @@ def render_snapshot(bars: list[Bar], asof: Optional[int] = None) -> list[dict]:
             "adkby_labels": adkby_labels,
             "adkby_warning": warning,
             "adkby_star": star,
-            "BS": None,
-            "BD": None,
+            "BS": outer_bs[i],
+            "BD": outer_bd[i],
         })
     return rows
 
