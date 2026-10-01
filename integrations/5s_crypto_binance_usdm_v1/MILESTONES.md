@@ -59,6 +59,19 @@ Security boundary:
 A failed connection does not retain submitted credentials.
 Successful credentials vanish when the Python process exits.
 
+## M2.3 — Mobile-first Chinese dashboard redesign
+Status: **IMPLEMENTED_AND_VERIFIED**
+
+UI-only scope:
+- compact mobile-first dashboard
+- collapsible Testnet account connection
+- four-symbol tab switcher instead of four vertically stacked cards
+- one visible symbol workspace at a time on mobile
+- Chinese visible labels throughout the dashboard
+- Chinese signal and timeframe presentation
+- no external front-end framework/runtime dependency
+- no strategy/execution semantic changes
+
 ## M3 — Frozen 5s-crypto V1 signal engine + execution
 Status: **NOT_STARTED**
 
