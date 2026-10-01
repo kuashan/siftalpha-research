@@ -52,11 +52,21 @@ class StateStore:
                 """
             )
 
-    def seed(self, symbols: Iterable[str], default_leverage: int, default_budget: float) -> None:
+    def seed(
+        self,
+        symbols: Iterable[str],
+        default_leverage: int,
+        default_budget: float,
+        default_timeframe: str = "1d",
+    ) -> None:
         with self._connect() as conn:
             conn.execute(
                 "INSERT OR IGNORE INTO app_settings(key, value) VALUES('capital_budget_usdt', ?)",
                 (str(default_budget),),
+            )
+            conn.execute(
+                "INSERT OR IGNORE INTO app_settings(key, value) VALUES('timeframe', ?)",
+                (default_timeframe,),
             )
             for symbol in symbols:
                 conn.execute(
@@ -83,6 +93,23 @@ class StateStore:
             conn.execute(
                 "INSERT INTO audit_events(event_type, detail) VALUES('SET_BUDGET', ?)",
                 (f"capital_budget_usdt={value}",),
+            )
+
+    def get_timeframe(self, default: str = "1d") -> str:
+        with self._connect() as conn:
+            row = conn.execute("SELECT value FROM app_settings WHERE key='timeframe'").fetchone()
+            return str(row[0]) if row else default
+
+    def set_timeframe(self, timeframe: str) -> None:
+        with self._connect() as conn:
+            conn.execute(
+                "INSERT INTO app_settings(key, value) VALUES('timeframe', ?) "
+                "ON CONFLICT(key) DO UPDATE SET value=excluded.value",
+                (timeframe,),
+            )
+            conn.execute(
+                "INSERT INTO audit_events(event_type, detail) VALUES('SET_TIMEFRAME', ?)",
+                (f"timeframe={timeframe}",),
             )
 
     def get_leverages(self) -> dict[str, int]:

@@ -14,7 +14,12 @@ from storage import StateStore
 
 settings = Settings.from_env()
 store = StateStore(settings.db_path)
-store.seed(settings.symbols, settings.default_leverage, settings.default_capital_budget_usdt)
+store.seed(
+    settings.symbols,
+    settings.default_leverage,
+    settings.default_capital_budget_usdt,
+    settings.default_timeframe,
+)
 probe = BinanceUsdMPublicProbe(settings.binance_public_base_url, settings.request_timeout_seconds)
 TEMPLATE = (Path(__file__).parent / "templates" / "index.html").read_text(encoding="utf-8")
 
@@ -22,6 +27,19 @@ TEMPLATE = (Path(__file__).parent / "templates" / "index.html").read_text(encodi
 def render_index() -> str:
     leverages = store.get_leverages()
     budget = store.get_budget()
+    timeframe = store.get_timeframe(settings.default_timeframe)
+    if timeframe not in settings.allowed_timeframes:
+        timeframe = settings.default_timeframe
+        store.set_timeframe(timeframe)
+
+    options = []
+    for interval in settings.allowed_timeframes:
+        selected = " selected" if interval == timeframe else ""
+        label = f"{interval} · V1 已验证" if interval in settings.validated_timeframes else f"{interval} · 实验"
+        options.append(f'<option value="{html.escape(interval)}"{selected}>{html.escape(label)}</option>')
+
+    validation_label = "V1 已验证周期" if timeframe in settings.validated_timeframes else "Experimental · 未验证周期"
+
     rows = []
     for symbol in settings.symbols:
         lev = leverages.get(symbol, settings.default_leverage)
@@ -35,11 +53,19 @@ def render_index() -> str:
             f"<td>{full.target_notional_usdt:.2f} USDT</td>"
             "</tr>"
         )
-    return TEMPLATE.replace("__BUDGET__", f"{budget:.2f}").replace("__ROWS__", "\n".join(rows))
+
+    return (
+        TEMPLATE
+        .replace("__BUDGET__", f"{budget:.2f}")
+        .replace("__ROWS__", "\n".join(rows))
+        .replace("__TIMEFRAME__", html.escape(timeframe))
+        .replace("__TIMEFRAME_OPTIONS__", "\n".join(options))
+        .replace("__TIMEFRAME_VALIDATION__", html.escape(validation_label))
+    )
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "5sCryptoM1/1.0"
+    server_version = "5sCryptoM1_1/1.0"
 
     def _send(self, status: int, body: bytes, content_type: str) -> None:
         self.send_response(status)
@@ -55,10 +81,12 @@ class Handler(BaseHTTPRequestHandler):
             return
         if self.path == "/api/status":
             result = probe.probe()
+            timeframe = store.get_timeframe(settings.default_timeframe)
             payload = {
                 "app": settings.app_name,
                 "mode": settings.mode,
-                "timeframe": settings.timeframe,
+                "timeframe": timeframe,
+                "timeframe_validation": "VALIDATED_V1" if timeframe in settings.validated_timeframes else "EXPERIMENTAL_UNVALIDATED",
                 "market": "BINANCE_USDS_M_PERPETUAL",
                 "margin_type": settings.margin_type,
                 "position_mode": settings.position_mode,
@@ -87,6 +115,10 @@ class Handler(BaseHTTPRequestHandler):
             if budget <= 0 or budget > 100_000_000:
                 raise ValueError("invalid capital budget")
 
+            timeframe = form.get("timeframe", [store.get_timeframe(settings.default_timeframe)])[0]
+            if timeframe not in settings.allowed_timeframes:
+                raise ValueError("unsupported timeframe")
+
             leverage_updates: dict[str, int] = {}
             for symbol in settings.symbols:
                 raw = form.get(f"leverage_{symbol}")
@@ -98,6 +130,7 @@ class Handler(BaseHTTPRequestHandler):
                 leverage_updates[symbol] = leverage
 
             store.set_budget(budget)
+            store.set_timeframe(timeframe)
             for symbol, leverage in leverage_updates.items():
                 store.set_leverage(symbol, leverage)
 
@@ -112,8 +145,9 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main(host: str = "0.0.0.0", port: int = 8080) -> None:
+    timeframe = store.get_timeframe(settings.default_timeframe)
     print(f"{settings.app_name}")
-    print(f"mode={settings.mode} timeframe={settings.timeframe} live_enabled=false")
+    print(f"mode={settings.mode} timeframe={timeframe} live_enabled=false")
     print(f"web=http://127.0.0.1:{port}")
     ThreadingHTTPServer((host, port), Handler).serve_forever()
 

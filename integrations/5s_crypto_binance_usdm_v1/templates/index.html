@@ -20,7 +20,7 @@
     .metric small { color:#9eabc5; display:block; margin-bottom:6px; }
     table { width:100%; border-collapse:collapse; margin-top:8px; }
     th,td { padding:10px 8px; border-bottom:1px solid #26314b; text-align:left; }
-    input { box-sizing:border-box; width:100%; max-width:160px; padding:10px; border-radius:8px; border:1px solid #394866; background:#0b1020; color:inherit; font-size:16px; }
+    input,select { box-sizing:border-box; width:100%; max-width:220px; padding:10px; border-radius:8px; border:1px solid #394866; background:#0b1020; color:inherit; font-size:16px; }
     button { padding:11px 16px; border-radius:9px; border:0; font-weight:700; cursor:pointer; }
     .primary { background:#e6edf7; color:#101622; }
     .note { color:#aab6cd; line-height:1.55; font-size:14px; }
@@ -34,11 +34,11 @@
   <div class="top">
     <div>
       <h1>5s-crypto V1 · USDⓈ-M Futures</h1>
-      <div class="note">M1 控制台 · 策略冻结 · 合约执行层独立</div>
+      <div class="note">M1.1 控制台 · 策略冻结 · K 线周期可调</div>
     </div>
     <div class="badges">
       <span class="badge paper">PAPER</span>
-      <span class="badge">1D</span>
+      <span class="badge">__TIMEFRAME__</span>
       <span class="badge">ISOLATED</span>
       <span class="badge">ONE-WAY</span>
       <span class="badge locked">LIVE LOCKED</span>
@@ -48,7 +48,7 @@
   <section class="card">
     <div class="grid">
       <div class="metric"><small>Binance USDⓈ-M</small><strong id="api-status"><span class="status-dot"></span>检测中</strong></div>
-      <div class="metric"><small>策略方向</small><strong>Long only</strong></div>
+      <div class="metric"><small>K 线状态</small><strong>__TIMEFRAME_VALIDATION__</strong></div>
       <div class="metric"><small>入场</small><strong>60% → 100%</strong></div>
       <div class="metric"><small>卖出</small><strong>A/B/C 全退</strong></div>
     </div>
@@ -56,8 +56,15 @@
 
   <form class="card" method="post" action="/settings">
     <h2 style="font-size:18px;margin-top:0">合约参数</h2>
-    <p class="note">“资金预算”是本机器人允许使用的保证金预算。例：1000 USDT、5x 时，60% 阶段预览名义价值为 3000 USDT；100% 阶段为 5000 USDT。M1 不会真实下单。</p>
-    <label>机器人资金预算（USDT）<br><input name="capital_budget_usdt" type="number" min="1" step="0.01" value="__BUDGET__" required></label>
+    <p class="note">K 线周期改变后，仍然遵守“当前 K 线收盘确认 → 下一根 K 线开盘执行”。1d 是当前 5s-crypto V1 已验证基线；其他周期可以用于 PAPER/Testnet，但暂时属于未验证周期。</p>
+
+    <label>K 线周期<br>
+      <select name="timeframe" required>
+__TIMEFRAME_OPTIONS__
+      </select>
+    </label>
+
+    <p><label>机器人资金预算（USDT）<br><input name="capital_budget_usdt" type="number" min="1" step="0.01" value="__BUDGET__" required></label></p>
 
     <table>
       <thead><tr><th>合约</th><th>杠杆</th><th>60% 名义价值</th><th>100% 名义价值</th></tr></thead>
@@ -70,7 +77,7 @@ __ROWS__
 
   <section class="card">
     <h2 style="font-size:18px;margin-top:0">本阶段边界</h2>
-    <p class="note">M1 只完成 UI、SQLite 状态、U 本位永续配置和公开 API 连通检查。不会使用 API Key，不会改 Binance 账户，不会发送订单。Testnet 属于 M2；5s-crypto V1 信号公式的 Python 等价性验证属于 M3；重启恢复与端到端验收属于 M4。M4 完成后本轮关闭。</p>
+    <p class="note">M1.1 只增加 Binance 支持周期的选择和持久化：15m / 1h / 2h / 4h / 6h / 12h / 1d。不会针对不同周期重新优化 BUY/SELL 规则。Testnet 属于 M2；信号公式 Python 等价性与完成 K 线门禁属于 M3；M4 完成后本轮关闭。</p>
   </section>
 </main>
 <script>
