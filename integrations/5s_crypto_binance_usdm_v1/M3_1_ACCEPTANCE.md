@@ -1,6 +1,6 @@
 # M3.1 — 冻结信号引擎一致性
 
-状态：**IMPLEMENTED_AWAITING_CI**
+状态：**IMPLEMENTED_AND_VERIFIED**
 
 目标：
 把研究阶段冻结的 5s-crypto V1 三买三卖信号引擎从 JavaScript 逐公式移植为纯 Python，作为后续 SiftAlpha / Binance Demo 自动调度的唯一运行时信号实现。
@@ -36,3 +36,10 @@ CI 使用冻结 JavaScript 原文件和 Python 新实现，对同一确定性 OH
 - 仓位变更
 - 实盘
 - 策略优化
+
+
+CI evidence:
+- Run: 36826589155
+- Frozen JS/Python signal parity: PASS
+- Full unit test suite: PASS
+- Compile: PASS
