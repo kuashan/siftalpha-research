@@ -1302,3 +1302,43 @@ This is not a strategy failure.
 No paper order has been generated.
 
 Massive near-real-time 5m data is also unavailable under the connected entitlement, so forward 5m execution currently requires an available external runner or sub-hour API execution service.
+
+## Stock Risk Exit Study v1.1 — corrected closure — 2026-10-01
+
+Status: **IMPLEMENTED_AND_VERIFIED / CLOSED**.
+
+Scope:
+- frozen 39-stock universe;
+- 49 configurations per stock;
+- 1,911 corrected portfolio runs;
+- 5,000 deterministic stock-level bootstrap resamples;
+- matched baseline trade audit;
+- 2010-2014 / 2015-2019 / 2020-2026 diagnostics;
+- sector-diversity inspection.
+
+Correction:
+- the first-pass closure was invalidated because sample-end open positions were synthetically sold;
+- v1.1 restores frozen mark-to-market semantics;
+- corrected baseline reproduction vs frozen AB_HALF control passed on all 39 stocks;
+- trades / win / exposure differences are exactly zero and remaining numeric differences are floating-point tolerance only.
+
+Corrected baseline aggregate:
+- mean cumulative return +154.92%;
+- mean intraday-low MDD -30.65%;
+- mean P5 -6.95%;
+- mean CVaR10 -8.22%;
+- 2,606 completed trades.
+
+Decisions:
+- `UNIVERSAL_STOCK_HARD_STOP_5_TO_20 = REJECTED_NOT_ADMITTED`
+- `UNIVERSAL_STOCK_TRAILING_STOP_5_TO_20 = REJECTED_NOT_ADMITTED`
+- `UNIVERSAL_STOCK_HARD_TRAIL_COMBINATION = REJECTED_NOT_ADMITTED`
+- `STOCK_SELECTIVE_SIGNAL_EXIT_CONTROL = RETAINED`
+- `STATE_OR_VOLATILITY_AWARE_STOCK_RISK_EXIT = PROMOTED_TO_NEXT_VALIDATION`
+- `STOCK_RISK_EXIT_STUDY_V1_1 = IMPLEMENTED_AND_VERIFIED`
+
+Canonical corrected report:
+`research/ssss/source_xma/experiments/stock_risk_exit_study_v1/FIVEGZ5SE_STOCK_RISK_EXIT_FINAL_v1_1.md`
+
+The invalidated first-pass report is historical only and must not be used as the current result.
+

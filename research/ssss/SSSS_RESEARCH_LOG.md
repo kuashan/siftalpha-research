@@ -1723,3 +1723,42 @@ No E042 candidate is accepted.
 Next research frontier:
 study causal pre-second-add local path shape / recovery-versus-continuation structure on the already-GREEN second-signal set under a new Experiment ID.
 Do not retune E042 thresholds.
+
+## Stock Risk Exit Study v1.1 corrected closure — 2026-10-01
+
+The first-pass Stock Risk Exit closure was invalidated after audit found a sample-end semantics bug: an open final position had been force-sold with synthetic 5 bps exit slippage and counted as a completed trade. The frozen protocol requires mark-to-market at the final close without a synthetic trade.
+
+The simulator was corrected and all 39 stocks x 49 configurations were recomputed (1,911 runs).
+
+Baseline reproduction against the previously frozen AB_HALF control:
+- 39/39 stocks PASS;
+- max absolute return difference 1.7763568394002505e-14;
+- max MDD difference 4.440892098500626e-16;
+- max P5 difference 1.942890293094024e-16;
+- max CVaR10 difference 8.326672684688674e-17;
+- trades difference 0;
+- win-rate difference 0;
+- exposure difference 0.
+
+Corrected aggregate baseline:
+- mean return +154.92%;
+- mean intraday-low MDD -30.65%;
+- mean P5 -6.95%;
+- mean CVaR10 -8.22%;
+- 2,606 completed trades.
+
+Fixed hard/trailing stops show a consistent trade-off: tight stops improve some MDD/tail metrics but destroy substantial return through winner truncation; wide stops preserve more return but lose reliable downside improvement. Matched-stop deltas are negative across all three eras for every tested standalone hard and trailing threshold.
+
+Final decisions:
+- `UNIVERSAL_STOCK_HARD_STOP_5_TO_20 = REJECTED_NOT_ADMITTED`
+- `UNIVERSAL_STOCK_TRAILING_STOP_5_TO_20 = REJECTED_NOT_ADMITTED`
+- `UNIVERSAL_STOCK_HARD_TRAIL_COMBINATION = REJECTED_NOT_ADMITTED`
+- `STOCK_SELECTIVE_SIGNAL_EXIT_CONTROL = RETAINED`
+- `STATE_OR_VOLATILITY_AWARE_STOCK_RISK_EXIT = PROMOTED_TO_NEXT_VALIDATION`
+- `STOCK_RISK_EXIT_STUDY_V1_1 = IMPLEMENTED_AND_VERIFIED`
+
+Corrected final report:
+`research/ssss/source_xma/experiments/stock_risk_exit_study_v1/FIVEGZ5SE_STOCK_RISK_EXIT_FINAL_v1_1.md`
+
+Round CLOSED. Do not reopen the fixed 5-20% grid without genuinely new untouched validation data or a different preregistered hypothesis.
+
