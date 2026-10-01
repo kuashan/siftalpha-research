@@ -28,8 +28,6 @@ class ChineseUiTests(unittest.TestCase):
             "币种策略",
             "策略总盈亏",
             "5s crypto v 1",
-            "买入信号",
-            "卖出信号",
         ]
         for phrase in required:
             self.assertIn(phrase, text)
@@ -45,7 +43,10 @@ class ChineseUiTests(unittest.TestCase):
     def test_chart_and_compact_layout_contract(self):
         text = (pathlib.Path(__file__).parents[1] / "templates" / "index.html").read_text(encoding="utf-8")
         self.assertIn("kline-canvas", text)
-        self.assertIn("下方柱状图为成交量", text)
+        app_text = (pathlib.Path(__file__).parents[1] / "app.py").read_text(encoding="utf-8")
+        self.assertIn("下方柱状图为成交量", app_text)
+        self.assertIn("买入信号", app_text)
+        self.assertIn("卖出信号", app_text)
         self.assertIn("trade-settings", text)
         self.assertIn("__TOP_CONNECTION_STATUS__", text)
         self.assertIn("__TOP_RECOVERY_STATUS__", text)
