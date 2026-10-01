@@ -16,6 +16,14 @@ class StateStore:
         conn.row_factory = sqlite3.Row
         return conn
 
+    @staticmethod
+    def _columns(conn: sqlite3.Connection, table: str) -> set[str]:
+        return {str(r[1]) for r in conn.execute(f"PRAGMA table_info({table})").fetchall()}
+
+    def _ensure_column(self, conn: sqlite3.Connection, table: str, column: str, ddl: str) -> None:
+        if column not in self._columns(conn, table):
+            conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {ddl}")
+
     def _init_schema(self) -> None:
         with self._connect() as conn:
             conn.executescript(
@@ -42,6 +50,29 @@ class StateStore:
                     updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
                 );
 
+                CREATE TABLE IF NOT EXISTS symbol_pnl (
+                    symbol TEXT PRIMARY KEY,
+                    realized_pnl REAL NOT NULL DEFAULT 0,
+                    unrealized_pnl REAL NOT NULL DEFAULT 0,
+                    funding_fee REAL NOT NULL DEFAULT 0,
+                    trading_fee REAL NOT NULL DEFAULT 0,
+                    updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+                );
+
+                CREATE TABLE IF NOT EXISTS orders (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    symbol TEXT NOT NULL,
+                    client_order_id TEXT NOT NULL,
+                    binance_order_id TEXT,
+                    side TEXT NOT NULL,
+                    quantity REAL,
+                    price REAL,
+                    status TEXT NOT NULL,
+                    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    UNIQUE(symbol, client_order_id)
+                );
+
                 CREATE TABLE IF NOT EXISTS audit_events (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     ts TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -52,6 +83,24 @@ class StateStore:
                 """
             )
 
+            old_symbol_columns = self._columns(conn, "symbol_settings")
+            old_runtime_columns = self._columns(conn, "runtime_state")
+            self._ensure_column(conn, "symbol_settings", "capital_budget_usdt", "REAL NOT NULL DEFAULT 1000")
+            self._ensure_column(conn, "symbol_settings", "timeframe", "TEXT NOT NULL DEFAULT '1d'")
+            self._ensure_column(conn, "symbol_settings", "enabled", "INTEGER NOT NULL DEFAULT 0")
+            self._ensure_column(conn, "runtime_state", "run_state", "TEXT NOT NULL DEFAULT 'STOPPED'")
+
+            if "capital_budget_usdt" not in old_symbol_columns:
+                row = conn.execute("SELECT value FROM app_settings WHERE key='capital_budget_usdt'").fetchone()
+                if row:
+                    conn.execute("UPDATE symbol_settings SET capital_budget_usdt=?", (float(row[0]),))
+            if "timeframe" not in old_symbol_columns:
+                row = conn.execute("SELECT value FROM app_settings WHERE key='timeframe'").fetchone()
+                if row:
+                    conn.execute("UPDATE symbol_settings SET timeframe=?", (str(row[0]),))
+            if "run_state" not in old_runtime_columns:
+                conn.execute("UPDATE runtime_state SET run_state='STOPPED'")
+
     def seed(
         self,
         symbols: Iterable[str],
@@ -60,70 +109,167 @@ class StateStore:
         default_timeframe: str = "1d",
     ) -> None:
         with self._connect() as conn:
-            conn.execute(
-                "INSERT OR IGNORE INTO app_settings(key, value) VALUES('capital_budget_usdt', ?)",
-                (str(default_budget),),
-            )
-            conn.execute(
-                "INSERT OR IGNORE INTO app_settings(key, value) VALUES('timeframe', ?)",
-                (default_timeframe,),
-            )
             for symbol in symbols:
                 conn.execute(
-                    "INSERT OR IGNORE INTO symbol_settings(symbol, requested_leverage) VALUES(?, ?)",
-                    (symbol, default_leverage),
+                    """
+                    INSERT OR IGNORE INTO symbol_settings(
+                        symbol, requested_leverage, capital_budget_usdt, timeframe, enabled
+                    ) VALUES(?, ?, ?, ?, 0)
+                    """,
+                    (symbol, default_leverage, default_budget, default_timeframe),
                 )
                 conn.execute(
-                    "INSERT OR IGNORE INTO runtime_state(symbol) VALUES(?)",
+                    "INSERT OR IGNORE INTO runtime_state(symbol, run_state) VALUES(?, 'STOPPED')",
                     (symbol,),
                 )
+                conn.execute("INSERT OR IGNORE INTO symbol_pnl(symbol) VALUES(?)", (symbol,))
 
-    def get_budget(self) -> float:
+    def get_symbol_configs(self) -> dict[str, dict[str, object]]:
         with self._connect() as conn:
-            row = conn.execute("SELECT value FROM app_settings WHERE key='capital_budget_usdt'").fetchone()
-            return float(row[0]) if row else 0.0
+            rows = conn.execute(
+                """
+                SELECT symbol, requested_leverage, capital_budget_usdt, timeframe, enabled
+                FROM symbol_settings ORDER BY symbol
+                """
+            ).fetchall()
+            return {
+                str(r["symbol"]): {
+                    "symbol": str(r["symbol"]),
+                    "leverage": int(r["requested_leverage"]),
+                    "capital_budget_usdt": float(r["capital_budget_usdt"]),
+                    "timeframe": str(r["timeframe"]),
+                    "enabled": bool(r["enabled"]),
+                }
+                for r in rows
+            }
+
+    def set_symbol_config(self, symbol: str, *, capital_budget_usdt: float, leverage: int, timeframe: str) -> None:
+        with self._connect() as conn:
+            cur = conn.execute(
+                """
+                UPDATE symbol_settings
+                SET capital_budget_usdt=?, requested_leverage=?, timeframe=?, updated_at=CURRENT_TIMESTAMP
+                WHERE symbol=?
+                """,
+                (float(capital_budget_usdt), int(leverage), timeframe, symbol),
+            )
+            if cur.rowcount != 1:
+                raise KeyError(f"unknown symbol: {symbol}")
+            conn.execute(
+                "INSERT INTO audit_events(event_type, symbol, detail) VALUES('SET_SYMBOL_CONFIG', ?, ?)",
+                (symbol, f"budget={capital_budget_usdt};leverage={leverage};timeframe={timeframe}"),
+            )
+
+    def set_symbol_enabled(self, symbol: str, enabled: bool) -> None:
+        run_state = "ARMED" if enabled else "STOPPED"
+        with self._connect() as conn:
+            cur = conn.execute(
+                "UPDATE symbol_settings SET enabled=?, updated_at=CURRENT_TIMESTAMP WHERE symbol=?",
+                (1 if enabled else 0, symbol),
+            )
+            if cur.rowcount != 1:
+                raise KeyError(f"unknown symbol: {symbol}")
+            conn.execute(
+                "UPDATE runtime_state SET run_state=?, updated_at=CURRENT_TIMESTAMP WHERE symbol=?",
+                (run_state, symbol),
+            )
+            conn.execute(
+                "INSERT INTO audit_events(event_type, symbol, detail) VALUES(?, ?, ?)",
+                ("START_SYMBOL" if enabled else "STOP_SYMBOL", symbol, f"run_state={run_state}"),
+            )
+
+    def get_runtime_states(self) -> dict[str, dict[str, object]]:
+        with self._connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT symbol, last_closed_bar_open_time, current_fraction, c_confirmed,
+                       pending_action, last_signal, last_order_id, run_state
+                FROM runtime_state ORDER BY symbol
+                """
+            ).fetchall()
+            return {str(r["symbol"]): dict(r) for r in rows}
+
+    def get_pnl(self) -> dict[str, dict[str, float]]:
+        with self._connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT symbol, realized_pnl, unrealized_pnl, funding_fee, trading_fee
+                FROM symbol_pnl ORDER BY symbol
+                """
+            ).fetchall()
+            out: dict[str, dict[str, float]] = {}
+            for r in rows:
+                realized = float(r["realized_pnl"])
+                unrealized = float(r["unrealized_pnl"])
+                funding = float(r["funding_fee"])
+                trading = float(r["trading_fee"])
+                out[str(r["symbol"])] = {
+                    "realized_pnl": realized,
+                    "unrealized_pnl": unrealized,
+                    "funding_fee": funding,
+                    "trading_fee": trading,
+                    "total_pnl": realized + unrealized + funding - trading,
+                }
+            return out
+
+    def set_pnl(
+        self,
+        symbol: str,
+        *,
+        realized_pnl: float,
+        unrealized_pnl: float,
+        funding_fee: float,
+        trading_fee: float,
+    ) -> None:
+        with self._connect() as conn:
+            cur = conn.execute(
+                """
+                UPDATE symbol_pnl
+                SET realized_pnl=?, unrealized_pnl=?, funding_fee=?, trading_fee=?, updated_at=CURRENT_TIMESTAMP
+                WHERE symbol=?
+                """,
+                (realized_pnl, unrealized_pnl, funding_fee, trading_fee, symbol),
+            )
+            if cur.rowcount != 1:
+                raise KeyError(f"unknown symbol: {symbol}")
+
+    def pnl_summary(self) -> dict[str, float]:
+        pnl = self.get_pnl()
+        return {
+            "realized_pnl": sum(x["realized_pnl"] for x in pnl.values()),
+            "unrealized_pnl": sum(x["unrealized_pnl"] for x in pnl.values()),
+            "funding_fee": sum(x["funding_fee"] for x in pnl.values()),
+            "trading_fee": sum(x["trading_fee"] for x in pnl.values()),
+            "total_pnl": sum(x["total_pnl"] for x in pnl.values()),
+        }
+
+    # Legacy M1/M2 helpers retained temporarily. New code should use per-symbol methods.
+    def get_budget(self) -> float:
+        configs = self.get_symbol_configs()
+        return float(next(iter(configs.values()))["capital_budget_usdt"]) if configs else 0.0
 
     def set_budget(self, value: float) -> None:
         with self._connect() as conn:
-            conn.execute(
-                "INSERT INTO app_settings(key, value) VALUES('capital_budget_usdt', ?) "
-                "ON CONFLICT(key) DO UPDATE SET value=excluded.value",
-                (str(value),),
-            )
-            conn.execute(
-                "INSERT INTO audit_events(event_type, detail) VALUES('SET_BUDGET', ?)",
-                (f"capital_budget_usdt={value}",),
-            )
+            conn.execute("UPDATE symbol_settings SET capital_budget_usdt=?, updated_at=CURRENT_TIMESTAMP", (float(value),))
 
     def get_timeframe(self, default: str = "1d") -> str:
-        with self._connect() as conn:
-            row = conn.execute("SELECT value FROM app_settings WHERE key='timeframe'").fetchone()
-            return str(row[0]) if row else default
+        configs = self.get_symbol_configs()
+        return str(next(iter(configs.values()))["timeframe"]) if configs else default
 
     def set_timeframe(self, timeframe: str) -> None:
         with self._connect() as conn:
-            conn.execute(
-                "INSERT INTO app_settings(key, value) VALUES('timeframe', ?) "
-                "ON CONFLICT(key) DO UPDATE SET value=excluded.value",
-                (timeframe,),
-            )
-            conn.execute(
-                "INSERT INTO audit_events(event_type, detail) VALUES('SET_TIMEFRAME', ?)",
-                (f"timeframe={timeframe}",),
-            )
+            conn.execute("UPDATE symbol_settings SET timeframe=?, updated_at=CURRENT_TIMESTAMP", (timeframe,))
 
     def get_leverages(self) -> dict[str, int]:
-        with self._connect() as conn:
-            rows = conn.execute("SELECT symbol, requested_leverage FROM symbol_settings ORDER BY symbol").fetchall()
-            return {str(r["symbol"]): int(r["requested_leverage"]) for r in rows}
+        return {symbol: int(cfg["leverage"]) for symbol, cfg in self.get_symbol_configs().items()}
 
     def set_leverage(self, symbol: str, leverage: int) -> None:
-        with self._connect() as conn:
-            conn.execute(
-                "UPDATE symbol_settings SET requested_leverage=?, updated_at=CURRENT_TIMESTAMP WHERE symbol=?",
-                (leverage, symbol),
-            )
-            conn.execute(
-                "INSERT INTO audit_events(event_type, symbol, detail) VALUES('SET_LEVERAGE', ?, ?)",
-                (symbol, f"requested_leverage={leverage}"),
-            )
+        cfg = self.get_symbol_configs().get(symbol)
+        if not cfg:
+            raise KeyError(f"unknown symbol: {symbol}")
+        self.set_symbol_config(
+            symbol,
+            capital_budget_usdt=float(cfg["capital_budget_usdt"]),
+            leverage=int(leverage),
+            timeframe=str(cfg["timeframe"]),
+        )

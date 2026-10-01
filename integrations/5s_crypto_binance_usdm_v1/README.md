@@ -1,72 +1,53 @@
 # 5s-crypto V1 · Binance USDⓈ-M Futures integration
 
-Bounded execution-integration project for frozen `5s-crypto V1`.
-
-## Status
+## Current state
 
 - M1: CLOSED
 - M1.1: CLOSED
-- M2: **IMPLEMENTED_AWAITING_TESTNET_ACCEPTANCE**
+- M2: IMPLEMENTED_AWAITING_TESTNET_ACCEPTANCE
+- M2.1: IMPLEMENTED_AND_VERIFIED
 - M3: NOT_STARTED
 - M4: NOT_STARTED
 
-## Install M2 dependency
+## Runtime architecture
 
-Requires Python 3.10+.
-
-```bash
-pip install -r requirements.txt
-```
-
-Official SDK is pinned:
-`binance-sdk-derivatives-trading-usds-futures==17.5.0`
-
-## PAPER console
-
-```bash
-FIVES_MODE=PAPER python app.py
-```
-
-## Binance Futures Testnet acceptance
-
-Provide credentials only as environment variables:
-
-```bash
-export FIVES_MODE=TESTNET
-export BINANCE_TESTNET_API_KEY='...'
-export BINANCE_TESTNET_API_SECRET='...'
-python m2_testnet_check.py
-```
-
-To explicitly apply the frozen execution account settings on Testnet:
-
-```bash
-python m2_testnet_check.py --apply-account-settings
-```
-
-To perform the bounded Testnet order submit/cancel probe:
-
-```bash
-python m2_testnet_check.py --order-probe BTCUSDT
-```
-
-The script is hard-guarded against PAPER/LIVE authenticated use. M2 contains no production URL for authenticated mutations.
-
-## Frozen boundaries
-
-Universe:
+One Python process manages four independent Strategy Slots:
 BTCUSDT / ETHUSDT / BNBUSDT / SOLUSDT.
 
-Product:
-Binance USDⓈ-M perpetual futures.
+Each slot has its own:
+- START/STOP intent
+- capital budget
+- leverage
+- K-line timeframe
+- 0% / 60% / 100% runtime position state
+- signal/order state
+- realized/unrealized PnL
+- funding and trading fees
 
-Account semantics:
-One-way + Long-only + Isolated.
+Only enabled slots will be scheduled once M3 attaches the frozen 5s-crypto V1 signal engine.
 
-Selectable intervals:
-15m / 1h / 2h / 4h / 6h / 12h / 1d.
+The dashboard also displays total PnL across all four slots.
 
-Validation boundary:
-1d remains the validated 5s-crypto V1 baseline; sub-daily intervals remain experimental.
+## Capital meaning
 
-M3 cannot start until M2's real Testnet acceptance is CLOSED.
+A slot's `capital_budget_usdt` is its maximum strategy margin budget, not the account's total balance.
+
+Example:
+BTC budget 100 USDT, leverage 5x:
+- initial 60% stage = 60 USDT margin / about 300 USDT notional
+- BUY-C top-up to 100% = 100 USDT margin / about 500 USDT notional
+
+M3 must additionally verify real Binance available margin immediately before an order. Configured budgets do not reserve or transfer funds on Binance.
+
+## Important M2.1 boundary
+
+The START button currently persists the slot as `ARMED`; it does not yet run the frozen signal loop. M3 is the only milestone allowed to attach automatic strategy execution.
+
+## Testnet
+
+Use environment variables only:
+`FIVES_MODE=TESTNET`
+`BINANCE_TESTNET_API_KEY`
+`BINANCE_TESTNET_API_SECRET`
+
+LIVE remains unsupported in this round.
