@@ -31,10 +31,15 @@ jobs:
 
       - name: Compile
         run: |
-          python -m py_compile             app.py config.py storage.py m2_testnet_check.py             engine/paper.py             exchange/binance_usdm_public.py             exchange/binance_usdm_testnet.py             strategy/frozen_contract.py
+          python -m py_compile             app.py config.py storage.py m2_testnet_check.py             engine/paper.py             exchange/binance_usdm_public.py             exchange/binance_usdm_testnet.py             strategy/frozen_contract.py strategy/frozen_signal_engine.py
 
       - name: Unit tests
         run: python -m unittest discover -s tests -v
+
+      - name: Frozen JS/Python signal parity
+        run: |
+          command -v node
+          python -m unittest tests.test_m3_signal_engine_parity -v
 
       - name: PAPER app import
         env:

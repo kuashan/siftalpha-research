@@ -6,8 +6,8 @@ Status: **CLOSED**
 ## M1.1 — Configurable K-line interval
 Status: **CLOSED**
 
-## M2 — Binance Futures Testnet adapter
-Status: **IMPLEMENTED_AWAITING_TESTNET_ACCEPTANCE**
+## M2 — Binance Futures Demo adapter
+Status: **CLOSED**
 
 Implemented:
 - official Binance modular USDⓈ-M SDK pinned at 17.5.0
@@ -104,9 +104,23 @@ Fixes Binance error -1021 / timestamp outside recvWindow:
 - strategy logic remains unchanged
 
 ## M3 — Frozen 5s-crypto V1 signal engine + execution
+Status: **IN_PROGRESS**
+
+User accepted the M2 Demo connection path on 2026-10-01 and authorized entry into M3.
+
+### M3.1 — Frozen signal engine parity
+Status: **IMPLEMENTED_AWAITING_CI**
+
+Scope:
+- exact Python port of the frozen research state/signal equations
+- bar-by-bar parity test against the frozen JavaScript research implementation
+- no scheduler or order execution yet
+
+### M3.2 — Four-symbol independent scheduler
 Status: **NOT_STARTED**
 
-M3 must not start before M2 real Testnet acceptance is CLOSED.
+### M3.3 — Binance Demo execution + idempotent order loop
+Status: **NOT_STARTED**
 
 ## M4 — Recovery + end-to-end Testnet acceptance
 Status: **NOT_STARTED**
