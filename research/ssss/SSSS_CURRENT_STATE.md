@@ -1342,3 +1342,28 @@ Canonical corrected report:
 
 The invalidated first-pass report is historical only and must not be used as the current result.
 
+## State / Volatility-Aware Risk Exit Study v1 — 2026-10-01
+
+Status: **IMPLEMENTED_AND_VERIFIED / CLOSED**.
+
+Baseline reproduction:
+- stocks 39/39 exact PASS;
+- Crypto BTC / ETH / BNB / SOL exact PASS.
+
+Formal candidate results:
+- stock pass: 0 / 8;
+- Crypto pass: 0 / 8;
+- universal pass: 0 / 8.
+
+Final decisions:
+- `STOCK_RISK_EXIT = NOT_USED_RETAIN_BASELINE`
+- `CRYPTO_RISK_EXIT = NOT_USED_RETAIN_BASELINE`
+- `UNIVERSAL_STATE_VOL_RISK_EXIT = REJECTED_NOT_ADMITTED`
+- `RISK_EXIT_LAYER = NOT_USED_RETAIN_BASELINES`
+- `STATE_VOL_RISK_EXIT_STUDY_V1 = IMPLEMENTED_AND_VERIFIED`
+
+Canonical final report:
+`research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/FIVEGZ5SE_STATE_VOL_RISK_EXIT_FINAL_v1.md`
+
+Round CLOSED. No post-result threshold tuning is allowed inside v1.
+

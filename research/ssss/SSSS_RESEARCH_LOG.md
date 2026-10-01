@@ -1762,3 +1762,34 @@ Corrected final report:
 
 Round CLOSED. Do not reopen the fixed 5-20% grid without genuinely new untouched validation data or a different preregistered hypothesis.
 
+## State / Volatility-Aware Risk Exit Study v1 — CLOSED — 2026-10-01
+
+The preregistered State / Volatility-Aware Risk Exit study was completed across the frozen 39-stock universe and BTC / ETH / BNB / SOL.
+
+Baseline reproduction passed exactly before interpretation.
+
+Eight formal candidates were evaluated:
+LOSS2_MOD, LOSS3_MOD, LOSS2_SEV, PEAK2_MOD, PEAK3_MOD, HYBRID25_MOD, CONFIRM_ADAPT, LOSS4_SEV.
+
+Results:
+- Stock: 0/8 candidates passed.
+- Crypto: 0/8 candidates passed.
+- Universal: 0/8 candidates passed.
+
+Representative stock result:
+CONFIRM_ADAPT improved mean intraday MDD +2.43pp and 25/39 stocks, but retained only 52.6% of baseline return and killed 725 baseline winners versus 434 saved losers.
+
+Representative Crypto result:
+LOSS4_SEV increased pooled mean return to +77.87% versus +68.74% baseline, but improved MDD on only 2/4 coins, worsened P5, and failed cross-coin dominance/consistency gates.
+
+Final decisions:
+- `STOCK_RISK_EXIT = NOT_USED_RETAIN_BASELINE`
+- `CRYPTO_RISK_EXIT = NOT_USED_RETAIN_BASELINE`
+- `UNIVERSAL_STATE_VOL_RISK_EXIT = REJECTED_NOT_ADMITTED`
+- `RISK_EXIT_LAYER = NOT_USED_RETAIN_BASELINES`
+- `STATE_VOL_RISK_EXIT_STUDY_V1 = IMPLEMENTED_AND_VERIFIED`
+
+The current SSSS candidate therefore uses the existing signal-driven SELL controls without an independent risk-exit layer.
+
+Round CLOSED.
+
