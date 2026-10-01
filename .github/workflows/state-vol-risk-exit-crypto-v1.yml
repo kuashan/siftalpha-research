@@ -1,0 +1,59 @@
+name: State Vol Risk Exit Crypto v1
+
+on:
+  push:
+    branches:
+      - research/source-xma-walkforward
+    paths:
+      - "research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/fetch_binance_crypto_v1.py"
+      - "research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/run_crypto_state_vol_v1.js"
+      - ".github/workflows/state-vol-risk-exit-crypto-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact trigger commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          git init .
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
+          git fetch --depth=1 origin "${SHA}"
+          git checkout --detach FETCH_HEAD
+      - name: Fetch frozen Binance daily OHLCV
+        run: python3 research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/fetch_binance_crypto_v1.py
+      - name: Reproduce baseline and compute frozen candidates
+        run: node research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/run_crypto_state_vol_v1.js
+      - name: Verify branch did not drift
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          BRANCH: research/source-xma-walkforward
+          SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          remote_sha="$(git ls-remote "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" "refs/heads/${BRANCH}" | awk '{print $1}')"
+          test "${remote_sha}" = "${SHA}"
+      - name: Commit verified Crypto outputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          BRANCH: research/source-xma-walkforward
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/CRYPTO_INPUT_MANIFEST_v1.json
+          git add research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/CRYPTO_BASELINE_REPRO_v1.json
+          git add research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/crypto_state_vol_results_v1.json
+          git commit -m "research: compute state volatility crypto v1"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" HEAD:"refs/heads/${BRANCH}"
