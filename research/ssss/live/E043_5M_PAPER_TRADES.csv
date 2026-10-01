@@ -1,1 +1,0 @@
-trade_id,utc_time,asset,side,action,execution_price,margin_pct,gross_notional,leverage,weighted_entry,hard_stop,reason,F1_LMD,F2_STRUCTURE,F3_DXBD,F4_KDJ_FLOW,F5_SSSS,risk_state,realized_pnl,unrealized_pnl,post_action_equity,strategy_version,status
