@@ -220,11 +220,19 @@ def render_index(selected_symbol: str | None = None) -> str:
     connection_label = "已连接虚拟资金" if connected else "等待连接"
     connection_class = "positive" if connected else "neutral"
     connection_open = "" if connected else " open"
-    error_html = (
-        '<div class="connect-error">连接失败，请检查测试网接口密钥与网络后重试。</div>'
-        if testnet.get("last_error")
-        else ""
-    )
+    last_error = str(testnet.get("last_error") or "").lower()
+    if last_error:
+        if any(token in last_error for token in ("-2015", "invalid api-key", "unauthorized", "401")):
+            error_text = "连接失败：接口密钥无效，或该密钥没有币安合约模拟交易权限。"
+        elif "-1021" in last_error or "timestamp" in last_error:
+            error_text = "连接失败：设备时间与币安服务器时间偏差过大。"
+        elif any(token in last_error for token in ("network", "timeout", "connection", "dns")):
+            error_text = "连接失败：当前网络无法连接币安合约模拟交易服务器。"
+        else:
+            error_text = "连接失败：请确认使用的是从币安合约模拟交易页面创建的接口密钥。"
+        error_html = f'<div class="connect-error">{html.escape(error_text)}</div>'
+    else:
+        error_html = ""
 
     return (
         TEMPLATE
@@ -324,9 +332,9 @@ class Handler(BaseHTTPRequestHandler):
             form = self._read_form()
 
             if self.path == "/testnet-connect":
-                environment = form.get("environment", ["TESTNET"])[0].upper().strip()
-                if environment != "TESTNET":
-                    raise ValueError("当前阶段只允许虚拟测试网")
+                environment = form.get("environment", ["DEMO"])[0].upper().strip()
+                if environment != "DEMO":
+                    raise ValueError("当前阶段只允许币安合约模拟交易")
                 api_key = form.get("api_key", [""])[0]
                 api_secret = form.get("api_secret", [""])[0]
                 testnet_session.connect_and_test(api_key, api_secret)
@@ -374,6 +382,9 @@ class Handler(BaseHTTPRequestHandler):
 
             self._send(404, "页面不存在".encode("utf-8"), "text/plain; charset=utf-8")
         except Exception:
+            if self.path.startswith("/testnet-"):
+                self._redirect_home()
+                return
             body = (
                 "<!doctype html><meta charset='utf-8'><title>操作失败</title>"
                 "<body style='font-family:system-ui;background:#0b1020;color:#edf2f7;padding:24px'>"
