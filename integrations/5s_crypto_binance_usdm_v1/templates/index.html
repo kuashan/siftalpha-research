@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>5s 加密货币 V1 · U 本位合约</title>
+<title>5s crypto v 1 · U 本位合约</title>
 <style>
 :root{
   color-scheme:dark;
@@ -78,12 +78,31 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 .status-pill{padding:4px 7px;border-radius:999px;font-size:10px;border:1px solid var(--line)}
 .status-pill.running{color:#8ce6bc;border-color:#285945;background:#122b23}.status-pill.stopped{color:#aab6c9;background:#1a2230}
 .hero-pnl{text-align:right}.hero-pnl small{display:block;color:var(--muted);font-size:10px}.hero-pnl strong{font-size:23px}.hero-pnl span{font-size:10px;color:var(--muted)}
+.market-chart{margin:10px 14px 0;background:var(--panel2);border:1px solid #1f2a3e;border-radius:11px;padding:10px}
+.chart-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.chart-head small{display:block;color:var(--muted);font-size:10px}.chart-head strong{font-size:13px}
+.chart-head span{font-size:10px;color:var(--muted);white-space:nowrap}
+.chart-readout{min-height:20px;margin-top:6px;color:#c8d3e4;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chart-scroll{margin-top:4px;overflow-x:auto;overflow-y:hidden;border-radius:8px;background:#080d17;scrollbar-width:thin}
+.kline-canvas{display:block;height:330px}
+.chart-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:7px;color:var(--muted);font-size:10px}
+.chart-legend b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;color:#08110d}
+.legend-buy{background:#52d49a}.legend-sell{background:#ff7b82;color:#1a0708!important}
+.chart-message{margin-top:5px;color:var(--muted);font-size:10px}
 .snapshot-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px 14px 0}
 .panel-body{display:grid;grid-template-columns:minmax(0,2fr) minmax(220px,.75fr);gap:10px;padding:10px 14px 14px}
 .settings-block,.control-block{background:var(--panel2);border:1px solid #1f2a3e;border-radius:11px;padding:11px}
 .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.section-title small,.control-block small{display:block;color:var(--muted);font-size:10px}
-.section-title strong,.control-block strong{display:block;font-size:13px;margin-top:2px}
+.section-title small,.control-block small,.trade-settings-summary small{display:block;color:var(--muted);font-size:10px}
+.section-title strong,.control-block strong,.trade-settings-summary strong{display:block;font-size:13px;margin-top:2px}
+.trade-settings{padding:0;overflow:hidden}
+.trade-settings summary{list-style:none;cursor:pointer}.trade-settings summary::-webkit-details-marker{display:none}
+.trade-settings-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px}
+.trade-settings-summary span{font-size:10px;color:var(--muted)}
+.trade-settings[open] .trade-settings-summary{border-bottom:1px solid #1f2a3e}
+.trade-settings[open] .trade-settings-summary span{font-size:0}
+.trade-settings[open] .trade-settings-summary span::after{content:"点击收起";font-size:10px}
+.trade-settings-body{padding:11px}
 .field-grid{display:grid;grid-template-columns:1.35fr .75fr 1fr;gap:8px}
 .input-with-unit{position:relative}.input-with-unit input{padding-right:52px}.input-with-unit span{position:absolute;right:10px;bottom:13px;color:var(--muted);font-size:11px}
 .exposure-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:8px}
@@ -102,19 +121,19 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 @media(max-width:760px){
   .shell{padding:10px}.topbar{margin:-10px -10px 0;padding:10px}
   .title-row{align-items:center}.brand h1{font-size:18px}.badges .badge:nth-child(2),.badges .badge:nth-child(3){display:none}
-  .summary-grid{grid-template-columns:1fr 1fr}.summary-card{padding:9px}.summary-card strong{font-size:16px}
+  .summary-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.summary-card{padding:7px 6px}.summary-card small{font-size:9px}.summary-card strong{font-size:12px}.summary-card span{font-size:8px;margin-left:1px}
   .connection-stats{grid-template-columns:1fr 1fr}
   .connect-form{grid-template-columns:1fr 1fr}.connect-form label:nth-child(2),.connect-form label:nth-child(3){grid-column:1/-1}.connect-form button{grid-column:1/-1;width:100%}
   .section-head{margin-top:12px}
-  .coin-tabs{gap:5px}.coin-tab{min-height:54px;padding:8px}.coin-tab strong{font-size:13px}
-  .coin-hero{padding:12px}.snapshot-grid{grid-template-columns:1fr 1fr;padding:8px 12px 0}
+  .coin-tabs{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.coin-tab{min-width:0;min-height:50px;padding:7px 5px}.coin-tab strong{font-size:12px}
+  .coin-hero{padding:12px}.market-chart{margin:8px 12px 0;padding:8px}.kline-canvas{height:300px}.snapshot-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px 12px 0}.snapshot{padding:7px 5px}.snapshot small{font-size:8px}.snapshot b{font-size:11px}
   .panel-body{grid-template-columns:1fr;padding:8px 12px 12px}
   .field-grid{grid-template-columns:1fr 1fr}.budget-field{grid-column:1/-1}
   .exposure-row{grid-template-columns:1fr 1fr}.exposure-row div:last-child{grid-column:1/-1}
 }
 @media(max-width:380px){
-  .badges .badge.locked{display:none}.brand p{display:none}
-  .coin-tab small{font-size:10px}.coin-tab{padding:7px 6px}
+  .badges .badge.test,.badges .badge.locked{display:none}.brand p{display:none}
+  .coin-tab small{font-size:9px}.coin-tab{padding:6px 4px}
 }
 </style>
 </head>
@@ -123,13 +142,13 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
   <header class="topbar">
     <div class="title-row">
       <div class="brand">
-        <h1>5s 加密货币 V1</h1>
+        <h1>5s crypto v 1</h1>
         <p>币安 U 本位合约 · 虚拟测试控制台</p>
       </div>
       <div class="badges">
+        <span class="badge __TOP_CONNECTION_CLASS__">● __TOP_CONNECTION_STATUS__</span>
+        <span class="badge __TOP_RECOVERY_CLASS__">● __TOP_RECOVERY_STATUS__</span>
         <span class="badge test">虚拟测试</span>
-        <span class="badge">逐仓</span>
-        <span class="badge">单向持仓</span>
         <span class="badge locked">实盘锁定</span>
       </div>
     </div>
@@ -203,6 +222,208 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
   const tabs = Array.from(root.querySelectorAll('.coin-tab'));
   const panels = Array.from(root.querySelectorAll('.coin-panel'));
 
+
+  const chartCache = new Map();
+
+  function formatPrice(value) {
+    const n = Number(value);
+    if (!Number.isFinite(n)) return '—';
+    if (Math.abs(n) >= 1000) return n.toFixed(2);
+    if (Math.abs(n) >= 1) return n.toFixed(3);
+    return n.toFixed(5);
+  }
+
+  function formatVolume(value) {
+    const n = Number(value);
+    if (!Number.isFinite(n)) return '—';
+    if (n >= 1000000000) return (n / 1000000000).toFixed(1) + 'B';
+    if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+    if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+    return n.toFixed(0);
+  }
+
+  function formatTime(ms) {
+    const d = new Date(Number(ms));
+    return d.toLocaleString('zh-CN', {
+      month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit',
+      hour12: false
+    });
+  }
+
+  function drawChart(section, payload) {
+    const canvas = section.querySelector('.kline-canvas');
+    const scroll = section.querySelector('.chart-scroll');
+    const message = section.querySelector('.chart-message');
+    const readout = section.querySelector('.chart-readout');
+    const candles = Array.isArray(payload.candles) ? payload.candles : [];
+    const markers = Array.isArray(payload.markers) ? payload.markers : [];
+    if (!canvas || !scroll || candles.length === 0) {
+      if (message) message.textContent = '暂时没有可显示的 K 线数据';
+      return;
+    }
+
+    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    const left = 8;
+    const right = 64;
+    const candleStep = 6;
+    const logicalWidth = Math.max(scroll.clientWidth, left + right + candles.length * candleStep);
+    const logicalHeight = window.innerWidth <= 760 ? 300 : 330;
+    canvas.style.width = logicalWidth + 'px';
+    canvas.style.height = logicalHeight + 'px';
+    canvas.width = Math.round(logicalWidth * dpr);
+    canvas.height = Math.round(logicalHeight * dpr);
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, logicalWidth, logicalHeight);
+
+    const priceTop = 12;
+    const priceBottom = logicalHeight * 0.72;
+    const volumeTop = logicalHeight * 0.78;
+    const volumeBottom = logicalHeight - 18;
+    const plotRight = logicalWidth - right;
+    const lows = candles.map(c => Number(c.low));
+    const highs = candles.map(c => Number(c.high));
+    let minPrice = Math.min.apply(null, lows);
+    let maxPrice = Math.max.apply(null, highs);
+    let pad = (maxPrice - minPrice) * 0.06;
+    if (!Number.isFinite(pad) || pad <= 0) pad = Math.max(1, maxPrice * 0.01);
+    minPrice -= pad;
+    maxPrice += pad;
+    const priceSpan = Math.max(1e-12, maxPrice - minPrice);
+    const maxVolume = Math.max(1, ...candles.map(c => Number(c.volume) || 0));
+    const yPrice = p => priceTop + (maxPrice - Number(p)) / priceSpan * (priceBottom - priceTop);
+
+    ctx.strokeStyle = '#1a2639';
+    ctx.lineWidth = 1;
+    ctx.fillStyle = '#71819a';
+    ctx.font = '10px system-ui';
+    ctx.textAlign = 'left';
+    for (let g = 0; g <= 4; g++) {
+      const y = priceTop + (priceBottom - priceTop) * g / 4;
+      ctx.beginPath(); ctx.moveTo(left, y); ctx.lineTo(plotRight, y); ctx.stroke();
+      const p = maxPrice - priceSpan * g / 4;
+      ctx.fillText(formatPrice(p), plotRight + 5, y + 3);
+    }
+    ctx.beginPath(); ctx.moveTo(left, volumeTop - 5); ctx.lineTo(plotRight, volumeTop - 5); ctx.stroke();
+
+    const markerMap = new Map();
+    markers.forEach(m => {
+      const key = String(m.open_time);
+      if (!markerMap.has(key)) markerMap.set(key, []);
+      markerMap.get(key).push(m);
+    });
+
+    candles.forEach((c, i) => {
+      const x = left + i * candleStep + candleStep / 2;
+      const open = Number(c.open), high = Number(c.high), low = Number(c.low), close = Number(c.close);
+      const up = close >= open;
+      const color = up ? '#52d49a' : '#ff7b82';
+      const yOpen = yPrice(open), yClose = yPrice(close), yHigh = yPrice(high), yLow = yPrice(low);
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.beginPath(); ctx.moveTo(x, yHigh); ctx.lineTo(x, yLow); ctx.stroke();
+      const bodyTop = Math.min(yOpen, yClose);
+      const bodyHeight = Math.max(1, Math.abs(yClose - yOpen));
+      ctx.fillRect(x - 1.7, bodyTop, 3.4, bodyHeight);
+
+      const vh = (Number(c.volume) || 0) / maxVolume * (volumeBottom - volumeTop);
+      ctx.globalAlpha = 0.62;
+      ctx.fillRect(x - 1.7, volumeBottom - vh, 3.4, vh);
+      ctx.globalAlpha = 1;
+
+      const ms = markerMap.get(String(c.open_time)) || [];
+      let buyOffset = 0, sellOffset = 0;
+      ms.forEach(m => {
+        const side = String(m.side || '');
+        const isBuy = side === 'B';
+        const y = isBuy ? Math.min(priceBottom - 10, yLow + 13 + buyOffset) : Math.max(priceTop + 10, yHigh - 13 - sellOffset);
+        if (isBuy) buyOffset += 18; else sellOffset += 18;
+        ctx.beginPath();
+        ctx.fillStyle = isBuy ? '#52d49a' : '#ff7b82';
+        ctx.arc(x, y, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = isBuy ? '#07130e' : '#1b0809';
+        ctx.font = 'bold 9px system-ui';
+        ctx.textAlign = 'center';
+        ctx.fillText(side, x, y + 3);
+      });
+    });
+
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#71819a';
+    ctx.font = '9px system-ui';
+    const labelEvery = Math.max(1, Math.floor(candles.length / 8));
+    candles.forEach((c, i) => {
+      if (i % labelEvery !== 0 && i !== candles.length - 1) return;
+      const x = left + i * candleStep;
+      ctx.fillText(formatTime(c.open_time), x, logicalHeight - 4);
+    });
+
+    function updateReadout(clientX) {
+      const rect = canvas.getBoundingClientRect();
+      const localX = clientX - rect.left;
+      const index = Math.max(0, Math.min(candles.length - 1, Math.floor((localX - left) / candleStep)));
+      const c = candles[index];
+      if (!c || !readout) return;
+      const ms = markerMap.get(String(c.open_time)) || [];
+      const mark = ms.length ? ' · 信号 ' + ms.map(m => m.side).join('/') : '';
+      readout.textContent =
+        formatTime(c.open_time) +
+        ' · 开 ' + formatPrice(c.open) +
+        ' · 高 ' + formatPrice(c.high) +
+        ' · 低 ' + formatPrice(c.low) +
+        ' · 收 ' + formatPrice(c.close) +
+        ' · 量 ' + formatVolume(c.volume) + mark;
+    }
+
+    canvas.onmousemove = e => updateReadout(e.clientX);
+    canvas.ontouchmove = e => {
+      if (e.touches && e.touches[0]) updateReadout(e.touches[0].clientX);
+    };
+    if (readout) {
+      const c = candles[candles.length - 1];
+      readout.textContent =
+        '最新 ' + formatTime(c.open_time) +
+        ' · 开 ' + formatPrice(c.open) +
+        ' · 高 ' + formatPrice(c.high) +
+        ' · 低 ' + formatPrice(c.low) +
+        ' · 收 ' + formatPrice(c.close) +
+        ' · 量 ' + formatVolume(c.volume);
+    }
+    if (message) {
+      message.textContent =
+        payload.source + ' · ' + payload.timeframe_label +
+        ' · 显示 ' + candles.length + ' / ' + payload.display_limit + ' 根';
+    }
+    if (section.dataset.scrolled !== '1') {
+      requestAnimationFrame(() => {
+        scroll.scrollLeft = Math.max(0, scroll.scrollWidth - scroll.clientWidth);
+        section.dataset.scrolled = '1';
+      });
+    }
+  }
+
+  async function loadChart(symbol, force) {
+    const section = root.querySelector('.market-chart[data-chart-symbol="' + symbol + '"]');
+    if (!section) return;
+    const timeframe = section.dataset.chartTimeframe || '';
+    const key = symbol + ':' + timeframe;
+    const message = section.querySelector('.chart-message');
+    try {
+      let payload = chartCache.get(key);
+      if (!payload || force) {
+        if (message) message.textContent = '正在加载 ' + timeframe + ' K 线…';
+        const response = await fetch('/api/chart?symbol=' + encodeURIComponent(symbol), {cache: 'no-store'});
+        if (!response.ok) throw new Error('行情读取失败');
+        payload = await response.json();
+        chartCache.set(key, payload);
+      }
+      drawChart(section, payload);
+    } catch (error) {
+      if (message) message.textContent = 'K 线加载失败，请稍后重试';
+    }
+  }
+
   function activate(symbol) {
     tabs.forEach((tab) => {
       const active = tab.dataset.symbol === symbol;
@@ -212,6 +433,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     panels.forEach((panel) => {
       panel.classList.toggle('active', panel.dataset.panel === symbol);
     });
+    loadChart(symbol, false);
   }
 
   tabs.forEach((tab) => {
@@ -219,6 +441,10 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
   });
 
   activate(root.dataset.initialSymbol || (tabs[0] && tabs[0].dataset.symbol));
+  setInterval(() => {
+    const active = tabs.find(tab => tab.classList.contains('active'));
+    if (active) loadChart(active.dataset.symbol, true);
+  }, 30000);
 })();
 </script>
 </body>
