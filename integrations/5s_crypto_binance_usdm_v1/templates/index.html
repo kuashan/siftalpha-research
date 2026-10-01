@@ -79,11 +79,19 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 .status-pill.running{color:#8ce6bc;border-color:#285945;background:#122b23}.status-pill.stopped{color:#aab6c9;background:#1a2230}
 .hero-pnl{text-align:right}.hero-pnl small{display:block;color:var(--muted);font-size:10px}.hero-pnl strong{font-size:23px}.hero-pnl span{font-size:10px;color:var(--muted)}
 .market-chart{margin:10px 14px 0;background:var(--panel2);border:1px solid #1f2a3e;border-radius:11px;padding:10px}
-.chart-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.chart-head small{display:block;color:var(--muted);font-size:10px}.chart-head strong{font-size:13px}
-.chart-head span{font-size:10px;color:var(--muted);white-space:nowrap}
-.chart-readout{min-height:20px;margin-top:6px;color:#c8d3e4;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chart-scroll{margin-top:4px;overflow-x:auto;overflow-y:hidden;border-radius:8px;background:#080d17;scrollbar-width:thin}
+.chart-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(100px,.75fr) minmax(98px,auto);align-items:center;gap:12px}
+.chart-identity{min-width:0}
+.chart-identity small,.live-price small{display:block;color:var(--muted);font-size:10px}
+.chart-identity strong{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chart-candle-meta{display:block;margin-top:5px;color:var(--muted);font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.live-price{text-align:center;min-width:0;padding:2px 10px;border-left:1px solid #1f2a3e;border-right:1px solid #1f2a3e}
+.live-price-value{display:block;margin-top:2px;font-size:20px;line-height:1.15;font-variant-numeric:tabular-nums;white-space:nowrap}
+.live-price-status{display:block;margin-top:3px;color:var(--muted);font-size:9px;white-space:nowrap}
+.chart-ohlc{display:grid;gap:2px;min-width:94px}
+.chart-ohlc div{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:15px}
+.chart-ohlc small{color:var(--muted);font-size:9px}
+.chart-ohlc b{font-size:10px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}
+.chart-scroll{margin-top:7px;overflow-x:auto;overflow-y:hidden;border-radius:8px;background:#080d17;scrollbar-width:thin}
 .kline-canvas{display:block;height:330px}
 .chart-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:7px;color:var(--muted);font-size:10px}
 .chart-legend b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;color:#08110d}
@@ -126,7 +134,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
   .connect-form{grid-template-columns:1fr 1fr}.connect-form label:nth-child(2),.connect-form label:nth-child(3){grid-column:1/-1}.connect-form button{grid-column:1/-1;width:100%}
   .section-head{margin-top:12px}
   .coin-tabs{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.coin-tab{min-width:0;min-height:50px;padding:7px 5px}.coin-tab strong{font-size:12px}
-  .coin-hero{padding:12px}.market-chart{margin:8px 12px 0;padding:8px}.kline-canvas{height:300px}.snapshot-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px 12px 0}.snapshot{padding:7px 5px}.snapshot small{font-size:8px}.snapshot b{font-size:11px}
+  .coin-hero{padding:12px}.market-chart{margin:8px 12px 0;padding:8px}.chart-head{grid-template-columns:minmax(0,1fr) minmax(88px,.72fr) minmax(88px,auto);gap:7px}.chart-identity strong{font-size:11px}.chart-candle-meta{font-size:8px}.live-price{padding:2px 6px}.live-price-value{font-size:16px}.live-price-status{font-size:8px}.chart-ohlc{min-width:84px}.chart-ohlc div{gap:5px}.chart-ohlc small{font-size:8px}.chart-ohlc b{font-size:9px}.kline-canvas{height:300px}.snapshot-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px 12px 0}.snapshot{padding:7px 5px}.snapshot small{font-size:8px}.snapshot b{font-size:11px}
   .panel-body{grid-template-columns:1fr;padding:8px 12px 12px}
   .field-grid{grid-template-columns:1fr 1fr}.budget-field{grid-column:1/-1}
   .exposure-row{grid-template-columns:1fr 1fr}.exposure-row div:last-child{grid-column:1/-1}
@@ -226,6 +234,10 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 
 
   const chartCache = new Map();
+  const livePriceCache = new Map();
+  let priceSocket = null;
+  let priceSocketGeneration = 0;
+  let priceReconnectTimer = null;
 
   function formatPrice(value) {
     const n = Number(value);
@@ -256,7 +268,9 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     const canvas = section.querySelector('.kline-canvas');
     const scroll = section.querySelector('.chart-scroll');
     const message = section.querySelector('.chart-message');
-    const readout = section.querySelector('.chart-readout');
+    const candleMeta = section.querySelector('.chart-candle-meta');
+    const liveValue = section.querySelector('.live-price-value');
+    const liveStatus = section.querySelector('.live-price-status');
     const candles = Array.isArray(payload.candles) ? payload.candles : [];
     const markers = Array.isArray(payload.markers) ? payload.markers : [];
     if (!canvas || !scroll || candles.length === 0) {
@@ -361,41 +375,57 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       ctx.fillText(formatTime(c.open_time), x, logicalHeight - 4);
     });
 
-    function updateReadout(clientX) {
+    function showCandle(c, prefix) {
+      if (!c) return;
+      const values = {
+        open: c.open,
+        high: c.high,
+        low: c.low,
+        close: c.close
+      };
+      Object.entries(values).forEach(([key, value]) => {
+        const node = section.querySelector('[data-ohlc="' + key + '"]');
+        if (node) node.textContent = formatPrice(value);
+      });
+      const ms = markerMap.get(String(c.open_time)) || [];
+      const mark = ms.length ? ' · 信号 ' + ms.map(m => m.side).join('/') : '';
+      if (candleMeta) {
+        candleMeta.textContent =
+          prefix + ' · ' + formatTime(c.open_time) +
+          ' · 量 ' + formatVolume(c.volume) + mark;
+      }
+    }
+
+    const latestCandle = candles[candles.length - 1];
+    function showFromClientX(clientX) {
       const rect = canvas.getBoundingClientRect();
       const localX = clientX - rect.left;
       const index = Math.max(0, Math.min(candles.length - 1, Math.floor((localX - left) / candleStep)));
-      const c = candles[index];
-      if (!c || !readout) return;
-      const ms = markerMap.get(String(c.open_time)) || [];
-      const mark = ms.length ? ' · 信号 ' + ms.map(m => m.side).join('/') : '';
-      readout.textContent =
-        formatTime(c.open_time) +
-        ' · 开 ' + formatPrice(c.open) +
-        ' · 高 ' + formatPrice(c.high) +
-        ' · 低 ' + formatPrice(c.low) +
-        ' · 收 ' + formatPrice(c.close) +
-        ' · 量 ' + formatVolume(c.volume) + mark;
+      showCandle(candles[index], '所选 K 线');
+    }
+    function restoreLatestCandle() {
+      showCandle(latestCandle, '最新 K 线');
     }
 
-    canvas.onmousemove = e => updateReadout(e.clientX);
-    canvas.ontouchmove = e => {
-      if (e.touches && e.touches[0]) updateReadout(e.touches[0].clientX);
+    canvas.onmousemove = e => showFromClientX(e.clientX);
+    canvas.onmouseleave = restoreLatestCandle;
+    canvas.ontouchstart = e => {
+      if (e.touches && e.touches[0]) showFromClientX(e.touches[0].clientX);
     };
-    if (readout) {
-      const c = candles[candles.length - 1];
-      readout.textContent =
-        '最新 ' + formatTime(c.open_time) +
-        ' · 开 ' + formatPrice(c.open) +
-        ' · 高 ' + formatPrice(c.high) +
-        ' · 低 ' + formatPrice(c.low) +
-        ' · 收 ' + formatPrice(c.close) +
-        ' · 量 ' + formatVolume(c.volume);
+    canvas.ontouchmove = e => {
+      if (e.touches && e.touches[0]) showFromClientX(e.touches[0].clientX);
+    };
+    canvas.ontouchend = restoreLatestCandle;
+    canvas.ontouchcancel = restoreLatestCandle;
+    restoreLatestCandle();
+
+    if (liveValue && section.dataset.livePriceReady !== '1') {
+      liveValue.textContent = formatPrice(latestCandle.close);
+      if (liveStatus) liveStatus.textContent = '等待实时行情';
     }
     if (message) {
       message.textContent =
-        payload.source + ' · ' + payload.timeframe_label +
-        ' · 显示 ' + candles.length + ' / ' + payload.display_limit + ' 根';
+        payload.source + ' · ' + payload.timeframe_label + ' · B/S 为真实策略信号';
     }
     if (section.dataset.scrolled !== '1') {
       requestAnimationFrame(() => {
@@ -403,6 +433,88 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
         section.dataset.scrolled = '1';
       });
     }
+  }
+
+  function activeSymbol() {
+    const active = tabs.find(tab => tab.classList.contains('active'));
+    return active ? active.dataset.symbol : '';
+  }
+
+  function stopPriceStream() {
+    priceSocketGeneration += 1;
+    if (priceReconnectTimer) {
+      clearTimeout(priceReconnectTimer);
+      priceReconnectTimer = null;
+    }
+    if (priceSocket) {
+      priceSocket.onopen = null;
+      priceSocket.onmessage = null;
+      priceSocket.onerror = null;
+      priceSocket.onclose = null;
+      try { priceSocket.close(); } catch (_) {}
+      priceSocket = null;
+    }
+  }
+
+  function startPriceStream(symbol) {
+    stopPriceStream();
+    const generation = priceSocketGeneration;
+    const section = root.querySelector('.market-chart[data-chart-symbol="' + symbol + '"]');
+    if (!section) return;
+    const valueNode = section.querySelector('.live-price-value');
+    const statusNode = section.querySelector('.live-price-status');
+    const cached = livePriceCache.get(symbol);
+    if (Number.isFinite(cached) && valueNode) {
+      valueNode.textContent = formatPrice(cached);
+      section.dataset.livePriceReady = '1';
+    }
+    if (statusNode) statusNode.textContent = '正在连接实时行情';
+
+    if (!('WebSocket' in window)) {
+      if (statusNode) statusNode.textContent = '当前浏览器不支持实时行情';
+      return;
+    }
+
+    const url = 'wss://fstream.binance.com/market/ws/' + symbol.toLowerCase() + '@ticker';
+    let socket;
+    try {
+      socket = new WebSocket(url);
+    } catch (_) {
+      if (statusNode) statusNode.textContent = '实时行情连接失败';
+      return;
+    }
+    priceSocket = socket;
+
+    socket.onopen = () => {
+      if (generation !== priceSocketGeneration || activeSymbol() !== symbol) return;
+      if (statusNode) statusNode.textContent = '实时 · 币安';
+    };
+    socket.onmessage = event => {
+      if (generation !== priceSocketGeneration || activeSymbol() !== symbol) return;
+      try {
+        const data = JSON.parse(event.data);
+        const price = Number(data.c);
+        if (!Number.isFinite(price)) return;
+        livePriceCache.set(symbol, price);
+        section.dataset.livePriceReady = '1';
+        if (valueNode) valueNode.textContent = formatPrice(price);
+        if (statusNode) statusNode.textContent = '实时 · 币安';
+      } catch (_) {}
+    };
+    socket.onerror = () => {
+      if (generation !== priceSocketGeneration || activeSymbol() !== symbol) return;
+      if (statusNode) statusNode.textContent = '实时行情连接异常';
+    };
+    socket.onclose = () => {
+      if (generation !== priceSocketGeneration || activeSymbol() !== symbol) return;
+      priceSocket = null;
+      if (statusNode) statusNode.textContent = '实时行情重连中';
+      priceReconnectTimer = setTimeout(() => {
+        if (generation === priceSocketGeneration && activeSymbol() === symbol) {
+          startPriceStream(symbol);
+        }
+      }, 3000);
+    };
   }
 
   async function loadChart(symbol, force) {
@@ -436,6 +548,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       panel.classList.toggle('active', panel.dataset.panel === symbol);
     });
     loadChart(symbol, false);
+    startPriceStream(symbol);
   }
 
   tabs.forEach((tab) => {
@@ -447,6 +560,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     const active = tabs.find(tab => tab.classList.contains('active'));
     if (active) loadChart(active.dataset.symbol, true);
   }, 30000);
+  window.addEventListener('beforeunload', stopPriceStream);
 })();
 </script>
 </body>

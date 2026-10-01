@@ -51,6 +51,11 @@ class ChineseUiTests(unittest.TestCase):
         self.assertIn("__TOP_CONNECTION_STATUS__", text)
         self.assertIn("__TOP_RECOVERY_STATUS__", text)
         self.assertIn("grid-template-columns:repeat(4,minmax(0,1fr))", text)
+        self.assertIn("live-price-value", text)
+        self.assertIn("chart-ohlc", text)
+        self.assertIn("@ticker", text)
+        self.assertIn("data-ohlc", app_text)
+        self.assertNotIn("最近 {DISPLAY_KLINE_LIMIT} 根", app_text)
 
 
 if __name__ == "__main__":

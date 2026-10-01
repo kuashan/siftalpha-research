@@ -245,13 +245,23 @@ def render_index(selected_symbol: str | None = None) -> str:
                 data-chart-timeframe="{html.escape(timeframe)}"
               >
                 <div class="chart-head">
-                  <div>
+                  <div class="chart-identity">
                     <small>行情图</small>
                     <strong>{html.escape(base)} / USDT · {_TIMEFRAME_LABELS.get(timeframe, timeframe)}</strong>
+                    <span class="chart-candle-meta">最新 K 线</span>
                   </div>
-                  <span>最近 {DISPLAY_KLINE_LIMIT} 根</span>
+                  <div class="live-price" aria-live="polite">
+                    <small>最新价</small>
+                    <strong class="live-price-value">—</strong>
+                    <span class="live-price-status">正在连接实时行情</span>
+                  </div>
+                  <div class="chart-ohlc" aria-label="K 线开高低收">
+                    <div><small>开</small><b data-ohlc="open">—</b></div>
+                    <div><small>高</small><b data-ohlc="high">—</b></div>
+                    <div><small>低</small><b data-ohlc="low">—</b></div>
+                    <div><small>收</small><b data-ohlc="close">—</b></div>
+                  </div>
                 </div>
-                <div class="chart-readout">触摸或移动到 K 线查看开高低收与成交量</div>
                 <div class="chart-scroll">
                   <canvas class="kline-canvas" aria-label="{html.escape(base)} K 线蜡烛图与成交量"></canvas>
                 </div>
