@@ -386,17 +386,32 @@ class Handler(BaseHTTPRequestHandler):
         print(f"[web] {self.address_string()} {fmt % args}")
 
 
-def main(host: str = "127.0.0.1", port: int = 8080) -> None:
+def create_server(host: str = "127.0.0.1", port: int = 0) -> ThreadingHTTPServer:
+    """Bind the Web UI to an available loopback port.
+
+    Port 0 asks the OS to choose a free ephemeral port, avoiding collisions with
+    another SiftAlpha project or a stale local listener.
+    """
+    return ThreadingHTTPServer((host, port), Handler)
+
+
+def main(host: str = "127.0.0.1", port: int = 0) -> None:
     enabled = [s for s, cfg in store.get_symbol_configs().items() if cfg["enabled"]]
-    url = f"http://127.0.0.1:{port}"
+    server = create_server(host, port)
+    actual_port = int(server.server_address[1])
+    url = f"http://127.0.0.1:{actual_port}"
     print(f"{settings.app_name}", flush=True)
     print(
         f"environment=TESTNET_READY enabled_symbols={','.join(enabled) or 'none'} live_enabled=false",
         flush=True,
     )
+    # Publish only after bind succeeds, so SiftAlpha never receives a stale/invalid URL.
     print(f"SIFTALPHA_WEB_URL={url}", flush=True)
-    print(f"server listening on {url}", flush=True)
-    ThreadingHTTPServer((host, port), Handler).serve_forever()
+    print(f"网页服务已启动：{url}", flush=True)
+    try:
+        server.serve_forever()
+    finally:
+        server.server_close()
 
 
 if __name__ == "__main__":
