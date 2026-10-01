@@ -40,7 +40,7 @@ class TestnetAccountSnapshot:
 
 
 class TestnetSession:
-    """In-memory Testnet credentials + last verified account snapshot.
+    """In-memory Demo Trading credentials + last verified account snapshot.
 
     Credentials are deliberately never written to SQLite or returned to the UI.
     A failed connection test does not retain the submitted secret.
@@ -66,7 +66,7 @@ class TestnetSession:
 
     def _adapter(self, api_key: str, api_secret: str) -> BinanceUsdMTestnetAdapter:
         return self._adapter_factory(
-            mode="TESTNET",
+            mode="DEMO",
             api_key=api_key,
             api_secret=api_secret,
             allowed_symbols=self.allowed_symbols,
@@ -95,7 +95,7 @@ class TestnetSession:
                 None,
             )
             if not isinstance(usdt, dict):
-                raise RuntimeError("Testnet 返回中没有找到 USDT 余额")
+                raise RuntimeError("模拟交易账户中没有找到 USDT 余额")
 
             position_rows = positions if isinstance(positions, list) else [positions]
             nonzero_positions = 0
@@ -110,7 +110,7 @@ class TestnetSession:
                     nonzero_positions += 1
 
             snapshot = TestnetAccountSnapshot(
-                environment="TESTNET",
+                environment="DEMO",
                 usdt_balance=_number(_first(usdt, "balance", default=0)),
                 usdt_available_balance=_number(
                     _first(usdt, "availableBalance", "available_balance", default=0)
@@ -138,7 +138,7 @@ class TestnetSession:
         with self._lock:
             api_key, api_secret = self._api_key, self._api_secret
         if not api_key or not api_secret:
-            raise ValueError("当前进程没有 Testnet 凭据")
+            raise ValueError("当前进程没有模拟交易凭据")
         return self.connect_and_test(api_key, api_secret)
 
     def disconnect(self) -> None:
@@ -156,7 +156,7 @@ class TestnetSession:
         with self._lock:
             snapshot = self._snapshot
             return {
-                "environment": "TESTNET",
+                "environment": "DEMO",
                 "credentials_present": bool(self._api_key and self._api_secret),
                 "connected": snapshot is not None,
                 "masked_api_key": _mask_key(self._api_key) if self._api_key else None,
