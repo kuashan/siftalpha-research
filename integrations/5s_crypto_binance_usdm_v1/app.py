@@ -8,6 +8,7 @@ from urllib.parse import parse_qs, urlencode, urlparse
 
 from config import Settings
 from engine.paper import preview_exposure
+from engine.execution import M3Executor
 from engine.scheduler import StrategyScheduler
 from exchange.binance_usdm_public import BinanceUsdMPublicProbe
 from runtime_testnet_session import TestnetSession
@@ -29,11 +30,14 @@ testnet_session = TestnetSession(
     initial_api_key=settings.testnet_api_key,
     initial_api_secret=settings.testnet_api_secret,
 )
+m3_executor = M3Executor(store)
 strategy_scheduler = StrategyScheduler(
     store=store,
     session=testnet_session,
     symbols=settings.symbols,
     allowed_timeframes=settings.allowed_timeframes,
+    on_decision=m3_executor.execute,
+    on_poll=m3_executor.refresh_accounting,
 )
 TEMPLATE = (Path(__file__).parent / "templates" / "index.html").read_text(encoding="utf-8")
 
@@ -55,6 +59,7 @@ _RUN_STATE_LABELS = {
     "MONITORING": "监测中",
     "SIGNAL_READY": "发现信号",
     "ERROR": "检测异常",
+    "BLOCKED": "交易已阻止",
     "STOPPED": "未启动",
 }
 
@@ -88,7 +93,9 @@ def _pnl_class(value: float) -> str:
 
 def _signal_label(value: object) -> str:
     raw = str(value or "").strip().upper()
-    return _SIGNAL_LABELS.get(raw, "等待信号")
+    if not raw:
+        return "等待信号"
+    return " + ".join(_SIGNAL_LABELS.get(part, part) for part in raw.split("+"))
 
 
 def _short_symbol(symbol: str) -> str:
@@ -215,7 +222,7 @@ def render_index(selected_symbol: str | None = None) -> str:
                   <div>
                     <small>运行控制</small>
                     <strong>{'策略已启用' if enabled else '策略未启动'}</strong>
-                    <p>{'停止只影响当前币种，不影响其他币种。' if enabled else '启动后仅启用当前币种；自动交易将在下一阶段接入。'}</p>
+                    <p>{'停止只影响当前币种，不影响其他币种。' if enabled else '启动后仅启用当前币种，并按该币设置自动监测模拟交易。'}</p>
                   </div>
                   <form method="post" action="/symbol-action">
                     <input type="hidden" name="symbol" value="{html.escape(symbol)}">
