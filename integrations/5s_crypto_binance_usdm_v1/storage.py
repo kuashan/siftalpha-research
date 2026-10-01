@@ -89,6 +89,8 @@ class StateStore:
             self._ensure_column(conn, "symbol_settings", "timeframe", "TEXT NOT NULL DEFAULT '1d'")
             self._ensure_column(conn, "symbol_settings", "enabled", "INTEGER NOT NULL DEFAULT 0")
             self._ensure_column(conn, "runtime_state", "run_state", "TEXT NOT NULL DEFAULT 'STOPPED'")
+            self._ensure_column(conn, "runtime_state", "entry_signal_open_time", "INTEGER")
+            self._ensure_column(conn, "runtime_state", "entry_family", "TEXT")
 
             if "capital_budget_usdt" not in old_symbol_columns:
                 row = conn.execute("SELECT value FROM app_settings WHERE key='capital_budget_usdt'").fetchone()
@@ -183,11 +185,108 @@ class StateStore:
             rows = conn.execute(
                 """
                 SELECT symbol, last_closed_bar_open_time, current_fraction, c_confirmed,
-                       pending_action, last_signal, last_order_id, run_state
+                       pending_action, last_signal, last_order_id, run_state,
+                       entry_signal_open_time, entry_family
                 FROM runtime_state ORDER BY symbol
                 """
             ).fetchall()
             return {str(r["symbol"]): dict(r) for r in rows}
+
+    def set_run_state(self, symbol: str, run_state: str) -> None:
+        with self._connect() as conn:
+            cur = conn.execute(
+                "UPDATE runtime_state SET run_state=?, updated_at=CURRENT_TIMESTAMP WHERE symbol=?",
+                (str(run_state), symbol),
+            )
+            if cur.rowcount != 1:
+                raise KeyError(f"unknown symbol: {symbol}")
+
+    def baseline_closed_bar(self, symbol: str, bar_open_time: int) -> None:
+        with self._connect() as conn:
+            cur = conn.execute(
+                """
+                UPDATE runtime_state
+                SET last_closed_bar_open_time=?, pending_action=NULL,
+                    run_state='MONITORING', updated_at=CURRENT_TIMESTAMP
+                WHERE symbol=?
+                """,
+                (int(bar_open_time), symbol),
+            )
+            if cur.rowcount != 1:
+                raise KeyError(f"unknown symbol: {symbol}")
+            conn.execute(
+                "INSERT INTO audit_events(event_type, symbol, detail) VALUES('M3_BASELINE_BAR', ?, ?)",
+                (symbol, f"bar_open_time={int(bar_open_time)}"),
+            )
+
+    def record_strategy_observation(
+        self,
+        symbol: str,
+        *,
+        bar_open_time: int,
+        signal: str,
+        pending_action: str | None,
+    ) -> None:
+        run_state = "SIGNAL_READY" if pending_action else "MONITORING"
+        with self._connect() as conn:
+            cur = conn.execute(
+                """
+                UPDATE runtime_state
+                SET last_closed_bar_open_time=?, last_signal=?, pending_action=?,
+                    run_state=?, updated_at=CURRENT_TIMESTAMP
+                WHERE symbol=?
+                """,
+                (int(bar_open_time), signal, pending_action, run_state, symbol),
+            )
+            if cur.rowcount != 1:
+                raise KeyError(f"unknown symbol: {symbol}")
+            conn.execute(
+                "INSERT INTO audit_events(event_type, symbol, detail) VALUES('M3_SIGNAL_BAR', ?, ?)",
+                (
+                    symbol,
+                    f"bar_open_time={int(bar_open_time)};signal={signal};pending={pending_action or 'NONE'}",
+                ),
+            )
+
+    def set_execution_position_state(
+        self,
+        symbol: str,
+        *,
+        current_fraction: float,
+        c_confirmed: bool,
+        entry_signal_open_time: int | None,
+        entry_family: str | None,
+        last_order_id: str | None = None,
+        run_state: str = "MONITORING",
+    ) -> None:
+        with self._connect() as conn:
+            cur = conn.execute(
+                """
+                UPDATE runtime_state
+                SET current_fraction=?, c_confirmed=?, entry_signal_open_time=?,
+                    entry_family=?, last_order_id=?, pending_action=NULL,
+                    run_state=?, updated_at=CURRENT_TIMESTAMP
+                WHERE symbol=?
+                """,
+                (
+                    float(current_fraction),
+                    1 if c_confirmed else 0,
+                    entry_signal_open_time,
+                    entry_family,
+                    last_order_id,
+                    run_state,
+                    symbol,
+                ),
+            )
+            if cur.rowcount != 1:
+                raise KeyError(f"unknown symbol: {symbol}")
+
+    def append_audit(self, event_type: str, symbol: str | None, detail: str) -> None:
+        with self._connect() as conn:
+            conn.execute(
+                "INSERT INTO audit_events(event_type, symbol, detail) VALUES(?, ?, ?)",
+                (event_type, symbol, str(detail)),
+            )
 
     def get_pnl(self) -> dict[str, dict[str, float]]:
         with self._connect() as conn:

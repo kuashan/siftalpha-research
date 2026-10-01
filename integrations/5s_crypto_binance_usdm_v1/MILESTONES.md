@@ -117,7 +117,7 @@ Scope:
 - no scheduler or order execution yet
 
 ### M3.2 — Four-symbol independent scheduler
-Status: **NOT_STARTED**
+Status: **IMPLEMENTED_AWAITING_CI**
 
 ### M3.3 — Binance Demo execution + idempotent order loop
 Status: **NOT_STARTED**

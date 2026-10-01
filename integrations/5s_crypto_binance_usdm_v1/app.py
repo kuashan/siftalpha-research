@@ -8,6 +8,7 @@ from urllib.parse import parse_qs, urlencode, urlparse
 
 from config import Settings
 from engine.paper import preview_exposure
+from engine.scheduler import StrategyScheduler
 from exchange.binance_usdm_public import BinanceUsdMPublicProbe
 from runtime_testnet_session import TestnetSession
 from storage import StateStore
@@ -28,6 +29,12 @@ testnet_session = TestnetSession(
     initial_api_key=settings.testnet_api_key,
     initial_api_secret=settings.testnet_api_secret,
 )
+strategy_scheduler = StrategyScheduler(
+    store=store,
+    session=testnet_session,
+    symbols=settings.symbols,
+    allowed_timeframes=settings.allowed_timeframes,
+)
 TEMPLATE = (Path(__file__).parent / "templates" / "index.html").read_text(encoding="utf-8")
 
 
@@ -39,6 +46,16 @@ _TIMEFRAME_LABELS = {
     "6h": "6 小时",
     "12h": "12 小时",
     "1d": "1 天",
+}
+
+_RUN_STATE_LABELS = {
+    "ARMED": "已启动",
+    "WAITING_DEMO": "等待模拟账户",
+    "WAITING_HISTORY": "历史数据不足",
+    "MONITORING": "监测中",
+    "SIGNAL_READY": "发现信号",
+    "ERROR": "检测异常",
+    "STOPPED": "未启动",
 }
 
 _SIGNAL_LABELS = {
@@ -105,8 +122,9 @@ def render_index(selected_symbol: str | None = None) -> str:
         initial = preview_exposure(symbol, budget, 0.60, leverage)
         full = preview_exposure(symbol, budget, 1.00, leverage)
         validation = "已验证基线" if timeframe in settings.validated_timeframes else "实验周期"
-        status_label = "运行中" if enabled else "未启动"
-        status_class = "running" if enabled else "stopped"
+        run_state = str(rt.get("run_state") or ("ARMED" if enabled else "STOPPED"))
+        status_label = _RUN_STATE_LABELS.get(run_state, "运行中" if enabled else "未启动")
+        status_class = "running" if enabled and run_state != "ERROR" else "stopped"
         action = "stop" if enabled else "start"
         action_label = "停止" if enabled else "启动"
         action_class = "danger" if enabled else "primary"
@@ -419,9 +437,11 @@ def main(host: str = "127.0.0.1", port: int = 0) -> None:
     # Publish only after bind succeeds, so SiftAlpha never receives a stale/invalid URL.
     print(f"SIFTALPHA_WEB_URL={url}", flush=True)
     print(f"网页服务已启动：{url}", flush=True)
+    strategy_scheduler.start()
     try:
         server.serve_forever()
     finally:
+        strategy_scheduler.stop()
         server.server_close()
 
 

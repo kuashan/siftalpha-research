@@ -31,7 +31,7 @@ jobs:
 
       - name: Compile
         run: |
-          python -m py_compile             app.py config.py storage.py m2_testnet_check.py             engine/paper.py             exchange/binance_usdm_public.py             exchange/binance_usdm_testnet.py             strategy/frozen_contract.py strategy/frozen_signal_engine.py
+          python -m py_compile             app.py config.py storage.py m2_testnet_check.py             engine/paper.py engine/scheduler.py             exchange/binance_usdm_public.py             exchange/binance_usdm_testnet.py             strategy/frozen_contract.py strategy/frozen_signal_engine.py
 
       - name: Unit tests
         run: python -m unittest discover -s tests -v
