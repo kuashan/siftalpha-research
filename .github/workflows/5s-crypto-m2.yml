@@ -1,0 +1,57 @@
+name: 5s-crypto M2
+
+on:
+  push:
+    branches:
+      - feature/5s-crypto-binance-usdm-v1
+    paths:
+      - "integrations/5s_crypto_binance_usdm_v1/**"
+      - ".github/workflows/5s-crypto-m2.yml"
+  workflow_dispatch:
+
+jobs:
+  m2-offline:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: integrations/5s_crypto_binance_usdm_v1
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: integrations/5s_crypto_binance_usdm_v1/requirements.txt
+
+      - name: Install official Binance SDK
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Compile
+        run: |
+          python -m py_compile             app.py config.py storage.py m2_testnet_check.py             engine/paper.py             exchange/binance_usdm_public.py             exchange/binance_usdm_testnet.py             strategy/frozen_contract.py
+
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: PAPER app import
+        env:
+          FIVES_MODE: PAPER
+          FIVES_DB_PATH: /tmp/5s_crypto_m2_ci.db
+        run: python -c "import app; assert app.settings.mode == 'PAPER'; print('PAPER_IMPORT_PASS')"
+
+      - name: Testnet credential guard
+        env:
+          FIVES_MODE: TESTNET
+          FIVES_DB_PATH: /tmp/5s_crypto_m2_ci_guard.db
+        run: |
+          set +e
+          output="$(python m2_testnet_check.py 2>&1)"
+          code=$?
+          set -e
+          echo "$output"
+          test "$code" -eq 2
+          echo "$output" | grep -q "Testnet API credentials missing"
+          echo "TESTNET_CREDENTIAL_GUARD_PASS"
