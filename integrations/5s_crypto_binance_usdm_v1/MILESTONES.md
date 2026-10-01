@@ -81,6 +81,16 @@ Fixes Android/SiftAlpha local port collisions:
 - no fixed 8080 dependency remains
 - Web UI stays loopback-only on 127.0.0.1
 
+## M2.3.2 — Binance Futures Demo routing
+Status: **IMPLEMENTED_AND_VERIFIED**
+
+Fixes the virtual-account environment mismatch:
+- Web credentials now route to Binance Futures Demo
+- Demo REST base URL: https://demo-fapi.binance.com
+- SDK configuration/constants are imported from binance_common
+- Futures Testnet remains available only for lower-level compatibility
+- connection failures return safe Chinese diagnostics without exposing secrets
+
 ## M3 — Frozen 5s-crypto V1 signal engine + execution
 Status: **NOT_STARTED**
 
