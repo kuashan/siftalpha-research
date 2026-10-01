@@ -33,11 +33,17 @@ class Settings:
     @classmethod
     def from_env(cls) -> "Settings":
         requested_mode = os.getenv("FIVES_MODE", "PAPER").upper().strip()
-        mode = requested_mode if requested_mode in {"PAPER", "TESTNET"} else "PAPER"
+        mode = requested_mode if requested_mode in {"PAPER", "DEMO", "TESTNET"} else "PAPER"
         db_path = Path(os.getenv("FIVES_DB_PATH", "data/5s_crypto_v1.db"))
         return cls(
             mode=mode,
             db_path=db_path,
-            testnet_api_key=os.getenv("BINANCE_TESTNET_API_KEY", "").strip(),
-            testnet_api_secret=os.getenv("BINANCE_TESTNET_API_SECRET", "").strip(),
+            testnet_api_key=(
+                os.getenv("BINANCE_DEMO_API_KEY", "").strip()
+                or os.getenv("BINANCE_TESTNET_API_KEY", "").strip()
+            ),
+            testnet_api_secret=(
+                os.getenv("BINANCE_DEMO_API_SECRET", "").strip()
+                or os.getenv("BINANCE_TESTNET_API_SECRET", "").strip()
+            ),
         )
