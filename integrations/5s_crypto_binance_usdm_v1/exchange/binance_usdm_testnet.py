@@ -88,7 +88,10 @@ def floor_to_step(value: Decimal, step: Decimal | None) -> Decimal:
 
 
 class BinanceUsdMTestnetAdapter:
-    """Official-SDK wrapper with a hard TESTNET-only mutation boundary.
+    """Official-SDK wrapper with a hard sandbox-only mutation boundary.
+
+    DEMO is the primary environment used by the Web UI. TESTNET remains
+    supported for backward-compatible acceptance checks.
 
     The class can receive a mock client in tests. When a client is not supplied,
     Binance's official modular USDⓈ-M Futures SDK is imported lazily.
@@ -115,19 +118,27 @@ class BinanceUsdMTestnetAdapter:
     def credentials_present(self) -> bool:
         return bool(self.api_key and self.api_secret)
 
-    def _require_testnet(self) -> None:
-        if self.mode != "TESTNET":
-            raise TestnetGuardError("authenticated Binance mutation/read is TESTNET-only in M2")
+    def _require_sandbox(self) -> None:
+        if self.mode not in {"DEMO", "TESTNET"}:
+            raise TestnetGuardError("authenticated Binance access is sandbox-only in M2")
         if not self.credentials_present:
-            raise TestnetConfigurationError("BINANCE_TESTNET_API_KEY/SECRET are required")
+            raise TestnetConfigurationError("Binance sandbox API key/secret are required")
 
     def _rest(self):
-        self._require_testnet()
+        self._require_sandbox()
         if self._client is None:
             try:
-                from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futures import (
-                    ConfigurationRestAPI,
+                from binance_common.configuration import ConfigurationRestAPI
+                from binance_common.constants import (
                     DERIVATIVES_TRADING_USDS_FUTURES_REST_API_TESTNET_URL,
+                )
+                try:
+                    from binance_common.constants import (
+                        DERIVATIVES_TRADING_USDS_FUTURES_REST_API_DEMO_URL,
+                    )
+                except ImportError:
+                    DERIVATIVES_TRADING_USDS_FUTURES_REST_API_DEMO_URL = "https://demo-fapi.binance.com"
+                from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futures import (
                     DerivativesTradingUsdsFutures,
                 )
             except Exception as exc:
@@ -135,10 +146,15 @@ class BinanceUsdMTestnetAdapter:
                     "Install binance-sdk-derivatives-trading-usds-futures==17.5.0"
                 ) from exc
 
+            base_path = (
+                DERIVATIVES_TRADING_USDS_FUTURES_REST_API_DEMO_URL
+                if self.mode == "DEMO"
+                else DERIVATIVES_TRADING_USDS_FUTURES_REST_API_TESTNET_URL
+            )
             configuration = ConfigurationRestAPI(
                 api_key=self.api_key,
                 api_secret=self.api_secret,
-                base_path=DERIVATIVES_TRADING_USDS_FUTURES_REST_API_TESTNET_URL,
+                base_path=base_path,
             )
             self._client = DerivativesTradingUsdsFutures(config_rest_api=configuration)
         return self._client.rest_api if hasattr(self._client, "rest_api") else self._client
@@ -244,7 +260,7 @@ class BinanceUsdMTestnetAdapter:
             )
         )
 
-    # ---- TESTNET-only account/order mutations ----
+    # ---- Sandbox-only account/order mutations ----
 
     def ensure_one_way(self) -> dict[str, Any]:
         if self.is_one_way():
