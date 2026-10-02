@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/sltd-v7-market-window-v8
+      - feature/sltd-v7-e-strategy-v1
     paths:
       - "integrations/sltd_v7_siftalpha_v1/**"
       - ".github/workflows/sltd-v7-siftalpha-web.yml"
@@ -23,7 +24,7 @@ jobs:
       - name: Checkout exact branch
         uses: actions/checkout@v4
         with:
-          ref: feature/sltd-v7-market-window-v8
+          ref: feature/sltd-v7-e-strategy-v1
           fetch-depth: 1
 
       - name: Set up Python
@@ -54,7 +55,7 @@ jobs:
           sys.path.insert(0, str(project))
           import data_provider
 
-          for timeframe in ("5m", "15m", "30m", "1h", "4h", "1d"):
+          for timeframe in ("5m", "15m", "30m", "1h", "4h", "1d", "5d"):
               last = None
               for attempt in range(3):
                   try:
@@ -91,17 +92,17 @@ jobs:
           find /tmp/sltd_v7_package -type d -name __pycache__ -prune -exec rm -rf {} +
           find /tmp/sltd_v7_package -type f -name '*.pyc' -delete
           cd /tmp/sltd_v7_package
-          zip -r "$GITHUB_WORKSPACE/SLTD-V7-SiftAlpha-中文行情窗口-v8.zip" .
+          zip -r "$GITHUB_WORKSPACE/SLTD-V7-E-SiftAlpha-v1.zip" .
 
       - name: Verify package
         run: |
           set -euo pipefail
-          unzip -l SLTD-V7-SiftAlpha-中文行情窗口-v8.zip
+          unzip -l SLTD-V7-E-SiftAlpha-v1.zip
           python - <<'PY'
           import zipfile
-          z=zipfile.ZipFile('SLTD-V7-SiftAlpha-中文行情窗口-v8.zip')
+          z=zipfile.ZipFile('SLTD-V7-E-SiftAlpha-v1.zip')
           names=set(z.namelist())
-          required={'app.py','strategy.py','data_provider.py','requirements.txt','templates/index.html'}
+          required={'app.py','strategy.py','e_strategy.py','data_provider.py','requirements.txt','templates/index.html'}
           missing=required-names
           assert not missing, missing
           assert '.project.json' not in names
@@ -119,6 +120,10 @@ jobs:
           assert '绿色第11至20根：轻阻力触发卖出' in strategy
           assert 'SiftAlpha 中文版' in readme
           assert 'C2 强制清仓' in page
+          assert 'data-strategy="e"' in page
+          e_strategy=z.read('e_strategy.py').decode('utf-8')
+          assert 'E_BUY_2_HIGHER_CLOSE_BELOW_ZD1' in e_strategy
+          assert 'E_SELL_4_CLOSE_BACK_BELOW_ZK1_FULL_EXIT' in e_strategy
           print('PACKAGE_VERIFY_PASS')
           PY
 
@@ -166,7 +171,7 @@ jobs:
       - name: Upload direct SiftAlpha import artifact
         uses: actions/upload-artifact@v4
         with:
-          name: sltd-v7-market-window-v8
+          name: sltd-v7-e-strategy-v1
           path: direct-import/
           include-hidden-files: true
           if-no-files-found: error
