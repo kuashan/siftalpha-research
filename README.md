@@ -1,56 +1,89 @@
 # siftalpha-research
 
-Private research repository for SiftAlpha quantitative trading research.
+Private research and strategy-integration repository for SiftAlpha.
 
-## Current primary project
+## Current canonical strategy state
 
-SSSS causal trading model and position-state-machine research.
+The repository currently contains three formal strategy definitions:
 
-## Repository structure
+1. **5s crypto v1** — `FROZEN_BASELINE`
+2. **5s stocks v1** — `FROZEN_BASELINE`
+3. **SLTD V6** — `OFFICIAL`
 
-- `models/ssss_core_v0_1.py` — executable reference implementation of the current frozen core model
-- `research/ssss/SSSS_CURRENT_STATE.md` — current source of truth
-- `research/ssss/SSSS_STATE_MACHINE.md` — OPEN / ADD / REDUCE / RE-ADD / HOLD / CLOSE architecture
-- `research/ssss/SSSS_RESEARCH_LOG.md` — accepted and rejected research history
-- `research/ssss/SSSS_EXPERIMENTS.csv` — machine-readable experiment ledger
-- `research/ssss/checkpoints/` — dated research checkpoints
+The canonical registry is:
 
-## Important
+`research/ssss/STRATEGY_FAMILY_REGISTRY_v1.md`
 
-Research results currently rely mainly on approximately two years of available market history. They are not claims of long-run or live performance.
+Do not use older branch descriptions or historical SSSS state files as the
+current strategy-status source when they conflict with this registry and the
+strategy-specific frozen / official records below.
 
-The executable Python model contains only the rules currently accepted as the core research model. Candidate position-management logic remains explicitly marked as research until validated.
+## Strategy references
 
+### 5s crypto v1
 
-## Universe and sample-split audit
+Frozen research baseline:
 
-- `research/ssss/SSSS_UNIVERSE_45.md` — exact 45-stock universe behind the corrected official baseline
-- `research/ssss/SSSS_SAMPLE_SPLITS.md` — human-readable Discovery / OOS / Frozen OOS split history
-- `research/ssss/SSSS_SAMPLE_SPLITS.csv` — machine-readable sample-split ledger
-- `research/ssss/ssss_universe.py` — executable ticker/cohort configuration with integrity checks
+`research/ssss/5S_CRYPTO_V1_BASELINE.md`
 
-Important: historical research cohorts must not be silently mixed into the official 45-stock baseline.
+Current Binance USDⓈ-M Demo integration:
 
+`integrations/5s_crypto_binance_usdm_v1/`
 
-## Research governance
+Integration milestone status:
 
-- `research/ssss/SSSS_RESEARCH_PROTOCOL.md` — mandatory pre-registration protocol for every new research round
+`integrations/5s_crypto_binance_usdm_v1/MILESTONES.md`
 
-Every new round must commit its Discovery / OOS / Frozen OOS membership to `main` before any corresponding results are computed or inspected.
+### 5s stocks v1
 
+Frozen research baseline:
 
-## SSSS data-source resilience
+`research/ssss/5S_STOCKS_V1_BASELINE.md`
 
-- `research/ssss/SSSS_DATA_SOURCE_POLICY.md` — provider-switching and parity-audit rules
-- `research/ssss/data_sources/yfinance_daily.py` — research fallback downloader
-- `research/ssss/data_sources/requirements.txt` — isolated fallback-data dependencies
+The strategy definition is frozen, but a stock trading runtime equivalent to
+the current 5s-crypto Binance integration is not yet present.
 
-Do not silently mix market-data providers inside one official research stage.
+### SLTD V6
 
+Official naming record:
 
-## Open-source quant and crypto research track
+`research/ssss_reboot_v1/phase6/SLTD_V6_OFFICIAL_NAMING.md`
 
-- `research/ssss/SSSS_OPEN_SOURCE_QUANT_SURVEY.md` — open-source strategy architecture and indicator survey
-- `research/ssss/SSSS_CRYPTO_RESEARCH_PLAN.md` — separate crypto validation track
-- `research/ssss/ssss_crypto_universe.py` — proposed 12-asset crypto research universe
-- `research/ssss/data_sources/ccxt_ohlcv.py` — exchange-native crypto OHLCV downloader through CCXT
+Formal 15-rule BUY / HOLD / WAIT / SELL taxonomy:
+
+`research/ssss_reboot_v1/phase6/SSSS_FORMAL_15_ACTION_TAXONOMY_v1.md`
+
+Independent V6 validation result:
+
+`research/ssss_reboot_v1/phase6/SSSS_V6_FIVE_V5_DISCOVERY_INDEPENDENT_RESULT.md`
+
+SLTD V6 is an official research strategy rule set.
+It does not yet have the same completed Trading Console execution integration
+as 5s crypto v1.
+
+## Repository layout
+
+- `research/ssss/` — frozen 5s baselines, registry, shared research material and source-XMA work.
+- `research/ssss_reboot_v1/` — reboot research lineage leading to SLTD V6.
+- `research/ssss/source_xma/experiments/` — supporting 5s / XMA experiments and audits.
+- `integrations/5s_crypto_binance_usdm_v1/` — current 5s-crypto Binance Demo runtime integration.
+- `.github/workflows/` — research and integration CI / workflow definitions.
+
+## Governance
+
+- Never modify a frozen baseline in place.
+- Any strategy change must receive a new version / experiment identity.
+- Preserve frozen / official strategy records as controls.
+- Keep research validation status separate from runtime-integration status.
+- Do not call a strategy production-ready solely because its research rules are frozen or official.
+- Historical branches are retained for provenance; the consolidated `main` branch is the repository baseline after this consolidation is merged.
+
+## Current consolidation note
+
+The 2026-10-02 repository consolidation combines:
+- the latest `research/ssss-reboot-v1` research state;
+- the `feature/5s-crypto-binance-usdm-v1` runtime integration;
+- synchronized strategy registry and integration documentation.
+
+This consolidation does **not** change any frozen 5s strategy rule or any
+official SLTD V6 rule.
