@@ -3,7 +3,7 @@ name: SLTD V7 SiftAlpha Web
 on:
   push:
     branches:
-      - feature/sltd-v7-siftalpha-direct-import-v4
+      - feature/sltd-v7-siftalpha-crypto-compatible-v5
     paths:
       - "integrations/sltd_v7_siftalpha_v1/**"
       - ".github/workflows/sltd-v7-siftalpha-web.yml"
@@ -23,7 +23,7 @@ jobs:
       - name: Checkout exact branch
         uses: actions/checkout@v4
         with:
-          ref: feature/sltd-v7-siftalpha-direct-import-v4
+          ref: feature/sltd-v7-siftalpha-crypto-compatible-v5
           fetch-depth: 1
 
       - name: Set up Python
@@ -50,15 +50,15 @@ jobs:
           find /tmp/sltd_v7_package -type d -name __pycache__ -prune -exec rm -rf {} +
           find /tmp/sltd_v7_package -type f -name '*.pyc' -delete
           cd /tmp/sltd_v7_package
-          zip -r "$GITHUB_WORKSPACE/SLTD-V7-SiftAlpha-DirectImport-v4.zip" .
+          zip -r "$GITHUB_WORKSPACE/SLTD-V7-SiftAlpha-CryptoCompatible-v5.zip" .
 
       - name: Verify package
         run: |
           set -euo pipefail
-          unzip -l SLTD-V7-SiftAlpha-DirectImport-v4.zip
-          unzip -p SLTD-V7-SiftAlpha-DirectImport-v4.zip .project.json | grep -q '"name": "SLTD V7"'
-          unzip -p SLTD-V7-SiftAlpha-DirectImport-v4.zip README-STUDIO.txt | grep -q 'SIFTALPHA_WEB_URL'
-          unzip -p SLTD-V7-SiftAlpha-DirectImport-v4.zip requirements.txt | grep -q 'standard library'
+          unzip -l SLTD-V7-SiftAlpha-CryptoCompatible-v5.zip
+          unzip -p SLTD-V7-SiftAlpha-CryptoCompatible-v5.zip .project.json | grep -q '"name": "SLTD V7"'
+          unzip -p SLTD-V7-SiftAlpha-CryptoCompatible-v5.zip README-STUDIO.txt | grep -q 'SIFTALPHA_WEB_URL'
+          unzip -p SLTD-V7-SiftAlpha-CryptoCompatible-v5.zip requirements.txt | grep -q 'standard library'
 
       - name: Stage direct-import artifact
         run: |
@@ -66,7 +66,7 @@ jobs:
           rm -rf direct-import
           mkdir direct-import
           cp -R /tmp/sltd_v7_package/. direct-import/
-          test -f direct-import/.project.json
+          test ! -e direct-import/.project.json
           test -f direct-import/app.py
           test -f direct-import/strategy.py
           test -f direct-import/data_provider.py
@@ -75,7 +75,7 @@ jobs:
       - name: Upload direct SiftAlpha import artifact
         uses: actions/upload-artifact@v4
         with:
-          name: sltd-v7-siftalpha-direct-import-v4
+          name: sltd-v7-siftalpha-crypto-compatible-v5
           path: direct-import/
           include-hidden-files: true
           if-no-files-found: error
