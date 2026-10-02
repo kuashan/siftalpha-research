@@ -42,6 +42,19 @@ MARKETS = {
     "SOL": "SOL/USDT",
 }
 
+# Official Binance public market-data endpoints. GitHub-hosted runners may be
+# blocked by api.binance.com (HTTP 451), while Binance's market-data endpoint
+# remains available. All candidates below are Binance-operated Spot public APIs.
+BINANCE_PUBLIC_BASES = [
+    ("data-api.binance.vision", "https://data-api.binance.vision/api/v3"),
+    ("api-gcp.binance.com", "https://api-gcp.binance.com/api/v3"),
+    ("api1.binance.com", "https://api1.binance.com/api/v3"),
+    ("api2.binance.com", "https://api2.binance.com/api/v3"),
+    ("api3.binance.com", "https://api3.binance.com/api/v3"),
+    ("api4.binance.com", "https://api4.binance.com/api/v3"),
+    ("api.binance.com", "https://api.binance.com/api/v3"),
+]
+
 
 def sha256_file(path: Path) -> str:
     h = hashlib.sha256()
@@ -49,6 +62,28 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: f.read(1024 * 1024), b""):
             h.update(chunk)
     return h.hexdigest()
+
+
+def make_binance_exchange() -> tuple[ccxt.Exchange, str, str]:
+    errors: dict[str, str] = {}
+    for endpoint_name, public_base in BINANCE_PUBLIC_BASES:
+        exchange = ccxt.binance({
+            "enableRateLimit": True,
+            "options": {"defaultType": "spot"},
+        })
+        exchange.urls["api"]["public"] = public_base
+        try:
+            exchange.load_markets()
+            missing = [market for market in MARKETS.values() if market not in exchange.markets]
+            if missing:
+                raise RuntimeError(f"missing expected spot markets: {missing}")
+            return exchange, endpoint_name, public_base
+        except Exception as exc:
+            errors[endpoint_name] = f"{type(exc).__name__}: {exc}"
+    raise RuntimeError(
+        "All official Binance Spot public endpoints failed through CCXT: "
+        + json.dumps(errors, sort_keys=True)
+    )
 
 
 def fetch_binance_daily(exchange: ccxt.Exchange, market: str) -> pd.DataFrame:
@@ -147,11 +182,7 @@ def main() -> None:
     LEDGER_DIR.mkdir(parents=True, exist_ok=True)
     BATCH_DIR.mkdir(parents=True, exist_ok=True)
 
-    exchange = ccxt.binance({
-        "enableRateLimit": True,
-        "options": {"defaultType": "spot"},
-    })
-    exchange.load_markets()
+    exchange, endpoint_name, public_base = make_binance_exchange()
 
     frames: dict[str, pd.DataFrame] = {}
     ledgers: dict[str, list[dict]] = {}
@@ -163,6 +194,8 @@ def main() -> None:
         "stage": "CRYPTO_TRANSFER_ONLY",
         "asset_class": "CRYPTO",
         "provider": "Binance Spot via CCXT",
+        "binance_public_endpoint_name": endpoint_name,
+        "binance_public_endpoint_base": public_base,
         "timeframe": "1d UTC",
         "markets": MARKETS,
         "fetch_start": "2016-01-01",
@@ -272,6 +305,8 @@ def main() -> None:
             "representation": "FIRST_OBSERVED",
             "execution": "CLOSE_CONFIRMED_NEXT_AVAILABLE_OPEN",
             "promoted_stock_policy": promoted_id,
+            "binance_public_endpoint_name": endpoint_name,
+            "binance_public_endpoint_base": public_base,
             "policy_locked": True,
             "retuning_allowed": False,
             "friction_baseline_bps": 5,
