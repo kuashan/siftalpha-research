@@ -303,11 +303,13 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
   let currentTimeframe = String(timeframeSelect.value || '__DEFAULT_TIMEFRAME__');
 
   const actionLabels = {
-    BUY:'BUY · 买入', SELL:'SELL · 卖出', HOLD:'HOLD · 持有', WAIT:'WAIT · 等待',
-    HARD_EXIT:'C2 · 强制退出', MIXED:'MIXED · 冲突不动作', NONE:'NONE · 无新动作'
+    BUY:'买入', SELL:'卖出', HOLD:'持有', WAIT:'等待',
+    HARD_EXIT:'C2 强制清仓', MIXED:'冲突信号不动作', NONE:'无新动作'
   };
-  const stateLabels = {BLUE:'BLUE · 蓝', GRAY:'GRAY · 灰', GREEN:'GREEN · 绿', OTHER:'OTHER'};
-  const classLabels = {BUY:'BUY', HOLD:'HOLD', WAIT:'WAIT', SELL:'SELL'};
+  const stateLabels = {BLUE:'蓝色', GRAY:'灰色', GREEN:'绿色', OTHER:'其他'};
+  const classLabels = {BUY:'买入', HOLD:'持有', WAIT:'等待', SELL:'卖出'};
+  const riskLabels = {ARMED:'已警戒', NORMAL:'正常'};
+  const sideLabels = {B:'买', S:'卖', X:'清'};
 
   function q(id){ return document.getElementById(id); }
   function safeText(id, value){ const n=q(id); if(n) n.textContent = value == null || value === '' ? '—' : String(value); }
@@ -357,7 +359,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
   function renderRules(strategy){
     const groups = q('rules-groups');
     groups.innerHTML = '';
-    const active = strategy && strategy.active_rules ? strategy.active_rules : {};
+    const active = strategy && strategy.active_rules_zh ? strategy.active_rules_zh : {};
     ['BUY','HOLD','WAIT','SELL'].forEach(cls => {
       const card = document.createElement('section');
       card.className = 'rule-group';
@@ -376,18 +378,18 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       return;
     }
     body.innerHTML = list.map(e => {
-      const rules = (e.rule_ids || []).join(' · ') || '—';
+      const rules = (e.rule_names_zh || e.rule_ids || []).join(' · ') || '—';
       const exec = e.execution_date
         ? escapeHtml(e.execution_date) + (e.execution_price != null ? '<br>@ '+escapeHtml(formatPrice(e.execution_price)) : '')
         : '无订单';
       const after = e.position_after == null
         ? '—'
-        : escapeHtml(formatPct(e.position_after)) + '<br>' + escapeHtml(e.risk_after || '');
+        : escapeHtml(formatPct(e.position_after)) + '<br>' + escapeHtml(riskLabels[e.risk_after] || e.risk_after || '');
       return '<tr>'+
         '<td>'+escapeHtml(e.date)+'</td>'+
-        '<td>'+escapeHtml(e.state)+'</td>'+
+        '<td>'+escapeHtml(e.state_zh || stateLabels[e.state] || e.state)+'</td>'+
         '<td>'+escapeHtml(e.age)+'</td>'+
-        '<td><b class="action-'+escapeHtml(e.action)+'">'+escapeHtml(e.action)+'</b></td>'+
+        '<td><b class="action-'+escapeHtml(e.action)+'">'+escapeHtml(e.action_zh || actionLabels[e.action] || e.action)+'</b></td>'+
         '<td class="rules">'+escapeHtml(rules)+'</td>'+
         '<td>'+exec+'</td>'+
         '<td>'+after+'</td>'+
@@ -508,7 +510,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
         const fill=side==='B'?'#52d49a':side==='S'?'#ff7b82':'#eab464';
         const y=side==='B'?Math.min(priceBottom-9,yl+13+mi*15):Math.max(priceTop+9,yh-13-mi*15);
         ctx.beginPath();ctx.fillStyle=fill;ctx.arc(x,y,7,0,Math.PI*2);ctx.fill();
-        ctx.fillStyle='#081018';ctx.font='bold 9px system-ui';ctx.textAlign='center';ctx.fillText(side,x,y+3);
+        ctx.fillStyle='#081018';ctx.font='bold 9px system-ui';ctx.textAlign='center';ctx.fillText(sideLabels[side]||side,x,y+3);
       });
     });
 
@@ -542,8 +544,8 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     function showCandle(c){
       if(!c)return;
       q('chart-candle-meta').textContent =
-        c.date+' · O '+formatPrice(c.open)+' H '+formatPrice(c.high)+' L '+formatPrice(c.low)+' C '+formatPrice(c.close)+
-        ' · 量 '+formatVolume(c.volume)+' · '+c.state+' · 仓位 '+formatPct(c.position);
+        c.date+' · 开 '+formatPrice(c.open)+' 高 '+formatPrice(c.high)+' 低 '+formatPrice(c.low)+' 收 '+formatPrice(c.close)+
+        ' · 量 '+formatVolume(c.volume)+' · '+(stateLabels[c.state]||c.state)+' · 仓位 '+formatPct(c.position);
     }
     showCandle(candles[candles.length-1]);
 
@@ -580,31 +582,31 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     const stateNode=q('summary-state');
     stateNode.textContent=stateLabels[s.state]||s.state||'—';
     setActionClass(stateNode,'state-',s.state||'OTHER');
-    safeText('summary-age','Age '+(s.run_age==null?'—':s.run_age)+' · '+(s.age_bucket||'—'));
+    safeText('summary-age','持续 '+(s.run_age==null?'—':s.run_age)+' 根 · '+(s.age_bucket||'—'));
 
     const riskNode=q('summary-risk');
-    riskNode.textContent=s.risk_state||'—';
+    riskNode.textContent=s.risk_state_zh||riskLabels[s.risk_state]||s.risk_state||'—';
     setActionClass(riskNode,'risk-',s.risk_state||'NORMAL');
-    safeText('summary-risk-sub',s.risk_state==='ARMED'?'等待 C2 或后续实际 BUY 重置':'普通监测');
+    safeText('summary-risk-sub',s.risk_state==='ARMED'?'等待 C2 条件或后续实际买入重置':'正常监测');
 
     safeText('next-action',s.next_action);
     safeText('meta-symbol',s.symbol);
     safeText('meta-date',s.latest_date);
-    safeText('meta-origin',s.origin||'—');
+    safeText('meta-origin',stateLabels[s.origin]||s.origin||'—');
     safeText('meta-forming',forming ? ('形成中 · '+formatPrice(forming.close)) : '当前无未完成 K 线');
     safeText('chart-title',(s.symbol||'')+' · '+(contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe)+' · SLTD V7');
     safeText('timeframe-badge',contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe);
     safeText('latest-price',formatPrice(s.latest_close));
-    safeText('market-source',(meta.provider||'Yahoo Finance')+' · '+(meta.source||'network'));
+    safeText('market-source',(meta.provider||'雅虎财经')+' · '+(meta.source||'网络'));
     safeText('value-gzb4',formatPrice(s.GZB4));
     safeText('value-zd1',formatPrice(s.ZD1));
     safeText('value-zk1',formatPrice(s.ZK1));
 
     const hit=q('rule-hit-row');
-    const ids=Array.isArray(s.rule_ids)?s.rule_ids:[];
+    const ids=Array.isArray(s.rule_names_zh)?s.rule_names_zh:(Array.isArray(s.rule_ids)?s.rule_ids:[]);
     hit.innerHTML=ids.length
       ? ids.map(x=>'<span class="rule-pill">'+escapeHtml(x)+'</span>').join('')
-      : '<span class="rule-pill empty">最新 K 线没有新的 12-rule 事件</span>';
+      : '<span class="rule-pill empty">最新 K 线没有新的 12 条规则事件</span>';
 
     renderRules(strategy);
     renderEvents(payload.events);
