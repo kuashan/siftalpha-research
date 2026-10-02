@@ -101,3 +101,19 @@ This package intentionally mirrors the already-working 5s crypto artifact shape:
   `SIFTALPHA_WEB_URL=...` marker.
 
 This avoids taking a special metadata path that the working crypto package does not use.
+
+
+## SiftAlpha runtime routing
+
+The working 5s crypto package runs as a long-lived Python Web service through SiftAlpha's
+Internal Alpine path. SLTD v6 deliberately follows the same runtime shape.
+
+`requirements.txt` contains the harmless pip option:
+
+`--only-binary=:all:`
+
+SiftAlpha's Embedded CPython requirements parser rejects option lines, while pip inside Internal
+Alpine accepts this option. Therefore the Environment Plan excludes Embedded CPython and selects
+Internal Alpine without adding an unrelated Python dependency.
+
+This is intentional for the SiftAlpha package only; it does not alter SLTD strategy logic.
