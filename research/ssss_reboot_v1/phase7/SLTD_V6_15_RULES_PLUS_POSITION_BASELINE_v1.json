@@ -1,0 +1,69 @@
+{
+  "schema": "SLTD_V6_15_RULES_PLUS_POSITION_BASELINE_V1",
+  "status": "FROZEN_ROLLBACK_BASELINE",
+  "rollback_branch": "baseline/sltd-v6-15rules-position-v1",
+  "rollback_commit": "05be43e350d9193ba01a2748ef4c0267438a84b1",
+  "rules": {
+    "BUY": [
+      "BUY_BLUE_21P_LOWER",
+      "BUY_GRAY_4_10_LIGHT_SUPPORT",
+      "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT",
+      "BLUE_11_20_LOWER_WICK_ONLY",
+      "NEW_V5_C_GRAY_4_10_LOWER_WICK_ONLY"
+    ],
+    "HOLD": [
+      "CONT_BLUE_11_20_UPPER",
+      "CONT_BLUE_4_10_UPPER",
+      "CONT_RECENT_GRAY_BLUE_UPPER",
+      "NEW_V5_B_BLUE_21P_UPPER_CLOSE_ABOVE"
+    ],
+    "WAIT": [
+      "AVOID_GREEN_11_20_LOWER",
+      "GREEN_11_20_LOWER_CLOSE_BELOW"
+    ],
+    "SELL": [
+      "SELL_RECENT_BLUE_GRAY_LIGHT_RESIST",
+      "GREEN_4_10_UPPER",
+      "NEW_V5_D_GREEN_11_20_UPPER_WICK_ONLY",
+      "NEW_V5_E_GREEN_11_20_LIGHT_RESIST"
+    ]
+  },
+  "taxonomy_source": {
+    "path": "research/ssss_reboot_v1/phase6/SSSS_FORMAL_15_ACTION_TAXONOMY_v1.md",
+    "blob_sha": "c20e5b98516acd3f21577207a07dd8520e93a88e"
+  },
+  "position_policy": {
+    "ordinary_policy_id": "I25_AADD_25_TO_CAP_S25_WHOLD_RNO_CHANGE_MIXED",
+    "hard_exit_id": "C2_FULL_CANDLE_BELOW_SLOW_BAND",
+    "initial_buy": 0.25,
+    "subsequent_buy_add_percentage_points": 0.25,
+    "cap": 1,
+    "ordinary_sell_fraction_of_current_position": 0.25,
+    "wait_while_long": "HOLD",
+    "wait_while_flat": "NO_ENTRY",
+    "mixed_same_bar": "NO_CHANGE_MIXED",
+    "hard_exit": {
+      "requires_armed": true,
+      "arm_on": "ACTUALLY_EXECUTED_ORDINARY_SELL",
+      "reset_on": "ACTUALLY_EXECUTED_BUY",
+      "condition": "state == GREEN && High < GZB4",
+      "execute": "NEXT_AVAILABLE_OPEN",
+      "target_position": 0
+    },
+    "sources": [
+      {
+        "path": "research/ssss_reboot_v1/phase7/SLTD_V6_INTEGRATED_POSITION_POLICY_v1.md",
+        "blob_sha": "e48c630b56b363e1a8fcfca01ce209e480dd3c21"
+      },
+      {
+        "path": "research/ssss_reboot_v1/phase7/SLTD_V6_INTEGRATED_POSITION_POLICY_v1.json",
+        "blob_sha": "ceae5f58ab1b7e87eeaf80c6a48a64ed04d0a68d"
+      }
+    ]
+  },
+  "governance": {
+    "future_rule_research_must_be_new_layer": true,
+    "silent_overwrite_forbidden": true,
+    "rollback_instruction": "Restore baseline/sltd-v6-15rules-position-v1 or commit 05be43e350d9193ba01a2748ef4c0267438a84b1."
+  }
+}
