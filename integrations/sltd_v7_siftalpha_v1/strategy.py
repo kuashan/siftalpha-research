@@ -651,6 +651,7 @@ def analyze(symbol: str, candles: Iterable[dict], display_limit: int = 300, time
                 "GZB4": row["GZB4"],
                 "ZD1": row["ZD1"],
                 "ZK1": row["ZK1"],
+                "BS": row["BS"],
                 "position": float(pos.get("fraction") or 0.0),
                 "risk_armed": bool(pos.get("risk_armed")),
             }
