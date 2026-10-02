@@ -1,0 +1,581 @@
+{
+  "coverage": [
+    {
+      "symbol": "AAPL",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 3
+    },
+    {
+      "symbol": "MSFT",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 1
+    },
+    {
+      "symbol": "NVDA",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 1
+    },
+    {
+      "symbol": "AMD",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 0
+    },
+    {
+      "symbol": "AVGO",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 1
+    },
+    {
+      "symbol": "ORCL",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 0
+    },
+    {
+      "symbol": "INTC",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 0
+    },
+    {
+      "symbol": "QCOM",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 2
+    },
+    {
+      "symbol": "MU",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 1
+    },
+    {
+      "symbol": "GOOGL",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 0
+    },
+    {
+      "symbol": "META",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2012-05-18",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 3
+    },
+    {
+      "symbol": "NFLX",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 1
+    },
+    {
+      "symbol": "AMZN",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 1
+    },
+    {
+      "symbol": "TSLA",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-06-29",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 1
+    },
+    {
+      "symbol": "HD",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 2
+    },
+    {
+      "symbol": "MCD",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 2
+    },
+    {
+      "symbol": "WMT",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 1
+    },
+    {
+      "symbol": "COST",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 0
+    },
+    {
+      "symbol": "PG",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 0
+    },
+    {
+      "symbol": "KO",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 1
+    },
+    {
+      "symbol": "PEP",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 1
+    },
+    {
+      "symbol": "ABT",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 0
+    },
+    {
+      "symbol": "LLY",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 1
+    },
+    {
+      "symbol": "UNH",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 0
+    },
+    {
+      "symbol": "JNJ",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 0
+    },
+    {
+      "symbol": "TMO",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 0
+    },
+    {
+      "symbol": "JPM",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 0
+    },
+    {
+      "symbol": "BAC",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 0
+    },
+    {
+      "symbol": "GS",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 2
+    },
+    {
+      "symbol": "V",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 3
+    },
+    {
+      "symbol": "MA",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 3
+    },
+    {
+      "symbol": "CAT",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 1
+    },
+    {
+      "symbol": "BA",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 1
+    },
+    {
+      "symbol": "GE",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 2
+    },
+    {
+      "symbol": "XOM",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 3
+    },
+    {
+      "symbol": "CVX",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 1
+    },
+    {
+      "symbol": "LIN",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 0
+    },
+    {
+      "symbol": "NEE",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 1
+    },
+    {
+      "symbol": "PLD",
+      "asset_class": "STOCK",
+      "error": null,
+      "returned_start": "2010-01-04",
+      "returned_end": "2026-10-01",
+      "main_start": "2026-01-02",
+      "eligible_end": "2026-09-02",
+      "event_count": 0
+    },
+    {
+      "symbol": "BTC/USD",
+      "asset_class": "CRYPTO",
+      "error": null,
+      "returned_start": "2017-08-28",
+      "returned_end": "2026-10-02",
+      "main_start": "2026-01-01",
+      "eligible_end": "2026-09-12",
+      "event_count": 0
+    },
+    {
+      "symbol": "ETH/USD",
+      "asset_class": "CRYPTO",
+      "error": null,
+      "returned_start": "2018-01-17",
+      "returned_end": "2026-10-02",
+      "main_start": "2026-01-01",
+      "eligible_end": "2026-09-12",
+      "event_count": 0
+    },
+    {
+      "symbol": "BNB/USD",
+      "asset_class": "CRYPTO",
+      "error": null,
+      "returned_start": "2017-11-08",
+      "returned_end": "2026-10-02",
+      "main_start": "2026-01-01",
+      "eligible_end": "2026-09-12",
+      "event_count": 2
+    },
+    {
+      "symbol": "SOL/USD",
+      "asset_class": "CRYPTO",
+      "error": null,
+      "returned_start": "2020-08-11",
+      "returned_end": "2026-10-02",
+      "main_start": "2026-01-01",
+      "eligible_end": "2026-09-12",
+      "event_count": 0
+    }
+  ],
+  "stock": {
+    "NEW_BUY_1": {
+      "status": "INSUFFICIENT_BREADTH",
+      "n": 5,
+      "hit": 5,
+      "pooled_probability": 1,
+      "eligible_symbols": 0,
+      "support_symbols": 0,
+      "opposite_symbols": 0,
+      "support_fraction": null,
+      "per_symbol": []
+    },
+    "NEW_AVOID_BUY_1": {
+      "status": "INSUFFICIENT_BREADTH",
+      "n": 10,
+      "hit": 10,
+      "pooled_probability": 1,
+      "eligible_symbols": 2,
+      "support_symbols": 2,
+      "opposite_symbols": 0,
+      "support_fraction": 1,
+      "per_symbol": [
+        {
+          "symbol": "V",
+          "n": 2,
+          "p": 1
+        },
+        {
+          "symbol": "MA",
+          "n": 2,
+          "p": 1
+        }
+      ]
+    },
+    "NEW_HOLD_1": {
+      "status": "INSUFFICIENT_BREADTH",
+      "n": 11,
+      "hit": 9,
+      "pooled_probability": 0.8181818181818182,
+      "eligible_symbols": 1,
+      "support_symbols": 0,
+      "opposite_symbols": 0,
+      "support_fraction": 0,
+      "per_symbol": [
+        {
+          "symbol": "QCOM",
+          "n": 2,
+          "p": 0.5
+        }
+      ]
+    },
+    "NEW_HOLD_2": {
+      "status": "INSUFFICIENT_BREADTH",
+      "n": 4,
+      "hit": 4,
+      "pooled_probability": 1,
+      "eligible_symbols": 0,
+      "support_symbols": 0,
+      "opposite_symbols": 0,
+      "support_fraction": null,
+      "per_symbol": []
+    },
+    "NEW_SELL_1": {
+      "status": "INSUFFICIENT_BREADTH",
+      "n": 10,
+      "hit": 5,
+      "pooled_probability": 0.5,
+      "eligible_symbols": 3,
+      "support_symbols": 0,
+      "opposite_symbols": 0,
+      "support_fraction": 0,
+      "per_symbol": [
+        {
+          "symbol": "AAPL",
+          "n": 2,
+          "p": 0.5
+        },
+        {
+          "symbol": "META",
+          "n": 2,
+          "p": 0.5
+        },
+        {
+          "symbol": "XOM",
+          "n": 2,
+          "p": 0.5
+        }
+      ]
+    }
+  },
+  "crypto": {
+    "NEW_BUY_1": {
+      "status": "INSUFFICIENT_BREADTH",
+      "n": 0,
+      "hit": 0,
+      "pooled_probability": null,
+      "eligible_symbols": 0,
+      "support_symbols": 0,
+      "opposite_symbols": 0,
+      "support_fraction": null,
+      "per_symbol": []
+    },
+    "NEW_AVOID_BUY_1": {
+      "status": "INSUFFICIENT_BREADTH",
+      "n": 1,
+      "hit": 1,
+      "pooled_probability": 1,
+      "eligible_symbols": 0,
+      "support_symbols": 0,
+      "opposite_symbols": 0,
+      "support_fraction": null,
+      "per_symbol": []
+    },
+    "NEW_HOLD_1": {
+      "status": "INSUFFICIENT_BREADTH",
+      "n": 1,
+      "hit": 1,
+      "pooled_probability": 1,
+      "eligible_symbols": 0,
+      "support_symbols": 0,
+      "opposite_symbols": 0,
+      "support_fraction": null,
+      "per_symbol": []
+    },
+    "NEW_HOLD_2": {
+      "status": "INSUFFICIENT_BREADTH",
+      "n": 0,
+      "hit": 0,
+      "pooled_probability": null,
+      "eligible_symbols": 0,
+      "support_symbols": 0,
+      "opposite_symbols": 0,
+      "support_fraction": null,
+      "per_symbol": []
+    },
+    "NEW_SELL_1": {
+      "status": "INSUFFICIENT_BREADTH",
+      "n": 0,
+      "hit": 0,
+      "pooled_probability": null,
+      "eligible_symbols": 0,
+      "support_symbols": 0,
+      "opposite_symbols": 0,
+      "support_fraction": null,
+      "per_symbol": []
+    }
+  }
+}
