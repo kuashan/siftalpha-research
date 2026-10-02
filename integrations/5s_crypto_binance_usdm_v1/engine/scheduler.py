@@ -79,6 +79,16 @@ def decide_actions(
     )
 
 
+def raw_signal_label(latest: BarEvaluation) -> str:
+    """Describe frozen-engine signal onsets without using account position state."""
+    labels: list[str] = []
+    labels.extend(f"BUY_{x}" for x in latest.buy_onsets)
+    sell = tuple(latest.sell_onsets)
+    if sell:
+        labels.append("MULTI_SELL" if len(sell) >= 2 else f"SELL_{sell[0]}")
+    return "+".join(labels) if labels else "HOLD"
+
+
 class TerminalDecisionError(RuntimeError):
     terminal = True
 
@@ -98,6 +108,7 @@ class StrategyScheduler:
         symbols: tuple[str, ...],
         allowed_timeframes: tuple[str, ...],
         adapter_factory: Callable[..., Any] = BinanceUsdMTestnetAdapter,
+        market_data_provider: Any | None = None,
         evaluator: Callable[[Any], list[BarEvaluation]] = evaluate_candles,
         poll_seconds: float = 5.0,
         fetch_limit: int = 220,
@@ -110,6 +121,7 @@ class StrategyScheduler:
         self.symbols = symbols
         self.allowed_timeframes = allowed_timeframes
         self.adapter_factory = adapter_factory
+        self.market_data_provider = market_data_provider
         self.evaluator = evaluator
         self.poll_seconds = max(1.0, float(poll_seconds))
         self.fetch_limit = max(100, int(fetch_limit))
@@ -144,32 +156,39 @@ class StrategyScheduler:
             return result
 
         api_key, api_secret = self.session.credentials()
-        if not api_key or not api_secret:
-            for symbol in enabled:
-                self.store.set_run_state(symbol, "WAITING_DEMO")
-                result[symbol] = {"state": "WAITING_DEMO"}
-            return result
-
+        credentials_ready = bool(api_key and api_secret)
+        adapter = self._adapter(api_key, api_secret) if credentials_ready else None
         recovery_ready = getattr(self.session, "recovery_ready", None)
-        ready_symbols: list[str] = []
+
         for symbol in enabled:
-            if callable(recovery_ready) and not recovery_ready(symbol):
-                self.store.set_run_state(symbol, "WAITING_RECONCILE")
-                result[symbol] = {"state": "WAITING_RECONCILE"}
-            else:
-                ready_symbols.append(symbol)
-        if not ready_symbols:
-            return result
-
-        adapter = self._adapter(api_key, api_secret)
-
-        for symbol in ready_symbols:
             cfg = configs[symbol]
             state = runtime[symbol]
             timeframe = str(cfg["timeframe"])
+            reconcile_ready = (
+                True
+                if not credentials_ready or not callable(recovery_ready)
+                else bool(recovery_ready(symbol))
+            )
+            execution_ready = bool(credentials_ready and reconcile_ready and adapter is not None)
+
             try:
-                rows = adapter.klines(symbol, timeframe, limit=self.fetch_limit)
-                if self.on_poll is not None:
+                if self.market_data_provider is not None:
+                    rows = self.market_data_provider.klines(
+                        symbol, timeframe, limit=self.fetch_limit
+                    )
+                elif adapter is not None:
+                    # Backward-compatible fallback for tests / older callers.
+                    rows = adapter.klines(symbol, timeframe, limit=self.fetch_limit)
+                else:
+                    self.store.set_run_state(symbol, "WAITING_DEMO")
+                    result[symbol] = {
+                        "state": "WAITING_DEMO",
+                        "signal_only": False,
+                        "timeframe": timeframe,
+                    }
+                    continue
+
+                if execution_ready and self.on_poll is not None:
                     try:
                         self.on_poll(symbol, adapter)
                     except Exception as exc:
@@ -178,6 +197,7 @@ class StrategyScheduler:
                             symbol,
                             f"{type(exc).__name__}:{exc}",
                         )
+
                 closed = self._closed_rows(rows)
                 if len(closed) < self.minimum_closed_bars:
                     self.store.set_run_state(symbol, "WAITING_HISTORY")
@@ -185,26 +205,39 @@ class StrategyScheduler:
                         "state": "WAITING_HISTORY",
                         "closed_bars": len(closed),
                         "timeframe": timeframe,
+                        "signal_only": not execution_ready,
                     }
                     continue
 
                 latest_open_time = int(closed[-1][0])
                 previous_open_time = state.get("last_closed_bar_open_time")
+                passive_state = (
+                    "WAITING_RECONCILE"
+                    if credentials_ready and not reconcile_ready
+                    else ("SIGNAL_ONLY" if not credentials_ready else "MONITORING")
+                )
+
                 if previous_open_time is None:
                     self.store.baseline_closed_bar(symbol, latest_open_time)
+                    if not execution_ready:
+                        self.store.set_run_state(symbol, passive_state)
                     result[symbol] = {
-                        "state": "MONITORING",
+                        "state": passive_state if not execution_ready else "MONITORING",
                         "baseline": latest_open_time,
                         "timeframe": timeframe,
+                        "signal_only": not execution_ready,
                     }
                     continue
 
                 if latest_open_time <= int(previous_open_time):
-                    self.store.set_run_state(symbol, "MONITORING")
+                    self.store.set_run_state(
+                        symbol, passive_state if not execution_ready else "MONITORING"
+                    )
                     result[symbol] = {
-                        "state": "MONITORING",
+                        "state": passive_state if not execution_ready else "MONITORING",
                         "new_bar": False,
                         "timeframe": timeframe,
+                        "signal_only": not execution_ready,
                     }
                     continue
 
@@ -213,7 +246,17 @@ class StrategyScheduler:
                     raise RuntimeError("冻结信号引擎没有返回结果")
                 latest = evaluations[-1]
                 closed_times = [int(row[0]) for row in closed]
-                decision = decide_actions(state, latest, closed_times)
+
+                if execution_ready:
+                    decision = decide_actions(state, latest, closed_times)
+                else:
+                    decision = M3Decision(
+                        signal=raw_signal_label(latest),
+                        actions=(),
+                        c_eligible=False,
+                        bar_open_time=latest.open_time,
+                    )
+
                 execution_context = {
                     "signal_bar_open_time": latest_open_time,
                     "execution_bar_open_time": int(rows[-1][0]),
@@ -221,7 +264,7 @@ class StrategyScheduler:
                     "timeframe": timeframe,
                 }
 
-                if decision.actions and self.on_decision is not None:
+                if execution_ready and decision.actions and self.on_decision is not None:
                     try:
                         self.on_decision(
                             symbol,
@@ -251,6 +294,7 @@ class StrategyScheduler:
                             "signal": decision.signal,
                             "actions": list(decision.actions),
                             "blocked": str(exc),
+                            "signal_only": False,
                         }
                         continue
 
@@ -262,7 +306,7 @@ class StrategyScheduler:
                         run_state="MONITORING",
                     )
                     state_name = "MONITORING"
-                else:
+                elif execution_ready:
                     self.store.record_strategy_observation(
                         symbol,
                         bar_open_time=latest_open_time,
@@ -270,6 +314,18 @@ class StrategyScheduler:
                         pending_action=decision.pending_action,
                     )
                     state_name = "SIGNAL_READY" if decision.actions else "MONITORING"
+                else:
+                    # Public market monitoring continues without API credentials.
+                    # No pending execution is retained, so reconnecting never causes
+                    # retroactive orders from an old signal bar.
+                    self.store.record_strategy_observation(
+                        symbol,
+                        bar_open_time=latest_open_time,
+                        signal=decision.signal,
+                        pending_action=None,
+                        run_state=passive_state,
+                    )
+                    state_name = passive_state
 
                 result[symbol] = {
                     "state": state_name,
@@ -277,6 +333,8 @@ class StrategyScheduler:
                     "timeframe": timeframe,
                     "signal": decision.signal,
                     "actions": list(decision.actions),
+                    "signal_only": not execution_ready,
+                    "execution_ready": execution_ready,
                 }
             except Exception as exc:
                 self.store.set_run_state(symbol, "ERROR")
