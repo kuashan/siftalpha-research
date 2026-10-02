@@ -1,0 +1,65 @@
+name: SLTD V6 Position Policy Batch 1
+
+on:
+  push:
+    branches:
+      - research/sltd-v6-position-policy-v1
+    paths:
+      - "research/ssss_reboot_v1/phase7/SLTD_V6_POSITION_POLICY_PROTOCOL_v1.md"
+      - "research/ssss_reboot_v1/phase7/sltd_v6_position_policy_batch_v1.py"
+      - ".github/workflows/sltd-v6-position-policy-batch1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  batch1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/sltd-v6-position-policy-v1
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install research dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "yfinance>=0.2.66,<0.3" "pandas>=2.2,<3" "numpy>=2,<3"
+
+      - name: Run Stock Batch 1
+        run: |
+          python research/ssss_reboot_v1/phase7/sltd_v6_position_policy_batch_v1.py --batch 1 --force-fetch
+
+      - name: Verify expected outputs
+        run: |
+          set -euo pipefail
+          test -f research/ssss_reboot_v1/phase7/batches/BATCH_01_STOCK_POSITION_POLICY.json
+          test -f research/ssss_reboot_v1/phase7/batches/BATCH_01_STOCK_POSITION_POLICY.md
+          test -f research/ssss_reboot_v1/phase7/data_snapshot/batch_01_stocks/manifest.json
+          grep -q 'Status: \*\*COMPLETE\*\*' research/ssss_reboot_v1/phase7/batches/BATCH_01_STOCK_POSITION_POLICY.md
+
+      - name: Commit frozen Batch 1 outputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ssss_reboot_v1/phase7/data_snapshot/batch_01_stocks
+          git add research/ssss_reboot_v1/phase7/signal_ledgers/BATCH_01_*
+          git add research/ssss_reboot_v1/phase7/batches/BATCH_01_STOCK_POSITION_POLICY.json
+          git add research/ssss_reboot_v1/phase7/batches/BATCH_01_STOCK_POSITION_POLICY.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "research: complete SLTD V6 position policy batch 1"
+          git push origin HEAD:research/sltd-v6-position-policy-v1
