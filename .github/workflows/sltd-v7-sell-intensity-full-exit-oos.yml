@@ -1,0 +1,78 @@
+name: SLTD V7 Sell Intensity Fresh Stock OOS
+
+on:
+  push:
+    branches:
+      - research/sltd-v7-sell-intensity-full-exit-oos-v1
+    paths:
+      - ".github/workflows/sltd-v7-sell-intensity-full-exit-oos.yml"
+      - "research/ssss_reboot_v1/phase8/sltd_v7_sell_intensity_full_exit_round3_oos_v1.py"
+      - "research/ssss_reboot_v1/phase8/SLTD_V7_SELL_INTENSITY_FULL_EXIT_ROUND3_OOS_PROTOCOL_v1.md"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  oos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/sltd-v7-sell-intensity-full-exit-oos-v1
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile
+        run: |
+          python -m compileall integrations/sltd_v7_siftalpha_v1
+          python -m py_compile             research/ssss_reboot_v1/phase8/sltd_v7_sell_intensity_full_exit_round2_v1.py             research/ssss_reboot_v1/phase8/sltd_v7_sell_intensity_full_exit_round3_oos_v1.py
+
+      - name: Run fresh-stock OOS
+        run: |
+          set -euo pipefail
+          python research/ssss_reboot_v1/phase8/sltd_v7_sell_intensity_full_exit_round3_oos_v1.py
+
+      - name: Verify outputs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("research/ssss_reboot_v1/phase8/SLTD_V7_SELL_INTENSITY_FULL_EXIT_ROUND3_OOS_RESULT_v1.json")
+          x=json.loads(p.read_text(encoding="utf-8"))
+          assert x["meta"]["status"] == "IMPLEMENTED_AND_VERIFIED"
+          assert x["meta"]["series"] == 60
+          assert x["meta"]["prior_universe_overlap"] == []
+          assert len(x["summary_5bps"]) == 4
+          assert all(max(r["parity_max_abs_diff"].values()) <= 1e-10 for r in x["rows"])
+          print("SELL_INTENSITY_ROUND3_OOS_VERIFY_PASS")
+          PY
+
+      - name: Commit verified results
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             research/ssss_reboot_v1/phase8/SLTD_V7_SELL_INTENSITY_FULL_EXIT_ROUND3_OOS_RESULT_v1.json             research/ssss_reboot_v1/phase8/SLTD_V7_SELL_INTENSITY_FULL_EXIT_ROUND3_OOS_RESULT_v1.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "research: archive V7 sell intensity fresh-stock OOS"
+          git push origin HEAD:research/sltd-v7-sell-intensity-full-exit-oos-v1
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-v7-sell-intensity-full-exit-oos-v1
+          path: |
+            research/ssss_reboot_v1/phase8/SLTD_V7_SELL_INTENSITY_FULL_EXIT_ROUND3_OOS_RESULT_v1.json
+            research/ssss_reboot_v1/phase8/SLTD_V7_SELL_INTENSITY_FULL_EXIT_ROUND3_OOS_RESULT_v1.md
+          if-no-files-found: error
+          retention-days: 30
