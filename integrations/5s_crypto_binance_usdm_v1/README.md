@@ -4,16 +4,24 @@
 
 - M1: CLOSED
 - M1.1: CLOSED
-- M2: IMPLEMENTED_AWAITING_TESTNET_ACCEPTANCE
+- M2: CLOSED
 - M2.1: IMPLEMENTED_AND_VERIFIED
 - M2.2: IMPLEMENTED_AND_VERIFIED
 - M2.3: IMPLEMENTED_AND_VERIFIED
-- M3: NOT_STARTED
-- M4: NOT_STARTED
+- M2.3.1: IMPLEMENTED_AND_VERIFIED
+- M2.3.2: IMPLEMENTED_AND_VERIFIED
+- M2.3.3: IMPLEMENTED_AND_VERIFIED
+- M3: IMPLEMENTED_AWAITING_DEVICE_ACCEPTANCE
+- M4: IMPLEMENTED_AWAITING_DEVICE_ACCEPTANCE
+- M4.1: IMPLEMENTED_AND_VERIFIED
+
+The detailed milestone record is:
+`integrations/5s_crypto_binance_usdm_v1/MILESTONES.md`
 
 ## Runtime architecture
 
 One Python process manages four independent Strategy Slots:
+
 BTCUSDT / ETHUSDT / BNBUSDT / SOLUSDT.
 
 Each slot has its own:
@@ -25,10 +33,41 @@ Each slot has its own:
 - signal/order state
 - realized/unrealized PnL
 - funding and trading fees
+- recovery / reconciliation state
 
-Only enabled slots will be scheduled once M3 attaches the frozen 5s-crypto V1 signal engine.
+The frozen 5s-crypto V1 signal engine, scheduler, Binance Demo execution path,
+idempotent order loop, and recovery / reconciliation gate are implemented.
 
-The dashboard uses a mobile-first Chinese interface with four symbol tabs and displays total PnL across all four slots.
+Automatic strategy execution remains gated by:
+- successful Binance Demo connection;
+- per-symbol reconciliation state;
+- current safety checks and configured strategy state.
+
+M3 and M4 are still awaiting their joint real-device acceptance.
+
+## Frozen strategy boundary
+
+The runtime uses the frozen `5s crypto v1` strategy contract:
+- BUY-A / BUY-B initial target = 60%
+- eligible W3 BUY-C top-up target = 100%
+- SELL-A / SELL-B / SELL-C / multi-family SELL = full exit
+- close-confirmed signal -> next-bar-open execution
+- no independent Risk Exit layer
+
+The runtime integration must not change this frozen strategy in place.
+
+## Dashboard
+
+The dashboard uses a mobile-first Chinese interface and includes:
+- four symbol tabs;
+- top Demo connection and reconciliation status;
+- account / available / strategy capital / total PnL summary;
+- 300-bar candlestick + volume visualization;
+- B/S markers from real M3 signal audit events;
+- collapsible per-symbol trading settings.
+
+The chart's 300 bars are display-only.
+The strategy scheduler keeps its independent 220-bar default fetch window.
 
 ## Capital meaning
 
@@ -39,17 +78,24 @@ BTC budget 100 USDT, leverage 5x:
 - initial 60% stage = 60 USDT margin / about 300 USDT notional
 - BUY-C top-up to 100% = 100 USDT margin / about 500 USDT notional
 
-M3 must additionally verify real Binance available margin immediately before an order. Configured budgets do not reserve or transfer funds on Binance.
+The execution path verifies Binance available margin and symbol filters before an order.
+Configured budgets do not reserve or transfer funds on Binance.
 
-## Important M2.1 boundary
+## Demo / LIVE boundary
 
-The START button currently persists the slot as `ARMED`; it does not yet run the frozen signal loop. M3 is the only milestone allowed to attach automatic strategy execution.
+Current authenticated trading integration is for Binance Futures Demo.
 
-## Testnet
+API credentials are handled by the current process and are not persisted as
+plain credentials in SQLite.
 
-Use environment variables only:
-`FIVES_MODE=TESTNET`
-`BINANCE_TESTNET_API_KEY`
-`BINANCE_TESTNET_API_SECRET`
+LIVE trading remains unsupported in this development round.
 
-LIVE remains unsupported in this round.
+## Acceptance boundary
+
+The code implementation for M3 and M4 is complete, but those milestones are not
+CLOSED until the real SiftAlpha + Binance Demo joint device acceptance passes.
+
+See:
+- `M3_1_ACCEPTANCE.md`
+- `M3_2_ACCEPTANCE.md`
+- `M4_ACCEPTANCE.md`
