@@ -1,0 +1,1861 @@
+{
+  "meta": {
+    "date": "2026-10-02",
+    "status": "COMPLETE",
+    "source_summary_commit": "b370f163d5ffbfa09a1404864ac3d5fa9c1dad32",
+    "window": "2020-01-02..2026-09-30",
+    "representation": "FIRST_OBSERVED",
+    "xma_modified": false
+  },
+  "core_retained": [
+    {
+      "id": "BUY_BLUE_21P_LOWER",
+      "optimization": "KEEP_STRONG_CROSS_ASSET",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 515,
+        "hit": 360,
+        "pooled_probability": 0.6990291262135923,
+        "eligible_symbols": 20,
+        "support_symbols": 19,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.95,
+        "median_symbol_probability": 0.6819852941176471,
+        "ret20_median": 0.008538163001293508,
+        "mfe20_median": 0.05002656639555325,
+        "mae20_median": -0.046844586623943196,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 31,
+            "p": 0.5806451612903226
+          },
+          {
+            "symbol": "CSCO",
+            "n": 29,
+            "p": 0.896551724137931
+          },
+          {
+            "symbol": "CRM",
+            "n": 17,
+            "p": 0.6470588235294118
+          },
+          {
+            "symbol": "ADBE",
+            "n": 22,
+            "p": 0.6363636363636364
+          },
+          {
+            "symbol": "TXN",
+            "n": 32,
+            "p": 0.875
+          },
+          {
+            "symbol": "DIS",
+            "n": 21,
+            "p": 0.8095238095238095
+          },
+          {
+            "symbol": "NKE",
+            "n": 21,
+            "p": 0.42857142857142855
+          },
+          {
+            "symbol": "SBUX",
+            "n": 20,
+            "p": 0.7
+          },
+          {
+            "symbol": "TGT",
+            "n": 25,
+            "p": 0.64
+          },
+          {
+            "symbol": "LOW",
+            "n": 25,
+            "p": 0.6
+          },
+          {
+            "symbol": "MRK",
+            "n": 34,
+            "p": 0.6764705882352942
+          },
+          {
+            "symbol": "PFE",
+            "n": 17,
+            "p": 0.6470588235294118
+          },
+          {
+            "symbol": "ABBV",
+            "n": 32,
+            "p": 0.6875
+          },
+          {
+            "symbol": "AMGN",
+            "n": 21,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "GILD",
+            "n": 23,
+            "p": 0.782608695652174
+          },
+          {
+            "symbol": "C",
+            "n": 31,
+            "p": 0.7096774193548387
+          },
+          {
+            "symbol": "MS",
+            "n": 42,
+            "p": 0.7619047619047619
+          },
+          {
+            "symbol": "BLK",
+            "n": 27,
+            "p": 0.6296296296296297
+          },
+          {
+            "symbol": "COP",
+            "n": 31,
+            "p": 0.7096774193548387
+          },
+          {
+            "symbol": "UPS",
+            "n": 14,
+            "p": 0.7857142857142857
+          }
+        ]
+      },
+      "crypto": {
+        "status": "STRONG_REPEAT",
+        "n": 124,
+        "hit": 102,
+        "pooled_probability": 0.8225806451612904,
+        "eligible_symbols": 4,
+        "support_symbols": 4,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.8363844393592678,
+        "ret20_median": -0.003131765189470559,
+        "mfe20_median": 0.1059214502365513,
+        "mae20_median": -0.07848560272827304,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 46,
+            "p": 0.8043478260869565
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 38,
+            "p": 0.868421052631579
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 22,
+            "p": 0.6818181818181818
+          },
+          {
+            "symbol": "SOL/USD",
+            "n": 18,
+            "p": 0.9444444444444444
+          }
+        ]
+      }
+    },
+    {
+      "id": "BUY_GRAY_4_10_LIGHT_SUPPORT",
+      "optimization": "KEEP_STRONG_CROSS_ASSET",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 167,
+        "hit": 126,
+        "pooled_probability": 0.7544910179640718,
+        "eligible_symbols": 19,
+        "support_symbols": 19,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.7272727272727273,
+        "ret20_median": -0.004199332585499871,
+        "mfe20_median": 0.046697792323267207,
+        "mae20_median": -0.05166665625,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "CSCO",
+            "n": 9,
+            "p": 0.5555555555555556
+          },
+          {
+            "symbol": "CRM",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "TXN",
+            "n": 10,
+            "p": 0.6
+          },
+          {
+            "symbol": "DIS",
+            "n": 10,
+            "p": 0.8
+          },
+          {
+            "symbol": "NKE",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "SBUX",
+            "n": 9,
+            "p": 1
+          },
+          {
+            "symbol": "TGT",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "LOW",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "MRK",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "PFE",
+            "n": 7,
+            "p": 0.5714285714285714
+          },
+          {
+            "symbol": "ABBV",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "AMGN",
+            "n": 18,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "GILD",
+            "n": 11,
+            "p": 0.8181818181818182
+          },
+          {
+            "symbol": "C",
+            "n": 11,
+            "p": 0.7272727272727273
+          },
+          {
+            "symbol": "MS",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "BLK",
+            "n": 13,
+            "p": 0.9230769230769231
+          },
+          {
+            "symbol": "COP",
+            "n": 15,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "UPS",
+            "n": 10,
+            "p": 0.7
+          }
+        ]
+      },
+      "crypto": {
+        "status": "STRONG_REPEAT",
+        "n": 53,
+        "hit": 43,
+        "pooled_probability": 0.8113207547169812,
+        "eligible_symbols": 4,
+        "support_symbols": 4,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.787719298245614,
+        "ret20_median": -0.060127880075366735,
+        "mfe20_median": 0.0550018282576934,
+        "mae20_median": -0.11366863532039417,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 15,
+            "p": 0.7333333333333333
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 19,
+            "p": 0.8421052631578947
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 14,
+            "p": 0.9285714285714286
+          },
+          {
+            "symbol": "SOL/USD",
+            "n": 5,
+            "p": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT",
+      "optimization": "KEEP_STRONG_CROSS_ASSET",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 57,
+        "hit": 43,
+        "pooled_probability": 0.7543859649122807,
+        "eligible_symbols": 7,
+        "support_symbols": 6,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.8571428571428571,
+        "median_symbol_probability": 0.6666666666666666,
+        "ret20_median": -0.008656275029265026,
+        "mfe20_median": 0.04328165374677018,
+        "mae20_median": -0.045834433007829745,
+        "per_symbol": [
+          {
+            "symbol": "CSCO",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "TXN",
+            "n": 4,
+            "p": 0.25
+          },
+          {
+            "symbol": "NKE",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "SBUX",
+            "n": 8,
+            "p": 1
+          },
+          {
+            "symbol": "ABBV",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "AMGN",
+            "n": 7,
+            "p": 1
+          },
+          {
+            "symbol": "GILD",
+            "n": 7,
+            "p": 1
+          }
+        ]
+      },
+      "crypto": {
+        "status": "STRONG_REPEAT",
+        "n": 28,
+        "hit": 24,
+        "pooled_probability": 0.8571428571428571,
+        "eligible_symbols": 3,
+        "support_symbols": 3,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.9090909090909091,
+        "ret20_median": -0.016434382449946938,
+        "mfe20_median": 0.06631298968387533,
+        "mae20_median": -0.04846553685200167,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 8,
+            "p": 1
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 11,
+            "p": 0.9090909090909091
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 7,
+            "p": 0.8571428571428571
+          }
+        ]
+      }
+    },
+    {
+      "id": "CONT_BLUE_11_20_UPPER",
+      "optimization": "KEEP_STRONG_CROSS_ASSET",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 86,
+        "hit": 72,
+        "pooled_probability": 0.8372093023255814,
+        "eligible_symbols": 17,
+        "support_symbols": 16,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.9411764705882353,
+        "median_symbol_probability": 0.8888888888888888,
+        "ret20_median": 0.0009431935314117013,
+        "mfe20_median": 0.05057175247212242,
+        "mae20_median": -0.047428198321772586,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "CSCO",
+            "n": 9,
+            "p": 0.8888888888888888
+          },
+          {
+            "symbol": "CRM",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "ADBE",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "TXN",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "NKE",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "SBUX",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "LOW",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "MRK",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "PFE",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "ABBV",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "GILD",
+            "n": 3,
+            "p": 0
+          },
+          {
+            "symbol": "C",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "MS",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "BLK",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "COP",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "UPS",
+            "n": 6,
+            "p": 0.8333333333333334
+          }
+        ]
+      },
+      "crypto": {
+        "status": "STRONG_REPEAT",
+        "n": 20,
+        "hit": 14,
+        "pooled_probability": 0.7,
+        "eligible_symbols": 3,
+        "support_symbols": 3,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.6,
+        "ret20_median": 0.0028267381394748714,
+        "mfe20_median": 0.09285567665513506,
+        "mae20_median": -0.07842563630924193,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 7,
+            "p": 0.5714285714285714
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 6,
+            "p": 0.8333333333333334
+          }
+        ]
+      }
+    },
+    {
+      "id": "SELL_RECENT_BLUE_GRAY_LIGHT_RESIST",
+      "optimization": "KEEP_STRONG_CROSS_ASSET",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 100,
+        "hit": 76,
+        "pooled_probability": 0.76,
+        "eligible_symbols": 17,
+        "support_symbols": 16,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.9411764705882353,
+        "median_symbol_probability": 0.7,
+        "ret20_median": -0.004109586356679906,
+        "mfe20_median": 0.051085044816168934,
+        "mae20_median": -0.05017354425519349,
+        "per_symbol": [
+          {
+            "symbol": "CSCO",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "ADBE",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "TXN",
+            "n": 11,
+            "p": 0.45454545454545453
+          },
+          {
+            "symbol": "DIS",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "SBUX",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "TGT",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "LOW",
+            "n": 7,
+            "p": 0.8571428571428571
+          },
+          {
+            "symbol": "MRK",
+            "n": 8,
+            "p": 1
+          },
+          {
+            "symbol": "PFE",
+            "n": 10,
+            "p": 0.9
+          },
+          {
+            "symbol": "ABBV",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "AMGN",
+            "n": 10,
+            "p": 0.7
+          },
+          {
+            "symbol": "GILD",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "C",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "MS",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "BLK",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "COP",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "UPS",
+            "n": 7,
+            "p": 0.8571428571428571
+          }
+        ]
+      },
+      "crypto": {
+        "status": "STRONG_REPEAT",
+        "n": 20,
+        "hit": 17,
+        "pooled_probability": 0.85,
+        "eligible_symbols": 3,
+        "support_symbols": 3,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.8333333333333334,
+        "ret20_median": -0.05656111512922707,
+        "mfe20_median": 0.09282856078222912,
+        "mae20_median": -0.12180903938054505,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "SOL/USD",
+            "n": 9,
+            "p": 0.8888888888888888
+          }
+        ]
+      }
+    },
+    {
+      "id": "AVOID_GREEN_11_20_LOWER",
+      "optimization": "KEEP_STRONG_STOCK",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 85,
+        "hit": 67,
+        "pooled_probability": 0.788235294117647,
+        "eligible_symbols": 16,
+        "support_symbols": 15,
+        "neutral_symbols": 1,
+        "oppose_symbols": 0,
+        "support_fraction": 0.9375,
+        "median_symbol_probability": 0.8035714285714286,
+        "ret20_median": 0.012060828526481382,
+        "mfe20_median": 0.0623395627180372,
+        "mae20_median": -0.04775458570524982,
+        "per_symbol": [
+          {
+            "symbol": "CSCO",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "CRM",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "TXN",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "DIS",
+            "n": 6,
+            "p": 0.5
+          },
+          {
+            "symbol": "NKE",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "SBUX",
+            "n": 7,
+            "p": 0.8571428571428571
+          },
+          {
+            "symbol": "TGT",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "MRK",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "PFE",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "ABBV",
+            "n": 8,
+            "p": 0.75
+          },
+          {
+            "symbol": "AMGN",
+            "n": 7,
+            "p": 0.5714285714285714
+          },
+          {
+            "symbol": "GILD",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "C",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "BLK",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "COP",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "UPS",
+            "n": 8,
+            "p": 0.625
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 11,
+        "hit": 9,
+        "pooled_probability": 0.8181818181818182,
+        "eligible_symbols": 3,
+        "support_symbols": 2,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.6666666666666666,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.03302255273465504,
+        "mfe20_median": 0.12351407457584207,
+        "mae20_median": -0.05366581316772201,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 3,
+            "p": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "CONT_BLUE_4_10_UPPER",
+      "optimization": "KEEP_STRONG_STOCK",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 66,
+        "hit": 54,
+        "pooled_probability": 0.8181818181818182,
+        "eligible_symbols": 13,
+        "support_symbols": 11,
+        "neutral_symbols": 1,
+        "oppose_symbols": 1,
+        "support_fraction": 0.8461538461538461,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.0191962683700746,
+        "mfe20_median": 0.06078051491202796,
+        "mae20_median": -0.05532927915690772,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "CSCO",
+            "n": 4,
+            "p": 0.25
+          },
+          {
+            "symbol": "CRM",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "TXN",
+            "n": 7,
+            "p": 0.7142857142857143
+          },
+          {
+            "symbol": "NKE",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "SBUX",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "LOW",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "ABBV",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "AMGN",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "GILD",
+            "n": 9,
+            "p": 1
+          },
+          {
+            "symbol": "MS",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "COP",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "UPS",
+            "n": 3,
+            "p": 1
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 14,
+        "hit": 12,
+        "pooled_probability": 0.8571428571428571,
+        "eligible_symbols": 2,
+        "support_symbols": 2,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.8333333333333333,
+        "ret20_median": -0.00789294918268113,
+        "mfe20_median": 0.07041622716071572,
+        "mae20_median": -0.08891935971436116,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 6,
+            "p": 0.6666666666666666
+          }
+        ]
+      }
+    },
+    {
+      "id": "CONT_RECENT_GRAY_BLUE_UPPER",
+      "optimization": "KEEP_STRONG_STOCK",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 61,
+        "hit": 43,
+        "pooled_probability": 0.7049180327868853,
+        "eligible_symbols": 10,
+        "support_symbols": 7,
+        "neutral_symbols": 1,
+        "oppose_symbols": 2,
+        "support_fraction": 0.7,
+        "median_symbol_probability": 0.75,
+        "ret20_median": 0.017660269497754122,
+        "mfe20_median": 0.059313297914519,
+        "mae20_median": -0.04797876684360958,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "CSCO",
+            "n": 4,
+            "p": 0.25
+          },
+          {
+            "symbol": "TXN",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "SBUX",
+            "n": 5,
+            "p": 0.2
+          },
+          {
+            "symbol": "MRK",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "PFE",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "ABBV",
+            "n": 8,
+            "p": 0.75
+          },
+          {
+            "symbol": "AMGN",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "GILD",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "UPS",
+            "n": 4,
+            "p": 1
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 6,
+        "hit": 6,
+        "pooled_probability": 1,
+        "eligible_symbols": 0,
+        "support_symbols": 0,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": null,
+        "median_symbol_probability": null,
+        "ret20_median": 0.0849318138934334,
+        "mfe20_median": 0.27297493158963637,
+        "mae20_median": -0.03556934724327343,
+        "per_symbol": []
+      }
+    }
+  ],
+  "promoted_v5": [
+    {
+      "id": "BLUE_11_20_LOWER_WICK_ONLY",
+      "optimization": "PROMOTE_V5",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 53,
+        "hit": 45,
+        "pooled_probability": 0.8490566037735849,
+        "eligible_symbols": 12,
+        "support_symbols": 12,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.875,
+        "ret20_median": 0.018947333333333427,
+        "mfe20_median": 0.06357330278494522,
+        "mae20_median": -0.03597684012483404,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "CSCO",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "TXN",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "SBUX",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "TGT",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "LOW",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "MRK",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "ABBV",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "AMGN",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "GILD",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "BLK",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "UPS",
+            "n": 3,
+            "p": 0.6666666666666666
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 7,
+        "hit": 5,
+        "pooled_probability": 0.7142857142857143,
+        "eligible_symbols": 1,
+        "support_symbols": 1,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.047311863799283316,
+        "mfe20_median": 0.13415420822572233,
+        "mae20_median": -0.07253885741899124,
+        "per_symbol": [
+          {
+            "symbol": "BNB/USD",
+            "n": 5,
+            "p": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "GREEN_11_20_LOWER_CLOSE_BELOW",
+      "optimization": "PROMOTE_V5",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 39,
+        "hit": 36,
+        "pooled_probability": 0.9230769230769231,
+        "eligible_symbols": 8,
+        "support_symbols": 8,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.020745243128963864,
+        "mfe20_median": 0.07688522573502277,
+        "mae20_median": -0.04005842483727928,
+        "per_symbol": [
+          {
+            "symbol": "CSCO",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "TXN",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "SBUX",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "MRK",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "ABBV",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "AMGN",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "COP",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "UPS",
+            "n": 3,
+            "p": 1
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 6,
+        "hit": 6,
+        "pooled_probability": 1,
+        "eligible_symbols": 1,
+        "support_symbols": 1,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.019924118952552194,
+        "mfe20_median": 0.14463586109631554,
+        "mae20_median": -0.08134075802378316,
+        "per_symbol": [
+          {
+            "symbol": "ETH/USD",
+            "n": 3,
+            "p": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "GREEN_4_10_UPPER",
+      "optimization": "PROMOTE_V5",
+      "stock": {
+        "status": "REPEAT",
+        "n": 52,
+        "hit": 33,
+        "pooled_probability": 0.6346153846153846,
+        "eligible_symbols": 10,
+        "support_symbols": 8,
+        "neutral_symbols": 0,
+        "oppose_symbols": 2,
+        "support_fraction": 0.8,
+        "median_symbol_probability": 0.6666666666666666,
+        "ret20_median": 0.005799227507951477,
+        "mfe20_median": 0.05109869413872836,
+        "mae20_median": -0.0398600322766966,
+        "per_symbol": [
+          {
+            "symbol": "CSCO",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "DIS",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "SBUX",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "LOW",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "MRK",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "AMGN",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "C",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "MS",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "BLK",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "COP",
+            "n": 3,
+            "p": 0.3333333333333333
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 7,
+        "hit": 5,
+        "pooled_probability": 0.7142857142857143,
+        "eligible_symbols": 1,
+        "support_symbols": 1,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 1,
+        "ret20_median": -0.1205496366888823,
+        "mfe20_median": 0.03486587734879687,
+        "mae20_median": -0.1654417876783505,
+        "per_symbol": [
+          {
+            "symbol": "BNB/USD",
+            "n": 4,
+            "p": 1
+          }
+        ]
+      }
+    }
+  ],
+  "watch_v5": [
+    {
+      "id": "BLUE_11_20_UPPER_CLOSE_ABOVE",
+      "optimization": "WATCH",
+      "stock": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 41,
+        "hit": 35,
+        "pooled_probability": 0.8536585365853658,
+        "eligible_symbols": 6,
+        "support_symbols": 5,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.8333333333333334,
+        "median_symbol_probability": 0.875,
+        "ret20_median": -0.023625254582484767,
+        "mfe20_median": 0.0415539234634712,
+        "mae20_median": -0.05932629462041228,
+        "per_symbol": [
+          {
+            "symbol": "CSCO",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "NKE",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "SBUX",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "MRK",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "ABBV",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "UPS",
+            "n": 3,
+            "p": 0.6666666666666666
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 7,
+        "hit": 7,
+        "pooled_probability": 1,
+        "eligible_symbols": 1,
+        "support_symbols": 1,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.058134083450539054,
+        "mfe20_median": 0.26307835694050996,
+        "mae20_median": -0.02978406552494417,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 3,
+            "p": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "BLUE_21P_UPPER_FULL_ABOVE",
+      "optimization": "WATCH",
+      "stock": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 18,
+        "hit": 18,
+        "pooled_probability": 1,
+        "eligible_symbols": 2,
+        "support_symbols": 2,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.030543970157031253,
+        "mfe20_median": 0.06364037178682125,
+        "mae20_median": -0.030975448164803687,
+        "per_symbol": [
+          {
+            "symbol": "LOW",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "MS",
+            "n": 3,
+            "p": 1
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 0,
+        "hit": 0,
+        "pooled_probability": null,
+        "eligible_symbols": 0,
+        "support_symbols": 0,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": null,
+        "median_symbol_probability": null,
+        "ret20_median": null,
+        "mfe20_median": null,
+        "mae20_median": null,
+        "per_symbol": []
+      }
+    }
+  ],
+  "mixed": [
+    {
+      "id": "BUY_GREEN_21P_LOWER",
+      "optimization": "REMAIN_MIXED",
+      "stock": {
+        "status": "MIXED",
+        "n": 303,
+        "hit": 127,
+        "pooled_probability": 0.41914191419141916,
+        "eligible_symbols": 19,
+        "support_symbols": 2,
+        "neutral_symbols": 6,
+        "oppose_symbols": 11,
+        "support_fraction": 0.10526315789473684,
+        "median_symbol_probability": 0.4,
+        "ret20_median": 0.018621498945066595,
+        "mfe20_median": 0.06976438067658286,
+        "mae20_median": -0.054036755965987116,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 8,
+            "p": 0.5
+          },
+          {
+            "symbol": "CSCO",
+            "n": 10,
+            "p": 0.4
+          },
+          {
+            "symbol": "CRM",
+            "n": 26,
+            "p": 0.5
+          },
+          {
+            "symbol": "ADBE",
+            "n": 30,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "TXN",
+            "n": 6,
+            "p": 0.5
+          },
+          {
+            "symbol": "DIS",
+            "n": 25,
+            "p": 0.4
+          },
+          {
+            "symbol": "NKE",
+            "n": 32,
+            "p": 0.5
+          },
+          {
+            "symbol": "SBUX",
+            "n": 13,
+            "p": 0.38461538461538464
+          },
+          {
+            "symbol": "TGT",
+            "n": 25,
+            "p": 0.56
+          },
+          {
+            "symbol": "LOW",
+            "n": 14,
+            "p": 0.2857142857142857
+          },
+          {
+            "symbol": "MRK",
+            "n": 13,
+            "p": 0.38461538461538464
+          },
+          {
+            "symbol": "PFE",
+            "n": 18,
+            "p": 0.2777777777777778
+          },
+          {
+            "symbol": "AMGN",
+            "n": 8,
+            "p": 0.125
+          },
+          {
+            "symbol": "GILD",
+            "n": 12,
+            "p": 0.5
+          },
+          {
+            "symbol": "C",
+            "n": 14,
+            "p": 0.21428571428571427
+          },
+          {
+            "symbol": "MS",
+            "n": 10,
+            "p": 0.7
+          },
+          {
+            "symbol": "BLK",
+            "n": 7,
+            "p": 0.2857142857142857
+          },
+          {
+            "symbol": "COP",
+            "n": 16,
+            "p": 0.5
+          },
+          {
+            "symbol": "UPS",
+            "n": 14,
+            "p": 0.42857142857142855
+          }
+        ]
+      },
+      "crypto": {
+        "status": "MIXED",
+        "n": 64,
+        "hit": 35,
+        "pooled_probability": 0.546875,
+        "eligible_symbols": 4,
+        "support_symbols": 3,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.75,
+        "median_symbol_probability": 0.5416666666666667,
+        "ret20_median": 0.05810233715930768,
+        "mfe20_median": 0.14661395993109505,
+        "mae20_median": -0.06824618604381244,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 20,
+            "p": 0.6
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 20,
+            "p": 0.55
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 9,
+            "p": 0.4444444444444444
+          },
+          {
+            "symbol": "SOL/USD",
+            "n": 15,
+            "p": 0.5333333333333333
+          }
+        ]
+      }
+    },
+    {
+      "id": "AVOID_RECENT_GRAY_GREEN_LOWER",
+      "optimization": "REMAIN_MIXED",
+      "stock": {
+        "status": "REPEAT",
+        "n": 48,
+        "hit": 29,
+        "pooled_probability": 0.6041666666666666,
+        "eligible_symbols": 7,
+        "support_symbols": 5,
+        "neutral_symbols": 0,
+        "oppose_symbols": 2,
+        "support_fraction": 0.7142857142857143,
+        "median_symbol_probability": 0.6666666666666666,
+        "ret20_median": 0.004893062746966215,
+        "mfe20_median": 0.055130154618588834,
+        "mae20_median": -0.033695815578638544,
+        "per_symbol": [
+          {
+            "symbol": "CSCO",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "TXN",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "SBUX",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "ABBV",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "GILD",
+            "n": 7,
+            "p": 0.7142857142857143
+          },
+          {
+            "symbol": "C",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "COP",
+            "n": 3,
+            "p": 0.3333333333333333
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 11,
+        "hit": 9,
+        "pooled_probability": 0.8181818181818182,
+        "eligible_symbols": 1,
+        "support_symbols": 1,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.7142857142857143,
+        "ret20_median": -0.06645077508054542,
+        "mfe20_median": 0.09947510583163033,
+        "mae20_median": -0.10963428151154164,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 7,
+            "p": 0.7142857142857143
+          }
+        ]
+      }
+    },
+    {
+      "id": "SELL_GREEN_21P_UPPER",
+      "optimization": "REMAIN_MIXED",
+      "stock": {
+        "status": "REPEAT",
+        "n": 392,
+        "hit": 239,
+        "pooled_probability": 0.6096938775510204,
+        "eligible_symbols": 20,
+        "support_symbols": 13,
+        "neutral_symbols": 1,
+        "oppose_symbols": 6,
+        "support_fraction": 0.65,
+        "median_symbol_probability": 0.6363636363636364,
+        "ret20_median": 0.004658509900153818,
+        "mfe20_median": 0.06051137380264271,
+        "mae20_median": -0.054095868971303473,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 11,
+            "p": 0.45454545454545453
+          },
+          {
+            "symbol": "CSCO",
+            "n": 15,
+            "p": 0.5333333333333333
+          },
+          {
+            "symbol": "CRM",
+            "n": 29,
+            "p": 0.7241379310344828
+          },
+          {
+            "symbol": "ADBE",
+            "n": 34,
+            "p": 0.7058823529411765
+          },
+          {
+            "symbol": "TXN",
+            "n": 14,
+            "p": 0.35714285714285715
+          },
+          {
+            "symbol": "DIS",
+            "n": 22,
+            "p": 0.5909090909090909
+          },
+          {
+            "symbol": "NKE",
+            "n": 42,
+            "p": 0.6904761904761905
+          },
+          {
+            "symbol": "SBUX",
+            "n": 25,
+            "p": 0.84
+          },
+          {
+            "symbol": "TGT",
+            "n": 22,
+            "p": 0.6363636363636364
+          },
+          {
+            "symbol": "LOW",
+            "n": 15,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "MRK",
+            "n": 16,
+            "p": 0.75
+          },
+          {
+            "symbol": "PFE",
+            "n": 18,
+            "p": 0.7222222222222222
+          },
+          {
+            "symbol": "ABBV",
+            "n": 14,
+            "p": 0.6428571428571429
+          },
+          {
+            "symbol": "AMGN",
+            "n": 10,
+            "p": 0.3
+          },
+          {
+            "symbol": "GILD",
+            "n": 10,
+            "p": 0.2
+          },
+          {
+            "symbol": "C",
+            "n": 15,
+            "p": 0.4
+          },
+          {
+            "symbol": "MS",
+            "n": 16,
+            "p": 0.5
+          },
+          {
+            "symbol": "BLK",
+            "n": 14,
+            "p": 0.2857142857142857
+          },
+          {
+            "symbol": "COP",
+            "n": 22,
+            "p": 0.6363636363636364
+          },
+          {
+            "symbol": "UPS",
+            "n": 28,
+            "p": 0.6428571428571429
+          }
+        ]
+      },
+      "crypto": {
+        "status": "REPEAT",
+        "n": 97,
+        "hit": 59,
+        "pooled_probability": 0.6082474226804123,
+        "eligible_symbols": 4,
+        "support_symbols": 3,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.75,
+        "median_symbol_probability": 0.6436335403726708,
+        "ret20_median": -0.007922787734805037,
+        "mfe20_median": 0.08726787028464011,
+        "mae20_median": -0.0811548607551642,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 28,
+            "p": 0.6785714285714286
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 28,
+            "p": 0.4642857142857143
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 23,
+            "p": 0.6086956521739131
+          },
+          {
+            "symbol": "SOL/USD",
+            "n": 18,
+            "p": 0.7222222222222222
+          }
+        ]
+      }
+    }
+  ],
+  "new_v5_discoveries": [
+    {
+      "id": "NEW_V5_A_GREEN_TO_GRAY_1_3_LIGHT_SUPPORT",
+      "definition": "origin GREEN -> current GRAY age 1-3 + LIGHT_SUPPORT",
+      "n": 48,
+      "p": 0.875,
+      "eligible_symbols": 9,
+      "support_fraction": 1,
+      "status": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+    },
+    {
+      "id": "NEW_V5_B_BLUE_21P_UPPER_CLOSE_ABOVE",
+      "definition": "BLUE 21+ + UPPER + CLOSE_ABOVE",
+      "n": 228,
+      "p": 0.8289473684210527,
+      "eligible_symbols": 20,
+      "support_fraction": 0.95,
+      "status": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+    },
+    {
+      "id": "NEW_V5_C_GRAY_4_10_LOWER_WICK_ONLY",
+      "definition": "GRAY 4-10 + LOWER + WICK_ONLY",
+      "n": 45,
+      "p": 0.8222222222222222,
+      "eligible_symbols": 9,
+      "support_fraction": 0.7777777777777778,
+      "status": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+    },
+    {
+      "id": "NEW_V5_D_GREEN_11_20_UPPER_WICK_ONLY",
+      "definition": "GREEN 11-20 + UPPER + WICK_ONLY",
+      "n": 49,
+      "p": 0.7755102040816326,
+      "eligible_symbols": 8,
+      "support_fraction": 0.875,
+      "status": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+    },
+    {
+      "id": "NEW_V5_E_GREEN_11_20_LIGHT_RESIST",
+      "definition": "GREEN 11-20 + LIGHT_RESIST",
+      "n": 88,
+      "p": 0.7840909090909091,
+      "eligible_symbols": 16,
+      "support_fraction": 0.9375,
+      "status": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+    }
+  ]
+}
