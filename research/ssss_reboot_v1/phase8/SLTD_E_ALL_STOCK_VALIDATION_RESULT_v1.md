@@ -76,9 +76,9 @@ Execution: signal close -> next available open. Primary friction 5 bps; stress 1
 
 ## Interpretation boundary
 
-- The prior 79 stocks are reused research data, not fresh OOS.
-- The OOS10 subset is reported separately.
+- Prior 79 are reused research data, not fresh OOS.
+- OOS10 is reported separately.
 - No E rule is changed or promoted by this run.
 - Frozen V7 79-stock parity check: **PASS**.
 
-`SLTD_E_ALL_STOCK_VALIDATION_V1 = COMPLETE`
+SLTD_E_ALL_STOCK_VALIDATION_V1 = COMPLETE
