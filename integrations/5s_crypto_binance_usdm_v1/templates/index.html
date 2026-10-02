@@ -454,7 +454,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     }
     if (message) {
       message.textContent =
-        payload.source + ' · ' + payload.timeframe_label + ' · B/S 为真实策略信号';
+        payload.source + ' · ' + payload.timeframe_label + ' · ' + (payload.signal_source || 'B/S 策略信号');
     }
     if (section.dataset.scrolled !== '1') {
       requestAnimationFrame(() => {
@@ -485,7 +485,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     }
   }
 
-  function startPriceStream(symbol) {
+  function startPriceStream(symbol, streamUrl, sourceLabel) {
     stopPriceStream();
     const generation = priceSocketGeneration;
     const section = root.querySelector('.market-chart[data-chart-symbol="' + symbol + '"]');
@@ -504,7 +504,11 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       return;
     }
 
-    const url = 'wss://fstream.binance.com/market/ws/' + symbol.toLowerCase() + '@ticker';
+    const url = String(streamUrl || '');
+    if (!url) {
+      if (statusNode) statusNode.textContent = '当前行情源未提供实时流';
+      return;
+    }
     let socket;
     try {
       socket = new WebSocket(url);
@@ -516,7 +520,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 
     socket.onopen = () => {
       if (generation !== priceSocketGeneration || activeSymbol() !== symbol) return;
-      if (statusNode) statusNode.textContent = '实时 · 币安';
+      if (statusNode) statusNode.textContent = '实时 · ' + (sourceLabel || '行情源');
     };
     socket.onmessage = event => {
       if (generation !== priceSocketGeneration || activeSymbol() !== symbol) return;
@@ -527,7 +531,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
         livePriceCache.set(symbol, price);
         section.dataset.livePriceReady = '1';
         if (valueNode) valueNode.textContent = formatPrice(price);
-        if (statusNode) statusNode.textContent = '实时 · 币安';
+        if (statusNode) statusNode.textContent = '实时 · ' + (sourceLabel || '行情源');
       } catch (_) {}
     };
     socket.onerror = () => {
@@ -540,7 +544,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       if (statusNode) statusNode.textContent = '实时行情重连中';
       priceReconnectTimer = setTimeout(() => {
         if (generation === priceSocketGeneration && activeSymbol() === symbol) {
-          startPriceStream(symbol);
+          startPriceStream(symbol, streamUrl, sourceLabel);
         }
       }, 3000);
     };
@@ -562,6 +566,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
         chartCache.set(key, payload);
       }
       drawChart(section, payload);
+      startPriceStream(symbol, payload.stream_url, payload.source);
     } catch (error) {
       if (message) message.textContent = 'K 线加载失败，请稍后重试';
     }
@@ -635,7 +640,6 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       panel.classList.toggle('active', panel.dataset.panel === symbol);
     });
     loadChart(symbol, false);
-    startPriceStream(symbol);
   }
 
   tabs.forEach((tab) => {
