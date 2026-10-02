@@ -114,6 +114,7 @@ class SchedulerLoopTests(unittest.TestCase):
             symbols=self.symbols,
             allowed_timeframes=("15m", "1h", "1d"),
             adapter_factory=FakeAdapter,
+            market_data_provider=FakeAdapter(),
             evaluator=fake_evaluator,
             minimum_closed_bars=64,
         )
@@ -140,10 +141,22 @@ class SchedulerLoopTests(unittest.TestCase):
         again = s.run_once()
         self.assertFalse(again["BTCUSDT"]["new_bar"])
 
-    def test_missing_demo_credentials_waits_without_crashing(self):
-        out = self.scheduler(FakeSession("", "")).run_once()
-        self.assertEqual(out["BTCUSDT"]["state"], "WAITING_DEMO")
-        self.assertEqual(out["ETHUSDT"]["state"], "WAITING_DEMO")
+    def test_missing_demo_credentials_keeps_public_signal_monitoring(self):
+        s = self.scheduler(FakeSession("", ""))
+        first = s.run_once()
+        self.assertEqual(first["BTCUSDT"]["state"], "SIGNAL_ONLY")
+        self.assertEqual(first["ETHUSDT"]["state"], "SIGNAL_ONLY")
+        self.assertTrue(first["BTCUSDT"]["signal_only"])
+
+        FakeAdapter.generation = 1
+        out = s.run_once()
+        self.assertEqual(out["BTCUSDT"]["state"], "SIGNAL_ONLY")
+        self.assertEqual(out["BTCUSDT"]["signal"], "BUY_A")
+        self.assertEqual(out["BTCUSDT"]["actions"], [])
+        self.assertTrue(out["BTCUSDT"]["signal_only"])
+        runtime = self.store.get_runtime_states()["BTCUSDT"]
+        self.assertEqual(runtime["last_signal"], "BUY_A")
+        self.assertIsNone(runtime["pending_action"])
 
 
 if __name__ == "__main__":
