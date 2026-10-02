@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SLTD V7 · SiftAlpha</title>
+<style>
+:root{
+  color-scheme:dark;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --bg:#090d18;--panel:#111827;--panel2:#0d1422;--soft:#151f31;--line:#243047;
+  --text:#f3f6fb;--muted:#8fa0ba;--blue:#5b8cff;--green:#52d49a;--red:#ff7b82;
+  --amber:#eab464;--gray:#8d99aa;--cyan:#65c5d8;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text)}
+button,input{font:inherit}
+button{cursor:pointer}
+.shell{max-width:1180px;margin:0 auto;padding:12px}
+.topbar{
+  position:sticky;top:0;z-index:20;margin:-12px -12px 0;padding:12px;
+  background:rgba(9,13,24,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(36,48,71,.72)
+}
+.title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.brand h1{font-size:20px;line-height:1.2;margin:0}
+.brand p{margin:5px 0 0;color:var(--muted);font-size:12px}
+.badges{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.badge{padding:5px 8px;border:1px solid var(--line);border-radius:999px;background:var(--soft);font-size:11px;color:#c8d3e4}
+.badge.v7{border-color:#36568d;color:#a9c6ff}.badge.c2{border-color:#634d2c;color:#f3c77d}.badge.local{border-color:#285945;color:#8ce6bc}
+.symbol-bar{display:grid;grid-template-columns:minmax(160px,1fr) auto auto;gap:7px;margin-top:10px}
+.symbol-input{
+  min-width:0;min-height:42px;border-radius:10px;border:1px solid #33415d;background:#0a1120;
+  color:var(--text);padding:9px 11px;font-size:16px;outline:none;text-transform:uppercase
+}
+.symbol-input:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(91,140,255,.12)}
+.primary,.secondary{
+  min-height:42px;border:0;border-radius:9px;font-weight:750;padding:9px 13px
+}
+.primary{background:#e8eef8;color:#0c1422}.secondary{background:#26344d;color:#edf3ff}
+.primary:disabled,.secondary:disabled{opacity:.5;cursor:wait}
+
+.summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}
+.summary-card{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.summary-card small{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}
+.summary-card strong{display:block;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.summary-card span{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.action-BUY{color:var(--green)!important}.action-SELL,.action-HARD_EXIT{color:var(--red)!important}
+.action-HOLD{color:#9ec0ff!important}.action-WAIT{color:var(--amber)!important}.action-MIXED{color:var(--gray)!important}
+.risk-ARMED{color:var(--amber)!important}.risk-NORMAL{color:var(--green)!important}
+.state-BLUE{color:#7ea7ff!important}.state-GREEN{color:#65d6a1!important}.state-GRAY{color:#b0b8c6!important}.state-OTHER{color:var(--muted)!important}
+
+.notice{display:none;margin-top:10px;padding:10px 12px;border:1px solid #5c3036;background:#321d24;color:#ffbec2;border-radius:10px;font-size:12px}
+.notice.show{display:block}
+.loading-line{height:2px;margin-top:8px;background:transparent;overflow:hidden}
+.loading-line::before{content:"";display:block;width:36%;height:100%;background:var(--blue);transform:translateX(-120%);opacity:0}
+.loading .loading-line::before{opacity:1;animation:load 1.1s linear infinite}
+@keyframes load{to{transform:translateX(340%)}}
+@media(prefers-reduced-motion:reduce){.loading .loading-line::before{animation:none;transform:none;width:100%}}
+
+.decision-panel{margin-top:10px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px}
+.decision-head{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,.7fr);gap:12px;align-items:start}
+.eyebrow{font-size:10px;color:var(--muted);margin-bottom:4px}
+.decision-text{font-size:16px;font-weight:760;line-height:1.45}
+.decision-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.decision-meta div{background:var(--panel2);border-radius:9px;padding:8px;min-width:0}
+.decision-meta small{display:block;color:var(--muted);font-size:9px;margin-bottom:3px}
+.decision-meta b{font-size:12px;overflow-wrap:anywhere}
+.rule-hit-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.rule-pill{font-size:10px;padding:5px 7px;border:1px solid #34445f;border-radius:999px;background:#0c1423;color:#d9e3f1}
+.rule-pill.empty{color:var(--muted)}
+
+.chart-card{margin-top:10px;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.chart-head{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(110px,.55fr) minmax(150px,.7fr);align-items:center;gap:12px;padding:12px 13px;border-bottom:1px solid var(--line)}
+.chart-identity small,.chart-price small,.chart-status small{display:block;color:var(--muted);font-size:10px}
+.chart-identity strong{display:block;font-size:14px;margin-top:2px}
+.chart-identity span{display:block;color:var(--muted);font-size:9px;margin-top:4px}
+.chart-price{text-align:center;padding:0 10px;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.chart-price strong{display:block;font-size:22px;font-variant-numeric:tabular-nums;margin-top:2px}
+.chart-status{text-align:right}.chart-status b{display:block;font-size:12px;margin-top:2px}
+.chart-scroll{margin:10px 12px 0;overflow-x:auto;overflow-y:hidden;border-radius:9px;background:#080d17;scrollbar-width:thin}
+.chart-canvas{display:block;height:430px}
+.chart-legend{display:flex;gap:10px;flex-wrap:wrap;padding:8px 13px 11px;color:var(--muted);font-size:10px}
+.legend-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}
+.legend-blue{background:#5b8cff}.legend-gray{background:#8d99aa}.legend-green{background:#52d49a}
+.legend-band{background:#68778e}.legend-buy{background:#52d49a}.legend-sell{background:#ff7b82}.legend-exit{background:#eab464}
+
+.indicator-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:0 12px 12px}
+.indicator{background:var(--panel2);border-radius:9px;padding:9px;min-width:0}
+.indicator small{display:block;color:var(--muted);font-size:9px;margin-bottom:4px}.indicator b{font-size:12px;overflow-wrap:anywhere}
+
+.policy-card,.events-card,.rules-card{margin-top:10px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
+.section-title{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:9px}
+.section-title h2{font-size:14px;margin:0}.section-title span{font-size:10px;color:var(--muted);text-align:right}
+.policy-flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+.flow-step{min-width:0;background:var(--panel2);border:1px solid #1f2a3e;border-radius:9px;padding:8px}
+.flow-step small{display:block;color:var(--muted);font-size:8px;margin-bottom:3px}.flow-step b{font-size:11px;line-height:1.35;display:block}
+.flow-arrow{color:#71819a}
+
+.table-wrap{overflow-x:auto;border:1px solid #1f2a3e;border-radius:9px}
+table{width:100%;border-collapse:collapse;min-width:760px;font-size:11px}
+th,td{padding:8px 9px;border-bottom:1px solid #1f2a3e;text-align:left;vertical-align:top}
+th{color:var(--muted);font-size:9px;background:#0b1220;position:sticky;top:0}
+tr:last-child td{border-bottom:0}
+td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
+.empty-row{text-align:center;color:var(--muted);padding:18px!important}
+
+.rules-groups{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.rule-group{min-width:0;background:var(--panel2);border:1px solid #1f2a3e;border-radius:10px;padding:9px}
+.rule-group h3{font-size:11px;margin:0 0 7px}.rule-group ul{padding-left:16px;margin:0}.rule-group li{font-size:9px;color:#c8d3e4;margin:4px 0;overflow-wrap:anywhere}
+.advanced{margin-top:9px;border-top:1px solid var(--line);padding-top:9px}
+.advanced summary{cursor:pointer;color:#cbd6e6;font-size:11px}
+.advanced p{font-size:9px;color:var(--muted);line-height:1.55;margin:7px 0 0}
+
+.footer-note{text-align:center;color:var(--muted);font-size:9px;padding:13px 5px 3px}
+
+@media(max-width:760px){
+  .shell{padding:10px}.topbar{margin:-10px -10px 0;padding:10px}
+  .title-row{align-items:center}.brand h1{font-size:18px}.brand p{font-size:10px}
+  .badges .badge:nth-child(2),.badges .badge:nth-child(4){display:none}
+  .symbol-bar{grid-template-columns:minmax(0,1fr) auto}.symbol-bar .secondary{grid-column:1/-1}
+  .summary-grid{gap:5px}.summary-card{padding:7px 6px}.summary-card small{font-size:8px}.summary-card strong{font-size:12px}.summary-card span{font-size:8px}
+  .decision-head{grid-template-columns:1fr}.decision-meta{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .decision-text{font-size:14px}
+  .chart-head{grid-template-columns:minmax(0,1fr) 90px}.chart-status{grid-column:1/-1;text-align:left;display:flex;gap:7px;align-items:center}.chart-status small,.chart-status b{display:inline}
+  .chart-price{border-right:0}.chart-canvas{height:390px}
+  .indicator-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .policy-flow{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rules-groups{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:390px){
+  .badges{display:none}.summary-card strong{font-size:11px}
+  .decision-meta{grid-template-columns:1fr 1fr}.rules-groups{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<main class="shell loading" id="sltd-root">
+  <header class="topbar">
+    <div class="title-row">
+      <div class="brand">
+        <h1>SLTD V7</h1>
+        <p>SiftAlpha · 结构信号 / 仓位 / C2 风险退出</p>
+      </div>
+      <div class="badges">
+        <span class="badge v7">12 条规则</span>
+        <span class="badge">日线</span>
+        <span class="badge c2">C2 Hard Exit</span>
+        <span class="badge local">本地 Web</span>
+      </div>
+    </div>
+
+    <form class="symbol-bar" id="symbol-form">
+      <input id="symbol-input" class="symbol-input" name="symbol" value="__DEFAULT_SYMBOL__" maxlength="15" autocomplete="off" aria-label="股票代码">
+      <button id="load-button" class="primary" type="submit">分析</button>
+      <button id="refresh-button" class="secondary" type="button">强制刷新行情</button>
+    </form>
+    <div class="loading-line"></div>
+  </header>
+
+  <div id="notice" class="notice" role="alert"></div>
+
+  <section class="summary-grid" aria-label="当前策略状态">
+    <div class="summary-card">
+      <small>当前决策</small>
+      <strong id="summary-action">加载中</strong>
+      <span id="summary-action-sub">等待 SLTD 计算</span>
+    </div>
+    <div class="summary-card">
+      <small>当前仓位</small>
+      <strong id="summary-position">—</strong>
+      <span>模拟策略仓位</span>
+    </div>
+    <div class="summary-card">
+      <small>SLTD 状态</small>
+      <strong id="summary-state">—</strong>
+      <span id="summary-age">Age —</span>
+    </div>
+    <div class="summary-card">
+      <small>C2 风险状态</small>
+      <strong id="summary-risk">—</strong>
+      <span id="summary-risk-sub">等待状态</span>
+    </div>
+  </section>
+
+  <section class="decision-panel">
+    <div class="decision-head">
+      <div>
+        <div class="eyebrow">下一步执行</div>
+        <div class="decision-text" id="next-action">正在分析最新一根 K 线…</div>
+        <div class="rule-hit-row" id="rule-hit-row"><span class="rule-pill empty">等待信号</span></div>
+      </div>
+      <div class="decision-meta">
+        <div><small>股票</small><b id="meta-symbol">—</b></div>
+        <div><small>最新交易日</small><b id="meta-date">—</b></div>
+        <div><small>Origin</small><b id="meta-origin">—</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chart-card">
+    <div class="chart-head">
+      <div class="chart-identity">
+        <small>SLTD 主图 · 最近 300 根仅用于显示</small>
+        <strong id="chart-title">—</strong>
+        <span id="chart-candle-meta">移动或点击 K 线查看细节</span>
+      </div>
+      <div class="chart-price">
+        <small>最新收盘</small>
+        <strong id="latest-price">—</strong>
+      </div>
+      <div class="chart-status">
+        <small>行情来源</small>
+        <b id="market-source">—</b>
+      </div>
+    </div>
+    <div class="chart-scroll" id="chart-scroll">
+      <canvas class="chart-canvas" id="chart-canvas" aria-label="SLTD K线、灰带、状态、成交量与仓位轨迹"></canvas>
+    </div>
+    <div class="chart-legend">
+      <span><i class="legend-dot legend-band"></i>GZB3 / GZB4 慢灰带</span>
+      <span><i class="legend-dot legend-blue"></i>BLUE</span>
+      <span><i class="legend-dot legend-gray"></i>GRAY</span>
+      <span><i class="legend-dot legend-green"></i>GREEN</span>
+      <span><i class="legend-dot legend-buy"></i>B 买入</span>
+      <span><i class="legend-dot legend-sell"></i>S 普通卖出</span>
+      <span><i class="legend-dot legend-exit"></i>X C2 清仓</span>
+    </div>
+    <div class="indicator-grid">
+      <div class="indicator"><small>GZB4 · 慢灰带下轨</small><b id="value-gzb4">—</b></div>
+      <div class="indicator"><small>ZD1 · 下轨</small><b id="value-zd1">—</b></div>
+      <div class="indicator"><small>ZK1 · 上轨</small><b id="value-zk1">—</b></div>
+      <div class="indicator"><small>策略版本</small><b>__STRATEGY_VERSION__</b></div>
+    </div>
+  </section>
+
+  <section class="policy-card">
+    <div class="section-title">
+      <h2>统一仓位 / 退出执行策略</h2>
+      <span>__POSITION_POLICY_ID__ · __HARD_EXIT_ID__</span>
+    </div>
+    <div class="policy-flow">
+      <div class="flow-step"><small>① 首次 BUY</small><b>空仓 → 25%</b></div>
+      <div class="flow-step"><small>② 后续 BUY</small><b>每次 +25 个百分点，最高 100%</b></div>
+      <div class="flow-step"><small>③ 普通 SELL</small><b>卖当前仓位 25%</b></div>
+      <div class="flow-step"><small>④ SELL 后</small><b>风险状态 → ARMED</b></div>
+      <div class="flow-step"><small>⑤ C2</small><b>ARMED + GREEN + High &lt; GZB4</b></div>
+      <div class="flow-step"><small>⑥ Hard Exit</small><b>下一开盘全部清仓 → 0%</b></div>
+    </div>
+  </section>
+
+  <section class="events-card">
+    <div class="section-title">
+      <h2>最近 SLTD 信号记录</h2>
+      <span>信号在收盘确认；订单在下一可用开盘执行</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>信号日</th><th>状态</th><th>Age</th><th>动作</th><th>命中规则</th><th>执行</th><th>执行后仓位 / 风险</th>
+        </tr></thead>
+        <tbody id="events-body"><tr><td class="empty-row" colspan="7">等待数据</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="rules-card">
+    <div class="section-title">
+      <h2>SLTD V7 当前 12 条规则</h2>
+      <span>由冻结候选基线驱动，不在运行脚本内自动调参</span>
+    </div>
+    <div class="rules-groups" id="rules-groups"></div>
+    <details class="advanced">
+      <summary>高级信息 / 研究事实源</summary>
+      <p>策略事实源 commit：__SOURCE_COMMIT_SHORT__…；Web 只负责执行冻结规则与可视化。300 根 K 线只限制图表显示，指标计算使用获取到的完整历史数据。</p>
+    </details>
+  </section>
+
+  <div class="footer-note">SLTD V7 · SiftAlpha 可运行项目 · 当前为策略分析与模拟仓位，不连接真实券商下单。</div>
+</main>
+
+<script>
+(() => {
+  const root = document.getElementById('sltd-root');
+  if (!root || root.dataset.ready === '1') return;
+  root.dataset.ready = '1';
+
+  const form = document.getElementById('symbol-form');
+  const input = document.getElementById('symbol-input');
+  const loadButton = document.getElementById('load-button');
+  const refreshButton = document.getElementById('refresh-button');
+  const notice = document.getElementById('notice');
+  const canvas = document.getElementById('chart-canvas');
+  const scroll = document.getElementById('chart-scroll');
+
+  let currentPayload = null;
+  let currentSymbol = String(input.value || 'AAPL').toUpperCase();
+
+  const actionLabels = {
+    BUY:'BUY · 买入', SELL:'SELL · 卖出', HOLD:'HOLD · 持有', WAIT:'WAIT · 等待',
+    HARD_EXIT:'C2 · 强制退出', MIXED:'MIXED · 冲突不动作', NONE:'NONE · 无新动作'
+  };
+  const stateLabels = {BLUE:'BLUE · 蓝', GRAY:'GRAY · 灰', GREEN:'GREEN · 绿', OTHER:'OTHER'};
+  const classLabels = {BUY:'BUY', HOLD:'HOLD', WAIT:'WAIT', SELL:'SELL'};
+
+  function q(id){ return document.getElementById(id); }
+  function safeText(id, value){ const n=q(id); if(n) n.textContent = value == null || value === '' ? '—' : String(value); }
+  function formatPrice(value){
+    const n=Number(value);
+    if(!Number.isFinite(n)) return '—';
+    if(Math.abs(n)>=1000) return n.toFixed(2);
+    if(Math.abs(n)>=100) return n.toFixed(2);
+    if(Math.abs(n)>=1) return n.toFixed(3);
+    return n.toFixed(5);
+  }
+  function formatPct(value){
+    const n=Number(value);
+    return Number.isFinite(n) ? (n*100).toFixed(1)+'%' : '—';
+  }
+  function formatVolume(value){
+    const n=Number(value);
+    if(!Number.isFinite(n)) return '—';
+    if(n>=1e9) return (n/1e9).toFixed(1)+'B';
+    if(n>=1e6) return (n/1e6).toFixed(1)+'M';
+    if(n>=1e3) return (n/1e3).toFixed(1)+'K';
+    return n.toFixed(0);
+  }
+  function escapeHtml(value){
+    return String(value == null ? '' : value)
+      .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
+      .replaceAll('"','&quot;').replaceAll("'",'&#39;');
+  }
+  function setLoading(on){
+    root.classList.toggle('loading', !!on);
+    loadButton.disabled = !!on;
+    refreshButton.disabled = !!on;
+  }
+  function showError(message){
+    notice.textContent = message;
+    notice.classList.add('show');
+  }
+  function clearError(){
+    notice.textContent = '';
+    notice.classList.remove('show');
+  }
+  function setActionClass(node, prefix, value){
+    Array.from(node.classList).forEach(c => { if(c.startsWith(prefix)) node.classList.remove(c); });
+    node.classList.add(prefix + value);
+  }
+
+  function renderRules(strategy){
+    const groups = q('rules-groups');
+    groups.innerHTML = '';
+    const active = strategy && strategy.active_rules ? strategy.active_rules : {};
+    ['BUY','HOLD','WAIT','SELL'].forEach(cls => {
+      const card = document.createElement('section');
+      card.className = 'rule-group';
+      const items = Array.isArray(active[cls]) ? active[cls] : [];
+      card.innerHTML = '<h3>'+classLabels[cls]+' · '+items.length+'</h3><ul>' +
+        items.map(x => '<li>'+escapeHtml(x)+'</li>').join('') + '</ul>';
+      groups.appendChild(card);
+    });
+  }
+
+  function renderEvents(events){
+    const body = q('events-body');
+    const list = Array.isArray(events) ? events.slice().reverse().slice(0,40) : [];
+    if(!list.length){
+      body.innerHTML = '<tr><td class="empty-row" colspan="7">当前还没有规则事件</td></tr>';
+      return;
+    }
+    body.innerHTML = list.map(e => {
+      const rules = (e.rule_ids || []).join(' · ') || '—';
+      const exec = e.execution_date
+        ? escapeHtml(e.execution_date) + (e.execution_price != null ? '<br>@ '+escapeHtml(formatPrice(e.execution_price)) : '')
+        : '无订单';
+      const after = e.position_after == null
+        ? '—'
+        : escapeHtml(formatPct(e.position_after)) + '<br>' + escapeHtml(e.risk_after || '');
+      return '<tr>'+
+        '<td>'+escapeHtml(e.date)+'</td>'+
+        '<td>'+escapeHtml(e.state)+'</td>'+
+        '<td>'+escapeHtml(e.age)+'</td>'+
+        '<td><b class="action-'+escapeHtml(e.action)+'">'+escapeHtml(e.action)+'</b></td>'+
+        '<td class="rules">'+escapeHtml(rules)+'</td>'+
+        '<td>'+exec+'</td>'+
+        '<td>'+after+'</td>'+
+      '</tr>';
+    }).join('');
+  }
+
+  function drawChart(payload){
+    const candles = Array.isArray(payload.chart) ? payload.chart : [];
+    const markers = Array.isArray(payload.markers) ? payload.markers : [];
+    if(!candles.length) return;
+
+    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    const left = 8, right = 72, step = 7;
+    const logicalWidth = Math.max(scroll.clientWidth, left + right + candles.length * step);
+    const logicalHeight = window.innerWidth <= 760 ? 390 : 430;
+    canvas.style.width = logicalWidth+'px';
+    canvas.style.height = logicalHeight+'px';
+    canvas.width = Math.round(logicalWidth*dpr);
+    canvas.height = Math.round(logicalHeight*dpr);
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,logicalWidth,logicalHeight);
+
+    const plotRight = logicalWidth-right;
+    const priceTop = 16;
+    const priceBottom = logicalHeight*0.57;
+    const stateTop = priceBottom+9;
+    const stateBottom = stateTop+10;
+    const volumeTop = stateBottom+13;
+    const volumeBottom = logicalHeight*0.78;
+    const positionTop = logicalHeight*0.84;
+    const positionBottom = logicalHeight-23;
+
+    const priceValues = [];
+    candles.forEach(c => {
+      [c.low,c.high,c.GZB3,c.GZB4,c.ZD1,c.ZK1].forEach(v => {
+        const n=Number(v); if(Number.isFinite(n)) priceValues.push(n);
+      });
+    });
+    let minPrice=Math.min(...priceValues), maxPrice=Math.max(...priceValues);
+    let pad=(maxPrice-minPrice)*0.04;
+    if(!Number.isFinite(pad)||pad<=0) pad=Math.max(1,maxPrice*0.01);
+    minPrice-=pad; maxPrice+=pad;
+    const span=Math.max(1e-12,maxPrice-minPrice);
+    const yPrice=p => priceTop+(maxPrice-Number(p))/span*(priceBottom-priceTop);
+    const maxVolume=Math.max(1,...candles.map(c=>Number(c.volume)||0));
+
+    ctx.strokeStyle='#1a2639'; ctx.lineWidth=1; ctx.fillStyle='#71819a';
+    ctx.font='10px system-ui'; ctx.textAlign='left';
+    for(let g=0;g<=4;g++){
+      const y=priceTop+(priceBottom-priceTop)*g/4;
+      ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(plotRight,y);ctx.stroke();
+      const p=maxPrice-span*g/4;
+      ctx.fillText(formatPrice(p),plotRight+5,y+3);
+    }
+
+    function drawLine(key,color,dash){
+      ctx.save();
+      ctx.strokeStyle=color; ctx.lineWidth=1.1; ctx.setLineDash(dash||[]);
+      ctx.beginPath();
+      let started=false;
+      candles.forEach((c,i)=>{
+        const v=Number(c[key]); if(!Number.isFinite(v)) return;
+        const x=left+i*step+step/2, y=yPrice(v);
+        if(!started){ctx.moveTo(x,y);started=true;} else ctx.lineTo(x,y);
+      });
+      ctx.stroke();ctx.restore();
+    }
+
+    ctx.save();
+    ctx.fillStyle='rgba(130,145,166,.13)';
+    ctx.beginPath();
+    let topStarted=false;
+    candles.forEach((c,i)=>{
+      const v=Number(c.GZB3); if(!Number.isFinite(v)) return;
+      const x=left+i*step+step/2,y=yPrice(v);
+      if(!topStarted){ctx.moveTo(x,y);topStarted=true;} else ctx.lineTo(x,y);
+    });
+    for(let i=candles.length-1;i>=0;i--){
+      const v=Number(candles[i].GZB4); if(!Number.isFinite(v)) continue;
+      ctx.lineTo(left+i*step+step/2,yPrice(v));
+    }
+    if(topStarted){ctx.closePath();ctx.fill();}
+    ctx.restore();
+
+    drawLine('GZB3','#728096',[]);
+    drawLine('GZB4','#9ba6b7',[]);
+    drawLine('ZD1','#65c5d8',[4,3]);
+    drawLine('ZK1','#c28bd8',[4,3]);
+
+    const markerMap=new Map();
+    markers.forEach(m=>{
+      const key=String(m.execution_date);
+      if(!markerMap.has(key)) markerMap.set(key,[]);
+      markerMap.get(key).push(m);
+    });
+
+    candles.forEach((c,i)=>{
+      const x=left+i*step+step/2;
+      const o=Number(c.open),h=Number(c.high),l=Number(c.low),cl=Number(c.close);
+      const up=cl>=o, color=up?'#52d49a':'#ff7b82';
+      const yo=yPrice(o),yc=yPrice(cl),yh=yPrice(h),yl=yPrice(l);
+      ctx.strokeStyle=color;ctx.fillStyle=color;ctx.setLineDash([]);
+      ctx.beginPath();ctx.moveTo(x,yh);ctx.lineTo(x,yl);ctx.stroke();
+      ctx.fillRect(x-2,Math.min(yo,yc),4,Math.max(1,Math.abs(yc-yo)));
+
+      const stateColor={BLUE:'#5b8cff',GRAY:'#8d99aa',GREEN:'#52d49a',OTHER:'#344055'}[c.state]||'#344055';
+      ctx.fillStyle=stateColor;
+      ctx.fillRect(x-step/2+0.5,stateTop,step-1,stateBottom-stateTop);
+
+      const vh=(Number(c.volume)||0)/maxVolume*(volumeBottom-volumeTop);
+      ctx.globalAlpha=.55;ctx.fillStyle=color;ctx.fillRect(x-2,volumeBottom-vh,4,vh);ctx.globalAlpha=1;
+
+      const ms=markerMap.get(String(c.date))||[];
+      ms.forEach((m,mi)=>{
+        const side=String(m.side||'');
+        const fill=side==='B'?'#52d49a':side==='S'?'#ff7b82':'#eab464';
+        const y=side==='B'?Math.min(priceBottom-9,yl+13+mi*15):Math.max(priceTop+9,yh-13-mi*15);
+        ctx.beginPath();ctx.fillStyle=fill;ctx.arc(x,y,7,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle='#081018';ctx.font='bold 9px system-ui';ctx.textAlign='center';ctx.fillText(side,x,y+3);
+      });
+    });
+
+    ctx.strokeStyle='#243047';ctx.fillStyle='#71819a';ctx.font='9px system-ui';ctx.textAlign='right';
+    [0,.25,.5,.75,1].forEach(frac=>{
+      const y=positionBottom-frac*(positionBottom-positionTop);
+      ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(plotRight,y);ctx.stroke();
+      ctx.fillText(Math.round(frac*100)+'%',plotRight+28,y+3);
+    });
+    ctx.strokeStyle='#9ec0ff';ctx.lineWidth=1.4;ctx.beginPath();
+    candles.forEach((c,i)=>{
+      const frac=Math.max(0,Math.min(1,Number(c.position)||0));
+      const x=left+i*step+step/2;
+      const y=positionBottom-frac*(positionBottom-positionTop);
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    });
+    ctx.stroke();
+
+    ctx.fillStyle='#71819a';ctx.textAlign='left';ctx.font='9px system-ui';
+    ctx.fillText('状态带',left,stateTop-2);
+    ctx.fillText('成交量',left,volumeTop-3);
+    ctx.fillText('仓位轨迹',left,positionTop-3);
+
+    const labelEvery=Math.max(1,Math.floor(candles.length/8));
+    candles.forEach((c,i)=>{
+      if(i%labelEvery!==0 && i!==candles.length-1)return;
+      ctx.fillStyle='#71819a';ctx.textAlign='left';ctx.font='9px system-ui';
+      ctx.fillText(String(c.date).slice(5),left+i*step,logicalHeight-5);
+    });
+
+    function showCandle(c){
+      if(!c)return;
+      q('chart-candle-meta').textContent =
+        c.date+' · O '+formatPrice(c.open)+' H '+formatPrice(c.high)+' L '+formatPrice(c.low)+' C '+formatPrice(c.close)+
+        ' · 量 '+formatVolume(c.volume)+' · '+c.state+' · 仓位 '+formatPct(c.position);
+    }
+    showCandle(candles[candles.length-1]);
+
+    function selectAt(clientX){
+      const rect=canvas.getBoundingClientRect();
+      const x=clientX-rect.left;
+      const idx=Math.max(0,Math.min(candles.length-1,Math.round((x-left-step/2)/step)));
+      showCandle(candles[idx]);
+    }
+    canvas.onpointermove=e=>selectAt(e.clientX);
+    canvas.onclick=e=>selectAt(e.clientX);
+
+    requestAnimationFrame(()=>{ scroll.scrollLeft=Math.max(0,scroll.scrollWidth-scroll.clientWidth); });
+  }
+
+  function applyPayload(payload){
+    currentPayload=payload;
+    const s=payload.snapshot||{};
+    const strategy=payload.strategy||{};
+    const meta=payload.market_data||{};
+    currentSymbol=String(s.symbol||currentSymbol).toUpperCase();
+    input.value=currentSymbol;
+
+    const actionNode=q('summary-action');
+    actionNode.textContent=actionLabels[s.resolved_action]||s.resolved_action||'—';
+    setActionClass(actionNode,'action-',s.resolved_action||'NONE');
+    safeText('summary-action-sub',(s.rule_ids||[]).length ? (s.rule_ids||[]).length+' 条规则命中' : '当前无新规则命中');
+    safeText('summary-position',formatPct(s.position_fraction));
+
+    const stateNode=q('summary-state');
+    stateNode.textContent=stateLabels[s.state]||s.state||'—';
+    setActionClass(stateNode,'state-',s.state||'OTHER');
+    safeText('summary-age','Age '+(s.run_age==null?'—':s.run_age)+' · '+(s.age_bucket||'—'));
+
+    const riskNode=q('summary-risk');
+    riskNode.textContent=s.risk_state||'—';
+    setActionClass(riskNode,'risk-',s.risk_state||'NORMAL');
+    safeText('summary-risk-sub',s.risk_state==='ARMED'?'等待 C2 或后续实际 BUY 重置':'普通监测');
+
+    safeText('next-action',s.next_action);
+    safeText('meta-symbol',s.symbol);
+    safeText('meta-date',s.latest_date);
+    safeText('meta-origin',s.origin||'—');
+    safeText('chart-title',(s.symbol||'')+' · 日线 · SLTD V7');
+    safeText('latest-price',formatPrice(s.latest_close));
+    safeText('market-source',(meta.provider||'Yahoo Finance')+' · '+(meta.source||'network'));
+    safeText('value-gzb4',formatPrice(s.GZB4));
+    safeText('value-zd1',formatPrice(s.ZD1));
+    safeText('value-zk1',formatPrice(s.ZK1));
+
+    const hit=q('rule-hit-row');
+    const ids=Array.isArray(s.rule_ids)?s.rule_ids:[];
+    hit.innerHTML=ids.length
+      ? ids.map(x=>'<span class="rule-pill">'+escapeHtml(x)+'</span>').join('')
+      : '<span class="rule-pill empty">最新 K 线没有新的 12-rule 事件</span>';
+
+    renderRules(strategy);
+    renderEvents(payload.events);
+    drawChart(payload);
+  }
+
+  async function load(symbol,force){
+    const normalized=String(symbol||'').trim().toUpperCase();
+    if(!/^[A-Z0-9.\-^]{1,15}$/.test(normalized)){
+      showError('股票代码格式不正确');
+      return;
+    }
+    clearError();setLoading(true);
+    try{
+      const params=new URLSearchParams({symbol:normalized});
+      if(force)params.set('refresh','1');
+      const response=await fetch('/api/analyze?'+params.toString(),{cache:'no-store'});
+      const payload=await response.json();
+      if(!response.ok)throw new Error(payload.error||payload.detail||'分析失败');
+      applyPayload(payload);
+    }catch(err){
+      showError('无法完成 SLTD 分析：'+(err&&err.message?err.message:String(err)));
+    }finally{
+      setLoading(false);
+    }
+  }
+
+  form.addEventListener('submit',e=>{e.preventDefault();load(input.value,false);});
+  refreshButton.addEventListener('click',()=>load(input.value,true));
+
+  let resizeTimer=null;
+  window.addEventListener('resize',()=>{
+    clearTimeout(resizeTimer);
+    resizeTimer=setTimeout(()=>{if(currentPayload)drawChart(currentPayload);},150);
+  });
+
+  load(currentSymbol,false);
+})();
+</script>
+</body>
+</html>
