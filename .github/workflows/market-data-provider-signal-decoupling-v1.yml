@@ -1,0 +1,174 @@
+name: Market Data Provider + Signal Decoupling v1
+
+on:
+  push:
+    branches:
+      - feature/market-data-provider-signal-decoupling-v1
+    paths:
+      - "integrations/5s_crypto_binance_usdm_v1/**"
+      - ".github/workflows/market-data-provider-signal-decoupling-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: integrations/5s_crypto_binance_usdm_v1
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/market-data-provider-signal-decoupling-v1
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: integrations/5s_crypto_binance_usdm_v1/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Compile
+        run: |
+          python -m compileall -q .
+
+      - name: Unit tests
+        run: |
+          python -m unittest discover -s tests -v
+
+      - name: Frozen JS/Python signal parity
+        run: |
+          command -v node
+          python -m unittest tests.test_m3_signal_engine_parity -v
+
+      - name: No-API signal mode smoke
+        env:
+          FIVES_MODE: PAPER
+          FIVES_DB_PATH: /tmp/5s_crypto_signal_only.db
+          BINANCE_DEMO_API_KEY: ""
+          BINANCE_DEMO_API_SECRET: ""
+          BINANCE_TESTNET_API_KEY: ""
+          BINANCE_TESTNET_API_SECRET: ""
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import tempfile
+
+          from engine.scheduler import StrategyScheduler
+          from storage import StateStore
+          from strategy.frozen_signal_engine import BarEvaluation
+
+          class Session:
+              def credentials(self):
+                  return "", ""
+
+          class PublicMarket:
+              generation = 0
+              def klines(self, symbol, timeframe, limit=220):
+                  base = 100.0
+                  rows = []
+                  for i in range(90):
+                      t = i + self.generation
+                      rows.append([t, base, base+1, base-1, base+0.5, 10])
+                  rows.append([90+self.generation, base, base+1, base-1, base+0.5, 10])
+                  return rows
+
+          def ev(t, buy=()):
+              return BarEvaluation(
+                  index=100,
+                  open_time=t,
+                  states={"trend":"GRAY","capital":"GRAY","momentum":"GRAY","accel":"GRAY","anomaly":"GRAY"},
+                  buy_active=tuple(buy), sell_active=(),
+                  buy_onsets=tuple(buy), sell_onsets=(), features={},
+              )
+
+          def evaluator(rows):
+              return [ev(int(r[0]), buy=("A",) if i == len(rows)-1 else ()) for i,r in enumerate(rows)]
+
+          with tempfile.TemporaryDirectory() as tmp:
+              store = StateStore(Path(tmp)/"state.db")
+              store.seed(("BTCUSDT",),1,1000,"1d")
+              store.set_symbol_enabled("BTCUSDT",True)
+              market = PublicMarket()
+              scheduler = StrategyScheduler(
+                  store=store,
+                  session=Session(),
+                  symbols=("BTCUSDT",),
+                  allowed_timeframes=("1d",),
+                  market_data_provider=market,
+                  evaluator=evaluator,
+                  minimum_closed_bars=64,
+              )
+              first=scheduler.run_once()
+              assert first["BTCUSDT"]["state"]=="SIGNAL_ONLY", first
+              market.generation=1
+              second=scheduler.run_once()
+              assert second["BTCUSDT"]["state"]=="SIGNAL_ONLY", second
+              assert second["BTCUSDT"]["signal"]=="BUY_A", second
+              assert second["BTCUSDT"]["actions"]==[], second
+              print("NO_API_SIGNAL_MODE_PASS")
+          PY
+
+      - name: Verify provider-neutral UI
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          page=Path("templates/index.html").read_text(encoding="utf-8")
+          app=Path("app.py").read_text(encoding="utf-8")
+          market=Path("market_data.py").read_text(encoding="utf-8")
+          preview=Path("signal_preview.py").read_text(encoding="utf-8")
+          assert "fstream.binance.com" not in page
+          assert "payload.stream_url" in page
+          assert "market_data_provider=crypto_market" in app
+          assert "冻结 5s 策略 · 无需 API" in app
+          assert "bars from multiple providers" in market.lower() or "never splice" in market.lower()
+          assert "build_strategy_signal_markers" in preview
+          print("PROVIDER_NEUTRAL_UI_PASS")
+          PY
+
+      - name: Build direct-import package
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/5s_market_provider_pkg
+          mkdir -p /tmp/5s_market_provider_pkg
+          cp -R . /tmp/5s_market_provider_pkg/
+          rm -rf /tmp/5s_market_provider_pkg/tests
+          rm -rf /tmp/5s_market_provider_pkg/data
+          find /tmp/5s_market_provider_pkg -type d -name __pycache__ -prune -exec rm -rf {} +
+          find /tmp/5s_market_provider_pkg -type f -name '*.pyc' -delete
+          cd /tmp/5s_market_provider_pkg
+          zip -r "$GITHUB_WORKSPACE/5s-crypto-v1-market-provider-signal-decoupled.zip" .
+
+      - name: Verify package
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          python - <<'PY'
+          import zipfile
+          z=zipfile.ZipFile("5s-crypto-v1-market-provider-signal-decoupled.zip")
+          names=set(z.namelist())
+          required={
+              "app.py","market_data.py","signal_preview.py",
+              "strategy/frozen_signal_engine.py","engine/scheduler.py",
+              "templates/index.html","MARKET_DATA_BOUNDARY_v1.md"
+          }
+          missing=required-names
+          assert not missing, missing
+          print("PACKAGE_VERIFY_PASS")
+          PY
+
+      - name: Upload direct-import artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: 5s-crypto-v1-market-provider-signal-decoupled
+          path: 5s-crypto-v1-market-provider-signal-decoupled.zip
+          if-no-files-found: error
+          retention-days: 30
