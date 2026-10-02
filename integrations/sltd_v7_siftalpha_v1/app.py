@@ -20,6 +20,7 @@ from data_provider import (
     normalize_symbol,
     normalize_timeframe,
 )
+from e_strategy import E_RULES, E_STRATEGY_VERSION, analyze_e
 from strategy import (
     ACTIVE_RULES,
     HARD_EXIT_ID,
@@ -39,19 +40,32 @@ TEMPLATE = (ROOT / "templates" / "index.html").read_text(encoding="utf-8")
 DEFAULT_SYMBOL = normalize_symbol(os.environ.get("SLTD_SYMBOL", "AAPL"))
 DISPLAY_KLINE_LIMIT = 300
 
-_ANALYSIS_CACHE: dict[tuple[str, str], tuple[float, dict]] = {}
+_ANALYSIS_CACHE: dict[tuple[str, str, str], tuple[float, dict]] = {}
 _ANALYSIS_LOCK = threading.RLock()
 _ANALYSIS_TTL_SECONDS = 5.0
+AVAILABLE_STRATEGIES = {
+    "v7": STRATEGY_VERSION,
+    "e": E_STRATEGY_VERSION,
+}
+
+
+def normalize_strategy(value: str) -> str:
+    strategy_id = str(value or "v7").strip().lower()
+    if strategy_id not in AVAILABLE_STRATEGIES:
+        raise ValueError("不支持这个策略标签")
+    return strategy_id
 
 
 def _payload_for(
     symbol: str,
     timeframe: str,
+    strategy_id: str = "v7",
     force_refresh: bool = False,
 ) -> dict:
     symbol = normalize_symbol(symbol)
     timeframe = normalize_timeframe(timeframe)
-    cache_key = (symbol, timeframe)
+    strategy_id = normalize_strategy(strategy_id)
+    cache_key = (symbol, timeframe, strategy_id)
     now = time.time()
 
     with _ANALYSIS_LOCK:
@@ -67,16 +81,26 @@ def _payload_for(
         timeframe,
         force_refresh=force_refresh,
     )
-    result = analyze(
-        symbol,
-        completed,
-        display_limit=DISPLAY_KLINE_LIMIT,
-        timeframe=timeframe,
-    )
+    if strategy_id == "e":
+        result = analyze_e(
+            symbol,
+            completed,
+            display_limit=DISPLAY_KLINE_LIMIT,
+            timeframe=timeframe,
+            market_meta=market_meta,
+        )
+    else:
+        result = analyze(
+            symbol,
+            completed,
+            display_limit=DISPLAY_KLINE_LIMIT,
+            timeframe=timeframe,
+        )
     result["forming_bar"] = forming
     result["market_data"] = market_meta
     result["market_data"]["analysis_cache"] = False
     result["decision_contract"] = {
+        "strategy_id": strategy_id,
         "selected_timeframe": timeframe,
         "selected_timeframe_label": market_meta["timeframe_label"],
         "confirmed_bar": result["snapshot"]["latest_date"],
@@ -153,6 +177,8 @@ class Handler(BaseHTTPRequestHandler):
                     "default_timeframe": DEFAULT_TIMEFRAME,
                     "timeframes": TIMEFRAMES,
                     "bar_close_contract": True,
+                    "available_strategies": AVAILABLE_STRATEGIES,
+                    "e_active_rules": sum(len(v) for v in E_RULES.values()),
                 },
             )
             return
@@ -180,13 +206,16 @@ class Handler(BaseHTTPRequestHandler):
             query = parse_qs(parsed.query)
             raw_symbol = str(query.get("symbol", [DEFAULT_SYMBOL])[0])
             raw_timeframe = str(query.get("timeframe", [DEFAULT_TIMEFRAME])[0])
+            raw_strategy = str(query.get("strategy", ["v7"])[0])
             force = str(query.get("refresh", ["0"])[0]).lower() in {"1", "true", "yes"}
             try:
                 symbol = normalize_symbol(raw_symbol)
                 timeframe = normalize_timeframe(raw_timeframe)
+                strategy_id = normalize_strategy(raw_strategy)
                 payload = _payload_for(
                     symbol,
                     timeframe,
+                    strategy_id=strategy_id,
                     force_refresh=force,
                 )
                 self._json(200, payload)
