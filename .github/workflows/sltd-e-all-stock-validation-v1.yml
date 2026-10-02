@@ -1,0 +1,116 @@
+name: SLTD E All Stock Validation v1
+
+on:
+  push:
+    branches:
+      - research/sltd-e-all-stock-v1
+    paths:
+      - "research/ssss_reboot_v1/phase8/sltd_e_all_stock_validation_v1.py"
+      - "research/ssss_reboot_v1/phase8/SLTD_E_ALL_STOCK_VALIDATION_PROTOCOL_v1.md"
+      - "integrations/sltd_v7_siftalpha_v1/**"
+      - ".github/workflows/sltd-e-all-stock-validation-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/sltd-e-all-stock-v1
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install research dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy pandas yfinance
+
+      - name: Compile E implementation and runner
+        run: |
+          python -m py_compile integrations/sltd_v7_siftalpha_v1/strategy.py
+          python -m py_compile integrations/sltd_v7_siftalpha_v1/e_strategy.py
+          python -m py_compile research/ssss_reboot_v1/phase8/sltd_e_all_stock_validation_v1.py
+
+      - name: Verify frozen protocol and universe files
+        run: |
+          test -f research/ssss_reboot_v1/phase8/SLTD_E_ALL_STOCK_VALIDATION_PROTOCOL_v1.md
+          python - <<'PY'
+          import gzip
+          from pathlib import Path
+          root=Path('.')
+          batches={
+            1:["AAPL","MSFT","NVDA","AMD","AVGO","ORCL","INTC","QCOM","MU","GOOGL"],
+            2:["META","NFLX","AMZN","TSLA","HD","MCD","WMT","COST","PG","KO"],
+            3:["PEP","ABT","LLY","UNH","JNJ","TMO","JPM","BAC","GS","V"],
+            4:["MA","CAT","BA","GE","XOM","CVX","LIN","NEE","PLD"],
+            5:["IBM","CSCO","CRM","ADBE","TXN","DIS","NKE","SBUX","TGT","LOW"],
+            6:["MRK","PFE","ABBV","AMGN","GILD","C","MS","BLK","COP","UPS"],
+            7:["ACN","NOW","INTU","AMAT","LRCX","BKNG","TJX","CMG","ROST","MAR"],
+            8:["DHR","SYK","MDT","BMY","ISRG","SCHW","SPGI","DE","HON","RTX"],
+          }
+          oos=["WFC","LMT","PM","ADP","WM","UNP","SO","VZ","PANW","CVS"]
+          symbols=[s for xs in batches.values() for s in xs]+oos
+          assert len(symbols)==89 and len(set(symbols))==89
+          for b,xs in batches.items():
+              for s in xs:
+                  p=root/f"research/ssss_reboot_v1/phase7/data_snapshot/batch_{b:02d}_stocks/{s}.csv.gz"
+                  assert p.exists(), p
+          for s in oos:
+              p=root/f"research/ssss_reboot_v1/phase8/oos10_data_snapshot/{s}.csv.gz"
+              assert p.exists(), p
+          print("UNIVERSE_89_PASS")
+          PY
+
+      - name: Run E all-stock validation
+        run: |
+          python research/ssss_reboot_v1/phase8/sltd_e_all_stock_validation_v1.py
+
+      - name: Verify outputs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("research/ssss_reboot_v1/phase8/SLTD_E_ALL_STOCK_VALIDATION_RESULT_v1.json")
+          m=Path("research/ssss_reboot_v1/phase8/SLTD_E_ALL_STOCK_VALIDATION_RESULT_v1.md")
+          assert p.exists() and m.exists()
+          x=json.loads(p.read_text())
+          assert x["meta"]["status"]=="COMPLETE"
+          assert x["meta"]["universe_count"]==89
+          assert x["meta"]["v7_79_parity"]=="PASS"
+          assert len(x["per_symbol"])==89
+          assert set(x["aggregates"])=={"5bps","10bps"}
+          print("RESULT_VERIFY_PASS")
+          PY
+
+      - name: Commit result archive
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ssss_reboot_v1/phase8/SLTD_E_ALL_STOCK_VALIDATION_RESULT_v1.json
+          git add research/ssss_reboot_v1/phase8/SLTD_E_ALL_STOCK_VALIDATION_RESULT_v1.md
+          if git diff --cached --quiet; then
+            echo "No result changes"
+          else
+            git commit -m "research: archive SLTD E all-stock validation result"
+            git push origin HEAD:research/sltd-e-all-stock-v1
+          fi
+
+      - name: Upload result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-e-all-stock-validation-v1
+          path: |
+            research/ssss_reboot_v1/phase8/SLTD_E_ALL_STOCK_VALIDATION_RESULT_v1.json
+            research/ssss_reboot_v1/phase8/SLTD_E_ALL_STOCK_VALIDATION_RESULT_v1.md
+          if-no-files-found: error
+          retention-days: 30
