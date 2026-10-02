@@ -6,6 +6,7 @@ on:
       - research/sltd-v6-position-policy-v1
     paths:
       - ".github/workflows/sltd-v6-position-policy-batch9-crypto.yml"
+      - "research/ssss_reboot_v1/phase7/sltd_v6_position_policy_crypto_transfer_v1.py"
   workflow_dispatch:
 
 permissions:
