@@ -86,3 +86,18 @@ SIFTALPHA_WEB_URL=http://127.0.0.1:<port>
 - 接真实券商
 - 自动下真实订单
 - 在运行期间修改冻结规则
+
+
+## SiftAlpha import packaging
+
+This package intentionally mirrors the already-working 5s crypto artifact shape:
+
+- no upstream `.project.json`;
+- no `README-STUDIO.txt` contract file;
+- root-level `app.py` and `requirements.txt`;
+- SiftAlpha creates/updates its own `.project.json` during ZIP import;
+- SiftAlpha infers `app.py` as the Python entrypoint and `python app.py` as the run command;
+- Web detection is left to SiftAlpha's normal Python HTTP server inspection plus the runtime
+  `SIFTALPHA_WEB_URL=...` marker.
+
+This avoids taking a special metadata path that the working crypto package does not use.
