@@ -105,11 +105,18 @@ def sha256_file(path: Path) -> str:
 
 def flatten_yf(frame: pd.DataFrame, ticker: str) -> pd.DataFrame:
     if isinstance(frame.columns, pd.MultiIndex):
-        if ticker in frame.columns.get_level_values(0):
+        frame = frame.copy()
+        selected = False
+        for level in range(frame.columns.nlevels):
+            values = {str(x) for x in frame.columns.get_level_values(level)}
+            if ticker in values:
+                frame = frame.xs(ticker, axis=1, level=level, drop_level=True)
+                selected = True
+                break
+        if isinstance(frame.columns, pd.MultiIndex):
+            frame.columns = frame.columns.get_level_values(0)
+        if not selected and ticker in {str(x) for x in frame.columns}:
             frame = frame[ticker].copy()
-        else:
-            frame = frame.copy()
-            frame.columns = frame.columns.get_level_values(-1)
     frame = frame.reset_index()
     date_col = "Date" if "Date" in frame.columns else frame.columns[0]
     frame = frame.rename(columns={date_col: "Date"})
