@@ -149,6 +149,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       <div class="badges">
         <button class="badge strategy-chip active" type="button" data-strategy="v7" aria-pressed="true">12条策略</button>
         <button class="badge strategy-chip" type="button" data-strategy="e" aria-pressed="false">E</button>
+        <button class="badge strategy-chip" type="button" data-strategy="5s_stocks" aria-pressed="false">5s Stocks</button>
         <span class="badge" id="timeframe-badge">__DEFAULT_TIMEFRAME__</span>
         <span class="badge c2" id="c2-badge">C2 强制清仓</span>
         <span class="badge local">本地网页</span>
@@ -227,19 +228,19 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       <canvas class="chart-canvas" id="chart-canvas" aria-label="SLTD K线、灰带、状态、成交量与仓位轨迹"></canvas>
     </div>
     <div class="chart-legend">
-      <span><i class="legend-dot legend-band"></i>GZB3 / GZB4 慢灰带</span>
-      <span><i class="legend-dot legend-blue"></i>蓝色</span>
-      <span><i class="legend-dot legend-gray"></i>灰色</span>
-      <span><i class="legend-dot legend-green"></i>绿色</span>
+      <span data-structure-only><i class="legend-dot legend-band"></i>GZB3 / GZB4 慢灰带</span>
+      <span data-structure-only><i class="legend-dot legend-blue"></i>蓝色</span>
+      <span data-structure-only><i class="legend-dot legend-gray"></i>灰色</span>
+      <span data-structure-only><i class="legend-dot legend-green"></i>绿色</span>
       <span><i class="legend-dot legend-buy"></i>买入标记</span>
       <span><i class="legend-dot legend-sell"></i>普通卖出标记</span>
-      <span><i class="legend-dot legend-exit"></i>C2 清仓标记</span>
+      <span><i class="legend-dot legend-exit"></i>全部清仓标记</span>
     </div>
     <div class="indicator-grid">
-      <div class="indicator"><small>GZB4 · 慢灰带下轨</small><b id="value-gzb4">—</b></div>
-      <div class="indicator"><small>ZD1 · 下轨</small><b id="value-zd1">—</b></div>
-      <div class="indicator"><small>ZK1 · 上轨</small><b id="value-zk1">—</b></div>
-      <div class="indicator"><small>BS · 上外轨</small><b id="value-bs">—</b></div>
+      <div class="indicator" data-structure-only><small>GZB4 · 慢灰带下轨</small><b id="value-gzb4">—</b></div>
+      <div class="indicator" data-structure-only><small>ZD1 · 下轨</small><b id="value-zd1">—</b></div>
+      <div class="indicator" data-structure-only><small>ZK1 · 上轨</small><b id="value-zk1">—</b></div>
+      <div class="indicator" data-structure-only><small>BS · 上外轨</small><b id="value-bs">—</b></div>
       <div class="indicator"><small>策略版本</small><b id="strategy-version">__STRATEGY_VERSION__</b></div>
     </div>
   </section>
@@ -562,7 +563,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       if(!c)return;
       q('chart-candle-meta').textContent =
         c.date+' · 开 '+formatPrice(c.open)+' 高 '+formatPrice(c.high)+' 低 '+formatPrice(c.low)+' 收 '+formatPrice(c.close)+
-        ' · 量 '+formatVolume(c.volume)+' · '+(stateLabels[c.state]||c.state)+' · 仓位 '+formatPct(c.position);
+        ' · 量 '+formatVolume(c.volume)+' · '+(c.state_zh||stateLabels[c.state]||c.state)+' · 仓位 '+formatPct(c.position);
     }
     showCandle(candles[candles.length-1]);
 
@@ -596,7 +597,10 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       btn.setAttribute('aria-pressed',active?'true':'false');
     });
     const c2Badge=q('c2-badge');
-    if(c2Badge)c2Badge.style.display=currentStrategy==='e'?'none':'';
+    if(c2Badge)c2Badge.style.display=currentStrategy==='v7'?'':'none';
+    document.querySelectorAll('[data-structure-only]').forEach(node=>{
+      node.style.display=currentStrategy==='5s_stocks'?'none':'';
+    });
 
     const actionNode=q('summary-action');
     actionNode.textContent=s.resolved_action_zh||actionLabels[s.resolved_action]||s.resolved_action||'—';
@@ -605,9 +609,11 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     safeText('summary-position',formatPct(s.position_fraction));
 
     const stateNode=q('summary-state');
-    stateNode.textContent=stateLabels[s.state]||s.state||'—';
+    stateNode.textContent=s.state_zh||stateLabels[s.state]||s.state||'—';
     setActionClass(stateNode,'state-',s.state||'OTHER');
-    safeText('summary-age','持续 '+(s.run_age==null?'—':s.run_age)+' 根 · '+(s.age_bucket||'—'));
+    safeText('summary-age',currentStrategy==='5s_stocks'
+      ? (s.age_bucket||'冻结 5s Stocks v1')
+      : ('持续 '+(s.run_age==null?'—':s.run_age)+' 根 · '+(s.age_bucket||'—')));
 
     const riskNode=q('summary-risk');
     riskNode.textContent=s.risk_state_zh||riskLabels[s.risk_state]||s.risk_state||'—';
@@ -632,7 +638,13 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     safeText('policy-title',strategy.policy_title_zh||'仓位 / 退出执行策略');
     safeText('policy-subtitle',(strategy.position_policy_zh||'')+(strategy.hard_exit_zh?' · '+strategy.hard_exit_zh:''));
     safeText('rules-title',strategy.rules_title_zh||'SLTD 当前规则');
-    safeText('rules-subtitle',currentStrategy==='e'?'E 为独立可选策略，不修改冻结的 V7 12 条策略':'由冻结候选基线驱动，不在运行脚本内自动调参');
+    safeText('rules-subtitle',
+      currentStrategy==='e'
+        ? 'E 为独立可选策略，不修改冻结的 V7 12 条策略'
+        : currentStrategy==='5s_stocks'
+          ? '5s Stocks v1 为独立冻结策略；A/B 首次半卖，C / 多重 / 后续不同 SELL 全清'
+          : '由冻结候选基线驱动，不在运行脚本内自动调参'
+    );
 
     const hit=q('rule-hit-row');
     const ids=Array.isArray(s.rule_names_zh)?s.rule_names_zh:(Array.isArray(s.rule_ids)?s.rule_ids:[]);
