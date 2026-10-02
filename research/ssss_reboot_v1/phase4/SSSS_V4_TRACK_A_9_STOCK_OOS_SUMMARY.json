@@ -1,0 +1,202 @@
+{
+  "NEW_BUY_1": {
+    "status": "MIXED",
+    "n": 28,
+    "hit": 21,
+    "pooled_probability": 0.75,
+    "eligible_symbols": 9,
+    "support_symbols": 5,
+    "opposite_symbols": 0,
+    "support_fraction": 0.5555555555555556,
+    "per_symbol": [
+      {
+        "symbol": "MA",
+        "n": 4,
+        "p": 0.75
+      },
+      {
+        "symbol": "CAT",
+        "n": 4,
+        "p": 0.5
+      },
+      {
+        "symbol": "BA",
+        "n": 4,
+        "p": 0.5
+      },
+      {
+        "symbol": "GE",
+        "n": 2,
+        "p": 1
+      },
+      {
+        "symbol": "XOM",
+        "n": 4,
+        "p": 1
+      },
+      {
+        "symbol": "CVX",
+        "n": 2,
+        "p": 0.5
+      },
+      {
+        "symbol": "LIN",
+        "n": 4,
+        "p": 1
+      },
+      {
+        "symbol": "NEE",
+        "n": 2,
+        "p": 1
+      },
+      {
+        "symbol": "PLD",
+        "n": 2,
+        "p": 0.5
+      }
+    ]
+  },
+  "NEW_AVOID_BUY_1": {
+    "status": "INSUFFICIENT_BREADTH",
+    "n": 16,
+    "hit": 15,
+    "pooled_probability": 0.9375,
+    "eligible_symbols": 5,
+    "support_symbols": 4,
+    "opposite_symbols": 0,
+    "support_fraction": 0.8,
+    "per_symbol": [
+      {
+        "symbol": "MA",
+        "n": 2,
+        "p": 1
+      },
+      {
+        "symbol": "BA",
+        "n": 4,
+        "p": 1
+      },
+      {
+        "symbol": "XOM",
+        "n": 4,
+        "p": 1
+      },
+      {
+        "symbol": "CVX",
+        "n": 2,
+        "p": 1
+      },
+      {
+        "symbol": "NEE",
+        "n": 2,
+        "p": 0.5
+      }
+    ]
+  },
+  "NEW_HOLD_1": {
+    "status": "SUPPORTS_V3_DISCOVERY",
+    "n": 25,
+    "hit": 23,
+    "pooled_probability": 0.92,
+    "eligible_symbols": 6,
+    "support_symbols": 6,
+    "opposite_symbols": 0,
+    "support_fraction": 1,
+    "per_symbol": [
+      {
+        "symbol": "MA",
+        "n": 8,
+        "p": 1
+      },
+      {
+        "symbol": "CAT",
+        "n": 2,
+        "p": 1
+      },
+      {
+        "symbol": "BA",
+        "n": 4,
+        "p": 0.75
+      },
+      {
+        "symbol": "XOM",
+        "n": 2,
+        "p": 1
+      },
+      {
+        "symbol": "LIN",
+        "n": 2,
+        "p": 1
+      },
+      {
+        "symbol": "NEE",
+        "n": 4,
+        "p": 0.75
+      }
+    ]
+  },
+  "NEW_HOLD_2": {
+    "status": "INSUFFICIENT_BREADTH",
+    "n": 13,
+    "hit": 10,
+    "pooled_probability": 0.7692307692307693,
+    "eligible_symbols": 3,
+    "support_symbols": 3,
+    "opposite_symbols": 0,
+    "support_fraction": 1,
+    "per_symbol": [
+      {
+        "symbol": "CAT",
+        "n": 3,
+        "p": 1
+      },
+      {
+        "symbol": "GE",
+        "n": 3,
+        "p": 1
+      },
+      {
+        "symbol": "LIN",
+        "n": 3,
+        "p": 0.6666666666666666
+      }
+    ]
+  },
+  "NEW_SELL_1": {
+    "status": "INSUFFICIENT_BREADTH",
+    "n": 17,
+    "hit": 10,
+    "pooled_probability": 0.5882352941176471,
+    "eligible_symbols": 5,
+    "support_symbols": 3,
+    "opposite_symbols": 0,
+    "support_fraction": 0.6,
+    "per_symbol": [
+      {
+        "symbol": "MA",
+        "n": 3,
+        "p": 0.6666666666666666
+      },
+      {
+        "symbol": "CAT",
+        "n": 2,
+        "p": 0.5
+      },
+      {
+        "symbol": "BA",
+        "n": 5,
+        "p": 0.6
+      },
+      {
+        "symbol": "XOM",
+        "n": 3,
+        "p": 0.6666666666666666
+      },
+      {
+        "symbol": "CVX",
+        "n": 2,
+        "p": 0.5
+      }
+    ]
+  }
+}
