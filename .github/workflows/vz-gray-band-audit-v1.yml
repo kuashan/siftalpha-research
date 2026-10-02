@@ -1,0 +1,33 @@
+name: VZ Gray Band Audit v1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/sltd-e7-wick-exit-v1]
+    paths:
+      - "research/ssss_reboot_v1/phase8/audit_vz_gray_band_20230628_20230705_v1.py"
+      - ".github/workflows/vz-gray-band-audit-v1.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/sltd-e7-wick-exit-v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pandas
+      - run: python research/ssss_reboot_v1/phase8/audit_vz_gray_band_20230628_20230705_v1.py
+      - name: Commit audit result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ssss_reboot_v1/phase8/VZ_20230628_20230705_GRAY_BAND_AUDIT_v1.json
+          git add research/ssss_reboot_v1/phase8/VZ_20230628_20230705_GRAY_BAND_AUDIT_v1.md
+          git commit -m "research: audit VZ gray-band window" || true
+          git push origin HEAD:research/sltd-e7-wick-exit-v1
