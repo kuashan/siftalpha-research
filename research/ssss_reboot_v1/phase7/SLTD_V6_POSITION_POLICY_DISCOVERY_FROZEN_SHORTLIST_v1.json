@@ -1,0 +1,386 @@
+{
+  "meta": {
+    "study": "SLTD_V6_POSITION_POLICY_STUDY_V1",
+    "stage": "DISCOVERY_SHORTLIST_FREEZE",
+    "status": "FROZEN_BEFORE_VALIDATION",
+    "source": "SLTD_V6_POSITION_POLICY_DISCOVERY_MERGED_v1.json",
+    "raw_candidate_count": 1152,
+    "unique_discovery_observed_outcome_groups": 688,
+    "shortlist_count": 5,
+    "dedup_rule": "Policies are discovery-observed equivalents only when their complete B1-B4 baseline_5bps and stress_10bps aggregate metric dictionaries are exactly identical. The representative is the earliest policy in the already-frozen discovery ranking. Deduplication does not reorder any non-equivalent policy.",
+    "governance_note": "User-directed pre-validation procedural amendment: exact discovery-observed duplicates are skipped when filling Primary + four Backup slots so validation covers five distinct observed outcomes. No Batch 5-8 validation outcome was used to define or select this shortlist."
+  },
+  "shortlist": [
+    {
+      "shortlist_rank": 1,
+      "role": "PRIMARY",
+      "discovery_rank": 1,
+      "policy_id": "I25_AADD_25_TO_CAP_S25_WHOLD_RNO_CHANGE_MIXED",
+      "policy": {
+        "initial": 0.25,
+        "add_mode": "ADD_25_TO_CAP",
+        "sell_reduction": 0.25,
+        "wait_mode": "HOLD",
+        "resolution": "NO_CHANGE_MIXED"
+      },
+      "discovery": {
+        "median_batch_calmar": 0.6155815356213501,
+        "worst_batch_calmar": 0.35965643160656224,
+        "median_batch_cagr": 0.12653502295060692,
+        "median_batch_max_drawdown_magnitude": 0.26797484742016114,
+        "calmar_dispersion_population_std": 0.20645390957797374,
+        "median_batch_turnover": 6.42422586745411,
+        "median_stress_10bps_calmar": 0.6122186284144531
+      },
+      "batches": [
+        {
+          "batch": 1,
+          "total_return": 8.059845168458523,
+          "cagr": 0.38655147797977985,
+          "max_drawdown": -0.4132270586330542,
+          "calmar": 0.9354457069159107,
+          "turnover_mean": 5.279484559982896,
+          "position_changes_sum": 257,
+          "time_in_market_mean": 0.9792330383480827,
+          "stress_10bps_calmar": 0.9335596915682808
+        },
+        {
+          "batch": 2,
+          "total_return": 1.1498994628749841,
+          "cagr": 0.12020078011365465,
+          "max_drawdown": -0.33421001141763396,
+          "calmar": 0.35965643160656224,
+          "turnover_mean": 6.227958591028734,
+          "position_changes_sum": 304,
+          "time_in_market_mean": 0.9847197640117992,
+          "stress_10bps_calmar": 0.3577115038425343
+        },
+        {
+          "batch": 3,
+          "total_return": 1.0143653612585593,
+          "cagr": 0.10943562859382006,
+          "max_drawdown": -0.19113868832576253,
+          "calmar": 0.5725456711689165,
+          "turnover_mean": 6.718834407343918,
+          "position_changes_sum": 320,
+          "time_in_market_mean": 0.9903834808259587,
+          "stress_10bps_calmar": 0.5692856534129578
+        },
+        {
+          "batch": 4,
+          "total_return": 1.319273923593519,
+          "cagr": 0.1328692657875592,
+          "max_drawdown": -0.20173968342268833,
+          "calmar": 0.6586174000737838,
+          "turnover_mean": 6.620493143879488,
+          "position_changes_sum": 284,
+          "time_in_market_mean": 0.9649295313012127,
+          "stress_10bps_calmar": 0.6551516034159482
+        }
+      ],
+      "equivalent_policy_count": 2,
+      "equivalent_policy_ids": [
+        "I25_AADD_25_TO_CAP_S25_WHOLD_RNO_CHANGE_MIXED",
+        "I25_AADD_ENTRY_TO_CAP_S25_WHOLD_RNO_CHANGE_MIXED"
+      ]
+    },
+    {
+      "shortlist_rank": 2,
+      "role": "BACKUP_1",
+      "discovery_rank": 3,
+      "policy_id": "I25_AADD_25_TO_CAP_S25_WHOLD_RSELL_FIRST",
+      "policy": {
+        "initial": 0.25,
+        "add_mode": "ADD_25_TO_CAP",
+        "sell_reduction": 0.25,
+        "wait_mode": "HOLD",
+        "resolution": "SELL_FIRST"
+      },
+      "discovery": {
+        "median_batch_calmar": 0.6155518375005633,
+        "worst_batch_calmar": 0.36276122794578636,
+        "median_batch_cagr": 0.1270082019202814,
+        "median_batch_max_drawdown_magnitude": 0.2678490124719921,
+        "calmar_dispersion_population_std": 0.20535733018165797,
+        "median_batch_turnover": 6.453182643044349,
+        "median_stress_10bps_calmar": 0.6121870100917091
+      },
+      "batches": [
+        {
+          "batch": 1,
+          "total_return": 8.055873772219464,
+          "cagr": 0.3864613280607825,
+          "max_drawdown": -0.4132270586330542,
+          "calmar": 0.9352275461805135,
+          "turnover_mean": 5.3154302220359755,
+          "position_changes_sum": 258,
+          "time_in_market_mean": 0.9792330383480827,
+          "stress_10bps_calmar": 0.9333397163977286
+        },
+        {
+          "batch": 2,
+          "total_return": 1.1621768409693871,
+          "cagr": 0.12114713805300359,
+          "max_drawdown": -0.3339583415212959,
+          "calmar": 0.36276122794578636,
+          "turnover_mean": 6.285872142209211,
+          "position_changes_sum": 307,
+          "time_in_market_mean": 0.9847197640117992,
+          "stress_10bps_calmar": 0.36077991419463384
+        },
+        {
+          "batch": 3,
+          "total_return": 1.014226364354411,
+          "cagr": 0.10942427567411417,
+          "max_drawdown": -0.19113868832576253,
+          "calmar": 0.5724862749273427,
+          "turnover_mean": 6.739910057727407,
+          "position_changes_sum": 321,
+          "time_in_market_mean": 0.9903834808259587,
+          "stress_10bps_calmar": 0.5692224167674698
+        },
+        {
+          "batch": 4,
+          "total_return": 1.319273923593519,
+          "cagr": 0.1328692657875592,
+          "max_drawdown": -0.20173968342268833,
+          "calmar": 0.6586174000737838,
+          "turnover_mean": 6.620493143879488,
+          "position_changes_sum": 284,
+          "time_in_market_mean": 0.9649295313012127,
+          "stress_10bps_calmar": 0.6551516034159482
+        }
+      ],
+      "equivalent_policy_count": 4,
+      "equivalent_policy_ids": [
+        "I25_AADD_25_TO_CAP_S25_WHOLD_RSELL_FIRST",
+        "I25_AADD_25_TO_CAP_S25_WHOLD_RWAIT_FIRST",
+        "I25_AADD_ENTRY_TO_CAP_S25_WHOLD_RSELL_FIRST",
+        "I25_AADD_ENTRY_TO_CAP_S25_WHOLD_RWAIT_FIRST"
+      ]
+    },
+    {
+      "shortlist_rank": 3,
+      "role": "BACKUP_2",
+      "discovery_rank": 7,
+      "policy_id": "I25_AADD_25_TO_CAP_S75_WHOLD_RSELL_FIRST",
+      "policy": {
+        "initial": 0.25,
+        "add_mode": "ADD_25_TO_CAP",
+        "sell_reduction": 0.75,
+        "wait_mode": "HOLD",
+        "resolution": "SELL_FIRST"
+      },
+      "discovery": {
+        "median_batch_calmar": 0.5810858771591665,
+        "worst_batch_calmar": 0.30683261193997735,
+        "median_batch_cagr": 0.09708023392030862,
+        "median_batch_max_drawdown_magnitude": 0.19493194717212764,
+        "calmar_dispersion_population_std": 0.34107917127900395,
+        "median_batch_turnover": 11.690375100313592,
+        "median_stress_10bps_calmar": 0.5735080586072534
+      },
+      "batches": [
+        {
+          "batch": 1,
+          "total_return": 5.5046082511951795,
+          "cagr": 0.32006840510060974,
+          "max_drawdown": -0.2604463827500859,
+          "calmar": 1.228922443540845,
+          "turnover_mean": 9.383151686503584,
+          "position_changes_sum": 324,
+          "time_in_market_mean": 0.9792330383480827,
+          "stress_10bps_calmar": 1.2239953914932504
+        },
+        {
+          "batch": 2,
+          "total_return": 0.963349102687501,
+          "cagr": 0.10522321564226655,
+          "max_drawdown": -0.19872520601849275,
+          "calmar": 0.5294910381548419,
+          "turnover_mean": 11.010520795021927,
+          "position_changes_sum": 388,
+          "time_in_market_mean": 0.9847197640117992,
+          "stress_10bps_calmar": 0.5234649573572225
+        },
+        {
+          "batch": 3,
+          "total_return": 0.4686112163416305,
+          "cagr": 0.05864758298177497,
+          "max_drawdown": -0.19113868832576253,
+          "calmar": 0.30683261193997735,
+          "turnover_mean": 12.370229405605254,
+          "position_changes_sum": 425,
+          "time_in_market_mean": 0.9903834808259587,
+          "stress_10bps_calmar": 0.30175231637793765
+        },
+        {
+          "batch": 4,
+          "total_return": 0.7763246118531972,
+          "cagr": 0.08893725219835069,
+          "max_drawdown": -0.14057209256772796,
+          "calmar": 0.6326807161634911,
+          "turnover_mean": 12.470592821287402,
+          "position_changes_sum": 377,
+          "time_in_market_mean": 0.9649295313012127,
+          "stress_10bps_calmar": 0.6235511598572842
+        }
+      ],
+      "equivalent_policy_count": 4,
+      "equivalent_policy_ids": [
+        "I25_AADD_25_TO_CAP_S75_WHOLD_RSELL_FIRST",
+        "I25_AADD_25_TO_CAP_S75_WHOLD_RWAIT_FIRST",
+        "I25_AADD_ENTRY_TO_CAP_S75_WHOLD_RSELL_FIRST",
+        "I25_AADD_ENTRY_TO_CAP_S75_WHOLD_RWAIT_FIRST"
+      ]
+    },
+    {
+      "shortlist_rank": 4,
+      "role": "BACKUP_3",
+      "discovery_rank": 11,
+      "policy_id": "I25_AADD_25_TO_CAP_S75_WHOLD_RNO_CHANGE_MIXED",
+      "policy": {
+        "initial": 0.25,
+        "add_mode": "ADD_25_TO_CAP",
+        "sell_reduction": 0.75,
+        "wait_mode": "HOLD",
+        "resolution": "NO_CHANGE_MIXED"
+      },
+      "discovery": {
+        "median_batch_calmar": 0.5728290922656911,
+        "worst_batch_calmar": 0.3068653749059892,
+        "median_batch_cagr": 0.09577298662775147,
+        "median_batch_max_drawdown_magnitude": 0.19558223691586718,
+        "calmar_dispersion_population_std": 0.3431879163525427,
+        "median_batch_turnover": 11.681893461334475,
+        "median_stress_10bps_calmar": 0.5653101262666259
+      },
+      "batches": [
+        {
+          "batch": 1,
+          "total_return": 5.508104446883978,
+          "cagr": 0.3201736006705558,
+          "max_drawdown": -0.26037986127294743,
+          "calmar": 1.2296404149894242,
+          "turnover_mean": 9.367626728577433,
+          "position_changes_sum": 323,
+          "time_in_market_mean": 0.9792330383480827,
+          "stress_10bps_calmar": 1.2244006543011603
+        },
+        {
+          "batch": 2,
+          "total_return": 0.9322419504614696,
+          "cagr": 0.10260872105715224,
+          "max_drawdown": -0.20002578550597183,
+          "calmar": 0.5129774683678912,
+          "turnover_mean": 10.994110645026385,
+          "position_changes_sum": 386,
+          "time_in_market_mean": 0.9847197640117992,
+          "stress_10bps_calmar": 0.5070690926759677
+        },
+        {
+          "batch": 3,
+          "total_return": 0.46866979896390637,
+          "cagr": 0.05865384525212414,
+          "max_drawdown": -0.19113868832576253,
+          "calmar": 0.3068653749059892,
+          "turnover_mean": 12.369676277642565,
+          "position_changes_sum": 424,
+          "time_in_market_mean": 0.9903834808259587,
+          "stress_10bps_calmar": 0.3017850555282928
+        },
+        {
+          "batch": 4,
+          "total_return": 0.7763246118531972,
+          "cagr": 0.08893725219835069,
+          "max_drawdown": -0.14057209256772796,
+          "calmar": 0.6326807161634911,
+          "turnover_mean": 12.470592821287402,
+          "position_changes_sum": 377,
+          "time_in_market_mean": 0.9649295313012127,
+          "stress_10bps_calmar": 0.6235511598572842
+        }
+      ],
+      "equivalent_policy_count": 2,
+      "equivalent_policy_ids": [
+        "I25_AADD_25_TO_CAP_S75_WHOLD_RNO_CHANGE_MIXED",
+        "I25_AADD_ENTRY_TO_CAP_S75_WHOLD_RNO_CHANGE_MIXED"
+      ]
+    },
+    {
+      "shortlist_rank": 5,
+      "role": "BACKUP_4",
+      "discovery_rank": 13,
+      "policy_id": "I25_AADD_25_TO_CAP_S75_WTRIM_25_RSELL_FIRST",
+      "policy": {
+        "initial": 0.25,
+        "add_mode": "ADD_25_TO_CAP",
+        "sell_reduction": 0.75,
+        "wait_mode": "TRIM_25",
+        "resolution": "SELL_FIRST"
+      },
+      "discovery": {
+        "median_batch_calmar": 0.5620571052743495,
+        "worst_batch_calmar": 0.2751254421666163,
+        "median_batch_cagr": 0.09343849480890976,
+        "median_batch_max_drawdown_magnitude": 0.19425767290373658,
+        "calmar_dispersion_population_std": 0.38114337946189314,
+        "median_batch_turnover": 12.164581421929137,
+        "median_stress_10bps_calmar": 0.5543189950203922
+      },
+      "batches": [
+        {
+          "batch": 1,
+          "total_return": 5.165286434081454,
+          "cagr": 0.3096219057871219,
+          "max_drawdown": -0.2380767267825259,
+          "calmar": 1.300513115966811,
+          "turnover_mean": 9.970268934351411,
+          "position_changes_sum": 380,
+          "time_in_market_mean": 0.9792330383480827,
+          "stress_10bps_calmar": 1.2930680853522774
+        },
+        {
+          "batch": 2,
+          "total_return": 0.9250032938835901,
+          "cagr": 0.10199518851160017,
+          "max_drawdown": -0.19799544093029553,
+          "calmar": 0.515139076093715,
+          "turnover_mean": 11.412828239289821,
+          "position_changes_sum": 431,
+          "time_in_market_mean": 0.9847197640117992,
+          "stress_10bps_calmar": 0.5089558642577108
+        },
+        {
+          "batch": 3,
+          "total_return": 0.4113008252889403,
+          "cagr": 0.05241687307087517,
+          "max_drawdown": -0.19051990487717763,
+          "calmar": 0.2751254421666163,
+          "turnover_mean": 12.916334604568453,
+          "position_changes_sum": 490,
+          "time_in_market_mean": 0.9903834808259587,
+          "stress_10bps_calmar": 0.2698788363477633
+        },
+        {
+          "batch": 4,
+          "total_return": 0.7321888421885923,
+          "cagr": 0.08488180110621935,
+          "max_drawdown": -0.13938467484749806,
+          "calmar": 0.608975134454984,
+          "turnover_mean": 12.99610922704729,
+          "position_changes_sum": 430,
+          "time_in_market_mean": 0.9649295313012127,
+          "stress_10bps_calmar": 0.5996821257830737
+        }
+      ],
+      "equivalent_policy_count": 4,
+      "equivalent_policy_ids": [
+        "I25_AADD_25_TO_CAP_S75_WTRIM_25_RSELL_FIRST",
+        "I25_AADD_25_TO_CAP_S75_WTRIM_25_RWAIT_FIRST",
+        "I25_AADD_ENTRY_TO_CAP_S75_WTRIM_25_RSELL_FIRST",
+        "I25_AADD_ENTRY_TO_CAP_S75_WTRIM_25_RWAIT_FIRST"
+      ]
+    }
+  ]
+}
