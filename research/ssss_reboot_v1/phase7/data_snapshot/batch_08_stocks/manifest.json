@@ -1,0 +1,100 @@
+{
+  "asset_class": "STOCK",
+  "auto_adjust": false,
+  "batch": 8,
+  "candidate_scope": "FROZEN_PRIMARY_PLUS_4_BACKUPS_ONLY",
+  "fetch_end_exclusive": "2026-10-01",
+  "fetch_start": "2010-01-04",
+  "files": {
+    "BMY": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_08_stocks/BMY.csv.gz",
+      "rows": 4211,
+      "sha256": "84eef2e2c77125f939d56789af13a410049f99986774b19e680d678c221e6316"
+    },
+    "DE": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_08_stocks/DE.csv.gz",
+      "rows": 4211,
+      "sha256": "f4ae77e2677d14fe1556165827c510196000f2981656621b43432366e6b0b885"
+    },
+    "DHR": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_08_stocks/DHR.csv.gz",
+      "rows": 4211,
+      "sha256": "6b5f0a1c1fbd22fcac2e3d1e26fcb25347002d7b79b219ceffacc1ba072e2b2f"
+    },
+    "HON": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_08_stocks/HON.csv.gz",
+      "rows": 4211,
+      "sha256": "cf424c11e842d206a6ae88538a35b2599e100b5e76f1a3810b7c5950bfde91a6"
+    },
+    "ISRG": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_08_stocks/ISRG.csv.gz",
+      "rows": 4211,
+      "sha256": "5d542a37e9dce951441c2fcbee9cd37073bd0329bfbc725649bc0c40c59b9513"
+    },
+    "MDT": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_08_stocks/MDT.csv.gz",
+      "rows": 4211,
+      "sha256": "e5040e0aa0442a0899ef5a28e5706b715469a09a9b8b9a40a88b325881e10f1c"
+    },
+    "RTX": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_08_stocks/RTX.csv.gz",
+      "rows": 4211,
+      "sha256": "ce46fd083559020b4abf8e2643578abe18c29508888049e697c9c1f3e3e1ed3f"
+    },
+    "SCHW": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_08_stocks/SCHW.csv.gz",
+      "rows": 4211,
+      "sha256": "7bba276e4b8158700a7998dacea30b263a2509f018b1a3ec3ea09c0aaa8f8f0a"
+    },
+    "SPGI": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_08_stocks/SPGI.csv.gz",
+      "rows": 4211,
+      "sha256": "62314ada0ef2e7ef9dd3cc934ffe9dd3298de6f42a00d541b7e4a77991473a64"
+    },
+    "SYK": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_08_stocks/SYK.csv.gz",
+      "rows": 4211,
+      "sha256": "f3d22d4b9debac4767da1d0564475c139bb011f64b25fb7426ed3a0a633add55"
+    }
+  },
+  "formal_end": "2026-09-30",
+  "formal_start": "2020-01-02",
+  "frozen_shortlist": "SLTD_V6_POSITION_POLICY_DISCOVERY_FROZEN_SHORTLIST_v1.json",
+  "generated_at_utc": "2026-10-02T08:23:39.968162+00:00",
+  "provider": "Yahoo Finance via yfinance",
+  "repair": false,
+  "stage": "VALIDATION",
+  "study": "SLTD_V6_POSITION_POLICY_STUDY_V1",
+  "symbols": [
+    "DHR",
+    "SYK",
+    "MDT",
+    "BMY",
+    "ISRG",
+    "SCHW",
+    "SPGI",
+    "DE",
+    "HON",
+    "RTX"
+  ]
+}
