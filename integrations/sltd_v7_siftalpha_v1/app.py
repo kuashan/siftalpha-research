@@ -12,7 +12,14 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
-from data_provider import MarketDataError, fetch_daily_candles, normalize_symbol
+from data_provider import (
+    DEFAULT_TIMEFRAME,
+    TIMEFRAMES,
+    MarketDataError,
+    fetch_bars,
+    normalize_symbol,
+    normalize_timeframe,
+)
 from strategy import (
     ACTIVE_RULES,
     HARD_EXIT_ID,
@@ -29,35 +36,74 @@ TEMPLATE = (ROOT / "templates" / "index.html").read_text(encoding="utf-8")
 DEFAULT_SYMBOL = normalize_symbol(os.environ.get("SLTD_SYMBOL", "AAPL"))
 DISPLAY_KLINE_LIMIT = 300
 
-_ANALYSIS_CACHE: dict[str, tuple[float, dict]] = {}
+_ANALYSIS_CACHE: dict[tuple[str, str], tuple[float, dict]] = {}
 _ANALYSIS_LOCK = threading.RLock()
-_ANALYSIS_TTL_SECONDS = 5 * 60
+_ANALYSIS_TTL_SECONDS = 5.0
 
 
-def _payload_for(symbol: str, force_refresh: bool = False) -> dict:
+def _payload_for(
+    symbol: str,
+    timeframe: str,
+    force_refresh: bool = False,
+) -> dict:
     symbol = normalize_symbol(symbol)
+    timeframe = normalize_timeframe(timeframe)
+    cache_key = (symbol, timeframe)
     now = time.time()
+
     with _ANALYSIS_LOCK:
-        cached = _ANALYSIS_CACHE.get(symbol)
+        cached = _ANALYSIS_CACHE.get(cache_key)
         if cached and not force_refresh and now - cached[0] < _ANALYSIS_TTL_SECONDS:
             payload = dict(cached[1])
             payload["market_data"] = dict(payload["market_data"])
             payload["market_data"]["analysis_cache"] = True
             return payload
 
-    candles, market_meta = fetch_daily_candles(symbol, force_refresh=force_refresh)
-    result = analyze(symbol, candles, display_limit=DISPLAY_KLINE_LIMIT)
+    completed, forming, market_meta = fetch_bars(
+        symbol,
+        timeframe,
+        force_refresh=force_refresh,
+    )
+    result = analyze(
+        symbol,
+        completed,
+        display_limit=DISPLAY_KLINE_LIMIT,
+        timeframe=timeframe,
+    )
+    result["forming_bar"] = forming
     result["market_data"] = market_meta
     result["market_data"]["analysis_cache"] = False
+    result["decision_contract"] = {
+        "selected_timeframe": timeframe,
+        "selected_timeframe_label": market_meta["timeframe_label"],
+        "confirmed_bar": result["snapshot"]["latest_date"],
+        "forming_bar_present": forming is not None,
+        "rule": "只用已结束的所选周期 K 线确认信号；当前未结束 K 线不参与正式决策",
+        "execution": "确认后在下一根所选周期 K 线开盘执行",
+    }
 
     with _ANALYSIS_LOCK:
-        _ANALYSIS_CACHE[symbol] = (now, result)
+        _ANALYSIS_CACHE[cache_key] = (now, result)
     return result
+
+
+def _timeframe_options() -> str:
+    out = []
+    for value, cfg in TIMEFRAMES.items():
+        selected = " selected" if value == DEFAULT_TIMEFRAME else ""
+        status = "已验证周期" if bool(cfg["validated"]) else "实验周期"
+        out.append(
+            f'<option value="{html.escape(value)}"{selected}>'
+            f'{html.escape(str(cfg["label"]))} · {status}</option>'
+        )
+    return "\n".join(out)
 
 
 def render_index() -> str:
     return (
         TEMPLATE.replace("__DEFAULT_SYMBOL__", html.escape(DEFAULT_SYMBOL))
+        .replace("__DEFAULT_TIMEFRAME__", html.escape(DEFAULT_TIMEFRAME))
+        .replace("__TIMEFRAME_OPTIONS__", _timeframe_options())
         .replace("__STRATEGY_VERSION__", html.escape(STRATEGY_VERSION))
         .replace("__SOURCE_COMMIT_SHORT__", html.escape(STRATEGY_SOURCE_COMMIT[:8]))
         .replace("__POSITION_POLICY_ID__", html.escape(POSITION_POLICY_ID))
@@ -66,7 +112,7 @@ def render_index() -> str:
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "SiftAlphaSLTDV7/1.0"
+    server_version = "SiftAlphaSLTDV7/2.0"
 
     def _send(self, status: int, body: bytes, content_type: str) -> None:
         self.send_response(status)
@@ -101,6 +147,9 @@ class Handler(BaseHTTPRequestHandler):
                     "source_commit": STRATEGY_SOURCE_COMMIT,
                     "active_rules": sum(len(v) for v in ACTIVE_RULES.values()),
                     "display_kline_limit": DISPLAY_KLINE_LIMIT,
+                    "default_timeframe": DEFAULT_TIMEFRAME,
+                    "timeframes": TIMEFRAMES,
+                    "bar_close_contract": True,
                 },
             )
             return
@@ -113,6 +162,9 @@ class Handler(BaseHTTPRequestHandler):
                     "active_rules": ACTIVE_RULES,
                     "position_policy": POSITION_POLICY_ID,
                     "hard_exit": HARD_EXIT_ID,
+                    "bar_close_contract": (
+                        "selected timeframe bar close -> confirm -> next selected bar open"
+                    ),
                 },
             )
             return
@@ -120,10 +172,16 @@ class Handler(BaseHTTPRequestHandler):
         if parsed.path == "/api/analyze":
             query = parse_qs(parsed.query)
             raw_symbol = str(query.get("symbol", [DEFAULT_SYMBOL])[0])
+            raw_timeframe = str(query.get("timeframe", [DEFAULT_TIMEFRAME])[0])
             force = str(query.get("refresh", ["0"])[0]).lower() in {"1", "true", "yes"}
             try:
                 symbol = normalize_symbol(raw_symbol)
-                payload = _payload_for(symbol, force_refresh=force)
+                timeframe = normalize_timeframe(raw_timeframe)
+                payload = _payload_for(
+                    symbol,
+                    timeframe,
+                    force_refresh=force,
+                )
                 self._json(200, payload)
             except (ValueError, MarketDataError) as exc:
                 self._json(400, {"error": str(exc)})
@@ -163,7 +221,9 @@ def main() -> None:
     print("SLTD V7 · SiftAlpha Web", flush=True)
     print(f"strategy={STRATEGY_VERSION}", flush=True)
     print(f"active_rules={sum(len(v) for v in ACTIVE_RULES.values())}", flush=True)
+    print("decision_contract=SELECTED_BAR_CLOSE_TO_NEXT_SELECTED_BAR_OPEN", flush=True)
     print(f"default_symbol={DEFAULT_SYMBOL}", flush=True)
+    print(f"default_timeframe={DEFAULT_TIMEFRAME}", flush=True)
     print(f"SIFTALPHA_WEB_URL={url}", flush=True)
     print(f"网页服务已启动：{url}", flush=True)
 
