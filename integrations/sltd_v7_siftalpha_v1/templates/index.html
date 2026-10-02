@@ -26,6 +26,9 @@ button{cursor:pointer}
 .brand p{margin:5px 0 0;color:var(--muted);font-size:12px}
 .badges{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .badge{padding:5px 8px;border:1px solid var(--line);border-radius:999px;background:var(--soft);font-size:11px;color:#c8d3e4}
+button.badge{appearance:none}
+.strategy-chip{font-weight:750;min-width:38px}
+.strategy-chip.active{border-color:#5b8cff;color:#dce8ff;background:#17284a;box-shadow:0 0 0 1px rgba(91,140,255,.18) inset}
 .badge.v7{border-color:#36568d;color:#a9c6ff}.badge.c2{border-color:#634d2c;color:#f3c77d}.badge.local{border-color:#285945;color:#8ce6bc}
 .symbol-bar{display:grid;grid-template-columns:minmax(160px,1fr) minmax(130px,180px) auto auto;gap:7px;margin-top:10px}
 .symbol-input,.timeframe-select{
@@ -85,7 +88,7 @@ button{cursor:pointer}
 .legend-blue{background:#5b8cff}.legend-gray{background:#8d99aa}.legend-green{background:#52d49a}
 .legend-band{background:#68778e}.legend-buy{background:#52d49a}.legend-sell{background:#ff7b82}.legend-exit{background:#eab464}
 
-.indicator-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:0 12px 12px}
+.indicator-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;padding:0 12px 12px}
 .indicator{background:var(--panel2);border-radius:9px;padding:9px;min-width:0}
 .indicator small{display:block;color:var(--muted);font-size:9px;margin-bottom:4px}.indicator b{font-size:12px;overflow-wrap:anywhere}
 
@@ -117,7 +120,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
 @media(max-width:760px){
   .shell{padding:10px}.topbar{margin:-10px -10px 0;padding:10px}
   .title-row{align-items:center}.brand h1{font-size:18px}.brand p{font-size:10px}
-  .badges .badge:nth-child(2),.badges .badge:nth-child(4){display:none}
+  .badges .c2,.badges .local{display:none}
   .symbol-bar{grid-template-columns:minmax(0,1fr) minmax(118px,.7fr)}.symbol-bar .primary,.symbol-bar .secondary{width:100%}
   .summary-grid{gap:5px}.summary-card{padding:7px 6px}.summary-card small{font-size:8px}.summary-card strong{font-size:12px}.summary-card span{font-size:8px}
   .decision-head{grid-template-columns:1fr}.decision-meta{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -129,7 +132,8 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
   .rules-groups{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:390px){
-  .badges{display:none}.summary-card strong{font-size:11px}
+  .title-row{flex-wrap:wrap}.brand p{display:none}.badges{width:100%;justify-content:flex-start}
+  .badge{padding:4px 6px}.summary-card strong{font-size:11px}
   .decision-meta{grid-template-columns:1fr 1fr}.rules-groups{grid-template-columns:1fr}
 }
 </style>
@@ -143,9 +147,10 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
         <p>SiftAlpha · 结构信号 / 仓位 / C2 风险退出</p>
       </div>
       <div class="badges">
-        <span class="badge v7">12 条规则</span>
+        <button class="badge strategy-chip active" type="button" data-strategy="v7" aria-pressed="true">12条策略</button>
+        <button class="badge strategy-chip" type="button" data-strategy="e" aria-pressed="false">E</button>
         <span class="badge" id="timeframe-badge">__DEFAULT_TIMEFRAME__</span>
-        <span class="badge c2">C2 强制清仓</span>
+        <span class="badge c2" id="c2-badge">C2 强制清仓</span>
         <span class="badge local">本地网页</span>
       </div>
     </div>
@@ -180,7 +185,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       <span id="summary-age">持续根数 —</span>
     </div>
     <div class="summary-card">
-      <small>C2 风险状态</small>
+      <small id="summary-risk-label">C2 风险状态</small>
       <strong id="summary-risk">—</strong>
       <span id="summary-risk-sub">等待状态</span>
     </div>
@@ -234,16 +239,17 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       <div class="indicator"><small>GZB4 · 慢灰带下轨</small><b id="value-gzb4">—</b></div>
       <div class="indicator"><small>ZD1 · 下轨</small><b id="value-zd1">—</b></div>
       <div class="indicator"><small>ZK1 · 上轨</small><b id="value-zk1">—</b></div>
-      <div class="indicator"><small>策略版本</small><b>__STRATEGY_VERSION__</b></div>
+      <div class="indicator"><small>BS · 上外轨</small><b id="value-bs">—</b></div>
+      <div class="indicator"><small>策略版本</small><b id="strategy-version">__STRATEGY_VERSION__</b></div>
     </div>
   </section>
 
   <section class="policy-card">
     <div class="section-title">
-      <h2>统一仓位 / 退出执行策略</h2>
-      <span>__POSITION_POLICY_NAME_ZH__ · __HARD_EXIT_NAME_ZH__</span>
+      <h2 id="policy-title">统一仓位 / 退出执行策略</h2>
+      <span id="policy-subtitle">__POSITION_POLICY_NAME_ZH__ · __HARD_EXIT_NAME_ZH__</span>
     </div>
-    <div class="policy-flow">
+    <div class="policy-flow" id="policy-flow">
       <div class="flow-step"><small>① 首次买入</small><b>空仓 → 25%</b></div>
       <div class="flow-step"><small>② 后续买入</small><b>每次 +25 个百分点，最高 100%</b></div>
       <div class="flow-step"><small>③ 普通卖出</small><b>卖当前仓位 25%</b></div>
@@ -270,8 +276,8 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
 
   <section class="rules-card">
     <div class="section-title">
-      <h2>SLTD V7 当前 12 条规则</h2>
-      <span>由冻结候选基线驱动，不在运行脚本内自动调参</span>
+      <h2 id="rules-title">SLTD V7 当前 12 条规则</h2>
+      <span id="rules-subtitle">由冻结候选基线驱动，不在运行脚本内自动调参</span>
     </div>
     <div class="rules-groups" id="rules-groups"></div>
     <details class="advanced">
@@ -297,14 +303,16 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
   const notice = document.getElementById('notice');
   const canvas = document.getElementById('chart-canvas');
   const scroll = document.getElementById('chart-scroll');
+  const strategyButtons = Array.from(document.querySelectorAll('[data-strategy]'));
 
   let currentPayload = null;
   let currentSymbol = String(input.value || 'AAPL').toUpperCase();
   let currentTimeframe = String(timeframeSelect.value || '__DEFAULT_TIMEFRAME__');
+  let currentStrategy = 'v7';
 
   const actionLabels = {
     BUY:'买入', SELL:'卖出', HOLD:'持有', WAIT:'等待',
-    HARD_EXIT:'C2 强制清仓', MIXED:'冲突信号不动作', NONE:'无新动作'
+    HARD_EXIT:'全部清仓', MIXED:'冲突信号不动作', NONE:'无新动作'
   };
   const stateLabels = {BLUE:'蓝色', GRAY:'灰色', GREEN:'绿色', OTHER:'其他'};
   const classLabels = {BUY:'买入', HOLD:'持有', WAIT:'等待', SELL:'卖出'};
@@ -370,6 +378,14 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     });
   }
 
+  function renderPolicy(strategy){
+    const flow = q('policy-flow');
+    const steps = strategy && Array.isArray(strategy.policy_steps_zh) ? strategy.policy_steps_zh : [];
+    if(!flow) return;
+    if(!steps.length) return;
+    flow.innerHTML = steps.map(step => '<div class="flow-step"><b>'+escapeHtml(step)+'</b></div>').join('');
+  }
+
   function renderEvents(events){
     const body = q('events-body');
     const list = Array.isArray(events) ? events.slice().reverse().slice(0,40) : [];
@@ -426,7 +442,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
 
     const priceValues = [];
     candles.forEach(c => {
-      [c.low,c.high,c.GZB3,c.GZB4,c.ZD1,c.ZK1].forEach(v => {
+      [c.low,c.high,c.GZB3,c.GZB4,c.ZD1,c.ZK1,c.BS].forEach(v => {
         const n=Number(v); if(Number.isFinite(n)) priceValues.push(n);
       });
     });
@@ -480,6 +496,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     drawLine('GZB4','#9ba6b7',[]);
     drawLine('ZD1','#65c5d8',[4,3]);
     drawLine('ZK1','#c28bd8',[4,3]);
+    drawLine('BS','#eab464',[2,3]);
 
     const markerMap=new Map();
     markers.forEach(m=>{
@@ -570,11 +587,19 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     const forming=payload.forming_bar||null;
     currentSymbol=String(s.symbol||currentSymbol).toUpperCase();
     currentTimeframe=String(contract.selected_timeframe||meta.timeframe||currentTimeframe);
+    currentStrategy=String(contract.strategy_id||strategy.id||currentStrategy||'v7');
     input.value=currentSymbol;
     timeframeSelect.value=currentTimeframe;
+    strategyButtons.forEach(btn=>{
+      const active=btn.dataset.strategy===currentStrategy;
+      btn.classList.toggle('active',active);
+      btn.setAttribute('aria-pressed',active?'true':'false');
+    });
+    const c2Badge=q('c2-badge');
+    if(c2Badge)c2Badge.style.display=currentStrategy==='e'?'none':'';
 
     const actionNode=q('summary-action');
-    actionNode.textContent=actionLabels[s.resolved_action]||s.resolved_action||'—';
+    actionNode.textContent=s.resolved_action_zh||actionLabels[s.resolved_action]||s.resolved_action||'—';
     setActionClass(actionNode,'action-',s.resolved_action||'NONE');
     safeText('summary-action-sub',(s.rule_ids||[]).length ? (s.rule_ids||[]).length+' 条规则命中' : '当前无新规则命中');
     safeText('summary-position',formatPct(s.position_fraction));
@@ -587,33 +612,41 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     const riskNode=q('summary-risk');
     riskNode.textContent=s.risk_state_zh||riskLabels[s.risk_state]||s.risk_state||'—';
     setActionClass(riskNode,'risk-',s.risk_state||'NORMAL');
-    safeText('summary-risk-sub',s.risk_state==='ARMED'?'等待 C2 条件或后续实际买入重置':'正常监测');
+    safeText('summary-risk-label',strategy.summary_state_label_zh||'策略状态');
+    safeText('summary-risk-sub',s.risk_sub_zh||(s.risk_state==='ARMED'?'等待 C2 条件或后续实际买入重置':'正常监测'));
 
     safeText('next-action',s.next_action);
     safeText('meta-symbol',s.symbol);
     safeText('meta-date',s.latest_date);
     safeText('meta-origin',stateLabels[s.origin]||s.origin||'—');
     safeText('meta-forming',forming ? ('形成中 · '+formatPrice(forming.close)) : '当前无未完成 K 线');
-    safeText('chart-title',(s.symbol||'')+' · '+(contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe)+' · SLTD V7');
+    safeText('chart-title',(s.symbol||'')+' · '+(contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe)+' · '+(strategy.selector_label||strategy.version||'SLTD'));
     safeText('timeframe-badge',contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe);
     safeText('latest-price',formatPrice(s.latest_close));
     safeText('market-source',(meta.provider||'雅虎财经')+' · '+(meta.source||'网络'));
     safeText('value-gzb4',formatPrice(s.GZB4));
     safeText('value-zd1',formatPrice(s.ZD1));
     safeText('value-zk1',formatPrice(s.ZK1));
+    safeText('value-bs',formatPrice(s.BS));
+    safeText('strategy-version',strategy.version||'—');
+    safeText('policy-title',strategy.policy_title_zh||'仓位 / 退出执行策略');
+    safeText('policy-subtitle',(strategy.position_policy_zh||'')+(strategy.hard_exit_zh?' · '+strategy.hard_exit_zh:''));
+    safeText('rules-title',strategy.rules_title_zh||'SLTD 当前规则');
+    safeText('rules-subtitle',currentStrategy==='e'?'E 为独立可选策略，不修改冻结的 V7 12 条策略':'由冻结候选基线驱动，不在运行脚本内自动调参');
 
     const hit=q('rule-hit-row');
     const ids=Array.isArray(s.rule_names_zh)?s.rule_names_zh:(Array.isArray(s.rule_ids)?s.rule_ids:[]);
     hit.innerHTML=ids.length
       ? ids.map(x=>'<span class="rule-pill">'+escapeHtml(x)+'</span>').join('')
-      : '<span class="rule-pill empty">最新 K 线没有新的 12 条规则事件</span>';
+      : '<span class="rule-pill empty">最新 K 线没有新的 '+escapeHtml(strategy.selector_label||'策略')+' 事件</span>';
 
+    renderPolicy(strategy);
     renderRules(strategy);
     renderEvents(payload.events);
     drawChart(payload);
   }
 
-  async function load(symbol,timeframe,force){
+  async function load(symbol,timeframe,force,strategyId){
     const normalized=String(symbol||'').trim().toUpperCase();
     const selected=String(timeframe||'').trim();
     if(!/^[A-Z0-9.\-^]{1,15}$/.test(normalized)){
@@ -622,7 +655,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     }
     clearError();setLoading(true);
     try{
-      const params=new URLSearchParams({symbol:normalized,timeframe:selected});
+      const params=new URLSearchParams({symbol:normalized,timeframe:selected,strategy:String(strategyId||currentStrategy||'v7')});
       if(force)params.set('refresh','1');
       const response=await fetch('/api/analyze?'+params.toString(),{cache:'no-store'});
       const payload=await response.json();
@@ -635,9 +668,13 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     }
   }
 
-  form.addEventListener('submit',e=>{e.preventDefault();load(input.value,timeframeSelect.value,false);});
-  timeframeSelect.addEventListener('change',()=>load(input.value,timeframeSelect.value,false));
-  refreshButton.addEventListener('click',()=>load(input.value,timeframeSelect.value,true));
+  form.addEventListener('submit',e=>{e.preventDefault();load(input.value,timeframeSelect.value,false,currentStrategy);});
+  timeframeSelect.addEventListener('change',()=>load(input.value,timeframeSelect.value,false,currentStrategy));
+  refreshButton.addEventListener('click',()=>load(input.value,timeframeSelect.value,true,currentStrategy));
+  strategyButtons.forEach(btn=>btn.addEventListener('click',()=>{
+    currentStrategy=String(btn.dataset.strategy||'v7');
+    load(input.value,timeframeSelect.value,false,currentStrategy);
+  }));
 
   let resizeTimer=null;
   window.addEventListener('resize',()=>{
@@ -645,7 +682,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     resizeTimer=setTimeout(()=>{if(currentPayload)drawChart(currentPayload);},150);
   });
 
-  load(currentSymbol,currentTimeframe,false);
+  load(currentSymbol,currentTimeframe,false,currentStrategy);
 })();
 </script>
 </body>
