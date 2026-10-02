@@ -11,18 +11,11 @@ Status: **CLOSED**
 
 Implemented:
 - official Binance modular USDⓈ-M SDK pinned at 17.5.0
-- hard TESTNET-only authenticated adapter
+- authenticated Demo adapter and account/position/order readback
 - exchange information / filters / leverage brackets
 - One-way + Isolated validation/apply paths
 - leverage mutation
-- account / position / order readback
-- Testnet LIMIT BUY submit + cancel primitives
-
-Still required before M2 may be CLOSED:
-- real Binance Futures Testnet credentials
-- authenticated account and four-symbol checks
-- account settings apply/readback PASS
-- one submit/cancel probe PASS with no orphan order
+- submit/cancel primitives and verified Demo connection path
 
 ## M2.1 — Four independent Strategy Slots
 Status: **IMPLEMENTED_AND_VERIFIED**
@@ -46,7 +39,7 @@ Added:
 - API Secret stored only in process memory
 - no credential persistence to SQLite
 - no secret echo to UI or API status
-- connection test against Binance Futures Testnet
+- connection test against Binance Futures Testnet / Demo path
 - virtual USDT total balance display
 - virtual available balance display
 - non-zero managed-position count
@@ -84,8 +77,7 @@ Fixes Android/SiftAlpha local port collisions:
 ## M2.3.2 — Binance Futures Demo routing
 Status: **IMPLEMENTED_AND_VERIFIED**
 
-Fixes the virtual-account environment mismatch:
-- Web credentials now route to Binance Futures Demo
+- Web credentials route to Binance Futures Demo
 - Demo REST base URL: https://demo-fapi.binance.com
 - SDK configuration/constants are imported from binance_common
 - Futures Testnet remains available only for lower-level compatibility
@@ -94,7 +86,6 @@ Fixes the virtual-account environment mismatch:
 ## M2.3.3 — Binance server clock synchronization
 Status: **IMPLEMENTED_AND_VERIFIED**
 
-Fixes Binance error -1021 / timestamp outside recvWindow:
 - fetch Binance Futures Demo server time before signed requests
 - estimate offset using the midpoint of request round-trip time
 - patch only the current Python process SDK timestamp generator
@@ -104,9 +95,10 @@ Fixes Binance error -1021 / timestamp outside recvWindow:
 - strategy logic remains unchanged
 
 ## M3 — Frozen 5s-crypto V1 signal engine + execution
-Status: **IMPLEMENTED_AWAITING_DEVICE_ACCEPTANCE**
+Status: **CLOSED**
 
-User accepted the M2 Demo connection path on 2026-10-01 and authorized entry into M3.
+Joint real-device acceptance with M4: **PASS**
+Acceptance date: **2026-10-02**
 
 ### M3.1 — Frozen signal engine parity
 Status: **IMPLEMENTED_AND_VERIFIED**
@@ -114,7 +106,6 @@ Status: **IMPLEMENTED_AND_VERIFIED**
 Scope:
 - exact Python port of the frozen research state/signal equations
 - bar-by-bar parity test against the frozen JavaScript research implementation
-- no scheduler or order execution yet
 
 ### M3.2 — Four-symbol independent scheduler
 Status: **IMPLEMENTED_AND_VERIFIED**
@@ -135,9 +126,12 @@ Implemented:
 - wired into the running Web app scheduler
 
 ## M4 — Recovery + end-to-end Demo acceptance
-Status: **IMPLEMENTED_AWAITING_DEVICE_ACCEPTANCE**
+Status: **CLOSED**
 
-Implemented:
+Joint real-device acceptance with M3: **PASS**
+Acceptance date: **2026-10-02**
+
+Implemented and accepted:
 - per-symbol startup/reconnect reconciliation gate
 - SQLite filled-order ledger vs Binance Demo position reconciliation
 - pending-order crash recovery by clientOrderId
@@ -146,8 +140,6 @@ Implemented:
 - no stale signal backfill after downtime; recovery rebases at latest closed bar
 - PnL/funding/fee refresh after recovery
 - explicit re-reconcile, strategy-order cancel, and emergency-flat controls
-
-M3 and M4 will be accepted together on the user's real SiftAlpha + Binance Demo environment.
 
 ### M4.1 — Visualization and compact dashboard
 Status: **IMPLEMENTED_AND_VERIFIED**
@@ -164,6 +156,27 @@ Status: **IMPLEMENTED_AND_VERIFIED**
 - 3m / 5m are available as experimental monitoring/trading timeframes; frozen strategy equations and the 220-bar scheduler fetch window remain unchanged
 - CI Run 36832764258 PASS
 
+## Final closure
+
+`M3 = CLOSED`
+
+`M4 = CLOSED`
+
+`5S_CRYPTO_V1_BINANCE_DEMO_INTEGRATION_ROUND = CLOSED`
+
+The frozen 5s-crypto V1 strategy rules were not changed by this closure.
+
 ## Hard stop boundary
-This development round ends at M4.
-No LIVE, cross-symbol capital rebalancing, dynamic leverage, automatic budget optimization, Hedge Mode, short selling, Cross Margin, other exchanges, or strategy optimization.
+
+This development round is formally closed at M4.
+
+Not included:
+- LIVE
+- cross-symbol capital rebalancing
+- dynamic leverage
+- automatic budget optimization
+- Hedge Mode
+- short selling
+- Cross Margin
+- other exchanges
+- strategy optimization
