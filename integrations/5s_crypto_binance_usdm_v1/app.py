@@ -175,6 +175,7 @@ def chart_payload(symbol: str) -> dict[str, object]:
         "provider_id": fetched.provider_id,
         "market_id": fetched.market_id,
         "signal_source": "冻结 5s 策略 · 无需 API",
+        "stream_url": fetched.stream_url,
         "candles": candles,
         "markers": markers,
     }
