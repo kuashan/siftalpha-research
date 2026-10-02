@@ -52,6 +52,9 @@ class MarketDataProvider(Protocol):
     def klines(self, symbol: str, timeframe: str, limit: int = 300) -> list[Any]:
         ...
 
+    def stream_url(self, symbol: str) -> str | None:
+        ...
+
 
 @dataclass(frozen=True)
 class MarketDataFetch:
@@ -61,6 +64,7 @@ class MarketDataFetch:
     symbol: str
     timeframe: str
     rows: list[Any]
+    stream_url: str | None = None
 
 
 class BinancePublicMarketDataProvider:
@@ -78,6 +82,12 @@ class BinancePublicMarketDataProvider:
         if not isinstance(rows, list):
             raise RuntimeError("币安公开行情返回格式异常")
         return rows
+
+    def stream_url(self, symbol: str) -> str | None:
+        name = str(symbol or "").strip().lower()
+        if not name:
+            return None
+        return f"wss://fstream.binance.com/market/ws/{name}@ticker"
 
 
 class MarketDataRouter:
@@ -115,6 +125,8 @@ class MarketDataRouter:
                 # Important: every fallback provider fetches the complete window.
                 # We never splice provider A and provider B bars together.
                 rows = provider.klines(symbol, timeframe, limit=limit)
+                stream_factory = getattr(provider, "stream_url", None)
+                stream_url = stream_factory(symbol) if callable(stream_factory) else None
                 return MarketDataFetch(
                     market_id=market,
                     provider_id=provider.provider_id,
@@ -122,6 +134,7 @@ class MarketDataRouter:
                     symbol=symbol,
                     timeframe=timeframe,
                     rows=rows,
+                    stream_url=stream_url,
                 )
             except Exception as exc:
                 errors.append(f"{provider.provider_id}:{type(exc).__name__}:{exc}")
