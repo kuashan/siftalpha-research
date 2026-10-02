@@ -56,9 +56,49 @@ jobs:
         run: |
           set -euo pipefail
           unzip -l SLTD-V7-SiftAlpha-CryptoCompatible-v5.zip
-          unzip -p SLTD-V7-SiftAlpha-CryptoCompatible-v5.zip .project.json | grep -q '"name": "SLTD V7"'
-          unzip -p SLTD-V7-SiftAlpha-CryptoCompatible-v5.zip README-STUDIO.txt | grep -q 'SIFTALPHA_WEB_URL'
-          unzip -p SLTD-V7-SiftAlpha-CryptoCompatible-v5.zip requirements.txt | grep -q 'standard library'
+          python - <<'PY'
+          import zipfile
+          z=zipfile.ZipFile('SLTD-V7-SiftAlpha-CryptoCompatible-v5.zip')
+          names=set(z.namelist())
+          required={'app.py','strategy.py','data_provider.py','requirements.txt','templates/index.html'}
+          missing=required-names
+          assert not missing, missing
+          assert '.project.json' not in names
+          assert 'README-STUDIO.txt' not in names
+          app=z.read('app.py').decode('utf-8')
+          assert 'ThreadingHTTPServer' in app
+          assert 'SIFTALPHA_WEB_URL=' in app
+          print('PACKAGE_VERIFY_PASS')
+          PY
+
+      - name: Full process startup smoke
+        run: |
+          set -euo pipefail
+          rm -f /tmp/sltd-v5.log /tmp/sltd-v5.pid
+          (
+            cd integrations/sltd_v7_siftalpha_v1
+            python app.py > /tmp/sltd-v5.log 2>&1 &
+            echo $! > /tmp/sltd-v5.pid
+          )
+          for i in $(seq 1 40); do
+            if grep -q '^SIFTALPHA_WEB_URL=' /tmp/sltd-v5.log; then
+              break
+            fi
+            sleep 0.25
+          done
+          cat /tmp/sltd-v5.log
+          url="$(sed -n 's/^SIFTALPHA_WEB_URL=//p' /tmp/sltd-v5.log | tail -n 1)"
+          test -n "$url"
+          python - "$url" <<'PY'
+          import json, sys, urllib.request
+          url=sys.argv[1].rstrip('/')+'/api/health'
+          with urllib.request.urlopen(url, timeout=5) as r:
+              payload=json.load(r)
+          assert payload['ok'] is True
+          assert payload['active_rules'] == 12
+          print('FULL_PROCESS_WEB_PASS', url)
+          PY
+          kill "$(cat /tmp/sltd-v5.pid)" || true
 
       - name: Stage direct-import artifact
         run: |
