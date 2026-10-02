@@ -19,10 +19,12 @@ class GateSession:
 
 
 class GateAdapter:
-    calls = []
-
     def __init__(self, **kwargs):
         pass
+
+
+class PublicMarket:
+    calls = []
 
     def klines(self, symbol, timeframe, limit):
         self.calls.append(symbol)
@@ -39,7 +41,7 @@ class M4SchedulerGateTests(unittest.TestCase):
             store.seed(symbols, 1, 100, "1d")
             store.set_symbol_enabled("BTCUSDT", True)
             store.set_symbol_enabled("ETHUSDT", True)
-            GateAdapter.calls = []
+            PublicMarket.calls = []
 
             scheduler = StrategyScheduler(
                 store=store,
@@ -47,11 +49,14 @@ class M4SchedulerGateTests(unittest.TestCase):
                 symbols=symbols,
                 allowed_timeframes=("1d",),
                 adapter_factory=GateAdapter,
+                market_data_provider=PublicMarket(),
                 minimum_closed_bars=64,
             )
             result = scheduler.run_once()
 
-            self.assertEqual(GateAdapter.calls, ["BTCUSDT"])
+            # Recovery gates execution only; public signal monitoring still reads
+            # both symbols from the market-data layer.
+            self.assertEqual(PublicMarket.calls, ["BTCUSDT", "ETHUSDT"])
             self.assertEqual(result["ETHUSDT"]["state"], "WAITING_RECONCILE")
             self.assertEqual(result["BTCUSDT"]["state"], "MONITORING")
 
