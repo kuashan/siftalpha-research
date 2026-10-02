@@ -1,1 +1,6 @@
 # SLTD V7 runtime uses only the Python standard library.
+# This pip option is intentionally kept as an active requirements line so
+# SiftAlpha does not route this long-running Web server through Embedded CPython.
+# It is harmless for pip, but SiftAlpha's Embedded CPython requirement parser
+# rejects option lines and therefore selects Internal Alpine instead.
+--only-binary=:all:
