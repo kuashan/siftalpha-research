@@ -651,6 +651,7 @@ def analyze(symbol: str, candles: Iterable[dict], display_limit: int = 300, time
                 "GZB4": row["GZB4"],
                 "ZD1": row["ZD1"],
                 "ZK1": row["ZK1"],
+                "BS": row["BS"],
                 "position": float(pos.get("fraction") or 0.0),
                 "risk_armed": bool(pos.get("risk_armed")),
             }
@@ -661,6 +662,8 @@ def analyze(symbol: str, candles: Iterable[dict], display_limit: int = 300, time
 
     return {
         "strategy": {
+            "id": "v7",
+            "selector_label": "12条策略",
             "version": STRATEGY_VERSION,
             "source_commit": STRATEGY_SOURCE_COMMIT,
             "position_policy": POSITION_POLICY_ID,
@@ -681,6 +684,17 @@ def analyze(symbol: str, candles: Iterable[dict], display_limit: int = 300, time
             "timeframe": str(timeframe),
             "bar_close_contract": "CONFIRMED_ON_SELECTED_BAR_CLOSE_EXECUTE_ON_NEXT_SELECTED_BAR_OPEN",
             "bar_close_contract_zh": "所选周期 K 线结束后确认信号，并在下一根同周期 K 线开盘执行",
+            "rules_title_zh": "SLTD V7 当前 12 条规则",
+            "policy_title_zh": "统一仓位 / 退出执行策略",
+            "summary_state_label_zh": "C2 风险状态",
+            "policy_steps_zh": [
+                "① 首次买入：空仓 → 25%",
+                "② 后续买入：每次 +25 个百分点，最高 100%",
+                "③ 普通卖出：卖当前仓位 25%",
+                "④ 卖出后：C2 风险状态 → 已警戒",
+                "⑤ C2：已警戒 + 绿色 + 最高价低于 GZB4",
+                "⑥ 下一根所选周期 K 线开盘全部清仓 → 0%",
+            ],
         },
         "snapshot": {
             "symbol": snapshot.symbol,
@@ -698,10 +712,12 @@ def analyze(symbol: str, candles: Iterable[dict], display_limit: int = 300, time
             "position_fraction": snapshot.position_fraction,
             "risk_state": snapshot.risk_state,
             "risk_state_zh": RISK_NAMES_ZH.get(snapshot.risk_state, snapshot.risk_state),
+            "risk_sub_zh": "等待 C2 条件或后续实际买入重置" if snapshot.risk_state == "ARMED" else "正常监测",
             "next_action": snapshot.next_action,
             "GZB4": ledger[-1]["GZB4"],
             "ZD1": ledger[-1]["ZD1"],
             "ZK1": ledger[-1]["ZK1"],
+            "BS": ledger[-1]["BS"],
         },
         "chart": chart,
         "markers": markers,
