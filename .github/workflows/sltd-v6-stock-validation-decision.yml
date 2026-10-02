@@ -1,0 +1,55 @@
+name: SLTD V6 Stock Validation Decision
+
+on:
+  push:
+    branches:
+      - research/sltd-v6-position-policy-v1
+    paths:
+      - "research/ssss_reboot_v1/phase7/merge_sltd_v6_stock_validation_v1.py"
+      - ".github/workflows/sltd-v6-stock-validation-decision.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  decide:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/sltd-v6-position-policy-v1
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Merge validation batches and apply frozen gates
+        run: |
+          python research/ssss_reboot_v1/phase7/merge_sltd_v6_stock_validation_v1.py
+
+      - name: Verify decision outputs
+        run: |
+          set -euo pipefail
+          test -f research/ssss_reboot_v1/phase7/SLTD_V6_POSITION_POLICY_STOCK_VALIDATION_DECISION_v1.json
+          test -f research/ssss_reboot_v1/phase7/SLTD_V6_POSITION_POLICY_STOCK_VALIDATION_DECISION_v1.md
+          grep -q 'Status: \*\*COMPLETE\*\*' research/ssss_reboot_v1/phase7/SLTD_V6_POSITION_POLICY_STOCK_VALIDATION_DECISION_v1.md
+          grep -Eq 'SLTD_V6_STOCK_POLICY = (PROMOTED|NO_POLICY_PROMOTED)' research/ssss_reboot_v1/phase7/SLTD_V6_POSITION_POLICY_STOCK_VALIDATION_DECISION_v1.md
+
+      - name: Commit stock validation decision
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ssss_reboot_v1/phase7/SLTD_V6_POSITION_POLICY_STOCK_VALIDATION_DECISION_v1.json
+          git add research/ssss_reboot_v1/phase7/SLTD_V6_POSITION_POLICY_STOCK_VALIDATION_DECISION_v1.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "research: decide SLTD V6 stock position policy"
+          git push origin HEAD:research/sltd-v6-position-policy-v1
