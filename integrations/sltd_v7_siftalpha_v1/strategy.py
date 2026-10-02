@@ -34,57 +34,45 @@ POLICY_START_DATE = "2020-01-02"
 MIN_WARMUP_BARS = 120
 
 REMOVED_V6_RULES = (
-    "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT",
-    "SELL_RECENT_BLUE_GRAY_LIGHT_RESIST",
-    "NEW_V5_D_GREEN_11_20_UPPER_WICK_ONLY",
+    "已移除：近期蓝/灰轻支撑买入",
+    "已移除：近期蓝/灰轻阻力卖出",
+    "已移除：绿色第11至20根上轨仅影线卖出",
 )
 
 ACTIVE_RULES = {
     "BUY": (
-        "BUY_BLUE_21P_LOWER",
-        "BUY_GRAY_4_10_LIGHT_SUPPORT",
-        "BLUE_11_20_LOWER_WICK_ONLY",
-        "NEW_V5_C_GRAY_4_10_LOWER_WICK_ONLY",
+        "蓝色持续21根以上：下轨触发买入",
+        "灰色第4至10根：轻支撑触发买入",
+        "蓝色第11至20根：下轨仅影线触发买入",
+        "灰色第4至10根：下轨仅影线触发买入",
     ),
     "HOLD": (
-        "CONT_BLUE_11_20_UPPER",
-        "CONT_BLUE_4_10_UPPER",
-        "CONT_RECENT_GRAY_BLUE_UPPER",
-        "NEW_V5_B_BLUE_21P_UPPER_CLOSE_ABOVE",
+        "蓝色第11至20根：上轨触发继续持有",
+        "蓝色第4至10根：上轨触发继续持有",
+        "近期灰转蓝：上轨触发继续持有",
+        "蓝色持续21根以上：收盘站上上轨继续持有",
     ),
     "WAIT": (
-        "AVOID_GREEN_11_20_LOWER",
-        "GREEN_11_20_LOWER_CLOSE_BELOW",
+        "绿色第11至20根：下轨触发等待",
+        "绿色第11至20根：收盘跌破下轨继续等待",
     ),
     "SELL": (
-        "GREEN_4_10_UPPER",
-        "NEW_V5_E_GREEN_11_20_LIGHT_RESIST",
+        "绿色第4至10根：上轨触发卖出",
+        "绿色第11至20根：轻阻力触发卖出",
     ),
 }
 
 ACTION_ORDER = ("BUY", "HOLD", "WAIT", "SELL")
 
-# 中文展示名。英文字符串仍作为冻结研究的内部机器 ID，避免中文化改变策略语义或回归基线。
+# 运行包直接使用中文规则名。冻结研究中的英文规则编号只保留在研究事实源和回归测试里，
+# 不再作为这个 SiftAlpha 中文包的用户可见规则名称。
 RULE_NAMES_ZH = {
-    "BUY_BLUE_21P_LOWER": "蓝色持续21根以上：下轨触发买入",
-    "BUY_GRAY_4_10_LIGHT_SUPPORT": "灰色第4至10根：轻支撑触发买入",
-    "BLUE_11_20_LOWER_WICK_ONLY": "蓝色第11至20根：下轨仅影线触发买入",
-    "NEW_V5_C_GRAY_4_10_LOWER_WICK_ONLY": "灰色第4至10根：下轨仅影线触发买入",
-    "CONT_BLUE_11_20_UPPER": "蓝色第11至20根：上轨触发继续持有",
-    "CONT_BLUE_4_10_UPPER": "蓝色第4至10根：上轨触发继续持有",
-    "CONT_RECENT_GRAY_BLUE_UPPER": "近期灰转蓝：上轨触发继续持有",
-    "NEW_V5_B_BLUE_21P_UPPER_CLOSE_ABOVE": "蓝色持续21根以上：收盘站上上轨继续持有",
-    "AVOID_GREEN_11_20_LOWER": "绿色第11至20根：下轨触发等待",
-    "GREEN_11_20_LOWER_CLOSE_BELOW": "绿色第11至20根：收盘跌破下轨继续等待",
-    "GREEN_4_10_UPPER": "绿色第4至10根：上轨触发卖出",
-    "NEW_V5_E_GREEN_11_20_LIGHT_RESIST": "绿色第11至20根：轻阻力触发卖出",
+    name: name
+    for rules in ACTIVE_RULES.values()
+    for name in rules
 }
 
-REMOVED_V6_RULE_NAMES_ZH = {
-    "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT": "已移除：近期蓝/灰轻支撑买入",
-    "SELL_RECENT_BLUE_GRAY_LIGHT_RESIST": "已移除：近期蓝/灰轻阻力卖出",
-    "NEW_V5_D_GREEN_11_20_UPPER_WICK_ONLY": "已移除：绿色第11至20根上轨仅影线卖出",
-}
+REMOVED_V6_RULE_NAMES_ZH = {name: name for name in REMOVED_V6_RULES}
 
 ACTION_NAMES_ZH = {
     "BUY": "买入",
@@ -323,35 +311,35 @@ def build_ledger(candles: Iterable[dict], symbol: str) -> list[dict]:
 
         # 买入规则——V7 当前启用规则；V6 的“近期蓝/灰轻支撑买入”已移除。
         if state == "BLUE" and run_age >= 21 and lower:
-            actions["BUY"].append("BUY_BLUE_21P_LOWER")
+            actions["BUY"].append("蓝色持续21根以上：下轨触发买入")
         if state == "GRAY" and 4 <= run_age <= 10 and light_support:
-            actions["BUY"].append("BUY_GRAY_4_10_LIGHT_SUPPORT")
+            actions["BUY"].append("灰色第4至10根：轻支撑触发买入")
         if state == "BLUE" and 11 <= run_age <= 20 and lower and lower_subtype == "WICK_ONLY":
-            actions["BUY"].append("BLUE_11_20_LOWER_WICK_ONLY")
+            actions["BUY"].append("蓝色第11至20根：下轨仅影线触发买入")
         if state == "GRAY" and 4 <= run_age <= 10 and lower and lower_subtype == "WICK_ONLY":
-            actions["BUY"].append("NEW_V5_C_GRAY_4_10_LOWER_WICK_ONLY")
+            actions["BUY"].append("灰色第4至10根：下轨仅影线触发买入")
 
         # 持有规则
         if state == "BLUE" and 11 <= run_age <= 20 and upper:
-            actions["HOLD"].append("CONT_BLUE_11_20_UPPER")
+            actions["HOLD"].append("蓝色第11至20根：上轨触发继续持有")
         if state == "BLUE" and 4 <= run_age <= 10 and upper:
-            actions["HOLD"].append("CONT_BLUE_4_10_UPPER")
+            actions["HOLD"].append("蓝色第4至10根：上轨触发继续持有")
         if state == "BLUE" and current_origin == "GRAY" and run_age <= 5 and upper:
-            actions["HOLD"].append("CONT_RECENT_GRAY_BLUE_UPPER")
+            actions["HOLD"].append("近期灰转蓝：上轨触发继续持有")
         if state == "BLUE" and run_age >= 21 and upper and upper_subtype == "CLOSE_ABOVE":
-            actions["HOLD"].append("NEW_V5_B_BLUE_21P_UPPER_CLOSE_ABOVE")
+            actions["HOLD"].append("蓝色持续21根以上：收盘站上上轨继续持有")
 
         # 等待规则
         if state == "GREEN" and 11 <= run_age <= 20 and lower:
-            actions["WAIT"].append("AVOID_GREEN_11_20_LOWER")
+            actions["WAIT"].append("绿色第11至20根：下轨触发等待")
         if state == "GREEN" and 11 <= run_age <= 20 and lower and lower_subtype == "CLOSE_BELOW":
-            actions["WAIT"].append("GREEN_11_20_LOWER_CLOSE_BELOW")
+            actions["WAIT"].append("绿色第11至20根：收盘跌破下轨继续等待")
 
         # 卖出规则——V7 已移除旧 S1 和 S3。
         if state == "GREEN" and 4 <= run_age <= 10 and upper:
-            actions["SELL"].append("GREEN_4_10_UPPER")
+            actions["SELL"].append("绿色第4至10根：上轨触发卖出")
         if state == "GREEN" and 11 <= run_age <= 20 and light_resist:
-            actions["SELL"].append("NEW_V5_E_GREEN_11_20_LIGHT_RESIST")
+            actions["SELL"].append("绿色第11至20根：轻阻力触发卖出")
 
         rows.append(
             {
