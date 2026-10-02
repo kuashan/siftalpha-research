@@ -11,7 +11,7 @@ from pathlib import Path
 from urllib.request import urlopen
 
 
-REPO = Path(__file__).resolve().parents[4]
+REPO = Path(__file__).resolve().parents[3]
 PROJECT = REPO / "integrations" / "sltd_v7_siftalpha_v1"
 sys.path.insert(0, str(PROJECT))
 
