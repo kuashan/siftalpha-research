@@ -1,0 +1,74 @@
+name: 5s-crypto M3-M4
+
+on:
+  push:
+    branches:
+      - feature/5s-crypto-binance-usdm-v1
+    paths:
+      - "integrations/5s_crypto_binance_usdm_v1/**"
+      - ".github/workflows/5s-crypto-m2.yml"
+  workflow_dispatch:
+
+jobs:
+  m3-m4-offline:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: integrations/5s_crypto_binance_usdm_v1
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: integrations/5s_crypto_binance_usdm_v1/requirements.txt
+
+      - name: Install official Binance SDK
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Compile
+        run: |
+          python -m py_compile app.py charting.py config.py storage.py m2_testnet_check.py engine/paper.py engine/scheduler.py engine/execution.py engine/recovery.py exchange/binance_usdm_public.py exchange/binance_usdm_testnet.py strategy/frozen_contract.py strategy/frozen_signal_engine.py
+
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Frozen JS/Python signal parity
+        run: |
+          command -v node
+          python -m unittest tests.test_m3_signal_engine_parity -v
+
+      - name: M4 recovery gate tests
+        run: |
+          python -m unittest tests.test_m4_recovery -v
+          python -m unittest tests.test_m4_scheduler_gate -v
+
+      - name: PAPER app import
+        env:
+          FIVES_MODE: PAPER
+          FIVES_DB_PATH: /tmp/5s_crypto_m2_ci.db
+        run: python -c "import app; assert app.settings.mode == 'PAPER'; print('PAPER_IMPORT_PASS')"
+
+      - name: Demo credential guard
+        env:
+          FIVES_MODE: DEMO
+          FIVES_DB_PATH: /tmp/5s_crypto_m2_ci_guard.db
+        run: |
+          set +e
+          output="$(python m2_testnet_check.py 2>&1)"
+          code=$?
+          set -e
+          echo "$output"
+          test "$code" -eq 2
+          echo "$output" | grep -q "Demo API credentials missing"
+          echo "DEMO_CREDENTIAL_GUARD_PASS"
+
+      - name: Upload M3+M4 test package
+        uses: actions/upload-artifact@v4
+        with:
+          name: 5s-crypto-v1-binance-usdm-m3-m4-chart-test
+          path: integrations/5s_crypto_binance_usdm_v1
+          if-no-files-found: error
