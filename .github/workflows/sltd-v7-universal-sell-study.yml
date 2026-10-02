@@ -1,0 +1,80 @@
+name: SLTD V7 Universal Sell Study
+
+on:
+  push:
+    branches:
+      - research/sltd-v7-universal-sell-study-v1
+    paths:
+      - "research/ssss_reboot_v1/phase8/sltd_v7_universal_sell_study_v1.py"
+      - "research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_STUDY_PROTOCOL_v1.md"
+      - "integrations/sltd_v7_siftalpha_v1/**"
+      - ".github/workflows/sltd-v7-universal-sell-study.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      SLTD_RUNTIME_DATA_DIR: /tmp/sltd-universal-sell-cache
+    steps:
+      - name: Checkout exact research branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/sltd-v7-universal-sell-study-v1
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile study and strategy
+        run: |
+          python -m compileall \
+            integrations/sltd_v7_siftalpha_v1 \
+            research/ssss_reboot_v1/phase8/sltd_v7_universal_sell_study_v1.py
+
+      - name: Run universal sell study
+        run: |
+          set -euo pipefail
+          rm -rf "$SLTD_RUNTIME_DATA_DIR"
+          python research/ssss_reboot_v1/phase8/sltd_v7_universal_sell_study_v1.py
+
+      - name: Verify all four batches and merged result
+        run: |
+          set -euo pipefail
+          for n in 01 02 03 04; do
+            test -f "research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_BATCH_${n}_v1.json"
+          done
+          test -f research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_STUDY_RESULT_v1.json
+          test -f research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_STUDY_RESULT_v1.md
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_STUDY_RESULT_v1.json")
+          x=json.loads(p.read_text())
+          assert x["status"] == "IMPLEMENTED_AND_VERIFIED"
+          assert x["scope"]["stocks"] == 20
+          assert x["scope"]["series"] == 60
+          assert x["scope"]["timeframes"] == ["1h","4h","1d"]
+          assert len(x["summary"]) == 8
+          print("RESULT_VERIFY_PASS")
+          PY
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-v7-universal-sell-study-v1
+          path: |
+            research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_BATCH_01_v1.json
+            research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_BATCH_02_v1.json
+            research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_BATCH_03_v1.json
+            research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_BATCH_04_v1.json
+            research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_STUDY_RESULT_v1.json
+            research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_STUDY_RESULT_v1.md
+          if-no-files-found: error
+          retention-days: 30
