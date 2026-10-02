@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>SLTD V7 · SiftAlpha</title>
+<title>SLTD V7 · SiftAlpha 中文版</title>
 <style>
 :root{
   color-scheme:dark;
@@ -145,8 +145,8 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       <div class="badges">
         <span class="badge v7">12 条规则</span>
         <span class="badge" id="timeframe-badge">__DEFAULT_TIMEFRAME__</span>
-        <span class="badge c2">C2 Hard Exit</span>
-        <span class="badge local">本地 Web</span>
+        <span class="badge c2">C2 强制清仓</span>
+        <span class="badge local">本地网页</span>
       </div>
     </div>
 
@@ -177,7 +177,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     <div class="summary-card">
       <small>SLTD 状态</small>
       <strong id="summary-state">—</strong>
-      <span id="summary-age">Age —</span>
+      <span id="summary-age">持续根数 —</span>
     </div>
     <div class="summary-card">
       <small>C2 风险状态</small>
@@ -196,7 +196,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       <div class="decision-meta">
         <div><small>股票</small><b id="meta-symbol">—</b></div>
         <div><small>最新已完成 K 线</small><b id="meta-date">—</b></div>
-        <div><small>Origin</small><b id="meta-origin">—</b></div>
+        <div><small>前序状态</small><b id="meta-origin">—</b></div>
         <div><small>当前 K 线</small><b id="meta-forming">—</b></div>
       </div>
     </div>
@@ -223,12 +223,12 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     </div>
     <div class="chart-legend">
       <span><i class="legend-dot legend-band"></i>GZB3 / GZB4 慢灰带</span>
-      <span><i class="legend-dot legend-blue"></i>BLUE</span>
-      <span><i class="legend-dot legend-gray"></i>GRAY</span>
-      <span><i class="legend-dot legend-green"></i>GREEN</span>
-      <span><i class="legend-dot legend-buy"></i>B 买入</span>
-      <span><i class="legend-dot legend-sell"></i>S 普通卖出</span>
-      <span><i class="legend-dot legend-exit"></i>X C2 清仓</span>
+      <span><i class="legend-dot legend-blue"></i>蓝色</span>
+      <span><i class="legend-dot legend-gray"></i>灰色</span>
+      <span><i class="legend-dot legend-green"></i>绿色</span>
+      <span><i class="legend-dot legend-buy"></i>买入标记</span>
+      <span><i class="legend-dot legend-sell"></i>普通卖出标记</span>
+      <span><i class="legend-dot legend-exit"></i>C2 清仓标记</span>
     </div>
     <div class="indicator-grid">
       <div class="indicator"><small>GZB4 · 慢灰带下轨</small><b id="value-gzb4">—</b></div>
@@ -241,15 +241,15 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
   <section class="policy-card">
     <div class="section-title">
       <h2>统一仓位 / 退出执行策略</h2>
-      <span>__POSITION_POLICY_ID__ · __HARD_EXIT_ID__</span>
+      <span>__POSITION_POLICY_NAME_ZH__ · __HARD_EXIT_NAME_ZH__</span>
     </div>
     <div class="policy-flow">
-      <div class="flow-step"><small>① 首次 BUY</small><b>空仓 → 25%</b></div>
-      <div class="flow-step"><small>② 后续 BUY</small><b>每次 +25 个百分点，最高 100%</b></div>
-      <div class="flow-step"><small>③ 普通 SELL</small><b>卖当前仓位 25%</b></div>
-      <div class="flow-step"><small>④ SELL 后</small><b>风险状态 → ARMED</b></div>
-      <div class="flow-step"><small>⑤ C2</small><b>ARMED + GREEN + High &lt; GZB4</b></div>
-      <div class="flow-step"><small>⑥ Hard Exit</small><b>下一根所选周期 K 线开盘全部清仓 → 0%</b></div>
+      <div class="flow-step"><small>① 首次买入</small><b>空仓 → 25%</b></div>
+      <div class="flow-step"><small>② 后续买入</small><b>每次 +25 个百分点，最高 100%</b></div>
+      <div class="flow-step"><small>③ 普通卖出</small><b>卖当前仓位 25%</b></div>
+      <div class="flow-step"><small>④ 卖出后</small><b>风险状态 → 已警戒</b></div>
+      <div class="flow-step"><small>⑤ C2 条件</small><b>已警戒 + 绿色 + 最高价 &lt; GZB4</b></div>
+      <div class="flow-step"><small>⑥ 强制清仓</small><b>下一根所选周期 K 线开盘全部清仓 → 0%</b></div>
     </div>
   </section>
 
@@ -261,7 +261,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     <div class="table-wrap">
       <table>
         <thead><tr>
-          <th>信号日</th><th>状态</th><th>Age</th><th>动作</th><th>命中规则</th><th>执行</th><th>执行后仓位 / 风险</th>
+          <th>信号时间</th><th>状态</th><th>持续根数</th><th>动作</th><th>命中规则</th><th>执行</th><th>执行后仓位 / 风险</th>
         </tr></thead>
         <tbody id="events-body"><tr><td class="empty-row" colspan="7">等待数据</td></tr></tbody>
       </table>
@@ -276,11 +276,11 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     <div class="rules-groups" id="rules-groups"></div>
     <details class="advanced">
       <summary>高级信息 / 研究事实源</summary>
-      <p>策略事实源 commit：__SOURCE_COMMIT_SHORT__…；Web 只负责执行冻结规则与可视化。300 根 K 线只限制图表显示；指标只使用已完成的所选周期 K 线。当前未完成 K 线不会参与正式信号。</p>
+      <p>策略事实源提交：__SOURCE_COMMIT_SHORT__…；网页只负责执行冻结规则与可视化。300 根 K 线只限制图表显示；指标只使用已完成的所选周期 K 线。当前未完成 K 线不会参与正式信号。</p>
     </details>
   </section>
 
-  <div class="footer-note">SLTD V7 · SiftAlpha 可运行项目 · 当前为策略分析与模拟仓位，不连接真实券商下单。</div>
+  <div class="footer-note">SLTD V7 · SiftAlpha 中文版 · 当前仅做策略分析与模拟仓位，不连接真实券商下单。</div>
 </main>
 
 <script>
