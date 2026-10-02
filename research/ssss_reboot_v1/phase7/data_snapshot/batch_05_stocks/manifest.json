@@ -1,0 +1,100 @@
+{
+  "asset_class": "STOCK",
+  "auto_adjust": false,
+  "batch": 5,
+  "candidate_scope": "FROZEN_PRIMARY_PLUS_4_BACKUPS_ONLY",
+  "fetch_end_exclusive": "2026-10-01",
+  "fetch_start": "2010-01-04",
+  "files": {
+    "ADBE": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_05_stocks/ADBE.csv.gz",
+      "rows": 4211,
+      "sha256": "b745096aadda275c75a8a669bff540682bded1b8f6be73801d69a10cdfc5558a"
+    },
+    "CRM": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_05_stocks/CRM.csv.gz",
+      "rows": 4211,
+      "sha256": "8678e49f341f91b2b1959141424110a9025e2e26f3660fd1fc5b3009475266fd"
+    },
+    "CSCO": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_05_stocks/CSCO.csv.gz",
+      "rows": 4211,
+      "sha256": "946a8912e8dc8de36414b9d537cf86d5ea1f48eb4995f5afcff3c00d2a9a6ff8"
+    },
+    "DIS": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_05_stocks/DIS.csv.gz",
+      "rows": 4211,
+      "sha256": "a0e60f985cde62e37d81a55adf29a84efd941c5e271b77649192ac5e895eb756"
+    },
+    "IBM": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_05_stocks/IBM.csv.gz",
+      "rows": 4211,
+      "sha256": "5d850852b5f6283c3a8b30ecdd175d537cf2eac698cfd9668e12528dfb827b5d"
+    },
+    "LOW": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_05_stocks/LOW.csv.gz",
+      "rows": 4211,
+      "sha256": "6109818b0f87f8127e6ae1fd0fe43b0bc7709e6cd70726325f2511e51ace02f4"
+    },
+    "NKE": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_05_stocks/NKE.csv.gz",
+      "rows": 4211,
+      "sha256": "5b4c4a6e7129eca42c999fa8f1620b8481d4995091b4453fc9d7abab0c0d3392"
+    },
+    "SBUX": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_05_stocks/SBUX.csv.gz",
+      "rows": 4211,
+      "sha256": "b6285c4daa398ed3a7e191658fc930270a4edcf9c3353e856a4e8864f3ec0d99"
+    },
+    "TGT": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_05_stocks/TGT.csv.gz",
+      "rows": 4211,
+      "sha256": "8c4ff3e7fc3c09e5a94fe8010f3857a416fdf32185195892171b0a2aa31dce15"
+    },
+    "TXN": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_05_stocks/TXN.csv.gz",
+      "rows": 4211,
+      "sha256": "53114de9096b3588f5c2db27e1b1586d774029ff233f7e085fb9bdb684153e23"
+    }
+  },
+  "formal_end": "2026-09-30",
+  "formal_start": "2020-01-02",
+  "frozen_shortlist": "SLTD_V6_POSITION_POLICY_DISCOVERY_FROZEN_SHORTLIST_v1.json",
+  "generated_at_utc": "2026-10-02T08:14:14.206562+00:00",
+  "provider": "Yahoo Finance via yfinance",
+  "repair": false,
+  "stage": "VALIDATION",
+  "study": "SLTD_V6_POSITION_POLICY_STUDY_V1",
+  "symbols": [
+    "IBM",
+    "CSCO",
+    "CRM",
+    "ADBE",
+    "TXN",
+    "DIS",
+    "NKE",
+    "SBUX",
+    "TGT",
+    "LOW"
+  ]
+}
