@@ -1,0 +1,5970 @@
+{
+  "meta": {
+    "symbol": "AAPL",
+    "main_window": "2018-01-02..2025-12-31",
+    "returned_end": "2025-12-30",
+    "main_bars": 2010,
+    "warmup_start": "2010-01-04",
+    "representation": "FIRST_OBSERVED",
+    "light_gray_band": "GZB4..GZB3",
+    "xma_modified": false,
+    "validation_of": "ABT v2.3-v2.4 frozen definitions"
+  },
+  "events": [
+    {
+      "type": "LOWER",
+      "date": "2018-01-25",
+      "t": 2029,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 61,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.025656010753316583,
+      "mfe20": 0.026532639822336446,
+      "mae20": -0.12196832446963946,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2018-03-21",
+      "t": 2067,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 15,
+      "age_bucket": "11_20",
+      "ret20": 0.008933263268523284,
+      "mfe20": 0.04478309102586553,
+      "mae20": -0.039703392304548446,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2018-04-20",
+      "t": 2088,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 11,
+      "age_bucket": "11_20",
+      "ret20": 0.124245715664977,
+      "mfe20": 0.14874487086652177,
+      "mae20": -0.030714458122133692,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2018-06-19",
+      "t": 2129,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 27,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.02536485540416833,
+      "mfe20": 0.0374818245462869,
+      "mae20": -0.026711185308848084,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2018-10-10",
+      "t": 2208,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 106,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.0296265483453505,
+      "mfe20": 0.03637454242928451,
+      "mae20": -0.08407284156036243,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2018-10-18",
+      "t": 2214,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 112,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.11392465465573343,
+      "mfe20": 0.03800570054983288,
+      "mae20": -0.13929267561851788,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2018-10-29",
+      "t": 2221,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 119,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.1790426087628607,
+      "mfe20": 0.04768184983637691,
+      "mae20": -0.19779496423303877,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2018-11-02",
+      "t": 2225,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 123,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.10921534605745131,
+      "mfe20": 0.012724117987275907,
+      "mae20": -0.17939078465394254,
+      "hit": {
+        "mid": false,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2018-11-09",
+      "t": 2230,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 128,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.17528243752139683,
+      "mfe20": -0.022595001711742557,
+      "mae20": -0.201203110480755,
+      "hit": {
+        "mid": false,
+        "upper": false,
+        "bd": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2018-12-04",
+      "t": 2246,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 13,
+      "age_bucket": "11_20",
+      "ret20": -0.16090329956420846,
+      "mfe20": -0.010809893032995621,
+      "mae20": -0.19633255985058573,
+      "hit": {
+        "mid": false,
+        "upper": false,
+        "bd": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2019-01-02",
+      "t": 2264,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 31,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.05395136778115517,
+      "mfe20": 0.07016210739615003,
+      "mae20": -0.10081053698074971,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2019-05-09",
+      "t": 2352,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 34,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.05266042247907532,
+      "mfe20": -0.00931646074133119,
+      "mae20": -0.1517038660821044,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2019-08-05",
+      "t": 2412,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 27,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.06392883004034333,
+      "mfe20": 0.10913416778731766,
+      "mae20": 0.0024826730112754714,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2019-12-03",
+      "t": 2496,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 111,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.15764119483522854,
+      "mfe20": 0.1586047407978417,
+      "mae20": 0.004740797841588096,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2020-02-03",
+      "t": 2537,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 152,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.06265794077625875,
+      "mfe20": 0.060130888356120016,
+      "mae20": -0.16940971943238514,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2020-02-24",
+      "t": 2551,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 166,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.2475350593601181,
+      "mfe20": 0.019518411697632354,
+      "mae20": -0.2869743108189684,
+      "hit": {
+        "mid": false,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2020-03-06",
+      "t": 2560,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 175,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.16475798360031824,
+      "mfe20": -0.0089610075078711,
+      "mae20": -0.26440161920907856,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2020-07-24",
+      "t": 2657,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 53,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.34287102521189894,
+      "mfe20": 0.34824272526048716,
+      "mae20": 0.006829347297953925,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2020-09-04",
+      "t": 2687,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 83,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.03687169312169303,
+      "mfe20": -0.0038029100529100024,
+      "mae20": -0.14765213293650792,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2020-09-10",
+      "t": 2690,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 86,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.013040796545951139,
+      "mfe20": 0.047052603753634736,
+      "mae20": -0.09154993391488231,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2020-09-16",
+      "t": 2694,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 90,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.08079907250512797,
+      "mfe20": 0.11825559618300185,
+      "mae20": -0.08053154374386873,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2020-10-28",
+      "t": 2724,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 120,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.04343524280575539,
+      "mfe20": 0.0970323741007193,
+      "mae20": -0.034892086330935324,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2020-10-30",
+      "t": 2726,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 122,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.09360649458019488,
+      "mfe20": 0.12061363218813148,
+      "mae20": -0.01414661032518838,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2021-02-17",
+      "t": 2799,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 195,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.046468969734026255,
+      "mfe20": -0.0009935035157443428,
+      "mae20": -0.1118159584225008,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2021-05-04",
+      "t": 2852,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 8,
+      "age_bucket": "4_10",
+      "ret20": -0.02182246382479469,
+      "mfe20": 0.026671802894016272,
+      "mae20": -0.04380132968322248,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2021-05-10",
+      "t": 2856,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 12,
+      "age_bucket": "11_20",
+      "ret20": -0.0008671659440283586,
+      "mfe20": 0.012692234923137757,
+      "mae20": -0.036263303113914014,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2021-09-15",
+      "t": 2945,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 53,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.05448566768090768,
+      "mfe20": -0.00040259679529353054,
+      "mae20": -0.07220022191639408,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2021-09-17",
+      "t": 2947,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 55,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.008352718175444585,
+      "mfe20": 0.009653580852438504,
+      "mae20": -0.053334233237494644,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2021-09-27",
+      "t": 2953,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 61,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.0224943248263052,
+      "mfe20": 0.03308791359977992,
+      "mae20": -0.048840888766595536,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2021-10-13",
+      "t": 2965,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 5,
+      "age_bucket": "4_10",
+      "ret20": 0.04974806614150862,
+      "mfe20": 0.08700589028457872,
+      "mae20": 0.0042579660776380646,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-01-10",
+      "t": 3026,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 48,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.015331900807247889,
+      "mfe20": 0.028979557465590444,
+      "mae20": -0.10157384284801674,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-01-18",
+      "t": 3031,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 53,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.017608892815076382,
+      "mfe20": 0.040341519434628825,
+      "mae20": -0.08892815076560667,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-02-22",
+      "t": 3055,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 77,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.0273855874278488,
+      "mfe20": 0.03103693822803444,
+      "mae20": -0.0865384562720024,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-03-07",
+      "t": 3064,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 2,
+      "age_bucket": "1_3",
+      "ret20": 0.12015065913370981,
+      "mfe20": 0.12749529190207154,
+      "mae20": -0.05775260514752045,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-03-10",
+      "t": 3067,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 5,
+      "age_bucket": "4_10",
+      "ret20": 0.08591975775927319,
+      "mfe20": 0.13304314912944748,
+      "mae20": -0.05311626293212224,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-04-14",
+      "t": 3092,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 7,
+      "age_bucket": "4_10",
+      "ret20": -0.10998845120627077,
+      "mfe20": 0.03775189290047165,
+      "mae20": -0.16026372800917943,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-04-22",
+      "t": 3097,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 12,
+      "age_bucket": "11_20",
+      "ret20": -0.1495765590936744,
+      "mfe20": 0.02898825817345063,
+      "mae20": -0.1803572025685889,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-05-05",
+      "t": 3106,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 9,
+      "age_bucket": "4_10",
+      "ret20": -0.07265420679977042,
+      "mfe20": 0.01703131976781269,
+      "mae20": -0.15411111819863488,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-06-10",
+      "t": 3131,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 24,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.06366221833296892,
+      "mfe20": 0.0825494056734486,
+      "mae20": -0.058995165171734754,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-08-26",
+      "t": 3184,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 14,
+      "age_bucket": "11_20",
+      "ret20": -0.0785356313409118,
+      "mfe20": 0.003911441144114347,
+      "mae20": -0.09320376482092652,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-09-13",
+      "t": 3195,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 25,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.09659386375455026,
+      "mfe20": 0.03185133905356219,
+      "mae20": -0.10497919916796672,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-09-23",
+      "t": 3203,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 7,
+      "age_bucket": "4_10",
+      "ret20": -0.021006383102199155,
+      "mfe20": 0.02851831606184385,
+      "mae20": -0.10676056017819313,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-09-28",
+      "t": 3206,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 10,
+      "age_bucket": "4_10",
+      "ret20": -0.003270088093966894,
+      "mfe20": 0.017685597971169198,
+      "mae20": -0.10324345969033633,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-10-07",
+      "t": 3213,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 7,
+      "age_bucket": "4_10",
+      "ret20": -0.012206410513424637,
+      "mfe20": 0.12427728244063907,
+      "mae20": -0.04083086703778627,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-11-04",
+      "t": 3233,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 27,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.05961844197138322,
+      "mfe20": 0.10991472756178644,
+      "mae20": -0.027388350917762594,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-12-07",
+      "t": 3255,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 10,
+      "age_bucket": "4_10",
+      "ret20": -0.08031786575847877,
+      "mfe20": 0.06406981694338021,
+      "mae20": -0.11898680289484886,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2022-12-15",
+      "t": 3261,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 16,
+      "age_bucket": "11_20",
+      "ret20": -0.004102564102564155,
+      "mfe20": 0.008424835164835276,
+      "mae20": -0.09032967032967032,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2023-03-01",
+      "t": 3311,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 10,
+      "age_bucket": "4_10",
+      "ret20": 0.10639322827059394,
+      "mfe20": 0.11582134746404238,
+      "mae20": -0.009703461564930183,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2023-08-04",
+      "t": 3419,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 118,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.041046209074882656,
+      "mfe20": 0.04357376539514446,
+      "mae20": -0.0551129152638653,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2023-08-24",
+      "t": 3433,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 1,
+      "age_bucket": "1_3",
+      "ret20": -0.00901468420455842,
+      "mfe20": 0.07710624787390863,
+      "mae20": -0.01610165551649856,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2023-09-07",
+      "t": 3442,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 10,
+      "age_bucket": "4_10",
+      "ret20": -0.01492453255237669,
+      "mfe20": 0.015431403469249982,
+      "mae20": -0.05598107681910336,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2023-09-12",
+      "t": 3445,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 13,
+      "age_bucket": "11_20",
+      "ret20": 0.011854792966534244,
+      "mfe20": 0.019398752127055996,
+      "mae20": -0.04923425978445839,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2023-09-21",
+      "t": 3452,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 20,
+      "age_bucket": "11_20",
+      "ret20": 0.008796757821925905,
+      "mfe20": 0.04835284587781552,
+      "mae20": -0.03627890739256634,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2023-09-26",
+      "t": 3455,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 23,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.008606594056373762,
+      "mfe20": 0.060362813423888495,
+      "mae20": -0.025238484226652536,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2023-10-23",
+      "t": 3474,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 6,
+      "age_bucket": "4_10",
+      "ret20": 0.10664739884393049,
+      "mfe20": 0.10930635838150282,
+      "mae20": -0.042369942196531896,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2023-10-25",
+      "t": 3476,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 8,
+      "age_bucket": "4_10",
+      "ret20": 0.1181179942654591,
+      "mfe20": 0.12758608254903092,
+      "mae20": -0.03173588359229207,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2024-01-02",
+      "t": 3522,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 28,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.006679648782589864,
+      "mfe20": 0.05785391079508728,
+      "mae20": -0.029465632406808884,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2024-02-01",
+      "t": 3543,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 6,
+      "age_bucket": "4_10",
+      "ret20": -0.038531520924756646,
+      "mfe20": 0.022423220592957316,
+      "mae20": -0.050733169217596186,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2024-02-13",
+      "t": 3551,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 14,
+      "age_bucket": "11_20",
+      "ret20": -0.07517290059560267,
+      "mfe20": 0.0026481140214915655,
+      "mae20": -0.08944003256636524,
+      "hit": {
+        "mid": false,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2024-02-26",
+      "t": 3559,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 8,
+      "age_bucket": "4_10",
+      "ret20": -0.05691096268491935,
+      "mfe20": 0.015235151247515955,
+      "mae20": -0.06993812099801278,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2024-04-10",
+      "t": 3590,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 26,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.0891644415305759,
+      "mfe20": 0.1145547741089521,
+      "mae20": -0.02205267612349504,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2024-04-19",
+      "t": 3597,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 33,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.15072727272727282,
+      "mfe20": 0.15818187878787882,
+      "mae20": -0.0013939393939392808,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2024-07-24",
+      "t": 3662,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 45,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.035965957534820125,
+      "mfe20": 0.04319580137255419,
+      "mae20": -0.10313897241415626,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2024-08-01",
+      "t": 3668,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 51,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.052344705990107876,
+      "mfe20": 0.06667887891555213,
+      "mae20": -0.10239970690602684,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2024-08-05",
+      "t": 3670,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 53,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.06450996320542846,
+      "mfe20": 0.11301189850432447,
+      "mae20": -0.039183796052945974,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2024-09-09",
+      "t": 3694,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 77,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.0035308496672852296,
+      "mfe20": 0.055135557466841734,
+      "mae20": -0.03164184509528767,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2024-09-16",
+      "t": 3699,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 82,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.06924921092597969,
+      "mfe20": 0.07752397015884016,
+      "mae20": -0.00841350737733415,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2024-10-31",
+      "t": 3732,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 115,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.05055110442211497,
+      "mfe20": 0.05267584436279926,
+      "mae20": -0.027444513301757234,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2024-11-11",
+      "t": 3739,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 122,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.10498149221781206,
+      "mfe20": 0.1069438076974536,
+      "mae20": -0.00655581322748966,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2024-11-13",
+      "t": 3741,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 124,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.10145704513148557,
+      "mfe20": 0.11407249466950953,
+      "mae20": -0.003775764036958007,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2025-01-02",
+      "t": 3774,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 157,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.0649580268624963,
+      "mfe20": 0.01427102668562541,
+      "mae20": -0.10034861183725197,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2025-02-28",
+      "t": 3812,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 3,
+      "age_bucket": "1_3",
+      "ret20": -0.09899110982467751,
+      "mfe20": 0.009055569798213758,
+      "mae20": -0.13819053919947077,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2025-03-05",
+      "t": 3815,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 6,
+      "age_bucket": "4_10",
+      "ret20": -0.05026728386072443,
+      "mfe20": 0.023882199716543706,
+      "mae20": -0.11589042521886728,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2025-03-10",
+      "t": 3818,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 9,
+      "age_bucket": "4_10",
+      "ret20": -0.202303455248813,
+      "mfe20": -0.00720942500439592,
+      "mae20": -0.2323720766660805,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2025-04-03",
+      "t": 3836,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 13,
+      "age_bucket": "11_20",
+      "ret20": 0.010630493626654802,
+      "mfe20": 0.05595747822235353,
+      "mae20": -0.1672325901865248,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BD_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2025-05-23",
+      "t": 3871,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 48,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.025759205203052193,
+      "mfe20": 0.05617867567982793,
+      "mae20": -0.0010241870230962569,
+      "hit": {
+        "mid": true,
+        "upper": false,
+        "bd": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2025-05-30",
+      "t": 3875,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 52,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.021508537639604697,
+      "mfe20": 0.03256156173455005,
+      "mae20": -0.028777708300836036,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2025-06-13",
+      "t": 3885,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 62,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.06444387884958025,
+      "mfe20": 0.10068719776024437,
+      "mae20": -0.007024652583354496,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2025-06-17",
+      "t": 3887,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 64,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.07350237170312823,
+      "mfe20": 0.10524432631363734,
+      "mae20": -0.0029134788386832033,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2025-08-01",
+      "t": 3918,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 19,
+      "age_bucket": "11_20",
+      "ret20": 0.14705010376519412,
+      "mfe20": 0.16177487894060683,
+      "mae20": -0.0034588892183021747,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2025-10-10",
+      "t": 3967,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 42,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.09458963591144465,
+      "mfe20": 0.1306723610714724,
+      "mae20": -0.0023239695029967367,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2025-10-14",
+      "t": 3969,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 44,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.11090931105460711,
+      "mfe20": 0.1192638737538847,
+      "mae20": -0.010655042983412133,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "LOWER",
+      "date": "2025-10-16",
+      "t": 3971,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 46,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.10305116185087915,
+      "mfe20": 0.12071129521115398,
+      "mae20": -0.000727419680743524,
+      "hit": {
+        "mid": true,
+        "upper": true,
+        "bd": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2018-01-05",
+      "t": 2016,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 48,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.10577142857142852,
+      "mfe20": 0.029142902857142827,
+      "mae20": -0.10857142857142854,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2018-01-12",
+      "t": 2021,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 53,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.08120164887910097,
+      "mfe20": 0.016997052346264585,
+      "mae20": -0.15161782144672198,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2018-02-15",
+      "t": 2044,
+      "state": "GREEN",
+      "origin": "BLUE",
+      "run_age": 4,
+      "age_bucket": "4_10",
+      "ret20": 0.029076825250014426,
+      "mfe20": 0.06075495693392674,
+      "mae20": -0.011445748309150905,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2018-03-09",
+      "t": 2059,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 7,
+      "age_bucket": "4_10",
+      "ret20": -0.05517279697744182,
+      "mfe20": 0.01955772863651517,
+      "mae20": -0.08617624180464489,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2018-04-17",
+      "t": 2085,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 8,
+      "age_bucket": "4_10",
+      "ret20": 0.046005385996409354,
+      "mfe20": 0.06805430879712748,
+      "mae20": -0.0987993716337523,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2018-05-02",
+      "t": 2096,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 19,
+      "age_bucket": "11_20",
+      "ret20": 0.0583338052896869,
+      "mfe20": 0.07815597213569703,
+      "mae20": -0.01206320439485753,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2018-06-01",
+      "t": 2117,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 15,
+      "age_bucket": "11_20",
+      "ret20": -0.026965937762825853,
+      "mfe20": 0.0208158116063919,
+      "mae20": -0.049989486963835206,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2018-06-12",
+      "t": 2124,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 22,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.022883295194508046,
+      "mfe20": 0.003120449344705678,
+      "mae20": -0.06006864988558358,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2018-07-10",
+      "t": 2143,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 41,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.08804833201996343,
+      "mfe20": 0.10060415024954028,
+      "mae20": -0.01439453638035193,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2018-07-12",
+      "t": 2145,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 43,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.0934408208134847,
+      "mfe20": 0.09815212270324025,
+      "mae20": -0.010260168559912075,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2018-07-24",
+      "t": 2153,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 51,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.11419689119170973,
+      "mfe20": 0.1356476683937824,
+      "mae20": -0.02036269430051818,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2018-08-01",
+      "t": 2159,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 57,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.10660049627791568,
+      "mfe20": 0.10913151364764273,
+      "mae20": -0.005707156327543372,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2018-09-13",
+      "t": 2189,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 87,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.052824521885075804,
+      "mfe20": 0.031182368269952798,
+      "mae20": -0.06223219822446002,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2018-10-01",
+      "t": 2201,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 99,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.06609168353427786,
+      "mfe20": 0.027325530229692863,
+      "mae20": -0.09315321658012843,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2019-01-30",
+      "t": 2283,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 50,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.04780635400907718,
+      "mfe20": 0.06426626323751883,
+      "mae20": -0.0041754916792737795,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2019-03-11",
+      "t": 2310,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 11,
+      "age_bucket": "11_20",
+      "ret20": 0.11850200111794296,
+      "mfe20": 0.11922859698155386,
+      "mae20": 0.0026271660145331666,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2019-05-01",
+      "t": 2346,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 28,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.15304959148774466,
+      "mfe20": 0.010117803534106073,
+      "mae20": -0.16397491924757746,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2019-06-07",
+      "t": 2372,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 4,
+      "age_bucket": "4_10",
+      "ret20": 0.051906412831974835,
+      "mfe20": 0.07851696029450439,
+      "mae20": 0.0007888509071785066,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2019-07-10",
+      "t": 2394,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 9,
+      "age_bucket": "4_10",
+      "ret20": -0.02061703488658173,
+      "mfe20": 0.0892584756187571,
+      "mae20": -0.05240368055897249,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2019-07-15",
+      "t": 2397,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 12,
+      "age_bucket": "11_20",
+      "ret20": -0.02304955898835348,
+      "mfe20": 0.07874859899615028,
+      "mae20": -0.061546708250085236,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2019-07-18",
+      "t": 2400,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 15,
+      "age_bucket": "11_20",
+      "ret20": -0.01906058543226674,
+      "mfe20": 0.07638821355635517,
+      "mae20": -0.0636001166974618,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2019-08-13",
+      "t": 2418,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 33,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.06996219553045901,
+      "mfe20": 0.07053644063741205,
+      "mae20": -0.04450399578886932,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2019-08-19",
+      "t": 2422,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 37,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.04920370810553831,
+      "mfe20": 0.07639648205371996,
+      "mae20": -0.04444972664606606,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2019-09-05",
+      "t": 2434,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 49,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.03535258814703668,
+      "mfe20": 0.07004876219054768,
+      "mae20": -0.010361965491372915,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2019-09-24",
+      "t": 2447,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 62,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.10235207644248434,
+      "mfe20": 0.11264241087835347,
+      "mae20": -0.011714443219404735,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2019-09-30",
+      "t": 2451,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 66,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.11197928293967951,
+      "mfe20": 0.11287225967763548,
+      "mae20": -0.0394695718176542,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2019-10-04",
+      "t": 2455,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 70,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.12691070877934885,
+      "mfe20": 0.12739526893088415,
+      "mae20": -0.011805647328311464,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2019-11-25",
+      "t": 2491,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 106,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.06719971468258445,
+      "mfe20": 0.06952734917595826,
+      "mae20": -0.03784206930209855,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2019-12-06",
+      "t": 2499,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 114,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.1022496398359869,
+      "mfe20": 0.11152155443094092,
+      "mae20": -0.021425141295112637,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2020-01-28",
+      "t": 2533,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 148,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.07881897447196962,
+      "mfe20": 0.0319808618464541,
+      "mae20": -0.09934212597185932,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2020-02-05",
+      "t": 2539,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 154,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.0887540830611292,
+      "mfe20": 0.01794991445014782,
+      "mae20": -0.2024576263804635,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2020-02-12",
+      "t": 2544,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 159,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.24135086797066008,
+      "mfe20": -0.002995110024449743,
+      "mae20": -0.2420537897310513,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2020-04-07",
+      "t": 2582,
+      "state": "GREEN",
+      "origin": "EXPANSION",
+      "run_age": 15,
+      "age_bucket": "11_20",
+      "ret20": 0.15880969818448132,
+      "mfe20": 0.1688702154723818,
+      "mae20": 0.006938287784759023,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2020-04-09",
+      "t": 2584,
+      "state": "GREEN",
+      "origin": "EXPANSION",
+      "run_age": 17,
+      "age_bucket": "11_20",
+      "ret20": 0.1572446733087054,
+      "mfe20": 0.15806559946266652,
+      "mae20": -0.009552595246091311,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2020-07-31",
+      "t": 2662,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 58,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.1745482778091474,
+      "mfe20": 0.21198004893657063,
+      "mae20": 0.015363259928477202,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2020-10-12",
+      "t": 2712,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 108,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.06495176848874606,
+      "mfe20": 0.00795819935691311,
+      "mae20": -0.13729903536977506,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2020-11-09",
+      "t": 2732,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 128,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.06929160935350764,
+      "mfe20": 0.07444979367262738,
+      "mae20": -0.03206671251719384,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2020-11-16",
+      "t": 2737,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 133,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.06300914380714873,
+      "mfe20": 0.06317539484621792,
+      "mae20": -0.06408977556109718,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2020-12-01",
+      "t": 2747,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 143,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.0896349413298565,
+      "mfe20": 0.1309484191655801,
+      "mae20": -0.020941981747066407,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2020-12-15",
+      "t": 2757,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 153,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.008054426024397987,
+      "mfe20": 0.08531427901157329,
+      "mae20": -0.03464185173600243,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2021-01-21",
+      "t": 2781,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 177,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.05114342076422884,
+      "mfe20": 0.06005695915832554,
+      "mae20": -0.06911668006137217,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2021-04-05",
+      "t": 2831,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 21,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.05274019062748203,
+      "mfe20": 0.08872126290706905,
+      "mae20": -0.006036536934074688,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2021-06-14",
+      "t": 2880,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 21,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.11618638871857745,
+      "mfe20": 0.13013496321275309,
+      "mae20": -0.015481223175965453,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2021-08-16",
+      "t": 2924,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 32,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.01985177342509259,
+      "mfe20": 0.04062989677077811,
+      "mae20": -0.04380624669137112,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2021-08-30",
+      "t": 2934,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 42,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.0732105538140021,
+      "mfe20": 0.027037552246603758,
+      "mae20": -0.07739028213166144,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2021-10-19",
+      "t": 2969,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 9,
+      "age_bucket": "4_10",
+      "ret20": 0.015057879474178693,
+      "mfe20": 0.029645135093112174,
+      "mae20": -0.015797191166791458,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2021-11-17",
+      "t": 2990,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 12,
+      "age_bucket": "11_20",
+      "ret20": 0.12228795867561648,
+      "mfe20": 0.18659188308085972,
+      "mae20": -0.0028666816817589647,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2021-12-27",
+      "t": 3016,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 38,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.11395774413575122,
+      "mfe20": 0.014473465313591616,
+      "mae20": -0.14212832030166933,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2022-01-03",
+      "t": 3021,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 43,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.04065707776283678,
+      "mfe20": 0.0051096397346466205,
+      "mae20": -0.15004667504673774,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2022-02-03",
+      "t": 3043,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 65,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.056275249061610744,
+      "mfe20": 0.021688838732726312,
+      "mae20": -0.12087907003349163,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2022-02-09",
+      "t": 3047,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 69,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.10074880871341041,
+      "mfe20": -0.004538234626730309,
+      "mae20": -0.13773542092126168,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2022-03-22",
+      "t": 3075,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 13,
+      "age_bucket": "11_20",
+      "ret20": -0.009418374042271416,
+      "mfe20": 0.06391416515139414,
+      "mae20": -0.031098209270334687,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2022-07-06",
+      "t": 3147,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 40,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.1623985446403584,
+      "mfe20": 0.1656171284634762,
+      "mae20": -0.005597537083683046,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2022-10-24",
+      "t": 3224,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 18,
+      "age_bucket": "11_20",
+      "ret20": -0.009635366343258456,
+      "mfe20": 0.05386416861826704,
+      "mae20": -0.100836400133824,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2022-10-28",
+      "t": 3228,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 22,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.07396949569991684,
+      "mfe20": -0.0018621419120239402,
+      "mae20": -0.13715171843124974,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2022-11-15",
+      "t": 3240,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 34,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.04552108316880554,
+      "mfe20": 0.01772865318648731,
+      "mae20": -0.06691544567054208,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-01-17",
+      "t": 3281,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 19,
+      "age_bucket": "11_20",
+      "ret20": 0.12696777990289831,
+      "mfe20": 0.15771663969398264,
+      "mae20": -0.01596292481977335,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-01-20",
+      "t": 3284,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 22,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.10647711612388489,
+      "mfe20": 0.14151011822731552,
+      "mae20": 0.0002175237542612063,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-03-06",
+      "t": 3314,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 13,
+      "age_bucket": "11_20",
+      "ret20": 0.08021842293440784,
+      "mfe20": 0.08099843983618271,
+      "mae20": -0.040434245595787566,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-03-16",
+      "t": 3322,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 21,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.060057743980895584,
+      "mfe20": 0.07051645360818393,
+      "mae20": -0.010908051914786498,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-03-29",
+      "t": 3331,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 30,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.04752130372581931,
+      "mfe20": 0.048454313615724276,
+      "mae20": -0.006157865273371921,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-04-13",
+      "t": 3341,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 40,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.04946847064508342,
+      "mfe20": 0.054542159942015056,
+      "mae20": -0.016670693404203907,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-04-18",
+      "t": 3344,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 43,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.03363973688952959,
+      "mfe20": 0.04877755751787105,
+      "mae20": -0.022046014296870253,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-04-27",
+      "t": 3351,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 50,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.02719559408586192,
+      "mfe20": 0.04738435959859855,
+      "mae20": -0.02434534766344043,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-05-05",
+      "t": 3357,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 56,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.03462573978073746,
+      "mfe20": 0.0655642642412706,
+      "mae20": -0.01814835408490212,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-05-18",
+      "t": 3366,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 65,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.056383872212786956,
+      "mfe20": 0.06820912193871842,
+      "mae20": -0.02587833717432153,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-05-26",
+      "t": 3372,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 71,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.07199457743798532,
+      "mfe20": 0.07387568111928866,
+      "mae20": 0.0064984327936175035,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-07-17",
+      "t": 3405,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 104,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.07490076421976577,
+      "mfe20": 0.021856744066356626,
+      "mae20": -0.08990158823127026,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-07-27",
+      "t": 3413,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 112,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.08715453886761204,
+      "mfe20": 0.018165821343546273,
+      "mae20": -0.11002996584204527,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-08-29",
+      "t": 3436,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 4,
+      "age_bucket": "4_10",
+      "ret20": -0.07435373669346079,
+      "mfe20": 0.031827069302628574,
+      "mae20": -0.08184877797088852,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-10-10",
+      "t": 3465,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 7,
+      "age_bucket": "4_10",
+      "ret20": 0.019227591232692465,
+      "mfe20": 0.02270306631537644,
+      "mae20": -0.07130444531644153,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-11-06",
+      "t": 3484,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 5,
+      "age_bucket": "4_10",
+      "ret20": 0.07917201361379234,
+      "mfe20": 0.08463979244546116,
+      "mae20": -0.0014506500027896552,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-12-05",
+      "t": 3504,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 10,
+      "age_bucket": "4_10",
+      "ret20": -0.05950780684520729,
+      "mfe20": 0.03205459621548967,
+      "mae20": -0.06483300589390961,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2023-12-12",
+      "t": 3509,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 15,
+      "age_bucket": "11_20",
+      "ret20": -0.046838937556420435,
+      "mfe20": 0.025216936715272142,
+      "mae20": -0.07467520545040296,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2024-01-19",
+      "t": 3534,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 2,
+      "age_bucket": "1_3",
+      "ret20": -0.04828774274378789,
+      "mfe20": 0.025161829191898022,
+      "mae20": -0.06426185007308416,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2024-04-11",
+      "t": 3591,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 27,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.05444479765261412,
+      "mfe20": 0.06832728221144291,
+      "mae20": -0.0626142106849833,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2024-04-29",
+      "t": 3603,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 39,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.09504328530259376,
+      "mfe20": 0.11239193083573484,
+      "mae20": -0.025302593659942252,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2024-05-03",
+      "t": 3607,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 43,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.058076120623841154,
+      "mfe20": 0.0633112116915695,
+      "mae20": -0.016141345839240984,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2024-08-16",
+      "t": 3679,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 62,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.04304354289258738,
+      "mfe20": 0.030391492629177286,
+      "mae20": -0.053660707095854465,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2024-08-20",
+      "t": 3681,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 64,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.02569418682151714,
+      "mfe20": 0.028299016745354066,
+      "mae20": -0.05558249329312137,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2024-09-19",
+      "t": 3702,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 85,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.014331236072879783,
+      "mfe20": 0.037663346004281895,
+      "mae20": -0.032944466290907415,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2024-09-30",
+      "t": 3709,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 92,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.001716695278970004,
+      "mfe20": 0.019270429184549354,
+      "mae20": -0.05008583690987123,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2024-10-15",
+      "t": 3720,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 103,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.041137522294739326,
+      "mfe20": 0.0128287358208794,
+      "mae20": -0.06046610816907805,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2024-10-17",
+      "t": 3722,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 105,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.016928667539464426,
+      "mfe20": 0.02024561793002877,
+      "mae20": -0.053585959663405514,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2024-11-25",
+      "t": 3749,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 132,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.10877317816807675,
+      "mfe20": 0.1088160346974707,
+      "mae20": 0.0019753510542364072,
+      "hit": {
+        "mid": false,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2025-01-31",
+      "t": 3793,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 4,
+      "age_bucket": "4_10",
+      "ret20": 0.008601690677966012,
+      "mfe20": 0.05932203389830515,
+      "mae20": -0.04364406779661023,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2025-02-13",
+      "t": 3802,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 13,
+      "age_bucket": "11_20",
+      "ret20": -0.11609319753239755,
+      "mfe20": 0.035068107481472266,
+      "mae20": -0.13708442015484623,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": false,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2025-05-01",
+      "t": 3855,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 32,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.058456775808326644,
+      "mfe20": 0.0029063846378030167,
+      "mae20": -0.09408404771779266,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2025-05-12",
+      "t": 3862,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 39,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.03852170589314985,
+      "mfe20": 0.014943831061427604,
+      "mae20": -0.0822144353249411,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": false,
+        "light": false
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2025-06-30",
+      "t": 3895,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 72,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.029731442218648096,
+      "mfe20": 0.053906516547253425,
+      "mae20": 0.004727786713457194,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2025-07-21",
+      "t": 3909,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 10,
+      "age_bucket": "4_10",
+      "ret20": 0.08664344879518082,
+      "mfe20": 0.10655120481927716,
+      "mae20": -0.05167545180722888,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2025-07-24",
+      "t": 3912,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 13,
+      "age_bucket": "11_20",
+      "ret20": 0.05211452339607625,
+      "mfe20": 0.09992520115668047,
+      "mae20": -0.0573539978178329,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": true
+      },
+      "race": {
+        "primary": "MID_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2025-08-07",
+      "t": 3922,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 23,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.08935145702563951,
+      "mfe20": 0.09675958322392209,
+      "mae20": -0.0035449666115755507,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2025-08-28",
+      "t": 3937,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 12,
+      "age_bucket": "11_20",
+      "ret20": 0.09846925524595807,
+      "mfe20": 0.1076711816305469,
+      "mae20": -0.028422772617819114,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2025-09-03",
+      "t": 3940,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 15,
+      "age_bucket": "11_20",
+      "ret20": 0.07120392502201534,
+      "mfe20": 0.08520992158342766,
+      "mae20": -0.05250136285486651,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2025-09-15",
+      "t": 3948,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 23,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.04630333755809035,
+      "mfe20": 0.09522598225602019,
+      "mae20": -0.0016053654414870389,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2025-10-20",
+      "t": 3973,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 48,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.01990543089938357,
+      "mfe20": 0.057504654419793244,
+      "mae20": -0.025968579391724256,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2025-10-24",
+      "t": 3977,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 52,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.032988279697576894,
+      "mfe20": 0.05517083725854821,
+      "mae20": 0.006962864052854956,
+      "hit": {
+        "mid": true,
+        "lower": false,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2025-11-25",
+      "t": 3999,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 74,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.01140917788930218,
+      "mfe20": 0.04206231721847131,
+      "mae20": -0.03617716720222408,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "UPPER",
+      "date": "2025-12-01",
+      "t": 4002,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 77,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.03539393375507116,
+      "mfe20": 0.019498374443716937,
+      "mae20": -0.05704697785068946,
+      "hit": {
+        "mid": true,
+        "lower": true,
+        "bs": true,
+        "light": false
+      },
+      "race": {
+        "primary": "BS_FIRST"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2018-01-29",
+      "t": 2031,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 63,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.06209811859966652,
+      "mfe20": 0.07454155751369362,
+      "mae20": -0.10550130983567518,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2018-03-21",
+      "t": 2067,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 15,
+      "age_bucket": "11_20",
+      "ret20": 0.008933263268523284,
+      "mfe20": 0.04478309102586553,
+      "mae20": -0.039703392304548446,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2018-03-27",
+      "t": 2071,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 19,
+      "age_bucket": "11_20",
+      "ret20": -0.027860259661643405,
+      "mfe20": 0.06296782851295779,
+      "mae20": -0.042295331882982956,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2018-04-06",
+      "t": 2078,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 1,
+      "age_bucket": "1_3",
+      "ret20": 0.09175671477000313,
+      "mfe20": 0.09425107271051014,
+      "mae20": -0.046026866705621505,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2018-04-11",
+      "t": 2081,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 4,
+      "age_bucket": "4_10",
+      "ret20": 0.08652284852702397,
+      "mfe20": 0.08832057527255843,
+      "mae20": -0.0684875898863373,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2018-04-20",
+      "t": 2088,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 11,
+      "age_bucket": "11_20",
+      "ret20": 0.124245715664977,
+      "mfe20": 0.14874487086652177,
+      "mae20": -0.030714458122133692,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2018-10-29",
+      "t": 2221,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 119,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.1790426087628607,
+      "mfe20": 0.04768184983637691,
+      "mae20": -0.19779496423303877,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2018-11-02",
+      "t": 2225,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 123,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.10921534605745131,
+      "mfe20": 0.012724117987275907,
+      "mae20": -0.17939078465394254,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2019-05-13",
+      "t": 2354,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 36,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.04894464785698904,
+      "mfe20": 0.055352143010984234,
+      "mae20": -0.08318974800775358,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2019-05-16",
+      "t": 2357,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 39,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.013994107744107698,
+      "mfe20": 0.03530092592592582,
+      "mae20": -0.10421927609427606,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2019-08-05",
+      "t": 2412,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 27,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.06392883004034333,
+      "mfe20": 0.10913416778731766,
+      "mae20": 0.0024826730112754714,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2019-08-07",
+      "t": 2414,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 29,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.07154340836012874,
+      "mfe20": 0.077371382636656,
+      "mae20": 0.0005526527331189968,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2020-02-27",
+      "t": 2554,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 169,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.05513307984790872,
+      "mfe20": 0.11143609242468555,
+      "mae20": -0.22268938286048545,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2020-03-03",
+      "t": 2557,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 172,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.12107700815705791,
+      "mfe20": 0.048665837135351886,
+      "mae20": -0.2651389464952302,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2020-03-06",
+      "t": 2560,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 175,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.16475798360031824,
+      "mfe20": -0.0089610075078711,
+      "mae20": -0.26440161920907856,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2020-04-17",
+      "t": 2589,
+      "state": "GREEN",
+      "origin": "EXPANSION",
+      "run_age": 22,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.08808345120226302,
+      "mfe20": 0.13044554455445545,
+      "mae20": -0.0614214992927864,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2020-04-28",
+      "t": 2596,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 5,
+      "age_bucket": "4_10",
+      "ret20": 0.14189819800416403,
+      "mfe20": 0.16390262043219184,
+      "mae20": 0.01906095197070856,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2020-10-30",
+      "t": 2726,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 122,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.09360649458019488,
+      "mfe20": 0.12061363218813148,
+      "mae20": -0.01414661032518838,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2021-02-22",
+      "t": 2802,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 198,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.020714285714285685,
+      "mfe20": 0.0215873015873016,
+      "mae20": -0.07769841269841271,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2021-03-02",
+      "t": 2808,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 204,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.041719948849104904,
+      "mfe20": 0.01678388746803061,
+      "mae20": -0.07121163682864462,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2021-04-07",
+      "t": 2833,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 23,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.0015637998436277556,
+      "mfe20": 0.07169669272869417,
+      "mae20": -0.009382329945269774,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2021-05-04",
+      "t": 2852,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 8,
+      "age_bucket": "4_10",
+      "ret20": -0.02182246382479469,
+      "mfe20": 0.026671802894016272,
+      "mae20": -0.04380132968322248,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2021-05-06",
+      "t": 2854,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 10,
+      "age_bucket": "4_10",
+      "ret20": -0.029674808873531133,
+      "mfe20": 0.011715584113181299,
+      "mae20": -0.05773091893549265,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2021-05-10",
+      "t": 2856,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 12,
+      "age_bucket": "11_20",
+      "ret20": -0.0008671659440283586,
+      "mfe20": 0.012692234923137757,
+      "mae20": -0.036263303113914014,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2021-09-20",
+      "t": 2948,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 56,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.025255351895900446,
+      "mfe20": 0.03169161886106053,
+      "mae20": -0.032671050790541445,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2021-09-28",
+      "t": 2954,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 62,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.052216263829187426,
+      "mfe20": 0.06292720738496227,
+      "mae20": -0.025650059897117772,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2021-10-18",
+      "t": 2968,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 8,
+      "age_bucket": "4_10",
+      "ret20": 0.023541453428863823,
+      "mfe20": 0.04517229614466034,
+      "mae20": -0.0009553053565336533,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2022-01-24",
+      "t": 3035,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 57,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.016705915109516134,
+      "mfe20": 0.09299585447345615,
+      "mae20": -0.02846179928226711,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2022-02-22",
+      "t": 3055,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 77,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.0273855874278488,
+      "mfe20": 0.03103693822803444,
+      "mae20": -0.0865384562720024,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2022-03-03",
+      "t": 3062,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 84,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.050412079648679775,
+      "mfe20": 0.0804908861216389,
+      "mae20": -0.09703416952415322,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2022-04-11",
+      "t": 3089,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 4,
+      "age_bucket": "4_10",
+      "ret20": -0.06781303167420827,
+      "mfe20": 0.034871794871794926,
+      "mae20": -0.08603312217194559,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2022-04-13",
+      "t": 3091,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 6,
+      "age_bucket": "4_10",
+      "ret20": -0.1633802325927367,
+      "mfe20": 0.006631514473680378,
+      "mae20": -0.18544596158720428,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2022-07-21",
+      "t": 3158,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 51,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.12101692172404754,
+      "mfe20": 0.1338910760288976,
+      "mae20": -0.029288765414305362,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2022-07-25",
+      "t": 3160,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 1,
+      "age_bucket": "1_3",
+      "ret20": 0.09558685845047399,
+      "mfe20": 0.1516834913370384,
+      "mae20": -0.014056881333769033,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2022-08-31",
+      "t": 3187,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 17,
+      "age_bucket": "11_20",
+      "ret20": -0.093753975321206,
+      "mfe20": 0.044777954458720126,
+      "mae20": -0.10520296399949114,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2022-09-13",
+      "t": 3195,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 25,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.09659386375455026,
+      "mfe20": 0.03185133905356219,
+      "mae20": -0.10497919916796672,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2022-10-31",
+      "t": 3229,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 23,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.07936611451676023,
+      "mfe20": 0.013760271292552417,
+      "mae20": -0.12364679796530587,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2023-01-30",
+      "t": 3290,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 28,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.030839160839160717,
+      "mfe20": 0.10055944055944055,
+      "mae20": -0.011748181818181824,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2023-02-01",
+      "t": 3292,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 30,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.00330062595754832,
+      "mfe20": 0.08217019061886743,
+      "mae20": -0.01052052606205911,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2023-02-24",
+      "t": 3308,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 7,
+      "age_bucket": "4_10",
+      "ret20": 0.09229083959574402,
+      "mfe20": 0.10517339614386212,
+      "mae20": -0.019153566958382773,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2023-03-01",
+      "t": 3311,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 10,
+      "age_bucket": "4_10",
+      "ret20": 0.10639322827059394,
+      "mfe20": 0.11582134746404238,
+      "mae20": -0.009703461564930183,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2023-08-07",
+      "t": 3420,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 119,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.06066530273048354,
+      "mfe20": 0.06223086037289005,
+      "mae20": -0.03852390055779131,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2023-08-09",
+      "t": 3422,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 121,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.0035355519389415058,
+      "mfe20": 0.06616532914304951,
+      "mae20": -0.03496262416521678,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2023-08-24",
+      "t": 3433,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 1,
+      "age_bucket": "1_3",
+      "ret20": -0.00901468420455842,
+      "mfe20": 0.07710624787390863,
+      "mae20": -0.01610165551649856,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2023-09-07",
+      "t": 3442,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 10,
+      "age_bucket": "4_10",
+      "ret20": -0.01492453255237669,
+      "mfe20": 0.015431403469249982,
+      "mae20": -0.05598107681910336,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2023-10-13",
+      "t": 3468,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 10,
+      "age_bucket": "4_10",
+      "ret20": 0.04221403174648963,
+      "mfe20": 0.04316466071206815,
+      "mae20": -0.07369309065177021,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2024-01-02",
+      "t": 3522,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 28,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.006679648782589864,
+      "mfe20": 0.05785391079508728,
+      "mae20": -0.029465632406808884,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2024-01-11",
+      "t": 3529,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 35,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.017565655477127073,
+      "mfe20": 0.05813890834635482,
+      "mae20": -0.03416132334716315,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2024-01-31",
+      "t": 3542,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 5,
+      "age_bucket": "4_10",
+      "ret20": -0.019793873090774072,
+      "mfe20": 0.03606297917912027,
+      "mae20": -0.02792836377051866,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2024-02-06",
+      "t": 3546,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 9,
+      "age_bucket": "4_10",
+      "ret20": -0.1066032752245114,
+      "mfe20": 0.009244601162176291,
+      "mae20": -0.10892768092974114,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2024-02-08",
+      "t": 3548,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 11,
+      "age_bucket": "11_20",
+      "ret20": -0.09340489096193239,
+      "mfe20": 0.008867883981102276,
+      "mae20": -0.10529948463787775,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2024-02-12",
+      "t": 3550,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 13,
+      "age_bucket": "11_20",
+      "ret20": -0.07437879104348344,
+      "mfe20": -0.005022602459129111,
+      "mae20": -0.09970601654854483,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2024-08-05",
+      "t": 3670,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 53,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.06450996320542846,
+      "mfe20": 0.11301189850432447,
+      "mae20": -0.039183796052945974,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2024-11-01",
+      "t": 3733,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 116,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.07482840608317254,
+      "mfe20": 0.08021169978915244,
+      "mae20": -0.014355524651204488,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2024-11-06",
+      "t": 3736,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 119,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.09123560075431048,
+      "mfe20": 0.0979705010775862,
+      "mae20": -0.0054777298850574585,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2024-11-11",
+      "t": 3739,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 122,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.10498149221781206,
+      "mfe20": 0.1069438076974536,
+      "mae20": -0.00655581322748966,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2024-11-13",
+      "t": 3741,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 124,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.10145704513148557,
+      "mfe20": 0.11407249466950953,
+      "mae20": -0.003775764036958007,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2025-01-10",
+      "t": 3779,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 162,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.03884323247442545,
+      "mfe20": 0.04365627850300702,
+      "mae20": -0.07375980267005267,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2025-01-16",
+      "t": 3783,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 166,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.07158512536515937,
+      "mfe20": 0.08293179194479072,
+      "mae20": -0.03890296323941833,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2025-01-29",
+      "t": 3791,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 2,
+      "age_bucket": "1_3",
+      "ret20": -0.008606283422459948,
+      "mfe20": 0.044451871657753994,
+      "mae20": -0.057068850267379734,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2025-01-31",
+      "t": 3793,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 4,
+      "age_bucket": "4_10",
+      "ret20": 0.008601690677966012,
+      "mfe20": 0.05932203389830515,
+      "mae20": -0.04364406779661023,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2025-02-13",
+      "t": 3802,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 13,
+      "age_bucket": "11_20",
+      "ret20": -0.11609319753239755,
+      "mfe20": 0.035068107481472266,
+      "mae20": -0.13708442015484623,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2025-02-28",
+      "t": 3812,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 3,
+      "age_bucket": "1_3",
+      "ret20": -0.09899110982467751,
+      "mfe20": 0.009055569798213758,
+      "mae20": -0.13819053919947077,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2025-03-10",
+      "t": 3818,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 9,
+      "age_bucket": "4_10",
+      "ret20": -0.202303455248813,
+      "mfe20": -0.00720942500439592,
+      "mae20": -0.2323720766660805,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2025-07-07",
+      "t": 3899,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 76,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.03143600857346984,
+      "mfe20": 0.027768516313408043,
+      "mae20": -0.04024767801857576,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2025-07-11",
+      "t": 3903,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 4,
+      "age_bucket": "4_10",
+      "ret20": 0.08614325629854136,
+      "mfe20": 0.09395718886152693,
+      "mae20": -0.04574730062511834,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_SUPPORT",
+      "date": "2025-07-29",
+      "t": 3915,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 16,
+      "age_bucket": "11_20",
+      "ret20": 0.08538836559852325,
+      "mfe20": 0.11288872059449995,
+      "mae20": -0.046244142566384316,
+      "hit": {},
+      "race": {
+        "band20": "SUPPORT_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2018-02-14",
+      "t": 2043,
+      "state": "GREEN",
+      "origin": "BLUE",
+      "run_age": 3,
+      "age_bucket": "1_3",
+      "ret20": 0.06739559060763578,
+      "mfe20": 0.09637330465435867,
+      "mae20": 0.009738901834259295,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2018-03-26",
+      "t": 2070,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 18,
+      "age_bucket": "11_20",
+      "ret20": -0.05689645193031201,
+      "mfe20": 0.03571221855646223,
+      "mae20": -0.0668518840076403,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2018-03-28",
+      "t": 2072,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 20,
+      "age_bucket": "11_20",
+      "ret20": -0.013575204228736149,
+      "mfe20": 0.07484382508409415,
+      "mae20": -0.031595386833253136,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2018-04-04",
+      "t": 2076,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 24,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.028902744595303176,
+      "mfe20": 0.04271312860555909,
+      "mae20": -0.06398228541460294,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2018-04-09",
+      "t": 2079,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 2,
+      "age_bucket": "1_3",
+      "ret20": 0.08885621875918837,
+      "mfe20": 0.10361658335783575,
+      "mae20": -0.05539547192002359,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2018-05-01",
+      "t": 2095,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 18,
+      "age_bucket": "11_20",
+      "ret20": 0.10881135422826738,
+      "mfe20": 0.12578356002365476,
+      "mae20": 0.02779420461265536,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2018-11-07",
+      "t": 2228,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 126,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.1974755894260537,
+      "mfe20": 0.0008097165991902688,
+      "mae20": -0.19838054774946412,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2019-02-06",
+      "t": 2288,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 55,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.009986225895316836,
+      "mfe20": 0.0201446280991735,
+      "mae20": -0.03340220385674941,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2019-02-25",
+      "t": 2300,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 1,
+      "age_bucket": "1_3",
+      "ret20": 0.08328072088618499,
+      "mfe20": 0.13464960110199176,
+      "mae20": -0.02714802272857708,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2019-03-08",
+      "t": 2309,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 10,
+      "age_bucket": "4_10",
+      "ret20": 0.1393210340639639,
+      "mfe20": 0.14331154936093915,
+      "mae20": 0.014111387426985145,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2019-05-14",
+      "t": 2355,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 37,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.029311989822961904,
+      "mfe20": 0.0389059684087778,
+      "mae20": -0.09747694264814999,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2019-05-21",
+      "t": 2360,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 42,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.060396570203644195,
+      "mfe20": 0.07336544480171492,
+      "mae20": -0.08751339764201493,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2019-06-07",
+      "t": 2372,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 4,
+      "age_bucket": "4_10",
+      "ret20": 0.051906412831974835,
+      "mfe20": 0.07851696029450439,
+      "mae20": 0.0007888509071785066,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2020-03-02",
+      "t": 2556,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 171,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.14725076135336834,
+      "mfe20": 0.017368896623272345,
+      "mae20": -0.2884776279240989,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2020-03-10",
+      "t": 2562,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 177,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.09080395317866397,
+      "mfe20": -0.01443891497862182,
+      "mae20": -0.2548889044648488,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2020-04-13",
+      "t": 2585,
+      "state": "GREEN",
+      "origin": "EXPANSION",
+      "run_age": 18,
+      "age_bucket": "11_20",
+      "ret20": 0.1528270814272643,
+      "mfe20": 0.16029277218664228,
+      "mae20": -0.02861848124428179,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2020-04-22",
+      "t": 2592,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 1,
+      "age_bucket": "1_3",
+      "ret20": 0.15621148406486118,
+      "mfe20": 0.15787754703723156,
+      "mae20": -0.0044549364880858144,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2021-02-26",
+      "t": 2806,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 202,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.0004123371268349718,
+      "mfe20": 0.061520699323767136,
+      "mae20": -0.04164604981032505,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2021-03-15",
+      "t": 2817,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 7,
+      "age_bucket": "4_10",
+      "ret20": 0.0842002580853296,
+      "mfe20": 0.08605532704250352,
+      "mae20": -0.041374304379385385,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2021-03-22",
+      "t": 2822,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 12,
+      "age_bucket": "11_20",
+      "ret20": 0.07877461706783384,
+      "mfe20": 0.09838722749007212,
+      "mae20": -0.036712861658157125,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2021-03-31",
+      "t": 2829,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 19,
+      "age_bucket": "11_20",
+      "ret20": 0.09275480966025373,
+      "mfe20": 0.12214496111338513,
+      "mae20": 0.002783462955382676,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2021-05-13",
+      "t": 2859,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 15,
+      "age_bucket": "11_20",
+      "ret20": 0.0190445706969673,
+      "mfe20": 0.02792678242778268,
+      "mae20": -0.016884052172521424,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2021-05-20",
+      "t": 2864,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 5,
+      "age_bucket": "4_10",
+      "ret20": 0.02474283245620934,
+      "mfe20": 0.04115937475453624,
+      "mae20": -0.0328332416935041,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2021-05-24",
+      "t": 2866,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 7,
+      "age_bucket": "4_10",
+      "ret20": 0.05413062240960853,
+      "mfe20": 0.0549174202189997,
+      "mae20": -0.0312352325922145,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2021-05-28",
+      "t": 2870,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 11,
+      "age_bucket": "11_20",
+      "ret20": 0.08161463766952903,
+      "mfe20": 0.08538640558542654,
+      "mae20": -0.011877056416017995,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2021-06-04",
+      "t": 2874,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 15,
+      "age_bucket": "11_20",
+      "ret20": 0.11176431805544529,
+      "mfe20": 0.11208197632854078,
+      "mae20": -0.008420049249344697,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2021-10-05",
+      "t": 2959,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 67,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.0631422578130536,
+      "mfe20": 0.08546523988377852,
+      "mae20": -0.019417475728155442,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2021-10-14",
+      "t": 2966,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 6,
+      "age_bucket": "4_10",
+      "ret20": 0.02858938707494363,
+      "mfe20": 0.0654563901959091,
+      "mae20": -0.004173553434443034,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-01-28",
+      "t": 3039,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 61,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.030587682733517307,
+      "mfe20": 0.03710438560441487,
+      "mae20": -0.107614630423296,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-02-24",
+      "t": 3057,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 79,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.06962023045224086,
+      "mfe20": 0.07005032136842049,
+      "mae20": -0.07766989813998426,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-03-08",
+      "t": 3065,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 3,
+      "age_bucket": "1_3",
+      "ret20": 0.11191563770325219,
+      "mfe20": 0.14081554878048785,
+      "mae20": -0.04662087144308946,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-03-18",
+      "t": 3073,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 11,
+      "age_bucket": "11_20",
+      "ret20": 0.0066471947798512065,
+      "mfe20": 0.09531650201244068,
+      "mae20": -0.005915389071837973,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-04-28",
+      "t": 3101,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 4,
+      "age_bucket": "4_10",
+      "ret20": -0.12136396968956242,
+      "mfe20": 0.017355169885113764,
+      "mae20": -0.1896235639208016,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-05-04",
+      "t": 3105,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 8,
+      "age_bucket": "4_10",
+      "ret20": -0.08920608145509978,
+      "mfe20": -0.01168535088096967,
+      "mae20": -0.20124083360460576,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-07-15",
+      "t": 3154,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 47,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.14603456083105826,
+      "mfe20": 0.14650063261636803,
+      "mae20": -0.023107145235399917,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-07-19",
+      "t": 3156,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 49,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.14589403311258287,
+      "mfe20": 0.15039741721854316,
+      "mae20": -0.004172185430463493,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-09-07",
+      "t": 3191,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 21,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.0612978929662803,
+      "mfe20": 0.05321864239429064,
+      "mae20": -0.11714547851080548,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-09-09",
+      "t": 3193,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 23,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.10980494376310601,
+      "mfe20": 0.043782105865158405,
+      "mae20": -0.1250556014488149,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-09-14",
+      "t": 3196,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 26,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.10926534028716761,
+      "mfe20": 0.02208492692035291,
+      "mae20": -0.1134505183182023,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-09-20",
+      "t": 3200,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 4,
+      "age_bucket": "4_10",
+      "ret20": -0.08381128641244662,
+      "mfe20": 0.011727343003654855,
+      "mae20": -0.1435945916886292,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-10-25",
+      "t": 3225,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 19,
+      "age_bucket": "11_20",
+      "ret20": -0.014178876197978196,
+      "mfe20": 0.033871602993304384,
+      "mae20": -0.11789418406196672,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-10-28",
+      "t": 3228,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 22,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.07396949569991684,
+      "mfe20": -0.0018621419120239402,
+      "mae20": -0.13715171843124974,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-11-11",
+      "t": 3238,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 32,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.034802872411489494,
+      "mfe20": 0.025985303941215898,
+      "mae20": -0.06479625918503662,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-11-15",
+      "t": 3240,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 34,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.04552108316880554,
+      "mfe20": 0.01772865318648731,
+      "mae20": -0.06691544567054208,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-11-22",
+      "t": 3245,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 39,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.09808224118273023,
+      "mfe20": 0.010986883139358472,
+      "mae20": -0.13510448362661376,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-11-30",
+      "t": 3250,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 5,
+      "age_bucket": "4_10",
+      "ret20": -0.12443423038866597,
+      "mfe20": 0.019523076535317596,
+      "mae20": -0.1496993795156345,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2022-12-13",
+      "t": 3259,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 14,
+      "age_bucket": "11_20",
+      "ret20": -0.08290369148277998,
+      "mfe20": 0.008180380834536205,
+      "mae20": -0.14642194266859143,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2023-01-23",
+      "t": 3285,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 23,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.052228757706753504,
+      "mfe20": 0.11530012047338944,
+      "mae20": -0.01629934093969254,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2023-08-23",
+      "t": 3432,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 131,
+      "age_bucket": "21_PLUS",
+      "ret20": -0.0396974933745583,
+      "mfe20": 0.0489178445229681,
+      "mae20": -0.04185076192579518,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2023-08-25",
+      "t": 3434,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 2,
+      "age_bucket": "1_3",
+      "ret20": -0.014164929175298213,
+      "mfe20": 0.06365824981803914,
+      "mae20": -0.028385924640277782,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2023-09-08",
+      "t": 3443,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 11,
+      "age_bucket": "11_20",
+      "ret20": -0.0038723764660666404,
+      "mfe20": 0.011898137383440144,
+      "mae20": -0.059265858079799005,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2023-09-18",
+      "t": 3449,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 17,
+      "age_bucket": "11_20",
+      "ret20": 0.004214193403382582,
+      "mfe20": 0.02455470023037587,
+      "mae20": -0.05815586896667979,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2023-10-06",
+      "t": 3463,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 5,
+      "age_bucket": "4_10",
+      "ret20": -0.0047327734107401875,
+      "mfe20": 0.02732542524506032,
+      "mae20": -0.06659535373286651,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2023-10-19",
+      "t": 3472,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 4,
+      "age_bucket": "4_10",
+      "ret20": 0.08121508713011005,
+      "mfe20": 0.08833921758011987,
+      "mae20": -0.05579624667751937,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2023-11-02",
+      "t": 3482,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 3,
+      "age_bucket": "1_3",
+      "ret20": 0.07698372039287493,
+      "mfe20": 0.08650098065546086,
+      "mae20": -0.023765274327573693,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2024-01-08",
+      "t": 3526,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 32,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.020155205863332748,
+      "mfe20": 0.058309980599267064,
+      "mae20": -0.03400517352877774,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2024-01-18",
+      "t": 3533,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 1,
+      "age_bucket": "1_3",
+      "ret20": -0.025287600063616522,
+      "mfe20": 0.041085723373800453,
+      "mae20": -0.04972697874145149,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2024-02-22",
+      "t": 3557,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 6,
+      "age_bucket": "4_10",
+      "ret20": -0.07051038672235177,
+      "mfe20": 0.003633958887020672,
+      "mae20": -0.0861310950805445,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2025-01-17",
+      "t": 3784,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 167,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.06300547873728157,
+      "mfe20": 0.07483259413862076,
+      "mae20": -0.046090964431689696,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2025-01-27",
+      "t": 3789,
+      "state": "BLUE",
+      "origin": "GRAY",
+      "run_age": 172,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.07474111633168024,
+      "mfe20": 0.08761855042199596,
+      "mae20": -0.018097972679022134,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2025-02-04",
+      "t": 3795,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 6,
+      "age_bucket": "4_10",
+      "ret20": 0.012628908934707805,
+      "mfe20": 0.07388316151202745,
+      "mae20": -0.024054982817869552,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2025-02-11",
+      "t": 3800,
+      "state": "GRAY",
+      "origin": "BLUE",
+      "run_age": 11,
+      "age_bucket": "11_20",
+      "ret20": -0.0672341157252172,
+      "mfe20": 0.07471412604247263,
+      "mae20": -0.07613274868884878,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2025-07-01",
+      "t": 3896,
+      "state": "GREEN",
+      "origin": "GRAY",
+      "run_age": 73,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.005918549421684682,
+      "mfe20": 0.04046766237765076,
+      "mae20": -0.0028871618281608447,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2025-08-04",
+      "t": 3919,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 20,
+      "age_bucket": "11_20",
+      "ret20": 0.12967783970111446,
+      "mfe20": 0.15623303878863837,
+      "mae20": -0.005852028234471174,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_HOLD"
+      }
+    },
+    {
+      "type": "LIGHT_RESIST",
+      "date": "2025-08-06",
+      "t": 3921,
+      "state": "GRAY",
+      "origin": "GREEN",
+      "run_age": 22,
+      "age_bucket": "21_PLUS",
+      "ret20": 0.12440797186400943,
+      "mfe20": 0.12497064478311848,
+      "mae20": 0.015615474794841822,
+      "hit": {},
+      "race": {
+        "band20": "RESIST_BREAK"
+      }
+    }
+  ]
+}

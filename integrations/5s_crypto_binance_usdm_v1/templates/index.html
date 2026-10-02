@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>5s crypto v 1 · U 本位合约</title>
+<style>
+:root{
+  color-scheme:dark;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --bg:#090d18;--panel:#111827;--panel2:#0d1422;--line:#243047;
+  --text:#f3f6fb;--muted:#8fa0ba;--soft:#151f31;--blue:#5b8cff;
+  --green:#52d49a;--red:#ff7b82;--amber:#eab464;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.shell{max-width:1100px;margin:0 auto;padding:12px}
+.topbar{
+  position:sticky;top:0;z-index:20;margin:-12px -12px 0;padding:12px;
+  background:rgba(9,13,24,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(36,48,71,.72)
+}
+.title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.brand h1{font-size:20px;line-height:1.2;margin:0}
+.brand p{margin:5px 0 0;color:var(--muted);font-size:12px}
+.badges{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.badge{padding:5px 8px;border:1px solid var(--line);border-radius:999px;background:var(--soft);font-size:11px;color:#c8d3e4}
+.badge.test{border-color:#36568d;color:#a9c6ff}
+.badge.locked{border-color:#603038;color:#ffb0b4}
+.summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}
+.summary-card{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.summary-card small{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}
+.summary-card strong{display:block;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.summary-card span{color:var(--muted);font-size:10px;margin-left:4px}
+.positive{color:var(--green)!important}.negative{color:var(--red)!important}.neutral{color:var(--text)!important}
+
+.connection{margin-top:10px;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.connection summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;cursor:pointer}
+.connection summary::-webkit-details-marker{display:none}
+.connection-title{display:flex;align-items:center;gap:9px;min-width:0}
+.connection-title .icon{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--soft);font-weight:800}
+.connection-title strong{font-size:14px}
+.connection-title small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.connection-state{font-size:12px;white-space:nowrap}
+.connection-body{border-top:1px solid var(--line);padding:12px}
+.connection-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.connection-stats div,.snapshot,.exposure-row div{background:var(--panel2);border-radius:9px;padding:9px;min-width:0}
+.connection-stats small,.snapshot small,.exposure-row small{display:block;color:var(--muted);font-size:10px;margin-bottom:4px}
+.connection-stats b,.snapshot b,.exposure-row b{font-size:13px;overflow-wrap:anywhere}
+.connect-form{display:grid;grid-template-columns:1fr 1.3fr 1.3fr auto;gap:8px;align-items:end;margin-top:10px}
+label{color:var(--muted);font-size:11px}
+input,select{
+  width:100%;min-height:42px;margin-top:5px;padding:9px 10px;border-radius:9px;
+  border:1px solid #33415d;background:#0a1120;color:var(--text);font-size:16px;outline:none
+}
+input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,255,.12)}
+.connect-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.connect-error{margin-top:9px;padding:9px 10px;border-radius:9px;background:#40232a;color:#ffbdc1;font-size:12px}
+
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:14px 2px 8px}
+.section-head h2{font-size:15px;margin:0}.section-head span{font-size:11px;color:var(--muted)}
+.coin-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.coin-tab{
+  min-height:58px;border:1px solid var(--line);border-radius:11px;background:var(--panel);
+  color:var(--text);padding:9px;text-align:left;outline:none
+}
+.coin-tab.active{border-color:#507bc9;background:#162238;box-shadow:inset 0 0 0 1px rgba(91,140,255,.18)}
+.tab-top{display:flex;align-items:center;gap:6px}.coin-tab strong{font-size:14px}.coin-tab small{display:block;margin-top:5px;font-size:11px}
+.run-dot{width:7px;height:7px;border-radius:50%;background:#58667a}.run-dot.on{background:var(--green);box-shadow:0 0 0 3px rgba(82,212,154,.10)}
+
+.coin-panel{display:none;margin-top:8px;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.coin-panel.active{display:block}
+.coin-hero{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:10px;color:var(--muted);margin-bottom:3px}
+.coin-title-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.coin-title-row h2{font-size:21px;margin:0}.coin-title-row h2 span{font-size:13px;color:var(--muted);font-weight:600}
+.market-badge{padding:4px 7px;border-radius:999px;font-size:10px;font-weight:700;color:#a9c6ff;border:1px solid #36568d;background:#12203a;white-space:nowrap}
+.status-pill{padding:4px 7px;border-radius:999px;font-size:10px;border:1px solid var(--line)}
+.status-pill.running{color:#8ce6bc;border-color:#285945;background:#122b23}.status-pill.stopped{color:#aab6c9;background:#1a2230}
+.hero-pnl{text-align:right}.hero-pnl small{display:block;color:var(--muted);font-size:10px}.hero-pnl strong{font-size:23px}.hero-pnl span{font-size:10px;color:var(--muted)}
+.market-chart{margin:10px 14px 0;background:var(--panel2);border:1px solid #1f2a3e;border-radius:11px;padding:10px}
+.chart-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(100px,.75fr) minmax(98px,auto);align-items:center;gap:12px}
+.chart-identity{min-width:0}
+.chart-identity small,.live-price small{display:block;color:var(--muted);font-size:10px}
+.chart-identity strong{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chart-candle-meta{display:block;margin-top:5px;color:var(--muted);font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.live-price{text-align:center;min-width:0;padding:2px 10px;border-left:1px solid #1f2a3e;border-right:1px solid #1f2a3e}
+.live-price-value{display:block;margin-top:2px;font-size:20px;line-height:1.15;font-variant-numeric:tabular-nums;white-space:nowrap}
+.live-price-status{display:block;margin-top:3px;color:var(--muted);font-size:9px;white-space:nowrap}
+.chart-ohlc{display:grid;gap:2px;min-width:94px}
+.chart-ohlc div{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:15px}
+.chart-ohlc small{color:var(--muted);font-size:9px}
+.chart-ohlc b{font-size:10px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}
+.chart-scroll{margin-top:7px;overflow-x:auto;overflow-y:hidden;border-radius:8px;background:#080d17;scrollbar-width:thin}
+.kline-canvas{display:block;height:330px}
+.chart-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:7px;color:var(--muted);font-size:10px}
+.chart-legend b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;color:#08110d}
+.legend-buy{background:#52d49a}.legend-sell{background:#ff7b82;color:#1a0708!important}
+.chart-message{margin-top:5px;color:var(--muted);font-size:10px}
+.snapshot-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px 14px 0}
+.panel-body{display:grid;grid-template-columns:minmax(0,2fr) minmax(220px,.75fr);gap:10px;padding:10px 14px 14px}
+.settings-block,.control-block{background:var(--panel2);border:1px solid #1f2a3e;border-radius:11px;padding:11px}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.section-title small,.control-block small,.trade-settings-summary small{display:block;color:var(--muted);font-size:10px}
+.section-title strong,.control-block strong,.trade-settings-summary strong{display:block;font-size:13px;margin-top:2px}
+.trade-settings{padding:0;overflow:hidden}
+.trade-settings summary{list-style:none;cursor:pointer}.trade-settings summary::-webkit-details-marker{display:none}
+.trade-settings-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px}
+.trade-settings-summary span{font-size:10px;color:var(--muted)}
+.trade-settings[open] .trade-settings-summary{border-bottom:1px solid #1f2a3e}
+.trade-settings[open] .trade-settings-summary span{font-size:0}
+.trade-settings[open] .trade-settings-summary span::after{content:"点击收起";font-size:10px}
+.trade-settings-body{padding:11px}
+.field-grid{display:grid;grid-template-columns:1.35fr .75fr 1fr;gap:8px}
+.input-with-unit{position:relative}.input-with-unit input{padding-right:52px}.input-with-unit span{position:absolute;right:10px;bottom:13px;color:var(--muted);font-size:11px}
+.field-label{display:block;color:var(--muted);font-size:11px}
+.timeframe-picker{position:relative;margin-top:5px}
+.timeframe-picker input[type="hidden"]{display:none}
+.timeframe-trigger{
+  width:100%;min-height:42px;display:grid;grid-template-columns:minmax(0,1fr) auto 18px;align-items:center;gap:7px;
+  padding:8px 10px;border:1px solid #33415d;border-radius:9px;background:#0a1120;color:var(--text);text-align:left;outline:none
+}
+.timeframe-trigger:focus,.timeframe-picker.open .timeframe-trigger{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,255,.12)}
+.timeframe-current{font-size:14px;font-weight:700;white-space:nowrap}
+.timeframe-trigger small{color:var(--muted);font-size:9px;white-space:nowrap}
+.timeframe-chevron{color:#8fa0ba;font-size:16px;line-height:1;transition:transform .16s ease;text-align:center}
+.timeframe-picker.open .timeframe-chevron{transform:rotate(180deg)}
+.timeframe-menu{
+  margin-top:7px;padding:7px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;
+  border:1px solid #2b3953;border-radius:10px;background:#0a1120;box-shadow:0 12px 30px rgba(0,0,0,.26)
+}
+.timeframe-menu[hidden]{display:none}
+.timeframe-option{
+  min-width:0;min-height:50px;padding:7px 6px;border:1px solid #26344d;border-radius:8px;
+  background:#10192a;color:var(--text);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;text-align:left
+}
+.timeframe-option span{font-size:12px;font-weight:700;white-space:nowrap}
+.timeframe-option small{font-size:8px;color:var(--muted);white-space:nowrap}
+.timeframe-option.selected{border-color:#5b8cff;background:#162746;box-shadow:inset 0 0 0 1px rgba(91,140,255,.18)}
+.timeframe-option.selected span{color:#d9e6ff}
+.timeframe-option.selected small{color:#9dbbff}
+.exposure-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:8px}
+.save-button{width:100%;margin-top:8px}
+.control-block{display:flex;flex-direction:column;justify-content:space-between}
+.control-block p{color:var(--muted);font-size:11px;line-height:1.5;margin:8px 0 12px}
+.control-button{width:100%}
+.control-actions{display:grid;gap:7px}
+
+.primary,.secondary,.danger{
+  min-height:42px;border:0;border-radius:9px;font-weight:750;padding:9px 13px
+}
+.primary{background:#e8eef8;color:#0c1422}.secondary{background:#26344d;color:#edf3ff}.danger{background:#692b35;color:#fff}
+.footer-note{text-align:center;color:var(--muted);font-size:10px;padding:12px 6px 4px}
+
+@media(max-width:760px){
+  .shell{padding:10px}.topbar{margin:-10px -10px 0;padding:10px}
+  .title-row{align-items:center}.brand h1{font-size:18px}.badges .badge:nth-child(2),.badges .badge:nth-child(3){display:none}
+  .summary-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.summary-card{padding:7px 6px}.summary-card small{font-size:9px}.summary-card strong{font-size:12px}.summary-card span{font-size:8px;margin-left:1px}
+  .connection-stats{grid-template-columns:1fr 1fr}
+  .connect-form{grid-template-columns:1fr 1fr}.connect-form label:nth-child(2),.connect-form label:nth-child(3){grid-column:1/-1}.connect-form button{grid-column:1/-1;width:100%}
+  .section-head{margin-top:12px}
+  .coin-tabs{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.coin-tab{min-width:0;min-height:50px;padding:7px 5px}.coin-tab strong{font-size:12px}
+  .coin-hero{padding:12px}.market-chart{margin:8px 12px 0;padding:8px}.chart-head{grid-template-columns:minmax(0,1fr) minmax(88px,.72fr) minmax(88px,auto);gap:7px}.chart-identity strong{font-size:11px}.chart-candle-meta{font-size:8px}.live-price{padding:2px 6px}.live-price-value{font-size:16px}.live-price-status{font-size:8px}.chart-ohlc{min-width:84px}.chart-ohlc div{gap:5px}.chart-ohlc small{font-size:8px}.chart-ohlc b{font-size:9px}.kline-canvas{height:300px}.snapshot-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px 12px 0}.snapshot{padding:7px 5px}.snapshot small{font-size:8px}.snapshot b{font-size:11px}
+  .panel-body{grid-template-columns:1fr;padding:8px 12px 12px}
+  .field-grid{grid-template-columns:1fr 1fr}.budget-field{grid-column:1/-1}.timeframe-field{grid-column:1/-1}
+  .timeframe-menu{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .exposure-row{grid-template-columns:1fr 1fr}.exposure-row div:last-child{grid-column:1/-1}
+}
+@media(max-width:380px){
+  .badges .badge.structural,.badges .badge.test,.badges .badge.locked{display:none}.brand p{display:none}
+  .coin-tab small{font-size:9px}.coin-tab{padding:6px 4px}
+  .timeframe-menu{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+</style>
+</head>
+<body>
+<main class="shell" data-initial-symbol="__INITIAL_SYMBOL__">
+  <header class="topbar">
+    <div class="title-row">
+      <div class="brand">
+        <h1>5s crypto v 1</h1>
+        <p>币安 U 本位合约 · 虚拟测试控制台</p>
+      </div>
+      <div class="badges">
+        <span class="badge __TOP_CONNECTION_CLASS__">● __TOP_CONNECTION_STATUS__</span>
+        <span class="badge __TOP_RECOVERY_CLASS__">● __TOP_RECOVERY_STATUS__</span>
+        <span class="badge structural">逐仓</span>
+        <span class="badge structural">单向持仓</span>
+        <span class="badge test">虚拟测试</span>
+        <span class="badge locked">实盘锁定</span>
+      </div>
+    </div>
+
+    <section class="summary-grid" aria-label="账户总览">
+      <div class="summary-card"><small>虚拟账户余额</small><strong>__VIRTUAL_BALANCE__ <span>USDT</span></strong></div>
+      <div class="summary-card"><small>虚拟可用资金</small><strong>__VIRTUAL_AVAILABLE__ <span>USDT</span></strong></div>
+      <div class="summary-card"><small>运行策略资金</small><strong>__ACTIVE_BUDGET__ <span>USDT</span></strong></div>
+      <div class="summary-card"><small>策略总盈亏</small><strong class="__TOTAL_PNL_CLASS__">__TOTAL_PNL__ <span>USDT</span></strong></div>
+    </section>
+  </header>
+
+  <details class="connection"__CONNECTION_OPEN__>
+    <summary>
+      <div class="connection-title">
+        <div class="icon">链</div>
+        <div><strong>虚拟测试账户连接</strong><small>点击展开或收起接口设置</small></div>
+      </div>
+      <span class="connection-state __CONNECTION_CLASS__">__CONNECTION_LABEL__</span>
+    </summary>
+    <div class="connection-body">
+      <div class="connection-stats">
+        <div><small>接口密钥</small><b>__MASKED_API_KEY__</b></div>
+        <div><small>虚拟账户总额</small><b>__VIRTUAL_BALANCE__ USDT</b></div>
+        <div><small>当前持仓数</small><b>__POSITION_COUNT__</b></div>
+        <div><small>单向持仓状态</small><b>__ONE_WAY_STATUS__</b></div>
+        <div><small>恢复对账状态</small><b class="__RECOVERY_CLASS__">__RECOVERY_STATUS__</b></div>
+      </div>
+      <form class="connect-form" method="post" action="/testnet-connect" autocomplete="off">
+        <label>连接环境
+          <select name="environment"><option value="DEMO">币安合约模拟交易</option></select>
+        </label>
+        <label>接口密钥
+          <input name="api_key" type="password" autocomplete="off" placeholder="请输入币安合约模拟交易接口密钥" required>
+        </label>
+        <label>接口私钥
+          <input name="api_secret" type="password" autocomplete="new-password" placeholder="请输入币安合约模拟交易接口私钥" required>
+        </label>
+        <button class="primary" type="submit">连接并检测</button>
+      </form>
+      __CONNECT_ERROR__
+      <div class="connect-actions">
+        <form method="post" action="/testnet-retest"><button class="secondary" type="submit">重新检测</button></form>
+        <form method="post" action="/reconcile"><button class="secondary" type="submit">重新对账</button></form>
+        <form method="post" action="/testnet-disconnect"><button class="danger" type="submit">断开连接</button></form>
+      </div>
+    </div>
+  </details>
+
+  <div class="section-head">
+    <h2>币种策略</h2>
+    <span>已启动 __ACTIVE_COUNT__ / 4 · 全部配置资金 __CONFIGURED_BUDGET__ USDT</span>
+  </div>
+
+  <nav class="coin-tabs" aria-label="币种切换">
+    __COIN_TABS__
+  </nav>
+
+  <section class="coin-panels">
+    __COIN_PANELS__
+  </section>
+
+  <div class="footer-note">当前仅用于虚拟测试；实盘交易入口仍然锁定。</div>
+</main>
+
+<script>
+(() => {
+  const root = document.querySelector('.shell');
+  if (!root || root.dataset.ready === '1') return;
+  root.dataset.ready = '1';
+  const tabs = Array.from(root.querySelectorAll('.coin-tab'));
+  const panels = Array.from(root.querySelectorAll('.coin-panel'));
+
+
+  const chartCache = new Map();
+  const livePriceCache = new Map();
+  let priceSocket = null;
+  let priceSocketGeneration = 0;
+  let priceReconnectTimer = null;
+
+  function formatPrice(value) {
+    const n = Number(value);
+    if (!Number.isFinite(n)) return '—';
+    if (Math.abs(n) >= 1000) return n.toFixed(2);
+    if (Math.abs(n) >= 1) return n.toFixed(3);
+    return n.toFixed(5);
+  }
+
+  function formatVolume(value) {
+    const n = Number(value);
+    if (!Number.isFinite(n)) return '—';
+    if (n >= 1000000000) return (n / 1000000000).toFixed(1) + 'B';
+    if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+    if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+    return n.toFixed(0);
+  }
+
+  function formatTime(ms) {
+    const d = new Date(Number(ms));
+    return d.toLocaleString('zh-CN', {
+      month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit',
+      hour12: false
+    });
+  }
+
+  function drawChart(section, payload) {
+    const canvas = section.querySelector('.kline-canvas');
+    const scroll = section.querySelector('.chart-scroll');
+    const message = section.querySelector('.chart-message');
+    const candleMeta = section.querySelector('.chart-candle-meta');
+    const liveValue = section.querySelector('.live-price-value');
+    const liveStatus = section.querySelector('.live-price-status');
+    const candles = Array.isArray(payload.candles) ? payload.candles : [];
+    const markers = Array.isArray(payload.markers) ? payload.markers : [];
+    if (!canvas || !scroll || candles.length === 0) {
+      if (message) message.textContent = '暂时没有可显示的 K 线数据';
+      return;
+    }
+
+    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    const left = 8;
+    const right = 64;
+    const candleStep = 6;
+    const logicalWidth = Math.max(scroll.clientWidth, left + right + candles.length * candleStep);
+    const logicalHeight = window.innerWidth <= 760 ? 300 : 330;
+    canvas.style.width = logicalWidth + 'px';
+    canvas.style.height = logicalHeight + 'px';
+    canvas.width = Math.round(logicalWidth * dpr);
+    canvas.height = Math.round(logicalHeight * dpr);
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, logicalWidth, logicalHeight);
+
+    const priceTop = 12;
+    const priceBottom = logicalHeight * 0.72;
+    const volumeTop = logicalHeight * 0.78;
+    const volumeBottom = logicalHeight - 18;
+    const plotRight = logicalWidth - right;
+    const lows = candles.map(c => Number(c.low));
+    const highs = candles.map(c => Number(c.high));
+    let minPrice = Math.min.apply(null, lows);
+    let maxPrice = Math.max.apply(null, highs);
+    let pad = (maxPrice - minPrice) * 0.06;
+    if (!Number.isFinite(pad) || pad <= 0) pad = Math.max(1, maxPrice * 0.01);
+    minPrice -= pad;
+    maxPrice += pad;
+    const priceSpan = Math.max(1e-12, maxPrice - minPrice);
+    const maxVolume = Math.max(1, ...candles.map(c => Number(c.volume) || 0));
+    const yPrice = p => priceTop + (maxPrice - Number(p)) / priceSpan * (priceBottom - priceTop);
+
+    ctx.strokeStyle = '#1a2639';
+    ctx.lineWidth = 1;
+    ctx.fillStyle = '#71819a';
+    ctx.font = '10px system-ui';
+    ctx.textAlign = 'left';
+    for (let g = 0; g <= 4; g++) {
+      const y = priceTop + (priceBottom - priceTop) * g / 4;
+      ctx.beginPath(); ctx.moveTo(left, y); ctx.lineTo(plotRight, y); ctx.stroke();
+      const p = maxPrice - priceSpan * g / 4;
+      ctx.fillText(formatPrice(p), plotRight + 5, y + 3);
+    }
+    ctx.beginPath(); ctx.moveTo(left, volumeTop - 5); ctx.lineTo(plotRight, volumeTop - 5); ctx.stroke();
+
+    const markerMap = new Map();
+    markers.forEach(m => {
+      const key = String(m.open_time);
+      if (!markerMap.has(key)) markerMap.set(key, []);
+      markerMap.get(key).push(m);
+    });
+
+    candles.forEach((c, i) => {
+      const x = left + i * candleStep + candleStep / 2;
+      const open = Number(c.open), high = Number(c.high), low = Number(c.low), close = Number(c.close);
+      const up = close >= open;
+      const color = up ? '#52d49a' : '#ff7b82';
+      const yOpen = yPrice(open), yClose = yPrice(close), yHigh = yPrice(high), yLow = yPrice(low);
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.beginPath(); ctx.moveTo(x, yHigh); ctx.lineTo(x, yLow); ctx.stroke();
+      const bodyTop = Math.min(yOpen, yClose);
+      const bodyHeight = Math.max(1, Math.abs(yClose - yOpen));
+      ctx.fillRect(x - 1.7, bodyTop, 3.4, bodyHeight);
+
+      const vh = (Number(c.volume) || 0) / maxVolume * (volumeBottom - volumeTop);
+      ctx.globalAlpha = 0.62;
+      ctx.fillRect(x - 1.7, volumeBottom - vh, 3.4, vh);
+      ctx.globalAlpha = 1;
+
+      const ms = markerMap.get(String(c.open_time)) || [];
+      let buyOffset = 0, sellOffset = 0;
+      ms.forEach(m => {
+        const side = String(m.side || '');
+        const isBuy = side === 'B';
+        const y = isBuy ? Math.min(priceBottom - 10, yLow + 13 + buyOffset) : Math.max(priceTop + 10, yHigh - 13 - sellOffset);
+        if (isBuy) buyOffset += 18; else sellOffset += 18;
+        ctx.beginPath();
+        ctx.fillStyle = isBuy ? '#52d49a' : '#ff7b82';
+        ctx.arc(x, y, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = isBuy ? '#07130e' : '#1b0809';
+        ctx.font = 'bold 9px system-ui';
+        ctx.textAlign = 'center';
+        ctx.fillText(side, x, y + 3);
+      });
+    });
+
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#71819a';
+    ctx.font = '9px system-ui';
+    const labelEvery = Math.max(1, Math.floor(candles.length / 8));
+    candles.forEach((c, i) => {
+      if (i % labelEvery !== 0 && i !== candles.length - 1) return;
+      const x = left + i * candleStep;
+      ctx.fillText(formatTime(c.open_time), x, logicalHeight - 4);
+    });
+
+    function showCandle(c, prefix) {
+      if (!c) return;
+      const values = {
+        open: c.open,
+        high: c.high,
+        low: c.low,
+        close: c.close
+      };
+      Object.entries(values).forEach(([key, value]) => {
+        const node = section.querySelector('[data-ohlc="' + key + '"]');
+        if (node) node.textContent = formatPrice(value);
+      });
+      const ms = markerMap.get(String(c.open_time)) || [];
+      const mark = ms.length ? ' · 信号 ' + ms.map(m => m.side).join('/') : '';
+      if (candleMeta) {
+        candleMeta.textContent =
+          prefix + ' · ' + formatTime(c.open_time) +
+          ' · 量 ' + formatVolume(c.volume) + mark;
+      }
+    }
+
+    const latestCandle = candles[candles.length - 1];
+    function showFromClientX(clientX) {
+      const rect = canvas.getBoundingClientRect();
+      const localX = clientX - rect.left;
+      const index = Math.max(0, Math.min(candles.length - 1, Math.floor((localX - left) / candleStep)));
+      showCandle(candles[index], '所选 K 线');
+    }
+    function restoreLatestCandle() {
+      showCandle(latestCandle, '最新 K 线');
+    }
+
+    canvas.onmousemove = e => showFromClientX(e.clientX);
+    canvas.onmouseleave = restoreLatestCandle;
+    canvas.ontouchstart = e => {
+      if (e.touches && e.touches[0]) showFromClientX(e.touches[0].clientX);
+    };
+    canvas.ontouchmove = e => {
+      if (e.touches && e.touches[0]) showFromClientX(e.touches[0].clientX);
+    };
+    canvas.ontouchend = restoreLatestCandle;
+    canvas.ontouchcancel = restoreLatestCandle;
+    restoreLatestCandle();
+
+    if (liveValue && section.dataset.livePriceReady !== '1') {
+      liveValue.textContent = formatPrice(latestCandle.close);
+      if (liveStatus) liveStatus.textContent = '等待实时行情';
+    }
+    if (message) {
+      message.textContent =
+        payload.source + ' · ' + payload.timeframe_label + ' · B/S 为真实策略信号';
+    }
+    if (section.dataset.scrolled !== '1') {
+      requestAnimationFrame(() => {
+        scroll.scrollLeft = Math.max(0, scroll.scrollWidth - scroll.clientWidth);
+        section.dataset.scrolled = '1';
+      });
+    }
+  }
+
+  function activeSymbol() {
+    const active = tabs.find(tab => tab.classList.contains('active'));
+    return active ? active.dataset.symbol : '';
+  }
+
+  function stopPriceStream() {
+    priceSocketGeneration += 1;
+    if (priceReconnectTimer) {
+      clearTimeout(priceReconnectTimer);
+      priceReconnectTimer = null;
+    }
+    if (priceSocket) {
+      priceSocket.onopen = null;
+      priceSocket.onmessage = null;
+      priceSocket.onerror = null;
+      priceSocket.onclose = null;
+      try { priceSocket.close(); } catch (_) {}
+      priceSocket = null;
+    }
+  }
+
+  function startPriceStream(symbol) {
+    stopPriceStream();
+    const generation = priceSocketGeneration;
+    const section = root.querySelector('.market-chart[data-chart-symbol="' + symbol + '"]');
+    if (!section) return;
+    const valueNode = section.querySelector('.live-price-value');
+    const statusNode = section.querySelector('.live-price-status');
+    const cached = livePriceCache.get(symbol);
+    if (Number.isFinite(cached) && valueNode) {
+      valueNode.textContent = formatPrice(cached);
+      section.dataset.livePriceReady = '1';
+    }
+    if (statusNode) statusNode.textContent = '正在连接实时行情';
+
+    if (!('WebSocket' in window)) {
+      if (statusNode) statusNode.textContent = '当前浏览器不支持实时行情';
+      return;
+    }
+
+    const url = 'wss://fstream.binance.com/market/ws/' + symbol.toLowerCase() + '@ticker';
+    let socket;
+    try {
+      socket = new WebSocket(url);
+    } catch (_) {
+      if (statusNode) statusNode.textContent = '实时行情连接失败';
+      return;
+    }
+    priceSocket = socket;
+
+    socket.onopen = () => {
+      if (generation !== priceSocketGeneration || activeSymbol() !== symbol) return;
+      if (statusNode) statusNode.textContent = '实时 · 币安';
+    };
+    socket.onmessage = event => {
+      if (generation !== priceSocketGeneration || activeSymbol() !== symbol) return;
+      try {
+        const data = JSON.parse(event.data);
+        const price = Number(data.c);
+        if (!Number.isFinite(price)) return;
+        livePriceCache.set(symbol, price);
+        section.dataset.livePriceReady = '1';
+        if (valueNode) valueNode.textContent = formatPrice(price);
+        if (statusNode) statusNode.textContent = '实时 · 币安';
+      } catch (_) {}
+    };
+    socket.onerror = () => {
+      if (generation !== priceSocketGeneration || activeSymbol() !== symbol) return;
+      if (statusNode) statusNode.textContent = '实时行情连接异常';
+    };
+    socket.onclose = () => {
+      if (generation !== priceSocketGeneration || activeSymbol() !== symbol) return;
+      priceSocket = null;
+      if (statusNode) statusNode.textContent = '实时行情重连中';
+      priceReconnectTimer = setTimeout(() => {
+        if (generation === priceSocketGeneration && activeSymbol() === symbol) {
+          startPriceStream(symbol);
+        }
+      }, 3000);
+    };
+  }
+
+  async function loadChart(symbol, force) {
+    const section = root.querySelector('.market-chart[data-chart-symbol="' + symbol + '"]');
+    if (!section) return;
+    const timeframe = section.dataset.chartTimeframe || '';
+    const key = symbol + ':' + timeframe;
+    const message = section.querySelector('.chart-message');
+    try {
+      let payload = chartCache.get(key);
+      if (!payload || force) {
+        if (message) message.textContent = '正在加载 ' + timeframe + ' K 线…';
+        const response = await fetch('/api/chart?symbol=' + encodeURIComponent(symbol), {cache: 'no-store'});
+        if (!response.ok) throw new Error('行情读取失败');
+        payload = await response.json();
+        chartCache.set(key, payload);
+      }
+      drawChart(section, payload);
+    } catch (error) {
+      if (message) message.textContent = 'K 线加载失败，请稍后重试';
+    }
+  }
+
+  function closeTimeframePicker(picker) {
+    if (!picker) return;
+    picker.classList.remove('open');
+    const menu = picker.querySelector('.timeframe-menu');
+    const trigger = picker.querySelector('.timeframe-trigger');
+    if (menu) menu.hidden = true;
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  root.querySelectorAll('[data-timeframe-picker]').forEach((picker) => {
+    const trigger = picker.querySelector('.timeframe-trigger');
+    const menu = picker.querySelector('.timeframe-menu');
+    const hidden = picker.querySelector('input[name="timeframe"]');
+    const current = picker.querySelector('[data-timeframe-current]');
+    const currentStatus = picker.querySelector('[data-timeframe-current-status]');
+    const options = Array.from(picker.querySelectorAll('[data-timeframe-option]'));
+    if (!trigger || !menu || !hidden) return;
+
+    trigger.addEventListener('click', () => {
+      const opening = !picker.classList.contains('open');
+      root.querySelectorAll('[data-timeframe-picker].open').forEach((other) => {
+        if (other !== picker) closeTimeframePicker(other);
+      });
+      picker.classList.toggle('open', opening);
+      menu.hidden = !opening;
+      trigger.setAttribute('aria-expanded', opening ? 'true' : 'false');
+    });
+
+    options.forEach((option) => {
+      option.addEventListener('click', () => {
+        const value = option.dataset.timeframeOption || '';
+        if (!value) return;
+        hidden.value = value;
+        options.forEach((item) => {
+          const selected = item === option;
+          item.classList.toggle('selected', selected);
+          item.setAttribute('aria-selected', selected ? 'true' : 'false');
+        });
+        const label = option.querySelector('span');
+        const status = option.querySelector('small');
+        if (current && label) current.textContent = label.textContent || value;
+        if (currentStatus && status) currentStatus.textContent = status.textContent || '';
+        closeTimeframePicker(picker);
+      });
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    root.querySelectorAll('[data-timeframe-picker].open').forEach((picker) => {
+      if (!picker.contains(event.target)) closeTimeframePicker(picker);
+    });
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    root.querySelectorAll('[data-timeframe-picker].open').forEach(closeTimeframePicker);
+  });
+
+  function activate(symbol) {
+    tabs.forEach((tab) => {
+      const active = tab.dataset.symbol === symbol;
+      tab.classList.toggle('active', active);
+      tab.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    panels.forEach((panel) => {
+      panel.classList.toggle('active', panel.dataset.panel === symbol);
+    });
+    loadChart(symbol, false);
+    startPriceStream(symbol);
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => activate(tab.dataset.symbol));
+  });
+
+  activate(root.dataset.initialSymbol || (tabs[0] && tabs[0].dataset.symbol));
+  setInterval(() => {
+    const active = tabs.find(tab => tab.classList.contains('active'));
+    if (active) loadChart(active.dataset.symbol, true);
+  }, 30000);
+  window.addEventListener('beforeunload', stopPriceStream);
+})();
+</script>
+</body>
+</html>

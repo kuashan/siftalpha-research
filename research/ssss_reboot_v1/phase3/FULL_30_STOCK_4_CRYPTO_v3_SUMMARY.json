@@ -1,0 +1,5672 @@
+{
+  "meta": {
+    "protocol_commit": "511bc4658e87b729ea264efb0258a6fbdbdf3bae",
+    "status_addendum_commit": "50a3587ae98264a08dd21d71427452e87f1227e6",
+    "generated": "2026-10-02",
+    "representation": "FIRST_OBSERVED",
+    "xma_modified": false,
+    "stock_count": 30,
+    "crypto_count": 4,
+    "formal_stock_validation_count": 28
+  },
+  "coverage": [
+    {
+      "symbol": "AAPL",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 315,
+      "error": null
+    },
+    {
+      "symbol": "MSFT",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 319,
+      "error": null
+    },
+    {
+      "symbol": "NVDA",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 270,
+      "error": null
+    },
+    {
+      "symbol": "AMD",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 324,
+      "error": null
+    },
+    {
+      "symbol": "AVGO",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 350,
+      "error": null
+    },
+    {
+      "symbol": "ORCL",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 326,
+      "error": null
+    },
+    {
+      "symbol": "INTC",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 347,
+      "error": null
+    },
+    {
+      "symbol": "QCOM",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 329,
+      "error": null
+    },
+    {
+      "symbol": "MU",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 365,
+      "error": null
+    },
+    {
+      "symbol": "GOOGL",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 317,
+      "error": null
+    },
+    {
+      "symbol": "META",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2012-05-18",
+        "returned_end": "2025-12-30",
+        "raw_bars": 3424,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 305,
+      "error": null
+    },
+    {
+      "symbol": "NFLX",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 308,
+      "error": null
+    },
+    {
+      "symbol": "AMZN",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 344,
+      "error": null
+    },
+    {
+      "symbol": "TSLA",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-06-29",
+        "returned_end": "2025-12-30",
+        "raw_bars": 3901,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 343,
+      "error": null
+    },
+    {
+      "symbol": "HD",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 326,
+      "error": null
+    },
+    {
+      "symbol": "MCD",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 378,
+      "error": null
+    },
+    {
+      "symbol": "WMT",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 332,
+      "error": null
+    },
+    {
+      "symbol": "COST",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 316,
+      "error": null
+    },
+    {
+      "symbol": "PG",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 377,
+      "error": null
+    },
+    {
+      "symbol": "KO",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 353,
+      "error": null
+    },
+    {
+      "symbol": "PEP",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 362,
+      "error": null
+    },
+    {
+      "symbol": "ABT",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 345,
+      "error": null
+    },
+    {
+      "symbol": "LLY",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 300,
+      "error": null
+    },
+    {
+      "symbol": "UNH",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 353,
+      "error": null
+    },
+    {
+      "symbol": "JNJ",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 360,
+      "error": null
+    },
+    {
+      "symbol": "TMO",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 332,
+      "error": null
+    },
+    {
+      "symbol": "JPM",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 311,
+      "error": null
+    },
+    {
+      "symbol": "BAC",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 320,
+      "error": null
+    },
+    {
+      "symbol": "GS",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 318,
+      "error": null
+    },
+    {
+      "symbol": "V",
+      "asset_class": "STOCK",
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2025-12-30",
+        "raw_bars": 4023,
+        "usable_start": "2018-01-02",
+        "usable_end": "2025-12-01"
+      },
+      "event_count": 386,
+      "error": null
+    },
+    {
+      "symbol": "BTC/USD",
+      "asset_class": "CRYPTO",
+      "coverage": {
+        "returned_start": "2017-08-28",
+        "returned_end": "2025-12-31",
+        "raw_bars": 3048,
+        "usable_start": "2018-02-24",
+        "usable_end": "2025-12-11"
+      },
+      "event_count": 408,
+      "error": null
+    },
+    {
+      "symbol": "ETH/USD",
+      "asset_class": "CRYPTO",
+      "coverage": {
+        "returned_start": "2018-01-17",
+        "returned_end": "2025-12-31",
+        "raw_bars": 2901,
+        "usable_start": "2018-07-16",
+        "usable_end": "2025-12-11"
+      },
+      "event_count": 378,
+      "error": null
+    },
+    {
+      "symbol": "BNB/USD",
+      "asset_class": "CRYPTO",
+      "coverage": {
+        "returned_start": "2017-11-08",
+        "returned_end": "2025-12-31",
+        "raw_bars": 2976,
+        "usable_start": "2018-05-07",
+        "usable_end": "2025-12-11"
+      },
+      "event_count": 423,
+      "error": null
+    },
+    {
+      "symbol": "SOL/USD",
+      "asset_class": "CRYPTO",
+      "coverage": {
+        "returned_start": "2020-08-11",
+        "returned_end": "2025-12-31",
+        "raw_bars": 1969,
+        "usable_start": "2021-02-07",
+        "usable_end": "2025-12-11"
+      },
+      "event_count": 266,
+      "error": null
+    }
+  ],
+  "eventCounts": {
+    "stocks": {
+      "LOWER": 2609,
+      "UPPER": 3135,
+      "LIGHT_SUPPORT": 2331,
+      "LIGHT_RESIST": 1956
+    },
+    "crypto": {
+      "LOWER": 415,
+      "UPPER": 401,
+      "LIGHT_SUPPORT": 351,
+      "LIGHT_RESIST": 308
+    }
+  },
+  "formal": {
+    "stocks": {
+      "BUY_GREEN_21P_LOWER": {
+        "id": "BUY_GREEN_21P_LOWER",
+        "type": "LOWER",
+        "wanted": "MID_FIRST",
+        "status": "MIXED",
+        "n": 299,
+        "pooled_probability": 0.43812709030100333,
+        "eligible_symbols": 27,
+        "supporting_symbols": 9,
+        "neutral_symbols": 4,
+        "opposing_symbols": 14,
+        "support_fraction": 0.3333333333333333,
+        "median_symbol_probability": 0.4444444444444444,
+        "per_symbol": [
+          {
+            "symbol": "MSFT",
+            "n": 9,
+            "p": 0.4444444444444444
+          },
+          {
+            "symbol": "NVDA",
+            "n": 14,
+            "p": 0.5714285714285714
+          },
+          {
+            "symbol": "AMD",
+            "n": 15,
+            "p": 0.4
+          },
+          {
+            "symbol": "AVGO",
+            "n": 4,
+            "p": 0
+          },
+          {
+            "symbol": "ORCL",
+            "n": 8,
+            "p": 0.375
+          },
+          {
+            "symbol": "INTC",
+            "n": 20,
+            "p": 0.3
+          },
+          {
+            "symbol": "QCOM",
+            "n": 14,
+            "p": 0.5
+          },
+          {
+            "symbol": "MU",
+            "n": 18,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "GOOGL",
+            "n": 16,
+            "p": 0.875
+          },
+          {
+            "symbol": "META",
+            "n": 19,
+            "p": 0.3157894736842105
+          },
+          {
+            "symbol": "NFLX",
+            "n": 9,
+            "p": 0
+          },
+          {
+            "symbol": "AMZN",
+            "n": 13,
+            "p": 0.3076923076923077
+          },
+          {
+            "symbol": "TSLA",
+            "n": 19,
+            "p": 0.5263157894736842
+          },
+          {
+            "symbol": "HD",
+            "n": 16,
+            "p": 0.5625
+          },
+          {
+            "symbol": "MCD",
+            "n": 5,
+            "p": 0.2
+          },
+          {
+            "symbol": "WMT",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "COST",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "PG",
+            "n": 6,
+            "p": 0.5
+          },
+          {
+            "symbol": "KO",
+            "n": 9,
+            "p": 0.7777777777777778
+          },
+          {
+            "symbol": "PEP",
+            "n": 10,
+            "p": 0.2
+          },
+          {
+            "symbol": "LLY",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "UNH",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "JNJ",
+            "n": 17,
+            "p": 0.6470588235294118
+          },
+          {
+            "symbol": "TMO",
+            "n": 10,
+            "p": 0.5
+          },
+          {
+            "symbol": "JPM",
+            "n": 11,
+            "p": 0.2727272727272727
+          },
+          {
+            "symbol": "BAC",
+            "n": 11,
+            "p": 0.18181818181818182
+          },
+          {
+            "symbol": "GS",
+            "n": 10,
+            "p": 0.2
+          }
+        ],
+        "stats": {
+          "n": 299,
+          "symbol_count": 27,
+          "ret5_median": 0.009186372081291694,
+          "mfe5_median": 0.03858007365025484,
+          "mae5_median": -0.02778866760168308,
+          "ret10_median": 0.01748830081455699,
+          "mfe10_median": 0.05223708487084866,
+          "mae10_median": -0.037536718712217754,
+          "ret20_median": 0.02280648823748921,
+          "mfe20_median": 0.07587816543514236,
+          "mae20_median": -0.05142145203307291,
+          "mid_first5": 0.3612040133779264,
+          "bd_first5": 0.5150501672240803,
+          "upper_first_vs_bd5": 0.09364548494983277,
+          "bd_first_vs_upper5": 0.5317725752508361,
+          "light_first_vs_bd5": 0.0802675585284281,
+          "light_first_vs_mid5": 0,
+          "hit_mid5": 0.5518394648829431,
+          "hit_upper5": 0.12709030100334448,
+          "hit_bd5": 0.5317725752508361,
+          "touch_light5": 0.0802675585284281,
+          "mid_first10": 0.4180602006688963,
+          "bd_first10": 0.5451505016722408,
+          "upper_first_vs_bd10": 0.21739130434782608,
+          "bd_first_vs_upper10": 0.5919732441471572,
+          "light_first_vs_bd10": 0.18729096989966554,
+          "light_first_vs_mid10": 0,
+          "hit_mid10": 0.7759197324414716,
+          "hit_upper10": 0.34448160535117056,
+          "hit_bd10": 0.5919732441471572,
+          "touch_light10": 0.23411371237458195,
+          "mid_first20": 0.43812709030100333,
+          "bd_first20": 0.5551839464882943,
+          "upper_first_vs_bd20": 0.2976588628762542,
+          "bd_first_vs_upper20": 0.6454849498327759,
+          "light_first_vs_bd20": 0.27759197324414714,
+          "light_first_vs_mid20": 0,
+          "hit_mid20": 0.9364548494983278,
+          "hit_upper20": 0.6321070234113713,
+          "hit_bd20": 0.6588628762541806,
+          "touch_light20": 0.45484949832775917
+        }
+      },
+      "BUY_BLUE_21P_LOWER": {
+        "id": "BUY_BLUE_21P_LOWER",
+        "type": "LOWER",
+        "wanted": "MID_FIRST",
+        "status": "SUPPORTS_ABT",
+        "n": 1049,
+        "pooled_probability": 0.7063870352716873,
+        "eligible_symbols": 28,
+        "supporting_symbols": 28,
+        "neutral_symbols": 0,
+        "opposing_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.7124060150375939,
+        "per_symbol": [
+          {
+            "symbol": "MSFT",
+            "n": 48,
+            "p": 0.6458333333333334
+          },
+          {
+            "symbol": "NVDA",
+            "n": 53,
+            "p": 0.7924528301886793
+          },
+          {
+            "symbol": "AMD",
+            "n": 42,
+            "p": 0.7619047619047619
+          },
+          {
+            "symbol": "AVGO",
+            "n": 41,
+            "p": 0.7804878048780488
+          },
+          {
+            "symbol": "ORCL",
+            "n": 35,
+            "p": 0.6571428571428571
+          },
+          {
+            "symbol": "INTC",
+            "n": 20,
+            "p": 0.65
+          },
+          {
+            "symbol": "QCOM",
+            "n": 32,
+            "p": 0.75
+          },
+          {
+            "symbol": "MU",
+            "n": 32,
+            "p": 0.625
+          },
+          {
+            "symbol": "GOOGL",
+            "n": 36,
+            "p": 0.6111111111111112
+          },
+          {
+            "symbol": "META",
+            "n": 47,
+            "p": 0.7021276595744681
+          },
+          {
+            "symbol": "NFLX",
+            "n": 35,
+            "p": 0.7142857142857143
+          },
+          {
+            "symbol": "AMZN",
+            "n": 33,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "TSLA",
+            "n": 27,
+            "p": 0.6296296296296297
+          },
+          {
+            "symbol": "HD",
+            "n": 44,
+            "p": 0.5909090909090909
+          },
+          {
+            "symbol": "MCD",
+            "n": 38,
+            "p": 0.7631578947368421
+          },
+          {
+            "symbol": "WMT",
+            "n": 38,
+            "p": 0.7105263157894737
+          },
+          {
+            "symbol": "COST",
+            "n": 53,
+            "p": 0.7547169811320755
+          },
+          {
+            "symbol": "PG",
+            "n": 33,
+            "p": 0.7272727272727273
+          },
+          {
+            "symbol": "KO",
+            "n": 34,
+            "p": 0.7058823529411765
+          },
+          {
+            "symbol": "PEP",
+            "n": 34,
+            "p": 0.6470588235294118
+          },
+          {
+            "symbol": "LLY",
+            "n": 36,
+            "p": 0.7222222222222222
+          },
+          {
+            "symbol": "UNH",
+            "n": 42,
+            "p": 0.7619047619047619
+          },
+          {
+            "symbol": "JNJ",
+            "n": 28,
+            "p": 0.5714285714285714
+          },
+          {
+            "symbol": "TMO",
+            "n": 41,
+            "p": 0.7560975609756098
+          },
+          {
+            "symbol": "JPM",
+            "n": 36,
+            "p": 0.7222222222222222
+          },
+          {
+            "symbol": "BAC",
+            "n": 34,
+            "p": 0.6764705882352942
+          },
+          {
+            "symbol": "GS",
+            "n": 35,
+            "p": 0.8
+          },
+          {
+            "symbol": "V",
+            "n": 42,
+            "p": 0.7380952380952381
+          }
+        ],
+        "stats": {
+          "n": 1049,
+          "symbol_count": 28,
+          "ret5_median": 0.003653290081464755,
+          "mfe5_median": 0.024584636135123406,
+          "mae5_median": -0.023980319459504518,
+          "ret10_median": 0.007907474458808128,
+          "mfe10_median": 0.03827706909898687,
+          "mae10_median": -0.03340957926110777,
+          "ret20_median": 0.016502730317465186,
+          "mfe20_median": 0.056836177962798384,
+          "mae20_median": -0.04515354777672653,
+          "mid_first5": 0.4661582459485224,
+          "bd_first5": 0.18970448045757865,
+          "upper_first_vs_bd5": 0.09628217349857007,
+          "bd_first_vs_upper5": 0.1982840800762631,
+          "light_first_vs_bd5": 0.449952335557674,
+          "light_first_vs_mid5": 0.47950428979980936,
+          "hit_mid5": 0.48236415633937085,
+          "hit_upper5": 0.09628217349857007,
+          "hit_bd5": 0.1992373689227836,
+          "touch_light5": 0.5252621544327931,
+          "mid_first10": 0.6358436606291706,
+          "bd_first10": 0.26024785510009535,
+          "upper_first_vs_bd10": 0.28217349857006674,
+          "bd_first_vs_upper10": 0.2897998093422307,
+          "light_first_vs_bd10": 0.5367016205910391,
+          "light_first_vs_mid10": 0.5328884652049571,
+          "hit_mid10": 0.7082936129647283,
+          "hit_upper10": 0.29837940896091514,
+          "hit_bd10": 0.2926596758817922,
+          "touch_light10": 0.6329837940896091,
+          "mid_first20": 0.7063870352716873,
+          "bd_first20": 0.2897998093422307,
+          "upper_first_vs_bd20": 0.5081029551954243,
+          "bd_first_vs_upper20": 0.3755958055290753,
+          "light_first_vs_bd20": 0.6148713060057197,
+          "light_first_vs_mid20": 0.5452812202097236,
+          "hit_mid20": 0.9199237368922784,
+          "hit_upper20": 0.6320305052430887,
+          "hit_bd20": 0.4051477597712107,
+          "touch_light20": 0.7302192564346998
+        }
+      },
+      "AVOID_GREEN_11_20_LOWER": {
+        "id": "AVOID_GREEN_11_20_LOWER",
+        "type": "LOWER",
+        "wanted": "BD_FIRST",
+        "status": "SUPPORTS_ABT",
+        "n": 135,
+        "pooled_probability": 0.7037037037037037,
+        "eligible_symbols": 25,
+        "supporting_symbols": 21,
+        "neutral_symbols": 2,
+        "opposing_symbols": 2,
+        "support_fraction": 0.84,
+        "median_symbol_probability": 0.6666666666666666,
+        "per_symbol": [
+          {
+            "symbol": "MSFT",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "NVDA",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "AMD",
+            "n": 5,
+            "p": 0.4
+          },
+          {
+            "symbol": "AVGO",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "ORCL",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "INTC",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "QCOM",
+            "n": 9,
+            "p": 0.5555555555555556
+          },
+          {
+            "symbol": "MU",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "GOOGL",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "META",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "NFLX",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "AMZN",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "TSLA",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "HD",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "MCD",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "WMT",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "PG",
+            "n": 11,
+            "p": 0.7272727272727273
+          },
+          {
+            "symbol": "KO",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "PEP",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "UNH",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "JNJ",
+            "n": 9,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "TMO",
+            "n": 8,
+            "p": 0.875
+          },
+          {
+            "symbol": "BAC",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "GS",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "V",
+            "n": 4,
+            "p": 0.5
+          }
+        ],
+        "stats": {
+          "n": 135,
+          "symbol_count": 28,
+          "ret5_median": -0.004346227140516912,
+          "mfe5_median": 0.023716325120884285,
+          "mae5_median": -0.03292526362362669,
+          "ret10_median": 0.007044955184319912,
+          "mfe10_median": 0.04110693175711977,
+          "mae10_median": -0.04682926829268297,
+          "ret20_median": 0.008677865245149574,
+          "mfe20_median": 0.06200404133603987,
+          "mae20_median": -0.059017821226198475,
+          "mid_first5": 0.22962962962962963,
+          "bd_first5": 0.7037037037037037,
+          "upper_first_vs_bd5": 0.06666666666666667,
+          "bd_first_vs_upper5": 0.762962962962963,
+          "light_first_vs_bd5": 0.08148148148148149,
+          "light_first_vs_mid5": 0,
+          "hit_mid5": 0.4740740740740741,
+          "hit_upper5": 0.1111111111111111,
+          "hit_bd5": 0.7703703703703704,
+          "touch_light5": 0.1111111111111111,
+          "mid_first10": 0.26666666666666666,
+          "bd_first10": 0.7037037037037037,
+          "upper_first_vs_bd10": 0.13333333333333333,
+          "bd_first_vs_upper10": 0.7703703703703704,
+          "light_first_vs_bd10": 0.13333333333333333,
+          "light_first_vs_mid10": 0,
+          "hit_mid10": 0.725925925925926,
+          "hit_upper10": 0.2814814814814815,
+          "hit_bd10": 0.7777777777777778,
+          "touch_light10": 0.2222222222222222,
+          "mid_first20": 0.2740740740740741,
+          "bd_first20": 0.7037037037037037,
+          "upper_first_vs_bd20": 0.16296296296296298,
+          "bd_first_vs_upper20": 0.8,
+          "light_first_vs_bd20": 0.17037037037037037,
+          "light_first_vs_mid20": 0,
+          "hit_mid20": 0.9555555555555556,
+          "hit_upper20": 0.6,
+          "hit_bd20": 0.8222222222222222,
+          "touch_light20": 0.4444444444444444
+        }
+      },
+      "AVOID_RECENT_GRAY_GREEN_LOWER": {
+        "id": "AVOID_RECENT_GRAY_GREEN_LOWER",
+        "type": "LOWER",
+        "wanted": "BD_FIRST",
+        "status": "MIXED",
+        "n": 64,
+        "pooled_probability": 0.5625,
+        "eligible_symbols": 11,
+        "supporting_symbols": 4,
+        "neutral_symbols": 1,
+        "opposing_symbols": 6,
+        "support_fraction": 0.36363636363636365,
+        "median_symbol_probability": 0.3333333333333333,
+        "per_symbol": [
+          {
+            "symbol": "AVGO",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "ORCL",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "INTC",
+            "n": 5,
+            "p": 0.2
+          },
+          {
+            "symbol": "QCOM",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "MU",
+            "n": 6,
+            "p": 0.5
+          },
+          {
+            "symbol": "GOOGL",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "TSLA",
+            "n": 4,
+            "p": 0.25
+          },
+          {
+            "symbol": "HD",
+            "n": 4,
+            "p": 0.25
+          },
+          {
+            "symbol": "PG",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "UNH",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "JNJ",
+            "n": 3,
+            "p": 1
+          }
+        ],
+        "stats": {
+          "n": 64,
+          "symbol_count": 23,
+          "ret5_median": 0.013115849397487667,
+          "mfe5_median": 0.029054295770584493,
+          "mae5_median": -0.02086758228780683,
+          "ret10_median": 0.014537845985802322,
+          "mfe10_median": 0.045369417016480895,
+          "mae10_median": -0.029581530476547102,
+          "ret20_median": 0.025416998142783975,
+          "mfe20_median": 0.06318941948477907,
+          "mae20_median": -0.04351989046208182,
+          "mid_first5": 0.375,
+          "bd_first5": 0.546875,
+          "upper_first_vs_bd5": 0.125,
+          "bd_first_vs_upper5": 0.5625,
+          "light_first_vs_bd5": 0.265625,
+          "light_first_vs_mid5": 0,
+          "hit_mid5": 0.53125,
+          "hit_upper5": 0.15625,
+          "hit_bd5": 0.5625,
+          "touch_light5": 0.3125,
+          "mid_first10": 0.4375,
+          "bd_first10": 0.5625,
+          "upper_first_vs_bd10": 0.234375,
+          "bd_first_vs_upper10": 0.578125,
+          "light_first_vs_bd10": 0.375,
+          "light_first_vs_mid10": 0,
+          "hit_mid10": 0.828125,
+          "hit_upper10": 0.40625,
+          "hit_bd10": 0.609375,
+          "touch_light10": 0.53125,
+          "mid_first20": 0.4375,
+          "bd_first20": 0.5625,
+          "upper_first_vs_bd20": 0.375,
+          "bd_first_vs_upper20": 0.609375,
+          "light_first_vs_bd20": 0.40625,
+          "light_first_vs_mid20": 0,
+          "hit_mid20": 0.984375,
+          "hit_upper20": 0.734375,
+          "hit_bd20": 0.671875,
+          "touch_light20": 0.671875
+        }
+      },
+      "BUY_GRAY_4_10_LIGHT_SUPPORT": {
+        "id": "BUY_GRAY_4_10_LIGHT_SUPPORT",
+        "type": "LIGHT_SUPPORT",
+        "wanted": "SUPPORT_HOLD",
+        "status": "SUPPORTS_ABT",
+        "n": 263,
+        "pooled_probability": 0.7414448669201521,
+        "eligible_symbols": 28,
+        "supporting_symbols": 25,
+        "neutral_symbols": 1,
+        "opposing_symbols": 2,
+        "support_fraction": 0.8928571428571429,
+        "median_symbol_probability": 0.7638888888888888,
+        "per_symbol": [
+          {
+            "symbol": "MSFT",
+            "n": 6,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "NVDA",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "AMD",
+            "n": 15,
+            "p": 0.8
+          },
+          {
+            "symbol": "AVGO",
+            "n": 9,
+            "p": 0.5555555555555556
+          },
+          {
+            "symbol": "ORCL",
+            "n": 8,
+            "p": 0.75
+          },
+          {
+            "symbol": "INTC",
+            "n": 11,
+            "p": 0.8181818181818182
+          },
+          {
+            "symbol": "QCOM",
+            "n": 7,
+            "p": 0.7142857142857143
+          },
+          {
+            "symbol": "MU",
+            "n": 13,
+            "p": 0.6153846153846154
+          },
+          {
+            "symbol": "GOOGL",
+            "n": 9,
+            "p": 0.8888888888888888
+          },
+          {
+            "symbol": "META",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "NFLX",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "AMZN",
+            "n": 12,
+            "p": 0.5833333333333334
+          },
+          {
+            "symbol": "TSLA",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "HD",
+            "n": 11,
+            "p": 0.8181818181818182
+          },
+          {
+            "symbol": "MCD",
+            "n": 11,
+            "p": 0.6363636363636364
+          },
+          {
+            "symbol": "WMT",
+            "n": 19,
+            "p": 0.8947368421052632
+          },
+          {
+            "symbol": "COST",
+            "n": 11,
+            "p": 0.8181818181818182
+          },
+          {
+            "symbol": "PG",
+            "n": 15,
+            "p": 0.5333333333333333
+          },
+          {
+            "symbol": "KO",
+            "n": 8,
+            "p": 0.75
+          },
+          {
+            "symbol": "PEP",
+            "n": 17,
+            "p": 0.8235294117647058
+          },
+          {
+            "symbol": "LLY",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "UNH",
+            "n": 7,
+            "p": 0.8571428571428571
+          },
+          {
+            "symbol": "JNJ",
+            "n": 11,
+            "p": 0.6363636363636364
+          },
+          {
+            "symbol": "TMO",
+            "n": 9,
+            "p": 0.7777777777777778
+          },
+          {
+            "symbol": "JPM",
+            "n": 7,
+            "p": 0.8571428571428571
+          },
+          {
+            "symbol": "BAC",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "GS",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "V",
+            "n": 14,
+            "p": 0.8571428571428571
+          }
+        ],
+        "stats": {
+          "n": 263,
+          "symbol_count": 28,
+          "ret5_median": 0.0024245835968796925,
+          "mfe5_median": 0.02149738123586875,
+          "mae5_median": -0.02092917970730923,
+          "ret10_median": 0.006309766828979546,
+          "mfe10_median": 0.031236080342637917,
+          "mae10_median": -0.03349985598903282,
+          "ret20_median": 0.006787745367822451,
+          "mfe20_median": 0.04824421374045795,
+          "mae20_median": -0.043566135189759714,
+          "hold5": 0.7376425855513308,
+          "break5": 0.2509505703422053,
+          "unresolved5": 0.011406844106463879,
+          "hold10": 0.7414448669201521,
+          "break10": 0.2585551330798479,
+          "unresolved10": 0,
+          "hold20": 0.7414448669201521,
+          "break20": 0.2585551330798479,
+          "unresolved20": 0
+        }
+      },
+      "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT": {
+        "id": "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT",
+        "type": "LIGHT_SUPPORT",
+        "wanted": "SUPPORT_HOLD",
+        "status": "SUPPORTS_ABT",
+        "n": 117,
+        "pooled_probability": 0.811965811965812,
+        "eligible_symbols": 22,
+        "supporting_symbols": 21,
+        "neutral_symbols": 0,
+        "opposing_symbols": 1,
+        "support_fraction": 0.9545454545454546,
+        "median_symbol_probability": 0.8,
+        "per_symbol": [
+          {
+            "symbol": "MSFT",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "NVDA",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "AMD",
+            "n": 7,
+            "p": 0.7142857142857143
+          },
+          {
+            "symbol": "ORCL",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "QCOM",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "MU",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "GOOGL",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "META",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "NFLX",
+            "n": 4,
+            "p": 0.25
+          },
+          {
+            "symbol": "AMZN",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "TSLA",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "MCD",
+            "n": 8,
+            "p": 0.75
+          },
+          {
+            "symbol": "WMT",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "COST",
+            "n": 7,
+            "p": 0.7142857142857143
+          },
+          {
+            "symbol": "PG",
+            "n": 8,
+            "p": 0.625
+          },
+          {
+            "symbol": "PEP",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "UNH",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "JNJ",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "TMO",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "JPM",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "BAC",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "V",
+            "n": 7,
+            "p": 1
+          }
+        ],
+        "stats": {
+          "n": 117,
+          "symbol_count": 28,
+          "ret5_median": 0.011947991097575272,
+          "mfe5_median": 0.025509605882451325,
+          "mae5_median": -0.016201158272853955,
+          "ret10_median": 0.011744966442952975,
+          "mfe10_median": 0.03515413282901325,
+          "mae10_median": -0.02131164257917295,
+          "ret20_median": 0.017447327908511,
+          "mfe20_median": 0.049649612397552945,
+          "mae20_median": -0.037130963264581096,
+          "hold5": 0.7948717948717948,
+          "break5": 0.18803418803418803,
+          "unresolved5": 0.017094017094017096,
+          "hold10": 0.811965811965812,
+          "break10": 0.18803418803418803,
+          "unresolved10": 0,
+          "hold20": 0.811965811965812,
+          "break20": 0.18803418803418803,
+          "unresolved20": 0
+        }
+      },
+      "CONT_BLUE_11_20_UPPER": {
+        "id": "CONT_BLUE_11_20_UPPER",
+        "type": "UPPER",
+        "wanted": "BS_FIRST",
+        "status": "SUPPORTS_ABT",
+        "n": 165,
+        "pooled_probability": 0.8545454545454545,
+        "eligible_symbols": 27,
+        "supporting_symbols": 26,
+        "neutral_symbols": 1,
+        "opposing_symbols": 0,
+        "support_fraction": 0.9629629629629629,
+        "median_symbol_probability": 0.8333333333333334,
+        "per_symbol": [
+          {
+            "symbol": "MSFT",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "NVDA",
+            "n": 7,
+            "p": 0.8571428571428571
+          },
+          {
+            "symbol": "AMD",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "AVGO",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "ORCL",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "INTC",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "QCOM",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "MU",
+            "n": 8,
+            "p": 0.5
+          },
+          {
+            "symbol": "META",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "NFLX",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "AMZN",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "TSLA",
+            "n": 7,
+            "p": 1
+          },
+          {
+            "symbol": "HD",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "MCD",
+            "n": 9,
+            "p": 1
+          },
+          {
+            "symbol": "WMT",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "COST",
+            "n": 7,
+            "p": 1
+          },
+          {
+            "symbol": "PG",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "KO",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "PEP",
+            "n": 11,
+            "p": 0.7272727272727273
+          },
+          {
+            "symbol": "LLY",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "UNH",
+            "n": 12,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "JNJ",
+            "n": 8,
+            "p": 0.875
+          },
+          {
+            "symbol": "TMO",
+            "n": 7,
+            "p": 0.7142857142857143
+          },
+          {
+            "symbol": "JPM",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "BAC",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "GS",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "V",
+            "n": 7,
+            "p": 0.8571428571428571
+          }
+        ],
+        "stats": {
+          "n": 165,
+          "symbol_count": 28,
+          "ret5_median": 0.0031289397346891956,
+          "mfe5_median": 0.01986954277447084,
+          "mae5_median": -0.018384138503006353,
+          "ret10_median": 0.007138730708921237,
+          "mfe10_median": 0.029130299480120136,
+          "mae10_median": -0.024563138806462215,
+          "ret20_median": 0.023583111449220207,
+          "mfe20_median": 0.044949926247962235,
+          "mae20_median": -0.03455774781542842,
+          "mid_first5": 0.08484848484848485,
+          "bs_first5": 0.8545454545454545,
+          "lower_first_vs_bs5": 0.024242424242424242,
+          "bs_first_vs_lower5": 0.9151515151515152,
+          "light_first_vs_bs5": 0.030303030303030304,
+          "light_first_vs_mid5": 0,
+          "hit_mid5": 0.43636363636363634,
+          "hit_lower5": 0.10303030303030303,
+          "hit_bs5": 0.9151515151515152,
+          "touch_light5": 0.07878787878787878,
+          "mid_first10": 0.09090909090909091,
+          "bs_first10": 0.8545454545454545,
+          "lower_first_vs_bs10": 0.03636363636363636,
+          "bs_first_vs_lower10": 0.9151515151515152,
+          "light_first_vs_bs10": 0.04242424242424243,
+          "light_first_vs_mid10": 0,
+          "hit_mid10": 0.6666666666666666,
+          "hit_lower10": 0.23636363636363636,
+          "hit_bs10": 0.9212121212121213,
+          "touch_light10": 0.18181818181818182,
+          "mid_first20": 0.09090909090909091,
+          "bs_first20": 0.8545454545454545,
+          "lower_first_vs_bs20": 0.048484848484848485,
+          "bs_first_vs_lower20": 0.9515151515151515,
+          "light_first_vs_bs20": 0.06060606060606061,
+          "light_first_vs_mid20": 0,
+          "hit_mid20": 0.8484848484848485,
+          "hit_lower20": 0.48484848484848486,
+          "hit_bs20": 0.9757575757575757,
+          "touch_light20": 0.3212121212121212
+        }
+      },
+      "CONT_BLUE_4_10_UPPER": {
+        "id": "CONT_BLUE_4_10_UPPER",
+        "type": "UPPER",
+        "wanted": "BS_FIRST",
+        "status": "SUPPORTS_ABT",
+        "n": 116,
+        "pooled_probability": 0.7586206896551724,
+        "eligible_symbols": 23,
+        "supporting_symbols": 19,
+        "neutral_symbols": 3,
+        "opposing_symbols": 1,
+        "support_fraction": 0.8260869565217391,
+        "median_symbol_probability": 0.75,
+        "per_symbol": [
+          {
+            "symbol": "MSFT",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "NVDA",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "AMD",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "ORCL",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "QCOM",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "MU",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "GOOGL",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "NFLX",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "AMZN",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "TSLA",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "HD",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "MCD",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "COST",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "PG",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "KO",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "PEP",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "LLY",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "UNH",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "JNJ",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "TMO",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "BAC",
+            "n": 5,
+            "p": 0.4
+          },
+          {
+            "symbol": "GS",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "V",
+            "n": 8,
+            "p": 0.625
+          }
+        ],
+        "stats": {
+          "n": 116,
+          "symbol_count": 27,
+          "ret5_median": 0.007328824356708008,
+          "mfe5_median": 0.026113323803868993,
+          "mae5_median": -0.014203965199454938,
+          "ret10_median": 0.012776273893504109,
+          "mfe10_median": 0.03491948821538393,
+          "mae10_median": -0.02125380226510465,
+          "ret20_median": 0.0239115935572336,
+          "mfe20_median": 0.05319953936239108,
+          "mae20_median": -0.028672182536423285,
+          "mid_first5": 0.1810344827586207,
+          "bs_first5": 0.7413793103448276,
+          "lower_first_vs_bs5": 0.09482758620689655,
+          "bs_first_vs_lower5": 0.8362068965517241,
+          "light_first_vs_bs5": 0.08620689655172414,
+          "light_first_vs_mid5": 0,
+          "hit_mid5": 0.41379310344827586,
+          "hit_lower5": 0.13793103448275862,
+          "hit_bs5": 0.8448275862068966,
+          "touch_light5": 0.14655172413793102,
+          "mid_first10": 0.1896551724137931,
+          "bs_first10": 0.75,
+          "lower_first_vs_bs10": 0.12931034482758622,
+          "bs_first_vs_lower10": 0.853448275862069,
+          "light_first_vs_bs10": 0.12931034482758622,
+          "light_first_vs_mid10": 0,
+          "hit_mid10": 0.6379310344827587,
+          "hit_lower10": 0.25862068965517243,
+          "hit_bs10": 0.8793103448275862,
+          "touch_light10": 0.25862068965517243,
+          "mid_first20": 0.1896551724137931,
+          "bs_first20": 0.7586206896551724,
+          "lower_first_vs_bs20": 0.12931034482758622,
+          "bs_first_vs_lower20": 0.8706896551724138,
+          "light_first_vs_bs20": 0.12931034482758622,
+          "light_first_vs_mid20": 0,
+          "hit_mid20": 0.896551724137931,
+          "hit_lower20": 0.4482758620689655,
+          "hit_bs20": 0.9137931034482759,
+          "touch_light20": 0.3793103448275862
+        }
+      },
+      "CONT_RECENT_GRAY_BLUE_UPPER": {
+        "id": "CONT_RECENT_GRAY_BLUE_UPPER",
+        "type": "UPPER",
+        "wanted": "BS_FIRST",
+        "status": "SUPPORTS_ABT",
+        "n": 106,
+        "pooled_probability": 0.7735849056603774,
+        "eligible_symbols": 20,
+        "supporting_symbols": 17,
+        "neutral_symbols": 1,
+        "opposing_symbols": 2,
+        "support_fraction": 0.85,
+        "median_symbol_probability": 0.788888888888889,
+        "per_symbol": [
+          {
+            "symbol": "MSFT",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "AMD",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "ORCL",
+            "n": 5,
+            "p": 0.4
+          },
+          {
+            "symbol": "INTC",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "QCOM",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "MU",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "GOOGL",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "META",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "NFLX",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "AMZN",
+            "n": 7,
+            "p": 0.7142857142857143
+          },
+          {
+            "symbol": "TSLA",
+            "n": 9,
+            "p": 0.7777777777777778
+          },
+          {
+            "symbol": "MCD",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "COST",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "PG",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "KO",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "PEP",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "UNH",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "JNJ",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "TMO",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "V",
+            "n": 3,
+            "p": 0.6666666666666666
+          }
+        ],
+        "stats": {
+          "n": 106,
+          "symbol_count": 28,
+          "ret5_median": 0.013908712591588213,
+          "mfe5_median": 0.02832711084337125,
+          "mae5_median": -0.01832253712514742,
+          "ret10_median": 0.012332260176413534,
+          "mfe10_median": 0.036110040227797846,
+          "mae10_median": -0.02139776932109022,
+          "ret20_median": 0.021714957028676207,
+          "mfe20_median": 0.059891823401351796,
+          "mae20_median": -0.035297432591280875,
+          "mid_first5": 0.19811320754716982,
+          "bs_first5": 0.7641509433962265,
+          "lower_first_vs_bs5": 0.07547169811320754,
+          "bs_first_vs_lower5": 0.8018867924528302,
+          "light_first_vs_bs5": 0.11320754716981132,
+          "light_first_vs_mid5": 0,
+          "hit_mid5": 0.4056603773584906,
+          "hit_lower5": 0.11320754716981132,
+          "hit_bs5": 0.8207547169811321,
+          "touch_light5": 0.1792452830188679,
+          "mid_first10": 0.2169811320754717,
+          "bs_first10": 0.7735849056603774,
+          "lower_first_vs_bs10": 0.12264150943396226,
+          "bs_first_vs_lower10": 0.8301886792452831,
+          "light_first_vs_bs10": 0.16037735849056603,
+          "light_first_vs_mid10": 0,
+          "hit_mid10": 0.5660377358490566,
+          "hit_lower10": 0.25471698113207547,
+          "hit_bs10": 0.8584905660377359,
+          "touch_light10": 0.330188679245283,
+          "mid_first20": 0.2169811320754717,
+          "bs_first20": 0.7735849056603774,
+          "lower_first_vs_bs20": 0.14150943396226415,
+          "bs_first_vs_lower20": 0.8584905660377359,
+          "light_first_vs_bs20": 0.16037735849056603,
+          "light_first_vs_mid20": 0,
+          "hit_mid20": 0.8490566037735849,
+          "hit_lower20": 0.4339622641509434,
+          "hit_bs20": 0.9056603773584906,
+          "touch_light20": 0.44339622641509435
+        }
+      },
+      "SELL_GREEN_21P_UPPER": {
+        "id": "SELL_GREEN_21P_UPPER",
+        "type": "UPPER",
+        "wanted": "MID_FIRST",
+        "status": "MIXED",
+        "n": 404,
+        "pooled_probability": 0.5544554455445545,
+        "eligible_symbols": 28,
+        "supporting_symbols": 14,
+        "neutral_symbols": 4,
+        "opposing_symbols": 10,
+        "support_fraction": 0.5,
+        "median_symbol_probability": 0.513157894736842,
+        "per_symbol": [
+          {
+            "symbol": "MSFT",
+            "n": 11,
+            "p": 0.5454545454545454
+          },
+          {
+            "symbol": "NVDA",
+            "n": 9,
+            "p": 0.2222222222222222
+          },
+          {
+            "symbol": "AMD",
+            "n": 14,
+            "p": 0.6428571428571429
+          },
+          {
+            "symbol": "AVGO",
+            "n": 9,
+            "p": 0.5555555555555556
+          },
+          {
+            "symbol": "ORCL",
+            "n": 12,
+            "p": 0.75
+          },
+          {
+            "symbol": "INTC",
+            "n": 29,
+            "p": 0.5862068965517241
+          },
+          {
+            "symbol": "QCOM",
+            "n": 24,
+            "p": 0.625
+          },
+          {
+            "symbol": "MU",
+            "n": 19,
+            "p": 0.6842105263157895
+          },
+          {
+            "symbol": "GOOGL",
+            "n": 22,
+            "p": 0.8636363636363636
+          },
+          {
+            "symbol": "META",
+            "n": 21,
+            "p": 0.7619047619047619
+          },
+          {
+            "symbol": "NFLX",
+            "n": 12,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "AMZN",
+            "n": 10,
+            "p": 0.5
+          },
+          {
+            "symbol": "TSLA",
+            "n": 18,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "HD",
+            "n": 17,
+            "p": 0.4117647058823529
+          },
+          {
+            "symbol": "MCD",
+            "n": 12,
+            "p": 0.75
+          },
+          {
+            "symbol": "WMT",
+            "n": 10,
+            "p": 0.5
+          },
+          {
+            "symbol": "COST",
+            "n": 6,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "PG",
+            "n": 15,
+            "p": 0.6
+          },
+          {
+            "symbol": "KO",
+            "n": 14,
+            "p": 0.35714285714285715
+          },
+          {
+            "symbol": "PEP",
+            "n": 14,
+            "p": 0.42857142857142855
+          },
+          {
+            "symbol": "LLY",
+            "n": 6,
+            "p": 0.5
+          },
+          {
+            "symbol": "UNH",
+            "n": 12,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "JNJ",
+            "n": 19,
+            "p": 0.5263157894736842
+          },
+          {
+            "symbol": "TMO",
+            "n": 13,
+            "p": 0.46153846153846156
+          },
+          {
+            "symbol": "JPM",
+            "n": 15,
+            "p": 0.6
+          },
+          {
+            "symbol": "BAC",
+            "n": 21,
+            "p": 0.47619047619047616
+          },
+          {
+            "symbol": "GS",
+            "n": 14,
+            "p": 0.5
+          },
+          {
+            "symbol": "V",
+            "n": 6,
+            "p": 0.3333333333333333
+          }
+        ],
+        "stats": {
+          "n": 404,
+          "symbol_count": 28,
+          "ret5_median": 0.004437776334833554,
+          "mfe5_median": 0.027788237762638612,
+          "mae5_median": -0.02103170448804864,
+          "ret10_median": 0.012606940922119891,
+          "mfe10_median": 0.04373044884363986,
+          "mae10_median": -0.028529849139269814,
+          "ret20_median": 0.02099854580843996,
+          "mfe20_median": 0.06936211068085962,
+          "mae20_median": -0.0414653420425643,
+          "mid_first5": 0.35148514851485146,
+          "bs_first5": 0.2722772277227723,
+          "lower_first_vs_bs5": 0.08168316831683169,
+          "bs_first_vs_lower5": 0.28217821782178215,
+          "light_first_vs_bs5": 0.4876237623762376,
+          "light_first_vs_mid5": 0.5495049504950495,
+          "hit_mid5": 0.36633663366336633,
+          "hit_lower5": 0.08415841584158416,
+          "hit_bs5": 0.28217821782178215,
+          "touch_light5": 0.5915841584158416,
+          "mid_first10": 0.4752475247524752,
+          "bs_first10": 0.37376237623762376,
+          "lower_first_vs_bs10": 0.21782178217821782,
+          "bs_first_vs_lower10": 0.4282178217821782,
+          "light_first_vs_bs10": 0.5816831683168316,
+          "light_first_vs_mid10": 0.6113861386138614,
+          "hit_mid10": 0.5297029702970297,
+          "hit_lower10": 0.22524752475247525,
+          "hit_bs10": 0.4282178217821782,
+          "touch_light10": 0.7128712871287128,
+          "mid_first20": 0.5544554455445545,
+          "bs_first20": 0.4405940594059406,
+          "lower_first_vs_bs20": 0.3341584158415842,
+          "bs_first_vs_lower20": 0.5742574257425742,
+          "light_first_vs_bs20": 0.6534653465346535,
+          "light_first_vs_mid20": 0.6485148514851485,
+          "hit_mid20": 0.7871287128712872,
+          "hit_lower20": 0.4628712871287129,
+          "hit_bs20": 0.6262376237623762,
+          "touch_light20": 0.8366336633663366
+        }
+      },
+      "SELL_RECENT_BLUE_GRAY_LIGHT_RESIST": {
+        "id": "SELL_RECENT_BLUE_GRAY_LIGHT_RESIST",
+        "type": "LIGHT_RESIST",
+        "wanted": "RESIST_HOLD",
+        "status": "SUPPORTS_ABT",
+        "n": 160,
+        "pooled_probability": 0.71875,
+        "eligible_symbols": 23,
+        "supporting_symbols": 22,
+        "neutral_symbols": 0,
+        "opposing_symbols": 1,
+        "support_fraction": 0.9565217391304348,
+        "median_symbol_probability": 0.7142857142857143,
+        "per_symbol": [
+          {
+            "symbol": "NVDA",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "AVGO",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "ORCL",
+            "n": 7,
+            "p": 0.7142857142857143
+          },
+          {
+            "symbol": "INTC",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "MU",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "GOOGL",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "META",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "NFLX",
+            "n": 7,
+            "p": 0.5714285714285714
+          },
+          {
+            "symbol": "AMZN",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "TSLA",
+            "n": 8,
+            "p": 0.75
+          },
+          {
+            "symbol": "HD",
+            "n": 7,
+            "p": 1
+          },
+          {
+            "symbol": "MCD",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "PG",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "KO",
+            "n": 10,
+            "p": 0.8
+          },
+          {
+            "symbol": "PEP",
+            "n": 12,
+            "p": 0.75
+          },
+          {
+            "symbol": "LLY",
+            "n": 7,
+            "p": 1
+          },
+          {
+            "symbol": "UNH",
+            "n": 8,
+            "p": 0.625
+          },
+          {
+            "symbol": "JNJ",
+            "n": 10,
+            "p": 0.9
+          },
+          {
+            "symbol": "TMO",
+            "n": 9,
+            "p": 0.7777777777777778
+          },
+          {
+            "symbol": "JPM",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "BAC",
+            "n": 7,
+            "p": 0.42857142857142855
+          },
+          {
+            "symbol": "GS",
+            "n": 8,
+            "p": 0.875
+          },
+          {
+            "symbol": "V",
+            "n": 5,
+            "p": 0.8
+          }
+        ],
+        "stats": {
+          "n": 160,
+          "symbol_count": 28,
+          "ret5_median": 0.003541505245432952,
+          "mfe5_median": 0.022238999853198105,
+          "mae5_median": -0.019644128301571584,
+          "ret10_median": 0.0047823870393587375,
+          "mfe10_median": 0.0353031282381826,
+          "mae10_median": -0.03126885058409906,
+          "ret20_median": 0.007964272946963669,
+          "mfe20_median": 0.05148885182471341,
+          "mae20_median": -0.047867554148406655,
+          "hold5": 0.71875,
+          "break5": 0.26875,
+          "unresolved5": 0.0125,
+          "hold10": 0.71875,
+          "break10": 0.275,
+          "unresolved10": 0.00625,
+          "hold20": 0.71875,
+          "break20": 0.28125,
+          "unresolved20": 0
+        }
+      }
+    },
+    "crypto": {
+      "BUY_GREEN_21P_LOWER": {
+        "id": "BUY_GREEN_21P_LOWER",
+        "type": "LOWER",
+        "wanted": "MID_FIRST",
+        "status": "MIXED",
+        "n": 69,
+        "pooled_probability": 0.4927536231884058,
+        "eligible_symbols": 4,
+        "supporting_symbols": 1,
+        "neutral_symbols": 1,
+        "opposing_symbols": 2,
+        "support_fraction": 0.25,
+        "median_symbol_probability": 0.4318181818181818,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 21,
+            "p": 0.6190476190476191
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 26,
+            "p": 0.5
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 11,
+            "p": 0.36363636363636365
+          },
+          {
+            "symbol": "SOL/USD",
+            "n": 11,
+            "p": 0.36363636363636365
+          }
+        ],
+        "stats": {
+          "n": 69,
+          "symbol_count": 4,
+          "ret5_median": 0.008576228559751486,
+          "mfe5_median": 0.04405278542014912,
+          "mae5_median": -0.052474550712284795,
+          "ret10_median": 0.01928753613182077,
+          "mfe10_median": 0.06573598551628401,
+          "mae10_median": -0.0795484634432484,
+          "ret20_median": 0.030823731716298042,
+          "mfe20_median": 0.11571378161330781,
+          "mae20_median": -0.09609640712017375,
+          "mid_first5": 0.2028985507246377,
+          "bd_first5": 0.4057971014492754,
+          "upper_first_vs_bd5": 0.057971014492753624,
+          "bd_first_vs_upper5": 0.42028985507246375,
+          "light_first_vs_bd5": 0.028985507246376812,
+          "light_first_vs_mid5": 0,
+          "hit_mid5": 0.3188405797101449,
+          "hit_upper5": 0.08695652173913043,
+          "hit_bd5": 0.42028985507246375,
+          "touch_light5": 0.043478260869565216,
+          "mid_first10": 0.37681159420289856,
+          "bd_first10": 0.463768115942029,
+          "upper_first_vs_bd10": 0.15942028985507245,
+          "bd_first_vs_upper10": 0.5072463768115942,
+          "light_first_vs_bd10": 0.043478260869565216,
+          "light_first_vs_mid10": 0,
+          "hit_mid10": 0.5507246376811594,
+          "hit_upper10": 0.2318840579710145,
+          "hit_bd10": 0.5072463768115942,
+          "touch_light10": 0.057971014492753624,
+          "mid_first20": 0.4927536231884058,
+          "bd_first20": 0.4782608695652174,
+          "upper_first_vs_bd20": 0.3333333333333333,
+          "bd_first_vs_upper20": 0.5217391304347826,
+          "light_first_vs_bd20": 0.2318840579710145,
+          "light_first_vs_mid20": 0,
+          "hit_mid20": 0.8985507246376812,
+          "hit_upper20": 0.5507246376811594,
+          "hit_bd20": 0.5362318840579711,
+          "touch_light20": 0.2898550724637681
+        }
+      },
+      "BUY_BLUE_21P_LOWER": {
+        "id": "BUY_BLUE_21P_LOWER",
+        "type": "LOWER",
+        "wanted": "MID_FIRST",
+        "status": "SUPPORTS_STOCK_HYPOTHESIS",
+        "n": 139,
+        "pooled_probability": 0.8057553956834532,
+        "eligible_symbols": 4,
+        "supporting_symbols": 4,
+        "neutral_symbols": 0,
+        "opposing_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.8266666666666667,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 50,
+            "p": 0.82
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 42,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 29,
+            "p": 0.6551724137931034
+          },
+          {
+            "symbol": "SOL/USD",
+            "n": 18,
+            "p": 0.9444444444444444
+          }
+        ],
+        "stats": {
+          "n": 139,
+          "symbol_count": 4,
+          "ret5_median": 0.016606029276081236,
+          "mfe5_median": 0.054791550741080775,
+          "mae5_median": -0.046034555631186636,
+          "ret10_median": 0.024205650159848435,
+          "mfe10_median": 0.08475758571587488,
+          "mae10_median": -0.06331943347943647,
+          "ret20_median": 0.0035150018392300364,
+          "mfe20_median": 0.11145097218657751,
+          "mae20_median": -0.07877435132640509,
+          "mid_first5": 0.4316546762589928,
+          "bd_first5": 0.11510791366906475,
+          "upper_first_vs_bd5": 0.050359712230215826,
+          "bd_first_vs_upper5": 0.11510791366906475,
+          "light_first_vs_bd5": 0.5107913669064749,
+          "light_first_vs_mid5": 0.5179856115107914,
+          "hit_mid5": 0.4460431654676259,
+          "hit_upper5": 0.05755395683453238,
+          "hit_bd5": 0.11510791366906475,
+          "touch_light5": 0.5539568345323741,
+          "mid_first10": 0.6762589928057554,
+          "bd_first10": 0.1510791366906475,
+          "upper_first_vs_bd10": 0.2014388489208633,
+          "bd_first_vs_upper10": 0.17266187050359713,
+          "light_first_vs_bd10": 0.60431654676259,
+          "light_first_vs_mid10": 0.5683453237410072,
+          "hit_mid10": 0.7338129496402878,
+          "hit_upper10": 0.22302158273381295,
+          "hit_bd10": 0.17266187050359713,
+          "touch_light10": 0.6618705035971223,
+          "mid_first20": 0.8057553956834532,
+          "bd_first20": 0.18705035971223022,
+          "upper_first_vs_bd20": 0.4316546762589928,
+          "bd_first_vs_upper20": 0.28776978417266186,
+          "light_first_vs_bd20": 0.7338129496402878,
+          "light_first_vs_mid20": 0.5755395683453237,
+          "hit_mid20": 0.9280575539568345,
+          "hit_upper20": 0.4748201438848921,
+          "hit_bd20": 0.2949640287769784,
+          "touch_light20": 0.7913669064748201
+        }
+      },
+      "AVOID_GREEN_11_20_LOWER": {
+        "id": "AVOID_GREEN_11_20_LOWER",
+        "type": "LOWER",
+        "wanted": "BD_FIRST",
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 15,
+        "pooled_probability": 0.7333333333333333,
+        "eligible_symbols": 3,
+        "supporting_symbols": 2,
+        "neutral_symbols": 0,
+        "opposing_symbols": 1,
+        "support_fraction": 0.6666666666666666,
+        "median_symbol_probability": 0.8,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 5,
+            "p": 0.4
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 4,
+            "p": 1
+          }
+        ],
+        "stats": {
+          "n": 15,
+          "symbol_count": 4,
+          "ret5_median": 0.05424981522542516,
+          "mfe5_median": 0.06624362900901448,
+          "mae5_median": -0.04688744370860931,
+          "ret10_median": 0.06954102678925489,
+          "mfe10_median": 0.1172082571859796,
+          "mae10_median": -0.047906818563985376,
+          "ret20_median": 0.03302255273465504,
+          "mfe20_median": 0.16575764761678902,
+          "mae20_median": -0.10304221307769512,
+          "mid_first5": 0.13333333333333333,
+          "bd_first5": 0.6666666666666666,
+          "upper_first_vs_bd5": 0.06666666666666667,
+          "bd_first_vs_upper5": 0.8,
+          "light_first_vs_bd5": 0,
+          "light_first_vs_mid5": 0,
+          "hit_mid5": 0.6,
+          "hit_upper5": 0.06666666666666667,
+          "hit_bd5": 0.8,
+          "touch_light5": 0,
+          "mid_first10": 0.13333333333333333,
+          "bd_first10": 0.7333333333333333,
+          "upper_first_vs_bd10": 0.13333333333333333,
+          "bd_first_vs_upper10": 0.8666666666666667,
+          "light_first_vs_bd10": 0,
+          "light_first_vs_mid10": 0,
+          "hit_mid10": 0.9333333333333333,
+          "hit_upper10": 0.3333333333333333,
+          "hit_bd10": 0.8666666666666667,
+          "touch_light10": 0.06666666666666667,
+          "mid_first20": 0.13333333333333333,
+          "bd_first20": 0.7333333333333333,
+          "upper_first_vs_bd20": 0.13333333333333333,
+          "bd_first_vs_upper20": 0.8666666666666667,
+          "light_first_vs_bd20": 0.13333333333333333,
+          "light_first_vs_mid20": 0,
+          "hit_mid20": 1,
+          "hit_upper20": 0.6666666666666666,
+          "hit_bd20": 0.9333333333333333,
+          "touch_light20": 0.4
+        }
+      },
+      "AVOID_RECENT_GRAY_GREEN_LOWER": {
+        "id": "AVOID_RECENT_GRAY_GREEN_LOWER",
+        "type": "LOWER",
+        "wanted": "BD_FIRST",
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 15,
+        "pooled_probability": 0.7333333333333333,
+        "eligible_symbols": 3,
+        "supporting_symbols": 2,
+        "neutral_symbols": 0,
+        "opposing_symbols": 1,
+        "support_fraction": 0.6666666666666666,
+        "median_symbol_probability": 0.7142857142857143,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 7,
+            "p": 0.7142857142857143
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 3,
+            "p": 1
+          }
+        ],
+        "stats": {
+          "n": 15,
+          "symbol_count": 4,
+          "ret5_median": 0.02145326464297259,
+          "mfe5_median": 0.059534630113514675,
+          "mae5_median": -0.05113522283012795,
+          "ret10_median": -0.010014104372355392,
+          "mfe10_median": 0.06260950383314445,
+          "mae10_median": -0.08591003335436753,
+          "ret20_median": 0.012807881773398977,
+          "mfe20_median": 0.11390362304562007,
+          "mae20_median": -0.09238363892806767,
+          "mid_first5": 0.2,
+          "bd_first5": 0.6,
+          "upper_first_vs_bd5": 0.06666666666666667,
+          "bd_first_vs_upper5": 0.6,
+          "light_first_vs_bd5": 0.06666666666666667,
+          "light_first_vs_mid5": 0,
+          "hit_mid5": 0.3333333333333333,
+          "hit_upper5": 0.06666666666666667,
+          "hit_bd5": 0.6,
+          "touch_light5": 0.06666666666666667,
+          "mid_first10": 0.2,
+          "bd_first10": 0.6666666666666666,
+          "upper_first_vs_bd10": 0.06666666666666667,
+          "bd_first_vs_upper10": 0.7333333333333333,
+          "light_first_vs_bd10": 0.13333333333333333,
+          "light_first_vs_mid10": 0,
+          "hit_mid10": 0.4666666666666667,
+          "hit_upper10": 0.13333333333333333,
+          "hit_bd10": 0.7333333333333333,
+          "touch_light10": 0.26666666666666666,
+          "mid_first20": 0.26666666666666666,
+          "bd_first20": 0.7333333333333333,
+          "upper_first_vs_bd20": 0.13333333333333333,
+          "bd_first_vs_upper20": 0.8,
+          "light_first_vs_bd20": 0.2,
+          "light_first_vs_mid20": 0,
+          "hit_mid20": 0.9333333333333333,
+          "hit_upper20": 0.3333333333333333,
+          "hit_bd20": 0.8,
+          "touch_light20": 0.4
+        }
+      },
+      "BUY_GRAY_4_10_LIGHT_SUPPORT": {
+        "id": "BUY_GRAY_4_10_LIGHT_SUPPORT",
+        "type": "LIGHT_SUPPORT",
+        "wanted": "SUPPORT_HOLD",
+        "status": "SUPPORTS_STOCK_HYPOTHESIS",
+        "n": 55,
+        "pooled_probability": 0.8,
+        "eligible_symbols": 4,
+        "supporting_symbols": 3,
+        "neutral_symbols": 1,
+        "opposing_symbols": 0,
+        "support_fraction": 0.75,
+        "median_symbol_probability": 0.7944444444444444,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 20,
+            "p": 0.7
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 18,
+            "p": 0.8888888888888888
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 13,
+            "p": 0.9230769230769231
+          },
+          {
+            "symbol": "SOL/USD",
+            "n": 4,
+            "p": 0.5
+          }
+        ],
+        "stats": {
+          "n": 55,
+          "symbol_count": 4,
+          "ret5_median": 0.005897491929702348,
+          "mfe5_median": 0.03637164842780072,
+          "mae5_median": -0.03533505657093117,
+          "ret10_median": -0.022023139069623276,
+          "mfe10_median": 0.042584746918498784,
+          "mae10_median": -0.06322810757290731,
+          "ret20_median": -0.060127880075366735,
+          "mfe20_median": 0.0550018282576934,
+          "mae20_median": -0.12352585775359504,
+          "hold5": 0.8,
+          "break5": 0.16363636363636364,
+          "unresolved5": 0.03636363636363636,
+          "hold10": 0.8,
+          "break10": 0.18181818181818182,
+          "unresolved10": 0.01818181818181818,
+          "hold20": 0.8,
+          "break20": 0.2,
+          "unresolved20": 0
+        }
+      },
+      "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT": {
+        "id": "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT",
+        "type": "LIGHT_SUPPORT",
+        "wanted": "SUPPORT_HOLD",
+        "status": "SUPPORTS_STOCK_HYPOTHESIS",
+        "n": 27,
+        "pooled_probability": 0.8518518518518519,
+        "eligible_symbols": 3,
+        "supporting_symbols": 3,
+        "neutral_symbols": 0,
+        "opposing_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.9090909090909091,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 7,
+            "p": 1
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 11,
+            "p": 0.9090909090909091
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 7,
+            "p": 0.8571428571428571
+          }
+        ],
+        "stats": {
+          "n": 27,
+          "symbol_count": 4,
+          "ret5_median": 0.0029472578292140117,
+          "mfe5_median": 0.03951796986563827,
+          "mae5_median": -0.024829472048061074,
+          "ret10_median": 0.004292126915880434,
+          "mfe10_median": 0.05831389342506177,
+          "mae10_median": -0.031127048300536697,
+          "ret20_median": -0.015192167489555652,
+          "mfe20_median": 0.06691785066299683,
+          "mae20_median": -0.04752064881688012,
+          "hold5": 0.8518518518518519,
+          "break5": 0.14814814814814814,
+          "unresolved5": 0,
+          "hold10": 0.8518518518518519,
+          "break10": 0.14814814814814814,
+          "unresolved10": 0,
+          "hold20": 0.8518518518518519,
+          "break20": 0.14814814814814814,
+          "unresolved20": 0
+        }
+      },
+      "CONT_BLUE_11_20_UPPER": {
+        "id": "CONT_BLUE_11_20_UPPER",
+        "type": "UPPER",
+        "wanted": "BS_FIRST",
+        "status": "SUPPORTS_STOCK_HYPOTHESIS",
+        "n": 20,
+        "pooled_probability": 0.65,
+        "eligible_symbols": 3,
+        "supporting_symbols": 2,
+        "neutral_symbols": 1,
+        "opposing_symbols": 0,
+        "support_fraction": 0.6666666666666666,
+        "median_symbol_probability": 0.625,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 8,
+            "p": 0.625
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 7,
+            "p": 0.7142857142857143
+          }
+        ],
+        "stats": {
+          "n": 20,
+          "symbol_count": 4,
+          "ret5_median": -0.0030937223828704785,
+          "mfe5_median": 0.0481423717787971,
+          "mae5_median": -0.05164564929489707,
+          "ret10_median": -0.011637390861068575,
+          "mfe10_median": 0.052874865018059936,
+          "mae10_median": -0.0708553625220873,
+          "ret20_median": -0.008783813648292393,
+          "mfe20_median": 0.08171543154084626,
+          "mae20_median": -0.08443066716027448,
+          "mid_first5": 0.15,
+          "bs_first5": 0.65,
+          "lower_first_vs_bs5": 0,
+          "bs_first_vs_lower5": 0.85,
+          "light_first_vs_bs5": 0,
+          "light_first_vs_mid5": 0,
+          "hit_mid5": 0.7,
+          "hit_lower5": 0.1,
+          "hit_bs5": 0.9,
+          "touch_light5": 0.1,
+          "mid_first10": 0.15,
+          "bs_first10": 0.65,
+          "lower_first_vs_bs10": 0.1,
+          "bs_first_vs_lower10": 0.85,
+          "light_first_vs_bs10": 0.1,
+          "light_first_vs_mid10": 0,
+          "hit_mid10": 0.7,
+          "hit_lower10": 0.35,
+          "hit_bs10": 0.9,
+          "touch_light10": 0.25,
+          "mid_first20": 0.15,
+          "bs_first20": 0.65,
+          "lower_first_vs_bs20": 0.1,
+          "bs_first_vs_lower20": 0.85,
+          "light_first_vs_bs20": 0.1,
+          "light_first_vs_mid20": 0,
+          "hit_mid20": 0.9,
+          "hit_lower20": 0.6,
+          "hit_bs20": 0.9,
+          "touch_light20": 0.35
+        }
+      },
+      "CONT_BLUE_4_10_UPPER": {
+        "id": "CONT_BLUE_4_10_UPPER",
+        "type": "UPPER",
+        "wanted": "BS_FIRST",
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 13,
+        "pooled_probability": 0.8461538461538461,
+        "eligible_symbols": 2,
+        "supporting_symbols": 2,
+        "neutral_symbols": 0,
+        "opposing_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.8333333333333333,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 6,
+            "p": 0.6666666666666666
+          }
+        ],
+        "stats": {
+          "n": 13,
+          "symbol_count": 4,
+          "ret5_median": -0.002758037825059123,
+          "mfe5_median": 0.04684475494016982,
+          "mae5_median": -0.03479576399394857,
+          "ret10_median": -0.026021210287443308,
+          "mfe10_median": 0.06397737358894973,
+          "mae10_median": -0.04601317510284186,
+          "ret20_median": -0.013264656558830912,
+          "mfe20_median": 0.06855795902285267,
+          "mae20_median": -0.08948770581298848,
+          "mid_first5": 0.07692307692307693,
+          "bs_first5": 0.7692307692307693,
+          "lower_first_vs_bs5": 0,
+          "bs_first_vs_lower5": 0.8461538461538461,
+          "light_first_vs_bs5": 0,
+          "light_first_vs_mid5": 0,
+          "hit_mid5": 0.3076923076923077,
+          "hit_lower5": 0,
+          "hit_bs5": 0.8461538461538461,
+          "touch_light5": 0,
+          "mid_first10": 0.07692307692307693,
+          "bs_first10": 0.8461538461538461,
+          "lower_first_vs_bs10": 0,
+          "bs_first_vs_lower10": 0.9230769230769231,
+          "light_first_vs_bs10": 0,
+          "light_first_vs_mid10": 0,
+          "hit_mid10": 0.6153846153846154,
+          "hit_lower10": 0.15384615384615385,
+          "hit_bs10": 0.9230769230769231,
+          "touch_light10": 0.15384615384615385,
+          "mid_first20": 0.07692307692307693,
+          "bs_first20": 0.8461538461538461,
+          "lower_first_vs_bs20": 0.07692307692307693,
+          "bs_first_vs_lower20": 0.9230769230769231,
+          "light_first_vs_bs20": 0.07692307692307693,
+          "light_first_vs_mid20": 0,
+          "hit_mid20": 0.9230769230769231,
+          "hit_lower20": 0.6153846153846154,
+          "hit_bs20": 0.9230769230769231,
+          "touch_light20": 0.5384615384615384
+        }
+      },
+      "CONT_RECENT_GRAY_BLUE_UPPER": {
+        "id": "CONT_RECENT_GRAY_BLUE_UPPER",
+        "type": "UPPER",
+        "wanted": "BS_FIRST",
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 6,
+        "pooled_probability": 1,
+        "eligible_symbols": 0,
+        "supporting_symbols": 0,
+        "neutral_symbols": 0,
+        "opposing_symbols": 0,
+        "support_fraction": null,
+        "median_symbol_probability": null,
+        "per_symbol": [],
+        "stats": {
+          "n": 6,
+          "symbol_count": 4,
+          "ret5_median": 0.06022284369258901,
+          "mfe5_median": 0.07729331127155692,
+          "mae5_median": -0.031118289340748895,
+          "ret10_median": 0.052644844727912865,
+          "mfe10_median": 0.09317586228197683,
+          "mae10_median": -0.03556934724327343,
+          "ret20_median": 0.0849318138934334,
+          "mfe20_median": 0.27297493158963637,
+          "mae20_median": -0.03556934724327343,
+          "mid_first5": 0,
+          "bs_first5": 1,
+          "lower_first_vs_bs5": 0,
+          "bs_first_vs_lower5": 1,
+          "light_first_vs_bs5": 0,
+          "light_first_vs_mid5": 0,
+          "hit_mid5": 0.3333333333333333,
+          "hit_lower5": 0,
+          "hit_bs5": 1,
+          "touch_light5": 0,
+          "mid_first10": 0,
+          "bs_first10": 1,
+          "lower_first_vs_bs10": 0,
+          "bs_first_vs_lower10": 1,
+          "light_first_vs_bs10": 0,
+          "light_first_vs_mid10": 0,
+          "hit_mid10": 0.5,
+          "hit_lower10": 0.16666666666666666,
+          "hit_bs10": 1,
+          "touch_light10": 0.3333333333333333,
+          "mid_first20": 0,
+          "bs_first20": 1,
+          "lower_first_vs_bs20": 0,
+          "bs_first_vs_lower20": 1,
+          "light_first_vs_bs20": 0,
+          "light_first_vs_mid20": 0,
+          "hit_mid20": 0.8333333333333334,
+          "hit_lower20": 0.5,
+          "hit_bs20": 1,
+          "touch_light20": 0.3333333333333333
+        }
+      },
+      "SELL_GREEN_21P_UPPER": {
+        "id": "SELL_GREEN_21P_UPPER",
+        "type": "UPPER",
+        "wanted": "MID_FIRST",
+        "status": "SUPPORTS_STOCK_HYPOTHESIS",
+        "n": 90,
+        "pooled_probability": 0.6,
+        "eligible_symbols": 4,
+        "supporting_symbols": 4,
+        "neutral_symbols": 0,
+        "opposing_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.5993589743589745,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 26,
+            "p": 0.6153846153846154
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 26,
+            "p": 0.5384615384615384
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 26,
+            "p": 0.6538461538461539
+          },
+          {
+            "symbol": "SOL/USD",
+            "n": 12,
+            "p": 0.5833333333333334
+          }
+        ],
+        "stats": {
+          "n": 90,
+          "symbol_count": 4,
+          "ret5_median": -0.0034171157604549474,
+          "mfe5_median": 0.04871311878157325,
+          "mae5_median": -0.04239523017924551,
+          "ret10_median": 0.015040709080627046,
+          "mfe10_median": 0.08005962326510085,
+          "mae10_median": -0.06606311910252505,
+          "ret20_median": 0.00717550674341455,
+          "mfe20_median": 0.13018818525229892,
+          "mae20_median": -0.098774653488655,
+          "mid_first5": 0.35555555555555557,
+          "bs_first5": 0.26666666666666666,
+          "lower_first_vs_bs5": 0.044444444444444446,
+          "bs_first_vs_lower5": 0.26666666666666666,
+          "light_first_vs_bs5": 0.2111111111111111,
+          "light_first_vs_mid5": 0.4,
+          "hit_mid5": 0.3888888888888889,
+          "hit_lower5": 0.05555555555555555,
+          "hit_bs5": 0.26666666666666666,
+          "touch_light5": 0.4111111111111111,
+          "mid_first10": 0.5444444444444444,
+          "bs_first10": 0.35555555555555557,
+          "lower_first_vs_bs10": 0.18888888888888888,
+          "bs_first_vs_lower10": 0.3888888888888889,
+          "light_first_vs_bs10": 0.25555555555555554,
+          "light_first_vs_mid10": 0.4666666666666667,
+          "hit_mid10": 0.6222222222222222,
+          "hit_lower10": 0.24444444444444444,
+          "hit_bs10": 0.4,
+          "touch_light10": 0.5,
+          "mid_first20": 0.6,
+          "bs_first20": 0.3888888888888889,
+          "lower_first_vs_bs20": 0.3111111111111111,
+          "bs_first_vs_lower20": 0.5444444444444444,
+          "light_first_vs_bs20": 0.28888888888888886,
+          "light_first_vs_mid20": 0.5,
+          "hit_mid20": 0.8333333333333334,
+          "hit_lower20": 0.4444444444444444,
+          "hit_bs20": 0.5555555555555556,
+          "touch_light20": 0.6555555555555556
+        }
+      },
+      "SELL_RECENT_BLUE_GRAY_LIGHT_RESIST": {
+        "id": "SELL_RECENT_BLUE_GRAY_LIGHT_RESIST",
+        "type": "LIGHT_RESIST",
+        "wanted": "RESIST_HOLD",
+        "status": "SUPPORTS_STOCK_HYPOTHESIS",
+        "n": 21,
+        "pooled_probability": 0.8571428571428571,
+        "eligible_symbols": 3,
+        "supporting_symbols": 3,
+        "neutral_symbols": 0,
+        "opposing_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.8571428571428571,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 7,
+            "p": 0.8571428571428571
+          },
+          {
+            "symbol": "SOL/USD",
+            "n": 9,
+            "p": 0.8888888888888888
+          }
+        ],
+        "stats": {
+          "n": 21,
+          "symbol_count": 4,
+          "ret5_median": -0.004184164654516764,
+          "mfe5_median": 0.05111594856428914,
+          "mae5_median": -0.037161029890826036,
+          "ret10_median": 0.00851155524430336,
+          "mfe10_median": 0.07481536768057895,
+          "mae10_median": -0.05523981822178825,
+          "ret20_median": -0.05311208849793414,
+          "mfe20_median": 0.10234124530256627,
+          "mae20_median": -0.11756714390218415,
+          "hold5": 0.8571428571428571,
+          "break5": 0.047619047619047616,
+          "unresolved5": 0.09523809523809523,
+          "hold10": 0.8571428571428571,
+          "break10": 0.14285714285714285,
+          "unresolved10": 0,
+          "hold20": 0.8571428571428571,
+          "break20": 0.14285714285714285,
+          "unresolved20": 0
+        }
+      }
+    }
+  },
+  "discovery_top": {
+    "stocks": {
+      "lower_clean": [
+        {
+          "level": "L4",
+          "key": "BLUE|11_20|WICK_ONLY",
+          "n": 67,
+          "p": 0.8507462686567164,
+          "eligible_symbols": 12,
+          "supporting_symbols": 12,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.012703597134232192,
+          "mfe20_median": 0.043824410196479535,
+          "mae20_median": -0.044968146327356795,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|11_20|WICK_ONLY",
+          "n": 66,
+          "p": 0.8484848484848485,
+          "eligible_symbols": 11,
+          "supporting_symbols": 11,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.013967029282387688,
+          "mfe20_median": 0.04378850995203121,
+          "mae20_median": -0.04549060000269073,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|BLUE|21_PLUS|WICK_ONLY|ABOVE|LG_Y",
+          "n": 75,
+          "p": 0.8133333333333334,
+          "eligible_symbols": 14,
+          "supporting_symbols": 14,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.875,
+          "ret20_median": 0.014260488928791393,
+          "mfe20_median": 0.04777123633305291,
+          "mae20_median": -0.0320158853038901,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|BLUE|21_PLUS|WICK_ONLY|ABOVE",
+          "n": 531,
+          "p": 0.8041431261770244,
+          "eligible_symbols": 30,
+          "supporting_symbols": 30,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.8180147058823529,
+          "ret20_median": 0.008833657733193334,
+          "mfe20_median": 0.05206679546233883,
+          "mae20_median": -0.04379176925782624,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|BLUE|21_PLUS|WICK_ONLY|ABOVE|LG_N",
+          "n": 456,
+          "p": 0.8026315789473685,
+          "eligible_symbols": 30,
+          "supporting_symbols": 30,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.8198051948051948,
+          "ret20_median": 0.0074475415497660125,
+          "mfe20_median": 0.052480447355683135,
+          "mae20_median": -0.046775396617248166,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "BLUE|11_20",
+          "n": 134,
+          "p": 0.7985074626865671,
+          "eligible_symbols": 24,
+          "supporting_symbols": 24,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.8166666666666667,
+          "ret20_median": 0.018132258405451074,
+          "mfe20_median": 0.058069367114363724,
+          "mae20_median": -0.04066921438612431,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GRAY|BLUE|11_20",
+          "n": 132,
+          "p": 0.7954545454545454,
+          "eligible_symbols": 24,
+          "supporting_symbols": 24,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.8,
+          "ret20_median": 0.0188616158535585,
+          "mfe20_median": 0.05491766424542388,
+          "mae20_median": -0.04206865468044402,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "BLUE|21_PLUS|WICK_ONLY",
+          "n": 612,
+          "p": 0.7859477124183006,
+          "eligible_symbols": 30,
+          "supporting_symbols": 30,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7894736842105263,
+          "ret20_median": 0.008500733947845007,
+          "mfe20_median": 0.051762822716351464,
+          "mae20_median": -0.04621097148274261,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|21_PLUS|WICK_ONLY",
+          "n": 603,
+          "p": 0.7844112769485904,
+          "eligible_symbols": 30,
+          "supporting_symbols": 30,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7894736842105263,
+          "ret20_median": 0.008833657733193334,
+          "mfe20_median": 0.05109183399160444,
+          "mae20_median": -0.04497884658205287,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "BLUE|21_PLUS",
+          "n": 1132,
+          "p": 0.7040636042402827,
+          "eligible_symbols": 30,
+          "supporting_symbols": 30,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7124060150375939,
+          "ret20_median": 0.01623104766021599,
+          "mfe20_median": 0.05457355248386986,
+          "mae20_median": -0.04538285169805284,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GRAY|BLUE|21_PLUS",
+          "n": 1117,
+          "p": 0.702775290957923,
+          "eligible_symbols": 30,
+          "supporting_symbols": 30,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7042925278219396,
+          "ret20_median": 0.016502730317465186,
+          "mfe20_median": 0.05411939743351302,
+          "mae20_median": -0.045125027943665574,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GREEN|GRAY|11_20",
+          "n": 91,
+          "p": 0.7802197802197802,
+          "eligible_symbols": 18,
+          "supporting_symbols": 16,
+          "support_fraction": 0.8888888888888888,
+          "median_symbol_probability": 0.775,
+          "ret20_median": 0.016163537512070336,
+          "mfe20_median": 0.05342237061769617,
+          "mae20_median": -0.04641975308641977,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GREEN|GRAY|11_20|WICK_ONLY",
+          "n": 46,
+          "p": 0.8913043478260869,
+          "eligible_symbols": 8,
+          "supporting_symbols": 7,
+          "support_fraction": 0.875,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.016033618329886368,
+          "mfe20_median": 0.049669172062849376,
+          "mae20_median": -0.04950124841400305,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|BLUE|11_20|WICK_ONLY|ABOVE",
+          "n": 47,
+          "p": 0.8723404255319149,
+          "eligible_symbols": 8,
+          "supporting_symbols": 7,
+          "support_fraction": 0.875,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.012703597134232192,
+          "mfe20_median": 0.04711987545407381,
+          "mae20_median": -0.043775587137022454,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GRAY|1_3",
+          "n": 77,
+          "p": 0.7142857142857143,
+          "eligible_symbols": 15,
+          "supporting_symbols": 13,
+          "support_fraction": 0.8666666666666667,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.017006195580439032,
+          "mfe20_median": 0.06411321363498335,
+          "mae20_median": -0.04115875779355416,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        }
+      ],
+      "lower_deeper": [
+        {
+          "level": "L4",
+          "key": "GREEN|11_20|CLOSE_BELOW",
+          "n": 60,
+          "p": 0.85,
+          "eligible_symbols": 9,
+          "supporting_symbols": 9,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.004990257837440559,
+          "mfe20_median": 0.05928239006228575,
+          "mae20_median": -0.05831106413273568,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|GREEN|11_20|CLOSE_BELOW",
+          "n": 59,
+          "p": 0.847457627118644,
+          "eligible_symbols": 9,
+          "supporting_symbols": 9,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.004075394803871646,
+          "mfe20_median": 0.058913057264252666,
+          "mae20_median": -0.05559547332495063,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|GREEN|11_20|CLOSE_BELOW|BELOW",
+          "n": 59,
+          "p": 0.847457627118644,
+          "eligible_symbols": 9,
+          "supporting_symbols": 9,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.004075394803871646,
+          "mfe20_median": 0.058913057264252666,
+          "mae20_median": -0.05559547332495063,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|GREEN|11_20|CLOSE_BELOW|BELOW|LG_N",
+          "n": 59,
+          "p": 0.847457627118644,
+          "eligible_symbols": 9,
+          "supporting_symbols": 9,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.004075394803871646,
+          "mfe20_median": 0.058913057264252666,
+          "mae20_median": -0.05559547332495063,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "BLUE|GRAY|4_10|CLOSE_BELOW|BELOW",
+          "n": 52,
+          "p": 0.75,
+          "eligible_symbols": 9,
+          "supporting_symbols": 8,
+          "support_fraction": 0.8888888888888888,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.013571701172217399,
+          "mfe20_median": 0.04808050094680383,
+          "mae20_median": -0.04750651345844353,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GREEN|11_20",
+          "n": 148,
+          "p": 0.722972972972973,
+          "eligible_symbols": 26,
+          "supporting_symbols": 22,
+          "support_fraction": 0.8461538461538461,
+          "median_symbol_probability": 0.696969696969697,
+          "ret20_median": 0.008319324097684988,
+          "mfe20_median": 0.05780418596509007,
+          "mae20_median": -0.05650884332914197,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GRAY|GREEN|11_20",
+          "n": 145,
+          "p": 0.7172413793103448,
+          "eligible_symbols": 25,
+          "supporting_symbols": 21,
+          "support_fraction": 0.84,
+          "median_symbol_probability": 0.7,
+          "ret20_median": 0.008677865245149574,
+          "mfe20_median": 0.056695314665927476,
+          "mae20_median": -0.057422213333333305,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "BLUE|GRAY|4_10|CLOSE_BELOW",
+          "n": 55,
+          "p": 0.7272727272727273,
+          "eligible_symbols": 10,
+          "supporting_symbols": 8,
+          "support_fraction": 0.8,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.0191249492900607,
+          "mfe20_median": 0.04824421374045795,
+          "mae20_median": -0.044542205114105005,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|GREEN|21_PLUS|CLOSE_BELOW",
+          "n": 125,
+          "p": 0.688,
+          "eligible_symbols": 20,
+          "supporting_symbols": 16,
+          "support_fraction": 0.8,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.04345549738219878,
+          "mfe20_median": 0.08647457733249841,
+          "mae20_median": -0.057000511720730396,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|GREEN|21_PLUS|CLOSE_BELOW|BELOW",
+          "n": 125,
+          "p": 0.688,
+          "eligible_symbols": 20,
+          "supporting_symbols": 16,
+          "support_fraction": 0.8,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.04345549738219878,
+          "mfe20_median": 0.08647457733249841,
+          "mae20_median": -0.057000511720730396,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|GREEN|21_PLUS|CLOSE_BELOW|BELOW|LG_N",
+          "n": 125,
+          "p": 0.688,
+          "eligible_symbols": 20,
+          "supporting_symbols": 16,
+          "support_fraction": 0.8,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.04345549738219878,
+          "mfe20_median": 0.08647457733249841,
+          "mae20_median": -0.057000511720730396,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GREEN|21_PLUS|CLOSE_BELOW",
+          "n": 133,
+          "p": 0.6616541353383458,
+          "eligible_symbols": 21,
+          "supporting_symbols": 16,
+          "support_fraction": 0.7619047619047619,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.03778910945183034,
+          "mfe20_median": 0.08340780458742914,
+          "mae20_median": -0.05446428571428563,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|BLUE|21_PLUS|CLOSE_BELOW|BELOW",
+          "n": 60,
+          "p": 0.7,
+          "eligible_symbols": 10,
+          "supporting_symbols": 7,
+          "support_fraction": 0.7,
+          "median_symbol_probability": 0.7083333333333333,
+          "ret20_median": 0.0182350519450295,
+          "mfe20_median": 0.055296161027166724,
+          "mae20_median": -0.05561855842468161,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "BLUE|21_PLUS|FULL_BELOW",
+          "n": 63,
+          "p": 0.5555555555555556,
+          "eligible_symbols": 11,
+          "supporting_symbols": 7,
+          "support_fraction": 0.6363636363636364,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.0006376833291750206,
+          "mfe20_median": 0.051998673080112745,
+          "mae20_median": -0.04937613660393314,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|21_PLUS|FULL_BELOW",
+          "n": 63,
+          "p": 0.5555555555555556,
+          "eligible_symbols": 11,
+          "supporting_symbols": 7,
+          "support_fraction": 0.6363636363636364,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.0006376833291750206,
+          "mfe20_median": 0.051998673080112745,
+          "mae20_median": -0.04937613660393314,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        }
+      ],
+      "upper_revert": [
+        {
+          "level": "L2",
+          "key": "GREEN|4_10",
+          "n": 80,
+          "p": 0.7125,
+          "eligible_symbols": 16,
+          "supporting_symbols": 14,
+          "support_fraction": 0.875,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.009402014095861833,
+          "mfe20_median": 0.0442410698988539,
+          "mae20_median": -0.04221765640760705,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GRAY|GREEN|4_10",
+          "n": 77,
+          "p": 0.7272727272727273,
+          "eligible_symbols": 14,
+          "supporting_symbols": 12,
+          "support_fraction": 0.8571428571428571,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.0092648204310124,
+          "mfe20_median": 0.042976939203354325,
+          "mae20_median": -0.04332634521313772,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "BLUE|GRAY|21_PLUS|WICK_ONLY",
+          "n": 57,
+          "p": 0.7368421052631579,
+          "eligible_symbols": 9,
+          "supporting_symbols": 7,
+          "support_fraction": 0.7777777777777778,
+          "median_symbol_probability": 1,
+          "ret20_median": -0.026011919734735822,
+          "mfe20_median": 0.029130053089975405,
+          "mae20_median": -0.05204957643982022,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "BLUE|GRAY|21_PLUS|WICK_ONLY|ABOVE",
+          "n": 48,
+          "p": 0.7291666666666666,
+          "eligible_symbols": 8,
+          "supporting_symbols": 6,
+          "support_fraction": 0.75,
+          "median_symbol_probability": 0.8333333333333333,
+          "ret20_median": -0.02408405555420201,
+          "mfe20_median": 0.02851282477200634,
+          "mae20_median": -0.0532402512430194,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|GREEN|11_20|WICK_ONLY|BELOW",
+          "n": 52,
+          "p": 0.6538461538461539,
+          "eligible_symbols": 8,
+          "supporting_symbols": 6,
+          "support_fraction": 0.75,
+          "median_symbol_probability": 0.8333333333333333,
+          "ret20_median": 0.013294721038232149,
+          "mfe20_median": 0.05761600464392291,
+          "mae20_median": -0.03725896101385501,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|GREEN|21_PLUS|WICK_ONLY",
+          "n": 191,
+          "p": 0.6387434554973822,
+          "eligible_symbols": 27,
+          "supporting_symbols": 20,
+          "support_fraction": 0.7407407407407407,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.03053758880288404,
+          "mfe20_median": 0.07547729809104253,
+          "mae20_median": -0.037447182779407506,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|GREEN|21_PLUS|WICK_ONLY|BELOW",
+          "n": 163,
+          "p": 0.656441717791411,
+          "eligible_symbols": 26,
+          "supporting_symbols": 19,
+          "support_fraction": 0.7307692307692307,
+          "median_symbol_probability": 0.75,
+          "ret20_median": 0.029731442218648096,
+          "mfe20_median": 0.07569212644806589,
+          "mae20_median": -0.0353748498884886,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|GREEN|21_PLUS|WICK_ONLY|BELOW|LG_N",
+          "n": 137,
+          "p": 0.6423357664233577,
+          "eligible_symbols": 25,
+          "supporting_symbols": 18,
+          "support_fraction": 0.72,
+          "median_symbol_probability": 0.7142857142857143,
+          "ret20_median": 0.04019504567825094,
+          "mfe20_median": 0.0783808647654094,
+          "mae20_median": -0.03370786516853941,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|21_PLUS|WICK_ONLY",
+          "n": 115,
+          "p": 0.6347826086956522,
+          "eligible_symbols": 21,
+          "supporting_symbols": 15,
+          "support_fraction": 0.7142857142857143,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": -0.0007256794513587073,
+          "mfe20_median": 0.03829073324780419,
+          "mae20_median": -0.04064454542333096,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|4_10|WICK_ONLY",
+          "n": 102,
+          "p": 0.6372549019607843,
+          "eligible_symbols": 23,
+          "supporting_symbols": 16,
+          "support_fraction": 0.6956521739130435,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.011629865724127164,
+          "mfe20_median": 0.046962559624163513,
+          "mae20_median": -0.04362716484131962,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GREEN|21_PLUS|WICK_ONLY",
+          "n": 201,
+          "p": 0.6368159203980099,
+          "eligible_symbols": 28,
+          "supporting_symbols": 19,
+          "support_fraction": 0.6785714285714286,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.027774596266177953,
+          "mfe20_median": 0.07500907158778691,
+          "mae20_median": -0.03745786177839239,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GRAY|GREEN|11_20",
+          "n": 142,
+          "p": 0.6197183098591549,
+          "eligible_symbols": 26,
+          "supporting_symbols": 17,
+          "support_fraction": 0.6538461538461539,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.018706170761513707,
+          "mfe20_median": 0.055643124113778586,
+          "mae20_median": -0.037018465001323386,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "BLUE|GRAY|4_10",
+          "n": 106,
+          "p": 0.6037735849056604,
+          "eligible_symbols": 23,
+          "supporting_symbols": 15,
+          "support_fraction": 0.6521739130434783,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.012037996238044468,
+          "mfe20_median": 0.04383726289737422,
+          "mae20_median": -0.04181318339430151,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|GREEN|11_20|WICK_ONLY",
+          "n": 82,
+          "p": 0.6707317073170732,
+          "eligible_symbols": 17,
+          "supporting_symbols": 11,
+          "support_fraction": 0.6470588235294118,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.024464659508160125,
+          "mfe20_median": 0.05852247847480663,
+          "mae20_median": -0.036892845535064445,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GREEN|GRAY|21_PLUS|WICK_ONLY",
+          "n": 58,
+          "p": 0.5344827586206896,
+          "eligible_symbols": 8,
+          "supporting_symbols": 5,
+          "support_fraction": 0.625,
+          "median_symbol_probability": 0.6190476190476191,
+          "ret20_median": 0.018646858320004345,
+          "mfe20_median": 0.057937662883784546,
+          "mae20_median": -0.030305000237909496,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        }
+      ],
+      "upper_continue": [
+        {
+          "level": "L4",
+          "key": "BLUE|11_20|CLOSE_ABOVE",
+          "n": 77,
+          "p": 0.961038961038961,
+          "eligible_symbols": 12,
+          "supporting_symbols": 12,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.03410927237089756,
+          "mfe20_median": 0.05115810674723065,
+          "mae20_median": -0.0290125540605477,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|11_20|CLOSE_ABOVE",
+          "n": 77,
+          "p": 0.961038961038961,
+          "eligible_symbols": 12,
+          "supporting_symbols": 12,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.03410927237089756,
+          "mfe20_median": 0.05115810674723065,
+          "mae20_median": -0.0290125540605477,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|BLUE|11_20|CLOSE_ABOVE|ABOVE",
+          "n": 77,
+          "p": 0.961038961038961,
+          "eligible_symbols": 12,
+          "supporting_symbols": 12,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.03410927237089756,
+          "mfe20_median": 0.05115810674723065,
+          "mae20_median": -0.0290125540605477,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|BLUE|11_20|CLOSE_ABOVE|ABOVE|LG_N",
+          "n": 77,
+          "p": 0.961038961038961,
+          "eligible_symbols": 12,
+          "supporting_symbols": 12,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.03410927237089756,
+          "mfe20_median": 0.05115810674723065,
+          "mae20_median": -0.0290125540605477,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "BLUE|21_PLUS|FULL_ABOVE",
+          "n": 66,
+          "p": 0.8939393939393939,
+          "eligible_symbols": 13,
+          "supporting_symbols": 13,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.028854352058893307,
+          "mfe20_median": 0.06560766005642582,
+          "mae20_median": -0.02858292323474132,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|21_PLUS|FULL_ABOVE",
+          "n": 66,
+          "p": 0.8939393939393939,
+          "eligible_symbols": 13,
+          "supporting_symbols": 13,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.028854352058893307,
+          "mfe20_median": 0.06560766005642582,
+          "mae20_median": -0.02858292323474132,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|BLUE|21_PLUS|FULL_ABOVE|ABOVE",
+          "n": 66,
+          "p": 0.8939393939393939,
+          "eligible_symbols": 13,
+          "supporting_symbols": 13,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.028854352058893307,
+          "mfe20_median": 0.06560766005642582,
+          "mae20_median": -0.02858292323474132,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|BLUE|21_PLUS|FULL_ABOVE|ABOVE|LG_N",
+          "n": 66,
+          "p": 0.8939393939393939,
+          "eligible_symbols": 13,
+          "supporting_symbols": 13,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.028854352058893307,
+          "mfe20_median": 0.06560766005642582,
+          "mae20_median": -0.02858292323474132,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "BLUE|21_PLUS|CLOSE_ABOVE",
+          "n": 612,
+          "p": 0.8545751633986928,
+          "eligible_symbols": 30,
+          "supporting_symbols": 30,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.85239651416122,
+          "ret20_median": 0.012628182334134985,
+          "mfe20_median": 0.05109451070602067,
+          "mae20_median": -0.03671195741197558,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|21_PLUS|CLOSE_ABOVE",
+          "n": 603,
+          "p": 0.8524046434494196,
+          "eligible_symbols": 30,
+          "supporting_symbols": 30,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.85239651416122,
+          "ret20_median": 0.012979424778761128,
+          "mfe20_median": 0.05116629044394272,
+          "mae20_median": -0.03592390232448939,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|BLUE|21_PLUS|CLOSE_ABOVE|ABOVE",
+          "n": 603,
+          "p": 0.8524046434494196,
+          "eligible_symbols": 30,
+          "supporting_symbols": 30,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.85239651416122,
+          "ret20_median": 0.012979424778761128,
+          "mfe20_median": 0.05116629044394272,
+          "mae20_median": -0.03592390232448939,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|BLUE|21_PLUS|CLOSE_ABOVE|ABOVE|LG_N",
+          "n": 603,
+          "p": 0.8524046434494196,
+          "eligible_symbols": 30,
+          "supporting_symbols": 30,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.85239651416122,
+          "ret20_median": 0.012979424778761128,
+          "mfe20_median": 0.05116629044394272,
+          "mae20_median": -0.03592390232448939,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "BLUE|21_PLUS",
+          "n": 1313,
+          "p": 0.741051028179741,
+          "eligible_symbols": 30,
+          "supporting_symbols": 30,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7634654471544715,
+          "ret20_median": 0.008257024663732793,
+          "mfe20_median": 0.047653692251727886,
+          "mae20_median": -0.04074784277704435,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GRAY|BLUE|21_PLUS",
+          "n": 1297,
+          "p": 0.7401696222050886,
+          "eligible_symbols": 30,
+          "supporting_symbols": 30,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7634654471544715,
+          "ret20_median": 0.008257024663732793,
+          "mfe20_median": 0.047581133102878814,
+          "mae20_median": -0.04064723701912043,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GREEN|GRAY|21_PLUS|CLOSE_ABOVE",
+          "n": 57,
+          "p": 0.6842105263157895,
+          "eligible_symbols": 8,
+          "supporting_symbols": 8,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.6666666666666666,
+          "ret20_median": 0.031234645890362733,
+          "mfe20_median": 0.04974190520882216,
+          "mae20_median": -0.026385424504704047,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        }
+      ],
+      "light_support": [
+        {
+          "level": "L4",
+          "key": "BLUE|21_PLUS|ABOVE",
+          "n": 440,
+          "p": 1,
+          "eligible_symbols": 30,
+          "supporting_symbols": 30,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.0147448795153452,
+          "mfe20_median": 0.056944495386247906,
+          "mae20_median": -0.03782641184468988,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|21_PLUS|ABOVE",
+          "n": 435,
+          "p": 1,
+          "eligible_symbols": 30,
+          "supporting_symbols": 30,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.014771234601542949,
+          "mfe20_median": 0.05680777153906691,
+          "mae20_median": -0.0367731555964147,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|4_10|ABOVE",
+          "n": 153,
+          "p": 1,
+          "eligible_symbols": 26,
+          "supporting_symbols": 26,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.012472416291953614,
+          "mfe20_median": 0.050420984380460165,
+          "mae20_median": -0.04364406779661023,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|21_PLUS|ABOVE",
+          "n": 129,
+          "p": 1,
+          "eligible_symbols": 21,
+          "supporting_symbols": 21,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.0074944190496439855,
+          "mfe20_median": 0.05056865329233173,
+          "mae20_median": -0.04052018393290269,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|11_20|ABOVE",
+          "n": 122,
+          "p": 1,
+          "eligible_symbols": 18,
+          "supporting_symbols": 18,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.019436736839086866,
+          "mfe20_median": 0.04729661424211706,
+          "mae20_median": -0.03260688877028789,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GREEN|GRAY|4_10|ABOVE",
+          "n": 79,
+          "p": 1,
+          "eligible_symbols": 15,
+          "supporting_symbols": 15,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.0034759795548129357,
+          "mfe20_median": 0.046181505540695555,
+          "mae20_median": -0.043806381410368966,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|1_3|ABOVE",
+          "n": 75,
+          "p": 1,
+          "eligible_symbols": 11,
+          "supporting_symbols": 11,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.017181898126225947,
+          "mfe20_median": 0.055750115327396044,
+          "mae20_median": -0.04187729210030722,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "BLUE|GRAY|11_20|ABOVE",
+          "n": 75,
+          "p": 1,
+          "eligible_symbols": 12,
+          "supporting_symbols": 12,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.007926119837114554,
+          "mfe20_median": 0.04299997286579793,
+          "mae20_median": -0.03415951700031772,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "BLUE|GRAY|4_10|ABOVE",
+          "n": 74,
+          "p": 1,
+          "eligible_symbols": 17,
+          "supporting_symbols": 17,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.01885241638659485,
+          "mfe20_median": 0.05110950467392672,
+          "mae20_median": -0.04326419782381813,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "BLUE|GRAY|21_PLUS|ABOVE",
+          "n": 67,
+          "p": 1,
+          "eligible_symbols": 10,
+          "supporting_symbols": 10,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": -0.002076485297414443,
+          "mfe20_median": 0.048080796053750596,
+          "mae20_median": -0.04105633591634261,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "BLUE|11_20|ABOVE",
+          "n": 63,
+          "p": 1,
+          "eligible_symbols": 9,
+          "supporting_symbols": 9,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.0059880239520957446,
+          "mfe20_median": 0.05747126436781613,
+          "mae20_median": -0.052222586381819425,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|11_20|ABOVE",
+          "n": 63,
+          "p": 1,
+          "eligible_symbols": 9,
+          "supporting_symbols": 9,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.0059880239520957446,
+          "mfe20_median": 0.05747126436781613,
+          "mae20_median": -0.052222586381819425,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GREEN|GRAY|21_PLUS|ABOVE",
+          "n": 62,
+          "p": 1,
+          "eligible_symbols": 9,
+          "supporting_symbols": 9,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.01318837089058067,
+          "mfe20_median": 0.05263967623731425,
+          "mae20_median": -0.03695613394122149,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "BLUE|4_10|ABOVE",
+          "n": 56,
+          "p": 1,
+          "eligible_symbols": 11,
+          "supporting_symbols": 11,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.012634367127614676,
+          "mfe20_median": 0.043848610091199114,
+          "mae20_median": -0.0357071999579297,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|4_10|ABOVE",
+          "n": 56,
+          "p": 1,
+          "eligible_symbols": 11,
+          "supporting_symbols": 11,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.012634367127614676,
+          "mfe20_median": 0.043848610091199114,
+          "mae20_median": -0.0357071999579297,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        }
+      ],
+      "light_resist": [
+        {
+          "level": "L4",
+          "key": "GREEN|21_PLUS|BELOW",
+          "n": 159,
+          "p": 1,
+          "eligible_symbols": 26,
+          "supporting_symbols": 26,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.009503695881731833,
+          "mfe20_median": 0.06361887853232728,
+          "mae20_median": -0.04747802827665282,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|GREEN|21_PLUS|BELOW",
+          "n": 141,
+          "p": 1,
+          "eligible_symbols": 22,
+          "supporting_symbols": 22,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.009503695881731833,
+          "mfe20_median": 0.0642810670136631,
+          "mae20_median": -0.04646338933831162,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|4_10|BELOW",
+          "n": 129,
+          "p": 1,
+          "eligible_symbols": 22,
+          "supporting_symbols": 22,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.014190908828684679,
+          "mfe20_median": 0.056445362955308775,
+          "mae20_median": -0.04176322297858259,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "BLUE|21_PLUS|BELOW",
+          "n": 119,
+          "p": 1,
+          "eligible_symbols": 27,
+          "supporting_symbols": 27,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.023137121469887667,
+          "mfe20_median": 0.061520699323767136,
+          "mae20_median": -0.046090964431689696,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|21_PLUS|BELOW",
+          "n": 118,
+          "p": 1,
+          "eligible_symbols": 27,
+          "supporting_symbols": 27,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.024084490099589795,
+          "mfe20_median": 0.06194773163613254,
+          "mae20_median": -0.04590994170002266,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|21_PLUS|BELOW",
+          "n": 104,
+          "p": 1,
+          "eligible_symbols": 18,
+          "supporting_symbols": 18,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.006483753687523741,
+          "mfe20_median": 0.0471474533594447,
+          "mae20_median": -0.0460663308682247,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|11_20|BELOW",
+          "n": 102,
+          "p": 1,
+          "eligible_symbols": 20,
+          "supporting_symbols": 20,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.012223726569310256,
+          "mfe20_median": 0.05779083090114934,
+          "mae20_median": -0.03956008190999272,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "BLUE|GRAY|4_10|BELOW",
+          "n": 78,
+          "p": 1,
+          "eligible_symbols": 15,
+          "supporting_symbols": 15,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.02592177571418619,
+          "mfe20_median": 0.057976943330237285,
+          "mae20_median": -0.041297351325083664,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|1_3|BELOW",
+          "n": 70,
+          "p": 1,
+          "eligible_symbols": 9,
+          "supporting_symbols": 9,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.016423010024022577,
+          "mfe20_median": 0.058464176032612114,
+          "mae20_median": -0.03907058860008139,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GREEN|4_10|BELOW",
+          "n": 70,
+          "p": 1,
+          "eligible_symbols": 12,
+          "supporting_symbols": 12,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.01882921272882976,
+          "mfe20_median": 0.05648772398719226,
+          "mae20_median": -0.03669478704504053,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GREEN|11_20|BELOW",
+          "n": 68,
+          "p": 1,
+          "eligible_symbols": 12,
+          "supporting_symbols": 12,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.025433251759499398,
+          "mfe20_median": 0.060274736007537744,
+          "mae20_median": -0.04189816896149101,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|GREEN|4_10|BELOW",
+          "n": 68,
+          "p": 1,
+          "eligible_symbols": 12,
+          "supporting_symbols": 12,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.01882921272882976,
+          "mfe20_median": 0.05648772398719226,
+          "mae20_median": -0.03653506248158567,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|GREEN|11_20|BELOW",
+          "n": 63,
+          "p": 1,
+          "eligible_symbols": 10,
+          "supporting_symbols": 10,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.02528322244200676,
+          "mfe20_median": 0.058480506497833984,
+          "mae20_median": -0.045865303440223326,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "BLUE|GRAY|11_20|BELOW",
+          "n": 54,
+          "p": 1,
+          "eligible_symbols": 9,
+          "supporting_symbols": 9,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.013784086007258556,
+          "mfe20_median": 0.06327467032306122,
+          "mae20_median": -0.026977125659946866,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "BLUE|GRAY|21_PLUS|BELOW",
+          "n": 54,
+          "p": 1,
+          "eligible_symbols": 9,
+          "supporting_symbols": 9,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": -0.005486279739237765,
+          "mfe20_median": 0.0411628825237611,
+          "mae20_median": -0.0460663308682247,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        }
+      ]
+    },
+    "crypto": {
+      "lower_clean": [
+        {
+          "level": "L6",
+          "key": "GRAY|BLUE|21_PLUS|CLOSE_BELOW|ABOVE",
+          "n": 26,
+          "p": 0.9615384615384616,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.0537275315705642,
+          "mfe20_median": 0.18097622163740057,
+          "mae20_median": -0.04203905252511969,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|BLUE|21_PLUS|CLOSE_BELOW|ABOVE|LG_N",
+          "n": 24,
+          "p": 0.9583333333333334,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.0537275315705642,
+          "mfe20_median": 0.18097622163740057,
+          "mae20_median": -0.04203905252511969,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|BLUE|21_PLUS|WICK_ONLY|ABOVE|LG_Y",
+          "n": 21,
+          "p": 0.9047619047619048,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": -0.018180919638695392,
+          "mfe20_median": 0.0742084211839924,
+          "mae20_median": -0.113959007949476,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "BLUE|21_PLUS|WICK_ONLY",
+          "n": 87,
+          "p": 0.8275862068965517,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.8570588235294118,
+          "ret20_median": -0.014109104172751907,
+          "mfe20_median": 0.09166743931414367,
+          "mae20_median": -0.0994647601490306,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|21_PLUS|WICK_ONLY",
+          "n": 87,
+          "p": 0.8275862068965517,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.8570588235294118,
+          "ret20_median": -0.014109104172751907,
+          "mfe20_median": 0.09166743931414367,
+          "mae20_median": -0.0994647601490306,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|BLUE|21_PLUS|WICK_ONLY|ABOVE",
+          "n": 76,
+          "p": 0.8157894736842105,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.8523809523809525,
+          "ret20_median": -0.01876471351956227,
+          "mfe20_median": 0.08867399419897903,
+          "mae20_median": -0.11398075221463616,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "BLUE|21_PLUS",
+          "n": 139,
+          "p": 0.8057553956834532,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.8266666666666667,
+          "ret20_median": 0.0035150018392300364,
+          "mfe20_median": 0.11145097218657751,
+          "mae20_median": -0.07877435132640509,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GRAY|BLUE|21_PLUS",
+          "n": 139,
+          "p": 0.8057553956834532,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.8266666666666667,
+          "ret20_median": 0.0035150018392300364,
+          "mfe20_median": 0.11145097218657751,
+          "mae20_median": -0.07877435132640509,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "BLUE|21_PLUS|CLOSE_BELOW",
+          "n": 52,
+          "p": 0.7692307692307693,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7904411764705883,
+          "ret20_median": 0.019450728737028355,
+          "mfe20_median": 0.15488025813175,
+          "mae20_median": -0.07766097037667025,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|21_PLUS|CLOSE_BELOW",
+          "n": 52,
+          "p": 0.7692307692307693,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7904411764705883,
+          "ret20_median": 0.019450728737028355,
+          "mfe20_median": 0.15488025813175,
+          "mae20_median": -0.07766097037667025,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GREEN|GRAY|11_20",
+          "n": 24,
+          "p": 0.5833333333333334,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.5714285714285714,
+          "ret20_median": -0.014641103071358075,
+          "mfe20_median": 0.06793415032198857,
+          "mae20_median": -0.12127953127730051,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|BLUE|21_PLUS|WICK_ONLY|ABOVE|LG_N",
+          "n": 55,
+          "p": 0.7818181818181819,
+          "eligible_symbols": 4,
+          "supporting_symbols": 3,
+          "support_fraction": 0.75,
+          "median_symbol_probability": 0.8444444444444444,
+          "ret20_median": -0.01934850740042915,
+          "mfe20_median": 0.09063587714859622,
+          "mae20_median": -0.11400249647979632,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GREEN|GRAY|21_PLUS|WICK_ONLY",
+          "n": 20,
+          "p": 0.75,
+          "eligible_symbols": 4,
+          "supporting_symbols": 3,
+          "support_fraction": 0.75,
+          "median_symbol_probability": 0.7333333333333334,
+          "ret20_median": -0.1731621340504273,
+          "mfe20_median": 0.025809197680597973,
+          "mae20_median": -0.24199382350353527,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GREEN|GRAY|21_PLUS",
+          "n": 27,
+          "p": 0.7407407407407407,
+          "eligible_symbols": 4,
+          "supporting_symbols": 3,
+          "support_fraction": 0.75,
+          "median_symbol_probability": 0.7166666666666667,
+          "ret20_median": -0.14411867475620221,
+          "mfe20_median": 0.0286621572810124,
+          "mae20_median": -0.1700263233082706,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GREEN|21_PLUS|WICK_ONLY",
+          "n": 34,
+          "p": 0.7352941176470589,
+          "eligible_symbols": 4,
+          "supporting_symbols": 3,
+          "support_fraction": 0.75,
+          "median_symbol_probability": 0.7833333333333333,
+          "ret20_median": 0.043578215121579555,
+          "mfe20_median": 0.1205525299475616,
+          "mae20_median": -0.05522297298500228,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        }
+      ],
+      "lower_deeper": [
+        {
+          "level": "L4",
+          "key": "GREEN|21_PLUS|CLOSE_BELOW",
+          "n": 35,
+          "p": 0.7142857142857143,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.696969696969697,
+          "ret20_median": 0.012386641145226696,
+          "mfe20_median": 0.11571378161330781,
+          "mae20_median": -0.12064486199329116,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|GREEN|21_PLUS|CLOSE_BELOW",
+          "n": 35,
+          "p": 0.7142857142857143,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.696969696969697,
+          "ret20_median": 0.012386641145226696,
+          "mfe20_median": 0.11571378161330781,
+          "mae20_median": -0.12064486199329116,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|GREEN|21_PLUS|CLOSE_BELOW|BELOW",
+          "n": 35,
+          "p": 0.7142857142857143,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.696969696969697,
+          "ret20_median": 0.012386641145226696,
+          "mfe20_median": 0.11571378161330781,
+          "mae20_median": -0.12064486199329116,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|GREEN|21_PLUS|CLOSE_BELOW|BELOW|LG_N",
+          "n": 35,
+          "p": 0.7142857142857143,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.696969696969697,
+          "ret20_median": 0.012386641145226696,
+          "mfe20_median": 0.11571378161330781,
+          "mae20_median": -0.12064486199329116,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "BLUE|GRAY|11_20",
+          "n": 21,
+          "p": 0.5714285714285714,
+          "eligible_symbols": 4,
+          "supporting_symbols": 2,
+          "support_fraction": 0.5,
+          "median_symbol_probability": 0.5833333333333333,
+          "ret20_median": -0.03279313166305475,
+          "mfe20_median": 0.07214721002097413,
+          "mae20_median": -0.15208613728129206,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GREEN|21_PLUS",
+          "n": 69,
+          "p": 0.4782608695652174,
+          "eligible_symbols": 4,
+          "supporting_symbols": 2,
+          "support_fraction": 0.5,
+          "median_symbol_probability": 0.548951048951049,
+          "ret20_median": 0.030823731716298042,
+          "mfe20_median": 0.11571378161330781,
+          "mae20_median": -0.09609640712017375,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GRAY|GREEN|21_PLUS",
+          "n": 69,
+          "p": 0.4782608695652174,
+          "eligible_symbols": 4,
+          "supporting_symbols": 2,
+          "support_fraction": 0.5,
+          "median_symbol_probability": 0.548951048951049,
+          "ret20_median": 0.030823731716298042,
+          "mfe20_median": 0.11571378161330781,
+          "mae20_median": -0.09609640712017375,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GRAY|21_PLUS",
+          "n": 58,
+          "p": 0.39655172413793105,
+          "eligible_symbols": 4,
+          "supporting_symbols": 2,
+          "support_fraction": 0.5,
+          "median_symbol_probability": 0.4358974358974359,
+          "ret20_median": -0.0764638754896046,
+          "mfe20_median": 0.04040619561233405,
+          "mae20_median": -0.16365872403710685,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|11_20|CLOSE_BELOW",
+          "n": 27,
+          "p": 0.5925925925925926,
+          "eligible_symbols": 3,
+          "supporting_symbols": 1,
+          "support_fraction": 0.3333333333333333,
+          "median_symbol_probability": 0.5,
+          "ret20_median": -0.03279313166305475,
+          "mfe20_median": 0.06756756614088744,
+          "mae20_median": -0.16131340389841176,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "BLUE|GRAY|21_PLUS",
+          "n": 31,
+          "p": 0.5161290322580645,
+          "eligible_symbols": 4,
+          "supporting_symbols": 1,
+          "support_fraction": 0.25,
+          "median_symbol_probability": 0.5,
+          "ret20_median": -0.03719886924089277,
+          "mfe20_median": 0.087538368644273,
+          "mae20_median": -0.13558399492477657,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GRAY|11_20",
+          "n": 45,
+          "p": 0.4444444444444444,
+          "eligible_symbols": 4,
+          "supporting_symbols": 1,
+          "support_fraction": 0.25,
+          "median_symbol_probability": 0.4356060606060606,
+          "ret20_median": -0.018373987241351752,
+          "mfe20_median": 0.06919453539944165,
+          "mae20_median": -0.14564541550242738,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GREEN|GRAY|21_PLUS",
+          "n": 27,
+          "p": 0.25925925925925924,
+          "eligible_symbols": 4,
+          "supporting_symbols": 1,
+          "support_fraction": 0.25,
+          "median_symbol_probability": 0.2833333333333333,
+          "ret20_median": -0.14411867475620221,
+          "mfe20_median": 0.0286621572810124,
+          "mae20_median": -0.1700263233082706,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GREEN|GRAY|21_PLUS|WICK_ONLY",
+          "n": 20,
+          "p": 0.25,
+          "eligible_symbols": 4,
+          "supporting_symbols": 1,
+          "support_fraction": 0.25,
+          "median_symbol_probability": 0.26666666666666666,
+          "ret20_median": -0.1731621340504273,
+          "mfe20_median": 0.025809197680597973,
+          "mae20_median": -0.24199382350353527,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GREEN|21_PLUS|WICK_ONLY",
+          "n": 34,
+          "p": 0.23529411764705882,
+          "eligible_symbols": 4,
+          "supporting_symbols": 1,
+          "support_fraction": 0.25,
+          "median_symbol_probability": 0.175,
+          "ret20_median": 0.043578215121579555,
+          "mfe20_median": 0.1205525299475616,
+          "mae20_median": -0.05522297298500228,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|GREEN|21_PLUS|WICK_ONLY",
+          "n": 34,
+          "p": 0.23529411764705882,
+          "eligible_symbols": 4,
+          "supporting_symbols": 1,
+          "support_fraction": 0.25,
+          "median_symbol_probability": 0.175,
+          "ret20_median": 0.043578215121579555,
+          "mfe20_median": 0.1205525299475616,
+          "mae20_median": -0.05522297298500228,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        }
+      ],
+      "upper_revert": [
+        {
+          "level": "L3",
+          "key": "BLUE|GRAY|11_20",
+          "n": 20,
+          "p": 0.75,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7142857142857143,
+          "ret20_median": 0.005599559492100836,
+          "mfe20_median": 0.0401561118467505,
+          "mae20_median": -0.09908960622443125,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|GREEN|21_PLUS|WICK_ONLY|BELOW",
+          "n": 42,
+          "p": 0.7142857142857143,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7,
+          "ret20_median": -0.019239214652757908,
+          "mfe20_median": 0.08775284818829421,
+          "mae20_median": -0.11243098830147064,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|GREEN|21_PLUS|WICK_ONLY|BELOW|LG_N",
+          "n": 39,
+          "p": 0.6923076923076923,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7,
+          "ret20_median": -0.013738202307500669,
+          "mfe20_median": 0.10287408759124084,
+          "mae20_median": -0.12010930928965324,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GREEN|21_PLUS|WICK_ONLY",
+          "n": 45,
+          "p": 0.6888888888888889,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.6833333333333333,
+          "ret20_median": -0.013738202307500669,
+          "mfe20_median": 0.09393435403800354,
+          "mae20_median": -0.10826347305389217,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|GREEN|21_PLUS|WICK_ONLY",
+          "n": 45,
+          "p": 0.6888888888888889,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.6833333333333333,
+          "ret20_median": -0.013738202307500669,
+          "mfe20_median": 0.09393435403800354,
+          "mae20_median": -0.10826347305389217,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GRAY|11_20",
+          "n": 32,
+          "p": 0.625,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.6458333333333333,
+          "ret20_median": 0.0230562128141234,
+          "mfe20_median": 0.052936174333938046,
+          "mae20_median": -0.09908960622443125,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GREEN|21_PLUS",
+          "n": 90,
+          "p": 0.6,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.5993589743589745,
+          "ret20_median": 0.00717550674341455,
+          "mfe20_median": 0.13018818525229892,
+          "mae20_median": -0.098774653488655,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GRAY|GREEN|21_PLUS",
+          "n": 90,
+          "p": 0.6,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.5993589743589745,
+          "ret20_median": 0.00717550674341455,
+          "mfe20_median": 0.13018818525229892,
+          "mae20_median": -0.098774653488655,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|GREEN|21_PLUS|CLOSE_ABOVE|BELOW|LG_N",
+          "n": 36,
+          "p": 0.5555555555555556,
+          "eligible_symbols": 4,
+          "supporting_symbols": 3,
+          "support_fraction": 0.75,
+          "median_symbol_probability": 0.5505050505050505,
+          "ret20_median": 0.03559789142895586,
+          "mfe20_median": 0.16663624392607423,
+          "mae20_median": -0.07884799900948886,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|GREEN|21_PLUS|CLOSE_ABOVE|BELOW",
+          "n": 38,
+          "p": 0.5263157894736842,
+          "eligible_symbols": 4,
+          "supporting_symbols": 2,
+          "support_fraction": 0.5,
+          "median_symbol_probability": 0.5277777777777778,
+          "ret20_median": 0.03559789142895586,
+          "mfe20_median": 0.16663624392607423,
+          "mae20_median": -0.07884799900948886,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GREEN|21_PLUS|CLOSE_ABOVE",
+          "n": 45,
+          "p": 0.5111111111111111,
+          "eligible_symbols": 4,
+          "supporting_symbols": 2,
+          "support_fraction": 0.5,
+          "median_symbol_probability": 0.5277777777777778,
+          "ret20_median": 0.02850331011414564,
+          "mfe20_median": 0.16040839773333482,
+          "mae20_median": -0.0797444658388039,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|GREEN|21_PLUS|CLOSE_ABOVE",
+          "n": 45,
+          "p": 0.5111111111111111,
+          "eligible_symbols": 4,
+          "supporting_symbols": 2,
+          "support_fraction": 0.5,
+          "median_symbol_probability": 0.5277777777777778,
+          "ret20_median": 0.02850331011414564,
+          "mfe20_median": 0.16040839773333482,
+          "mae20_median": -0.0797444658388039,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "BLUE|GRAY|21_PLUS",
+          "n": 22,
+          "p": 0.36363636363636365,
+          "eligible_symbols": 4,
+          "supporting_symbols": 1,
+          "support_fraction": 0.25,
+          "median_symbol_probability": 0.38888888888888884,
+          "ret20_median": 0.0031104545689961682,
+          "mfe20_median": 0.15916425750431695,
+          "mae20_median": -0.0597180040220594,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "BLUE|21_PLUS|WICK_ONLY",
+          "n": 58,
+          "p": 0.3103448275862069,
+          "eligible_symbols": 4,
+          "supporting_symbols": 0,
+          "support_fraction": 0,
+          "median_symbol_probability": 0.3176691729323308,
+          "ret20_median": 0.07416685573184234,
+          "mfe20_median": 0.13927764424021916,
+          "mae20_median": -0.08059899291740436,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|21_PLUS|WICK_ONLY",
+          "n": 58,
+          "p": 0.3103448275862069,
+          "eligible_symbols": 4,
+          "supporting_symbols": 0,
+          "support_fraction": 0,
+          "median_symbol_probability": 0.3176691729323308,
+          "ret20_median": 0.07416685573184234,
+          "mfe20_median": 0.13927764424021916,
+          "mae20_median": -0.08059899291740436,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        }
+      ],
+      "upper_continue": [
+        {
+          "level": "L4",
+          "key": "BLUE|21_PLUS|CLOSE_ABOVE",
+          "n": 84,
+          "p": 0.8928571428571429,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.9090909090909091,
+          "ret20_median": 0.025303727159957434,
+          "mfe20_median": 0.12558959932518843,
+          "mae20_median": -0.09118925455015348,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|21_PLUS|CLOSE_ABOVE",
+          "n": 84,
+          "p": 0.8928571428571429,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.9090909090909091,
+          "ret20_median": 0.025303727159957434,
+          "mfe20_median": 0.12558959932518843,
+          "mae20_median": -0.09118925455015348,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|BLUE|21_PLUS|CLOSE_ABOVE|ABOVE",
+          "n": 84,
+          "p": 0.8928571428571429,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.9090909090909091,
+          "ret20_median": 0.025303727159957434,
+          "mfe20_median": 0.12558959932518843,
+          "mae20_median": -0.09118925455015348,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|BLUE|21_PLUS|CLOSE_ABOVE|ABOVE|LG_N",
+          "n": 84,
+          "p": 0.8928571428571429,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.9090909090909091,
+          "ret20_median": 0.025303727159957434,
+          "mfe20_median": 0.12558959932518843,
+          "mae20_median": -0.09118925455015348,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "BLUE|21_PLUS",
+          "n": 142,
+          "p": 0.7887323943661971,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7863636363636364,
+          "ret20_median": 0.04713899836821067,
+          "mfe20_median": 0.1340533350993145,
+          "mae20_median": -0.08895860711951403,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GRAY|BLUE|21_PLUS",
+          "n": 142,
+          "p": 0.7887323943661971,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7863636363636364,
+          "ret20_median": 0.04713899836821067,
+          "mfe20_median": 0.1340533350993145,
+          "mae20_median": -0.08895860711951403,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|21_PLUS|CLOSE_ABOVE",
+          "n": 32,
+          "p": 0.75,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7211538461538461,
+          "ret20_median": 0.05761793735770926,
+          "mfe20_median": 0.1327239883229988,
+          "mae20_median": -0.0395538501170456,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GRAY|21_PLUS",
+          "n": 41,
+          "p": 0.6829268292682927,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.6583333333333333,
+          "ret20_median": 0.040736039092070575,
+          "mfe20_median": 0.13016978667827606,
+          "mae20_median": -0.052300555273164906,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L7",
+          "key": "GRAY|BLUE|21_PLUS|WICK_ONLY|ABOVE|LG_N",
+          "n": 57,
+          "p": 0.6491228070175439,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.6466165413533835,
+          "ret20_median": 0.07242079058018525,
+          "mfe20_median": 0.13713427167327574,
+          "mae20_median": -0.08010890622545686,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "BLUE|21_PLUS|WICK_ONLY",
+          "n": 58,
+          "p": 0.6379310344827587,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.6466165413533835,
+          "ret20_median": 0.07416685573184234,
+          "mfe20_median": 0.13927764424021916,
+          "mae20_median": -0.08059899291740436,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|21_PLUS|WICK_ONLY",
+          "n": 58,
+          "p": 0.6379310344827587,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.6466165413533835,
+          "ret20_median": 0.07416685573184234,
+          "mfe20_median": 0.13927764424021916,
+          "mae20_median": -0.08059899291740436,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L6",
+          "key": "GRAY|BLUE|21_PLUS|WICK_ONLY|ABOVE",
+          "n": 58,
+          "p": 0.6379310344827587,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.6466165413533835,
+          "ret20_median": 0.07416685573184234,
+          "mfe20_median": 0.13927764424021916,
+          "mae20_median": -0.08059899291740436,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GRAY|4_10",
+          "n": 29,
+          "p": 0.6896551724137931,
+          "eligible_symbols": 4,
+          "supporting_symbols": 3,
+          "support_fraction": 0.75,
+          "median_symbol_probability": 0.6458333333333333,
+          "ret20_median": 0.031644164896990956,
+          "mfe20_median": 0.18781670571568698,
+          "mae20_median": -0.06257872058336089,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "BLUE|GRAY|21_PLUS",
+          "n": 22,
+          "p": 0.6363636363636364,
+          "eligible_symbols": 4,
+          "supporting_symbols": 3,
+          "support_fraction": 0.75,
+          "median_symbol_probability": 0.6111111111111112,
+          "ret20_median": 0.0031104545689961682,
+          "mfe20_median": 0.15916425750431695,
+          "mae20_median": -0.0597180040220594,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "BLUE|11_20",
+          "n": 20,
+          "p": 0.65,
+          "eligible_symbols": 3,
+          "supporting_symbols": 2,
+          "support_fraction": 0.6666666666666666,
+          "median_symbol_probability": 0.625,
+          "ret20_median": -0.008783813648292393,
+          "mfe20_median": 0.08171543154084626,
+          "mae20_median": -0.08443066716027448,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        }
+      ],
+      "light_support": [
+        {
+          "level": "L4",
+          "key": "BLUE|21_PLUS|ABOVE",
+          "n": 72,
+          "p": 1,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": -0.030722172554661142,
+          "mfe20_median": 0.06532779238578923,
+          "mae20_median": -0.12318783245021553,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|BLUE|21_PLUS|ABOVE",
+          "n": 72,
+          "p": 1,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": -0.030722172554661142,
+          "mfe20_median": 0.06532779238578923,
+          "mae20_median": -0.12318783245021553,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|4_10|ABOVE",
+          "n": 24,
+          "p": 1,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": -0.0736609381104904,
+          "mfe20_median": 0.04722390944604471,
+          "mae20_median": -0.14164342082653397,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|11_20|ABOVE",
+          "n": 23,
+          "p": 1,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": -0.06118945367650819,
+          "mfe20_median": 0.052347430433810516,
+          "mae20_median": -0.1403598176446189,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|21_PLUS|ABOVE",
+          "n": 23,
+          "p": 1,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.03134718794718294,
+          "mfe20_median": 0.16009038762384842,
+          "mae20_median": -0.05596752980340647,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "BLUE|GRAY|11_20",
+          "n": 29,
+          "p": 0.8620689655172413,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.8571428571428571,
+          "ret20_median": 0.07616186844622908,
+          "mfe20_median": 0.08539919854695555,
+          "mae20_median": -0.05668060357886329,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "BLUE|GRAY|4_10",
+          "n": 32,
+          "p": 0.8125,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.8461538461538461,
+          "ret20_median": -0.02915112430858169,
+          "mfe20_median": 0.04722390944604471,
+          "mae20_median": -0.07251502179780983,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GRAY|21_PLUS",
+          "n": 40,
+          "p": 0.8,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7774725274725275,
+          "ret20_median": 0.012458197864309462,
+          "mfe20_median": 0.130937657348142,
+          "mae20_median": -0.08447010807399996,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "BLUE|GRAY|21_PLUS",
+          "n": 28,
+          "p": 0.7857142857142857,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7692307692307693,
+          "ret20_median": -0.045776742232498724,
+          "mfe20_median": 0.10804956816983191,
+          "mae20_median": -0.11297669887410378,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GREEN|GRAY|4_10",
+          "n": 23,
+          "p": 0.782608695652174,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.8333333333333333,
+          "ret20_median": -0.08825465444401426,
+          "mfe20_median": 0.06371834433306955,
+          "mae20_median": -0.1597609838994729,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "BLUE|21_PLUS",
+          "n": 122,
+          "p": 0.7786885245901639,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7840909090909092,
+          "ret20_median": -0.0068858812869009856,
+          "mfe20_median": 0.09780366155221232,
+          "mae20_median": -0.11611879055699442,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GRAY|BLUE|21_PLUS",
+          "n": 122,
+          "p": 0.7786885245901639,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7840909090909092,
+          "ret20_median": -0.0068858812869009856,
+          "mfe20_median": 0.09780366155221232,
+          "mae20_median": -0.11611879055699442,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "BLUE|GRAY|4_10|INSIDE",
+          "n": 20,
+          "p": 0.7,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7777777777777778,
+          "ret20_median": -0.02915112430858169,
+          "mfe20_median": 0.06049627263113799,
+          "mae20_median": -0.040924012976613244,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GRAY|1_3",
+          "n": 30,
+          "p": 0.6666666666666666,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.6363636363636364,
+          "ret20_median": -0.009599542469047706,
+          "mfe20_median": 0.06916889440604412,
+          "mae20_median": -0.0785936622386258,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GRAY|4_10",
+          "n": 55,
+          "p": 0.8,
+          "eligible_symbols": 4,
+          "supporting_symbols": 3,
+          "support_fraction": 0.75,
+          "median_symbol_probability": 0.7944444444444444,
+          "ret20_median": -0.060127880075366735,
+          "mfe20_median": 0.0550018282576934,
+          "mae20_median": -0.12352585775359504,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        }
+      ],
+      "light_resist": [
+        {
+          "level": "L4",
+          "key": "GRAY|21_PLUS|BELOW",
+          "n": 36,
+          "p": 1,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": -0.021047692578763155,
+          "mfe20_median": 0.06407208143176413,
+          "mae20_median": -0.07879547897738115,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|11_20|BELOW",
+          "n": 27,
+          "p": 1,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": -0.04336512798015413,
+          "mfe20_median": 0.08675146249960264,
+          "mae20_median": -0.14616792030900583,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|4_10|BELOW",
+          "n": 26,
+          "p": 1,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": -0.022906248682793506,
+          "mfe20_median": 0.06569594657901545,
+          "mae20_median": -0.11867681116991141,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GREEN|21_PLUS|BELOW",
+          "n": 22,
+          "p": 1,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.0030624440547186715,
+          "mfe20_median": 0.11754571756150656,
+          "mae20_median": -0.08221607141568493,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GRAY|GREEN|21_PLUS|BELOW",
+          "n": 22,
+          "p": 1,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.0030624440547186715,
+          "mfe20_median": 0.11754571756150656,
+          "mae20_median": -0.08221607141568493,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L5",
+          "key": "GREEN|GRAY|21_PLUS|BELOW",
+          "n": 21,
+          "p": 1,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": -0.027432399269482488,
+          "mfe20_median": 0.05038165394402028,
+          "mae20_median": -0.07160504719847871,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GREEN|GRAY|21_PLUS",
+          "n": 33,
+          "p": 0.8484848484848485,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.8333333333333334,
+          "ret20_median": -0.02609788297918647,
+          "mfe20_median": 0.08721299980277175,
+          "mae20_median": -0.07160504719847871,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "BLUE|GRAY|11_20",
+          "n": 40,
+          "p": 0.825,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7980769230769231,
+          "ret20_median": -0.05936519102244381,
+          "mfe20_median": 0.08545745517742898,
+          "mae20_median": -0.17496619034093475,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GRAY|11_20",
+          "n": 60,
+          "p": 0.8166666666666667,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.788888888888889,
+          "ret20_median": -0.05107165431178573,
+          "mfe20_median": 0.07423759217175463,
+          "mae20_median": -0.15302975961249748,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GRAY|21_PLUS",
+          "n": 68,
+          "p": 0.8088235294117647,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.8141711229946524,
+          "ret20_median": -0.01166444604759731,
+          "mfe20_median": 0.10496796618877258,
+          "mae20_median": -0.07317537315938294,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "GREEN|GRAY|4_10",
+          "n": 20,
+          "p": 0.8,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 1,
+          "ret20_median": 0.01008636702664012,
+          "mfe20_median": 0.058233912964555046,
+          "mae20_median": -0.11649078655952633,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GRAY|4_10",
+          "n": 48,
+          "p": 0.7708333333333334,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.8035714285714286,
+          "ret20_median": -0.01675392648571411,
+          "mfe20_median": 0.07602245103199678,
+          "mae20_median": -0.11888417985644456,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L4",
+          "key": "GRAY|11_20|INSIDE",
+          "n": 29,
+          "p": 0.7586206896551724,
+          "eligible_symbols": 3,
+          "supporting_symbols": 3,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7272727272727273,
+          "ret20_median": -0.05849651780283982,
+          "mfe20_median": 0.04920978148761512,
+          "mae20_median": -0.17630908021180625,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L3",
+          "key": "BLUE|GRAY|4_10",
+          "n": 28,
+          "p": 0.75,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.7638888888888888,
+          "ret20_median": -0.03473386572716669,
+          "mfe20_median": 0.08595995689782754,
+          "mae20_median": -0.12415314164431834,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        },
+        {
+          "level": "L2",
+          "key": "GREEN|21_PLUS",
+          "n": 51,
+          "p": 0.6666666666666666,
+          "eligible_symbols": 4,
+          "supporting_symbols": 4,
+          "support_fraction": 1,
+          "median_symbol_probability": 0.649671052631579,
+          "ret20_median": 0.024769016630294738,
+          "mfe20_median": 0.14161403722539379,
+          "mae20_median": -0.0821807044474483,
+          "label": "NEW_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+        }
+      ]
+    }
+  }
+}

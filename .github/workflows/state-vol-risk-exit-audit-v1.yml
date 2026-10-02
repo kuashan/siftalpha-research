@@ -1,0 +1,60 @@
+name: State Vol Risk Exit Audit v1
+
+on:
+  push:
+    branches:
+      - research/source-xma-walkforward
+    paths:
+      - "research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/build_state_vol_audit_v1.py"
+      - ".github/workflows/state-vol-risk-exit-audit-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact trigger commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          git init .
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
+          git fetch --depth=1 origin "${SHA}"
+          git checkout --detach FETCH_HEAD
+      - name: Build frozen audit outputs
+        run: python3 research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/build_state_vol_audit_v1.py
+      - name: Verify branch did not drift
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          BRANCH: research/source-xma-walkforward
+          SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          remote_sha="$(git ls-remote "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" "refs/heads/${BRANCH}" | awk '{print $1}')"
+          test "${remote_sha}" = "${SHA}"
+      - name: Commit audit outputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          BRANCH: research/source-xma-walkforward
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/BASELINE_REPRO_AUDIT_v1.md
+          git add research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/STATE_VOL_PER_ASSET_v1.csv
+          git add research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/STATE_VOL_CONFIG_SUMMARY_v1.csv
+          git add research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/STATE_VOL_BOOTSTRAP_v1.csv
+          git add research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/STATE_VOL_PERIOD_DIAGNOSTICS_v1.csv
+          git add research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/STATE_VOL_ADMISSION_v1.json
+          git add research/ssss/source_xma/experiments/state_vol_risk_exit_study_v1/STATE_VOL_RISK_STATISTICAL_AUDIT_v1.md
+          git commit -m "research: compute state volatility risk audit v1"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" HEAD:"refs/heads/${BRANCH}"

@@ -1,0 +1,491 @@
+{
+  "meta": {
+    "date": "2026-10-02",
+    "status": "COMPLETE",
+    "protocol_commit": "6eadd9ca753ffa0a22d06bb17a3159bee0ef6810",
+    "existing_core_preserved": true
+  },
+  "validated_core_v3": {
+    "validated_cross_asset": [
+      {
+        "id": "BUY_BLUE_21P_LOWER",
+        "action": "BUY_CANDIDATE",
+        "stock": {
+          "n": 1049,
+          "p": 0.706,
+          "breadth": "28/28"
+        },
+        "crypto": {
+          "n": 139,
+          "p": 0.806,
+          "breadth": "4/4"
+        }
+      },
+      {
+        "id": "BUY_GRAY_4_10_LIGHT_SUPPORT",
+        "action": "BUY_SUPPORT_CANDIDATE",
+        "stock": {
+          "n": 263,
+          "p": 0.741,
+          "breadth": "25/28"
+        },
+        "crypto": {
+          "n": 55,
+          "p": 0.8,
+          "breadth": "3/4"
+        }
+      },
+      {
+        "id": "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT",
+        "action": "BUY_SUPPORT_CANDIDATE",
+        "stock": {
+          "n": 117,
+          "p": 0.812,
+          "breadth": "21/22"
+        },
+        "crypto": {
+          "n": 27,
+          "p": 0.852,
+          "breadth": "3/3"
+        }
+      },
+      {
+        "id": "CONT_BLUE_11_20_UPPER",
+        "action": "HOLD_NOT_SELL",
+        "stock": {
+          "n": 165,
+          "p": 0.855,
+          "breadth": "26/27"
+        },
+        "crypto": {
+          "n": 20,
+          "p": 0.65,
+          "breadth": "2/3"
+        }
+      },
+      {
+        "id": "SELL_RECENT_BLUE_GRAY_LIGHT_RESIST",
+        "action": "SELL_TRIM_CANDIDATE",
+        "stock": {
+          "n": 160,
+          "p": 0.719,
+          "breadth": "22/23"
+        },
+        "crypto": {
+          "n": 21,
+          "p": 0.857,
+          "breadth": "3/3"
+        }
+      }
+    ],
+    "stock_validated_crypto_insufficient": [
+      {
+        "id": "AVOID_GREEN_11_20_LOWER",
+        "action": "WAIT_FOR_BD",
+        "stock": {
+          "n": 135,
+          "p": 0.704,
+          "breadth": "21/25"
+        },
+        "crypto": {
+          "n": 15,
+          "p": 0.733,
+          "status": "INSUFFICIENT_BREADTH"
+        }
+      },
+      {
+        "id": "CONT_BLUE_4_10_UPPER",
+        "action": "HOLD_NOT_SELL",
+        "stock": {
+          "n": 116,
+          "p": 0.759,
+          "breadth": "19/23"
+        },
+        "crypto": {
+          "n": 13,
+          "p": 0.846,
+          "status": "INSUFFICIENT_BREADTH"
+        }
+      },
+      {
+        "id": "CONT_RECENT_GRAY_BLUE_UPPER",
+        "action": "HOLD_NOT_SELL",
+        "stock": {
+          "n": 106,
+          "p": 0.774,
+          "breadth": "17/20"
+        },
+        "crypto": {
+          "n": 6,
+          "p": 1,
+          "status": "INSUFFICIENT_BREADTH"
+        }
+      }
+    ]
+  },
+  "v4_candidates": {
+    "NEW_BUY_1": {
+      "definition": "BLUE 11-20 + LOWER + WICK_ONLY -> MID before BD",
+      "final_status": "PENDING_MORE_OOS_DATA",
+      "track_A_9_stock": {
+        "status": "MIXED",
+        "n": 28,
+        "hit": 21,
+        "pooled_probability": 0.75,
+        "eligible_symbols": 9,
+        "support_symbols": 5,
+        "opposite_symbols": 0,
+        "support_fraction": 0.5555555555555556,
+        "per_symbol": [
+          {
+            "symbol": "MA",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "CAT",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "BA",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "GE",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "XOM",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "CVX",
+            "n": 2,
+            "p": 0.5
+          },
+          {
+            "symbol": "LIN",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "NEE",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "PLD",
+            "n": 2,
+            "p": 0.5
+          }
+        ]
+      },
+      "track_B_2026_stock": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 5,
+        "hit": 5,
+        "pooled_probability": 1,
+        "eligible_symbols": 0,
+        "support_symbols": 0,
+        "opposite_symbols": 0,
+        "support_fraction": null,
+        "per_symbol": []
+      },
+      "track_B_2026_crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 0,
+        "hit": 0,
+        "pooled_probability": null,
+        "eligible_symbols": 0,
+        "support_symbols": 0,
+        "opposite_symbols": 0,
+        "support_fraction": null,
+        "per_symbol": []
+      }
+    },
+    "NEW_AVOID_BUY_1": {
+      "definition": "GREEN 11-20 + LOWER + CLOSE_BELOW -> BD before MID",
+      "final_status": "PENDING_MORE_OOS_DATA",
+      "track_A_9_stock": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 16,
+        "hit": 15,
+        "pooled_probability": 0.9375,
+        "eligible_symbols": 5,
+        "support_symbols": 4,
+        "opposite_symbols": 0,
+        "support_fraction": 0.8,
+        "per_symbol": [
+          {
+            "symbol": "MA",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "BA",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "XOM",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "CVX",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "NEE",
+            "n": 2,
+            "p": 0.5
+          }
+        ]
+      },
+      "track_B_2026_stock": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 10,
+        "hit": 10,
+        "pooled_probability": 1,
+        "eligible_symbols": 2,
+        "support_symbols": 2,
+        "opposite_symbols": 0,
+        "support_fraction": 1,
+        "per_symbol": [
+          {
+            "symbol": "V",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "MA",
+            "n": 2,
+            "p": 1
+          }
+        ]
+      },
+      "track_B_2026_crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 1,
+        "hit": 1,
+        "pooled_probability": 1,
+        "eligible_symbols": 0,
+        "support_symbols": 0,
+        "opposite_symbols": 0,
+        "support_fraction": null,
+        "per_symbol": []
+      }
+    },
+    "NEW_HOLD_1": {
+      "definition": "BLUE 11-20 + UPPER + CLOSE_ABOVE -> BS before MID",
+      "final_status": "PENDING_MORE_OOS_DATA",
+      "track_A_9_stock": {
+        "status": "SUPPORTS_V3_DISCOVERY",
+        "n": 25,
+        "hit": 23,
+        "pooled_probability": 0.92,
+        "eligible_symbols": 6,
+        "support_symbols": 6,
+        "opposite_symbols": 0,
+        "support_fraction": 1,
+        "per_symbol": [
+          {
+            "symbol": "MA",
+            "n": 8,
+            "p": 1
+          },
+          {
+            "symbol": "CAT",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "BA",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "XOM",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "LIN",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "NEE",
+            "n": 4,
+            "p": 0.75
+          }
+        ]
+      },
+      "track_B_2026_stock": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 11,
+        "hit": 9,
+        "pooled_probability": 0.8181818181818182,
+        "eligible_symbols": 1,
+        "support_symbols": 0,
+        "opposite_symbols": 0,
+        "support_fraction": 0,
+        "per_symbol": [
+          {
+            "symbol": "QCOM",
+            "n": 2,
+            "p": 0.5
+          }
+        ]
+      },
+      "track_B_2026_crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 1,
+        "hit": 1,
+        "pooled_probability": 1,
+        "eligible_symbols": 0,
+        "support_symbols": 0,
+        "opposite_symbols": 0,
+        "support_fraction": null,
+        "per_symbol": []
+      }
+    },
+    "NEW_HOLD_2": {
+      "definition": "BLUE 21+ + UPPER + FULL_ABOVE -> BS before MID",
+      "final_status": "PENDING_MORE_OOS_DATA",
+      "track_A_9_stock": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 13,
+        "hit": 10,
+        "pooled_probability": 0.7692307692307693,
+        "eligible_symbols": 3,
+        "support_symbols": 3,
+        "opposite_symbols": 0,
+        "support_fraction": 1,
+        "per_symbol": [
+          {
+            "symbol": "CAT",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "GE",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "LIN",
+            "n": 3,
+            "p": 0.6666666666666666
+          }
+        ]
+      },
+      "track_B_2026_stock": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 4,
+        "hit": 4,
+        "pooled_probability": 1,
+        "eligible_symbols": 0,
+        "support_symbols": 0,
+        "opposite_symbols": 0,
+        "support_fraction": null,
+        "per_symbol": []
+      },
+      "track_B_2026_crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 0,
+        "hit": 0,
+        "pooled_probability": null,
+        "eligible_symbols": 0,
+        "support_symbols": 0,
+        "opposite_symbols": 0,
+        "support_fraction": null,
+        "per_symbol": []
+      }
+    },
+    "NEW_SELL_1": {
+      "definition": "GREEN 4-10 + UPPER -> MID before BS",
+      "final_status": "PENDING_MORE_OOS_DATA",
+      "track_A_9_stock": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 17,
+        "hit": 10,
+        "pooled_probability": 0.5882352941176471,
+        "eligible_symbols": 5,
+        "support_symbols": 3,
+        "opposite_symbols": 0,
+        "support_fraction": 0.6,
+        "per_symbol": [
+          {
+            "symbol": "MA",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "CAT",
+            "n": 2,
+            "p": 0.5
+          },
+          {
+            "symbol": "BA",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "XOM",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "CVX",
+            "n": 2,
+            "p": 0.5
+          }
+        ]
+      },
+      "track_B_2026_stock": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 10,
+        "hit": 5,
+        "pooled_probability": 0.5,
+        "eligible_symbols": 3,
+        "support_symbols": 0,
+        "opposite_symbols": 0,
+        "support_fraction": 0,
+        "per_symbol": [
+          {
+            "symbol": "AAPL",
+            "n": 2,
+            "p": 0.5
+          },
+          {
+            "symbol": "META",
+            "n": 2,
+            "p": 0.5
+          },
+          {
+            "symbol": "XOM",
+            "n": 2,
+            "p": 0.5
+          }
+        ]
+      },
+      "track_B_2026_crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 0,
+        "hit": 0,
+        "pooled_probability": null,
+        "eligible_symbols": 0,
+        "support_symbols": 0,
+        "opposite_symbols": 0,
+        "support_fraction": null,
+        "per_symbol": []
+      }
+    }
+  }
+}

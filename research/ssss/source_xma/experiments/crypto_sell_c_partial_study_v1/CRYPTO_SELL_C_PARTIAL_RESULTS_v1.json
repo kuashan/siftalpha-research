@@ -1,0 +1,736 @@
+{
+  "study": "crypto_sell_c_partial_v1",
+  "date": "2026-10-01",
+  "baseline_reproduction": "PASS",
+  "results": [
+    {
+      "symbol": "BTC",
+      "configs": [
+        {
+          "config": "C_SELL_25",
+          "sell_frac": 0.25,
+          "start": "2017-08-17",
+          "end": "2026-05-05",
+          "rows": 3184,
+          "return": 1.449348991826505,
+          "close_mdd": -0.48246269172545464,
+          "intra_mdd": -0.5279540452099262,
+          "trades": 63,
+          "win": 0.6349206349206349,
+          "avg_trade": 0.018720886872382384,
+          "median_trade": 0.013154393320001567,
+          "p10": -0.07595067319777889,
+          "p5": -0.1374979158268892,
+          "cvar10": -0.14749722690943257,
+          "worst": -0.25703713076495227,
+          "exposure": 0.5136174303107979,
+          "c_partial_events": 32,
+          "full_exits": 63,
+          "open_at_end": false
+        },
+        {
+          "config": "C_SELL_50",
+          "sell_frac": 0.5,
+          "start": "2017-08-17",
+          "end": "2026-05-05",
+          "rows": 3184,
+          "return": 0.7927381544696472,
+          "close_mdd": -0.45226758989128935,
+          "intra_mdd": -0.5004130825635564,
+          "trades": 63,
+          "win": 0.6190476190476191,
+          "avg_trade": 0.012991601715949553,
+          "median_trade": 0.015331834342431794,
+          "p10": -0.07697825128802827,
+          "p5": -0.136096328233477,
+          "cvar10": -0.1455794095629926,
+          "worst": -0.25703713076495227,
+          "exposure": 0.5136174303107979,
+          "c_partial_events": 32,
+          "full_exits": 63,
+          "open_at_end": false
+        },
+        {
+          "config": "C_SELL_75",
+          "sell_frac": 0.75,
+          "start": "2017-08-17",
+          "end": "2026-05-05",
+          "rows": 3184,
+          "return": 0.2959084557951106,
+          "close_mdd": -0.44369603787306255,
+          "intra_mdd": -0.492594967054229,
+          "trades": 63,
+          "win": 0.6190476190476191,
+          "avg_trade": 0.007262316559516719,
+          "median_trade": 0.013229884040639517,
+          "p10": -0.08522078673660438,
+          "p5": -0.13469474064006484,
+          "cvar10": -0.14491528697943945,
+          "worst": -0.25703713076495227,
+          "exposure": 0.5136174303107979,
+          "c_partial_events": 32,
+          "full_exits": 63,
+          "open_at_end": false
+        },
+        {
+          "config": "C_SELL_100",
+          "sell_frac": 1,
+          "start": "2017-08-17",
+          "end": "2026-05-05",
+          "rows": 3184,
+          "return": 0.07244627437181483,
+          "close_mdd": -0.5272900151222275,
+          "intra_mdd": -0.568841062117097,
+          "trades": 71,
+          "win": 0.6056338028169014,
+          "avg_trade": 0.003599032907302237,
+          "median_trade": 0.014855221714025202,
+          "p10": -0.07820009606443845,
+          "p5": -0.12466505855805615,
+          "cvar10": -0.1367584338397116,
+          "worst": -0.25703713076495227,
+          "exposure": 0.42069849407241267,
+          "c_partial_events": 0,
+          "full_exits": 71,
+          "open_at_end": false
+        }
+      ]
+    },
+    {
+      "symbol": "ETH",
+      "configs": [
+        {
+          "config": "C_SELL_25",
+          "sell_frac": 0.25,
+          "start": "2017-08-17",
+          "end": "2026-04-19",
+          "rows": 3168,
+          "return": 3.806866121822079,
+          "close_mdd": -0.691885893948587,
+          "intra_mdd": -0.7080273371827455,
+          "trades": 65,
+          "win": 0.6,
+          "avg_trade": 0.03708647467560352,
+          "median_trade": 0.0245295695808736,
+          "p10": -0.16758362448486377,
+          "p5": -0.21062467188509565,
+          "cvar10": -0.23444837905453086,
+          "worst": -0.3262036887712121,
+          "exposure": 0.4885668276972625,
+          "c_partial_events": 42,
+          "full_exits": 65,
+          "open_at_end": false
+        },
+        {
+          "config": "C_SELL_50",
+          "sell_frac": 0.5,
+          "start": "2017-08-17",
+          "end": "2026-04-19",
+          "rows": 3168,
+          "return": 2.1083622589715296,
+          "close_mdd": -0.7038165652522883,
+          "intra_mdd": -0.719332985971048,
+          "trades": 65,
+          "win": 0.6461538461538462,
+          "avg_trade": 0.027529395242773126,
+          "median_trade": 0.024529569580873822,
+          "p10": -0.16758362448486375,
+          "p5": -0.21062467188509565,
+          "cvar10": -0.23303482004662326,
+          "worst": -0.32456863261579116,
+          "exposure": 0.4885668276972625,
+          "c_partial_events": 42,
+          "full_exits": 65,
+          "open_at_end": false
+        },
+        {
+          "config": "C_SELL_75",
+          "sell_frac": 0.75,
+          "start": "2017-08-17",
+          "end": "2026-04-19",
+          "rows": 3168,
+          "return": 0.9232897695242195,
+          "close_mdd": -0.7182387585204235,
+          "intra_mdd": -0.7329996311828706,
+          "trades": 65,
+          "win": 0.6461538461538462,
+          "avg_trade": 0.01797231580994271,
+          "median_trade": 0.027682242404586832,
+          "p10": -0.16758362448486375,
+          "p5": -0.21062467188509565,
+          "cvar10": -0.2316212610387156,
+          "worst": -0.32293357646037013,
+          "exposure": 0.4885668276972625,
+          "c_partial_events": 42,
+          "full_exits": 65,
+          "open_at_end": false
+        },
+        {
+          "config": "C_SELL_100",
+          "sell_frac": 1,
+          "start": "2017-08-17",
+          "end": "2026-04-19",
+          "rows": 3168,
+          "return": 0.29392434613592466,
+          "close_mdd": -0.7591147633810964,
+          "intra_mdd": -0.7717342290156299,
+          "trades": 72,
+          "win": 0.6388888888888888,
+          "avg_trade": 0.009718611107604714,
+          "median_trade": 0.024432916866380716,
+          "p10": -0.16033043346936907,
+          "p5": -0.20619652675867256,
+          "cvar10": -0.22200429773711194,
+          "worst": -0.32129852030494943,
+          "exposure": 0.39098228663446055,
+          "c_partial_events": 0,
+          "full_exits": 72,
+          "open_at_end": false
+        }
+      ]
+    },
+    {
+      "symbol": "BNB",
+      "configs": [
+        {
+          "config": "C_SELL_25",
+          "sell_frac": 0.25,
+          "start": "2017-11-06",
+          "end": "2026-04-19",
+          "rows": 3087,
+          "return": 2.6015325895086163,
+          "close_mdd": -0.6193824011138116,
+          "intra_mdd": -0.6554142870999179,
+          "trades": 52,
+          "win": 0.7115384615384616,
+          "avg_trade": 0.03922855197001254,
+          "median_trade": 0.020114835382088803,
+          "p10": -0.1619627832749843,
+          "p5": -0.24014591885086878,
+          "cvar10": -0.23460835512882353,
+          "worst": -0.30137353967866065,
+          "exposure": 0.478505291005291,
+          "c_partial_events": 41,
+          "full_exits": 52,
+          "open_at_end": false
+        },
+        {
+          "config": "C_SELL_50",
+          "sell_frac": 0.5,
+          "start": "2017-11-06",
+          "end": "2026-04-19",
+          "rows": 3087,
+          "return": 2.026202685495433,
+          "close_mdd": -0.5882077782698649,
+          "intra_mdd": -0.6283933729850613,
+          "trades": 52,
+          "win": 0.7307692307692307,
+          "avg_trade": 0.032515558295770026,
+          "median_trade": 0.03506081840276132,
+          "p10": -0.15707800870376665,
+          "p5": -0.22153006341256037,
+          "cvar10": -0.22732600995944277,
+          "worst": -0.2991128127288788,
+          "exposure": 0.478505291005291,
+          "c_partial_events": 41,
+          "full_exits": 52,
+          "open_at_end": false
+        },
+        {
+          "config": "C_SELL_75",
+          "sell_frac": 0.75,
+          "start": "2017-11-06",
+          "end": "2026-04-19",
+          "rows": 3087,
+          "return": 1.4283115272096039,
+          "close_mdd": -0.5524141376275169,
+          "intra_mdd": -0.5973913517134486,
+          "trades": 52,
+          "win": 0.7307692307692307,
+          "avg_trade": 0.025802564621527475,
+          "median_trade": 0.03541112269875901,
+          "p10": -0.15275323584301181,
+          "p5": -0.20656832475005452,
+          "cvar10": -0.22004366479006196,
+          "worst": -0.29685208577909694,
+          "exposure": 0.478505291005291,
+          "c_partial_events": 41,
+          "full_exits": 52,
+          "open_at_end": false
+        },
+        {
+          "config": "C_SELL_100",
+          "sell_frac": 1,
+          "start": "2017-11-06",
+          "end": "2026-04-19",
+          "rows": 3087,
+          "return": 0.9519029149687179,
+          "close_mdd": -0.5942238991870472,
+          "intra_mdd": -0.6361694848790918,
+          "trades": 65,
+          "win": 0.6923076923076923,
+          "avg_trade": 0.016565360887560478,
+          "median_trade": 0.02720753025549083,
+          "p10": -0.14065043023881107,
+          "p5": -0.1625857271196615,
+          "cvar10": -0.20900081381001037,
+          "worst": -0.2945913588293151,
+          "exposure": 0.31183862433862436,
+          "c_partial_events": 0,
+          "full_exits": 65,
+          "open_at_end": false
+        }
+      ]
+    },
+    {
+      "symbol": "SOL",
+      "configs": [
+        {
+          "config": "C_SELL_25",
+          "sell_frac": 0.25,
+          "start": "2020-08-11",
+          "end": "2026-04-19",
+          "rows": 2078,
+          "return": 1.4658475981390775,
+          "close_mdd": -0.7017369724441767,
+          "intra_mdd": -0.7030926591923636,
+          "trades": 39,
+          "win": 0.46153846153846156,
+          "avg_trade": 0.04747892965614199,
+          "median_trade": -0.009704853816808745,
+          "p10": -0.14114145772284808,
+          "p5": -0.19802218396072646,
+          "cvar10": -0.21512259783490253,
+          "worst": -0.3081351481122184,
+          "exposure": 0.4496277915632754,
+          "c_partial_events": 27,
+          "full_exits": 39,
+          "open_at_end": false
+        },
+        {
+          "config": "C_SELL_50",
+          "sell_frac": 0.5,
+          "start": "2020-08-11",
+          "end": "2026-04-19",
+          "rows": 2078,
+          "return": 1.2709383184684535,
+          "close_mdd": -0.674846091961146,
+          "intra_mdd": -0.6763240050899095,
+          "trades": 39,
+          "win": 0.48717948717948717,
+          "avg_trade": 0.03948204237398172,
+          "median_trade": -0.004682765169577885,
+          "p10": -0.1325311572809205,
+          "p5": -0.16112417324725142,
+          "cvar10": -0.20442654037238245,
+          "worst": -0.3081351481122183,
+          "exposure": 0.4496277915632754,
+          "c_partial_events": 27,
+          "full_exits": 39,
+          "open_at_end": false
+        },
+        {
+          "config": "C_SELL_75",
+          "sell_frac": 0.75,
+          "start": "2020-08-11",
+          "end": "2026-04-19",
+          "rows": 2078,
+          "return": 0.9931818258034564,
+          "close_mdd": -0.6463455062884873,
+          "intra_mdd": -0.6479529623466196,
+          "trades": 39,
+          "win": 0.5384615384615384,
+          "avg_trade": 0.03148515509182142,
+          "median_trade": 0.004021498707883042,
+          "p10": -0.11815540822554331,
+          "p5": -0.15375476166368726,
+          "cvar10": -0.19472606079024768,
+          "worst": -0.3081351481122183,
+          "exposure": 0.4496277915632754,
+          "c_partial_events": 27,
+          "full_exits": 39,
+          "open_at_end": false
+        },
+        {
+          "config": "C_SELL_100",
+          "sell_frac": 1,
+          "start": "2020-08-11",
+          "end": "2026-04-19",
+          "rows": 2078,
+          "return": 1.431440078946435,
+          "close_mdd": -0.6322125785885401,
+          "intra_mdd": -0.6591611372641959,
+          "trades": 45,
+          "win": 0.5777777777777777,
+          "avg_trade": 0.030154693962861905,
+          "median_trade": 0.020557357413761634,
+          "p10": -0.11715041292875476,
+          "p5": -0.1529432826432901,
+          "cvar10": -0.1863347655640341,
+          "worst": -0.3081351481122183,
+          "exposure": 0.343424317617866,
+          "c_partial_events": 0,
+          "full_exits": 45,
+          "open_at_end": false
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "config": "C_SELL_25",
+      "sell_frac": 0.25,
+      "mean_return": 2.3308988253240694,
+      "median_return": 2.033690093823847,
+      "mean_intra_mdd": -0.6486220821712383,
+      "mean_p5": -0.19657267263089503,
+      "mean_cvar10": -0.20791913973192236,
+      "mean_exposure": 0.4825793351441567,
+      "total_trades": 219,
+      "return_improve_n": 4,
+      "mdd_improve_n": 2,
+      "mean_return_delta": 1.6434704217183462,
+      "mean_mdd_improvement": 0.010354396147765343,
+      "mean_p5_delta": -0.034975023860974945,
+      "mean_cvar_delta": -0.01939456199420537,
+      "return_bootstrap": {
+        "mean": 1.6434704217183462,
+        "lo": 0.4382130580294565,
+        "hi": 2.978932011128288
+      },
+      "mdd_bootstrap": {
+        "mean": 0.010354396147765343,
+        "lo": -0.03158816207449694,
+        "hi": 0.052296954370027626
+      },
+      "p5_bootstrap": {
+        "mean": -0.034975023860974945,
+        "lo": -0.06137835811561373,
+        "hi": -0.008630501197628065
+      },
+      "cvar_bootstrap": {
+        "mean": -0.01939456199420537,
+        "lo": -0.02719768679484079,
+        "hi": -0.011591437193569948
+      },
+      "positive_uplift_concentration": 0.5343786126697011,
+      "gate": {
+        "mean_return_higher": true,
+        "return_improve_ge_3_of_4": true,
+        "mean_intraday_mdd_no_worse": true,
+        "mean_p5_no_worse": false,
+        "mean_cvar_no_worse": false,
+        "positive_uplift_concentration_le_60pct": true,
+        "era_2021_2023_nonnegative": true,
+        "era_2024_2026_nonnegative": true,
+        "confirmed_wait_nonnegative": true,
+        "pass": false
+      },
+      "deltas": [
+        {
+          "symbol": "BTC",
+          "ret": 1.3769027174546902,
+          "mdd": 0.04088701690717078,
+          "p5": -0.012832857268833042,
+          "cvar": -0.010738793069720975
+        },
+        {
+          "symbol": "ETH",
+          "ret": 3.512941775686154,
+          "mdd": 0.06370689183288447,
+          "p5": -0.004428145126423089,
+          "cvar": -0.01244408131741892
+        },
+        {
+          "symbol": "BNB",
+          "ret": 1.6496296745398984,
+          "mdd": -0.01924480222082614,
+          "p5": -0.07756019173120729,
+          "cvar": -0.025607541318813154
+        },
+        {
+          "symbol": "SOL",
+          "ret": 0.03440751919264251,
+          "mdd": -0.04393152192816774,
+          "p5": -0.04507890131743636,
+          "cvar": -0.028787832270868424
+        }
+      ]
+    },
+    {
+      "config": "C_SELL_50",
+      "sell_frac": 0.5,
+      "mean_return": 1.549560354351266,
+      "median_return": 1.6485705019819432,
+      "mean_intra_mdd": -0.6311158616523938,
+      "mean_p5": -0.18234380919459614,
+      "mean_cvar10": -0.20259169498536028,
+      "mean_exposure": 0.4825793351441567,
+      "total_trades": 219,
+      "return_improve_n": 3,
+      "mdd_improve_n": 3,
+      "mean_return_delta": 0.8621319507455428,
+      "mean_mdd_improvement": 0.027860616666609828,
+      "mean_p5_delta": -0.020746160424676037,
+      "mean_cvar_delta": -0.014067117247643264,
+      "return_bootstrap": {
+        "mean": 0.8621319507455428,
+        "lo": 0.14819862227319264,
+        "hi": 1.540901404651162
+      },
+      "mdd_bootstrap": {
+        "mean": 0.027860616666609828,
+        "lo": -0.004693377965841572,
+        "hi": 0.06041461129906123
+      },
+      "p5_bootstrap": {
+        "mean": -0.020746160424676037,
+        "lo": -0.046253474870664495,
+        "hi": -0.0061789262636725295
+      },
+      "cvar_bootstrap": {
+        "mean": -0.014067117247643264,
+        "lo": -0.01820848547889037,
+        "hi": -0.00992574901639616
+      },
+      "positive_uplift_concentration": 0.5027495289054975,
+      "gate": {
+        "mean_return_higher": true,
+        "return_improve_ge_3_of_4": true,
+        "mean_intraday_mdd_no_worse": true,
+        "mean_p5_no_worse": false,
+        "mean_cvar_no_worse": false,
+        "positive_uplift_concentration_le_60pct": true,
+        "era_2021_2023_nonnegative": true,
+        "era_2024_2026_nonnegative": true,
+        "confirmed_wait_nonnegative": true,
+        "pass": false
+      },
+      "deltas": [
+        {
+          "symbol": "BTC",
+          "ret": 0.7202918800978324,
+          "mdd": 0.06842797955354052,
+          "p5": -0.011431269675420852,
+          "cvar": -0.008820975723281
+        },
+        {
+          "symbol": "ETH",
+          "ret": 1.814437912835605,
+          "mdd": 0.052401243044581935,
+          "p5": -0.004428145126423089,
+          "cvar": -0.01103052230951132
+        },
+        {
+          "symbol": "BNB",
+          "ret": 1.074299770526715,
+          "mdd": 0.007776111894030491,
+          "p5": -0.058944336292898886,
+          "cvar": -0.0183251961494324
+        },
+        {
+          "symbol": "SOL",
+          "ret": -0.16050176047798148,
+          "mdd": -0.017162867825713635,
+          "p5": -0.008180890603961322,
+          "cvar": -0.018091774808348338
+        }
+      ]
+    },
+    {
+      "config": "C_SELL_75",
+      "sell_frac": 0.75,
+      "mean_return": 0.9101728945830976,
+      "median_return": 0.9582357976638379,
+      "mean_intra_mdd": -0.617734728074292,
+      "mean_p5": -0.17641062473472557,
+      "mean_cvar10": -0.19782656839961618,
+      "mean_exposure": 0.4825793351441567,
+      "total_trades": 219,
+      "return_improve_n": 3,
+      "mdd_improve_n": 4,
+      "mean_return_delta": 0.22274449097737448,
+      "mean_mdd_improvement": 0.04124175024471169,
+      "mean_p5_delta": -0.014812975964805492,
+      "mean_cvar_delta": -0.00930199066189917,
+      "return_bootstrap": {
+        "mean": 0.22274449097737448,
+        "lo": -0.20959153679701248,
+        "hi": 0.5528870178145904
+      },
+      "mdd_bootstrap": {
+        "mean": 0.04124175024471169,
+        "lo": 0.01810066447959302,
+        "hi": 0.0668682207553408
+      },
+      "p5_bootstrap": {
+        "mean": -0.014812975964805492,
+        "lo": -0.03409398450440054,
+        "hi": -0.0026198120734101243
+      },
+      "cvar_bootstrap": {
+        "mean": -0.00930199066189917,
+        "lo": -0.010379962041592083,
+        "hi": -0.008274074182970714
+      },
+      "positive_uplift_concentration": 0.4734789914044663,
+      "gate": {
+        "mean_return_higher": true,
+        "return_improve_ge_3_of_4": true,
+        "mean_intraday_mdd_no_worse": true,
+        "mean_p5_no_worse": false,
+        "mean_cvar_no_worse": false,
+        "positive_uplift_concentration_le_60pct": true,
+        "era_2021_2023_nonnegative": true,
+        "era_2024_2026_nonnegative": true,
+        "confirmed_wait_nonnegative": true,
+        "pass": false
+      },
+      "deltas": [
+        {
+          "symbol": "BTC",
+          "ret": 0.22346218142329577,
+          "mdd": 0.07624609506286795,
+          "p5": -0.01002968208200869,
+          "cvar": -0.00815685313972786
+        },
+        {
+          "symbol": "ETH",
+          "ret": 0.6293654233882948,
+          "mdd": 0.03873459783275934,
+          "p5": -0.004428145126423089,
+          "cvar": -0.009616963301603665
+        },
+        {
+          "symbol": "BNB",
+          "ret": 0.47640861224088593,
+          "mdd": 0.03877813316564316,
+          "p5": -0.04398259763039303,
+          "cvar": -0.011042850980051588
+        },
+        {
+          "symbol": "SOL",
+          "ret": -0.4382582531429786,
+          "mdd": 0.011208174917576308,
+          "p5": -0.00081147902039716,
+          "cvar": -0.008391295226213569
+        }
+      ]
+    },
+    {
+      "config": "C_SELL_100",
+      "sell_frac": 1,
+      "mean_return": 0.6874284036057231,
+      "median_return": 0.6229136305523213,
+      "mean_intra_mdd": -0.6589764783190036,
+      "mean_p5": -0.16159764876992005,
+      "mean_cvar10": -0.18852457773771703,
+      "mean_exposure": 0.36673593066584087,
+      "total_trades": 253,
+      "return_improve_n": 0,
+      "mdd_improve_n": 0,
+      "mean_return_delta": 0,
+      "mean_mdd_improvement": 0,
+      "mean_p5_delta": 0,
+      "mean_cvar_delta": 0,
+      "return_bootstrap": {
+        "mean": 0,
+        "lo": 0,
+        "hi": 0
+      },
+      "mdd_bootstrap": {
+        "mean": 0,
+        "lo": 0,
+        "hi": 0
+      },
+      "p5_bootstrap": {
+        "mean": 0,
+        "lo": 0,
+        "hi": 0
+      },
+      "cvar_bootstrap": {
+        "mean": 0,
+        "lo": 0,
+        "hi": 0
+      },
+      "positive_uplift_concentration": null,
+      "gate": {
+        "mean_return_higher": false,
+        "return_improve_ge_3_of_4": false,
+        "mean_intraday_mdd_no_worse": true,
+        "mean_p5_no_worse": true,
+        "mean_cvar_no_worse": true,
+        "positive_uplift_concentration_le_60pct": false,
+        "era_2021_2023_nonnegative": true,
+        "era_2024_2026_nonnegative": true,
+        "confirmed_wait_nonnegative": true,
+        "pass": false
+      },
+      "deltas": [
+        {
+          "symbol": "BTC",
+          "ret": 0,
+          "mdd": 0,
+          "p5": 0,
+          "cvar": 0
+        },
+        {
+          "symbol": "ETH",
+          "ret": 0,
+          "mdd": 0,
+          "p5": 0,
+          "cvar": 0
+        },
+        {
+          "symbol": "BNB",
+          "ret": 0,
+          "mdd": 0,
+          "p5": 0,
+          "cvar": 0
+        },
+        {
+          "symbol": "SOL",
+          "ret": 0,
+          "mdd": 0,
+          "p5": 0,
+          "cvar": 0
+        }
+      ]
+    }
+  ],
+  "eventAudit": {
+    "total": 166,
+    "confirmed_n": 19,
+    "confirmed_wait_mean": 0.06417833826927485,
+    "preconfirm_n": 147,
+    "preconfirm_wait_mean": 0.05176434653035987,
+    "by_era": {
+      "2017-2020": {
+        "n": 51,
+        "wait_mean": 0.07040857526907482,
+        "ret3_mean": 0.009700849261110664,
+        "ret5_mean": 0.03780031757799096,
+        "ret10_mean": 0.06528551932128625
+      },
+      "2021-2023": {
+        "n": 61,
+        "wait_mean": 0.07312196780809066,
+        "ret3_mean": 0.0006693712430131321,
+        "ret5_mean": 0.01823150963059933,
+        "ret10_mean": 0.06575113696944034
+      },
+      "2024-2026": {
+        "n": 54,
+        "wait_mean": 0.014397592445607009,
+        "ret3_mean": -0.0038577299225706486,
+        "ret5_mean": 0.00036584146451476665,
+        "ret10_mean": 0.016449538938060653
+      }
+    }
+  },
+  "decision": {
+    "CRYPTO_SELL_C_FULL": "RETAINED",
+    "CRYPTO_SELL_C_PARTIAL": "REJECTED_NOT_ADMITTED",
+    "passed": []
+  }
+}

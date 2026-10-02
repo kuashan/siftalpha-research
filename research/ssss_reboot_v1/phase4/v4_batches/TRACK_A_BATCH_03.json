@@ -1,0 +1,41 @@
+{
+  "track": "A_CROSS_SYMBOL_OOS",
+  "batch": 3,
+  "symbols": [
+    "PLD"
+  ],
+  "results": [
+    {
+      "symbol": "PLD",
+      "coverage": {
+        "start": "2010-01-04",
+        "end": "2025-12-30",
+        "main_start": "2018-01-02",
+        "eligible_end": "2025-12-01"
+      },
+      "events": [
+        {
+          "symbol": "PLD",
+          "date": "2022-04-19",
+          "id": "NEW_HOLD_1",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "PLD",
+          "date": "2023-02-17",
+          "id": "NEW_BUY_1",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "PLD",
+          "date": "2025-03-10",
+          "id": "NEW_BUY_1",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST"
+        }
+      ]
+    }
+  ]
+}

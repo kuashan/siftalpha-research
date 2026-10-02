@@ -1,0 +1,7 @@
+family_id,family_name,representative,rep_n,rep_mean10_pct,rep_positive10_pct,exact_overlap_with_v2_pct,near3_overlap_with_v2_pct,near5_overlap_with_v2_pct,novel3_n,novel3_mean10_pct,novel3_positive10_pct,v2_plus_family_return_pct,delta_vs_v2_pp,status
+S-F1,趋势先弱、动能仍强,S003,16,-2.82,31.25,43.75,68.75,81.25,5,-1.08,40,272.74,-7.52,INCREMENTAL_BUT_THIN
+S-F2,加速衰减/高位失速,S019,22,-2.09,40.91,22.73,59.09,72.73,9,-0.08,55.56,263.95,-16.31,INCREMENTAL_BUT_THIN
+S-F3,资金先恶化的内部背离,S031,15,-1.97,26.67,100,100,100,0,,,280.26,0,MOSTLY_V2_VARIANT
+S-F4,异动过热/强势末端,S026,15,-2.35,40,66.67,80,86.67,3,2.55,100,278.03,-2.23,MOSTLY_V2_VARIANT
+S-F5,广泛强势后的失败延续,S006,15,-2.07,40,100,100,100,0,,,280.26,0,MOSTLY_V2_VARIANT
+S-F8,多维复合衰减,S037,16,-2.24,31.25,12.5,50,56.25,8,-1,37.5,259.59,-20.67,INCREMENTAL_FAMILY_CANDIDATE_EVENT_LEVEL_ONLY

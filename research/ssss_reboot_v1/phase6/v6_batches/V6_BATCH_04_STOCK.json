@@ -1,0 +1,1725 @@
+{
+  "phase": "V6",
+  "track": "INDEPENDENT_STOCK",
+  "batch": 4,
+  "symbols": [
+    "SCHW",
+    "SPGI",
+    "DE",
+    "HON",
+    "RTX"
+  ],
+  "results": [
+    {
+      "symbol": "SCHW",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31",
+        "raw_bars": 4210
+      },
+      "events": [
+        {
+          "symbol": "SCHW",
+          "date": "2021-03-11",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.017467248908296984,
+          "mfe20": 0.03734377352808327,
+          "mae20": -0.0502936304773377
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2021-04-05",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.040939104915627134,
+          "mfe20": 0.058840792369772466,
+          "mae20": -0.0688187820983126
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2021-05-14",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.016928300341296887,
+          "mfe20": 0.04259385665529014,
+          "mae20": -0.0552901023890785
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2021-06-01",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.019024651661307623,
+          "mfe20": 0.023177920685959252,
+          "mae20": -0.07181136120042875
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2021-08-03",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.08070019284972552,
+          "mfe20": 0.12742916481234245,
+          "mae20": -0.01349948078920038
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2021-11-03",
+          "id": "V6_B",
+          "outcome": "SAME",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.038521540861634396,
+          "mfe20": 0.0015204608184327117,
+          "mae20": -0.08244329773190928
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2021-12-16",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": 0.13875312909762783,
+          "mfe20": 0.13982596257003221,
+          "mae20": -0.05876743354392666
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2021-12-22",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.05712254088646618,
+          "mfe20": 0.13320692107134402,
+          "mae20": -0.007821758710594873
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2022-01-03",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.050139902052238616,
+          "mfe20": 0.11497201492537301,
+          "mae20": -0.009794776119403048
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2022-11-30",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.001453840562151587,
+          "mfe20": 0.005451902108068785,
+          "mae20": -0.07947661739762546
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2023-09-06",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.11772781877466976,
+          "mfe20": 0.04942509009782037,
+          "mae20": -0.12922601681825985
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2024-04-22",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.05925127928898455,
+          "mfe20": 0.0667923511984918,
+          "mae20": -0.010907621869108541
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2024-05-03",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.04826408405754756,
+          "mfe20": 0.045370843695806684,
+          "mae20": -0.0862703960248501
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2024-05-14",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.045543012845465025,
+          "mfe20": 0.031400025950434785,
+          "mae20": -0.09848189957181774
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2024-07-11",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.17481600486813853,
+          "mfe20": 0.008149290006590926,
+          "mae20": -0.19808101082857488
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2025-04-25",
+          "id": "V6_D",
+          "outcome": "BS_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": 0.09331998999249458,
+          "mfe20": 0.1239679759819865,
+          "mae20": -0.008006004503377517
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2025-06-30",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.0731039017974573,
+          "mfe20": 0.09151687856203439,
+          "mae20": -0.014138535729942947
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2025-09-29",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.021158014242955936,
+          "mfe20": 0.004231602848591143,
+          "mae20": -0.0508824440086697
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2026-02-09",
+          "id": "V6_B",
+          "outcome": "SAME",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.13095793302863534,
+          "mfe20": 0.0027049715511613392,
+          "mae20": -0.14858688555172084
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2026-03-23",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.034942287513116455,
+          "mfe20": 0.057292759706190965,
+          "mae20": -0.05561385099685201
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2026-04-17",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.015171218032076328,
+          "mfe20": 0.020372778500216793,
+          "mae20": -0.05060684872128307
+        },
+        {
+          "symbol": "SCHW",
+          "date": "2026-05-18",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": 0.013854313237363414,
+          "mfe20": 0.014179023703864146,
+          "mae20": -0.0912436410866978
+        }
+      ]
+    },
+    {
+      "symbol": "SPGI",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31",
+        "raw_bars": 4210
+      },
+      "events": [
+        {
+          "symbol": "SPGI",
+          "date": "2020-01-02",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.057191177793718184,
+          "mfe20": 0.08231360645886943,
+          "mae20": -0.013712999627364164
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2020-01-28",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.048809130961300795,
+          "mfe20": 0.05267763088490929,
+          "mae20": -0.05493132575387605
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2020-02-12",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.27110553339851196,
+          "mfe20": 0.02998390408424778,
+          "mae20": -0.2967448900503221
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2020-02-14",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.27788071832064376,
+          "mfe20": 0.017194863123584092,
+          "mae20": -0.31841375677554096
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2020-04-07",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": 0.13004765374982363,
+          "mfe20": 0.20444429565518774,
+          "mae20": -0.003241422576835906
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2020-04-21",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": 0.16412820682091112,
+          "mfe20": 0.18732920361186034,
+          "mae20": 0.008120305367497416
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2020-08-26",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.050876792804336546,
+          "mfe20": 0.04242467979638875,
+          "mae20": -0.08056859816992024
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2021-01-07",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.015346206782511862,
+          "mfe20": 0.010301855790400438,
+          "mae20": -0.07770381315006736
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2021-01-07",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.015346206782511862,
+          "mfe20": 0.010301855790400438,
+          "mae20": -0.07770381315006736
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2021-06-11",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.04907139305570718,
+          "mfe20": 0.06998905458673077,
+          "mae20": -0.010981150206387014
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2021-10-18",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.025499056403431197,
+          "mfe20": 0.06321164766485055,
+          "mae20": -0.02672716453113455
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2021-10-22",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.024018271559911764,
+          "mfe20": 0.05700456019400235,
+          "mae20": -0.01505025448573305
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2021-12-13",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.07902101642511694,
+          "mfe20": 0.01117236376261932,
+          "mae20": -0.1055423441714557
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2022-04-12",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.17996024205089778,
+          "mfe20": 0.015529447895947124,
+          "mae20": -0.1878634127529255
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2022-09-13",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.1733190968960472,
+          "mfe20": 0.009172249585187364,
+          "mae20": -0.17783513254497485
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2022-11-21",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": -0.04406775886344916,
+          "mfe20": 0.054746403524322806,
+          "mae20": -0.047982297456436895
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2023-03-31",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": 0.05186065663684225,
+          "mfe20": 0.060214080747234,
+          "mae20": -0.0444063861354661
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2023-04-04",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.010276809745160875,
+          "mfe20": 0.05519470741458887,
+          "mae20": -0.04893045461312384
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2023-06-29",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.009296736953264495,
+          "mfe20": 0.08288701761660344,
+          "mae20": -0.009700933155461278
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2023-12-22",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.0254346767958209,
+          "mfe20": 0.035599320276354485,
+          "mae20": -0.020858224512210644
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2024-03-15",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.03133798482532091,
+          "mfe20": 0.03665950696600073,
+          "mae20": -0.03441263710671982
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2024-03-25",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.012473701290303785,
+          "mfe20": 0.0473857940896909,
+          "mae20": -0.0256403831791715
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2024-05-07",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": 0.018037196604843597,
+          "mfe20": 0.03280759814721135,
+          "mae20": -0.021163850865029143
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2024-10-14",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.03840610682795209,
+          "mfe20": 0.010938012465895541,
+          "mae20": -0.09521911575854214
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2025-01-08",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.046968905513864456,
+          "mfe20": 0.06481672126000126,
+          "mae20": -0.03480820425215159
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2026-03-04",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.04563409633946769,
+          "mfe20": 0.016139192408314962,
+          "mae20": -0.09456783598472285
+        },
+        {
+          "symbol": "SPGI",
+          "date": "2026-08-12",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.0007802974693904563,
+          "mfe20": 0.10929041430650055,
+          "mae20": -0.0006096073979613426
+        }
+      ]
+    },
+    {
+      "symbol": "DE",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31",
+        "raw_bars": 4211
+      },
+      "events": [
+        {
+          "symbol": "DE",
+          "date": "2020-02-25",
+          "id": "V6_A",
+          "outcome": "SUPPORT_BREAK",
+          "primary": "SUPPORT_HOLD",
+          "hit": false,
+          "ret20": -0.24392434707016786,
+          "mfe20": 0.016381699152817175,
+          "mae20": -0.36309627141291756
+        },
+        {
+          "symbol": "DE",
+          "date": "2020-11-05",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.0299568973261215,
+          "mfe20": 0.08068447962467307,
+          "mae20": -0.0002642224166453655
+        },
+        {
+          "symbol": "DE",
+          "date": "2020-12-18",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.11171033942702846,
+          "mfe20": 0.13169559912465445,
+          "mae20": -0.02900635282577213
+        },
+        {
+          "symbol": "DE",
+          "date": "2021-02-04",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.1311475452241584,
+          "mfe20": 0.174734089136809,
+          "mae20": -0.03469453987436677
+        },
+        {
+          "symbol": "DE",
+          "date": "2021-02-19",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.1287273030303031,
+          "mfe20": 0.18915154545454538,
+          "mae20": -0.0060606060606061
+        },
+        {
+          "symbol": "DE",
+          "date": "2021-05-06",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.08532735759534249,
+          "mfe20": 0.026749506296324776,
+          "mae20": -0.10099766612808092
+        },
+        {
+          "symbol": "DE",
+          "date": "2021-10-25",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.01009299160807442,
+          "mfe20": 0.03821731118167393,
+          "mae20": -0.048962321388069885
+        },
+        {
+          "symbol": "DE",
+          "date": "2021-10-28",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": 0.027452043824648387,
+          "mfe20": 0.07131827076584862,
+          "mae20": -0.04074921244640517
+        },
+        {
+          "symbol": "DE",
+          "date": "2021-11-01",
+          "id": "V6_E",
+          "outcome": "RESIST_BREAK",
+          "primary": "RESIST_HOLD",
+          "hit": false,
+          "ret20": -0.03682227177700348,
+          "mfe20": 0.04429271080139374,
+          "mae20": -0.06494770731707311
+        },
+        {
+          "symbol": "DE",
+          "date": "2021-11-09",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": 0.014755060284983523,
+          "mfe20": 0.052921531154267676,
+          "mae20": -0.04049917090582056
+        },
+        {
+          "symbol": "DE",
+          "date": "2022-04-14",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.16041213508872354,
+          "mfe20": 0.022919313108185513,
+          "mae20": -0.18878078992558678
+        },
+        {
+          "symbol": "DE",
+          "date": "2022-05-19",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.11491415720476106,
+          "mfe20": 0.010668668751028454,
+          "mae20": -0.1562722560473918
+        },
+        {
+          "symbol": "DE",
+          "date": "2023-10-17",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.04131726835753735,
+          "mfe20": -0.0018664092861525594,
+          "mae20": -0.082634511147474
+        },
+        {
+          "symbol": "DE",
+          "date": "2024-03-12",
+          "id": "V6_D",
+          "outcome": "BS_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": 0.10551458756244703,
+          "mfe20": 0.11310881827744046,
+          "mae20": 0.0003220179879785956
+        },
+        {
+          "symbol": "DE",
+          "date": "2024-03-13",
+          "id": "V6_E",
+          "outcome": "RESIST_BREAK",
+          "primary": "RESIST_HOLD",
+          "hit": false,
+          "ret20": 0.08971885733881857,
+          "mfe20": 0.09489238234413655,
+          "mae20": -0.005015177378509206
+        },
+        {
+          "symbol": "DE",
+          "date": "2024-06-20",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.009094965009304512,
+          "mfe20": 0.023091237910518148,
+          "mae20": -0.09328231069640647
+        },
+        {
+          "symbol": "DE",
+          "date": "2024-06-24",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.017584736558036385,
+          "mfe20": 0.03218126683287226,
+          "mae20": -0.08522624520119926
+        },
+        {
+          "symbol": "DE",
+          "date": "2024-08-29",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": 0.09475666296273988,
+          "mfe20": 0.09902569014127871,
+          "mae20": -0.008826148215752228
+        },
+        {
+          "symbol": "DE",
+          "date": "2024-11-21",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.011541847338715439,
+          "mfe20": 0.07279334294479733,
+          "mae20": -0.03558533995553903
+        },
+        {
+          "symbol": "DE",
+          "date": "2025-02-18",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.040653142196347414,
+          "mfe20": 0.02689606029188929,
+          "mae20": -0.10748466783635058
+        },
+        {
+          "symbol": "DE",
+          "date": "2025-08-26",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.03858456948940936,
+          "mfe20": 0.014843344783431522,
+          "mae20": -0.05111124218650076
+        },
+        {
+          "symbol": "DE",
+          "date": "2026-04-08",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.02901595173281779,
+          "mfe20": 0.016280410682721458,
+          "mae20": -0.08461891806244815
+        },
+        {
+          "symbol": "DE",
+          "date": "2026-07-28",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.014347429934947864,
+          "mfe20": 0.03260186768870965,
+          "mae20": -0.09460181789501354
+        },
+        {
+          "symbol": "DE",
+          "date": "2026-08-31",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.039074118844151906,
+          "mfe20": 0.10125055814923689,
+          "mae20": -0.0013131301085552716
+        }
+      ]
+    },
+    {
+      "symbol": "HON",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31",
+        "raw_bars": 4210
+      },
+      "events": [
+        {
+          "symbol": "HON",
+          "date": "2020-01-02",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.04187179195550883,
+          "mfe20": 0.01808717653116676,
+          "mae20": -0.05227057746590791
+        },
+        {
+          "symbol": "HON",
+          "date": "2020-06-15",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.010025267039079022,
+          "mfe20": 0.03941901222584887,
+          "mae20": -0.06206093915758659
+        },
+        {
+          "symbol": "HON",
+          "date": "2020-10-16",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.15257921108711603,
+          "mfe20": 0.2009607128444162,
+          "mae20": -0.08829927456265607
+        },
+        {
+          "symbol": "HON",
+          "date": "2020-10-22",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.1462821952915596,
+          "mfe20": 0.18744699874377835,
+          "mae20": -0.09855811385451263
+        },
+        {
+          "symbol": "HON",
+          "date": "2020-11-03",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.16064954561598488,
+          "mfe20": 0.17180959498999115,
+          "mae20": -0.03308963073043458
+        },
+        {
+          "symbol": "HON",
+          "date": "2021-02-24",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": 0.005639016847190481,
+          "mfe20": 0.03776713666141007,
+          "mae20": -0.049850711870037756
+        },
+        {
+          "symbol": "HON",
+          "date": "2021-03-10",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.03264293164714838,
+          "mfe20": 0.03823218085767732,
+          "mae20": -0.023671897382144036
+        },
+        {
+          "symbol": "HON",
+          "date": "2021-03-26",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.013682351354393107,
+          "mfe20": 0.06324080773307994,
+          "mae20": -0.013911078359220896
+        },
+        {
+          "symbol": "HON",
+          "date": "2021-05-10",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.004893032141767173,
+          "mfe20": 0.013336835389895718,
+          "mae20": -0.06131462743848759
+        },
+        {
+          "symbol": "HON",
+          "date": "2021-05-27",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.05417912497851818,
+          "mfe20": 0.011890842570766003,
+          "mae20": -0.08349551656755538
+        },
+        {
+          "symbol": "HON",
+          "date": "2021-10-15",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.007566080548308207,
+          "mfe20": 0.034160877253922584,
+          "mae20": -0.02872417537404559
+        },
+        {
+          "symbol": "HON",
+          "date": "2021-10-15",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": 0.007566080548308207,
+          "mfe20": 0.034160877253922584,
+          "mae20": -0.02872417537404559
+        },
+        {
+          "symbol": "HON",
+          "date": "2022-04-25",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.011677527231615192,
+          "mfe20": 0.07600879907650637,
+          "mae20": -0.034250798017829376
+        },
+        {
+          "symbol": "HON",
+          "date": "2022-05-10",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.0012835828538215743,
+          "mfe20": 0.02710891251993086,
+          "mae20": -0.05072649928829054
+        },
+        {
+          "symbol": "HON",
+          "date": "2022-05-13",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.04707286158043111,
+          "mfe20": 0.03368983253601621,
+          "mae20": -0.057872166856538954
+        },
+        {
+          "symbol": "HON",
+          "date": "2022-05-18",
+          "id": "V6_A",
+          "outcome": "SUPPORT_BREAK",
+          "primary": "SUPPORT_HOLD",
+          "hit": false,
+          "ret20": -0.07216173477080301,
+          "mfe20": 0.02125135826549185,
+          "mae20": -0.07649461195131335
+        },
+        {
+          "symbol": "HON",
+          "date": "2022-05-20",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.048695568251770016,
+          "mfe20": 0.04342562719640286,
+          "mae20": -0.060922258696020526
+        },
+        {
+          "symbol": "HON",
+          "date": "2022-05-24",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.08101709278406033,
+          "mfe20": 0.04227203990718187,
+          "mae20": -0.08970315018738606
+        },
+        {
+          "symbol": "HON",
+          "date": "2022-10-18",
+          "id": "V6_D",
+          "outcome": "BS_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": 0.19763168390742414,
+          "mfe20": 0.20185671451704867,
+          "mae20": -0.0186791553383433
+        },
+        {
+          "symbol": "HON",
+          "date": "2023-02-09",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.02956527064901182,
+          "mfe20": 0.02268848634938392,
+          "mae20": -0.04813767117360024
+        },
+        {
+          "symbol": "HON",
+          "date": "2023-04-26",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.005028772884376309,
+          "mfe20": 0.058983704341501575,
+          "mae20": -0.00005241084029583565
+        },
+        {
+          "symbol": "HON",
+          "date": "2024-07-16",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.09951021205818933,
+          "mfe20": 0.010619275883892998,
+          "mae20": -0.10463673559143838
+        },
+        {
+          "symbol": "HON",
+          "date": "2024-08-30",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": -0.005771735738491213,
+          "mfe20": 0.014140729595040646,
+          "mae20": -0.05074311588813141
+        },
+        {
+          "symbol": "HON",
+          "date": "2024-09-11",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.04734366759687014,
+          "mfe20": 0.048961011421505996,
+          "mae20": -0.01690842671336379
+        },
+        {
+          "symbol": "HON",
+          "date": "2024-12-16",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.05639830874803031,
+          "mfe20": 0.009788129541085544,
+          "mae20": -0.0906779596628483
+        },
+        {
+          "symbol": "HON",
+          "date": "2025-03-10",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.12328128369588054,
+          "mfe20": 0.015620647292375667,
+          "mae20": -0.14231596721151707
+        },
+        {
+          "symbol": "HON",
+          "date": "2025-03-10",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.12328128369588054,
+          "mfe20": 0.015620647292375667,
+          "mae20": -0.14231596721151707
+        },
+        {
+          "symbol": "HON",
+          "date": "2025-04-29",
+          "id": "V6_E",
+          "outcome": "RESIST_BREAK",
+          "primary": "RESIST_HOLD",
+          "hit": false,
+          "ret20": 0.06203601319474772,
+          "mfe20": 0.07754495378361681,
+          "mae20": -0.026951676266034674
+        },
+        {
+          "symbol": "HON",
+          "date": "2025-06-30",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.04792163725681009,
+          "mfe20": 0.03795949939459953,
+          "mae20": -0.049982814788248286
+        },
+        {
+          "symbol": "HON",
+          "date": "2025-08-21",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.037025151633645836,
+          "mfe20": 0.026032514462114964,
+          "mae20": -0.045993973547418965
+        },
+        {
+          "symbol": "HON",
+          "date": "2026-03-02",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.09901626226864157,
+          "mfe20": -0.003104309876351241,
+          "mae20": -0.1137316311728811
+        },
+        {
+          "symbol": "HON",
+          "date": "2026-04-09",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.08468182313548944,
+          "mfe20": 0.0032618910722859162,
+          "mae20": -0.11958823281867514
+        }
+      ]
+    },
+    {
+      "symbol": "RTX",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31",
+        "raw_bars": 4210
+      },
+      "events": [
+        {
+          "symbol": "RTX",
+          "date": "2020-01-02",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.019198116359540163,
+          "mfe20": 0.01560662777141153,
+          "mae20": -0.03323753401813001
+        },
+        {
+          "symbol": "RTX",
+          "date": "2020-01-17",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.020207263644225315,
+          "mfe20": 0.026165807827944976,
+          "mae20": -0.04112690151277132
+        },
+        {
+          "symbol": "RTX",
+          "date": "2020-07-23",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.03374524714828886,
+          "mfe20": 0.04800380228136891,
+          "mae20": -0.11707858048162234
+        },
+        {
+          "symbol": "RTX",
+          "date": "2020-09-08",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.013502109704641274,
+          "mfe20": 0.08033758649789036,
+          "mae20": -0.04911392405063286
+        },
+        {
+          "symbol": "RTX",
+          "date": "2020-10-16",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.07125506072874499,
+          "mfe20": 0.10364372469635641,
+          "mae20": -0.15919028340080965
+        },
+        {
+          "symbol": "RTX",
+          "date": "2020-10-16",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": 0.07125506072874499,
+          "mfe20": 0.10364372469635641,
+          "mae20": -0.15919028340080965
+        },
+        {
+          "symbol": "RTX",
+          "date": "2021-05-14",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.03306939916162088,
+          "mfe20": 0.04774103400093166,
+          "mae20": -0.026781555659059153
+        },
+        {
+          "symbol": "RTX",
+          "date": "2021-07-27",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.03162548175016999,
+          "mfe20": 0.010201768306506542,
+          "mae20": -0.05951031512128768
+        },
+        {
+          "symbol": "RTX",
+          "date": "2021-12-27",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": 0.05947911778507753,
+          "mfe20": 0.0849366494603474,
+          "mae20": -0.005396527451900446
+        },
+        {
+          "symbol": "RTX",
+          "date": "2021-12-30",
+          "id": "V6_D",
+          "outcome": "BS_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": 0.05279720279720279,
+          "mfe20": 0.07785547785547786,
+          "mae20": -0.011655011655011704
+        },
+        {
+          "symbol": "RTX",
+          "date": "2022-02-25",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.04392580513656741,
+          "mfe20": 0.06339176518548717,
+          "mae20": -0.04127598858540571
+        },
+        {
+          "symbol": "RTX",
+          "date": "2022-05-31",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": -0.019133725820016934,
+          "mfe20": 0.058452481076535,
+          "mae20": -0.07895290159798152
+        },
+        {
+          "symbol": "RTX",
+          "date": "2022-06-13",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.0015225666122893333,
+          "mfe20": 0.058401305057096176,
+          "mae20": -0.047199564980968
+        },
+        {
+          "symbol": "RTX",
+          "date": "2023-01-06",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.04704274838961542,
+          "mfe20": 0.003123170017568011,
+          "mae20": -0.0890103455006831
+        },
+        {
+          "symbol": "RTX",
+          "date": "2023-05-18",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": 0.01674815354207837,
+          "mfe20": 0.047331738271091384,
+          "mae20": -0.04348278373036507
+        },
+        {
+          "symbol": "RTX",
+          "date": "2023-06-14",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": -0.007123683667148439,
+          "mfe20": 0.03190171381375184,
+          "mae20": -0.02178401817055542
+        },
+        {
+          "symbol": "RTX",
+          "date": "2024-05-08",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.04079276505676366,
+          "mfe20": 0.045314604579565154,
+          "mae20": -0.0022128150856263185
+        },
+        {
+          "symbol": "RTX",
+          "date": "2024-05-31",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.07661626936276789,
+          "mfe20": 0.0077914850199425345,
+          "mae20": -0.07884240793989428
+        },
+        {
+          "symbol": "RTX",
+          "date": "2024-07-17",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.12058291265834842,
+          "mfe20": 0.1267739784741404,
+          "mae20": -0.022573578436041464
+        },
+        {
+          "symbol": "RTX",
+          "date": "2024-07-23",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.1236543774411738,
+          "mfe20": 0.13356197008669146,
+          "mae20": -0.009050233400018981
+        },
+        {
+          "symbol": "RTX",
+          "date": "2024-10-01",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.01286277031915739,
+          "mfe20": 0.034649087547230284,
+          "mae20": -0.01591767826995738
+        },
+        {
+          "symbol": "RTX",
+          "date": "2024-12-12",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.029470029397586472,
+          "mfe20": 0.029900878158529487,
+          "mae20": -0.01999140835868829
+        },
+        {
+          "symbol": "RTX",
+          "date": "2025-02-27",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.022295357033404795,
+          "mfe20": 0.04328838492185083,
+          "mae20": -0.03493717437940558
+        },
+        {
+          "symbol": "RTX",
+          "date": "2025-07-14",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.036977491961414755,
+          "mfe20": 0.06370572079314041,
+          "mae20": -0.03831725616291537
+        },
+        {
+          "symbol": "RTX",
+          "date": "2025-07-23",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.0006389545249565476,
+          "mfe20": 0.014697296012697425,
+          "mae20": -0.024474469648254282
+        },
+        {
+          "symbol": "RTX",
+          "date": "2025-08-26",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.011342920890961894,
+          "mfe20": 0.021683203504217374,
+          "mae20": -0.0561509647082179
+        },
+        {
+          "symbol": "RTX",
+          "date": "2025-11-10",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.039658208343061,
+          "mfe20": 0.0054180919701618535,
+          "mae20": -0.06864765161507924
+        },
+        {
+          "symbol": "RTX",
+          "date": "2026-01-12",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.006912509315836424,
+          "mfe20": 0.06515341422989862,
+          "mae20": -0.004384884994331428
+        },
+        {
+          "symbol": "RTX",
+          "date": "2026-01-27",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.026331478537360953,
+          "mfe20": 0.027076709062003212,
+          "mae20": -0.0430246422893481
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "V6_A": {
+      "n": 10,
+      "hit": 8,
+      "p": 0.8,
+      "per_symbol": [
+        {
+          "symbol": "SPGI",
+          "n": 3,
+          "p": 1
+        },
+        {
+          "symbol": "DE",
+          "n": 3,
+          "p": 0.6666666666666666
+        },
+        {
+          "symbol": "HON",
+          "n": 2,
+          "p": 0.5
+        },
+        {
+          "symbol": "RTX",
+          "n": 2,
+          "p": 1
+        }
+      ],
+      "ret20_median": -0.006447709702819826,
+      "mfe20_median": 0.04286456465073951,
+      "mae20_median": -0.04424073418112873
+    },
+    "V6_B": {
+      "n": 71,
+      "hit": 57,
+      "p": 0.8028169014084507,
+      "per_symbol": [
+        {
+          "symbol": "SCHW",
+          "n": 16,
+          "p": 0.6875
+        },
+        {
+          "symbol": "SPGI",
+          "n": 12,
+          "p": 0.9166666666666666
+        },
+        {
+          "symbol": "DE",
+          "n": 11,
+          "p": 0.8181818181818182
+        },
+        {
+          "symbol": "HON",
+          "n": 14,
+          "p": 0.7142857142857143
+        },
+        {
+          "symbol": "RTX",
+          "n": 18,
+          "p": 0.8888888888888888
+        }
+      ],
+      "ret20_median": -0.009296736953264495,
+      "mfe20_median": 0.03776713666141007,
+      "mae20_median": -0.0508824440086697
+    },
+    "V6_C": {
+      "n": 23,
+      "hit": 17,
+      "p": 0.7391304347826086,
+      "per_symbol": [
+        {
+          "symbol": "SCHW",
+          "n": 3,
+          "p": 1
+        },
+        {
+          "symbol": "SPGI",
+          "n": 6,
+          "p": 0.6666666666666666
+        },
+        {
+          "symbol": "DE",
+          "n": 2,
+          "p": 0.5
+        },
+        {
+          "symbol": "HON",
+          "n": 8,
+          "p": 0.875
+        },
+        {
+          "symbol": "RTX",
+          "n": 4,
+          "p": 0.5
+        }
+      ],
+      "ret20_median": -0.013502109704641274,
+      "mfe20_median": 0.04342562719640286,
+      "mae20_median": -0.047199564980968
+    },
+    "V6_D": {
+      "n": 13,
+      "hit": 9,
+      "p": 0.6923076923076923,
+      "per_symbol": [
+        {
+          "symbol": "SCHW",
+          "n": 1,
+          "p": 0
+        },
+        {
+          "symbol": "SPGI",
+          "n": 3,
+          "p": 1
+        },
+        {
+          "symbol": "DE",
+          "n": 3,
+          "p": 0.6666666666666666
+        },
+        {
+          "symbol": "HON",
+          "n": 3,
+          "p": 0.6666666666666666
+        },
+        {
+          "symbol": "RTX",
+          "n": 3,
+          "p": 0.6666666666666666
+        }
+      ],
+      "ret20_median": 0.007566080548308207,
+      "mfe20_median": 0.04800380228136891,
+      "mae20_median": -0.07770381315006736
+    },
+    "V6_E": {
+      "n": 17,
+      "hit": 14,
+      "p": 0.8235294117647058,
+      "per_symbol": [
+        {
+          "symbol": "SCHW",
+          "n": 2,
+          "p": 1
+        },
+        {
+          "symbol": "SPGI",
+          "n": 3,
+          "p": 1
+        },
+        {
+          "symbol": "DE",
+          "n": 5,
+          "p": 0.6
+        },
+        {
+          "symbol": "HON",
+          "n": 5,
+          "p": 0.8
+        },
+        {
+          "symbol": "RTX",
+          "n": 2,
+          "p": 1
+        }
+      ],
+      "ret20_median": 0.007566080548308207,
+      "mfe20_median": 0.04429271080139374,
+      "mae20_median": -0.05072649928829054
+    }
+  }
+}

@@ -1,0 +1,1 @@
+binance-sdk-derivatives-trading-usds-futures==17.5.0

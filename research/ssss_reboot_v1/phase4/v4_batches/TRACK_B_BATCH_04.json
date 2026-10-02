@@ -1,0 +1,188 @@
+{
+  "track": "B_FORWARD_2026_OOS",
+  "batch": 4,
+  "symbols": [
+    "JNJ",
+    "TMO",
+    "JPM",
+    "BAC",
+    "GS",
+    "V",
+    "MA",
+    "CAT"
+  ],
+  "results": [
+    {
+      "symbol": "JNJ",
+      "asset_class": "STOCK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-10-01",
+        "main_start": "2026-01-02",
+        "eligible_end": "2026-09-02"
+      },
+      "events": []
+    },
+    {
+      "symbol": "TMO",
+      "asset_class": "STOCK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-10-01",
+        "main_start": "2026-01-02",
+        "eligible_end": "2026-09-02"
+      },
+      "events": []
+    },
+    {
+      "symbol": "JPM",
+      "asset_class": "STOCK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-10-01",
+        "main_start": "2026-01-02",
+        "eligible_end": "2026-09-02"
+      },
+      "events": []
+    },
+    {
+      "symbol": "BAC",
+      "asset_class": "STOCK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-10-01",
+        "main_start": "2026-01-02",
+        "eligible_end": "2026-09-02"
+      },
+      "events": []
+    },
+    {
+      "symbol": "GS",
+      "asset_class": "STOCK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-10-01",
+        "main_start": "2026-01-02",
+        "eligible_end": "2026-09-02"
+      },
+      "events": [
+        {
+          "symbol": "GS",
+          "asset_class": "STOCK",
+          "date": "2026-04-01",
+          "id": "NEW_SELL_1",
+          "outcome": "BS_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "GS",
+          "asset_class": "STOCK",
+          "date": "2026-05-20",
+          "id": "NEW_HOLD_1",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        }
+      ]
+    },
+    {
+      "symbol": "V",
+      "asset_class": "STOCK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-10-01",
+        "main_start": "2026-01-02",
+        "eligible_end": "2026-09-02"
+      },
+      "events": [
+        {
+          "symbol": "V",
+          "asset_class": "STOCK",
+          "date": "2026-02-13",
+          "id": "NEW_AVOID_BUY_1",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "V",
+          "asset_class": "STOCK",
+          "date": "2026-02-23",
+          "id": "NEW_AVOID_BUY_1",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "V",
+          "asset_class": "STOCK",
+          "date": "2026-07-28",
+          "id": "NEW_HOLD_1",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        }
+      ]
+    },
+    {
+      "symbol": "MA",
+      "asset_class": "STOCK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-10-01",
+        "main_start": "2026-01-02",
+        "eligible_end": "2026-09-02"
+      },
+      "events": [
+        {
+          "symbol": "MA",
+          "asset_class": "STOCK",
+          "date": "2026-02-05",
+          "id": "NEW_SELL_1",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "asset_class": "STOCK",
+          "date": "2026-02-13",
+          "id": "NEW_AVOID_BUY_1",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "asset_class": "STOCK",
+          "date": "2026-02-23",
+          "id": "NEW_AVOID_BUY_1",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        }
+      ]
+    },
+    {
+      "symbol": "CAT",
+      "asset_class": "STOCK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-10-01",
+        "main_start": "2026-01-02",
+        "eligible_end": "2026-09-02"
+      },
+      "events": [
+        {
+          "symbol": "CAT",
+          "asset_class": "STOCK",
+          "date": "2026-04-08",
+          "id": "NEW_HOLD_2",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        }
+      ]
+    }
+  ]
+}

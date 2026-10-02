@@ -1,0 +1,181 @@
+{
+  "track": "B_FORWARD_2026_OOS",
+  "batch": 5,
+  "symbols": [
+    "BA",
+    "GE",
+    "XOM",
+    "CVX",
+    "LIN",
+    "NEE",
+    "PLD",
+    "BTC/USD"
+  ],
+  "results": [
+    {
+      "symbol": "BA",
+      "asset_class": "STOCK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-10-01",
+        "main_start": "2026-01-02",
+        "eligible_end": "2026-09-02"
+      },
+      "events": [
+        {
+          "symbol": "BA",
+          "asset_class": "STOCK",
+          "date": "2026-01-30",
+          "id": "NEW_BUY_1",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        }
+      ]
+    },
+    {
+      "symbol": "GE",
+      "asset_class": "STOCK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-10-01",
+        "main_start": "2026-01-02",
+        "eligible_end": "2026-09-02"
+      },
+      "events": [
+        {
+          "symbol": "GE",
+          "asset_class": "STOCK",
+          "date": "2026-01-12",
+          "id": "NEW_HOLD_1",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "GE",
+          "asset_class": "STOCK",
+          "date": "2026-04-08",
+          "id": "NEW_SELL_1",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        }
+      ]
+    },
+    {
+      "symbol": "XOM",
+      "asset_class": "STOCK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-10-01",
+        "main_start": "2026-01-02",
+        "eligible_end": "2026-09-02"
+      },
+      "events": [
+        {
+          "symbol": "XOM",
+          "asset_class": "STOCK",
+          "date": "2026-07-08",
+          "id": "NEW_SELL_1",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "XOM",
+          "asset_class": "STOCK",
+          "date": "2026-07-13",
+          "id": "NEW_SELL_1",
+          "outcome": "BS_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "XOM",
+          "asset_class": "STOCK",
+          "date": "2026-08-28",
+          "id": "NEW_BUY_1",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        }
+      ]
+    },
+    {
+      "symbol": "CVX",
+      "asset_class": "STOCK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-10-01",
+        "main_start": "2026-01-02",
+        "eligible_end": "2026-09-02"
+      },
+      "events": [
+        {
+          "symbol": "CVX",
+          "asset_class": "STOCK",
+          "date": "2026-07-13",
+          "id": "NEW_SELL_1",
+          "outcome": "BS_FIRST",
+          "primary": "MID_FIRST"
+        }
+      ]
+    },
+    {
+      "symbol": "LIN",
+      "asset_class": "STOCK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-10-01",
+        "main_start": "2026-01-02",
+        "eligible_end": "2026-09-02"
+      },
+      "events": []
+    },
+    {
+      "symbol": "NEE",
+      "asset_class": "STOCK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-10-01",
+        "main_start": "2026-01-02",
+        "eligible_end": "2026-09-02"
+      },
+      "events": [
+        {
+          "symbol": "NEE",
+          "asset_class": "STOCK",
+          "date": "2026-02-23",
+          "id": "NEW_HOLD_1",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        }
+      ]
+    },
+    {
+      "symbol": "PLD",
+      "asset_class": "STOCK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-10-01",
+        "main_start": "2026-01-02",
+        "eligible_end": "2026-09-02"
+      },
+      "events": []
+    },
+    {
+      "symbol": "BTC/USD",
+      "asset_class": "CRYPTO",
+      "error": null,
+      "coverage": {
+        "returned_start": "2017-08-28",
+        "returned_end": "2026-10-02",
+        "main_start": "2026-01-01",
+        "eligible_end": "2026-09-12"
+      },
+      "events": []
+    }
+  ]
+}

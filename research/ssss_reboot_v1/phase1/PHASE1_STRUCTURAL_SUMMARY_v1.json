@@ -1,0 +1,208 @@
+{
+  "schema": 1,
+  "phase": "SSSS_REBOOT_PHASE1_STRUCTURAL_INVENTORY",
+  "representation": "FIRST_OBSERVED",
+  "data_provider": "Twelve Data",
+  "universe": [
+    "ABT",
+    "CRSP",
+    "PG",
+    "WMT",
+    "AAPL",
+    "ARM"
+  ],
+  "target_window": "2020-01-02..2026-10-01 where available",
+  "pooled": {
+    "ready_bars": 9226,
+    "state_counts": {
+      "UP": 4298,
+      "DOWN": 2404,
+      "RANGE": 2503,
+      "EXPANSION": 21
+    },
+    "state_proportions": {
+      "UP": 0.4658573596358118,
+      "DOWN": 0.26056796011272493,
+      "RANGE": 0.27129850422718405,
+      "EXPANSION": 0.002276176024279211
+    },
+    "state_run_counts": {
+      "UP": 72,
+      "DOWN": 65,
+      "RANGE": 132,
+      "EXPANSION": 3
+    },
+    "transition_counts": {
+      "UP->RANGE": 69,
+      "RANGE->DOWN": 62,
+      "DOWN->RANGE": 62,
+      "RANGE->UP": 66,
+      "UP->DOWN": 1,
+      "DOWN->EXPANSION": 2,
+      "EXPANSION->DOWN": 2,
+      "EXPANSION->UP": 1,
+      "UP->EXPANSION": 1
+    },
+    "primitive_counts": {
+      "LOWER_TOUCH": 1319,
+      "UPPER_TOUCH": 1637,
+      "LOWER_CROSS": 482,
+      "UPPER_CROSS": 540,
+      "MID_CROSS_UP": 570,
+      "MID_CROSS_DOWN": 577,
+      "CLOSE_BELOW_LOWER": 1525,
+      "CLOSE_ABOVE_UPPER": 2234,
+      "FULL_BELOW_LOWER": 879,
+      "FULL_ABOVE_UPPER": 1366,
+      "BD_TOUCH": 596,
+      "BS_TOUCH": 864,
+      "CLOSE_BELOW_BD": 692,
+      "CLOSE_ABOVE_BS": 1977,
+      "FULL_BELOW_BD": 416,
+      "FULL_ABOVE_BS": 1540
+    },
+    "source_display_counts": {
+      "SSSS_MONEY_BAG": 482,
+      "SSSS_PERSON": 538,
+      "ADKBY_DUO": 341,
+      "ADKBY_KONG": 301,
+      "ADKBY_PING": 378,
+      "ADKBY_WARNING": 443,
+      "ADKBY_STAR": 461
+    },
+    "momentum_counts": {
+      "UP": 4028,
+      "DOWN": 4008,
+      "CONFLICT": 1190,
+      "SSSS_BOTH_TRUE": 1190
+    }
+  },
+  "per_symbol": {
+    "ABT": {
+      "ready_bars": 1696,
+      "state_counts": {
+        "UP": 766,
+        "DOWN": 581,
+        "RANGE": 349,
+        "EXPANSION": 0
+      },
+      "run_median": {
+        "UP": 49,
+        "DOWN": 27.5,
+        "RANGE": 11
+      },
+      "run_max": {
+        "UP": 118,
+        "DOWN": 125,
+        "RANGE": 62
+      }
+    },
+    "CRSP": {
+      "ready_bars": 1696,
+      "state_counts": {
+        "UP": 489,
+        "DOWN": 662,
+        "RANGE": 545,
+        "EXPANSION": 0
+      },
+      "run_median": {
+        "UP": 35,
+        "DOWN": 35,
+        "RANGE": 15.5
+      },
+      "run_max": {
+        "UP": 96,
+        "DOWN": 172,
+        "RANGE": 58
+      }
+    },
+    "PG": {
+      "ready_bars": 1696,
+      "state_counts": {
+        "UP": 667,
+        "DOWN": 484,
+        "RANGE": 545,
+        "EXPANSION": 0
+      },
+      "run_median": {
+        "UP": 34.5,
+        "DOWN": 34,
+        "RANGE": 14
+      },
+      "run_max": {
+        "UP": 179,
+        "DOWN": 84,
+        "RANGE": 76
+      }
+    },
+    "WMT": {
+      "ready_bars": 1696,
+      "state_counts": {
+        "UP": 974,
+        "DOWN": 279,
+        "RANGE": 425,
+        "EXPANSION": 18
+      },
+      "run_median": {
+        "UP": 43,
+        "DOWN": 19,
+        "RANGE": 12,
+        "EXPANSION": 9
+      },
+      "run_max": {
+        "UP": 286,
+        "DOWN": 78,
+        "RANGE": 81,
+        "EXPANSION": 17
+      }
+    },
+    "AAPL": {
+      "ready_bars": 1696,
+      "state_counts": {
+        "UP": 1055,
+        "DOWN": 292,
+        "RANGE": 346,
+        "EXPANSION": 3
+      },
+      "run_median": {
+        "UP": 49,
+        "DOWN": 30,
+        "RANGE": 13.5,
+        "EXPANSION": 3
+      },
+      "run_max": {
+        "UP": 206,
+        "DOWN": 76,
+        "RANGE": 34,
+        "EXPANSION": 3
+      }
+    },
+    "ARM": {
+      "ready_bars": 746,
+      "state_counts": {
+        "UP": 347,
+        "DOWN": 106,
+        "RANGE": 293,
+        "EXPANSION": 0
+      },
+      "run_median": {
+        "UP": 43,
+        "DOWN": 53,
+        "RANGE": 28.5
+      },
+      "run_max": {
+        "UP": 104,
+        "DOWN": 61,
+        "RANGE": 54
+      }
+    }
+  },
+  "reconciliation": {
+    "state_count_sum": 9226,
+    "state_run_sum": 272,
+    "transition_count_sum": 266,
+    "expected_transition_count": 266,
+    "source_icon_count_sum": 1020,
+    "adkby_action_text_count_sum": 1020
+  }
+}

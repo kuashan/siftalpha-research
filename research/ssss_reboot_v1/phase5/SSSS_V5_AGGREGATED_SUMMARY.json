@@ -1,0 +1,2959 @@
+{
+  "meta": {
+    "date": "2026-10-02",
+    "status": "BATCHES_COMPLETE_AGGREGATED",
+    "protocol_commit": "56c6b3d7b454ba8bdd5e0b4db54158032b26b888",
+    "window": "2020-01-02..2026-09-30",
+    "stock_count": 20,
+    "crypto_count": 4,
+    "xma_modified": false,
+    "representation": "FIRST_OBSERVED"
+  },
+  "coverage": [
+    {
+      "symbol": "IBM",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 257
+    },
+    {
+      "symbol": "CSCO",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 263
+    },
+    {
+      "symbol": "CRM",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 239
+    },
+    {
+      "symbol": "ADBE",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 261
+    },
+    {
+      "symbol": "TXN",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 314
+    },
+    {
+      "symbol": "DIS",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 280
+    },
+    {
+      "symbol": "NKE",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 261
+    },
+    {
+      "symbol": "SBUX",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 289
+    },
+    {
+      "symbol": "TGT",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 260
+    },
+    {
+      "symbol": "LOW",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 284
+    },
+    {
+      "symbol": "MRK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 307
+    },
+    {
+      "symbol": "PFE",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 275
+    },
+    {
+      "symbol": "ABBV",
+      "error": null,
+      "coverage": {
+        "returned_start": "2013-01-02",
+        "returned_end": "2026-09-29",
+        "raw_bars": 3456,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 290
+    },
+    {
+      "symbol": "AMGN",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 286
+    },
+    {
+      "symbol": "GILD",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 295
+    },
+    {
+      "symbol": "C",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 276
+    },
+    {
+      "symbol": "MS",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 262
+    },
+    {
+      "symbol": "BLK",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 272
+    },
+    {
+      "symbol": "COP",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 319
+    },
+    {
+      "symbol": "UPS",
+      "error": null,
+      "coverage": {
+        "returned_start": "2010-01-04",
+        "returned_end": "2026-09-29",
+        "raw_bars": 4210,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-08-31"
+      },
+      "event_count": 292
+    },
+    {
+      "symbol": "BTC/USD",
+      "error": null,
+      "coverage": {
+        "returned_start": "2017-08-28",
+        "returned_end": "2026-09-30",
+        "raw_bars": 3321,
+        "pre2020_bars": 857,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-09-10"
+      },
+      "event_count": 345
+    },
+    {
+      "symbol": "ETH/USD",
+      "error": null,
+      "coverage": {
+        "returned_start": "2018-01-17",
+        "returned_end": "2026-09-30",
+        "raw_bars": 3174,
+        "pre2020_bars": 715,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-09-10"
+      },
+      "event_count": 352
+    },
+    {
+      "symbol": "BNB/USD",
+      "error": null,
+      "coverage": {
+        "returned_start": "2017-11-08",
+        "returned_end": "2026-09-30",
+        "raw_bars": 3249,
+        "pre2020_bars": 785,
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-09-10"
+      },
+      "event_count": 371
+    },
+    {
+      "symbol": "SOL/USD",
+      "error": null,
+      "coverage": {
+        "returned_start": "2020-08-11",
+        "returned_end": "2026-09-30",
+        "raw_bars": 2242,
+        "pre2020_bars": 0,
+        "main_start": "2021-02-07",
+        "eligible_end": "2026-09-10"
+      },
+      "event_count": 296
+    }
+  ],
+  "event_counts": {
+    "stock": {
+      "LOWER": 1524,
+      "UPPER": 1642,
+      "LIGHT_SUPPORT": 1248,
+      "LIGHT_RESIST": 1168
+    },
+    "crypto": {
+      "LOWER": 375,
+      "UPPER": 384,
+      "LIGHT_SUPPORT": 318,
+      "LIGHT_RESIST": 287
+    }
+  },
+  "evaluation": {
+    "BUY_BLUE_21P_LOWER": {
+      "group": "V3_VALIDATED",
+      "primary": "MID_FIRST",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 515,
+        "hit": 360,
+        "pooled_probability": 0.6990291262135923,
+        "eligible_symbols": 20,
+        "support_symbols": 19,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.95,
+        "median_symbol_probability": 0.6819852941176471,
+        "ret20_median": 0.008538163001293508,
+        "mfe20_median": 0.05002656639555325,
+        "mae20_median": -0.046844586623943196,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 31,
+            "p": 0.5806451612903226
+          },
+          {
+            "symbol": "CSCO",
+            "n": 29,
+            "p": 0.896551724137931
+          },
+          {
+            "symbol": "CRM",
+            "n": 17,
+            "p": 0.6470588235294118
+          },
+          {
+            "symbol": "ADBE",
+            "n": 22,
+            "p": 0.6363636363636364
+          },
+          {
+            "symbol": "TXN",
+            "n": 32,
+            "p": 0.875
+          },
+          {
+            "symbol": "DIS",
+            "n": 21,
+            "p": 0.8095238095238095
+          },
+          {
+            "symbol": "NKE",
+            "n": 21,
+            "p": 0.42857142857142855
+          },
+          {
+            "symbol": "SBUX",
+            "n": 20,
+            "p": 0.7
+          },
+          {
+            "symbol": "TGT",
+            "n": 25,
+            "p": 0.64
+          },
+          {
+            "symbol": "LOW",
+            "n": 25,
+            "p": 0.6
+          },
+          {
+            "symbol": "MRK",
+            "n": 34,
+            "p": 0.6764705882352942
+          },
+          {
+            "symbol": "PFE",
+            "n": 17,
+            "p": 0.6470588235294118
+          },
+          {
+            "symbol": "ABBV",
+            "n": 32,
+            "p": 0.6875
+          },
+          {
+            "symbol": "AMGN",
+            "n": 21,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "GILD",
+            "n": 23,
+            "p": 0.782608695652174
+          },
+          {
+            "symbol": "C",
+            "n": 31,
+            "p": 0.7096774193548387
+          },
+          {
+            "symbol": "MS",
+            "n": 42,
+            "p": 0.7619047619047619
+          },
+          {
+            "symbol": "BLK",
+            "n": 27,
+            "p": 0.6296296296296297
+          },
+          {
+            "symbol": "COP",
+            "n": 31,
+            "p": 0.7096774193548387
+          },
+          {
+            "symbol": "UPS",
+            "n": 14,
+            "p": 0.7857142857142857
+          }
+        ]
+      },
+      "crypto": {
+        "status": "STRONG_REPEAT",
+        "n": 124,
+        "hit": 102,
+        "pooled_probability": 0.8225806451612904,
+        "eligible_symbols": 4,
+        "support_symbols": 4,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.8363844393592678,
+        "ret20_median": -0.003131765189470559,
+        "mfe20_median": 0.1059214502365513,
+        "mae20_median": -0.07848560272827304,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 46,
+            "p": 0.8043478260869565
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 38,
+            "p": 0.868421052631579
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 22,
+            "p": 0.6818181818181818
+          },
+          {
+            "symbol": "SOL/USD",
+            "n": 18,
+            "p": 0.9444444444444444
+          }
+        ]
+      },
+      "optimization": "KEEP_STRONG_CROSS_ASSET"
+    },
+    "BUY_GRAY_4_10_LIGHT_SUPPORT": {
+      "group": "V3_VALIDATED",
+      "primary": "SUPPORT_HOLD",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 167,
+        "hit": 126,
+        "pooled_probability": 0.7544910179640718,
+        "eligible_symbols": 19,
+        "support_symbols": 19,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.7272727272727273,
+        "ret20_median": -0.004199332585499871,
+        "mfe20_median": 0.046697792323267207,
+        "mae20_median": -0.05166665625,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "CSCO",
+            "n": 9,
+            "p": 0.5555555555555556
+          },
+          {
+            "symbol": "CRM",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "TXN",
+            "n": 10,
+            "p": 0.6
+          },
+          {
+            "symbol": "DIS",
+            "n": 10,
+            "p": 0.8
+          },
+          {
+            "symbol": "NKE",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "SBUX",
+            "n": 9,
+            "p": 1
+          },
+          {
+            "symbol": "TGT",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "LOW",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "MRK",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "PFE",
+            "n": 7,
+            "p": 0.5714285714285714
+          },
+          {
+            "symbol": "ABBV",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "AMGN",
+            "n": 18,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "GILD",
+            "n": 11,
+            "p": 0.8181818181818182
+          },
+          {
+            "symbol": "C",
+            "n": 11,
+            "p": 0.7272727272727273
+          },
+          {
+            "symbol": "MS",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "BLK",
+            "n": 13,
+            "p": 0.9230769230769231
+          },
+          {
+            "symbol": "COP",
+            "n": 15,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "UPS",
+            "n": 10,
+            "p": 0.7
+          }
+        ]
+      },
+      "crypto": {
+        "status": "STRONG_REPEAT",
+        "n": 53,
+        "hit": 43,
+        "pooled_probability": 0.8113207547169812,
+        "eligible_symbols": 4,
+        "support_symbols": 4,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.787719298245614,
+        "ret20_median": -0.060127880075366735,
+        "mfe20_median": 0.0550018282576934,
+        "mae20_median": -0.11366863532039417,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 15,
+            "p": 0.7333333333333333
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 19,
+            "p": 0.8421052631578947
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 14,
+            "p": 0.9285714285714286
+          },
+          {
+            "symbol": "SOL/USD",
+            "n": 5,
+            "p": 0.6
+          }
+        ]
+      },
+      "optimization": "KEEP_STRONG_CROSS_ASSET"
+    },
+    "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT": {
+      "group": "V3_VALIDATED",
+      "primary": "SUPPORT_HOLD",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 57,
+        "hit": 43,
+        "pooled_probability": 0.7543859649122807,
+        "eligible_symbols": 7,
+        "support_symbols": 6,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.8571428571428571,
+        "median_symbol_probability": 0.6666666666666666,
+        "ret20_median": -0.008656275029265026,
+        "mfe20_median": 0.04328165374677018,
+        "mae20_median": -0.045834433007829745,
+        "per_symbol": [
+          {
+            "symbol": "CSCO",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "TXN",
+            "n": 4,
+            "p": 0.25
+          },
+          {
+            "symbol": "NKE",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "SBUX",
+            "n": 8,
+            "p": 1
+          },
+          {
+            "symbol": "ABBV",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "AMGN",
+            "n": 7,
+            "p": 1
+          },
+          {
+            "symbol": "GILD",
+            "n": 7,
+            "p": 1
+          }
+        ]
+      },
+      "crypto": {
+        "status": "STRONG_REPEAT",
+        "n": 28,
+        "hit": 24,
+        "pooled_probability": 0.8571428571428571,
+        "eligible_symbols": 3,
+        "support_symbols": 3,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.9090909090909091,
+        "ret20_median": -0.016434382449946938,
+        "mfe20_median": 0.06631298968387533,
+        "mae20_median": -0.04846553685200167,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 8,
+            "p": 1
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 11,
+            "p": 0.9090909090909091
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 7,
+            "p": 0.8571428571428571
+          }
+        ]
+      },
+      "optimization": "KEEP_STRONG_CROSS_ASSET"
+    },
+    "CONT_BLUE_11_20_UPPER": {
+      "group": "V3_VALIDATED",
+      "primary": "BS_FIRST",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 86,
+        "hit": 72,
+        "pooled_probability": 0.8372093023255814,
+        "eligible_symbols": 17,
+        "support_symbols": 16,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.9411764705882353,
+        "median_symbol_probability": 0.8888888888888888,
+        "ret20_median": 0.0009431935314117013,
+        "mfe20_median": 0.05057175247212242,
+        "mae20_median": -0.047428198321772586,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "CSCO",
+            "n": 9,
+            "p": 0.8888888888888888
+          },
+          {
+            "symbol": "CRM",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "ADBE",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "TXN",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "NKE",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "SBUX",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "LOW",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "MRK",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "PFE",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "ABBV",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "GILD",
+            "n": 3,
+            "p": 0
+          },
+          {
+            "symbol": "C",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "MS",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "BLK",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "COP",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "UPS",
+            "n": 6,
+            "p": 0.8333333333333334
+          }
+        ]
+      },
+      "crypto": {
+        "status": "STRONG_REPEAT",
+        "n": 20,
+        "hit": 14,
+        "pooled_probability": 0.7,
+        "eligible_symbols": 3,
+        "support_symbols": 3,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.6,
+        "ret20_median": 0.0028267381394748714,
+        "mfe20_median": 0.09285567665513506,
+        "mae20_median": -0.07842563630924193,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 7,
+            "p": 0.5714285714285714
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 6,
+            "p": 0.8333333333333334
+          }
+        ]
+      },
+      "optimization": "KEEP_STRONG_CROSS_ASSET"
+    },
+    "SELL_RECENT_BLUE_GRAY_LIGHT_RESIST": {
+      "group": "V3_VALIDATED",
+      "primary": "RESIST_HOLD",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 100,
+        "hit": 76,
+        "pooled_probability": 0.76,
+        "eligible_symbols": 17,
+        "support_symbols": 16,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.9411764705882353,
+        "median_symbol_probability": 0.7,
+        "ret20_median": -0.004109586356679906,
+        "mfe20_median": 0.051085044816168934,
+        "mae20_median": -0.05017354425519349,
+        "per_symbol": [
+          {
+            "symbol": "CSCO",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "ADBE",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "TXN",
+            "n": 11,
+            "p": 0.45454545454545453
+          },
+          {
+            "symbol": "DIS",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "SBUX",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "TGT",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "LOW",
+            "n": 7,
+            "p": 0.8571428571428571
+          },
+          {
+            "symbol": "MRK",
+            "n": 8,
+            "p": 1
+          },
+          {
+            "symbol": "PFE",
+            "n": 10,
+            "p": 0.9
+          },
+          {
+            "symbol": "ABBV",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "AMGN",
+            "n": 10,
+            "p": 0.7
+          },
+          {
+            "symbol": "GILD",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "C",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "MS",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "BLK",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "COP",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "UPS",
+            "n": 7,
+            "p": 0.8571428571428571
+          }
+        ]
+      },
+      "crypto": {
+        "status": "STRONG_REPEAT",
+        "n": 20,
+        "hit": 17,
+        "pooled_probability": 0.85,
+        "eligible_symbols": 3,
+        "support_symbols": 3,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.8333333333333334,
+        "ret20_median": -0.05656111512922707,
+        "mfe20_median": 0.09282856078222912,
+        "mae20_median": -0.12180903938054505,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "SOL/USD",
+            "n": 9,
+            "p": 0.8888888888888888
+          }
+        ]
+      },
+      "optimization": "KEEP_STRONG_CROSS_ASSET"
+    },
+    "AVOID_GREEN_11_20_LOWER": {
+      "group": "V3_VALIDATED",
+      "primary": "BD_FIRST",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 85,
+        "hit": 67,
+        "pooled_probability": 0.788235294117647,
+        "eligible_symbols": 16,
+        "support_symbols": 15,
+        "neutral_symbols": 1,
+        "oppose_symbols": 0,
+        "support_fraction": 0.9375,
+        "median_symbol_probability": 0.8035714285714286,
+        "ret20_median": 0.012060828526481382,
+        "mfe20_median": 0.0623395627180372,
+        "mae20_median": -0.04775458570524982,
+        "per_symbol": [
+          {
+            "symbol": "CSCO",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "CRM",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "TXN",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "DIS",
+            "n": 6,
+            "p": 0.5
+          },
+          {
+            "symbol": "NKE",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "SBUX",
+            "n": 7,
+            "p": 0.8571428571428571
+          },
+          {
+            "symbol": "TGT",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "MRK",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "PFE",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "ABBV",
+            "n": 8,
+            "p": 0.75
+          },
+          {
+            "symbol": "AMGN",
+            "n": 7,
+            "p": 0.5714285714285714
+          },
+          {
+            "symbol": "GILD",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "C",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "BLK",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "COP",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "UPS",
+            "n": 8,
+            "p": 0.625
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 11,
+        "hit": 9,
+        "pooled_probability": 0.8181818181818182,
+        "eligible_symbols": 3,
+        "support_symbols": 2,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.6666666666666666,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.03302255273465504,
+        "mfe20_median": 0.12351407457584207,
+        "mae20_median": -0.05366581316772201,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 3,
+            "p": 1
+          }
+        ]
+      },
+      "optimization": "KEEP_STRONG_STOCK"
+    },
+    "CONT_BLUE_4_10_UPPER": {
+      "group": "V3_VALIDATED",
+      "primary": "BS_FIRST",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 66,
+        "hit": 54,
+        "pooled_probability": 0.8181818181818182,
+        "eligible_symbols": 13,
+        "support_symbols": 11,
+        "neutral_symbols": 1,
+        "oppose_symbols": 1,
+        "support_fraction": 0.8461538461538461,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.0191962683700746,
+        "mfe20_median": 0.06078051491202796,
+        "mae20_median": -0.05532927915690772,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "CSCO",
+            "n": 4,
+            "p": 0.25
+          },
+          {
+            "symbol": "CRM",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "TXN",
+            "n": 7,
+            "p": 0.7142857142857143
+          },
+          {
+            "symbol": "NKE",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "SBUX",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "LOW",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "ABBV",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "AMGN",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "GILD",
+            "n": 9,
+            "p": 1
+          },
+          {
+            "symbol": "MS",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "COP",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "UPS",
+            "n": 3,
+            "p": 1
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 14,
+        "hit": 12,
+        "pooled_probability": 0.8571428571428571,
+        "eligible_symbols": 2,
+        "support_symbols": 2,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.8333333333333333,
+        "ret20_median": -0.00789294918268113,
+        "mfe20_median": 0.07041622716071572,
+        "mae20_median": -0.08891935971436116,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 6,
+            "p": 0.6666666666666666
+          }
+        ]
+      },
+      "optimization": "KEEP_STRONG_STOCK"
+    },
+    "CONT_RECENT_GRAY_BLUE_UPPER": {
+      "group": "V3_VALIDATED",
+      "primary": "BS_FIRST",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 61,
+        "hit": 43,
+        "pooled_probability": 0.7049180327868853,
+        "eligible_symbols": 10,
+        "support_symbols": 7,
+        "neutral_symbols": 1,
+        "oppose_symbols": 2,
+        "support_fraction": 0.7,
+        "median_symbol_probability": 0.75,
+        "ret20_median": 0.017660269497754122,
+        "mfe20_median": 0.059313297914519,
+        "mae20_median": -0.04797876684360958,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "CSCO",
+            "n": 4,
+            "p": 0.25
+          },
+          {
+            "symbol": "TXN",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "SBUX",
+            "n": 5,
+            "p": 0.2
+          },
+          {
+            "symbol": "MRK",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "PFE",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "ABBV",
+            "n": 8,
+            "p": 0.75
+          },
+          {
+            "symbol": "AMGN",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "GILD",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "UPS",
+            "n": 4,
+            "p": 1
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 6,
+        "hit": 6,
+        "pooled_probability": 1,
+        "eligible_symbols": 0,
+        "support_symbols": 0,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": null,
+        "median_symbol_probability": null,
+        "ret20_median": 0.0849318138934334,
+        "mfe20_median": 0.27297493158963637,
+        "mae20_median": -0.03556934724327343,
+        "per_symbol": []
+      },
+      "optimization": "KEEP_STRONG_STOCK"
+    },
+    "BLUE_11_20_LOWER_WICK_ONLY": {
+      "group": "V3_DISCOVERY",
+      "primary": "MID_FIRST",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 53,
+        "hit": 45,
+        "pooled_probability": 0.8490566037735849,
+        "eligible_symbols": 12,
+        "support_symbols": 12,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.875,
+        "ret20_median": 0.018947333333333427,
+        "mfe20_median": 0.06357330278494522,
+        "mae20_median": -0.03597684012483404,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "CSCO",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "TXN",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "SBUX",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "TGT",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "LOW",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "MRK",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "ABBV",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "AMGN",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "GILD",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "BLK",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "UPS",
+            "n": 3,
+            "p": 0.6666666666666666
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 7,
+        "hit": 5,
+        "pooled_probability": 0.7142857142857143,
+        "eligible_symbols": 1,
+        "support_symbols": 1,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.047311863799283316,
+        "mfe20_median": 0.13415420822572233,
+        "mae20_median": -0.07253885741899124,
+        "per_symbol": [
+          {
+            "symbol": "BNB/USD",
+            "n": 5,
+            "p": 1
+          }
+        ]
+      },
+      "optimization": "PROMOTE_V5"
+    },
+    "GREEN_11_20_LOWER_CLOSE_BELOW": {
+      "group": "V3_DISCOVERY",
+      "primary": "BD_FIRST",
+      "stock": {
+        "status": "STRONG_REPEAT",
+        "n": 39,
+        "hit": 36,
+        "pooled_probability": 0.9230769230769231,
+        "eligible_symbols": 8,
+        "support_symbols": 8,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.020745243128963864,
+        "mfe20_median": 0.07688522573502277,
+        "mae20_median": -0.04005842483727928,
+        "per_symbol": [
+          {
+            "symbol": "CSCO",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "TXN",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "SBUX",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "MRK",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "ABBV",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "AMGN",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "COP",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "UPS",
+            "n": 3,
+            "p": 1
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 6,
+        "hit": 6,
+        "pooled_probability": 1,
+        "eligible_symbols": 1,
+        "support_symbols": 1,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.019924118952552194,
+        "mfe20_median": 0.14463586109631554,
+        "mae20_median": -0.08134075802378316,
+        "per_symbol": [
+          {
+            "symbol": "ETH/USD",
+            "n": 3,
+            "p": 1
+          }
+        ]
+      },
+      "optimization": "PROMOTE_V5"
+    },
+    "BLUE_11_20_UPPER_CLOSE_ABOVE": {
+      "group": "V3_DISCOVERY",
+      "primary": "BS_FIRST",
+      "stock": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 41,
+        "hit": 35,
+        "pooled_probability": 0.8536585365853658,
+        "eligible_symbols": 6,
+        "support_symbols": 5,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.8333333333333334,
+        "median_symbol_probability": 0.875,
+        "ret20_median": -0.023625254582484767,
+        "mfe20_median": 0.0415539234634712,
+        "mae20_median": -0.05932629462041228,
+        "per_symbol": [
+          {
+            "symbol": "CSCO",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "NKE",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "SBUX",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "MRK",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "ABBV",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "UPS",
+            "n": 3,
+            "p": 0.6666666666666666
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 7,
+        "hit": 7,
+        "pooled_probability": 1,
+        "eligible_symbols": 1,
+        "support_symbols": 1,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.058134083450539054,
+        "mfe20_median": 0.26307835694050996,
+        "mae20_median": -0.02978406552494417,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 3,
+            "p": 1
+          }
+        ]
+      },
+      "optimization": "WATCH"
+    },
+    "BLUE_21P_UPPER_FULL_ABOVE": {
+      "group": "V3_DISCOVERY",
+      "primary": "BS_FIRST",
+      "stock": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 18,
+        "hit": 18,
+        "pooled_probability": 1,
+        "eligible_symbols": 2,
+        "support_symbols": 2,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.030543970157031253,
+        "mfe20_median": 0.06364037178682125,
+        "mae20_median": -0.030975448164803687,
+        "per_symbol": [
+          {
+            "symbol": "LOW",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "MS",
+            "n": 3,
+            "p": 1
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 0,
+        "hit": 0,
+        "pooled_probability": null,
+        "eligible_symbols": 0,
+        "support_symbols": 0,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": null,
+        "median_symbol_probability": null,
+        "ret20_median": null,
+        "mfe20_median": null,
+        "mae20_median": null,
+        "per_symbol": []
+      },
+      "optimization": "WATCH"
+    },
+    "GREEN_4_10_UPPER": {
+      "group": "V3_DISCOVERY",
+      "primary": "MID_FIRST",
+      "stock": {
+        "status": "REPEAT",
+        "n": 52,
+        "hit": 33,
+        "pooled_probability": 0.6346153846153846,
+        "eligible_symbols": 10,
+        "support_symbols": 8,
+        "neutral_symbols": 0,
+        "oppose_symbols": 2,
+        "support_fraction": 0.8,
+        "median_symbol_probability": 0.6666666666666666,
+        "ret20_median": 0.005799227507951477,
+        "mfe20_median": 0.05109869413872836,
+        "mae20_median": -0.0398600322766966,
+        "per_symbol": [
+          {
+            "symbol": "CSCO",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "DIS",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "SBUX",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "LOW",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "MRK",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "AMGN",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "C",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "MS",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "BLK",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "COP",
+            "n": 3,
+            "p": 0.3333333333333333
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 7,
+        "hit": 5,
+        "pooled_probability": 0.7142857142857143,
+        "eligible_symbols": 1,
+        "support_symbols": 1,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 1,
+        "ret20_median": -0.1205496366888823,
+        "mfe20_median": 0.03486587734879687,
+        "mae20_median": -0.1654417876783505,
+        "per_symbol": [
+          {
+            "symbol": "BNB/USD",
+            "n": 4,
+            "p": 1
+          }
+        ]
+      },
+      "optimization": "PROMOTE_V5"
+    },
+    "BUY_GREEN_21P_LOWER": {
+      "group": "V3_MIXED",
+      "primary": "MID_FIRST",
+      "stock": {
+        "status": "MIXED",
+        "n": 303,
+        "hit": 127,
+        "pooled_probability": 0.41914191419141916,
+        "eligible_symbols": 19,
+        "support_symbols": 2,
+        "neutral_symbols": 6,
+        "oppose_symbols": 11,
+        "support_fraction": 0.10526315789473684,
+        "median_symbol_probability": 0.4,
+        "ret20_median": 0.018621498945066595,
+        "mfe20_median": 0.06976438067658286,
+        "mae20_median": -0.054036755965987116,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 8,
+            "p": 0.5
+          },
+          {
+            "symbol": "CSCO",
+            "n": 10,
+            "p": 0.4
+          },
+          {
+            "symbol": "CRM",
+            "n": 26,
+            "p": 0.5
+          },
+          {
+            "symbol": "ADBE",
+            "n": 30,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "TXN",
+            "n": 6,
+            "p": 0.5
+          },
+          {
+            "symbol": "DIS",
+            "n": 25,
+            "p": 0.4
+          },
+          {
+            "symbol": "NKE",
+            "n": 32,
+            "p": 0.5
+          },
+          {
+            "symbol": "SBUX",
+            "n": 13,
+            "p": 0.38461538461538464
+          },
+          {
+            "symbol": "TGT",
+            "n": 25,
+            "p": 0.56
+          },
+          {
+            "symbol": "LOW",
+            "n": 14,
+            "p": 0.2857142857142857
+          },
+          {
+            "symbol": "MRK",
+            "n": 13,
+            "p": 0.38461538461538464
+          },
+          {
+            "symbol": "PFE",
+            "n": 18,
+            "p": 0.2777777777777778
+          },
+          {
+            "symbol": "AMGN",
+            "n": 8,
+            "p": 0.125
+          },
+          {
+            "symbol": "GILD",
+            "n": 12,
+            "p": 0.5
+          },
+          {
+            "symbol": "C",
+            "n": 14,
+            "p": 0.21428571428571427
+          },
+          {
+            "symbol": "MS",
+            "n": 10,
+            "p": 0.7
+          },
+          {
+            "symbol": "BLK",
+            "n": 7,
+            "p": 0.2857142857142857
+          },
+          {
+            "symbol": "COP",
+            "n": 16,
+            "p": 0.5
+          },
+          {
+            "symbol": "UPS",
+            "n": 14,
+            "p": 0.42857142857142855
+          }
+        ]
+      },
+      "crypto": {
+        "status": "MIXED",
+        "n": 64,
+        "hit": 35,
+        "pooled_probability": 0.546875,
+        "eligible_symbols": 4,
+        "support_symbols": 3,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.75,
+        "median_symbol_probability": 0.5416666666666667,
+        "ret20_median": 0.05810233715930768,
+        "mfe20_median": 0.14661395993109505,
+        "mae20_median": -0.06824618604381244,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 20,
+            "p": 0.6
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 20,
+            "p": 0.55
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 9,
+            "p": 0.4444444444444444
+          },
+          {
+            "symbol": "SOL/USD",
+            "n": 15,
+            "p": 0.5333333333333333
+          }
+        ]
+      },
+      "optimization": "REMAIN_MIXED"
+    },
+    "AVOID_RECENT_GRAY_GREEN_LOWER": {
+      "group": "V3_MIXED",
+      "primary": "BD_FIRST",
+      "stock": {
+        "status": "REPEAT",
+        "n": 48,
+        "hit": 29,
+        "pooled_probability": 0.6041666666666666,
+        "eligible_symbols": 7,
+        "support_symbols": 5,
+        "neutral_symbols": 0,
+        "oppose_symbols": 2,
+        "support_fraction": 0.7142857142857143,
+        "median_symbol_probability": 0.6666666666666666,
+        "ret20_median": 0.004893062746966215,
+        "mfe20_median": 0.055130154618588834,
+        "mae20_median": -0.033695815578638544,
+        "per_symbol": [
+          {
+            "symbol": "CSCO",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "TXN",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "SBUX",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "ABBV",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "GILD",
+            "n": 7,
+            "p": 0.7142857142857143
+          },
+          {
+            "symbol": "C",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "COP",
+            "n": 3,
+            "p": 0.3333333333333333
+          }
+        ]
+      },
+      "crypto": {
+        "status": "INSUFFICIENT_BREADTH",
+        "n": 11,
+        "hit": 9,
+        "pooled_probability": 0.8181818181818182,
+        "eligible_symbols": 1,
+        "support_symbols": 1,
+        "neutral_symbols": 0,
+        "oppose_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.7142857142857143,
+        "ret20_median": -0.06645077508054542,
+        "mfe20_median": 0.09947510583163033,
+        "mae20_median": -0.10963428151154164,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 7,
+            "p": 0.7142857142857143
+          }
+        ]
+      },
+      "optimization": "REMAIN_MIXED"
+    },
+    "SELL_GREEN_21P_UPPER": {
+      "group": "V3_MIXED",
+      "primary": "MID_FIRST",
+      "stock": {
+        "status": "REPEAT",
+        "n": 392,
+        "hit": 239,
+        "pooled_probability": 0.6096938775510204,
+        "eligible_symbols": 20,
+        "support_symbols": 13,
+        "neutral_symbols": 1,
+        "oppose_symbols": 6,
+        "support_fraction": 0.65,
+        "median_symbol_probability": 0.6363636363636364,
+        "ret20_median": 0.004658509900153818,
+        "mfe20_median": 0.06051137380264271,
+        "mae20_median": -0.054095868971303473,
+        "per_symbol": [
+          {
+            "symbol": "IBM",
+            "n": 11,
+            "p": 0.45454545454545453
+          },
+          {
+            "symbol": "CSCO",
+            "n": 15,
+            "p": 0.5333333333333333
+          },
+          {
+            "symbol": "CRM",
+            "n": 29,
+            "p": 0.7241379310344828
+          },
+          {
+            "symbol": "ADBE",
+            "n": 34,
+            "p": 0.7058823529411765
+          },
+          {
+            "symbol": "TXN",
+            "n": 14,
+            "p": 0.35714285714285715
+          },
+          {
+            "symbol": "DIS",
+            "n": 22,
+            "p": 0.5909090909090909
+          },
+          {
+            "symbol": "NKE",
+            "n": 42,
+            "p": 0.6904761904761905
+          },
+          {
+            "symbol": "SBUX",
+            "n": 25,
+            "p": 0.84
+          },
+          {
+            "symbol": "TGT",
+            "n": 22,
+            "p": 0.6363636363636364
+          },
+          {
+            "symbol": "LOW",
+            "n": 15,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "MRK",
+            "n": 16,
+            "p": 0.75
+          },
+          {
+            "symbol": "PFE",
+            "n": 18,
+            "p": 0.7222222222222222
+          },
+          {
+            "symbol": "ABBV",
+            "n": 14,
+            "p": 0.6428571428571429
+          },
+          {
+            "symbol": "AMGN",
+            "n": 10,
+            "p": 0.3
+          },
+          {
+            "symbol": "GILD",
+            "n": 10,
+            "p": 0.2
+          },
+          {
+            "symbol": "C",
+            "n": 15,
+            "p": 0.4
+          },
+          {
+            "symbol": "MS",
+            "n": 16,
+            "p": 0.5
+          },
+          {
+            "symbol": "BLK",
+            "n": 14,
+            "p": 0.2857142857142857
+          },
+          {
+            "symbol": "COP",
+            "n": 22,
+            "p": 0.6363636363636364
+          },
+          {
+            "symbol": "UPS",
+            "n": 28,
+            "p": 0.6428571428571429
+          }
+        ]
+      },
+      "crypto": {
+        "status": "REPEAT",
+        "n": 97,
+        "hit": 59,
+        "pooled_probability": 0.6082474226804123,
+        "eligible_symbols": 4,
+        "support_symbols": 3,
+        "neutral_symbols": 0,
+        "oppose_symbols": 1,
+        "support_fraction": 0.75,
+        "median_symbol_probability": 0.6436335403726708,
+        "ret20_median": -0.007922787734805037,
+        "mfe20_median": 0.08726787028464011,
+        "mae20_median": -0.0811548607551642,
+        "per_symbol": [
+          {
+            "symbol": "BTC/USD",
+            "n": 28,
+            "p": 0.6785714285714286
+          },
+          {
+            "symbol": "ETH/USD",
+            "n": 28,
+            "p": 0.4642857142857143
+          },
+          {
+            "symbol": "BNB/USD",
+            "n": 23,
+            "p": 0.6086956521739131
+          },
+          {
+            "symbol": "SOL/USD",
+            "n": 18,
+            "p": 0.7222222222222222
+          }
+        ]
+      },
+      "optimization": "REMAIN_MIXED"
+    }
+  },
+  "discoveries": {
+    "lower_mid": [
+      {
+        "type": "LOWER",
+        "primary": "MID_FIRST",
+        "level": "L4",
+        "key": "BLUE|11_20|WICK_ONLY",
+        "n": 53,
+        "p": 0.8490566037735849,
+        "eligible_symbols": 12,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.875,
+        "ret20_median": 0.018947333333333427,
+        "mfe20_median": 0.06357330278494522,
+        "mae20_median": -0.03597684012483404,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LOWER",
+        "primary": "MID_FIRST",
+        "level": "L5",
+        "key": "GRAY|BLUE|11_20|WICK_ONLY",
+        "n": 53,
+        "p": 0.8490566037735849,
+        "eligible_symbols": 12,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.875,
+        "ret20_median": 0.018947333333333427,
+        "mfe20_median": 0.06357330278494522,
+        "mae20_median": -0.03597684012483404,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LOWER",
+        "primary": "MID_FIRST",
+        "level": "L4",
+        "key": "GRAY|4_10|WICK_ONLY",
+        "n": 45,
+        "p": 0.8222222222222222,
+        "eligible_symbols": 9,
+        "support_fraction": 0.7777777777777778,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.017239878101872108,
+        "mfe20_median": 0.058116796143355076,
+        "mae20_median": -0.033189694691482474,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LOWER",
+        "primary": "MID_FIRST",
+        "level": "L6",
+        "key": "GRAY|BLUE|21_PLUS|WICK_ONLY|NO_LG_EVENT",
+        "n": 203,
+        "p": 0.812807881773399,
+        "eligible_symbols": 20,
+        "support_fraction": 0.95,
+        "median_symbol_probability": 0.8166666666666667,
+        "ret20_median": 0.0042728955989175255,
+        "mfe20_median": 0.04675642594859242,
+        "mae20_median": -0.046844586623943196,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LOWER",
+        "primary": "MID_FIRST",
+        "level": "L4",
+        "key": "BLUE|21_PLUS|WICK_ONLY",
+        "n": 273,
+        "p": 0.8058608058608059,
+        "eligible_symbols": 20,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.8090909090909091,
+        "ret20_median": 0.005897530409141094,
+        "mfe20_median": 0.046021073825503356,
+        "mae20_median": -0.04926273458445041,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LOWER",
+        "primary": "MID_FIRST",
+        "level": "L5",
+        "key": "GRAY|BLUE|21_PLUS|WICK_ONLY",
+        "n": 273,
+        "p": 0.8058608058608059,
+        "eligible_symbols": 20,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.8090909090909091,
+        "ret20_median": 0.005897530409141094,
+        "mfe20_median": 0.046021073825503356,
+        "mae20_median": -0.04926273458445041,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LOWER",
+        "primary": "MID_FIRST",
+        "level": "L2",
+        "key": "BLUE|11_20",
+        "n": 92,
+        "p": 0.7934782608695652,
+        "eligible_symbols": 15,
+        "support_fraction": 0.9333333333333333,
+        "median_symbol_probability": 0.8,
+        "ret20_median": 0.009717676951707332,
+        "mfe20_median": 0.05848281696429802,
+        "mae20_median": -0.040172754007580136,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LOWER",
+        "primary": "MID_FIRST",
+        "level": "L3",
+        "key": "GRAY|BLUE|11_20",
+        "n": 92,
+        "p": 0.7934782608695652,
+        "eligible_symbols": 15,
+        "support_fraction": 0.9333333333333333,
+        "median_symbol_probability": 0.8,
+        "ret20_median": 0.009717676951707332,
+        "mfe20_median": 0.05848281696429802,
+        "mae20_median": -0.040172754007580136,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LOWER",
+        "primary": "MID_FIRST",
+        "level": "L6",
+        "key": "GRAY|BLUE|21_PLUS|WICK_ONLY|LG_EVENT",
+        "n": 70,
+        "p": 0.7857142857142857,
+        "eligible_symbols": 13,
+        "support_fraction": 0.7692307692307693,
+        "median_symbol_probability": 0.8,
+        "ret20_median": 0.007654288764938677,
+        "mfe20_median": 0.045601852970231005,
+        "mae20_median": -0.055388878888832926,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LOWER",
+        "primary": "MID_FIRST",
+        "level": "L3",
+        "key": "GREEN|GRAY|11_20",
+        "n": 58,
+        "p": 0.7586206896551724,
+        "eligible_symbols": 11,
+        "support_fraction": 0.8181818181818182,
+        "median_symbol_probability": 0.75,
+        "ret20_median": 0.02056734826078732,
+        "mfe20_median": 0.0556116092203951,
+        "mae20_median": -0.052139348085489035,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LOWER",
+        "primary": "MID_FIRST",
+        "level": "L4",
+        "key": "GRAY|11_20|WICK_ONLY",
+        "n": 50,
+        "p": 0.74,
+        "eligible_symbols": 9,
+        "support_fraction": 0.8888888888888888,
+        "median_symbol_probability": 0.75,
+        "ret20_median": 0.00624286521773032,
+        "mfe20_median": 0.055895119776585456,
+        "mae20_median": -0.061062525930374256,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LOWER",
+        "primary": "MID_FIRST",
+        "level": "L4",
+        "key": "GRAY|21_PLUS|WICK_ONLY",
+        "n": 61,
+        "p": 0.7213114754098361,
+        "eligible_symbols": 10,
+        "support_fraction": 0.9,
+        "median_symbol_probability": 0.7083333333333333,
+        "ret20_median": -0.000540230515761353,
+        "mfe20_median": 0.055478715229752895,
+        "mae20_median": -0.05056360708534635,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LOWER",
+        "primary": "MID_FIRST",
+        "level": "L6",
+        "key": "GRAY|BLUE|21_PLUS|CLOSE_BELOW|NO_LG_EVENT",
+        "n": 126,
+        "p": 0.7142857142857143,
+        "eligible_symbols": 19,
+        "support_fraction": 0.7894736842105263,
+        "median_symbol_probability": 0.75,
+        "ret20_median": 0.008709739134133643,
+        "mfe20_median": 0.05193972797840907,
+        "mae20_median": -0.04607997034066946,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      }
+    ],
+    "lower_bd": [
+      {
+        "type": "LOWER",
+        "primary": "BD_FIRST",
+        "level": "L2",
+        "key": "GREEN|11_20",
+        "n": 85,
+        "p": 0.788235294117647,
+        "eligible_symbols": 16,
+        "support_fraction": 0.9375,
+        "median_symbol_probability": 0.8035714285714286,
+        "ret20_median": 0.012060828526481382,
+        "mfe20_median": 0.0623395627180372,
+        "mae20_median": -0.04775458570524982,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LOWER",
+        "primary": "BD_FIRST",
+        "level": "L3",
+        "key": "GRAY|GREEN|11_20",
+        "n": 85,
+        "p": 0.788235294117647,
+        "eligible_symbols": 16,
+        "support_fraction": 0.9375,
+        "median_symbol_probability": 0.8035714285714286,
+        "ret20_median": 0.012060828526481382,
+        "mfe20_median": 0.0623395627180372,
+        "mae20_median": -0.04775458570524982,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      }
+    ],
+    "upper_mid": [
+      {
+        "type": "UPPER",
+        "primary": "MID_FIRST",
+        "level": "L5",
+        "key": "GRAY|GREEN|11_20|WICK_ONLY",
+        "n": 47,
+        "p": 0.7872340425531915,
+        "eligible_symbols": 8,
+        "support_fraction": 0.875,
+        "median_symbol_probability": 0.775,
+        "ret20_median": -0.005129112133003155,
+        "mfe20_median": 0.05331614590257061,
+        "mae20_median": -0.04304998175848229,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "UPPER",
+        "primary": "MID_FIRST",
+        "level": "L4",
+        "key": "GREEN|11_20|WICK_ONLY",
+        "n": 49,
+        "p": 0.7755102040816326,
+        "eligible_symbols": 8,
+        "support_fraction": 0.875,
+        "median_symbol_probability": 0.775,
+        "ret20_median": -0.00028921237828982704,
+        "mfe20_median": 0.05515886891570232,
+        "mae20_median": -0.04250425894378207,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      }
+    ],
+    "upper_bs": [
+      {
+        "type": "UPPER",
+        "primary": "BS_FIRST",
+        "level": "L2",
+        "key": "BLUE|11_20",
+        "n": 86,
+        "p": 0.8372093023255814,
+        "eligible_symbols": 17,
+        "support_fraction": 0.9411764705882353,
+        "median_symbol_probability": 0.8888888888888888,
+        "ret20_median": 0.0009431935314117013,
+        "mfe20_median": 0.05057175247212242,
+        "mae20_median": -0.047428198321772586,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "UPPER",
+        "primary": "BS_FIRST",
+        "level": "L3",
+        "key": "GRAY|BLUE|11_20",
+        "n": 86,
+        "p": 0.8372093023255814,
+        "eligible_symbols": 17,
+        "support_fraction": 0.9411764705882353,
+        "median_symbol_probability": 0.8888888888888888,
+        "ret20_median": 0.0009431935314117013,
+        "mfe20_median": 0.05057175247212242,
+        "mae20_median": -0.047428198321772586,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "UPPER",
+        "primary": "BS_FIRST",
+        "level": "L4",
+        "key": "BLUE|21_PLUS|CLOSE_ABOVE",
+        "n": 228,
+        "p": 0.8289473684210527,
+        "eligible_symbols": 20,
+        "support_fraction": 0.95,
+        "median_symbol_probability": 0.8090909090909091,
+        "ret20_median": 0.0020840788835263524,
+        "mfe20_median": 0.049730336699240985,
+        "mae20_median": -0.04760163516351634,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "UPPER",
+        "primary": "BS_FIRST",
+        "level": "L5",
+        "key": "GRAY|BLUE|21_PLUS|CLOSE_ABOVE",
+        "n": 228,
+        "p": 0.8289473684210527,
+        "eligible_symbols": 20,
+        "support_fraction": 0.95,
+        "median_symbol_probability": 0.8090909090909091,
+        "ret20_median": 0.0020840788835263524,
+        "mfe20_median": 0.049730336699240985,
+        "mae20_median": -0.04760163516351634,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "UPPER",
+        "primary": "BS_FIRST",
+        "level": "L6",
+        "key": "GRAY|BLUE|21_PLUS|CLOSE_ABOVE|NO_LG_EVENT",
+        "n": 228,
+        "p": 0.8289473684210527,
+        "eligible_symbols": 20,
+        "support_fraction": 0.95,
+        "median_symbol_probability": 0.8090909090909091,
+        "ret20_median": 0.0020840788835263524,
+        "mfe20_median": 0.049730336699240985,
+        "mae20_median": -0.04760163516351634,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "UPPER",
+        "primary": "BS_FIRST",
+        "level": "L2",
+        "key": "BLUE|4_10",
+        "n": 66,
+        "p": 0.8181818181818182,
+        "eligible_symbols": 13,
+        "support_fraction": 0.8461538461538461,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.0191962683700746,
+        "mfe20_median": 0.06078051491202796,
+        "mae20_median": -0.05532927915690772,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "UPPER",
+        "primary": "BS_FIRST",
+        "level": "L3",
+        "key": "GRAY|BLUE|4_10",
+        "n": 66,
+        "p": 0.8181818181818182,
+        "eligible_symbols": 13,
+        "support_fraction": 0.8461538461538461,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.0191962683700746,
+        "mfe20_median": 0.06078051491202796,
+        "mae20_median": -0.05532927915690772,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      }
+    ],
+    "light_support": [
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L3",
+        "key": "GREEN|GRAY|1_3",
+        "n": 48,
+        "p": 0.875,
+        "eligible_symbols": 9,
+        "support_fraction": 1,
+        "median_symbol_probability": 1,
+        "ret20_median": 0.021457551293952437,
+        "mfe20_median": 0.06232062195306798,
+        "mae20_median": -0.032274705377324464,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L3",
+        "key": "GREEN|GRAY|21_PLUS",
+        "n": 104,
+        "p": 0.8269230769230769,
+        "eligible_symbols": 13,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.8,
+        "ret20_median": -0.0029861628367849335,
+        "mfe20_median": 0.049565253093161954,
+        "mae20_median": -0.04761887791053532,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L2",
+        "key": "GRAY|1_3",
+        "n": 86,
+        "p": 0.8023255813953488,
+        "eligible_symbols": 18,
+        "support_fraction": 0.8888888888888888,
+        "median_symbol_probability": 0.775,
+        "ret20_median": 0.014120668415595228,
+        "mfe20_median": 0.05271951914194384,
+        "mae20_median": -0.037716625328770625,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L3",
+        "key": "BLUE|GRAY|11_20",
+        "n": 73,
+        "p": 0.7945205479452054,
+        "eligible_symbols": 12,
+        "support_fraction": 0.8333333333333334,
+        "median_symbol_probability": 0.8166666666666667,
+        "ret20_median": 0.006615208655332383,
+        "mfe20_median": 0.0533183714973533,
+        "mae20_median": -0.03383389144354976,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L2",
+        "key": "GRAY|21_PLUS",
+        "n": 175,
+        "p": 0.7771428571428571,
+        "eligible_symbols": 17,
+        "support_fraction": 0.8823529411764706,
+        "median_symbol_probability": 0.7777777777777778,
+        "ret20_median": -0.014375788602751016,
+        "mfe20_median": 0.04734779188454552,
+        "mae20_median": -0.054866066811459224,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L2",
+        "key": "GRAY|11_20",
+        "n": 148,
+        "p": 0.7635135135135135,
+        "eligible_symbols": 19,
+        "support_fraction": 0.8947368421052632,
+        "median_symbol_probability": 0.75,
+        "ret20_median": 0.014684419660408676,
+        "mfe20_median": 0.06136993418515124,
+        "mae20_median": -0.03600564557105551,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L3",
+        "key": "GRAY|GREEN|21_PLUS",
+        "n": 83,
+        "p": 0.7590361445783133,
+        "eligible_symbols": 14,
+        "support_fraction": 0.7857142857142857,
+        "median_symbol_probability": 0.7916666666666667,
+        "ret20_median": 0.005599848139711483,
+        "mfe20_median": 0.0510498940473898,
+        "mae20_median": -0.04530192106566844,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L3",
+        "key": "GREEN|GRAY|4_10",
+        "n": 102,
+        "p": 0.7549019607843137,
+        "eligible_symbols": 17,
+        "support_fraction": 0.8235294117647058,
+        "median_symbol_probability": 0.7142857142857143,
+        "ret20_median": 0.002190094185566094,
+        "mfe20_median": 0.04789045754960786,
+        "mae20_median": -0.05043653255460939,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L2",
+        "key": "GRAY|4_10",
+        "n": 167,
+        "p": 0.7544910179640718,
+        "eligible_symbols": 19,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.7272727272727273,
+        "ret20_median": -0.004199332585499871,
+        "mfe20_median": 0.046697792323267207,
+        "mae20_median": -0.05166665625,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L3",
+        "key": "BLUE|GRAY|4_10",
+        "n": 65,
+        "p": 0.7538461538461538,
+        "eligible_symbols": 10,
+        "support_fraction": 0.9,
+        "median_symbol_probability": 0.75,
+        "ret20_median": -0.015756345177665,
+        "mfe20_median": 0.04144043432783784,
+        "mae20_median": -0.051990986412955964,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L2",
+        "key": "GREEN|21_PLUS",
+        "n": 87,
+        "p": 0.7471264367816092,
+        "eligible_symbols": 17,
+        "support_fraction": 0.7647058823529411,
+        "median_symbol_probability": 0.75,
+        "ret20_median": 0.007803706760711293,
+        "mfe20_median": 0.05500354861603984,
+        "mae20_median": -0.04212648467473512,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L3",
+        "key": "GREEN|GRAY|11_20",
+        "n": 75,
+        "p": 0.7333333333333333,
+        "eligible_symbols": 14,
+        "support_fraction": 0.8571428571428571,
+        "median_symbol_probability": 0.8035714285714286,
+        "ret20_median": 0.021436848203939762,
+        "mfe20_median": 0.06573707986381216,
+        "mae20_median": -0.036555680631310206,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L2",
+        "key": "BLUE|21_PLUS",
+        "n": 406,
+        "p": 0.7118226600985221,
+        "eligible_symbols": 20,
+        "support_fraction": 0.9,
+        "median_symbol_probability": 0.7089947089947091,
+        "ret20_median": -0.002025196107130367,
+        "mfe20_median": 0.04771706098426731,
+        "mae20_median": -0.04832045759027054,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L3",
+        "key": "GRAY|BLUE|21_PLUS",
+        "n": 406,
+        "p": 0.7118226600985221,
+        "eligible_symbols": 20,
+        "support_fraction": 0.9,
+        "median_symbol_probability": 0.7089947089947091,
+        "ret20_median": -0.002025196107130367,
+        "mfe20_median": 0.04771706098426731,
+        "mae20_median": -0.04832045759027054,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L2",
+        "key": "BLUE|11_20",
+        "n": 83,
+        "p": 0.7108433734939759,
+        "eligible_symbols": 11,
+        "support_fraction": 0.8181818181818182,
+        "median_symbol_probability": 0.75,
+        "ret20_median": 0.007773182046673988,
+        "mfe20_median": 0.05797616877349321,
+        "mae20_median": -0.042427078458898704,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_SUPPORT",
+        "primary": "SUPPORT_HOLD",
+        "level": "L3",
+        "key": "GRAY|BLUE|11_20",
+        "n": 83,
+        "p": 0.7108433734939759,
+        "eligible_symbols": 11,
+        "support_fraction": 0.8181818181818182,
+        "median_symbol_probability": 0.75,
+        "ret20_median": 0.007773182046673988,
+        "mfe20_median": 0.05797616877349321,
+        "mae20_median": -0.042427078458898704,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      }
+    ],
+    "light_resist": [
+      {
+        "type": "LIGHT_RESIST",
+        "primary": "RESIST_HOLD",
+        "level": "L2",
+        "key": "GREEN|11_20",
+        "n": 88,
+        "p": 0.7840909090909091,
+        "eligible_symbols": 16,
+        "support_fraction": 0.9375,
+        "median_symbol_probability": 0.8,
+        "ret20_median": 0.0189719313631308,
+        "mfe20_median": 0.05938454156645934,
+        "mae20_median": -0.03640211995315851,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_RESIST",
+        "primary": "RESIST_HOLD",
+        "level": "L3",
+        "key": "GRAY|GREEN|11_20",
+        "n": 83,
+        "p": 0.7710843373493976,
+        "eligible_symbols": 16,
+        "support_fraction": 0.9375,
+        "median_symbol_probability": 0.8,
+        "ret20_median": 0.012201686703750214,
+        "mfe20_median": 0.05857570970997328,
+        "mae20_median": -0.03663575429253507,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_RESIST",
+        "primary": "RESIST_HOLD",
+        "level": "L3",
+        "key": "BLUE|GRAY|11_20",
+        "n": 75,
+        "p": 0.76,
+        "eligible_symbols": 13,
+        "support_fraction": 0.7692307692307693,
+        "median_symbol_probability": 0.75,
+        "ret20_median": -0.007015877669679815,
+        "mfe20_median": 0.04052878761523737,
+        "mae20_median": -0.05026347790839081,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_RESIST",
+        "primary": "RESIST_HOLD",
+        "level": "L3",
+        "key": "BLUE|GRAY|1_3",
+        "n": 63,
+        "p": 0.746031746031746,
+        "eligible_symbols": 10,
+        "support_fraction": 0.9,
+        "median_symbol_probability": 0.75,
+        "ret20_median": -0.005133586889503605,
+        "mfe20_median": 0.052489989989989994,
+        "mae20_median": -0.043374768579740874,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_RESIST",
+        "primary": "RESIST_HOLD",
+        "level": "L2",
+        "key": "GRAY|11_20",
+        "n": 148,
+        "p": 0.7432432432432432,
+        "eligible_symbols": 19,
+        "support_fraction": 0.8947368421052632,
+        "median_symbol_probability": 0.75,
+        "ret20_median": 0.00023919747624617793,
+        "mfe20_median": 0.04658106359488923,
+        "mae20_median": -0.050322717491845415,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_RESIST",
+        "primary": "RESIST_HOLD",
+        "level": "L3",
+        "key": "BLUE|GRAY|4_10",
+        "n": 97,
+        "p": 0.7422680412371134,
+        "eligible_symbols": 19,
+        "support_fraction": 0.8947368421052632,
+        "median_symbol_probability": 0.75,
+        "ret20_median": 0.003915662503175543,
+        "mfe20_median": 0.04632368664130504,
+        "mae20_median": -0.057407050664611825,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_RESIST",
+        "primary": "RESIST_HOLD",
+        "level": "L3",
+        "key": "BLUE|GRAY|21_PLUS",
+        "n": 69,
+        "p": 0.7391304347826086,
+        "eligible_symbols": 11,
+        "support_fraction": 0.9090909090909091,
+        "median_symbol_probability": 0.6666666666666666,
+        "ret20_median": -0.006995295441458493,
+        "mfe20_median": 0.04698477193192652,
+        "mae20_median": -0.04899006532218475,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_RESIST",
+        "primary": "RESIST_HOLD",
+        "level": "L3",
+        "key": "GRAY|GREEN|21_PLUS",
+        "n": 299,
+        "p": 0.7357859531772575,
+        "eligible_symbols": 20,
+        "support_fraction": 0.85,
+        "median_symbol_probability": 0.7071428571428571,
+        "ret20_median": 0.008069585532106016,
+        "mfe20_median": 0.0543592131300199,
+        "mae20_median": -0.053473431124671955,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_RESIST",
+        "primary": "RESIST_HOLD",
+        "level": "L2",
+        "key": "GREEN|21_PLUS",
+        "n": 309,
+        "p": 0.7313915857605178,
+        "eligible_symbols": 20,
+        "support_fraction": 0.9,
+        "median_symbol_probability": 0.7,
+        "ret20_median": 0.009086468001954229,
+        "mfe20_median": 0.05559681697612717,
+        "mae20_median": -0.05218595305881513,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_RESIST",
+        "primary": "RESIST_HOLD",
+        "level": "L2",
+        "key": "GRAY|1_3",
+        "n": 92,
+        "p": 0.717391304347826,
+        "eligible_symbols": 13,
+        "support_fraction": 0.9230769230769231,
+        "median_symbol_probability": 0.75,
+        "ret20_median": -0.002021261811449626,
+        "mfe20_median": 0.057598028120211864,
+        "mae20_median": -0.04279004588682861,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_RESIST",
+        "primary": "RESIST_HOLD",
+        "level": "L2",
+        "key": "GRAY|4_10",
+        "n": 155,
+        "p": 0.7161290322580646,
+        "eligible_symbols": 20,
+        "support_fraction": 0.95,
+        "median_symbol_probability": 0.7142857142857143,
+        "ret20_median": 0.008182164347428245,
+        "mfe20_median": 0.05174911873468613,
+        "mae20_median": -0.05410489878847158,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_RESIST",
+        "primary": "RESIST_HOLD",
+        "level": "L2",
+        "key": "GRAY|21_PLUS",
+        "n": 154,
+        "p": 0.7142857142857143,
+        "eligible_symbols": 17,
+        "support_fraction": 0.8823529411764706,
+        "median_symbol_probability": 0.75,
+        "ret20_median": -0.0025593980326069077,
+        "mfe20_median": 0.05584793741477423,
+        "mae20_median": -0.047333214967689496,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_RESIST",
+        "primary": "RESIST_HOLD",
+        "level": "L2",
+        "key": "BLUE|21_PLUS",
+        "n": 111,
+        "p": 0.7117117117117117,
+        "eligible_symbols": 19,
+        "support_fraction": 0.9473684210526315,
+        "median_symbol_probability": 0.7142857142857143,
+        "ret20_median": 0.0033088512046324237,
+        "mfe20_median": 0.05007418443824907,
+        "mae20_median": -0.04560529834117344,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      },
+      {
+        "type": "LIGHT_RESIST",
+        "primary": "RESIST_HOLD",
+        "level": "L3",
+        "key": "GRAY|BLUE|21_PLUS",
+        "n": 111,
+        "p": 0.7117117117117117,
+        "eligible_symbols": 19,
+        "support_fraction": 0.9473684210526315,
+        "median_symbol_probability": 0.7142857142857143,
+        "ret20_median": 0.0033088512046324237,
+        "mfe20_median": 0.05007418443824907,
+        "mae20_median": -0.04560529834117344,
+        "label": "NEW_V5_DISCOVERY_REQUIRES_FUTURE_VALIDATION"
+      }
+    ]
+  },
+  "no_new_broad_discovery": false
+}

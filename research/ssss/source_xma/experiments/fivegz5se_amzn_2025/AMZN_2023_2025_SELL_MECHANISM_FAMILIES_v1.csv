@@ -1,0 +1,7 @@
+family_id,family_name,count,v2_members,representative,representative_conditions,avg_n,mean_candidate_10_pct,median_candidate_10_pct,avg_win10_pct,avg_matched_diff_pct,mechanism,members
+S-F1,趋势先弱、动能仍强,4,,S003,trend.net5<0 AND momentum>=L AND accel.pos3>=2 AND accel.slope5<0 AND accel.pos5>=3,19.75,-2.425,-2.523,34.561,-3.579,趋势已转弱，但动能/加速仍保持强势；属于表面强、趋势先坏。,S003|S004|S020|S073
+S-F2,加速衰减/高位失速,3,,S019,trend.net5<0 AND accel.pos3>=2 AND accel.slope5<0 AND accel.pos5>=3 AND anomaly=GRAY,20.33,-2.108,-2.102,37.247,-2.682,加速仍处高位或过去持续偏多，但 W3/W5 斜率开始下行。,S019|S023|S060
+S-F3,资金先恶化的内部背离,12,SELL_B,S031,capital.slope5<0 AND momentum>=L AND anomaly.net1<0,17.50,-2.034,-1.997,30.690,-2.657,资金 W3/W5 转弱，而动能、加速或多维表面仍强。,S022|S029|S031|S047|S057|S062|S069|S071|S074|S078|S082|S096
+S-F4,异动过热/强势末端,4,SELL_C,S026,accel.net3>0 AND accel.pos3>=2 AND anomaly.net3>0 AND bullbars3>=2,20.75,-2.082,-2.213,38.418,-3.430,异动持续上升且市场仍偏多，历史上更像末端过热而非新起点。,S024|S026|S058|S075
+S-F5,广泛强势后的失败延续,1,SELL_A,S006,trend=GRAY AND accel.pos5>=3 AND bullbars3>=2,15.00,-2.066,-2.066,40.000,-5.756,前期多维持续偏多，但趋势回落/走弱，形成强势后的失败延续。,S006
+S-F8,多维复合衰减,3,,S037,trend.net3<0 AND capital>=L AND momentum.slope5>0,22.00,-1.932,-1.952,38.014,-3.955,多个维度共同恶化，未被单一领先机制完全解释。,S037|S046|S098

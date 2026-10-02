@@ -1,0 +1,6 @@
+family_id,family_name,count,v2_members,representative,representative_conditions,avg_n,mean_candidate_10_pct,median_candidate_10_pct,avg_win10_pct,avg_matched_diff_pct,mechanism,members
+B-F1,弱势中的趋势先拐,10,BUY_A,B001,trend.net5<0 AND trend.slope3>0 AND trend.neg5>=3 AND accel.neg3>=2,17.20,5.205,5.034,92.561,3.377,W5/当前仍弱，但趋势 W1/W3 已开始改善；典型早期反转。,B001|B008|B014|B022|B028|B047|B050|B058|B059|B090
+B-F2,资金先修复,6,,B005,capital.slope3>0 AND capital.slope5<0 AND momentum.neg5>=3 AND accel.net1>0,17.17,5.072,5.004,87.308,4.997,资金 W3 已改善，但 W5 或动能背景仍弱；资金领先价格/动能修复。,B005|B029|B039|B062|B076|B082
+B-F3,资金走弱、加速先修复的背离反转,10,BUY_B,B004,capital=GRAY AND capital.net1<0 AND accel.slope3>0 AND anomaly=GRAY,17.10,4.884,4.853,90.706,4.085,资金仍恶化，但加速 W3/W5 提前回升，形成跨维度背离。,B004|B009|B019|B034|B037|B038|B046|B056|B064|B080
+B-F5,中性区恢复,4,,B007,trend=GRAY AND capital.net3>0 AND capital.pos3>=2 AND capital.slope5>0 AND anomaly=GRAY,17.25,4.816,4.802,92.547,5.434,趋势/资金/异动处于中性区，资金、动能或加速出现持续恢复。,B007|B018|B043|B070
+B-F6,多维复合恢复,4,,B077,capital.slope3>0 AND momentum.net1>0 AND accel.neg5>=3,16.75,4.501,4.489,86.591,3.304,多个维度共同改善，未被单一领先维度完全解释。,B045|B077|B088|B100

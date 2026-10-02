@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "date": "2026-10-02",
+    "source_head": "b0343e38a12d7455db613503250c21f95c2011b3",
+    "source_rulebook": "SSSS_V5_OPTIMIZED_RULEBOOK.json",
+    "status": "LATEST_ORGANIZED_STATE",
+    "representation": "FIRST_OBSERVED",
+    "xma_modified": false
+  },
+  "active_formal": {
+    "retained": [
+      {
+        "id": "BUY_BLUE_21P_LOWER",
+        "status": "KEEP_STRONG_CROSS_ASSET"
+      },
+      {
+        "id": "BUY_GRAY_4_10_LIGHT_SUPPORT",
+        "status": "KEEP_STRONG_CROSS_ASSET"
+      },
+      {
+        "id": "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT",
+        "status": "KEEP_STRONG_CROSS_ASSET"
+      },
+      {
+        "id": "CONT_BLUE_11_20_UPPER",
+        "status": "KEEP_STRONG_CROSS_ASSET"
+      },
+      {
+        "id": "SELL_RECENT_BLUE_GRAY_LIGHT_RESIST",
+        "status": "KEEP_STRONG_CROSS_ASSET"
+      },
+      {
+        "id": "AVOID_GREEN_11_20_LOWER",
+        "status": "KEEP_STRONG_STOCK"
+      },
+      {
+        "id": "CONT_BLUE_4_10_UPPER",
+        "status": "KEEP_STRONG_STOCK"
+      },
+      {
+        "id": "CONT_RECENT_GRAY_BLUE_UPPER",
+        "status": "KEEP_STRONG_STOCK"
+      }
+    ],
+    "promoted_v5": [
+      {
+        "id": "BLUE_11_20_LOWER_WICK_ONLY",
+        "status": "PROMOTE_V5"
+      },
+      {
+        "id": "GREEN_11_20_LOWER_CLOSE_BELOW",
+        "status": "PROMOTE_V5"
+      },
+      {
+        "id": "GREEN_4_10_UPPER",
+        "status": "PROMOTE_V5"
+      }
+    ]
+  },
+  "watch": [
+    {
+      "id": "BLUE_11_20_UPPER_CLOSE_ABOVE",
+      "status": "WATCH"
+    },
+    {
+      "id": "BLUE_21P_UPPER_FULL_ABOVE",
+      "status": "WATCH"
+    }
+  ],
+  "mixed": [
+    {
+      "id": "BUY_GREEN_21P_LOWER",
+      "status": "WEAKEN_REMAIN_MIXED",
+      "priority": "LOW"
+    },
+    {
+      "id": "AVOID_RECENT_GRAY_GREEN_LOWER",
+      "status": "REMAIN_MIXED_HIGH_WATCH",
+      "priority": "HIGH"
+    },
+    {
+      "id": "SELL_GREEN_21P_UPPER",
+      "status": "REMAIN_MIXED_HIGH_WATCH",
+      "priority": "HIGH"
+    }
+  ],
+  "next_independent_validation": [
+    {
+      "priority": 1,
+      "id": "NEW_V5_B_BLUE_21P_UPPER_CLOSE_ABOVE",
+      "n": 228,
+      "p": 0.8289473684210527,
+      "eligible_symbols": 20,
+      "support_fraction": 0.95
+    },
+    {
+      "priority": 1,
+      "id": "NEW_V5_E_GREEN_11_20_LIGHT_RESIST",
+      "n": 88,
+      "p": 0.7840909090909091,
+      "eligible_symbols": 16,
+      "support_fraction": 0.9375
+    },
+    {
+      "priority": 1,
+      "id": "NEW_V5_A_GREEN_TO_GRAY_1_3_LIGHT_SUPPORT",
+      "n": 48,
+      "p": 0.875,
+      "eligible_symbols": 9,
+      "support_fraction": 1
+    },
+    {
+      "priority": 2,
+      "id": "NEW_V5_D_GREEN_11_20_UPPER_WICK_ONLY",
+      "n": 49,
+      "p": 0.7755102040816326,
+      "eligible_symbols": 8,
+      "support_fraction": 0.875
+    },
+    {
+      "priority": 2,
+      "id": "NEW_V5_C_GRAY_4_10_LOWER_WICK_ONLY",
+      "n": 45,
+      "p": 0.8222222222222222,
+      "eligible_symbols": 9,
+      "support_fraction": 0.7777777777777778
+    }
+  ]
+}

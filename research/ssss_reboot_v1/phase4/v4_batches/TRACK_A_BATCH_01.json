@@ -1,0 +1,840 @@
+{
+  "track": "A_CROSS_SYMBOL_OOS",
+  "batch": 1,
+  "symbols": [
+    "MA",
+    "CAT",
+    "BA",
+    "GE",
+    "XOM",
+    "CVX"
+  ],
+  "results": [
+    {
+      "symbol": "MA",
+      "coverage": {
+        "start": "2010-01-04",
+        "end": "2025-12-30",
+        "main_start": "2018-01-02",
+        "eligible_end": "2025-12-01"
+      },
+      "events": [
+        {
+          "symbol": "MA",
+          "date": "2018-05-02",
+          "id": "NEW_HOLD_2",
+          "color": "BLUE",
+          "age": "21_PLUS",
+          "subtype": "FULL_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2018-11-19",
+          "id": "NEW_AVOID_BUY_1",
+          "color": "GREEN",
+          "age": "11_20",
+          "subtype": "CLOSE_BELOW",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2019-03-08",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2020-06-25",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2020-08-05",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2021-08-10",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2021-11-22",
+          "id": "NEW_AVOID_BUY_1",
+          "color": "GREEN",
+          "age": "11_20",
+          "subtype": "CLOSE_BELOW",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2022-01-28",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2022-05-27",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2023-05-05",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2023-05-18",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2023-11-10",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2023-12-18",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2024-07-18",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2025-05-30",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2025-06-06",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2025-08-29",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "MA",
+          "date": "2025-09-10",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        }
+      ]
+    },
+    {
+      "symbol": "CAT",
+      "coverage": {
+        "start": "2010-01-04",
+        "end": "2025-12-30",
+        "main_start": "2018-01-02",
+        "eligible_end": "2025-12-01"
+      },
+      "events": [
+        {
+          "symbol": "CAT",
+          "date": "2019-05-06",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "CAT",
+          "date": "2019-07-31",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "CAT",
+          "date": "2020-07-31",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "CAT",
+          "date": "2020-08-04",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "CAT",
+          "date": "2020-08-10",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "CAT",
+          "date": "2020-11-09",
+          "id": "NEW_HOLD_2",
+          "color": "BLUE",
+          "age": "21_PLUS",
+          "subtype": "FULL_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "CAT",
+          "date": "2021-09-30",
+          "id": "NEW_AVOID_BUY_1",
+          "color": "GREEN",
+          "age": "11_20",
+          "subtype": "CLOSE_BELOW",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "CAT",
+          "date": "2022-04-14",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "CAT",
+          "date": "2023-04-03",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "CAT",
+          "date": "2024-11-06",
+          "id": "NEW_HOLD_2",
+          "color": "BLUE",
+          "age": "21_PLUS",
+          "subtype": "FULL_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "CAT",
+          "date": "2025-01-15",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "WICK_ONLY",
+          "outcome": "BS_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "CAT",
+          "date": "2025-10-29",
+          "id": "NEW_HOLD_2",
+          "color": "BLUE",
+          "age": "21_PLUS",
+          "subtype": "FULL_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        }
+      ]
+    },
+    {
+      "symbol": "BA",
+      "coverage": {
+        "start": "2010-01-04",
+        "end": "2025-12-30",
+        "main_start": "2018-01-02",
+        "eligible_end": "2025-12-01"
+      },
+      "events": [
+        {
+          "symbol": "BA",
+          "date": "2018-01-31",
+          "id": "NEW_HOLD_2",
+          "color": "BLUE",
+          "age": "21_PLUS",
+          "subtype": "FULL_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2018-12-03",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2019-05-31",
+          "id": "NEW_AVOID_BUY_1",
+          "color": "GREEN",
+          "age": "11_20",
+          "subtype": "CLOSE_BELOW",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2019-10-02",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2019-11-11",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2020-10-01",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2020-11-09",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "FULL_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2021-06-28",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2021-07-02",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2021-11-05",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2022-11-30",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2022-12-12",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2023-07-11",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2023-10-13",
+          "id": "NEW_AVOID_BUY_1",
+          "color": "GREEN",
+          "age": "11_20",
+          "subtype": "CLOSE_BELOW",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2023-10-19",
+          "id": "NEW_AVOID_BUY_1",
+          "color": "GREEN",
+          "age": "11_20",
+          "subtype": "CLOSE_BELOW",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2024-09-03",
+          "id": "NEW_AVOID_BUY_1",
+          "color": "GREEN",
+          "age": "11_20",
+          "subtype": "CLOSE_BELOW",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2025-01-14",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "BA",
+          "date": "2025-05-29",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        }
+      ]
+    },
+    {
+      "symbol": "GE",
+      "coverage": {
+        "start": "2010-01-04",
+        "end": "2025-12-30",
+        "main_start": "2018-01-02",
+        "eligible_end": "2025-12-01"
+      },
+      "events": [
+        {
+          "symbol": "GE",
+          "date": "2019-12-03",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "GE",
+          "date": "2020-01-29",
+          "id": "NEW_HOLD_2",
+          "color": "BLUE",
+          "age": "21_PLUS",
+          "subtype": "FULL_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "GE",
+          "date": "2023-06-30",
+          "id": "NEW_HOLD_2",
+          "color": "BLUE",
+          "age": "21_PLUS",
+          "subtype": "FULL_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "GE",
+          "date": "2023-07-25",
+          "id": "NEW_HOLD_2",
+          "color": "BLUE",
+          "age": "21_PLUS",
+          "subtype": "FULL_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "GE",
+          "date": "2023-12-12",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "GE",
+          "date": "2025-02-24",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "GE",
+          "date": "2025-04-25",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "MID_FIRST"
+        }
+      ]
+    },
+    {
+      "symbol": "XOM",
+      "coverage": {
+        "start": "2010-01-04",
+        "end": "2025-12-30",
+        "main_start": "2018-01-02",
+        "eligible_end": "2025-12-01"
+      },
+      "events": [
+        {
+          "symbol": "XOM",
+          "date": "2018-01-02",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "XOM",
+          "date": "2018-03-14",
+          "id": "NEW_AVOID_BUY_1",
+          "color": "GREEN",
+          "age": "11_20",
+          "subtype": "CLOSE_BELOW",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "XOM",
+          "date": "2018-06-19",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "XOM",
+          "date": "2018-06-21",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "XOM",
+          "date": "2018-06-25",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "XOM",
+          "date": "2018-07-10",
+          "id": "NEW_HOLD_2",
+          "color": "BLUE",
+          "age": "21_PLUS",
+          "subtype": "FULL_ABOVE",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "XOM",
+          "date": "2018-11-07",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "XOM",
+          "date": "2018-11-20",
+          "id": "NEW_AVOID_BUY_1",
+          "color": "GREEN",
+          "age": "11_20",
+          "subtype": "CLOSE_BELOW",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "XOM",
+          "date": "2019-08-23",
+          "id": "NEW_AVOID_BUY_1",
+          "color": "GREEN",
+          "age": "11_20",
+          "subtype": "CLOSE_BELOW",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "XOM",
+          "date": "2023-06-07",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "XOM",
+          "date": "2023-09-27",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "XOM",
+          "date": "2023-12-05",
+          "id": "NEW_AVOID_BUY_1",
+          "color": "GREEN",
+          "age": "11_20",
+          "subtype": "CLOSE_BELOW",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "XOM",
+          "date": "2024-10-28",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "XOM",
+          "date": "2025-06-10",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "MID_FIRST"
+        }
+      ]
+    },
+    {
+      "symbol": "CVX",
+      "coverage": {
+        "start": "2010-01-04",
+        "end": "2025-12-30",
+        "main_start": "2018-01-02",
+        "eligible_end": "2025-12-01"
+      },
+      "events": [
+        {
+          "symbol": "CVX",
+          "date": "2018-11-07",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "CVX",
+          "date": "2020-12-21",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "CVX",
+          "date": "2022-11-11",
+          "id": "NEW_HOLD_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST"
+        },
+        {
+          "symbol": "CVX",
+          "date": "2023-01-31",
+          "id": "NEW_BUY_1",
+          "color": "BLUE",
+          "age": "11_20",
+          "subtype": "WICK_ONLY",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST"
+        },
+        {
+          "symbol": "CVX",
+          "date": "2023-03-15",
+          "id": "NEW_AVOID_BUY_1",
+          "color": "GREEN",
+          "age": "11_20",
+          "subtype": "CLOSE_BELOW",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "CVX",
+          "date": "2024-09-04",
+          "id": "NEW_AVOID_BUY_1",
+          "color": "GREEN",
+          "age": "11_20",
+          "subtype": "CLOSE_BELOW",
+          "outcome": "BD_FIRST",
+          "primary": "BD_FIRST"
+        },
+        {
+          "symbol": "CVX",
+          "date": "2025-01-10",
+          "id": "NEW_SELL_1",
+          "color": "GREEN",
+          "age": "4_10",
+          "subtype": "CLOSE_ABOVE",
+          "outcome": "BS_FIRST",
+          "primary": "MID_FIRST"
+        }
+      ]
+    }
+  ]
+}

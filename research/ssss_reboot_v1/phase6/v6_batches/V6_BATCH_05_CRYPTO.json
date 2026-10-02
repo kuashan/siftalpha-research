@@ -1,0 +1,1338 @@
+{
+  "phase": "V6",
+  "track": "INDEPENDENT_CRYPTO",
+  "batch": 5,
+  "symbols": [
+    "XRP/USD",
+    "ADA/USD",
+    "DOGE/USD",
+    "LTC/USD"
+  ],
+  "results": [
+    {
+      "symbol": "XRP/USD",
+      "error": null,
+      "coverage": {
+        "returned_start": "2018-05-07",
+        "returned_end": "2026-09-30",
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-09-10",
+        "raw_bars": 3069,
+        "pre2020_bars": 605
+      },
+      "events": [
+        {
+          "symbol": "XRP/USD",
+          "date": "2020-07-12",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": 0.44617303410402753,
+          "mfe20": 0.46033799504662,
+          "mae20": -0.05233593699482786
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2021-05-01",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.39076419610932667,
+          "mfe20": 0.035452396824434906,
+          "mae20": -0.4105205745106357
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2021-06-08",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.2631880306671244,
+          "mfe20": 0.05298087881908686,
+          "mae20": -0.3785330129305412
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2021-08-08",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": 0.4693877551020409,
+          "mfe20": 0.7299448081119242,
+          "mae20": -0.02374538570145035
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2021-09-06",
+          "id": "V6_B",
+          "outcome": "SAME",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.3205986042161306,
+          "mfe20": 0.0015109000647528514,
+          "mae20": -0.3821138283329736
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2021-12-21",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.21837385791846275,
+          "mfe20": 0.07307282767456713,
+          "mae20": -0.25997890411893654
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2021-12-22",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.1930376827824507,
+          "mfe20": 0.06553422391177288,
+          "mae20": -0.26517773655051136
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2022-02-24",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.13823823427968862,
+          "mfe20": 0.21985916885014611,
+          "mae20": -0.01853713123905354
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2022-09-09",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.3635854443581359,
+          "mfe20": 0.559944077309358,
+          "mae20": -0.0977590503573964
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2022-11-30",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.14492398589808697,
+          "mfe20": 0.0034331045471580612,
+          "mae20": -0.18366846943767712
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2023-01-11",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": 0.08795920922608724,
+          "mfe20": 0.15875566750454095,
+          "mae20": -0.024671519853271096
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2024-01-03",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.11009957248539293,
+          "mfe20": 0.06836137183719293,
+          "mae20": -0.14720027734799512
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2024-05-06",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.021670735321355994,
+          "mfe20": 0.03056121503982201,
+          "mae20": -0.09835156510464904
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2024-05-06",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.021670735321355994,
+          "mfe20": 0.03056121503982201,
+          "mae20": -0.09835156510464904
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2024-05-13",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.016425885937579432,
+          "mfe20": 0.10112806453845358,
+          "mae20": -0.015436354946296471
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2024-09-01",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.09129087258153867,
+          "mfe20": 0.11740003865985105,
+          "mae20": -0.08179658721556671
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2025-01-11",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.17842726284738375,
+          "mfe20": 0.3196708585623349,
+          "mae20": -0.09575376494333188
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2025-10-27",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.1591116173120728,
+          "mfe20": 0.02076689445709956,
+          "mae20": -0.2154517843583903
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2026-01-19",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.2795568982880161,
+          "mfe20": 0.0024672708962738543,
+          "mae20": -0.4374622356495469
+        },
+        {
+          "symbol": "XRP/USD",
+          "date": "2026-06-15",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.06541754159263446,
+          "mfe20": 0.014375706670973987,
+          "mae20": -0.18494588919399113
+        }
+      ]
+    },
+    {
+      "symbol": "ADA/USD",
+      "error": null,
+      "coverage": {
+        "returned_start": "2018-04-25",
+        "returned_end": "2026-09-30",
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-09-10",
+        "raw_bars": 3081,
+        "pre2020_bars": 617
+      },
+      "events": [
+        {
+          "symbol": "ADA/USD",
+          "date": "2020-05-28",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.284000085661541,
+          "mfe20": 0.38753851961656993,
+          "mae20": -0.0370768472946722
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2020-07-01",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.2700360748832167,
+          "mfe20": 0.3742134837707378,
+          "mae20": -0.09045903887655415
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2020-07-25",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.037261457027441325,
+          "mfe20": 0.0629614152388911,
+          "mae20": -0.09423318010865034
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2020-08-01",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.1485381147663929,
+          "mfe20": 0.03318560573545848,
+          "mae20": -0.1485381147663929
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2020-09-28",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": 0.06952883753361894,
+          "mfe20": 0.12361789022811043,
+          "mae20": -0.09104490487100303
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2020-10-01",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": 0.0800693594451245,
+          "mfe20": 0.15055079559363516,
+          "mae20": -0.06925742554059577
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2020-10-12",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": -0.10272097333820318,
+          "mfe20": 0.02994886778670547,
+          "mae20": -0.16891889152666184
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2020-12-28",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 1.1617164153724069,
+          "mfe20": 1.2052488946831428,
+          "mae20": -0.02635749914975627
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2021-02-01",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 1.6942770346415799,
+          "mfe20": 1.8333578323288746,
+          "mae20": -0.007398672154441566
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2021-03-17",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.09115598835225003,
+          "mfe20": 0.05521788699358798,
+          "mae20": -0.22506154281855206
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2021-05-05",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.04986468200270644,
+          "mfe20": 0.6197564276048715,
+          "mae20": -0.24451962110960757
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2022-03-31",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": -0.179509649737303,
+          "mfe20": 0.0884413309982488,
+          "mae20": -0.23292470227670747
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2022-09-10",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.15114230232932246,
+          "mfe20": 0.014450381349360608,
+          "mae20": -0.1698886611946363
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2022-09-12",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.1634078745647296,
+          "mfe20": 0.013367876561537262,
+          "mae20": -0.1660016094971425
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2022-09-19",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.0658272601243044,
+          "mfe20": 0.06339743899707173,
+          "mae20": -0.07863923301610842
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2022-09-21",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.11121221034313822,
+          "mfe20": 0.09483738697208577,
+          "mae20": -0.12349331081434356
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2023-02-15",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.21065201312032444,
+          "mfe20": 0.002627179301954108,
+          "mae20": -0.2335801711588208
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2023-03-24",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": 0.18313390434550247,
+          "mfe20": 0.19287509582173934,
+          "mae20": -0.06123014364681734
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2023-08-03",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.0834188062707284,
+          "mfe20": 0.03384615500328736,
+          "mae20": -0.17948718562349353
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2023-12-21",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.11032422096317285,
+          "mfe20": 0.0637393452943027,
+          "mae20": -0.26849228832231664
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2024-03-11",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.15953462858947798,
+          "mfe20": 0.04680023089333307,
+          "mae20": -0.2633484190039398
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2024-04-10",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.2474419805990099,
+          "mfe20": 0.013813165781710435,
+          "mae20": -0.316678000512176
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2024-06-07",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.12908969795436676,
+          "mfe20": 0.0022257289611780084,
+          "mae20": -0.1929668193404589
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2024-08-01",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.060845213849287094,
+          "mfe20": 0.005600840122199635,
+          "mae20": -0.2942973268839104
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2024-08-21",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.07020875576036878,
+          "mfe20": 0.08782870696665768,
+          "mae20": -0.17701271347248582
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2024-09-25",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": -0.05772763054316454,
+          "mfe20": 0.09000262398320658,
+          "mae20": -0.13014956704277092
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2024-10-02",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.061753537379739765,
+          "mfe20": 0.08622193165680359,
+          "mae20": -0.03437229728015434
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2025-01-03",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.09427207637231494,
+          "mfe20": 0.07049752157150713,
+          "mae20": -0.19607123187075448
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2025-04-23",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": 0.18947971907696726,
+          "mfe20": 0.23878457789881025,
+          "mae20": -0.07897377096173142
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2025-07-09",
+          "id": "V6_D",
+          "outcome": "BS_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": 0.2571061506343344,
+          "mfe20": 0.5052192066805845,
+          "mae20": -0.00867191263850986
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2025-07-10",
+          "id": "V6_E",
+          "outcome": "RESIST_BREAK",
+          "primary": "RESIST_HOLD",
+          "hit": false,
+          "ret20": 0.1267896678966789,
+          "mfe20": 0.38346863468634695,
+          "mae20": -0.013874538745387355
+        },
+        {
+          "symbol": "ADA/USD",
+          "date": "2026-08-18",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.2628865979381443,
+          "mfe20": 0.4799541809851089,
+          "mae20": -0.0074455899198166975
+        }
+      ]
+    },
+    {
+      "symbol": "DOGE/USD",
+      "error": null,
+      "coverage": {
+        "returned_start": "2020-03-03",
+        "returned_end": "2026-09-30",
+        "main_start": "2020-08-30",
+        "eligible_end": "2026-09-10",
+        "raw_bars": 2403,
+        "pre2020_bars": 0
+      },
+      "events": [
+        {
+          "symbol": "DOGE/USD",
+          "date": "2020-12-17",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 1.8052123268461133,
+          "mfe20": 2.5679474360007375,
+          "mae20": -0.00537342840874333
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2021-01-28",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.36688803624725685,
+          "mfe20": 1.3233253126776723,
+          "mae20": -0.3444712032900581
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2021-03-08",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.14681194389511576,
+          "mfe20": -0.0023345229409630353,
+          "mae20": -0.19914982392838076
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2021-03-13",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.08224753458591749,
+          "mfe20": 0.049646976163975065,
+          "mae20": -0.19727584597554548
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2021-04-01",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": 3.927575666026688,
+          "mfe20": 5.71241802732038,
+          "mae20": -0.1076901245953652
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2021-04-06",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 3.2043874727786594,
+          "mfe20": 5.479398113540779,
+          "mae20": -0.0929230374839285
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2021-04-28",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.466440723156879,
+          "mfe20": 1.2354699610314315,
+          "mae20": -0.06579349971628667
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2021-05-01",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.08272834434174392,
+          "mfe20": 0.854509565024298,
+          "mae20": -0.19304125695262153
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2021-08-07",
+          "id": "V6_E",
+          "outcome": "RESIST_BREAK",
+          "primary": "RESIST_HOLD",
+          "hit": false,
+          "ret20": 0.12327830134686568,
+          "mfe20": 0.34190549048036933,
+          "mae20": -0.11931016063184396
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2021-08-08",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": 0.18925675619404547,
+          "mfe20": 0.46450139496148246,
+          "mae20": -0.038850718301061904
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2021-08-10",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": 0.056907449930321485,
+          "mfe20": 0.36709952449271266,
+          "mae20": -0.020368460715558534
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2021-09-16",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.050413264462809915,
+          "mfe20": 0.12231409090909096,
+          "mae20": -0.19752070247933884
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2021-11-16",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.2478885135135135,
+          "mfe20": 0.01858108108108092,
+          "mae20": -0.4375
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2021-12-14",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.10942408376963353,
+          "mfe20": 0.02094235602094252,
+          "mae20": -0.15602094240837694
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2022-04-06",
+          "id": "V6_A",
+          "outcome": "SUPPORT_BREAK",
+          "primary": "SUPPORT_HOLD",
+          "hit": false,
+          "ret20": -0.039748884239888316,
+          "mfe20": 0.18410041841004188,
+          "mae20": -0.1450488145048815
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2022-08-17",
+          "id": "V6_A",
+          "outcome": "SUPPORT_BREAK",
+          "primary": "SUPPORT_HOLD",
+          "hit": false,
+          "ret20": -0.26575169974108925,
+          "mfe20": 0.02495316250838231,
+          "mae20": -0.2737367526670399
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2023-03-23",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": 0.07794726258844076,
+          "mfe20": 0.34513965919621215,
+          "mae20": -0.07833502113501889
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2023-03-31",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": 0.08990507522904645,
+          "mfe20": 0.35195523700375553,
+          "mae20": -0.013641716843356244
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2023-06-23",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.03181357665484752,
+          "mfe20": 0.051165534413298186,
+          "mae20": -0.11054095031640365
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2023-12-02",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.10247180796779132,
+          "mfe20": 0.24115116950848914,
+          "mae20": -0.028780316974109876
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2024-03-28",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.3294875694716375,
+          "mfe20": 0.020712255664619095,
+          "mae20": -0.4045693770244084
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2024-07-15",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.16934902714388667,
+          "mfe20": 0.14869092801665462,
+          "mae20": -0.20466009288173592
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2024-08-01",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.10940515143887919,
+          "mfe20": 0.0038593841765248715,
+          "mae20": -0.3245238862320665
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2024-08-23",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.08941072219760748,
+          "mfe20": 0.018431546300398782,
+          "mae20": -0.210633602126717
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2025-01-03",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.07325804838242655,
+          "mfe20": 0.142646555581879,
+          "mae20": -0.1847903340440653
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2025-07-09",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": 0.2403478646208388,
+          "mfe20": 0.5925330969921896,
+          "mae20": -0.00991524954301215
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2025-07-14",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": 0.006430705352169719,
+          "mfe20": 0.4557699124006278,
+          "mae20": -0.04592637601903893
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2026-05-23",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.16580964393130881,
+          "mfe20": 0.008440865431260436,
+          "mae20": -0.24653148345784404
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2026-05-27",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.13255050253756595,
+          "mfe20": 0.013334660165190693,
+          "mae20": -0.2271867847547019
+        },
+        {
+          "symbol": "DOGE/USD",
+          "date": "2026-08-30",
+          "id": "V6_A",
+          "outcome": "SUPPORT_HOLD",
+          "primary": "SUPPORT_HOLD",
+          "hit": true,
+          "ret20": 0.06910420475319934,
+          "mfe20": 0.15965874466788543,
+          "mae20": -0.04558196221815958
+        }
+      ]
+    },
+    {
+      "symbol": "LTC/USD",
+      "error": null,
+      "coverage": {
+        "returned_start": "2017-12-14",
+        "returned_end": "2026-09-30",
+        "main_start": "2020-01-02",
+        "eligible_end": "2026-09-10",
+        "raw_bars": 3045,
+        "pre2020_bars": 737
+      },
+      "events": [
+        {
+          "symbol": "LTC/USD",
+          "date": "2021-03-12",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.08286115769910707,
+          "mfe20": 0.03512986718643751,
+          "mae20": -0.22782280948279776
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2021-04-02",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.19349509063444104,
+          "mfe20": 0.5442314954682779,
+          "mae20": -0.07916348659365557
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2021-04-05",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": 0.011262927345187856,
+          "mfe20": 0.47969059634801337,
+          "mae20": -0.02266145718598289
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2021-05-03",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.5164082018390673,
+          "mfe20": 0.362439292685401,
+          "mae20": -0.5656497245851384
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2022-09-09",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.11757972199509403,
+          "mfe20": 0.10188062142273102,
+          "mae20": -0.1795584627964022
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2022-09-19",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.01927801927801931,
+          "mfe20": 0.0546210546210546,
+          "mae20": -0.04989604989604979
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2022-10-13",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.19053208137715183,
+          "mfe20": 0.22007042253521125,
+          "mae20": -0.02777777777777768
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2022-12-05",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.13731603891244704,
+          "mfe20": 0.01870790720878035,
+          "mae20": -0.23808929907707665
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2023-02-07",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.06741350252800649,
+          "mfe20": 0.043422226628333505,
+          "mae20": -0.12402101715078817
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2023-02-15",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.16101118133203685,
+          "mfe20": 0.02333495381623729,
+          "mae20": -0.17987360233349536
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2023-04-26",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.019745801180208744,
+          "mfe20": 0.038697231048570035,
+          "mae20": -0.13912846118928734
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2023-08-02",
+          "id": "V6_C",
+          "outcome": "BD_FIRST",
+          "primary": "MID_FIRST",
+          "hit": false,
+          "ret20": -0.2598515134209024,
+          "mfe20": 0.00948029697315822,
+          "mae20": -0.34665905197030267
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2024-03-29",
+          "id": "V6_B",
+          "outcome": "BS_FIRST",
+          "primary": "BS_FIRST",
+          "hit": true,
+          "ret20": -0.25792520444730305,
+          "mfe20": 0.03464118349719736,
+          "mae20": -0.34852522282458875
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2024-05-01",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.10106051154086071,
+          "mfe20": 0.11640673736743601,
+          "mae20": -0.02358078602620084
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2025-02-19",
+          "id": "V6_B",
+          "outcome": "MID_FIRST",
+          "primary": "BS_FIRST",
+          "hit": false,
+          "ret20": -0.3293297746144721,
+          "mfe20": 0.03922004744958474,
+          "mae20": -0.3825622775800711
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2025-03-16",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": -0.08368432720017727,
+          "mfe20": 0.06982930614054528,
+          "mae20": -0.11194857016182658
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2025-04-22",
+          "id": "V6_D",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.243741765480896,
+          "mfe20": 0.28218948377051145,
+          "mae20": -0.032578751946340856
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2025-10-28",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.05597516813243675,
+          "mfe20": 0.176513191929643,
+          "mae20": -0.1753750646663218
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2025-11-01",
+          "id": "V6_E",
+          "outcome": "RESIST_HOLD",
+          "primary": "RESIST_HOLD",
+          "hit": true,
+          "ret20": -0.18484908265930156,
+          "mfe20": 0.12162162162162171,
+          "mae20": -0.21384888538173208
+        },
+        {
+          "symbol": "LTC/USD",
+          "date": "2026-08-01",
+          "id": "V6_C",
+          "outcome": "MID_FIRST",
+          "primary": "MID_FIRST",
+          "hit": true,
+          "ret20": 0.20158192090395488,
+          "mfe20": 0.22463276836158186,
+          "mae20": -0.01943502824858756
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "V6_A": {
+      "n": 12,
+      "hit": 10,
+      "p": 0.8333333333333334,
+      "per_symbol": [
+        {
+          "symbol": "XRP/USD",
+          "n": 2,
+          "p": 1
+        },
+        {
+          "symbol": "ADA/USD",
+          "n": 4,
+          "p": 1
+        },
+        {
+          "symbol": "DOGE/USD",
+          "n": 6,
+          "p": 0.6666666666666666
+        }
+      ],
+      "ret20_median": 0.0316690776412456,
+      "mfe20_median": 0.1884877571158906,
+      "mae20_median": -0.0567830403208226
+    },
+    "V6_B": {
+      "n": 35,
+      "hit": 28,
+      "p": 0.8,
+      "per_symbol": [
+        {
+          "symbol": "XRP/USD",
+          "n": 3,
+          "p": 0.6666666666666666
+        },
+        {
+          "symbol": "ADA/USD",
+          "n": 12,
+          "p": 0.9166666666666666
+        },
+        {
+          "symbol": "DOGE/USD",
+          "n": 11,
+          "p": 0.6363636363636364
+        },
+        {
+          "symbol": "LTC/USD",
+          "n": 9,
+          "p": 0.8888888888888888
+        }
+      ],
+      "ret20_median": -0.08224753458591749,
+      "mfe20_median": 0.07049752157150713,
+      "mae20_median": -0.19304125695262153
+    },
+    "V6_C": {
+      "n": 26,
+      "hit": 15,
+      "p": 0.5769230769230769,
+      "per_symbol": [
+        {
+          "symbol": "XRP/USD",
+          "n": 6,
+          "p": 0.6666666666666666
+        },
+        {
+          "symbol": "ADA/USD",
+          "n": 8,
+          "p": 0.5
+        },
+        {
+          "symbol": "DOGE/USD",
+          "n": 5,
+          "p": 0.2
+        },
+        {
+          "symbol": "LTC/USD",
+          "n": 7,
+          "p": 0.8571428571428571
+        }
+      ],
+      "ret20_median": -0.0746230331975164,
+      "mfe20_median": 0.059009246809063165,
+      "mae20_median": -0.14316436926864123
+    },
+    "V6_D": {
+      "n": 11,
+      "hit": 10,
+      "p": 0.9090909090909091,
+      "per_symbol": [
+        {
+          "symbol": "XRP/USD",
+          "n": 4,
+          "p": 1
+        },
+        {
+          "symbol": "ADA/USD",
+          "n": 2,
+          "p": 0.5
+        },
+        {
+          "symbol": "DOGE/USD",
+          "n": 4,
+          "p": 1
+        },
+        {
+          "symbol": "LTC/USD",
+          "n": 1,
+          "p": 1
+        }
+      ],
+      "ret20_median": -0.06541754159263446,
+      "mfe20_median": 0.07307282767456713,
+      "mae20_median": -0.15602094240837694
+    },
+    "V6_E": {
+      "n": 18,
+      "hit": 16,
+      "p": 0.8888888888888888,
+      "per_symbol": [
+        {
+          "symbol": "XRP/USD",
+          "n": 5,
+          "p": 1
+        },
+        {
+          "symbol": "ADA/USD",
+          "n": 6,
+          "p": 0.8333333333333334
+        },
+        {
+          "symbol": "DOGE/USD",
+          "n": 4,
+          "p": 0.75
+        },
+        {
+          "symbol": "LTC/USD",
+          "n": 3,
+          "p": 1
+        }
+      ],
+      "ret20_median": 0.02392905110613147,
+      "mfe20_median": 0.1370843429108728,
+      "mae20_median": -0.1088308628682465
+    }
+  }
+}

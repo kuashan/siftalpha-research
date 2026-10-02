@@ -1,0 +1,826 @@
+{
+  "meta": {
+    "date": "2026-10-02",
+    "status": "COMPLETE",
+    "protocol_commit": "4804d81b3baa077be4c720bfa356d196ec9c0cb0",
+    "representation": "FIRST_OBSERVED",
+    "xma_modified": false,
+    "independent_stock_count": 20,
+    "independent_crypto_count": 4,
+    "stock_symbols": [
+      "ACN",
+      "NOW",
+      "INTU",
+      "AMAT",
+      "LRCX",
+      "BKNG",
+      "TJX",
+      "CMG",
+      "ROST",
+      "MAR",
+      "DHR",
+      "SYK",
+      "MDT",
+      "BMY",
+      "ISRG",
+      "SCHW",
+      "SPGI",
+      "DE",
+      "HON",
+      "RTX"
+    ],
+    "crypto_symbols": [
+      "XRP/USD",
+      "ADA/USD",
+      "DOGE/USD",
+      "LTC/USD"
+    ]
+  },
+  "rules": {
+    "V6_A": {
+      "definition": "GREEN→GRAY 1–3 + LIGHT_SUPPORT",
+      "v5_discovery": {
+        "n": 48,
+        "p": 0.875,
+        "eligible": 9,
+        "support_fraction": 1
+      },
+      "v6_stock": {
+        "n": 41,
+        "hit": 33,
+        "p": 0.8048780487804879,
+        "eligible_symbols": 6,
+        "supporting_symbols": 5,
+        "neutral_symbols": 0,
+        "opposing_symbols": 1,
+        "support_fraction": 0.8333333333333334,
+        "median_symbol_probability": 0.6666666666666666,
+        "per_symbol": [
+          {
+            "symbol": "ACN",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "NOW",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "INTU",
+            "n": 1,
+            "p": 1
+          },
+          {
+            "symbol": "AMAT",
+            "n": 1,
+            "p": 0
+          },
+          {
+            "symbol": "BKNG",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "TJX",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "CMG",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "ROST",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "MAR",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "DHR",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "SYK",
+            "n": 3,
+            "p": 0
+          },
+          {
+            "symbol": "MDT",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "BMY",
+            "n": 1,
+            "p": 1
+          },
+          {
+            "symbol": "ISRG",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "SPGI",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "DE",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "HON",
+            "n": 2,
+            "p": 0.5
+          },
+          {
+            "symbol": "RTX",
+            "n": 2,
+            "p": 1
+          }
+        ],
+        "ret20_median": -0.0022610672801069986,
+        "mfe20_median": 0.057559568165383546,
+        "mae20_median": -0.059284982071705405,
+        "status": "INSUFFICIENT_BREADTH"
+      },
+      "v6_crypto": {
+        "n": 12,
+        "hit": 10,
+        "p": 0.8333333333333334,
+        "eligible_symbols": 2,
+        "supporting_symbols": 2,
+        "neutral_symbols": 0,
+        "opposing_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.8333333333333333,
+        "per_symbol": [
+          {
+            "symbol": "XRP/USD",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "ADA/USD",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "DOGE/USD",
+            "n": 6,
+            "p": 0.6666666666666666
+          }
+        ],
+        "ret20_median": 0.0316690776412456,
+        "mfe20_median": 0.1884877571158906,
+        "mae20_median": -0.0567830403208226,
+        "status": "INSUFFICIENT_BREADTH"
+      },
+      "final_disposition": "HOLD_FOR_MORE_DATA"
+    },
+    "V6_B": {
+      "definition": "BLUE 21+ + UPPER CLOSE_ABOVE",
+      "v5_discovery": {
+        "n": 228,
+        "p": 0.829,
+        "eligible": 20,
+        "support_fraction": 0.95
+      },
+      "v6_stock": {
+        "n": 320,
+        "hit": 256,
+        "p": 0.8,
+        "eligible_symbols": 20,
+        "supporting_symbols": 20,
+        "neutral_symbols": 0,
+        "opposing_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.7928571428571429,
+        "per_symbol": [
+          {
+            "symbol": "ACN",
+            "n": 13,
+            "p": 0.6923076923076923
+          },
+          {
+            "symbol": "NOW",
+            "n": 13,
+            "p": 0.6923076923076923
+          },
+          {
+            "symbol": "INTU",
+            "n": 12,
+            "p": 0.75
+          },
+          {
+            "symbol": "AMAT",
+            "n": 17,
+            "p": 0.8235294117647058
+          },
+          {
+            "symbol": "LRCX",
+            "n": 25,
+            "p": 0.8
+          },
+          {
+            "symbol": "BKNG",
+            "n": 16,
+            "p": 0.75
+          },
+          {
+            "symbol": "TJX",
+            "n": 23,
+            "p": 0.7391304347826086
+          },
+          {
+            "symbol": "CMG",
+            "n": 14,
+            "p": 0.9285714285714286
+          },
+          {
+            "symbol": "ROST",
+            "n": 19,
+            "p": 0.8947368421052632
+          },
+          {
+            "symbol": "MAR",
+            "n": 21,
+            "p": 0.9047619047619048
+          },
+          {
+            "symbol": "DHR",
+            "n": 14,
+            "p": 0.7857142857142857
+          },
+          {
+            "symbol": "SYK",
+            "n": 12,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "MDT",
+            "n": 13,
+            "p": 0.6923076923076923
+          },
+          {
+            "symbol": "BMY",
+            "n": 17,
+            "p": 0.7647058823529411
+          },
+          {
+            "symbol": "ISRG",
+            "n": 20,
+            "p": 0.85
+          },
+          {
+            "symbol": "SCHW",
+            "n": 16,
+            "p": 0.6875
+          },
+          {
+            "symbol": "SPGI",
+            "n": 12,
+            "p": 0.9166666666666666
+          },
+          {
+            "symbol": "DE",
+            "n": 11,
+            "p": 0.8181818181818182
+          },
+          {
+            "symbol": "HON",
+            "n": 14,
+            "p": 0.7142857142857143
+          },
+          {
+            "symbol": "RTX",
+            "n": 18,
+            "p": 0.8888888888888888
+          }
+        ],
+        "ret20_median": -0.003441199275055651,
+        "mfe20_median": 0.04250926822583945,
+        "mae20_median": -0.05047361262428973,
+        "status": "VALIDATED_V6_STRONG"
+      },
+      "v6_crypto": {
+        "n": 35,
+        "hit": 28,
+        "p": 0.8,
+        "eligible_symbols": 4,
+        "supporting_symbols": 4,
+        "neutral_symbols": 0,
+        "opposing_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.7777777777777777,
+        "per_symbol": [
+          {
+            "symbol": "XRP/USD",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "ADA/USD",
+            "n": 12,
+            "p": 0.9166666666666666
+          },
+          {
+            "symbol": "DOGE/USD",
+            "n": 11,
+            "p": 0.6363636363636364
+          },
+          {
+            "symbol": "LTC/USD",
+            "n": 9,
+            "p": 0.8888888888888888
+          }
+        ],
+        "ret20_median": -0.08224753458591749,
+        "mfe20_median": 0.07049752157150713,
+        "mae20_median": -0.19304125695262153,
+        "status": "SUPPORTS_V6_STOCK"
+      },
+      "final_disposition": "PROMOTE_TO_FORMAL"
+    },
+    "V6_C": {
+      "definition": "GRAY 4–10 + LOWER WICK_ONLY",
+      "v5_discovery": {
+        "n": 45,
+        "p": 0.822,
+        "eligible": 9,
+        "support_fraction": 0.778
+      },
+      "v6_stock": {
+        "n": 58,
+        "hit": 44,
+        "p": 0.7586206896551724,
+        "eligible_symbols": 12,
+        "supporting_symbols": 9,
+        "neutral_symbols": 2,
+        "opposing_symbols": 1,
+        "support_fraction": 0.75,
+        "median_symbol_probability": 0.7083333333333333,
+        "per_symbol": [
+          {
+            "symbol": "ACN",
+            "n": 1,
+            "p": 1
+          },
+          {
+            "symbol": "NOW",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "INTU",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "AMAT",
+            "n": 1,
+            "p": 1
+          },
+          {
+            "symbol": "LRCX",
+            "n": 1,
+            "p": 1
+          },
+          {
+            "symbol": "BKNG",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "CMG",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "ROST",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "MAR",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "DHR",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "SYK",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "MDT",
+            "n": 1,
+            "p": 1
+          },
+          {
+            "symbol": "BMY",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "ISRG",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "SCHW",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "SPGI",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "DE",
+            "n": 2,
+            "p": 0.5
+          },
+          {
+            "symbol": "HON",
+            "n": 8,
+            "p": 0.875
+          },
+          {
+            "symbol": "RTX",
+            "n": 4,
+            "p": 0.5
+          }
+        ],
+        "ret20_median": -0.02296632028666834,
+        "mfe20_median": 0.04735876618039114,
+        "mae20_median": -0.061190905691225095,
+        "status": "VALIDATED_V6_STRONG"
+      },
+      "v6_crypto": {
+        "n": 26,
+        "hit": 15,
+        "p": 0.5769230769230769,
+        "eligible_symbols": 4,
+        "supporting_symbols": 2,
+        "neutral_symbols": 1,
+        "opposing_symbols": 1,
+        "support_fraction": 0.5,
+        "median_symbol_probability": 0.5833333333333333,
+        "per_symbol": [
+          {
+            "symbol": "XRP/USD",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "ADA/USD",
+            "n": 8,
+            "p": 0.5
+          },
+          {
+            "symbol": "DOGE/USD",
+            "n": 5,
+            "p": 0.2
+          },
+          {
+            "symbol": "LTC/USD",
+            "n": 7,
+            "p": 0.8571428571428571
+          }
+        ],
+        "ret20_median": -0.0746230331975164,
+        "mfe20_median": 0.059009246809063165,
+        "mae20_median": -0.14316436926864123,
+        "status": "MIXED"
+      },
+      "final_disposition": "PROMOTE_TO_FORMAL"
+    },
+    "V6_D": {
+      "definition": "GREEN 11–20 + UPPER WICK_ONLY",
+      "v5_discovery": {
+        "n": 49,
+        "p": 0.776,
+        "eligible": 8,
+        "support_fraction": 0.875
+      },
+      "v6_stock": {
+        "n": 48,
+        "hit": 31,
+        "p": 0.6458333333333334,
+        "eligible_symbols": 11,
+        "supporting_symbols": 8,
+        "neutral_symbols": 1,
+        "opposing_symbols": 2,
+        "support_fraction": 0.7272727272727273,
+        "median_symbol_probability": 0.6666666666666666,
+        "per_symbol": [
+          {
+            "symbol": "NOW",
+            "n": 7,
+            "p": 0.7142857142857143
+          },
+          {
+            "symbol": "INTU",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "LRCX",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "BKNG",
+            "n": 1,
+            "p": 1
+          },
+          {
+            "symbol": "TJX",
+            "n": 1,
+            "p": 1
+          },
+          {
+            "symbol": "CMG",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "ROST",
+            "n": 4,
+            "p": 0.5
+          },
+          {
+            "symbol": "MAR",
+            "n": 3,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "DHR",
+            "n": 2,
+            "p": 0
+          },
+          {
+            "symbol": "SYK",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "MDT",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "BMY",
+            "n": 1,
+            "p": 1
+          },
+          {
+            "symbol": "ISRG",
+            "n": 2,
+            "p": 0.5
+          },
+          {
+            "symbol": "SCHW",
+            "n": 1,
+            "p": 0
+          },
+          {
+            "symbol": "SPGI",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "DE",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "HON",
+            "n": 3,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "RTX",
+            "n": 3,
+            "p": 0.6666666666666666
+          }
+        ],
+        "ret20_median": 0.014002783238365235,
+        "mfe20_median": 0.08409932645011398,
+        "mae20_median": -0.046866219148836485,
+        "status": "VALIDATED_V6"
+      },
+      "v6_crypto": {
+        "n": 11,
+        "hit": 10,
+        "p": 0.9090909090909091,
+        "eligible_symbols": 2,
+        "supporting_symbols": 2,
+        "neutral_symbols": 0,
+        "opposing_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 1,
+        "per_symbol": [
+          {
+            "symbol": "XRP/USD",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "ADA/USD",
+            "n": 2,
+            "p": 0.5
+          },
+          {
+            "symbol": "DOGE/USD",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "LTC/USD",
+            "n": 1,
+            "p": 1
+          }
+        ],
+        "ret20_median": -0.06541754159263446,
+        "mfe20_median": 0.07307282767456713,
+        "mae20_median": -0.15602094240837694,
+        "status": "INSUFFICIENT_BREADTH"
+      },
+      "final_disposition": "PROMOTE_TO_FORMAL"
+    },
+    "V6_E": {
+      "definition": "GREEN 11–20 + LIGHT_RESIST",
+      "v5_discovery": {
+        "n": 88,
+        "p": 0.784,
+        "eligible": 16,
+        "support_fraction": 0.938
+      },
+      "v6_stock": {
+        "n": 74,
+        "hit": 52,
+        "p": 0.7027027027027027,
+        "eligible_symbols": 12,
+        "supporting_symbols": 10,
+        "neutral_symbols": 0,
+        "opposing_symbols": 2,
+        "support_fraction": 0.8333333333333334,
+        "median_symbol_probability": 0.6458333333333333,
+        "per_symbol": [
+          {
+            "symbol": "NOW",
+            "n": 6,
+            "p": 0.3333333333333333
+          },
+          {
+            "symbol": "INTU",
+            "n": 6,
+            "p": 1
+          },
+          {
+            "symbol": "AMAT",
+            "n": 1,
+            "p": 1
+          },
+          {
+            "symbol": "LRCX",
+            "n": 4,
+            "p": 1
+          },
+          {
+            "symbol": "BKNG",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "TJX",
+            "n": 2,
+            "p": 0
+          },
+          {
+            "symbol": "CMG",
+            "n": 7,
+            "p": 0.5714285714285714
+          },
+          {
+            "symbol": "ROST",
+            "n": 5,
+            "p": 0.4
+          },
+          {
+            "symbol": "MAR",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "DHR",
+            "n": 1,
+            "p": 1
+          },
+          {
+            "symbol": "SYK",
+            "n": 8,
+            "p": 0.625
+          },
+          {
+            "symbol": "MDT",
+            "n": 6,
+            "p": 0.6666666666666666
+          },
+          {
+            "symbol": "BMY",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "ISRG",
+            "n": 1,
+            "p": 1
+          },
+          {
+            "symbol": "SCHW",
+            "n": 2,
+            "p": 1
+          },
+          {
+            "symbol": "SPGI",
+            "n": 3,
+            "p": 1
+          },
+          {
+            "symbol": "DE",
+            "n": 5,
+            "p": 0.6
+          },
+          {
+            "symbol": "HON",
+            "n": 5,
+            "p": 0.8
+          },
+          {
+            "symbol": "RTX",
+            "n": 2,
+            "p": 1
+          }
+        ],
+        "ret20_median": 0.014841608044491195,
+        "mfe20_median": 0.06508780217228982,
+        "mae20_median": -0.04418764398162589,
+        "status": "VALIDATED_V6_STRONG"
+      },
+      "v6_crypto": {
+        "n": 18,
+        "hit": 16,
+        "p": 0.8888888888888888,
+        "eligible_symbols": 4,
+        "supporting_symbols": 4,
+        "neutral_symbols": 0,
+        "opposing_symbols": 0,
+        "support_fraction": 1,
+        "median_symbol_probability": 0.9166666666666667,
+        "per_symbol": [
+          {
+            "symbol": "XRP/USD",
+            "n": 5,
+            "p": 1
+          },
+          {
+            "symbol": "ADA/USD",
+            "n": 6,
+            "p": 0.8333333333333334
+          },
+          {
+            "symbol": "DOGE/USD",
+            "n": 4,
+            "p": 0.75
+          },
+          {
+            "symbol": "LTC/USD",
+            "n": 3,
+            "p": 1
+          }
+        ],
+        "ret20_median": 0.02392905110613147,
+        "mfe20_median": 0.1370843429108728,
+        "mae20_median": -0.1088308628682465,
+        "status": "INSUFFICIENT_BREADTH"
+      },
+      "final_disposition": "PROMOTE_TO_FORMAL"
+    }
+  }
+}

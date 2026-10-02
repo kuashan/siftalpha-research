@@ -1,0 +1,112 @@
+{
+  "meta": {
+    "date": "2026-10-02",
+    "status": "COMPLETE",
+    "total_formal_rules": 15,
+    "source_v5": "b0343e38a12d7455db613503250c21f95c2011b3",
+    "source_v6": "fc4ebac147bf2be48c76d8a64af6da6925905bb9",
+    "representation": "FIRST_OBSERVED",
+    "xma_modified": false,
+    "strategy_name": "SLTD V6",
+    "official_name_status": "OFFICIAL",
+    "naming_date": "2026-10-02",
+    "previous_research_lineage": "SSSS"
+  },
+  "BUY": [
+    {
+      "id": "BUY_BLUE_21P_LOWER",
+      "condition": "BLUE 21+ + LOWER",
+      "evidence": "V5 STRONG_REPEAT cross-asset"
+    },
+    {
+      "id": "BUY_GRAY_4_10_LIGHT_SUPPORT",
+      "condition": "GRAY 4-10 + LIGHT_SUPPORT",
+      "evidence": "V5 STRONG_REPEAT cross-asset"
+    },
+    {
+      "id": "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT",
+      "condition": "recent BLUE->GRAY + LIGHT_SUPPORT",
+      "evidence": "V5 STRONG_REPEAT cross-asset"
+    },
+    {
+      "id": "BLUE_11_20_LOWER_WICK_ONLY",
+      "condition": "BLUE 11-20 + LOWER WICK_ONLY",
+      "evidence": "V5 PROMOTE"
+    },
+    {
+      "id": "NEW_V5_C_GRAY_4_10_LOWER_WICK_ONLY",
+      "condition": "GRAY 4-10 + LOWER WICK_ONLY",
+      "evidence": "V6 VALIDATED_V6_STRONG stock; crypto MIXED"
+    }
+  ],
+  "HOLD": [
+    {
+      "id": "CONT_BLUE_11_20_UPPER",
+      "condition": "BLUE 11-20 + UPPER",
+      "evidence": "V5 STRONG_REPEAT cross-asset"
+    },
+    {
+      "id": "CONT_BLUE_4_10_UPPER",
+      "condition": "BLUE 4-10 + UPPER",
+      "evidence": "V5 STRONG_REPEAT stock"
+    },
+    {
+      "id": "CONT_RECENT_GRAY_BLUE_UPPER",
+      "condition": "recent GRAY->BLUE + UPPER",
+      "evidence": "V5 STRONG_REPEAT stock"
+    },
+    {
+      "id": "NEW_V5_B_BLUE_21P_UPPER_CLOSE_ABOVE",
+      "condition": "BLUE 21+ + UPPER CLOSE_ABOVE",
+      "evidence": "V6 VALIDATED_V6_STRONG; crypto supports"
+    }
+  ],
+  "WAIT": [
+    {
+      "id": "AVOID_GREEN_11_20_LOWER",
+      "condition": "GREEN 11-20 + LOWER",
+      "evidence": "V5 STRONG_REPEAT stock"
+    },
+    {
+      "id": "GREEN_11_20_LOWER_CLOSE_BELOW",
+      "condition": "GREEN 11-20 + LOWER CLOSE_BELOW",
+      "evidence": "V5 PROMOTE"
+    }
+  ],
+  "SELL": [
+    {
+      "id": "SELL_RECENT_BLUE_GRAY_LIGHT_RESIST",
+      "condition": "recent BLUE->GRAY + LIGHT_RESIST",
+      "evidence": "V5 STRONG_REPEAT cross-asset"
+    },
+    {
+      "id": "GREEN_4_10_UPPER",
+      "condition": "GREEN 4-10 + UPPER",
+      "evidence": "V5 PROMOTE"
+    },
+    {
+      "id": "NEW_V5_D_GREEN_11_20_UPPER_WICK_ONLY",
+      "condition": "GREEN 11-20 + UPPER WICK_ONLY",
+      "evidence": "V6 VALIDATED_V6"
+    },
+    {
+      "id": "NEW_V5_E_GREEN_11_20_LIGHT_RESIST",
+      "condition": "GREEN 11-20 + LIGHT_RESIST",
+      "evidence": "V6 VALIDATED_V6_STRONG"
+    }
+  ],
+  "excluded": {
+    "mixed": [
+      "BUY_GREEN_21P_LOWER",
+      "AVOID_RECENT_GRAY_GREEN_LOWER",
+      "SELL_GREEN_21P_UPPER"
+    ],
+    "watch": [
+      "BLUE_11_20_UPPER_CLOSE_ABOVE",
+      "BLUE_21P_UPPER_FULL_ABOVE"
+    ],
+    "more_data": [
+      "NEW_V5_A_GREEN_TO_GRAY_1_3_LIGHT_SUPPORT"
+    ]
+  }
+}
