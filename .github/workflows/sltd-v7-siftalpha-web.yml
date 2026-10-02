@@ -3,7 +3,7 @@ name: SLTD V7 SiftAlpha Web
 on:
   push:
     branches:
-      - feature/sltd-v7-siftalpha-crypto-compatible-v5
+      - feature/sltd-v7-siftalpha-internal-alpine-v6
     paths:
       - "integrations/sltd_v7_siftalpha_v1/**"
       - ".github/workflows/sltd-v7-siftalpha-web.yml"
@@ -23,7 +23,7 @@ jobs:
       - name: Checkout exact branch
         uses: actions/checkout@v4
         with:
-          ref: feature/sltd-v7-siftalpha-crypto-compatible-v5
+          ref: feature/sltd-v7-siftalpha-internal-alpine-v6
           fetch-depth: 1
 
       - name: Set up Python
@@ -50,15 +50,15 @@ jobs:
           find /tmp/sltd_v7_package -type d -name __pycache__ -prune -exec rm -rf {} +
           find /tmp/sltd_v7_package -type f -name '*.pyc' -delete
           cd /tmp/sltd_v7_package
-          zip -r "$GITHUB_WORKSPACE/SLTD-V7-SiftAlpha-CryptoCompatible-v5.zip" .
+          zip -r "$GITHUB_WORKSPACE/SLTD-V7-SiftAlpha-InternalAlpine-v6.zip" .
 
       - name: Verify package
         run: |
           set -euo pipefail
-          unzip -l SLTD-V7-SiftAlpha-CryptoCompatible-v5.zip
+          unzip -l SLTD-V7-SiftAlpha-InternalAlpine-v6.zip
           python - <<'PY'
           import zipfile
-          z=zipfile.ZipFile('SLTD-V7-SiftAlpha-CryptoCompatible-v5.zip')
+          z=zipfile.ZipFile('SLTD-V7-SiftAlpha-InternalAlpine-v6.zip')
           names=set(z.namelist())
           required={'app.py','strategy.py','data_provider.py','requirements.txt','templates/index.html'}
           missing=required-names
@@ -68,6 +68,8 @@ jobs:
           app=z.read('app.py').decode('utf-8')
           assert 'ThreadingHTTPServer' in app
           assert 'SIFTALPHA_WEB_URL=' in app
+          req=z.read('requirements.txt').decode('utf-8')
+          assert '--only-binary=:all:' in req
           print('PACKAGE_VERIFY_PASS')
           PY
 
@@ -115,7 +117,7 @@ jobs:
       - name: Upload direct SiftAlpha import artifact
         uses: actions/upload-artifact@v4
         with:
-          name: sltd-v7-siftalpha-crypto-compatible-v5
+          name: sltd-v7-siftalpha-internal-alpine-v6
           path: direct-import/
           include-hidden-files: true
           if-no-files-found: error
