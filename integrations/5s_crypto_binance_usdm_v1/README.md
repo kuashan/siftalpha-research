@@ -14,6 +14,7 @@
 - M3: CLOSED
 - M4: CLOSED
 - M4.1: IMPLEMENTED_AND_VERIFIED
+- Market Data Provider + Signal Decoupling v1: IMPLEMENTED_PENDING_CI
 
 Joint SiftAlpha + Binance Demo real-device acceptance:
 
@@ -70,6 +71,25 @@ The dashboard uses a mobile-first Chinese interface and includes:
 
 The chart's 300 bars are display-only.
 The strategy scheduler keeps its independent 220-bar default fetch window.
+
+## Provider-neutral market data boundary
+
+Market data is now separated from account execution:
+
+- public market data -> frozen strategy -> theoretical B/S chart markers;
+- authenticated Binance account -> reconciliation -> actual order execution.
+
+API credentials are not required for K-line retrieval or B/S signal display.
+
+The first provider implementation is Binance USDⓈ-M public market data, routed
+through `MarketDataRouter`. The strategy/chart layers do not hard-code the
+provider, and the browser receives any realtime stream URL from the selected
+provider instead of constructing a Binance URL itself.
+
+Provider failover is whole-window only: bars from different providers are never
+stitched into one strategy calculation.
+
+See `MARKET_DATA_BOUNDARY_v1.md`.
 
 ## Capital meaning
 
