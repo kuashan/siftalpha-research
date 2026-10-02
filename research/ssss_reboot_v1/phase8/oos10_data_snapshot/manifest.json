@@ -1,0 +1,117 @@
+{
+  "actions": false,
+  "auto_adjust": false,
+  "fetch_end_exclusive": "2026-10-01",
+  "fetch_start": "2010-01-04",
+  "files": {
+    "ADP": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "ledger_path": "oos10_signal_ledgers/ADP_FIRST_OBSERVED.csv.gz",
+      "ledger_sha256": "6632fd582e724b6bc2919fff313f2a32d0b6d773457b2b73470e8ced91001db5",
+      "ohlcv_path": "oos10_data_snapshot/ADP.csv.gz",
+      "ohlcv_sha256": "162da8860a27af1534cee6e061ba3ece8e2473221ee3910b42842b081924da23",
+      "rows": 4211
+    },
+    "CVS": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "ledger_path": "oos10_signal_ledgers/CVS_FIRST_OBSERVED.csv.gz",
+      "ledger_sha256": "89c5612bc96f7bccd25bbacb0c13236936a92c94fc34b2865811b677a72c459a",
+      "ohlcv_path": "oos10_data_snapshot/CVS.csv.gz",
+      "ohlcv_sha256": "bc93c1c05ce0c4b40b69308ec97c8719b2c9b0ee1d54d74df2cf7e783eca36bb",
+      "rows": 4211
+    },
+    "LMT": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "ledger_path": "oos10_signal_ledgers/LMT_FIRST_OBSERVED.csv.gz",
+      "ledger_sha256": "8fd31eced317110f8d9a8938f3232a6b8e1877a1f838ecbaec6b9f949cda8324",
+      "ohlcv_path": "oos10_data_snapshot/LMT.csv.gz",
+      "ohlcv_sha256": "ad425e521c6e948c60c726aa99abe0b3268698765f1ede5cb687bf66426e8144",
+      "rows": 4211
+    },
+    "PANW": {
+      "first": "2012-07-20",
+      "last": "2026-09-30",
+      "ledger_path": "oos10_signal_ledgers/PANW_FIRST_OBSERVED.csv.gz",
+      "ledger_sha256": "803e0088774c9f0cec975361721b989f42e51cc0c76fb36b1c8cc5d1341e3aea",
+      "ohlcv_path": "oos10_data_snapshot/PANW.csv.gz",
+      "ohlcv_sha256": "03aece3034960f719c94466ce6ab330cfe0e874fb5a96918b22fc97592a5eccc",
+      "rows": 3569
+    },
+    "PM": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "ledger_path": "oos10_signal_ledgers/PM_FIRST_OBSERVED.csv.gz",
+      "ledger_sha256": "2e0fcd0f881c6ce0c3fedc850bc023f09cb9eca058a83ead64319d7205ee92dd",
+      "ohlcv_path": "oos10_data_snapshot/PM.csv.gz",
+      "ohlcv_sha256": "9109c387e79951a43957fc6909f0115101dcd1e8c76710f54f584874c2a7e531",
+      "rows": 4211
+    },
+    "SO": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "ledger_path": "oos10_signal_ledgers/SO_FIRST_OBSERVED.csv.gz",
+      "ledger_sha256": "fdc6bb3821c9e328fdb638276549d4cd4c1d9292708b88c2e230253170e5c0fa",
+      "ohlcv_path": "oos10_data_snapshot/SO.csv.gz",
+      "ohlcv_sha256": "60da499d52a3afc63973b47b59468fa9d157a7bcd8a423c53add54fac7a688fa",
+      "rows": 4211
+    },
+    "UNP": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "ledger_path": "oos10_signal_ledgers/UNP_FIRST_OBSERVED.csv.gz",
+      "ledger_sha256": "d37bf17fa393d6f5c7b4d148f365e7d8e5f8b289d1ad197b9bd2b9678567fcbe",
+      "ohlcv_path": "oos10_data_snapshot/UNP.csv.gz",
+      "ohlcv_sha256": "a597ab81f04b07b848af6a2d0e3f12cbb0c6e6fc3ba1758d2640290723f8c269",
+      "rows": 4211
+    },
+    "VZ": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "ledger_path": "oos10_signal_ledgers/VZ_FIRST_OBSERVED.csv.gz",
+      "ledger_sha256": "0e960c5e568daff4524032c101d4f6eb59b74d7b03cccd60f2115425fd7aec80",
+      "ohlcv_path": "oos10_data_snapshot/VZ.csv.gz",
+      "ohlcv_sha256": "6cb3ea2183d26eb677b619f2240e44b1354b93d4d026ed150cf003866eaefdbb",
+      "rows": 4211
+    },
+    "WFC": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "ledger_path": "oos10_signal_ledgers/WFC_FIRST_OBSERVED.csv.gz",
+      "ledger_sha256": "e3745006bd9f4c15778903a30934d19036428b8d3d3bc0d0cc9fbaf8dbaefcfa",
+      "ohlcv_path": "oos10_data_snapshot/WFC.csv.gz",
+      "ohlcv_sha256": "0fc22c7ebbdc1d39656c438234d4fa468edd7ca7a3c64106ebd06f08a39a7051",
+      "rows": 4211
+    },
+    "WM": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "ledger_path": "oos10_signal_ledgers/WM_FIRST_OBSERVED.csv.gz",
+      "ledger_sha256": "71823f5b672d76fff7b746445f46a29999b5d935b27f77ab548b08c774b41d41",
+      "ohlcv_path": "oos10_data_snapshot/WM.csv.gz",
+      "ohlcv_sha256": "9de9b62ef7f07fdec5e55b1ffe2859c9ab6cfbad5c8a9730d7dbdd4c5d581d6b",
+      "rows": 4211
+    }
+  },
+  "formal_end": "2026-09-30",
+  "formal_start": "2020-01-02",
+  "generated_at_utc": "2026-10-02T09:45:46.726571+00:00",
+  "prior_79_overlap": [],
+  "provider": "Yahoo Finance via yfinance",
+  "repair": false,
+  "study": "SLTD_V7_FRESH_OOS10_VALIDATION_V1",
+  "symbols": [
+    "WFC",
+    "LMT",
+    "PM",
+    "ADP",
+    "WM",
+    "UNP",
+    "SO",
+    "VZ",
+    "PANW",
+    "CVS"
+  ]
+}
