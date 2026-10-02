@@ -1,0 +1,115 @@
+{
+  "schema": "SLTD_V7_12_RULES_PLUS_POSITION_CANDIDATE_BASELINE_V1",
+  "status": "FROZEN_CANDIDATE_BASELINE",
+  "rollback_v6": {
+    "branch": "baseline/sltd-v6-15rules-position-v1",
+    "commit": "05be43e350d9193ba01a2748ef4c0267438a84b1"
+  },
+  "evidence": {
+    "reused_79_commit": "678c55c8082e2871f786e76068cd1a1aa8d9e38c",
+    "fresh_oos10_commit": "1b2e97cdbfdb1705556f210fe3f80f3a1cb9395c"
+  },
+  "removed_rules": [
+    "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT",
+    "SELL_RECENT_BLUE_GRAY_LIGHT_RESIST",
+    "NEW_V5_D_GREEN_11_20_UPPER_WICK_ONLY"
+  ],
+  "active_rules": {
+    "BUY": [
+      "BUY_BLUE_21P_LOWER",
+      "BUY_GRAY_4_10_LIGHT_SUPPORT",
+      "BLUE_11_20_LOWER_WICK_ONLY",
+      "NEW_V5_C_GRAY_4_10_LOWER_WICK_ONLY"
+    ],
+    "HOLD": [
+      "CONT_BLUE_11_20_UPPER",
+      "CONT_BLUE_4_10_UPPER",
+      "CONT_RECENT_GRAY_BLUE_UPPER",
+      "NEW_V5_B_BLUE_21P_UPPER_CLOSE_ABOVE"
+    ],
+    "WAIT": [
+      "AVOID_GREEN_11_20_LOWER",
+      "GREEN_11_20_LOWER_CLOSE_BELOW"
+    ],
+    "SELL": [
+      "GREEN_4_10_UPPER",
+      "NEW_V5_E_GREEN_11_20_LIGHT_RESIST"
+    ]
+  },
+  "position_policy": {
+    "id": "I25_AADD_25_TO_CAP_S25_WHOLD_RNO_CHANGE_MIXED",
+    "initial_buy_fraction": 0.25,
+    "subsequent_buy_add_percentage_points": 0.25,
+    "max_fraction": 1,
+    "ordinary_sell_fraction_of_current_position": 0.25,
+    "wait_long": "HOLD",
+    "wait_flat": "NO_ENTRY",
+    "mixed_same_bar": "NO_CHANGE_MIXED",
+    "hard_exit": {
+      "id": "C2_FULL_CANDLE_BELOW_SLOW_BAND",
+      "arm_on": "ACTUALLY_EXECUTED_ORDINARY_SELL",
+      "reset_on": "ACTUALLY_EXECUTED_BUY",
+      "condition": "state == GREEN && High < GZB4",
+      "execution": "NEXT_AVAILABLE_OPEN",
+      "target_fraction": 0
+    }
+  },
+  "evidence_summary": {
+    "reused_79": {
+      "baseline": {
+        "total_return": 1.5345,
+        "cagr": 0.1479,
+        "max_drawdown": -0.183,
+        "calmar": 0.808
+      },
+      "candidate_b": {
+        "total_return": 1.9858,
+        "cagr": 0.1761,
+        "max_drawdown": -0.2091,
+        "calmar": 0.842
+      },
+      "better_return_symbols": "59/79",
+      "better_calmar_symbols": "58/79",
+      "better_return_years": "7/7",
+      "better_calmar_eras": "3/3"
+    },
+    "fresh_oos10": {
+      "symbols": [
+        "WFC",
+        "LMT",
+        "PM",
+        "ADP",
+        "WM",
+        "UNP",
+        "SO",
+        "VZ",
+        "PANW",
+        "CVS"
+      ],
+      "baseline": {
+        "total_return": 0.6443,
+        "cagr": 0.0765,
+        "max_drawdown": -0.1634,
+        "calmar": 0.468
+      },
+      "candidate_b": {
+        "total_return": 0.8773,
+        "cagr": 0.0979,
+        "max_drawdown": -0.1643,
+        "calmar": 0.596
+      },
+      "better_return_symbols": "7/10",
+      "better_cagr_symbols": "7/10",
+      "better_maxdd_symbols": "5/10",
+      "better_calmar_symbols": "7/10",
+      "median_symbol_delta_return": 0.1185,
+      "median_symbol_delta_cagr": 0.0177,
+      "median_symbol_delta_calmar": 0.071
+    }
+  },
+  "governance": {
+    "v6_remains_immutable_rollback": true,
+    "this_is_candidate_not_final_production_baseline": true,
+    "future_v7_research_must_branch_from_this_candidate": true
+  }
+}
