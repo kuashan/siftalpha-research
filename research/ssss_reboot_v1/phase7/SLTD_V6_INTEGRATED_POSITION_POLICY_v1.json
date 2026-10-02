@@ -1,0 +1,47 @@
+{
+  "schema": "SLTD_V6_INTEGRATED_POSITION_POLICY_V1",
+  "status": "FROZEN_BY_USER_DECISION",
+  "ordinary_policy_id": "I25_AADD_25_TO_CAP_S25_WHOLD_RNO_CHANGE_MIXED",
+  "hard_exit_id": "C2_FULL_CANDLE_BELOW_SLOW_BAND",
+  "execution": "SIGNAL_CLOSE_TO_NEXT_AVAILABLE_OPEN",
+  "representation": "FIRST_OBSERVED",
+  "constraints": {
+    "long_cash_only": true,
+    "leverage": false,
+    "shorting": false
+  },
+  "buy": {
+    "initial_target_fraction": 0.25,
+    "subsequent_add_percentage_points": 0.25,
+    "cap_fraction": 1
+  },
+  "ordinary_sell": {
+    "reduction_fraction_of_current_position": 0.25,
+    "arms_hard_exit_risk_state": true
+  },
+  "wait": {
+    "while_long": "HOLD",
+    "while_flat": "NO_ENTRY"
+  },
+  "mixed_same_bar": "NO_CHANGE_MIXED",
+  "hard_exit": {
+    "requires_risk_armed": true,
+    "arm_event": "ACTUALLY_EXECUTED_ORDINARY_SELL",
+    "reset_on_executed_buy": true,
+    "condition": {
+      "state": "GREEN",
+      "candle_vs_slow_band_lower_edge": "FULL_CANDLE_BELOW",
+      "formula": "High < GZB4"
+    },
+    "execution": "NEXT_AVAILABLE_OPEN",
+    "target_fraction": 0,
+    "overrides_ordinary_action_on_execution_open": true,
+    "reset_risk_armed_after_exit": true
+  },
+  "reentry_after_hard_exit": {
+    "requires_new_valid_buy": true,
+    "restart_target_fraction": 0.25
+  },
+  "frozen_signal_taxonomy_unchanged": true,
+  "research_note": "C2 selected after repeated use of the same 79-stock universe; frozen by explicit user decision and not represented as fresh independent OOS validation."
+}
