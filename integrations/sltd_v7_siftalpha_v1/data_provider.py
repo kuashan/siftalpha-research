@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-"""Dependency-free OHLCV provider for SLTD bar-close execution.
+"""SLTD 的无第三方依赖 OHLCV（开高低收量）数据提供层。
 
-The strategy is NOT bound to a calendar day. A signal is evaluated only from
-completed bars of the selected timeframe. The newest still-forming bar is kept
-separate for display and never enters the confirmed SLTD decision.
+策略不绑定自然日。只有所选周期已经结束的 K 线才参与正式信号计算。
+最新仍在形成中的 K 线会单独保留用于页面展示，不进入正式 SLTD 决策。
 """
 
 import json
@@ -154,7 +153,7 @@ def _write_cache(
             {
                 "symbol": symbol,
                 "timeframe": timeframe,
-                "provider": "Yahoo Finance chart API",
+                "provider": "雅虎财经图表接口",
                 "saved_at_utc": datetime.now(timezone.utc).isoformat(),
                 "completed": completed,
                 "forming": forming,
@@ -199,7 +198,7 @@ def _request_chart(symbol: str, timeframe: str, start_date: str) -> dict:
                 return json.loads(response.read().decode("utf-8"))
         except (HTTPError, URLError, TimeoutError, OSError, ValueError) as exc:
             errors.append(f"{host}:{type(exc).__name__}:{exc}")
-    raise MarketDataError("；".join(errors) or "无法获取 Yahoo Finance 行情")
+    raise MarketDataError("；".join(errors) or "无法获取雅虎财经行情")
 
 
 def _is_complete(
@@ -209,7 +208,7 @@ def _is_complete(
     regular_start: int | None,
     regular_end: int | None,
 ) -> bool:
-    """Return whether this provider bar has reached its selected-timeframe close."""
+    """判断数据源中的这根 K 线是否已经到达所选周期的结束时点。"""
     if timeframe == "1d":
         if (
             regular_start is not None
@@ -217,7 +216,7 @@ def _is_complete(
             and regular_start <= ts <= regular_end
         ):
             return now_ts >= regular_end
-        # Any daily bar from an earlier session is closed.
+        # 早于当前交易时段的日 K 线均视为已结束。
         return regular_start is None or ts < regular_start or now_ts >= regular_end
 
     seconds = int(TIMEFRAMES[timeframe]["seconds"])
@@ -388,7 +387,7 @@ def _parse_chart(
             continue
         bars.append(candle)
 
-    # Provider may occasionally duplicate a timestamp during session transitions.
+    # 数据源在交易时段切换时偶尔可能返回重复时间戳，因此这里按时间戳去重。
     dedup: dict[int, dict] = {int(c["open_time"]): c for c in bars}
     ordered = [dedup[k] for k in sorted(dedup)]
     if timeframe == "4h":
@@ -434,7 +433,7 @@ def fetch_bars(
     start_date: str = DEFAULT_START,
     force_refresh: bool = False,
 ) -> tuple[list[dict], dict | None, dict]:
-    """Fetch selected-timeframe bars and separate confirmed vs forming bars."""
+    """获取所选周期 K 线，并把“已结束 K 线”和“形成中 K 线”分开。"""
     symbol = normalize_symbol(symbol)
     timeframe = normalize_timeframe(timeframe)
     cfg = TIMEFRAMES[timeframe]
@@ -448,8 +447,8 @@ def fetch_bars(
             cached_meta = dict(cached.get("meta") or {})
             cached_meta.update(
                 {
-                    "provider": "Yahoo Finance",
-                    "source": "cache",
+                    "provider": "雅虎财经",
+                    "source": "缓存",
                     "cached": True,
                     "rows": len(completed),
                     "timeframe": timeframe,
@@ -467,7 +466,7 @@ def fetch_bars(
         meta.update(
             {
                 "provider": "Yahoo Finance",
-                "source": "network",
+                "source": "网络",
                 "cached": False,
                 "rows": len(completed),
                 "timeframe": timeframe,
@@ -485,7 +484,7 @@ def fetch_bars(
             stale_meta.update(
                 {
                     "provider": "Yahoo Finance",
-                    "source": "stale-cache",
+                    "source": "过期缓存",
                     "cached": True,
                     "rows": len(completed),
                     "timeframe": timeframe,
@@ -506,7 +505,7 @@ def fetch_daily_candles(
     start_date: str = DEFAULT_START,
     force_refresh: bool = False,
 ) -> tuple[list[dict], dict]:
-    """Backward-compatible daily wrapper used by older callers/tests."""
+    """供旧调用方和测试使用的兼容日线包装函数。"""
     completed, _forming, meta = fetch_bars(
         symbol,
         "1d",
