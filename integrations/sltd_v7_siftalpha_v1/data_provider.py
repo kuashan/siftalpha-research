@@ -196,7 +196,7 @@ def _request_params(
         lookback_days = int(cfg["lookback_days"])
         params["period1"] = now - lookback_days * 86400
         # 只稍微越过“现在”，避免把盘中查询窗口无意中扩大到数据源限制之外。
-        params["period2"] = now + 3600
+        params["period2"] = now + 60
 
     return params
 
@@ -491,7 +491,7 @@ def fetch_bars(
         meta = dict(provider_meta)
         meta.update(
             {
-                "provider": "Yahoo Finance",
+                "provider": "雅虎财经",
                 "source": "网络",
                 "cached": False,
                 "rows": len(completed),
@@ -514,7 +514,7 @@ def fetch_bars(
             stale_meta = dict(stale.get("meta") or {})
             stale_meta.update(
                 {
-                    "provider": "Yahoo Finance",
+                    "provider": "雅虎财经",
                     "source": "过期缓存",
                     "cached": True,
                     "rows": len(completed),
