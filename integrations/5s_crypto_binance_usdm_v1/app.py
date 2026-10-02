@@ -13,7 +13,9 @@ from engine.execution import M3Executor
 from engine.recovery import M4Recovery
 from engine.scheduler import StrategyScheduler
 from exchange.binance_usdm_public import BinanceUsdMPublicProbe
+from market_data import BinancePublicMarketDataProvider, MarketDataRouter
 from runtime_testnet_session import TestnetSession
+from signal_preview import SIGNAL_HISTORY_LIMIT, build_strategy_signal_markers
 from storage import StateStore
 
 
@@ -26,6 +28,9 @@ store.seed(
     settings.default_timeframe,
 )
 probe = BinanceUsdMPublicProbe(settings.binance_public_base_url, settings.request_timeout_seconds)
+market_router = MarketDataRouter()
+market_router.register(BinancePublicMarketDataProvider(probe))
+crypto_market = market_router.for_market("CRYPTO")
 testnet_session = TestnetSession(
     allowed_symbols=settings.symbols,
     allowed_timeframes=settings.allowed_timeframes,
@@ -39,6 +44,7 @@ strategy_scheduler = StrategyScheduler(
     session=testnet_session,
     symbols=settings.symbols,
     allowed_timeframes=settings.allowed_timeframes,
+    market_data_provider=crypto_market,
     on_decision=m3_executor.execute,
     on_poll=m3_executor.refresh_accounting,
 )
@@ -64,6 +70,7 @@ _RUN_STATE_LABELS = {
     "WAITING_RECONCILE": "等待恢复对账",
     "RECOVERY_BLOCKED": "恢复对账已阻止",
     "MONITORING": "监测中",
+    "SIGNAL_ONLY": "仅信号",
     "SIGNAL_READY": "发现信号",
     "ERROR": "检测异常",
     "BLOCKED": "交易已阻止",
@@ -137,22 +144,17 @@ def chart_payload(symbol: str) -> dict[str, object]:
     cfg = store.get_symbol_configs()[symbol]
     timeframe = str(cfg["timeframe"])
 
-    source = "币安公开行情"
-    try:
-        api_key, api_secret = testnet_session.credentials()
-        if api_key and api_secret:
-            rows = testnet_session.adapter().klines(
-                symbol, timeframe, limit=DISPLAY_KLINE_LIMIT
-            )
-            source = "币安模拟交易行情"
-        else:
-            rows = probe.klines(symbol, timeframe, limit=DISPLAY_KLINE_LIMIT)
-    except Exception:
-        rows = probe.klines(symbol, timeframe, limit=DISPLAY_KLINE_LIMIT)
-        source = "币安公开行情"
+    # Chart + signal calculation always use public market data. Account API
+    # credentials are intentionally not consulted here.
+    fetched = crypto_market.fetch(
+        symbol,
+        timeframe,
+        limit=SIGNAL_HISTORY_LIMIT,
+    )
+    rows = fetched.rows
+    candles = normalize_chart_klines(rows)
+    markers = build_strategy_signal_markers(rows)
 
-    candles = normalize_chart_klines(rows if isinstance(rows, list) else [])
-    markers = store.list_signal_markers(symbol)
     if candles:
         first_time = int(candles[0]["open_time"])
         last_time = int(candles[-1]["open_time"])
@@ -168,7 +170,11 @@ def chart_payload(symbol: str) -> dict[str, object]:
         "timeframe": timeframe,
         "timeframe_label": _TIMEFRAME_LABELS.get(timeframe, timeframe),
         "display_limit": DISPLAY_KLINE_LIMIT,
-        "source": source,
+        "signal_history_limit": SIGNAL_HISTORY_LIMIT,
+        "source": fetched.provider_label_zh,
+        "provider_id": fetched.provider_id,
+        "market_id": fetched.market_id,
+        "signal_source": "冻结 5s 策略 · 无需 API",
         "candles": candles,
         "markers": markers,
     }
@@ -203,7 +209,7 @@ def render_index(selected_symbol: str | None = None) -> str:
         validation = "已验证基线" if timeframe in settings.validated_timeframes else "实验周期"
         run_state = str(rt.get("run_state") or ("ARMED" if enabled else "STOPPED"))
         status_label = _RUN_STATE_LABELS.get(run_state, "运行中" if enabled else "未启动")
-        status_class = "running" if enabled and run_state in {"ARMED", "MONITORING", "SIGNAL_READY"} else "stopped"
+        status_class = "running" if enabled and run_state in {"ARMED", "MONITORING", "SIGNAL_ONLY", "SIGNAL_READY"} else "stopped"
         action = "stop" if enabled else "start"
         action_label = "停止" if enabled else "启动"
         action_class = "danger" if enabled else "primary"
