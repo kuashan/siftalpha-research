@@ -11,9 +11,17 @@
 - M2.3.1: IMPLEMENTED_AND_VERIFIED
 - M2.3.2: IMPLEMENTED_AND_VERIFIED
 - M2.3.3: IMPLEMENTED_AND_VERIFIED
-- M3: IMPLEMENTED_AWAITING_DEVICE_ACCEPTANCE
-- M4: IMPLEMENTED_AWAITING_DEVICE_ACCEPTANCE
+- M3: CLOSED
+- M4: CLOSED
 - M4.1: IMPLEMENTED_AND_VERIFIED
+
+Joint SiftAlpha + Binance Demo real-device acceptance:
+
+`M3_M4_REAL_DEVICE_ACCEPTANCE = PASS`
+
+Acceptance date: **2026-10-02**
+
+This development round is formally closed.
 
 The detailed milestone record is:
 `integrations/5s_crypto_binance_usdm_v1/MILESTONES.md`
@@ -36,14 +44,8 @@ Each slot has its own:
 - recovery / reconciliation state
 
 The frozen 5s-crypto V1 signal engine, scheduler, Binance Demo execution path,
-idempotent order loop, and recovery / reconciliation gate are implemented.
-
-Automatic strategy execution remains gated by:
-- successful Binance Demo connection;
-- per-symbol reconciliation state;
-- current safety checks and configured strategy state.
-
-M3 and M4 are still awaiting their joint real-device acceptance.
+idempotent order loop, and recovery / reconciliation gate are implemented and
+have passed the completed M3 + M4 joint real-device acceptance.
 
 ## Frozen strategy boundary
 
@@ -59,12 +61,12 @@ The runtime integration must not change this frozen strategy in place.
 ## Dashboard
 
 The dashboard uses a mobile-first Chinese interface and includes:
-- four symbol tabs;
-- top Demo connection and reconciliation status;
-- account / available / strategy capital / total PnL summary;
-- 300-bar candlestick + volume visualization;
-- B/S markers from real M3 signal audit events;
-- collapsible per-symbol trading settings.
+- four symbol tabs
+- top Demo connection and reconciliation status
+- account / available / strategy capital / total PnL summary
+- 300-bar candlestick + volume visualization
+- B/S markers from real M3 signal audit events
+- collapsible per-symbol trading settings
 
 The chart's 300 bars are display-only.
 The strategy scheduler keeps its independent 220-bar default fetch window.
@@ -83,17 +85,20 @@ Configured budgets do not reserve or transfer funds on Binance.
 
 ## Demo / LIVE boundary
 
-Current authenticated trading integration is for Binance Futures Demo.
+Current authenticated automated trading integration is for Binance Futures Demo.
 
 API credentials are handled by the current process and are not persisted as
 plain credentials in SQLite.
 
-LIVE trading remains unsupported in this development round.
+LIVE trading remains unsupported in this closed development round.
 
-## Acceptance boundary
+## Closure
 
-The code implementation for M3 and M4 is complete, but those milestones are not
-CLOSED until the real SiftAlpha + Binance Demo joint device acceptance passes.
+`M3 = CLOSED`
+
+`M4 = CLOSED`
+
+`5S_CRYPTO_V1_BINANCE_DEMO_INTEGRATION_ROUND = CLOSED`
 
 See:
 - `M3_1_ACCEPTANCE.md`
