@@ -1,0 +1,100 @@
+{
+  "asset_class": "STOCK",
+  "auto_adjust": false,
+  "batch": 6,
+  "candidate_scope": "FROZEN_PRIMARY_PLUS_4_BACKUPS_ONLY",
+  "fetch_end_exclusive": "2026-10-01",
+  "fetch_start": "2010-01-04",
+  "files": {
+    "ABBV": {
+      "first": "2013-01-02",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_06_stocks/ABBV.csv.gz",
+      "rows": 3457,
+      "sha256": "c106ba5ff21e14e50f57f523ca00fca5a51bae48bcc274a51ccf33342b3a130d"
+    },
+    "AMGN": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_06_stocks/AMGN.csv.gz",
+      "rows": 4211,
+      "sha256": "625e89ddfac799ee7540e781ea4436462a1e974a7bdc42836e7dbc651bd68574"
+    },
+    "BLK": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_06_stocks/BLK.csv.gz",
+      "rows": 4211,
+      "sha256": "cc0ad0dcd8ad79d63349dbb4f063b82a98ecc37f01f4312b7f7577d03d5222db"
+    },
+    "C": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_06_stocks/C.csv.gz",
+      "rows": 4211,
+      "sha256": "6e28cfd2472b407b9cd2257aea33fe5400e7b609c7a262dde0c6cd40da5932f5"
+    },
+    "COP": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_06_stocks/COP.csv.gz",
+      "rows": 4211,
+      "sha256": "e5047cc325d10fa81f6ab77e8aacc3f3288de8598572090e2062113b9fd95da9"
+    },
+    "GILD": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_06_stocks/GILD.csv.gz",
+      "rows": 4211,
+      "sha256": "4a27b70477ef749e04d9011f2b6d0474df72ac251ada93ebb2838e017bfa396b"
+    },
+    "MRK": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_06_stocks/MRK.csv.gz",
+      "rows": 4211,
+      "sha256": "5b360db63fda220a85437d5c918ac404489ba066670a15fecb311a0729ed9732"
+    },
+    "MS": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_06_stocks/MS.csv.gz",
+      "rows": 4211,
+      "sha256": "28ebe9a3c21f21a860643a3ea7ea07c6e40a122c5ef0d328a9d65d0bc7a609c3"
+    },
+    "PFE": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_06_stocks/PFE.csv.gz",
+      "rows": 4211,
+      "sha256": "d0769c55aa715e4194f4a5ab22093c466bfac816528f26c3ff175b0280d8a72a"
+    },
+    "UPS": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_06_stocks/UPS.csv.gz",
+      "rows": 4211,
+      "sha256": "7937ddf6d7fab37f41c1f97775ed1d7f61acd2f6265c70c27edb66cc0f9a88de"
+    }
+  },
+  "formal_end": "2026-09-30",
+  "formal_start": "2020-01-02",
+  "frozen_shortlist": "SLTD_V6_POSITION_POLICY_DISCOVERY_FROZEN_SHORTLIST_v1.json",
+  "generated_at_utc": "2026-10-02T08:17:50.360939+00:00",
+  "provider": "Yahoo Finance via yfinance",
+  "repair": false,
+  "stage": "VALIDATION",
+  "study": "SLTD_V6_POSITION_POLICY_STUDY_V1",
+  "symbols": [
+    "MRK",
+    "PFE",
+    "ABBV",
+    "AMGN",
+    "GILD",
+    "C",
+    "MS",
+    "BLK",
+    "COP",
+    "UPS"
+  ]
+}
