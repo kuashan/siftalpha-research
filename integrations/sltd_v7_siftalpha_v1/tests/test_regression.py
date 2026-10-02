@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+from datetime import datetime, timezone
 import gzip
 import json
 import math
@@ -131,7 +132,7 @@ class BarCloseContractTest(unittest.TestCase):
 
     def test_four_hour_aggregation_uses_four_hour_then_session_tail(self) -> None:
         rows = []
-        base = 1_700_000_000
+        base = int(datetime(2023, 11, 14, 9, 30, tzinfo=timezone.utc).timestamp())
         for i in range(7):
             rows.append(
                 {
@@ -165,7 +166,7 @@ class BarCloseContractTest(unittest.TestCase):
         self.assertEqual(106.5, aggregated[1]["close"])
 
     def test_short_four_hour_tail_is_forming_until_session_close(self) -> None:
-        base = 1_700_000_000
+        base = int(datetime(2023, 11, 14, 9, 30, tzinfo=timezone.utc).timestamp())
         rows = [
             {
                 "date": str(i),
