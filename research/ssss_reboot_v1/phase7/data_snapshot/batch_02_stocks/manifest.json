@@ -1,0 +1,97 @@
+{
+  "asset_class": "STOCK",
+  "auto_adjust": false,
+  "batch": 2,
+  "fetch_end_exclusive": "2026-10-01",
+  "fetch_start": "2010-01-04",
+  "files": {
+    "AMZN": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_02_stocks/AMZN.csv.gz",
+      "rows": 4211,
+      "sha256": "1b91f58cb5ebc294c041913287a21d5ab9c0f5ba2e3e77890388de52ea4765eb"
+    },
+    "COST": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_02_stocks/COST.csv.gz",
+      "rows": 4211,
+      "sha256": "3ad55c169b037b3a5111766e98fef45d868ffe6eddcb20f29b7ff6944e74b37c"
+    },
+    "HD": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_02_stocks/HD.csv.gz",
+      "rows": 4211,
+      "sha256": "d07581b8406267203296d4cde3134051b38c9518836b46f9ad3f16aeec67606e"
+    },
+    "KO": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_02_stocks/KO.csv.gz",
+      "rows": 4211,
+      "sha256": "807042353c95f10f237f15df793eec7f4d1ed59bb1e0e8a98fe6fba5ef8e341d"
+    },
+    "MCD": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_02_stocks/MCD.csv.gz",
+      "rows": 4211,
+      "sha256": "9866f8e5d53342ff76b113e89e68755c19e4b3b28be0ed4f5ccd019d01c44ea7"
+    },
+    "META": {
+      "first": "2012-05-18",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_02_stocks/META.csv.gz",
+      "rows": 3612,
+      "sha256": "3440d6fa8970496982fc4f0d0671f28ef2fb9686e8ad48bc9f41d0f66089d422"
+    },
+    "NFLX": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_02_stocks/NFLX.csv.gz",
+      "rows": 4211,
+      "sha256": "7653a92074fccf50b378c39628535db2803198cd669c6c7658cec3a64e285b4c"
+    },
+    "PG": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_02_stocks/PG.csv.gz",
+      "rows": 4211,
+      "sha256": "46dc41d07b576a20eeee2bea43a0ea7462660d61646b253001e0f1cfe0f4c238"
+    },
+    "TSLA": {
+      "first": "2010-06-29",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_02_stocks/TSLA.csv.gz",
+      "rows": 4089,
+      "sha256": "8ea08d3db4d9db7dcc9bcbdd2dae976135c816e9a4ea534228ad694925366635"
+    },
+    "WMT": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_02_stocks/WMT.csv.gz",
+      "rows": 4211,
+      "sha256": "2c8b97dd60062f742d13dc506ac474eb0224fa665c513a3f549e9931325f24e1"
+    }
+  },
+  "formal_end": "2026-09-30",
+  "formal_start": "2020-01-02",
+  "generated_at_utc": "2026-10-02T07:41:37.791346+00:00",
+  "provider": "Yahoo Finance via yfinance",
+  "repair": false,
+  "study": "SLTD_V6_POSITION_POLICY_STUDY_V1",
+  "symbols": [
+    "META",
+    "NFLX",
+    "AMZN",
+    "TSLA",
+    "HD",
+    "MCD",
+    "WMT",
+    "COST",
+    "PG",
+    "KO"
+  ]
+}
