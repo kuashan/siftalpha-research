@@ -1,0 +1,100 @@
+{
+  "asset_class": "STOCK",
+  "auto_adjust": false,
+  "batch": 7,
+  "candidate_scope": "FROZEN_PRIMARY_PLUS_4_BACKUPS_ONLY",
+  "fetch_end_exclusive": "2026-10-01",
+  "fetch_start": "2010-01-04",
+  "files": {
+    "ACN": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_07_stocks/ACN.csv.gz",
+      "rows": 4211,
+      "sha256": "b42738bcd3bca78b700c439368d0a92ad0ede1f3d9e4ae47c8c9cf92f6f079c9"
+    },
+    "AMAT": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_07_stocks/AMAT.csv.gz",
+      "rows": 4211,
+      "sha256": "fd3ee0fe21c0ed90a1938993ceef9e841b953243ee534935cd08e9f23403978f"
+    },
+    "BKNG": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_07_stocks/BKNG.csv.gz",
+      "rows": 4211,
+      "sha256": "8a6c45bd39799bdb70eb6521c4a8ec4df4afd9cd4d6c2668b6d66b4491c6cebf"
+    },
+    "CMG": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_07_stocks/CMG.csv.gz",
+      "rows": 4211,
+      "sha256": "87779b7c5e84dd34e2271ff94f7a317b4bf3b714c9ec00502dedf10026acb6cc"
+    },
+    "INTU": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_07_stocks/INTU.csv.gz",
+      "rows": 4211,
+      "sha256": "a261bf90ac1889fbea734c3f9f682de4354466b9cf79147712801e984a2c7854"
+    },
+    "LRCX": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_07_stocks/LRCX.csv.gz",
+      "rows": 4211,
+      "sha256": "13fdc2d768385f2d9484c7aa81fbf04dba5a033d8e7a5c052d5a2e3854c58a31"
+    },
+    "MAR": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_07_stocks/MAR.csv.gz",
+      "rows": 4211,
+      "sha256": "9c1baf1f6de7b87673f5f358228bcefed73f0191112b07875b78d04c4c558f9b"
+    },
+    "NOW": {
+      "first": "2012-06-29",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_07_stocks/NOW.csv.gz",
+      "rows": 3583,
+      "sha256": "5d5657dee85bb0ab28e9f6010ac7f9ac055e9af4c6dfa6f488b24d5727d4d7ad"
+    },
+    "ROST": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_07_stocks/ROST.csv.gz",
+      "rows": 4211,
+      "sha256": "617769ef9df2c80d36f8f5d7ac00934e3281e9b3522b0ac0d99d054abeacb8b6"
+    },
+    "TJX": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_07_stocks/TJX.csv.gz",
+      "rows": 4211,
+      "sha256": "aee1d7a93c90dd6deedc041bd1ea7902d2f926d131a5ad94ab3d9e8f0cd3eae9"
+    }
+  },
+  "formal_end": "2026-09-30",
+  "formal_start": "2020-01-02",
+  "frozen_shortlist": "SLTD_V6_POSITION_POLICY_DISCOVERY_FROZEN_SHORTLIST_v1.json",
+  "generated_at_utc": "2026-10-02T08:20:50.377703+00:00",
+  "provider": "Yahoo Finance via yfinance",
+  "repair": false,
+  "stage": "VALIDATION",
+  "study": "SLTD_V6_POSITION_POLICY_STUDY_V1",
+  "symbols": [
+    "ACN",
+    "NOW",
+    "INTU",
+    "AMAT",
+    "LRCX",
+    "BKNG",
+    "TJX",
+    "CMG",
+    "ROST",
+    "MAR"
+  ]
+}
