@@ -14,7 +14,7 @@
 - M3: CLOSED
 - M4: CLOSED
 - M4.1: IMPLEMENTED_AND_VERIFIED
-- Market Data Provider + Signal Decoupling v1: IMPLEMENTED_PENDING_CI
+- Market Data Provider + Signal Decoupling v1: IMPLEMENTED_AND_VERIFIED
 
 Joint SiftAlpha + Binance Demo real-device acceptance:
 
