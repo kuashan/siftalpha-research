@@ -1,24 +1,24 @@
 from __future__ import annotations
 
-"""Frozen SLTD V7 candidate signal engine and unified position policy.
+"""SLTD V7 冻结候选策略：信号引擎与统一仓位管理。
 
-This module intentionally has no third-party dependencies so the project stays easy
-for SiftAlpha to prepare in either the internal or external Python runtime.
+本模块不依赖第三方 Python 包，便于 SiftAlpha 在内部或外部 Python 运行环境中准备和运行。
 
-Strategy source of truth:
+策略事实源：
 - candidate/sltd-v7-12rules-position-v1
 - commit 5f9ea4d8fa434b54afdbf32a1cb21ef2f3cb4042
 
-Execution semantics:
-- signal is confirmed on close t
-- action executes on the next available open
-- long/cash only
-- first BUY -> 25%
-- later executed BUY -> +25 percentage points, capped at 100%
-- ordinary SELL -> sell 25% of current position
-- executed SELL arms C2 risk state
-- executed BUY resets C2 risk state
-- while armed, GREEN + High < GZB4 -> next-open full exit
+执行语义：
+- 只在所选周期 K 线结束后确认信号；
+- 在下一根同周期 K 线开盘执行动作；
+- 只做多或持有现金，不做空、不加杠杆；
+- 第一次买入：目标仓位 25%；
+- 后续实际买入：每次增加 25 个百分点，最高 100%；
+- 普通卖出：卖出当前持仓的 25%；
+- 普通卖出实际执行后，C2 风险状态进入“已警戒”；
+- 后续实际买入会把 C2 风险状态重置为“正常”；
+- 已警戒时，如果进入绿色状态且整根 K 线位于慢带下方（High < GZB4），
+  则在下一根同周期 K 线开盘全部清仓。
 """
 
 from dataclasses import dataclass
@@ -26,7 +26,7 @@ from math import isfinite
 from typing import Iterable
 
 
-STRATEGY_VERSION = "SLTD V7 12-rule Candidate v1"
+STRATEGY_VERSION = "SLTD V7 12条规则候选版 v1"
 STRATEGY_SOURCE_COMMIT = "5f9ea4d8fa434b54afdbf32a1cb21ef2f3cb4042"
 POSITION_POLICY_ID = "I25_AADD_25_TO_CAP_S25_WHOLD_RNO_CHANGE_MIXED"
 HARD_EXIT_ID = "C2_FULL_CANDLE_BELOW_SLOW_BAND"
@@ -63,6 +63,58 @@ ACTIVE_RULES = {
 }
 
 ACTION_ORDER = ("BUY", "HOLD", "WAIT", "SELL")
+
+# 中文展示名。英文字符串仍作为冻结研究的内部机器 ID，避免中文化改变策略语义或回归基线。
+RULE_NAMES_ZH = {
+    "BUY_BLUE_21P_LOWER": "蓝色持续21根以上：下轨触发买入",
+    "BUY_GRAY_4_10_LIGHT_SUPPORT": "灰色第4至10根：轻支撑触发买入",
+    "BLUE_11_20_LOWER_WICK_ONLY": "蓝色第11至20根：下轨仅影线触发买入",
+    "NEW_V5_C_GRAY_4_10_LOWER_WICK_ONLY": "灰色第4至10根：下轨仅影线触发买入",
+    "CONT_BLUE_11_20_UPPER": "蓝色第11至20根：上轨触发继续持有",
+    "CONT_BLUE_4_10_UPPER": "蓝色第4至10根：上轨触发继续持有",
+    "CONT_RECENT_GRAY_BLUE_UPPER": "近期灰转蓝：上轨触发继续持有",
+    "NEW_V5_B_BLUE_21P_UPPER_CLOSE_ABOVE": "蓝色持续21根以上：收盘站上上轨继续持有",
+    "AVOID_GREEN_11_20_LOWER": "绿色第11至20根：下轨触发等待",
+    "GREEN_11_20_LOWER_CLOSE_BELOW": "绿色第11至20根：收盘跌破下轨继续等待",
+    "GREEN_4_10_UPPER": "绿色第4至10根：上轨触发卖出",
+    "NEW_V5_E_GREEN_11_20_LIGHT_RESIST": "绿色第11至20根：轻阻力触发卖出",
+}
+
+REMOVED_V6_RULE_NAMES_ZH = {
+    "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT": "已移除：近期蓝/灰轻支撑买入",
+    "SELL_RECENT_BLUE_GRAY_LIGHT_RESIST": "已移除：近期蓝/灰轻阻力卖出",
+    "NEW_V5_D_GREEN_11_20_UPPER_WICK_ONLY": "已移除：绿色第11至20根上轨仅影线卖出",
+}
+
+ACTION_NAMES_ZH = {
+    "BUY": "买入",
+    "HOLD": "持有",
+    "WAIT": "等待",
+    "SELL": "卖出",
+    "HARD_EXIT": "C2 强制清仓",
+    "MIXED": "冲突信号不动作",
+    "NONE": "无新动作",
+}
+STATE_NAMES_ZH = {
+    "BLUE": "蓝色",
+    "GRAY": "灰色",
+    "GREEN": "绿色",
+    "OTHER": "其他",
+}
+RISK_NAMES_ZH = {
+    "ARMED": "已警戒",
+    "NORMAL": "正常",
+}
+POSITION_POLICY_NAME_ZH = "首次买入25%；后续每次加25个百分点至100%；普通卖出每次减当前仓位25%；冲突信号不调整仓位"
+HARD_EXIT_NAME_ZH = "C2：已警戒时，绿色状态且整根K线跌到慢带下方（High < GZB4），下一根同周期K线开盘全部清仓"
+
+
+def rule_name_zh(rule_id: str) -> str:
+    return RULE_NAMES_ZH.get(str(rule_id), str(rule_id))
+
+
+def rule_names_zh(rule_ids: Iterable[str]) -> list[str]:
+    return [rule_name_zh(x) for x in rule_ids]
 
 
 @dataclass(frozen=True)
@@ -114,7 +166,7 @@ def ema_optional(values: list[float | None], period: int) -> list[float | None]:
 
 
 def double_xma_right(prefix: list[float], t: int, period: int) -> float:
-    """Exact causal right-edge XMA(XMA(x,n),n) used by the frozen research."""
+    """冻结研究使用的精确因果右端 XMA(XMA(x,n),n) 计算。"""
     p = int((period - 2) / 2)
     outer_left = max(0, t - p - 1)
     inners: list[float] = []
@@ -122,7 +174,7 @@ def double_xma_right(prefix: list[float], t: int, period: int) -> float:
         left = max(0, j - p - 1)
         right = min(t + 1, j + (period - p) - 1)
         if right <= left:
-            raise RuntimeError("invalid XMA window")
+            raise RuntimeError("XMA 计算窗口无效")
         inners.append((prefix[right] - prefix[left]) / (right - left))
     return sum(inners) / len(inners)
 
@@ -143,9 +195,9 @@ def _validate_candles(candles: Iterable[dict]) -> list[dict]:
     for raw in candles:
         date = str(raw.get("date") or "")
         if not date:
-            raise ValueError("candle date is required")
+            raise ValueError("K 线日期不能为空")
         if last_date and date <= last_date:
-            raise ValueError("candles must be strictly ordered by date")
+            raise ValueError("K 线必须按时间严格递增排列")
         item = {
             "date": date,
             "open": float(raw["open"]),
@@ -155,16 +207,16 @@ def _validate_candles(candles: Iterable[dict]) -> list[dict]:
             "volume": float(raw.get("volume") or 0.0),
         }
         if item["high"] < item["low"]:
-            raise ValueError(f"{date}: high < low")
+            raise ValueError(f"{date}: 最高价小于最低价")
         out.append(item)
         last_date = date
     if len(out) < 120:
-        raise ValueError("at least 120 completed K-line bars are required")
+        raise ValueError("至少需要 120 根已经结束的 K 线")
     return out
 
 
 def build_ledger(candles: Iterable[dict], symbol: str) -> list[dict]:
-    """Build the frozen V7 FIRST_OBSERVED signal ledger."""
+    """构建冻结 V7 的“首次观察”信号账本。"""
     bars = _validate_candles(candles)
     highs = [b["high"] for b in bars]
     lows = [b["low"] for b in bars]
@@ -269,7 +321,7 @@ def build_ledger(candles: Iterable[dict], symbol: str) -> list[dict]:
 
         actions: dict[str, list[str]] = {k: [] for k in ACTION_ORDER}
 
-        # BUY — V7 active taxonomy. V6 BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT is removed.
+        # 买入规则——V7 当前启用规则；V6 的“近期蓝/灰轻支撑买入”已移除。
         if state == "BLUE" and run_age >= 21 and lower:
             actions["BUY"].append("BUY_BLUE_21P_LOWER")
         if state == "GRAY" and 4 <= run_age <= 10 and light_support:
@@ -279,7 +331,7 @@ def build_ledger(candles: Iterable[dict], symbol: str) -> list[dict]:
         if state == "GRAY" and 4 <= run_age <= 10 and lower and lower_subtype == "WICK_ONLY":
             actions["BUY"].append("NEW_V5_C_GRAY_4_10_LOWER_WICK_ONLY")
 
-        # HOLD
+        # 持有规则
         if state == "BLUE" and 11 <= run_age <= 20 and upper:
             actions["HOLD"].append("CONT_BLUE_11_20_UPPER")
         if state == "BLUE" and 4 <= run_age <= 10 and upper:
@@ -289,13 +341,13 @@ def build_ledger(candles: Iterable[dict], symbol: str) -> list[dict]:
         if state == "BLUE" and run_age >= 21 and upper and upper_subtype == "CLOSE_ABOVE":
             actions["HOLD"].append("NEW_V5_B_BLUE_21P_UPPER_CLOSE_ABOVE")
 
-        # WAIT
+        # 等待规则
         if state == "GREEN" and 11 <= run_age <= 20 and lower:
             actions["WAIT"].append("AVOID_GREEN_11_20_LOWER")
         if state == "GREEN" and 11 <= run_age <= 20 and lower and lower_subtype == "CLOSE_BELOW":
             actions["WAIT"].append("GREEN_11_20_LOWER_CLOSE_BELOW")
 
-        # SELL — V7 removes old S1 and S3.
+        # 卖出规则——V7 已移除旧 S1 和 S3。
         if state == "GREEN" and 4 <= run_age <= 10 and upper:
             actions["SELL"].append("GREEN_4_10_UPPER")
         if state == "GREEN" and 11 <= run_age <= 20 and light_resist:
@@ -350,7 +402,7 @@ def action_classes(row: dict | None) -> tuple[str, ...]:
 
 
 def resolve_action(row: dict | None) -> str | None:
-    """V7 keeps the frozen NO_CHANGE_MIXED resolution."""
+    """V7 保持冻结规则：出现不同动作类别的冲突信号时不调整仓位。"""
     classes = action_classes(row)
     if len(classes) == 1:
         return classes[0]
@@ -380,10 +432,10 @@ def simulate_policy(
     ledger: list[dict],
     friction_bps: float = 5.0,
 ) -> dict:
-    """Replay the unified V7 position policy and C2 hard exit."""
+    """重放统一 V7 仓位策略和 C2 强制退出规则。"""
     bars = _validate_candles(candles)
     if len(bars) != len(ledger):
-        raise ValueError("candles and ledger length mismatch")
+        raise ValueError("K 线数量与信号账本长度不一致")
 
     cash = 1.0
     shares = 0.0
@@ -396,8 +448,7 @@ def simulate_policy(
     execution_by_signal_date: dict[str, dict] = {}
 
     formal_index = next((i for i, b in enumerate(bars) if b["date"] >= POLICY_START_DATE), 0)
-    # The research daily dataset already has years of warmup before 2020. For
-    # shorter intraday histories, never replay orders before a minimum warmup.
+    # 日线研究数据在 2020 年前已有多年预热数据；较短的盘中周期也必须先满足最小预热根数，再开始重放仓位动作。
     warmup_index = min(MIN_WARMUP_BARS, len(bars) - 1)
     start_index = max(formal_index, warmup_index)
     policy_start_key = bars[start_index]["date"]
@@ -412,7 +463,7 @@ def simulate_policy(
         cl = float(bar["close"])
         pre_equity = cash + shares * op
         if pre_equity <= 0:
-            raise RuntimeError("non-positive equity")
+            raise RuntimeError("账户权益不得为零或负数")
 
         position_value = shares * op
         current_fraction = position_value / pre_equity
@@ -478,6 +529,7 @@ def simulate_policy(
                 "side": side,
                 "action": "HARD_EXIT" if hard else str(ordinary_action),
                 "rule_ids": _rule_ids(signal),
+                "rule_names_zh": rule_names_zh(_rule_ids(signal)),
                 "position_after": max(0.0, min(1.0, close_fraction)),
                 "risk_after": "ARMED" if risk_armed else "NORMAL",
             }
@@ -504,6 +556,9 @@ def simulate_policy(
                 "origin": row["origin"],
                 "action": label,
                 "rule_ids": _rule_ids(row),
+                "rule_names_zh": rule_names_zh(_rule_ids(row)),
+                "action_zh": ACTION_NAMES_ZH.get(label, label),
+                "state_zh": STATE_NAMES_ZH.get(str(row["color"]), str(row["color"])),
                 "lower_subtype": row["lower_subtype"],
                 "upper_subtype": row["upper_subtype"],
                 "execution_date": execution["execution_date"] if execution else None,
@@ -533,13 +588,13 @@ def next_action_text(row: dict, position_fraction: float, risk_armed: bool) -> t
     classes = action_classes(row)
     action = resolve_action(row)
     if len(classes) > 1:
-        return "MIXED", "同一根 K 线出现冲突动作：NO_CHANGE_MIXED，不调整仓位"
+        return "MIXED", "同一根 K 线出现冲突动作：不调整仓位"
     if action == "BUY":
         if position_fraction <= 1e-9:
             return "BUY", "下一根所选周期 K 线开盘建立约 25% 仓位"
         return "BUY", "下一根所选周期 K 线开盘增加约 25 个百分点，上限 100%"
     if action == "SELL":
-        return "SELL", "下一根所选周期 K 线开盘卖出当前仓位的 25%，执行后进入 ARMED"
+        return "SELL", "下一根所选周期 K 线开盘卖出当前仓位的 25%，执行后进入“已警戒”状态"
     if action == "HOLD":
         return "HOLD", "保持当前仓位，不下新订单"
     if action == "WAIT":
@@ -609,14 +664,23 @@ def analyze(symbol: str, candles: Iterable[dict], display_limit: int = 300, time
             "version": STRATEGY_VERSION,
             "source_commit": STRATEGY_SOURCE_COMMIT,
             "position_policy": POSITION_POLICY_ID,
+            "position_policy_zh": POSITION_POLICY_NAME_ZH,
             "hard_exit": HARD_EXIT_ID,
+            "hard_exit_zh": HARD_EXIT_NAME_ZH,
             "active_rule_count": sum(len(x) for x in ACTIVE_RULES.values()),
             "active_rules": ACTIVE_RULES,
+            "active_rules_zh": {
+                cls: rule_names_zh(ids) for cls, ids in ACTIVE_RULES.items()
+            },
             "removed_v6_rules": REMOVED_V6_RULES,
+            "removed_v6_rules_zh": [
+                REMOVED_V6_RULE_NAMES_ZH.get(x, x) for x in REMOVED_V6_RULES
+            ],
             "display_candles": limit,
             "policy_start_date": POLICY_START_DATE,
             "timeframe": str(timeframe),
             "bar_close_contract": "CONFIRMED_ON_SELECTED_BAR_CLOSE_EXECUTE_ON_NEXT_SELECTED_BAR_OPEN",
+            "bar_close_contract_zh": "所选周期 K 线结束后确认信号，并在下一根同周期 K 线开盘执行",
         },
         "snapshot": {
             "symbol": snapshot.symbol,
@@ -628,8 +692,12 @@ def analyze(symbol: str, candles: Iterable[dict], display_limit: int = 300, time
             "origin": snapshot.origin,
             "resolved_action": snapshot.resolved_action,
             "rule_ids": list(snapshot.rule_ids),
+            "rule_names_zh": rule_names_zh(snapshot.rule_ids),
+            "resolved_action_zh": ACTION_NAMES_ZH.get(snapshot.resolved_action, snapshot.resolved_action),
+            "state_zh": STATE_NAMES_ZH.get(snapshot.state, snapshot.state),
             "position_fraction": snapshot.position_fraction,
             "risk_state": snapshot.risk_state,
+            "risk_state_zh": RISK_NAMES_ZH.get(snapshot.risk_state, snapshot.risk_state),
             "next_action": snapshot.next_action,
             "GZB4": ledger[-1]["GZB4"],
             "ZD1": ledger[-1]["ZD1"],
