@@ -21,6 +21,11 @@ from data_provider import (
     normalize_timeframe,
 )
 from e_strategy import E_RULES, E_STRATEGY_VERSION, analyze_e
+from five_s_stocks_strategy import (
+    FIVE_S_STOCKS_RULES,
+    FIVE_S_STOCKS_VERSION,
+    analyze_5s_stocks,
+)
 from strategy import (
     ACTIVE_RULES,
     HARD_EXIT_ID,
@@ -46,6 +51,7 @@ _ANALYSIS_TTL_SECONDS = 5.0
 AVAILABLE_STRATEGIES = {
     "v7": STRATEGY_VERSION,
     "e": E_STRATEGY_VERSION,
+    "5s_stocks": FIVE_S_STOCKS_VERSION,
 }
 
 
@@ -88,6 +94,13 @@ def _payload_for(
             display_limit=DISPLAY_KLINE_LIMIT,
             timeframe=timeframe,
             market_meta=market_meta,
+        )
+    elif strategy_id == "5s_stocks":
+        result = analyze_5s_stocks(
+            symbol,
+            completed,
+            display_limit=DISPLAY_KLINE_LIMIT,
+            timeframe=timeframe,
         )
     else:
         result = analyze(
@@ -179,6 +192,9 @@ class Handler(BaseHTTPRequestHandler):
                     "bar_close_contract": True,
                     "available_strategies": AVAILABLE_STRATEGIES,
                     "e_active_rules": sum(len(v) for v in E_RULES.values()),
+                    "five_s_stocks_active_rules": sum(
+                        len(v) for v in FIVE_S_STOCKS_RULES.values()
+                    ),
                 },
             )
             return
