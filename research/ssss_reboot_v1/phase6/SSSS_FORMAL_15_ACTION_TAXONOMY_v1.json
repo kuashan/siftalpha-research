@@ -6,7 +6,11 @@
     "source_v5": "b0343e38a12d7455db613503250c21f95c2011b3",
     "source_v6": "fc4ebac147bf2be48c76d8a64af6da6925905bb9",
     "representation": "FIRST_OBSERVED",
-    "xma_modified": false
+    "xma_modified": false,
+    "strategy_name": "SLTD V6",
+    "official_name_status": "OFFICIAL",
+    "naming_date": "2026-10-02",
+    "previous_research_lineage": "SSSS"
   },
   "BUY": [
     {
