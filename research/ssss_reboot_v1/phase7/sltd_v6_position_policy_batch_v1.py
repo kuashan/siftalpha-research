@@ -413,6 +413,163 @@ def cvar5(values: list[float]) -> float | None:
     return float(np.mean(tail)) if len(tail) else float(cutoff)
 
 
+def prepare_fast_symbol(frame: pd.DataFrame, ledger: list[dict]) -> dict:
+    dates = pd.to_datetime(frame["Date"]).dt.tz_localize(None)
+    mask = (dates >= FORMAL_START) & (dates <= FORMAL_END)
+    idx = np.flatnonzero(mask.to_numpy())
+    if len(idx) < 2:
+        raise RuntimeError("insufficient formal-window bars")
+
+    formal_dates = [pd.Timestamp(dates.iloc[i]) for i in idx]
+    opens = frame["Open"].astype(float).to_numpy()[idx]
+    closes = frame["Close"].astype(float).to_numpy()[idx]
+    ledger_by_date = {pd.Timestamp(x["date"]): x for x in ledger}
+
+    action_arrays: dict[str, np.ndarray] = {}
+    action_code = {None:0, "BUY":1, "HOLD":2, "WAIT":3, "SELL":4}
+    for resolution in RESOLUTIONS:
+        arr = np.zeros(len(idx), dtype=np.int8)
+        for j in range(1, len(idx)):
+            signal = ledger_by_date.get(formal_dates[j-1])
+            classes = action_classes(signal) if signal else ()
+            arr[j] = action_code[resolve_action(classes, resolution)]
+        action_arrays[resolution] = arr
+
+    return {
+        "dates":[d.strftime("%Y-%m-%d") for d in formal_dates],
+        "opens":opens,
+        "closes":closes,
+        "actions":action_arrays,
+    }
+
+
+def simulate_symbol_fast(prep: dict, policy: Policy, friction_bps: float) -> dict:
+    opens = prep["opens"]
+    closes = prep["closes"]
+    actions = prep["actions"][policy.resolution]
+    n = len(opens)
+
+    cash = 1.0
+    shares = 0.0
+    turnover = 0.0
+    changes = 0
+    invested_days = 0
+    curve = np.empty(n, dtype=float)
+    cost_rate = friction_bps / 10000.0
+
+    initial = policy.initial
+    sell_reduction = policy.sell_reduction
+    add_mode = policy.add_mode
+    wait_mode = policy.wait_mode
+    wait_trim = {"HOLD":0.0,"TRIM_25":0.25,"TRIM_50":0.50,"EXIT_100":1.0}[wait_mode]
+
+    for j in range(n):
+        op = float(opens[j])
+        cl = float(closes[j])
+        pre_equity = cash + shares * op
+        if pre_equity <= 0:
+            raise RuntimeError("non-positive equity")
+        position_value = shares * op
+        current_fraction = position_value / pre_equity
+        action = int(actions[j])
+        order_value = 0.0
+
+        if action == 1:
+            if shares <= 1e-14:
+                desired_fraction = initial
+            elif add_mode == "IGNORE":
+                desired_fraction = current_fraction
+            elif add_mode == "ADD_25_TO_CAP":
+                desired_fraction = min(1.0, current_fraction + 0.25)
+            elif add_mode == "ADD_ENTRY_TO_CAP":
+                desired_fraction = min(1.0, current_fraction + initial)
+            else:
+                desired_fraction = 1.0
+            if desired_fraction < current_fraction:
+                desired_fraction = current_fraction
+            order_value = desired_fraction * pre_equity - position_value
+        elif action == 4 and shares > 0:
+            order_value = -position_value * sell_reduction
+        elif action == 3 and shares > 0 and wait_trim > 0:
+            order_value = -position_value * wait_trim
+
+        if order_value > 1e-14:
+            max_buy = cash / (1.0 + cost_rate)
+            if order_value > max_buy:
+                order_value = max_buy
+        elif order_value < -1e-14:
+            if order_value < -position_value:
+                order_value = -position_value
+
+        if abs(order_value) > 1e-14:
+            cost = abs(order_value) * cost_rate
+            shares += order_value / op
+            cash -= order_value + cost
+            turnover += abs(order_value) / pre_equity
+            changes += 1
+            if shares <= 1e-12:
+                shares = 0.0
+
+        curve[j] = cash + shares * cl
+        if shares > 1e-12:
+            invested_days += 1
+
+    final_equity = float(curve[-1])
+    days = max(1, (pd.Timestamp(prep["dates"][-1]) - pd.Timestamp(prep["dates"][0])).days)
+    total_return = final_equity - 1.0
+    cagr = final_equity ** (365.25 / days) - 1.0 if final_equity > 0 else -1.0
+    mdd = max_drawdown(curve)
+    calmar = cagr / abs(mdd) if mdd < -1e-12 else (999.0 if cagr > 0 else 0.0)
+    return {
+        "curve":curve,
+        "total_return":float(total_return),
+        "cagr":float(cagr),
+        "max_drawdown":float(mdd),
+        "calmar":float(calmar),
+        "turnover":float(turnover),
+        "position_changes":int(changes),
+        "time_in_market":float(invested_days / n),
+    }
+
+
+def prepare_common_alignment(prepared: dict[str, dict]) -> tuple[list[str], dict[str, np.ndarray]]:
+    common = set.intersection(*(set(v["dates"]) for v in prepared.values()))
+    common_dates = sorted(common)
+    if len(common_dates) < 2:
+        raise RuntimeError("no common portfolio dates")
+    indices: dict[str, np.ndarray] = {}
+    for symbol, prep in prepared.items():
+        pos = {d:i for i,d in enumerate(prep["dates"])}
+        indices[symbol] = np.asarray([pos[d] for d in common_dates], dtype=np.int32)
+    return common_dates, indices
+
+
+def portfolio_metrics_fast(
+    per_symbol: dict[str, dict],
+    common_dates: list[str],
+    common_idx: dict[str, np.ndarray],
+) -> dict:
+    curves = np.vstack([
+        per_symbol[s]["curve"][common_idx[s]]
+        for s in per_symbol
+    ])
+    curve = np.mean(curves, axis=0)
+    days = max(1, (pd.Timestamp(common_dates[-1]) - pd.Timestamp(common_dates[0])).days)
+    total = float(curve[-1] - 1.0)
+    cagr = float(curve[-1] ** (365.25 / days) - 1.0) if curve[-1] > 0 else -1.0
+    mdd = max_drawdown(curve)
+    calmar = cagr / abs(mdd) if mdd < -1e-12 else (999.0 if cagr > 0 else 0.0)
+    return {
+        "total_return":total,
+        "cagr":cagr,
+        "max_drawdown":float(mdd),
+        "calmar":float(calmar),
+        "turnover_mean":float(np.mean([v["turnover"] for v in per_symbol.values()])),
+        "position_changes_sum":int(sum(v["position_changes"] for v in per_symbol.values())),
+        "time_in_market_mean":float(np.mean([v["time_in_market"] for v in per_symbol.values()])),
+    }
+
+
 def simulate_symbol(
     frame: pd.DataFrame,
     ledger: list[dict],
@@ -660,15 +817,15 @@ def main() -> None:
     manifest_path = data_dir / "manifest.json"
     manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
 
+    prepared = {s:prepare_fast_symbol(frames[s], ledgers[s]) for s in symbols}
+    common_dates, common_idx = prepare_common_alignment(prepared)
+
     all_results = []
     for policy in policies():
-        per5 = {}
-        per10 = {}
-        for symbol in symbols:
-            per5[symbol] = simulate_symbol(frames[symbol], ledgers[symbol], policy, 5.0)
-            per10[symbol] = simulate_symbol(frames[symbol], ledgers[symbol], policy, 10.0)
-        p5 = portfolio_metrics(per5)
-        p10 = portfolio_metrics(per10)
+        per5 = {s:simulate_symbol_fast(prepared[s], policy, 5.0) for s in symbols}
+        per10 = {s:simulate_symbol_fast(prepared[s], policy, 10.0) for s in symbols}
+        p5 = portfolio_metrics_fast(per5, common_dates, common_idx)
+        p10 = portfolio_metrics_fast(per10, common_dates, common_idx)
         all_results.append({
             "policy_id":policy.id,
             "policy":{
