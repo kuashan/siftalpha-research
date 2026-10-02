@@ -1,0 +1,61 @@
+name: SLTD V7 Combination Ablation 79 Stocks
+
+on:
+  push:
+    branches:
+      - research/sltd-v7-combination-ablation-v1
+    paths:
+      - ".github/workflows/sltd-v7-combination-ablation.yml"
+      - "research/ssss_reboot_v1/phase8/sltd_v7_combination_ablation_v1.py"
+      - "research/ssss_reboot_v1/phase8/SLTD_V7_COMBINATION_ABLATION_PROTOCOL_v1.md"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  combination-ablation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/sltd-v7-combination-ablation-v1
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "pandas>=2.2,<3" "numpy>=2,<3" "yfinance>=0.2.66,<0.3"
+
+      - name: Run combination ablation study
+        run: |
+          python research/ssss_reboot_v1/phase8/sltd_v7_combination_ablation_v1.py
+
+      - name: Verify outputs
+        run: |
+          set -euo pipefail
+          test -f research/ssss_reboot_v1/phase8/SLTD_V7_COMBINATION_ABLATION_RESULT_v1.json
+          test -f research/ssss_reboot_v1/phase8/SLTD_V7_COMBINATION_ABLATION_RESULT_v1.md
+          grep -q 'Baseline reproduction against frozen C2 result: \*\*PASS' research/ssss_reboot_v1/phase8/SLTD_V7_COMBINATION_ABLATION_RESULT_v1.md
+          grep -q 'SLTD_V7_COMBINATION_ABLATION_STUDY_V1 = COMPLETE' research/ssss_reboot_v1/phase8/SLTD_V7_COMBINATION_ABLATION_RESULT_v1.md
+
+      - name: Commit results
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/ssss_reboot_v1/phase8/SLTD_V7_COMBINATION_ABLATION_RESULT_v1.json
+          git add research/ssss_reboot_v1/phase8/SLTD_V7_COMBINATION_ABLATION_RESULT_v1.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "research: complete SLTD V7 combination ablation study"
+          git push origin HEAD:research/sltd-v7-combination-ablation-v1
