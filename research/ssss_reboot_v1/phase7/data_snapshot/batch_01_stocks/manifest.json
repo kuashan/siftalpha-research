@@ -1,0 +1,97 @@
+{
+  "asset_class": "STOCK",
+  "auto_adjust": false,
+  "batch": 1,
+  "fetch_end_exclusive": "2026-10-01",
+  "fetch_start": "2010-01-04",
+  "files": {
+    "AAPL": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_01_stocks/AAPL.csv.gz",
+      "rows": 4211,
+      "sha256": "d3afae15e0776f3996eaf4b1c04ee84e74c6d472969721f46290cdf395492d39"
+    },
+    "AMD": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_01_stocks/AMD.csv.gz",
+      "rows": 4211,
+      "sha256": "91af1c6d1c38fafd3c9b30ad65ae9a7920a3305cdb04a15f85a53dac1bbabfa4"
+    },
+    "AVGO": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_01_stocks/AVGO.csv.gz",
+      "rows": 4211,
+      "sha256": "646b1be9c2c1638fb0dcd78885905e4bc3e6932230e8b93d4d28150da59b9556"
+    },
+    "GOOGL": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_01_stocks/GOOGL.csv.gz",
+      "rows": 4211,
+      "sha256": "eac29a246450d4af3c96081d1dedb17a56e7834405adad6b815995c73978cf17"
+    },
+    "INTC": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_01_stocks/INTC.csv.gz",
+      "rows": 4211,
+      "sha256": "1deb826c7c583880b83c0c3979bcea4e3c92f00466b29feb9fd654c3009cc124"
+    },
+    "MSFT": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_01_stocks/MSFT.csv.gz",
+      "rows": 4211,
+      "sha256": "c74195e1285b149539f778096debe45b11af4734d241fc6fcea957dc8e262e0d"
+    },
+    "MU": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_01_stocks/MU.csv.gz",
+      "rows": 4211,
+      "sha256": "6710ba71d79f3eed2024f89add4a41f1aacbe79fae21978c75cde8a89e13cabc"
+    },
+    "NVDA": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_01_stocks/NVDA.csv.gz",
+      "rows": 4211,
+      "sha256": "333fcdf493fb1fdf5ad93688d8cb7677b4aa045bdf4cfcf12eab28f65496dca8"
+    },
+    "ORCL": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_01_stocks/ORCL.csv.gz",
+      "rows": 4211,
+      "sha256": "4a8b75e4e9520c376acd450a80171850ce685dbe4c858e0a8620b69b60200be2"
+    },
+    "QCOM": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_01_stocks/QCOM.csv.gz",
+      "rows": 4211,
+      "sha256": "db180030b47f8c5a8379739b2f5b655c2111a211f4397270673cc7e82009101b"
+    }
+  },
+  "formal_end": "2026-09-30",
+  "formal_start": "2020-01-02",
+  "generated_at_utc": "2026-10-02T07:34:59.117359+00:00",
+  "provider": "Yahoo Finance via yfinance",
+  "repair": false,
+  "study": "SLTD_V6_POSITION_POLICY_STUDY_V1",
+  "symbols": [
+    "AAPL",
+    "MSFT",
+    "NVDA",
+    "AMD",
+    "AVGO",
+    "ORCL",
+    "INTC",
+    "QCOM",
+    "MU",
+    "GOOGL"
+  ]
+}
