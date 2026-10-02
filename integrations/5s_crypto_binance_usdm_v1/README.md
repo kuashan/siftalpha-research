@@ -53,3 +53,19 @@ Use environment variables only:
 `BINANCE_TESTNET_API_SECRET`
 
 LIVE remains unsupported in this round.
+
+
+## K-line boundary contract
+
+5s crypto V1 is not bound to a 24-hour/day boundary.
+
+For every Strategy Slot:
+- the selected timeframe defines the strategy bar;
+- only a **completed** selected-timeframe K-line is evaluated;
+- the currently forming K-line is excluded from confirmed signal calculation;
+- once a bar closes, its signal is confirmed;
+- any resulting action is executed on the **next K-line of the same timeframe**;
+- changing 15m -> 1h changes the bar boundary, not the frozen signal formulas.
+
+Formal runtime contract:
+`SELECTED_TIMEFRAME_BAR_CLOSE_TO_NEXT_SELECTED_BAR_OPEN`
