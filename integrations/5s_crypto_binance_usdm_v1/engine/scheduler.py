@@ -9,6 +9,9 @@ from exchange.binance_usdm_testnet import BinanceUsdMTestnetAdapter
 from strategy.frozen_signal_engine import BarEvaluation, evaluate_candles
 
 
+BAR_CLOSE_CONTRACT = "SELECTED_TIMEFRAME_BAR_CLOSE_TO_NEXT_SELECTED_BAR_OPEN"
+
+
 @dataclass(frozen=True)
 class M3Decision:
     signal: str
@@ -86,8 +89,9 @@ class TerminalDecisionError(RuntimeError):
 class StrategyScheduler:
     """One-process scheduler for four independent symbol slots.
 
-    M3.2 observes newly closed candles and persists frozen strategy decisions.
-    It does not place orders. M3.3 will attach the execution callback.
+    Contract: selected timeframe bar closes -> signal is confirmed -> action is
+    executed on the next selected-timeframe bar. The currently forming bar is
+    never fed into the frozen signal engine.
     """
 
     def __init__(
@@ -130,6 +134,12 @@ class StrategyScheduler:
 
     @staticmethod
     def _closed_rows(rows: Any) -> list[Any]:
+        """Return confirmed bars only.
+
+        Binance kline responses include the currently forming selected-timeframe
+        bar as the final row. That row must never be evaluated as a confirmed
+        signal. The completed bar immediately before it is the strategy boundary.
+        """
         if not isinstance(rows, list) or len(rows) < 2:
             return []
         return rows[:-1]
@@ -219,6 +229,7 @@ class StrategyScheduler:
                     "execution_bar_open_time": int(rows[-1][0]),
                     "reference_price": float(rows[-1][1]),
                     "timeframe": timeframe,
+                    "bar_close_contract": BAR_CLOSE_CONTRACT,
                 }
 
                 if decision.actions and self.on_decision is not None:
