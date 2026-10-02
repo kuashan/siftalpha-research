@@ -30,6 +30,7 @@ STRATEGY_VERSION = "SLTD V7 12-rule Candidate v1"
 STRATEGY_SOURCE_COMMIT = "5f9ea4d8fa434b54afdbf32a1cb21ef2f3cb4042"
 POSITION_POLICY_ID = "I25_AADD_25_TO_CAP_S25_WHOLD_RNO_CHANGE_MIXED"
 HARD_EXIT_ID = "C2_FULL_CANDLE_BELOW_SLOW_BAND"
+POLICY_START_DATE = "2020-01-02"
 
 REMOVED_V6_RULES = (
     "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT",
@@ -393,7 +394,16 @@ def simulate_policy(
     equity_curve: list[float] = []
     execution_by_signal_date: dict[str, dict] = {}
 
+    start_index = next((i for i, b in enumerate(bars) if b["date"] >= POLICY_START_DATE), None)
+    if start_index is None:
+        raise ValueError(f"no candles on or after {POLICY_START_DATE}")
+
     for j, bar in enumerate(bars):
+        if j < start_index:
+            equity_curve.append(1.0)
+            positions.append({"date": bar["date"], "fraction": 0.0, "risk_armed": False})
+            continue
+
         op = float(bar["open"])
         cl = float(bar["close"])
         pre_equity = cash + shares * op
@@ -402,7 +412,7 @@ def simulate_policy(
 
         position_value = shares * op
         current_fraction = position_value / pre_equity
-        signal = ledger[j - 1] if j > 0 else None
+        signal = ledger[j - 1] if j > start_index else None
 
         hard = bool(shares > 1e-14 and risk_armed and c2_condition(signal))
         action = resolve_action(signal)
@@ -472,6 +482,8 @@ def simulate_policy(
 
     events: list[dict] = []
     for row in ledger:
+        if row["date"] < POLICY_START_DATE:
+            continue
         classes = action_classes(row)
         if not classes:
             continue
@@ -598,6 +610,7 @@ def analyze(symbol: str, candles: Iterable[dict], display_limit: int = 300) -> d
             "active_rules": ACTIVE_RULES,
             "removed_v6_rules": REMOVED_V6_RULES,
             "display_candles": limit,
+            "policy_start_date": POLICY_START_DATE,
         },
         "snapshot": {
             "symbol": snapshot.symbol,
