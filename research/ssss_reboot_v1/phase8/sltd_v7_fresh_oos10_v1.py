@@ -105,8 +105,8 @@ def main() -> None:
         frame = core.fetch_stock(symbol, path, force=True)
         if frame.empty:
             raise RuntimeError(f"{symbol}: empty data")
-        if pd.Timestamp(frame["Date"].min()) > pd.Timestamp(core.FETCH_START) + pd.Timedelta(days=10):
-            raise RuntimeError(f"{symbol}: insufficient warmup history: {frame['Date'].min()}")
+        if pd.Timestamp(frame["Date"].min()) >= core.FORMAL_START:
+            raise RuntimeError(f"{symbol}: no pre-formal-window warmup history: {frame['Date'].min()}")
         if pd.Timestamp(frame["Date"].max()) < core.FORMAL_END:
             raise RuntimeError(f"{symbol}: data ends before formal end: {frame['Date'].max()}")
         frames[symbol] = frame
