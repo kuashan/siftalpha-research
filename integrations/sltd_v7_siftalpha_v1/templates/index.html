@@ -14,7 +14,7 @@
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text)}
-button,input{font:inherit}
+button,input,select{font:inherit}
 button{cursor:pointer}
 .shell{max-width:1180px;margin:0 auto;padding:12px}
 .topbar{
@@ -27,12 +27,13 @@ button{cursor:pointer}
 .badges{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .badge{padding:5px 8px;border:1px solid var(--line);border-radius:999px;background:var(--soft);font-size:11px;color:#c8d3e4}
 .badge.v7{border-color:#36568d;color:#a9c6ff}.badge.c2{border-color:#634d2c;color:#f3c77d}.badge.local{border-color:#285945;color:#8ce6bc}
-.symbol-bar{display:grid;grid-template-columns:minmax(160px,1fr) auto auto;gap:7px;margin-top:10px}
-.symbol-input{
+.symbol-bar{display:grid;grid-template-columns:minmax(160px,1fr) minmax(130px,180px) auto auto;gap:7px;margin-top:10px}
+.symbol-input,.timeframe-select{
   min-width:0;min-height:42px;border-radius:10px;border:1px solid #33415d;background:#0a1120;
-  color:var(--text);padding:9px 11px;font-size:16px;outline:none;text-transform:uppercase
+  color:var(--text);padding:9px 11px;font-size:16px;outline:none
 }
-.symbol-input:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(91,140,255,.12)}
+.symbol-input{text-transform:uppercase}
+.symbol-input:focus,.timeframe-select:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(91,140,255,.12)}
 .primary,.secondary{
   min-height:42px;border:0;border-radius:9px;font-weight:750;padding:9px 13px
 }
@@ -61,7 +62,7 @@ button{cursor:pointer}
 .decision-head{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,.7fr);gap:12px;align-items:start}
 .eyebrow{font-size:10px;color:var(--muted);margin-bottom:4px}
 .decision-text{font-size:16px;font-weight:760;line-height:1.45}
-.decision-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.decision-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
 .decision-meta div{background:var(--panel2);border-radius:9px;padding:8px;min-width:0}
 .decision-meta small{display:block;color:var(--muted);font-size:9px;margin-bottom:3px}
 .decision-meta b{font-size:12px;overflow-wrap:anywhere}
@@ -117,7 +118,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
   .shell{padding:10px}.topbar{margin:-10px -10px 0;padding:10px}
   .title-row{align-items:center}.brand h1{font-size:18px}.brand p{font-size:10px}
   .badges .badge:nth-child(2),.badges .badge:nth-child(4){display:none}
-  .symbol-bar{grid-template-columns:minmax(0,1fr) auto}.symbol-bar .secondary{grid-column:1/-1}
+  .symbol-bar{grid-template-columns:minmax(0,1fr) minmax(118px,.7fr)}.symbol-bar .primary,.symbol-bar .secondary{width:100%}
   .summary-grid{gap:5px}.summary-card{padding:7px 6px}.summary-card small{font-size:8px}.summary-card strong{font-size:12px}.summary-card span{font-size:8px}
   .decision-head{grid-template-columns:1fr}.decision-meta{grid-template-columns:repeat(3,minmax(0,1fr))}
   .decision-text{font-size:14px}
@@ -143,7 +144,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       </div>
       <div class="badges">
         <span class="badge v7">12 条规则</span>
-        <span class="badge">日线</span>
+        <span class="badge" id="timeframe-badge">__DEFAULT_TIMEFRAME__</span>
         <span class="badge c2">C2 Hard Exit</span>
         <span class="badge local">本地 Web</span>
       </div>
@@ -151,6 +152,9 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
 
     <form class="symbol-bar" id="symbol-form">
       <input id="symbol-input" class="symbol-input" name="symbol" value="__DEFAULT_SYMBOL__" maxlength="15" autocomplete="off" aria-label="股票代码">
+      <select id="timeframe-select" class="timeframe-select" name="timeframe" aria-label="K 线周期">
+        __TIMEFRAME_OPTIONS__
+      </select>
       <button id="load-button" class="primary" type="submit">分析</button>
       <button id="refresh-button" class="secondary" type="button">强制刷新行情</button>
     </form>
@@ -191,8 +195,9 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       </div>
       <div class="decision-meta">
         <div><small>股票</small><b id="meta-symbol">—</b></div>
-        <div><small>最新交易日</small><b id="meta-date">—</b></div>
+        <div><small>最新已完成 K 线</small><b id="meta-date">—</b></div>
         <div><small>Origin</small><b id="meta-origin">—</b></div>
+        <div><small>当前 K 线</small><b id="meta-forming">—</b></div>
       </div>
     </div>
   </section>
@@ -205,7 +210,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
         <span id="chart-candle-meta">移动或点击 K 线查看细节</span>
       </div>
       <div class="chart-price">
-        <small>最新收盘</small>
+        <small>已完成 K 线收盘</small>
         <strong id="latest-price">—</strong>
       </div>
       <div class="chart-status">
@@ -244,14 +249,14 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       <div class="flow-step"><small>③ 普通 SELL</small><b>卖当前仓位 25%</b></div>
       <div class="flow-step"><small>④ SELL 后</small><b>风险状态 → ARMED</b></div>
       <div class="flow-step"><small>⑤ C2</small><b>ARMED + GREEN + High &lt; GZB4</b></div>
-      <div class="flow-step"><small>⑥ Hard Exit</small><b>下一开盘全部清仓 → 0%</b></div>
+      <div class="flow-step"><small>⑥ Hard Exit</small><b>下一根所选周期 K 线开盘全部清仓 → 0%</b></div>
     </div>
   </section>
 
   <section class="events-card">
     <div class="section-title">
       <h2>最近 SLTD 信号记录</h2>
-      <span>信号在收盘确认；订单在下一可用开盘执行</span>
+      <span>所选周期 K 线收盘确认；下一根同周期 K 线开盘执行</span>
     </div>
     <div class="table-wrap">
       <table>
@@ -271,7 +276,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     <div class="rules-groups" id="rules-groups"></div>
     <details class="advanced">
       <summary>高级信息 / 研究事实源</summary>
-      <p>策略事实源 commit：__SOURCE_COMMIT_SHORT__…；Web 只负责执行冻结规则与可视化。300 根 K 线只限制图表显示，指标计算使用获取到的完整历史数据。</p>
+      <p>策略事实源 commit：__SOURCE_COMMIT_SHORT__…；Web 只负责执行冻结规则与可视化。300 根 K 线只限制图表显示；指标只使用已完成的所选周期 K 线。当前未完成 K 线不会参与正式信号。</p>
     </details>
   </section>
 
@@ -286,6 +291,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
 
   const form = document.getElementById('symbol-form');
   const input = document.getElementById('symbol-input');
+  const timeframeSelect = document.getElementById('timeframe-select');
   const loadButton = document.getElementById('load-button');
   const refreshButton = document.getElementById('refresh-button');
   const notice = document.getElementById('notice');
@@ -294,6 +300,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
 
   let currentPayload = null;
   let currentSymbol = String(input.value || 'AAPL').toUpperCase();
+  let currentTimeframe = String(timeframeSelect.value || '__DEFAULT_TIMEFRAME__');
 
   const actionLabels = {
     BUY:'BUY · 买入', SELL:'SELL · 卖出', HOLD:'HOLD · 持有', WAIT:'WAIT · 等待',
@@ -557,8 +564,12 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     const s=payload.snapshot||{};
     const strategy=payload.strategy||{};
     const meta=payload.market_data||{};
+    const contract=payload.decision_contract||{};
+    const forming=payload.forming_bar||null;
     currentSymbol=String(s.symbol||currentSymbol).toUpperCase();
+    currentTimeframe=String(contract.selected_timeframe||meta.timeframe||currentTimeframe);
     input.value=currentSymbol;
+    timeframeSelect.value=currentTimeframe;
 
     const actionNode=q('summary-action');
     actionNode.textContent=actionLabels[s.resolved_action]||s.resolved_action||'—';
@@ -580,7 +591,9 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     safeText('meta-symbol',s.symbol);
     safeText('meta-date',s.latest_date);
     safeText('meta-origin',s.origin||'—');
-    safeText('chart-title',(s.symbol||'')+' · 日线 · SLTD V7');
+    safeText('meta-forming',forming ? ('形成中 · '+formatPrice(forming.close)) : '当前无未完成 K 线');
+    safeText('chart-title',(s.symbol||'')+' · '+(contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe)+' · SLTD V7');
+    safeText('timeframe-badge',contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe);
     safeText('latest-price',formatPrice(s.latest_close));
     safeText('market-source',(meta.provider||'Yahoo Finance')+' · '+(meta.source||'network'));
     safeText('value-gzb4',formatPrice(s.GZB4));
@@ -598,15 +611,16 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     drawChart(payload);
   }
 
-  async function load(symbol,force){
+  async function load(symbol,timeframe,force){
     const normalized=String(symbol||'').trim().toUpperCase();
+    const selected=String(timeframe||'').trim();
     if(!/^[A-Z0-9.\-^]{1,15}$/.test(normalized)){
       showError('股票代码格式不正确');
       return;
     }
     clearError();setLoading(true);
     try{
-      const params=new URLSearchParams({symbol:normalized});
+      const params=new URLSearchParams({symbol:normalized,timeframe:selected});
       if(force)params.set('refresh','1');
       const response=await fetch('/api/analyze?'+params.toString(),{cache:'no-store'});
       const payload=await response.json();
@@ -619,8 +633,9 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     }
   }
 
-  form.addEventListener('submit',e=>{e.preventDefault();load(input.value,false);});
-  refreshButton.addEventListener('click',()=>load(input.value,true));
+  form.addEventListener('submit',e=>{e.preventDefault();load(input.value,timeframeSelect.value,false);});
+  timeframeSelect.addEventListener('change',()=>load(input.value,timeframeSelect.value,false));
+  refreshButton.addEventListener('click',()=>load(input.value,timeframeSelect.value,true));
 
   let resizeTimer=null;
   window.addEventListener('resize',()=>{
@@ -628,7 +643,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     resizeTimer=setTimeout(()=>{if(currentPayload)drawChart(currentPayload);},150);
   });
 
-  load(currentSymbol,false);
+  load(currentSymbol,currentTimeframe,false);
 })();
 </script>
 </body>
