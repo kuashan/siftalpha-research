@@ -3,7 +3,7 @@ name: SLTD V7 SiftAlpha Web
 on:
   push:
     branches:
-      - feature/sltd-v7-bar-close-v2
+      - feature/sltd-v7-4h-v3
     paths:
       - "integrations/sltd_v7_siftalpha_v1/**"
       - ".github/workflows/sltd-v7-siftalpha-web.yml"
@@ -23,7 +23,7 @@ jobs:
       - name: Checkout exact branch
         uses: actions/checkout@v4
         with:
-          ref: feature/sltd-v7-bar-close-v2
+          ref: feature/sltd-v7-4h-v3
           fetch-depth: 1
 
       - name: Set up Python
@@ -50,20 +50,20 @@ jobs:
           find /tmp/sltd_v7_package -type d -name __pycache__ -prune -exec rm -rf {} +
           find /tmp/sltd_v7_package -type f -name '*.pyc' -delete
           cd /tmp/sltd_v7_package
-          zip -r "$GITHUB_WORKSPACE/SLTD-V7-SiftAlpha-BarClose-v2.zip" .
+          zip -r "$GITHUB_WORKSPACE/SLTD-V7-SiftAlpha-BarClose-4h-v3.zip" .
 
       - name: Verify package
         run: |
           set -euo pipefail
-          unzip -l SLTD-V7-SiftAlpha-BarClose-v2.zip
-          unzip -p SLTD-V7-SiftAlpha-BarClose-v2.zip .project.json | grep -q '"name": "SLTD V7"'
-          unzip -p SLTD-V7-SiftAlpha-BarClose-v2.zip README-STUDIO.txt | grep -q 'SIFTALPHA_WEB_URL'
-          unzip -p SLTD-V7-SiftAlpha-BarClose-v2.zip requirements.txt | grep -q 'standard library'
+          unzip -l SLTD-V7-SiftAlpha-BarClose-4h-v3.zip
+          unzip -p SLTD-V7-SiftAlpha-BarClose-4h-v3.zip .project.json | grep -q '"name": "SLTD V7"'
+          unzip -p SLTD-V7-SiftAlpha-BarClose-4h-v3.zip README-STUDIO.txt | grep -q 'SIFTALPHA_WEB_URL'
+          unzip -p SLTD-V7-SiftAlpha-BarClose-4h-v3.zip requirements.txt | grep -q 'standard library'
 
       - name: Upload SiftAlpha project ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: sltd-v7-siftalpha-bar-close-v2
-          path: SLTD-V7-SiftAlpha-BarClose-v2.zip
+          name: sltd-v7-siftalpha-bar-close-4h-v3
+          path: SLTD-V7-SiftAlpha-BarClose-4h-v3.zip
           if-no-files-found: error
           retention-days: 30
