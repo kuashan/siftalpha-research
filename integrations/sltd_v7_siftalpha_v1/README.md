@@ -1,119 +1,142 @@
-# SLTD V7 · SiftAlpha Web
+# SLTD V7 · SiftAlpha 中文版
 
-这是 SLTD V7 冻结候选策略的 SiftAlpha 可运行工程版本。
+这是 SLTD V7 冻结候选策略的 SiftAlpha 可运行中文版工程。
 
-## 边界
+## 策略边界
 
-该项目**不重新研究或自动优化策略参数**。研究事实源仍在：
+本项目不会重新研究、自动优化或修改策略参数。研究事实源仍然是：
+
 `candidate/sltd-v7-12rules-position-v1`
 
-冻结候选 commit：
+冻结候选提交：
+
 `5f9ea4d8fa434b54afdbf32a1cb21ef2f3cb4042`
 
-当前执行层：
-- 12 条 SLTD V7 活跃规则
-- 首次 BUY 25%
-- 后续 BUY 每次 +25 个百分点，上限 100%
-- 普通 SELL 每次减当前仓位 25%
-- 普通 SELL 实际执行后 C2 状态 = ARMED
-- 后续实际 BUY 会重置 ARMED
-- ARMED + GREEN + `High < GZB4` -> 下一根所选周期 K 线开盘全部清仓
+当前正式执行逻辑：
 
-## Web UI
+- 12 条 SLTD V7 活跃规则；
+- 第一次买入：目标仓位 25%；
+- 后续实际买入：每次增加 25 个百分点，最高 100%；
+- 普通卖出：每次卖出当前持仓的 25%；
+- 普通卖出实际执行后，C2 风险状态进入“已警戒”；
+- 后续实际买入会把 C2 风险状态重置为“正常”；
+- 已警戒 + 绿色状态 + 整根 K 线跌到慢带下方（最高价 < GZB4）
+  → 下一根同周期 K 线开盘全部清仓；
+- 冲突信号不调整仓位。
 
-Web 设计借鉴已完成的 5s crypto 移动端框架，但信息架构按 SLTD 重做：
+## 12 条规则中文名称
 
-1. 当前 BUY / HOLD / WAIT / SELL / C2
-2. 当前模拟仓位
-3. BLUE / GRAY / GREEN + Age / Origin
-4. C2 NORMAL / ARMED
-5. 最近 300 根 K 线
-6. GZB3/GZB4 慢灰带、ZD1/ZK1
-7. BLUE / GRAY / GREEN 状态带
-8. B / S / X 执行标记
-9. 成交量
-10. 仓位轨迹
-11. 最近信号记录
-12. 当前 12 条规则清单
+### 买入
+1. 蓝色持续21根以上：下轨触发买入
+2. 灰色第4至10根：轻支撑触发买入
+3. 蓝色第11至20根：下轨仅影线触发买入
+4. 灰色第4至10根：下轨仅影线触发买入
 
-## Runtime（运行时）
+### 持有
+5. 蓝色第11至20根：上轨触发继续持有
+6. 蓝色第4至10根：上轨触发继续持有
+7. 近期灰转蓝：上轨触发继续持有
+8. 蓝色持续21根以上：收盘站上上轨继续持有
 
-只依赖 Python 标准库。
+### 等待
+9. 绿色第11至20根：下轨触发等待
+10. 绿色第11至20根：收盘跌破下轨继续等待
 
-```bash
-python app.py
-```
+### 卖出
+11. 绿色第4至10根：上轨触发卖出
+12. 绿色第11至20根：轻阻力触发卖出
 
-服务器使用回环地址 + 自动空闲端口，并在成功 bind 后输出：
+英文规则编号仍然保留在程序内部，作为冻结研究回归时使用的机器标识。
+网页、规则列表、信号记录和用户可见文案全部使用中文名称。
+这样可以保证“中文化”不会改变已经验证过的 12 条规则含义。
 
-```
-SIFTALPHA_WEB_URL=http://127.0.0.1:<port>
-```
+## K 线执行边界
 
-因此不会和另一个 SiftAlpha 项目争抢固定端口。
+策略不再绑定“日线结束”，而是绑定“所选周期 K 线结束”。
 
-## K 线边界与行情
+支持周期：
 
-策略已经改为 **Bar Close（K 线收盘）契约**，不再写死“日线结束”：
+- 5 分钟
+- 15 分钟
+- 30 分钟
+- 1 小时
+- 4 小时
+- 1 天
 
-- 用户选择哪个周期，就只用该周期已经结束的 K 线确认 SLTD 信号；
-- 当前正在形成的 K 线可以获取/展示，但不会参与正式策略决策；
-- 信号在所选周期 K 线结束时确认；
-- 订单语义为：下一根同周期 K 线开盘执行；
-- 300 根 K 线只限制 Web 显示，不限制策略计算历史。
+规则是：
 
-当前支持：
-- 5m
-- 15m
-- 30m
-- 1h
-- 4h
-- 1d
+> 所选周期 K 线结束后确认信号，下一根同周期 K 线开盘执行。
 
-其中 **1d 是当前已做历史研究验证的周期**；5m / 15m / 30m / 1h 只完成了工程适配，属于实验周期，不能视为已经通过同等级回测。
+当前还在形成中的 K 线只用于展示，不参与正式信号确认。
 
-当前行情层仍使用 Yahoo Finance chart endpoint，并按周期分离：
-- completed bars（已结束 K 线）
-- forming bar（当前形成中 K 线）
+其中 1 天周期已经完成历史研究验证；5 分钟、15 分钟、30 分钟、1 小时、4 小时目前属于工程适配后的实验周期，不能视为已经完成同等级回测。
 
-网络成功后写入 runtime cache；短时重复加载优先使用缓存；网络临时失败时可回退到已有缓存。
+## 页面内容
 
-## 当前阶段
+页面显示：
 
-这是第一版工程化 Web / signal runtime（信号运行时）。
+- 当前买入 / 持有 / 等待 / 卖出 / C2 强制清仓状态；
+- 当前模拟仓位；
+- 蓝色 / 灰色 / 绿色结构状态；
+- 持续根数与前序状态；
+- C2 正常 / 已警戒状态；
+- 最近 300 根 K 线；
+- GZB3 / GZB4 慢灰带；
+- ZD1 / ZK1 上下轨；
+- 买入、卖出、C2 清仓标记；
+- 成交量；
+- 仓位轨迹；
+- 最近信号记录；
+- 12 条中文规则清单。
 
-当前不会：
-- 接真实券商
-- 自动下真实订单
-- 在运行期间修改冻结规则
+## 行情数据
 
+当前使用雅虎财经图表接口读取 OHLCV（开盘、最高、最低、收盘、成交量）数据。
 
-## SiftAlpha import packaging
+程序会区分：
 
-This package intentionally mirrors the already-working 5s crypto artifact shape:
+- 已结束 K 线：参与正式策略计算；
+- 形成中 K 线：只展示，不参与正式策略确认。
 
-- no upstream `.project.json`;
-- no `README-STUDIO.txt` contract file;
-- root-level `app.py` and `requirements.txt`;
-- SiftAlpha creates/updates its own `.project.json` during ZIP import;
-- SiftAlpha infers `app.py` as the Python entrypoint and `python app.py` as the run command;
-- Web detection is left to SiftAlpha's normal Python HTTP server inspection plus the runtime
-  `SIFTALPHA_WEB_URL=...` marker.
+网络成功后会写入运行缓存；短时间重复加载优先读取缓存；网络临时失败时可回退到已有缓存。
 
-This avoids taking a special metadata path that the working crypto package does not use.
+## SiftAlpha 运行方式
 
+项目入口：
 
-## SiftAlpha runtime routing
+`app.py`
 
-The working 5s crypto package runs as a long-lived Python Web service through SiftAlpha's
-Internal Alpine path. SLTD v6 deliberately follows the same runtime shape.
+运行命令：
 
-`requirements.txt` contains the harmless pip option:
+`python app.py`
+
+程序使用本机回环地址和自动空闲端口，成功启动后会输出：
+
+`SIFTALPHA_WEB_URL=http://127.0.0.1:<端口>`
+
+该机器标记必须保留英文，因为 SiftAlpha 使用它识别网页地址。
+
+## 内部 Alpine 运行路径
+
+为了与已经可以正常运行的 5s crypto 项目保持相同的运行路径，本包通过 `requirements.txt` 中的：
 
 `--only-binary=:all:`
 
-SiftAlpha's Embedded CPython requirements parser rejects option lines, while pip inside Internal
-Alpine accepts this option. Therefore the Environment Plan excludes Embedded CPython and selects
-Internal Alpine without adding an unrelated Python dependency.
+让 SiftAlpha 选择内部 Alpine，而不是内嵌 CPython。
 
-This is intentional for the SiftAlpha package only; it does not alter SLTD strategy logic.
+这个参数不会安装额外 Python 包，也不会改变 SLTD 策略逻辑。
+
+## 当前限制
+
+当前版本只做：
+
+- 策略分析；
+- 模拟仓位；
+- 中文规则展示；
+- 本地网页可视化。
+
+当前不会：
+
+- 连接真实券商；
+- 自动发送真实订单；
+- 在运行时自动修改冻结规则。
