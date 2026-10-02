@@ -1,0 +1,43 @@
+name: SLTD V7 ABT 4H Sell Audit
+
+on:
+  push:
+    branches:
+      - research/sltd-v7-abt-4h-sell-audit-v1
+    paths:
+      - "research/ssss_reboot_v1/phase8/sltd_v7_abt_4h_sell_audit_v1.py"
+      - ".github/workflows/sltd-v7-abt-4h-sell-audit.yml"
+      - "integrations/sltd_v7_siftalpha_v1/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SLTD_RUNTIME_DATA_DIR: /tmp/sltd-abt-4h-audit-cache
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/sltd-v7-abt-4h-sell-audit-v1
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run ABT 4h sell audit
+        run: |
+          set -euo pipefail
+          rm -rf "$SLTD_RUNTIME_DATA_DIR"
+          python research/ssss_reboot_v1/phase8/sltd_v7_abt_4h_sell_audit_v1.py
+      - name: Upload audit outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-v7-abt-4h-sell-audit-v1
+          path: |
+            research/ssss_reboot_v1/phase8/SLTD_V7_ABT_4H_SELL_AUDIT_v1.json
+            research/ssss_reboot_v1/phase8/SLTD_V7_ABT_4H_SELL_AUDIT_v1.md
+          if-no-files-found: error
+          retention-days: 30
