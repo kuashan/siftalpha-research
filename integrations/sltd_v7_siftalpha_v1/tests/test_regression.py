@@ -66,6 +66,16 @@ class StrategyRegressionTest(unittest.TestCase):
         for removed in strategy.REMOVED_V6_RULES:
             self.assertNotIn(removed, active)
 
+    def test_all_12_rules_have_chinese_display_names(self) -> None:
+        active = [r for group in strategy.ACTIVE_RULES.values() for r in group]
+        self.assertEqual(12, len(active))
+        self.assertEqual(12, len(strategy.RULE_NAMES_ZH))
+        for rule_id in active:
+            name = strategy.RULE_NAMES_ZH.get(rule_id)
+            self.assertIsNotNone(name, rule_id)
+            self.assertRegex(name, r"[\u4e00-\u9fff]")
+            self.assertNotEqual(rule_id, name)
+
     def test_signal_math_matches_frozen_v6_ledger_then_applies_only_v7_deletions(self) -> None:
         self.assertEqual(len(self.expected), len(self.actual))
         removed = set(strategy.REMOVED_V6_RULES)
@@ -119,6 +129,9 @@ class StrategyRegressionTest(unittest.TestCase):
             "CONFIRMED_ON_SELECTED_BAR_CLOSE_EXECUTE_ON_NEXT_SELECTED_BAR_OPEN",
             payload["strategy"]["bar_close_contract"],
         )
+        self.assertEqual(12, sum(len(v) for v in payload["strategy"]["active_rules_zh"].values()))
+        self.assertRegex(payload["snapshot"]["resolved_action_zh"], r"[\u4e00-\u9fff]")
+        self.assertRegex(payload["snapshot"]["state_zh"], r"[\u4e00-\u9fff]")
         self.assertGreater(len(self.actual), len(payload["chart"]))
 
 
