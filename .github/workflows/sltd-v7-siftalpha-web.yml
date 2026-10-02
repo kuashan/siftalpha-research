@@ -3,7 +3,7 @@ name: SLTD V7 SiftAlpha Web
 on:
   push:
     branches:
-      - feature/sltd-v7-siftalpha-internal-alpine-v6
+      - feature/sltd-v7-siftalpha-zh-v7
     paths:
       - "integrations/sltd_v7_siftalpha_v1/**"
       - ".github/workflows/sltd-v7-siftalpha-web.yml"
@@ -23,7 +23,7 @@ jobs:
       - name: Checkout exact branch
         uses: actions/checkout@v4
         with:
-          ref: feature/sltd-v7-siftalpha-internal-alpine-v6
+          ref: feature/sltd-v7-siftalpha-zh-v7
           fetch-depth: 1
 
       - name: Set up Python
@@ -50,15 +50,15 @@ jobs:
           find /tmp/sltd_v7_package -type d -name __pycache__ -prune -exec rm -rf {} +
           find /tmp/sltd_v7_package -type f -name '*.pyc' -delete
           cd /tmp/sltd_v7_package
-          zip -r "$GITHUB_WORKSPACE/SLTD-V7-SiftAlpha-InternalAlpine-v6.zip" .
+          zip -r "$GITHUB_WORKSPACE/SLTD-V7-SiftAlpha-中文版-v7.zip" .
 
       - name: Verify package
         run: |
           set -euo pipefail
-          unzip -l SLTD-V7-SiftAlpha-InternalAlpine-v6.zip
+          unzip -l SLTD-V7-SiftAlpha-中文版-v7.zip
           python - <<'PY'
           import zipfile
-          z=zipfile.ZipFile('SLTD-V7-SiftAlpha-InternalAlpine-v6.zip')
+          z=zipfile.ZipFile('SLTD-V7-SiftAlpha-中文版-v7.zip')
           names=set(z.namelist())
           required={'app.py','strategy.py','data_provider.py','requirements.txt','templates/index.html'}
           missing=required-names
@@ -70,26 +70,33 @@ jobs:
           assert 'SIFTALPHA_WEB_URL=' in app
           req=z.read('requirements.txt').decode('utf-8')
           assert '--only-binary=:all:' in req
+          readme=z.read('README.md').decode('utf-8')
+          strategy=z.read('strategy.py').decode('utf-8')
+          page=z.read('templates/index.html').decode('utf-8')
+          assert '蓝色持续21根以上：下轨触发买入' in strategy
+          assert '绿色第11至20根：轻阻力触发卖出' in strategy
+          assert 'SiftAlpha 中文版' in readme
+          assert 'C2 强制清仓' in page
           print('PACKAGE_VERIFY_PASS')
           PY
 
       - name: Full process startup smoke
         run: |
           set -euo pipefail
-          rm -f /tmp/sltd-v5.log /tmp/sltd-v5.pid
+          rm -f /tmp/sltd-v7-zh.log /tmp/sltd-v7-zh.pid
           (
             cd integrations/sltd_v7_siftalpha_v1
-            python app.py > /tmp/sltd-v5.log 2>&1 &
-            echo $! > /tmp/sltd-v5.pid
+            python app.py > /tmp/sltd-v7-zh.log 2>&1 &
+            echo $! > /tmp/sltd-v7-zh.pid
           )
           for i in $(seq 1 40); do
-            if grep -q '^SIFTALPHA_WEB_URL=' /tmp/sltd-v5.log; then
+            if grep -q '^SIFTALPHA_WEB_URL=' /tmp/sltd-v7-zh.log; then
               break
             fi
             sleep 0.25
           done
-          cat /tmp/sltd-v5.log
-          url="$(sed -n 's/^SIFTALPHA_WEB_URL=//p' /tmp/sltd-v5.log | tail -n 1)"
+          cat /tmp/sltd-v7-zh.log
+          url="$(sed -n 's/^SIFTALPHA_WEB_URL=//p' /tmp/sltd-v7-zh.log | tail -n 1)"
           test -n "$url"
           python - "$url" <<'PY'
           import json, sys, urllib.request
@@ -100,7 +107,7 @@ jobs:
           assert payload['active_rules'] == 12
           print('FULL_PROCESS_WEB_PASS', url)
           PY
-          kill "$(cat /tmp/sltd-v5.pid)" || true
+          kill "$(cat /tmp/sltd-v7-zh.pid)" || true
 
       - name: Stage direct-import artifact
         run: |
@@ -117,7 +124,7 @@ jobs:
       - name: Upload direct SiftAlpha import artifact
         uses: actions/upload-artifact@v4
         with:
-          name: sltd-v7-siftalpha-internal-alpine-v6
+          name: sltd-v7-siftalpha-zh-v7
           path: direct-import/
           include-hidden-files: true
           if-no-files-found: error
