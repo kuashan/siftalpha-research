@@ -17,7 +17,7 @@
 - 普通 SELL 每次减当前仓位 25%
 - 普通 SELL 实际执行后 C2 状态 = ARMED
 - 后续实际 BUY 会重置 ARMED
-- ARMED + GREEN + `High < GZB4` -> 下一可用开盘全部清仓
+- ARMED + GREEN + `High < GZB4` -> 下一根所选周期 K 线开盘全部清仓
 
 ## Web UI
 
@@ -52,16 +52,30 @@ SIFTALPHA_WEB_URL=http://127.0.0.1:<port>
 
 因此不会和另一个 SiftAlpha 项目争抢固定端口。
 
-## 行情
+## K 线边界与行情
 
-当前第一版使用 Yahoo Finance daily chart endpoint：
-- 日线 OHLCV
-- 默认从 2010-01-04 获取，给 XMA / EMA 足够 warmup
-- 网络成功后写入项目内 runtime cache
-- 短时重复加载优先使用缓存
-- 网络临时失败时可回退到已有缓存
+策略已经改为 **Bar Close（K 线收盘）契约**，不再写死“日线结束”：
 
-Web 显示最多 300 根 K 线；策略计算不受 300 根限制。
+- 用户选择哪个周期，就只用该周期已经结束的 K 线确认 SLTD 信号；
+- 当前正在形成的 K 线可以获取/展示，但不会参与正式策略决策；
+- 信号在所选周期 K 线结束时确认；
+- 订单语义为：下一根同周期 K 线开盘执行；
+- 300 根 K 线只限制 Web 显示，不限制策略计算历史。
+
+当前支持：
+- 5m
+- 15m
+- 30m
+- 1h
+- 1d
+
+其中 **1d 是当前已做历史研究验证的周期**；5m / 15m / 30m / 1h 只完成了工程适配，属于实验周期，不能视为已经通过同等级回测。
+
+当前行情层仍使用 Yahoo Finance chart endpoint，并按周期分离：
+- completed bars（已结束 K 线）
+- forming bar（当前形成中 K 线）
+
+网络成功后写入 runtime cache；短时重复加载优先使用缓存；网络临时失败时可回退到已有缓存。
 
 ## 当前阶段
 
