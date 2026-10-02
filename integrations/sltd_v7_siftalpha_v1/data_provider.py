@@ -71,6 +71,14 @@ TIMEFRAMES: dict[str, dict[str, object]] = {
         "validated": True,
         "cache_seconds": 60,
     },
+    "5d": {
+        "label": "5 天",
+        "interval": "1d",
+        "seconds": 5 * 24 * 60 * 60,
+        "validated": False,
+        "cache_seconds": 120,
+        "aggregate_from": "1d",
+    },
 }
 DEFAULT_TIMEFRAME = os.environ.get("SLTD_TIMEFRAME", "1d").strip() or "1d"
 if DEFAULT_TIMEFRAME not in TIMEFRAMES:
@@ -189,7 +197,7 @@ def _request_params(
         "includePrePost": "false",
     }
 
-    if timeframe == "1d":
+    if timeframe in {"1d", "5d"}:
         params["period1"] = _utc_timestamp(start_date)
         params["period2"] = now + 2 * 86400
     else:
@@ -324,6 +332,34 @@ def _aggregate_four_hour_bars(
     return out
 
 
+def _aggregate_daily_bars(ordered: list[dict], factor: int) -> list[dict]:
+    """Aggregate completed provider daily bars into fixed non-overlapping N-day bars.
+
+    The grouping is anchored to the first available source trading day. A partial
+    tail never becomes a completed N-day bar, which keeps 5d/20d semantics causal.
+    """
+    out: list[dict] = []
+    for offset in range(0, len(ordered), factor):
+        chunk = ordered[offset : offset + factor]
+        if len(chunk) != factor:
+            break
+        complete = all(bool(x.get("complete")) for x in chunk)
+        out.append(
+            {
+                "date": str(chunk[0]["date"])[:10],
+                "open_time": int(chunk[0]["open_time"]),
+                "open": float(chunk[0]["open"]),
+                "high": max(float(x["high"]) for x in chunk),
+                "low": min(float(x["low"]) for x in chunk),
+                "close": float(chunk[-1]["close"]),
+                "volume": sum(float(x.get("volume") or 0.0) for x in chunk),
+                "complete": complete,
+                "source_bars": len(chunk),
+            }
+        )
+    return out
+
+
 def _parse_chart(
     payload: dict,
     symbol: str,
@@ -363,7 +399,7 @@ def _parse_chart(
     closes = q.get("close") or []
     volumes = q.get("volume") or []
     now_ts = int(time.time())
-    source_timeframe = "1h" if timeframe == "4h" else timeframe
+    source_timeframe = "1h" if timeframe == "4h" else ("1d" if timeframe == "5d" else timeframe)
 
     bars: list[dict] = []
     for i, raw_ts in enumerate(timestamps):
@@ -419,6 +455,8 @@ def _parse_chart(
             regular_end=regular_end,
             now_ts=now_ts,
         )
+    elif timeframe == "5d":
+        ordered = _aggregate_daily_bars(ordered, 5)
 
     completed = [
         {k: v for k, v in c.items() if k != "complete"}
@@ -477,7 +515,7 @@ def fetch_bars(
                     "validated_timeframe": bool(cfg["validated"]),
                     "history_window": (
                         "2010年至今"
-                        if timeframe == "1d"
+                        if timeframe in {"1d", "5d"}
                         else f"最近约 {int(cfg['lookback_days'])} 天"
                     ),
                 }
@@ -523,7 +561,7 @@ def fetch_bars(
                     "validated_timeframe": bool(cfg["validated"]),
                     "history_window": (
                         "2010年至今"
-                        if timeframe == "1d"
+                        if timeframe in {"1d", "5d"}
                         else f"最近约 {int(cfg['lookback_days'])} 天"
                     ),
                     "warning": f"网络刷新失败，已使用缓存：{type(exc).__name__}",
