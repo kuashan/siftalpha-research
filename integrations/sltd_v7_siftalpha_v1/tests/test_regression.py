@@ -143,6 +143,33 @@ class BarCloseContractTest(unittest.TestCase):
         self.assertFalse(data_provider.TIMEFRAMES["4h"]["validated"])
         self.assertEqual("1h", data_provider.TIMEFRAMES["4h"]["aggregate_from"])
 
+    def test_market_data_windows_cover_all_selected_timeframes(self) -> None:
+        now = 2_000_000_000
+        expected = {
+            "5m": ("5m", 30),
+            "15m": ("15m", 55),
+            "30m": ("30m", 55),
+            "1h": ("60m", 365),
+            "4h": ("60m", 365),
+        }
+        for timeframe, (interval, days) in expected.items():
+            params = data_provider._request_params(
+                timeframe, "2010-01-04", now_ts=now
+            )
+            self.assertEqual(interval, params["interval"], timeframe)
+            self.assertNotIn("range", params, timeframe)
+            self.assertEqual(now - days * 86400, params["period1"], timeframe)
+            self.assertEqual(now + 60, params["period2"], timeframe)
+
+        daily = data_provider._request_params("1d", "2010-01-04", now_ts=now)
+        self.assertEqual("1d", daily["interval"])
+        self.assertNotIn("range", daily)
+        self.assertEqual(
+            data_provider._utc_timestamp("2010-01-04"),
+            daily["period1"],
+        )
+        self.assertGreater(daily["period2"], now)
+
     def test_four_hour_aggregation_uses_four_hour_then_session_tail(self) -> None:
         rows = []
         base = int(datetime(2023, 11, 14, 9, 30, tzinfo=timezone.utc).timestamp())
