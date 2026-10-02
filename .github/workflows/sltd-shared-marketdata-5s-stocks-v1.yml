@@ -1,0 +1,208 @@
+name: SLTD Shared MarketData + 5s Stocks v1
+
+on:
+  push:
+    branches:
+      - feature/sltd-shared-marketdata-5s-stocks-v1
+    paths:
+      - "integrations/shared_market_data/**"
+      - "integrations/sltd_v7_siftalpha_v1/**"
+      - "integrations/5s_crypto_binance_usdm_v1/**"
+      - ".github/workflows/sltd-shared-marketdata-5s-stocks-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/sltd-shared-marketdata-5s-stocks-v1
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile shared + SLTD + Crypto
+        run: |
+          python -m compileall -q integrations/shared_market_data
+          python -m compileall -q integrations/sltd_v7_siftalpha_v1
+          python -m compileall -q integrations/5s_crypto_binance_usdm_v1
+
+      - name: Frozen 5s signal engine byte parity
+        run: |
+          cmp             integrations/5s_crypto_binance_usdm_v1/strategy/frozen_signal_engine.py             integrations/sltd_v7_siftalpha_v1/five_s_signal_engine.py
+          echo "FIVE_S_SIGNAL_ENGINE_BYTE_PARITY_PASS"
+
+      - name: SLTD regression tests
+        working-directory: integrations/sltd_v7_siftalpha_v1
+        run: |
+          python -m unittest discover -s tests -v
+
+      - name: 5s Crypto regression tests
+        working-directory: integrations/5s_crypto_binance_usdm_v1
+        run: |
+          python -m pip install -r requirements.txt
+          python -m unittest discover -s tests -v
+          python -m unittest tests.test_m3_signal_engine_parity -v
+
+      - name: Live Yahoo provider-router probe
+        env:
+          SLTD_RUNTIME_DATA_DIR: /tmp/sltd-shared-marketdata-cache
+        run: |
+          set -euo pipefail
+          rm -rf "$SLTD_RUNTIME_DATA_DIR"
+          python - <<'PY'
+          import sys
+          import time
+          from pathlib import Path
+
+          project = Path("integrations/sltd_v7_siftalpha_v1").resolve()
+          sys.path.insert(0, str(project))
+          import data_provider
+
+          for timeframe in ("5m", "15m", "30m", "1h", "4h", "1d"):
+              last = None
+              for attempt in range(3):
+                  try:
+                      bars, forming, meta = data_provider.fetch_bars(
+                          "AAPL", timeframe, force_refresh=True
+                      )
+                      assert len(bars) >= data_provider.MIN_COMPLETED_BARS
+                      assert meta["provider_id"] == "YAHOO_FINANCE_CHART"
+                      assert meta["market_id"] == "US_EQUITY"
+                      print(
+                          "ROUTER_LIVE_PASS",
+                          timeframe,
+                          "bars=", len(bars),
+                          "forming=", forming is not None,
+                          "provider=", meta["provider_id"],
+                      )
+                      break
+                  except Exception as exc:
+                      last = exc
+                      if attempt == 2:
+                          raise
+                      time.sleep(2)
+              else:
+                  raise last
+          PY
+
+      - name: Live strategy selector smoke
+        env:
+          SLTD_RUNTIME_DATA_DIR: /tmp/sltd-shared-marketdata-cache
+        working-directory: integrations/sltd_v7_siftalpha_v1
+        run: |
+          python - <<'PY'
+          import app
+
+          for strategy_id in ("v7", "e", "5s_stocks"):
+              payload = app._payload_for(
+                  "AAPL",
+                  "1d",
+                  strategy_id=strategy_id,
+                  force_refresh=False,
+              )
+              assert payload["strategy"]["id"] == strategy_id
+              assert len(payload["chart"]) <= 300
+              assert payload["market_data"]["provider_id"] == "YAHOO_FINANCE_CHART"
+              print(
+                  "STRATEGY_SELECTOR_PASS",
+                  strategy_id,
+                  payload["strategy"]["version"],
+                  len(payload["markers"]),
+              )
+          PY
+
+      - name: Build SLTD direct-import ZIP
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/sltd_shared_package
+          mkdir -p /tmp/sltd_shared_package
+          cp -R integrations/sltd_v7_siftalpha_v1/. /tmp/sltd_shared_package/
+          cp -R integrations/shared_market_data /tmp/sltd_shared_package/shared_market_data
+          rm -rf /tmp/sltd_shared_package/tests
+          rm -rf /tmp/sltd_shared_package/runtime_data
+          find /tmp/sltd_shared_package -type d -name __pycache__ -prune -exec rm -rf {} +
+          find /tmp/sltd_shared_package -type f -name '*.pyc' -delete
+          cd /tmp/sltd_shared_package
+          zip -r "$GITHUB_WORKSPACE/SLTD-统一行情-12条-E-5sStocks-v1.zip" .
+
+      - name: Verify SLTD package
+        run: |
+          python - <<'PY'
+          import zipfile
+
+          name="SLTD-统一行情-12条-E-5sStocks-v1.zip"
+          z=zipfile.ZipFile(name)
+          names=set(z.namelist())
+          required={
+              "app.py",
+              "strategy.py",
+              "e_strategy.py",
+              "five_s_signal_engine.py",
+              "five_s_stocks_strategy.py",
+              "data_provider.py",
+              "providers/yahoo.py",
+              "shared_market_data/__init__.py",
+              "templates/index.html",
+              "requirements.txt",
+          }
+          missing=required-names
+          assert not missing, missing
+          app=z.read("app.py").decode("utf-8")
+          page=z.read("templates/index.html").decode("utf-8")
+          provider=z.read("data_provider.py").decode("utf-8")
+          assert '"5s_stocks": FIVE_S_STOCKS_VERSION' in app
+          assert 'data-strategy="5s_stocks"' in page
+          assert "MarketDataRouter" in provider
+          assert "query1.finance.yahoo.com" not in provider
+          print("SLTD_PACKAGE_VERIFY_PASS")
+          PY
+
+      - name: Packaged startup smoke
+        run: |
+          set -euo pipefail
+          rm -f /tmp/sltd-shared.log /tmp/sltd-shared.pid
+          (
+            cd /tmp/sltd_shared_package
+            python app.py > /tmp/sltd-shared.log 2>&1 &
+            echo $! > /tmp/sltd-shared.pid
+          )
+          for i in $(seq 1 40); do
+            if grep -q '^SIFTALPHA_WEB_URL=' /tmp/sltd-shared.log; then
+              break
+            fi
+            sleep 0.25
+          done
+          cat /tmp/sltd-shared.log
+          url="$(sed -n 's/^SIFTALPHA_WEB_URL=//p' /tmp/sltd-shared.log | tail -n 1)"
+          test -n "$url"
+          python - "$url" <<'PY'
+          import json, sys, urllib.request
+          url=sys.argv[1].rstrip('/')+'/api/health'
+          with urllib.request.urlopen(url, timeout=5) as r:
+              payload=json.load(r)
+          assert payload["ok"] is True
+          assert payload["active_rules"] == 12
+          assert "e" in payload["available_strategies"]
+          assert "5s_stocks" in payload["available_strategies"]
+          print("PACKAGED_WEB_PASS", url)
+          PY
+          kill "$(cat /tmp/sltd-shared.pid)" || true
+
+      - name: Upload SLTD direct-import artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-shared-marketdata-12rules-e-5s-stocks-v1
+          path: SLTD-统一行情-12条-E-5sStocks-v1.zip
+          if-no-files-found: error
+          retention-days: 30
