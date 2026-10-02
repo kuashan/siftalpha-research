@@ -123,9 +123,74 @@ class StrategyRegressionTest(unittest.TestCase):
 
 class BarCloseContractTest(unittest.TestCase):
     def test_supported_timeframes_are_not_daily_only(self) -> None:
-        self.assertEqual({"5m", "15m", "30m", "1h", "1d"}, set(data_provider.TIMEFRAMES))
+        self.assertEqual({"5m", "15m", "30m", "1h", "4h", "1d"}, set(data_provider.TIMEFRAMES))
         self.assertTrue(data_provider.TIMEFRAMES["1d"]["validated"])
         self.assertFalse(data_provider.TIMEFRAMES["15m"]["validated"])
+        self.assertFalse(data_provider.TIMEFRAMES["4h"]["validated"])
+        self.assertEqual("1h", data_provider.TIMEFRAMES["4h"]["aggregate_from"])
+
+    def test_four_hour_aggregation_uses_four_hour_then_session_tail(self) -> None:
+        rows = []
+        base = 1_700_000_000
+        for i in range(7):
+            rows.append(
+                {
+                    "date": str(i),
+                    "open_time": base + i * 3600,
+                    "open": 100 + i,
+                    "high": 101 + i,
+                    "low": 99 + i,
+                    "close": 100.5 + i,
+                    "volume": 10 + i,
+                    "complete": True,
+                }
+            )
+        regular_start = base
+        regular_end = base + int(6.5 * 3600)
+        aggregated = data_provider._aggregate_four_hour_bars(
+            rows,
+            exchange_timezone="UTC",
+            regular_start=regular_start,
+            regular_end=regular_end,
+            now_ts=regular_end,
+        )
+        self.assertEqual(2, len(aggregated))
+        self.assertEqual(4, aggregated[0]["source_bars"])
+        self.assertEqual(3, aggregated[1]["source_bars"])
+        self.assertTrue(aggregated[0]["complete"])
+        self.assertTrue(aggregated[1]["complete"])
+        self.assertEqual(100.0, aggregated[0]["open"])
+        self.assertEqual(103.5, aggregated[0]["close"])
+        self.assertEqual(104.0, aggregated[1]["open"])
+        self.assertEqual(106.5, aggregated[1]["close"])
+
+    def test_short_four_hour_tail_is_forming_until_session_close(self) -> None:
+        base = 1_700_000_000
+        rows = [
+            {
+                "date": str(i),
+                "open_time": base + i * 3600,
+                "open": 100 + i,
+                "high": 101 + i,
+                "low": 99 + i,
+                "close": 100.5 + i,
+                "volume": 10,
+                "complete": True,
+            }
+            for i in range(6)
+        ]
+        regular_start = base
+        regular_end = base + int(6.5 * 3600)
+        aggregated = data_provider._aggregate_four_hour_bars(
+            rows,
+            exchange_timezone="UTC",
+            regular_start=regular_start,
+            regular_end=regular_end,
+            now_ts=regular_end - 60,
+        )
+        self.assertEqual(2, len(aggregated))
+        self.assertTrue(aggregated[0]["complete"])
+        self.assertFalse(aggregated[1]["complete"])
 
     def test_intraday_bar_is_not_confirmed_before_its_selected_close(self) -> None:
         # 5-minute bar opened at t=4700 and regular session ends at t=5000.
