@@ -98,7 +98,16 @@ class MarketDataRouter:
         errors: list[str] = []
         for provider in providers:
             try:
-                payload = provider.fetch(symbol, timeframe, **kwargs)
+                fetcher = getattr(provider, "fetch", None)
+                if callable(fetcher):
+                    payload = fetcher(symbol, timeframe, **kwargs)
+                else:
+                    legacy = getattr(provider, "klines", None)
+                    if not callable(legacy):
+                        raise TypeError(
+                            f"{provider.provider_id}: provider has no fetch/klines method"
+                        )
+                    payload = legacy(symbol, timeframe, **kwargs)
                 stream_factory = getattr(provider, "stream_url", None)
                 stream_url = stream_factory(symbol) if callable(stream_factory) else None
                 return MarketDataFetch(
