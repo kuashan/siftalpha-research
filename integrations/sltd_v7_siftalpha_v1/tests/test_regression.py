@@ -16,6 +16,7 @@ PROJECT = REPO / "integrations" / "sltd_v7_siftalpha_v1"
 sys.path.insert(0, str(PROJECT))
 
 import app  # noqa: E402
+import data_provider  # noqa: E402
 import strategy  # noqa: E402
 
 
@@ -108,11 +109,48 @@ class StrategyRegressionTest(unittest.TestCase):
         self.assertEqual(sum(1 for m in sim["markers"] if m["side"] == "X"), expected["hard_exit_count"])
 
     def test_analyze_display_is_capped_at_300_without_limiting_history_math(self) -> None:
-        payload = strategy.analyze("AAPL", self.candles, display_limit=300)
+        payload = strategy.analyze("AAPL", self.candles, display_limit=300, timeframe="1d")
         self.assertEqual(300, len(payload["chart"]))
         self.assertEqual(12, payload["strategy"]["active_rule_count"])
         self.assertEqual("AAPL", payload["snapshot"]["symbol"])
+        self.assertEqual("1d", payload["strategy"]["timeframe"])
+        self.assertEqual(
+            "CONFIRMED_ON_SELECTED_BAR_CLOSE_EXECUTE_ON_NEXT_SELECTED_BAR_OPEN",
+            payload["strategy"]["bar_close_contract"],
+        )
         self.assertGreater(len(self.actual), len(payload["chart"]))
+
+
+class BarCloseContractTest(unittest.TestCase):
+    def test_supported_timeframes_are_not_daily_only(self) -> None:
+        self.assertEqual({"5m", "15m", "30m", "1h", "1d"}, set(data_provider.TIMEFRAMES))
+        self.assertTrue(data_provider.TIMEFRAMES["1d"]["validated"])
+        self.assertFalse(data_provider.TIMEFRAMES["15m"]["validated"])
+
+    def test_intraday_bar_is_not_confirmed_before_its_selected_close(self) -> None:
+        # 5-minute bar opened at t=4700 and regular session ends at t=5000.
+        self.assertFalse(
+            data_provider._is_complete(
+                4700, "5m", 4999, regular_start=1000, regular_end=5000
+            )
+        )
+        self.assertTrue(
+            data_provider._is_complete(
+                4700, "5m", 5000, regular_start=1000, regular_end=5000
+            )
+        )
+
+    def test_daily_bar_is_not_confirmed_until_regular_session_close(self) -> None:
+        self.assertFalse(
+            data_provider._is_complete(
+                1000, "1d", 4999, regular_start=1000, regular_end=5000
+            )
+        )
+        self.assertTrue(
+            data_provider._is_complete(
+                1000, "1d", 5000, regular_start=1000, regular_end=5000
+            )
+        )
 
 
 class WebSmokeTest(unittest.TestCase):
@@ -127,6 +165,9 @@ class WebSmokeTest(unittest.TestCase):
                 payload = json.loads(response.read().decode("utf-8"))
             self.assertTrue(payload["ok"])
             self.assertEqual(12, payload["active_rules"])
+            self.assertTrue(payload["bar_close_contract"])
+            self.assertIn("15m", payload["timeframes"])
+            self.assertIn("1h", payload["timeframes"])
         finally:
             server.shutdown()
             server.server_close()
