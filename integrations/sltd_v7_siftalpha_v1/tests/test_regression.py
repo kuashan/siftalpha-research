@@ -326,6 +326,10 @@ class EStrategyTest(unittest.TestCase):
                 close = 121.0
                 high = 125.0
                 low = 115.0
+            if i == 605:
+                close = 123.0
+                high = 126.0
+                low = 121.0
             if i == 606:
                 close = 125.0
                 high = 131.0
@@ -334,6 +338,10 @@ class EStrategyTest(unittest.TestCase):
                 close = 121.0
                 high = 131.0
                 low = 116.0
+            if i == 615:
+                close = 123.0
+                high = 126.0
+                low = 121.0
             if i == 616:
                 close = 119.0
                 high = 122.0
