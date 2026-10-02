@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   study:
@@ -64,6 +64,19 @@ jobs:
           assert len(x["summary"]) == 8
           print("RESULT_VERIFY_PASS")
           PY
+
+      - name: Commit verified research outputs
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_BATCH_01_v1.json             research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_BATCH_02_v1.json             research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_BATCH_03_v1.json             research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_BATCH_04_v1.json             research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_STUDY_RESULT_v1.json             research/ssss_reboot_v1/phase8/SLTD_V7_UNIVERSAL_SELL_STUDY_RESULT_v1.md
+          if git diff --cached --quiet; then
+            echo "NO_RESULT_CHANGES"
+          else
+            git commit -m "research: archive universal sell study v1 results"
+            git push origin HEAD:research/sltd-v7-universal-sell-study-v1
+          fi
 
       - name: Upload result
         uses: actions/upload-artifact@v4
