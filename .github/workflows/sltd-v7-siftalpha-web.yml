@@ -1,0 +1,69 @@
+name: SLTD V7 SiftAlpha Web
+
+on:
+  push:
+    branches:
+      - feature/sltd-v7-siftalpha-web-v1
+    paths:
+      - "integrations/sltd_v7_siftalpha_v1/**"
+      - ".github/workflows/sltd-v7-siftalpha-web.yml"
+      - "research/ssss_reboot_v1/phase7/data_snapshot/**"
+      - "research/ssss_reboot_v1/phase7/signal_ledgers/**"
+      - "research/ssss_reboot_v1/phase8/SLTD_V7_79_STOCK_ROBUSTNESS_RESULT_v1.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/sltd-v7-siftalpha-web-v1
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile
+        run: |
+          python -m compileall -q integrations/sltd_v7_siftalpha_v1
+
+      - name: Run frozen-strategy regression tests
+        run: |
+          python -m unittest discover -s integrations/sltd_v7_siftalpha_v1/tests -v
+
+      - name: Build SiftAlpha import ZIP
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/sltd_v7_package
+          mkdir -p /tmp/sltd_v7_package
+          cp -R integrations/sltd_v7_siftalpha_v1/. /tmp/sltd_v7_package/
+          rm -rf /tmp/sltd_v7_package/tests
+          rm -rf /tmp/sltd_v7_package/__pycache__
+          find /tmp/sltd_v7_package -type d -name __pycache__ -prune -exec rm -rf {} +
+          find /tmp/sltd_v7_package -type f -name '*.pyc' -delete
+          cd /tmp/sltd_v7_package
+          zip -r "$GITHUB_WORKSPACE/SLTD-V7-SiftAlpha-Web-v1.zip" .
+
+      - name: Verify package
+        run: |
+          set -euo pipefail
+          unzip -l SLTD-V7-SiftAlpha-Web-v1.zip
+          unzip -p SLTD-V7-SiftAlpha-Web-v1.zip .project.json | grep -q '"name": "SLTD V7"'
+          unzip -p SLTD-V7-SiftAlpha-Web-v1.zip README-STUDIO.txt | grep -q 'SIFTALPHA_WEB_URL'
+          unzip -p SLTD-V7-SiftAlpha-Web-v1.zip requirements.txt | grep -q 'standard library'
+
+      - name: Upload SiftAlpha project ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-v7-siftalpha-web-v1
+          path: SLTD-V7-SiftAlpha-Web-v1.zip
+          if-no-files-found: error
+          retention-days: 30
