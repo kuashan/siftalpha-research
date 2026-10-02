@@ -1,0 +1,89 @@
+{
+  "asset_class": "STOCK",
+  "auto_adjust": false,
+  "batch": 4,
+  "fetch_end_exclusive": "2026-10-01",
+  "fetch_start": "2010-01-04",
+  "files": {
+    "BA": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_04_stocks/BA.csv.gz",
+      "rows": 4211,
+      "sha256": "f5b3b1750a3eaa078515aebd027d34da7851011f09cf57f70ff756e84046a46c"
+    },
+    "CAT": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_04_stocks/CAT.csv.gz",
+      "rows": 4211,
+      "sha256": "266d775582f037a0917a2731e049da6976caca4a55d3aebb8dcf1e5286ba8416"
+    },
+    "CVX": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_04_stocks/CVX.csv.gz",
+      "rows": 4211,
+      "sha256": "4a90b0d3ce19bfd94261fdcec6c6a8d23b3249a2e87252271b9ce2b0171489fe"
+    },
+    "GE": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_04_stocks/GE.csv.gz",
+      "rows": 4211,
+      "sha256": "2d8d3fe1100067ae5294c77bac5aa4b55d62c0b001324fc767adb49ca0e23d23"
+    },
+    "LIN": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_04_stocks/LIN.csv.gz",
+      "rows": 4211,
+      "sha256": "8b7ca113a52a3e5cfa2d780f0aac7e87f96b5f489d4d98126a70d955a669c87a"
+    },
+    "MA": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_04_stocks/MA.csv.gz",
+      "rows": 4211,
+      "sha256": "d7f5b7de823cdbe9c312d0a05dd1817111a6c17bc3e7fde17b9842da234c5339"
+    },
+    "NEE": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_04_stocks/NEE.csv.gz",
+      "rows": 4211,
+      "sha256": "83e8804c008fb40a83c741dd30581db62117f51906df90f64da416a7811ca509"
+    },
+    "PLD": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_04_stocks/PLD.csv.gz",
+      "rows": 4211,
+      "sha256": "dae3709be2055b9b9420cabf3a256e8e0e42e3c50d7bd34780bf243391ba639c"
+    },
+    "XOM": {
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "path": "data_snapshot/batch_04_stocks/XOM.csv.gz",
+      "rows": 4211,
+      "sha256": "95e0e5a0f26b62246f801922ecd42298147dec1fbd99ca8d8f49f0e1bf437de5"
+    }
+  },
+  "formal_end": "2026-09-30",
+  "formal_start": "2020-01-02",
+  "generated_at_utc": "2026-10-02T07:53:46.970978+00:00",
+  "provider": "Yahoo Finance via yfinance",
+  "repair": false,
+  "study": "SLTD_V6_POSITION_POLICY_STUDY_V1",
+  "symbols": [
+    "MA",
+    "CAT",
+    "BA",
+    "GE",
+    "XOM",
+    "CVX",
+    "LIN",
+    "NEE",
+    "PLD"
+  ]
+}
