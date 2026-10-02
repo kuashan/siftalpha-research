@@ -1,0 +1,53 @@
+name: SLTD V8 Universal Sell R1
+
+on:
+  push:
+    branches:
+      - research/sltd-v8-universal-sell-study-r1
+    paths:
+      - "research/ssss_reboot_v1/phase8/SLTD_V8_UNIVERSAL_SELL_STUDY_R1_PROTOCOL.md"
+      - "research/ssss_reboot_v1/phase8/sltd_v8_universal_sell_study_r1.py"
+      - ".github/workflows/sltd-v8-universal-sell-r1.yml"
+      - "integrations/sltd_v7_siftalpha_v1/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      SLTD_RUNTIME_DATA_DIR: /tmp/sltd-v8-universal-sell-r1-cache
+    steps:
+      - name: Checkout exact research branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/sltd-v8-universal-sell-study-r1
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile runner
+        run: |
+          python -m py_compile research/ssss_reboot_v1/phase8/sltd_v8_universal_sell_study_r1.py
+
+      - name: Run universal sell R1
+        run: |
+          set -euo pipefail
+          rm -rf "$SLTD_RUNTIME_DATA_DIR"
+          python research/ssss_reboot_v1/phase8/sltd_v8_universal_sell_study_r1.py
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-v8-universal-sell-r1
+          path: |
+            research/ssss_reboot_v1/phase8/SLTD_V8_UNIVERSAL_SELL_STUDY_R1_RESULT.json
+            research/ssss_reboot_v1/phase8/SLTD_V8_UNIVERSAL_SELL_STUDY_R1_RESULT.md
+          if-no-files-found: error
+          retention-days: 30
