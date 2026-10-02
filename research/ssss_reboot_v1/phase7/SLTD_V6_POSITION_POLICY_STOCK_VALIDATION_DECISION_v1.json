@@ -1,0 +1,607 @@
+{
+  "meta": {
+    "study": "SLTD_V6_POSITION_POLICY_STUDY_V1",
+    "stage": "STOCK_VALIDATION_DECISION",
+    "status": "COMPLETE",
+    "validation_batches": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "selection_rule": "Choose the first candidate in frozen discovery order that meets all preregistered validation gates; otherwise NO_POLICY_PROMOTED.",
+    "validation_is_admission_not_ranking": true
+  },
+  "validation_gates": [
+    "at least 3 of 4 validation batches have Calmar > 0",
+    "median validation-batch Calmar > 0",
+    "median validation-batch CAGR > 0",
+    "median 10 bps validation-batch Calmar > 0",
+    "no validation batch Max Drawdown worse than -60%"
+  ],
+  "candidates": [
+    {
+      "shortlist_rank": 1,
+      "role": "PRIMARY",
+      "discovery_rank": 1,
+      "policy_id": "I25_AADD_25_TO_CAP_S25_WHOLD_RNO_CHANGE_MIXED",
+      "policy": {
+        "initial": 0.25,
+        "add_mode": "ADD_25_TO_CAP",
+        "sell_reduction": 0.25,
+        "wait_mode": "HOLD",
+        "resolution": "NO_CHANGE_MIXED"
+      },
+      "validation_batches": [
+        {
+          "batch": 5,
+          "baseline_5bps": {
+            "total_return": 0.31034216966142547,
+            "cagr": 0.040896477504191786,
+            "max_drawdown": -0.33177945527540365,
+            "calmar": 0.12326404439432338,
+            "turnover_mean": 5.611012105078904,
+            "position_changes_sum": 261,
+            "time_in_market_mean": 0.9741002949852507
+          },
+          "stress_10bps": {
+            "total_return": 0.30643360049330237,
+            "cagr": 0.04043545856316744,
+            "max_drawdown": -0.33205155382679075,
+            "calmar": 0.12177464040496534,
+            "turnover_mean": 5.609366122194692,
+            "position_changes_sum": 261,
+            "time_in_market_mean": 0.9741002949852507
+          }
+        },
+        {
+          "batch": 6,
+          "baseline_5bps": {
+            "total_return": 0.7815205648101144,
+            "cagr": 0.08940902315069454,
+            "max_drawdown": -0.15769576492552084,
+            "calmar": 0.5669716190090591,
+            "turnover_mean": 7.286019321842434,
+            "position_changes_sum": 351,
+            "time_in_market_mean": 0.9828908554572271
+          },
+          "stress_10bps": {
+            "total_return": 0.7751322853268181,
+            "cagr": 0.08882882812582404,
+            "max_drawdown": -0.15824588890569447,
+            "calmar": 0.561334191618469,
+            "turnover_mean": 7.284126988657064,
+            "position_changes_sum": 350,
+            "time_in_market_mean": 0.9828908554572271
+          }
+        },
+        {
+          "batch": 7,
+          "baseline_5bps": {
+            "total_return": 1.8987412848337142,
+            "cagr": 0.1709631860400631,
+            "max_drawdown": -0.3490966146082395,
+            "calmar": 0.4897302892264369,
+            "turnover_mean": 5.6897023196082745,
+            "position_changes_sum": 269,
+            "time_in_market_mean": 0.9815339233038349
+          },
+          "stress_10bps": {
+            "total_return": 1.8917847389183273,
+            "cagr": 0.17054603096938625,
+            "max_drawdown": -0.34932747053032576,
+            "calmar": 0.48821248071465606,
+            "turnover_mean": 5.688091844419628,
+            "position_changes_sum": 269,
+            "time_in_market_mean": 0.9815339233038349
+          }
+        },
+        {
+          "batch": 8,
+          "baseline_5bps": {
+            "total_return": 0.6129822167705963,
+            "cagr": 0.07347115511212632,
+            "max_drawdown": -0.22735256103337464,
+            "calmar": 0.3231595667019602,
+            "turnover_mean": 6.102122927516475,
+            "position_changes_sum": 298,
+            "time_in_market_mean": 0.9899115044247788
+          },
+          "stress_10bps": {
+            "total_return": 0.6083002164553484,
+            "cagr": 0.0730085019624771,
+            "max_drawdown": -0.228131778578902,
+            "calmar": 0.3200277594698464,
+            "turnover_mean": 6.1004502931704305,
+            "position_changes_sum": 298,
+            "time_in_market_mean": 0.9899115044247788
+          }
+        }
+      ],
+      "summary": {
+        "positive_calmar_batches": 4,
+        "median_validation_calmar": 0.40644492796419857,
+        "median_validation_cagr": 0.08144008913141043,
+        "median_10bps_validation_calmar": 0.40412012009225123,
+        "worst_validation_max_drawdown": -0.3490966146082395
+      },
+      "gates": {
+        "at_least_3_of_4_calmar_gt_0": true,
+        "median_validation_calmar_gt_0": true,
+        "median_validation_cagr_gt_0": true,
+        "median_10bps_validation_calmar_gt_0": true,
+        "no_validation_batch_maxdd_worse_than_minus_60pct": true
+      },
+      "passes_all_validation_gates": true
+    },
+    {
+      "shortlist_rank": 2,
+      "role": "BACKUP_1",
+      "discovery_rank": 3,
+      "policy_id": "I25_AADD_25_TO_CAP_S25_WHOLD_RSELL_FIRST",
+      "policy": {
+        "initial": 0.25,
+        "add_mode": "ADD_25_TO_CAP",
+        "sell_reduction": 0.25,
+        "wait_mode": "HOLD",
+        "resolution": "SELL_FIRST"
+      },
+      "validation_batches": [
+        {
+          "batch": 5,
+          "baseline_5bps": {
+            "total_return": 0.31034216966142547,
+            "cagr": 0.040896477504191786,
+            "max_drawdown": -0.33177945527540365,
+            "calmar": 0.12326404439432338,
+            "turnover_mean": 5.611012105078904,
+            "position_changes_sum": 261,
+            "time_in_market_mean": 0.9741002949852507
+          },
+          "stress_10bps": {
+            "total_return": 0.30643360049330237,
+            "cagr": 0.04043545856316744,
+            "max_drawdown": -0.33205155382679075,
+            "calmar": 0.12177464040496534,
+            "turnover_mean": 5.609366122194692,
+            "position_changes_sum": 261,
+            "time_in_market_mean": 0.9741002949852507
+          }
+        },
+        {
+          "batch": 6,
+          "baseline_5bps": {
+            "total_return": 0.7805911730700827,
+            "cagr": 0.08932472437780925,
+            "max_drawdown": -0.15769576492552084,
+            "calmar": 0.5664370531446866,
+            "turnover_mean": 7.313110837220691,
+            "position_changes_sum": 353,
+            "time_in_market_mean": 0.9828908554572271
+          },
+          "stress_10bps": {
+            "total_return": 0.774196626856499,
+            "cagr": 0.08874370068873372,
+            "max_drawdown": -0.15824588890569447,
+            "calmar": 0.5607962475513023,
+            "turnover_mean": 7.31121978341281,
+            "position_changes_sum": 352,
+            "time_in_market_mean": 0.9828908554572271
+          }
+        },
+        {
+          "batch": 7,
+          "baseline_5bps": {
+            "total_return": 1.8963753828625416,
+            "cagr": 0.17082140853045136,
+            "max_drawdown": -0.3490966146082395,
+            "calmar": 0.4893241623730704,
+            "turnover_mean": 5.758021529687762,
+            "position_changes_sum": 272,
+            "time_in_market_mean": 0.9815339233038349
+          },
+          "stress_10bps": {
+            "total_return": 1.8893539613604426,
+            "cagr": 0.17040006585213097,
+            "max_drawdown": -0.34932747053032576,
+            "calmar": 0.4877946346259025,
+            "turnover_mean": 5.75639187098377,
+            "position_changes_sum": 272,
+            "time_in_market_mean": 0.9815339233038349
+          }
+        },
+        {
+          "batch": 8,
+          "baseline_5bps": {
+            "total_return": 0.6134490585472476,
+            "cagr": 0.07351722347761691,
+            "max_drawdown": -0.22735256103337464,
+            "calmar": 0.3233621963327029,
+            "turnover_mean": 6.11004204183203,
+            "position_changes_sum": 299,
+            "time_in_market_mean": 0.9899115044247788
+          },
+          "stress_10bps": {
+            "total_return": 0.6087612183093001,
+            "cagr": 0.07305410686386127,
+            "max_drawdown": -0.228131778578902,
+            "calmar": 0.3202276654262557,
+            "turnover_mean": 6.108371169444768,
+            "position_changes_sum": 299,
+            "time_in_market_mean": 0.9899115044247788
+          }
+        }
+      ],
+      "summary": {
+        "positive_calmar_batches": 4,
+        "median_validation_calmar": 0.40634317935288666,
+        "median_validation_cagr": 0.08142097392771308,
+        "median_10bps_validation_calmar": 0.4040111500260791,
+        "worst_validation_max_drawdown": -0.3490966146082395
+      },
+      "gates": {
+        "at_least_3_of_4_calmar_gt_0": true,
+        "median_validation_calmar_gt_0": true,
+        "median_validation_cagr_gt_0": true,
+        "median_10bps_validation_calmar_gt_0": true,
+        "no_validation_batch_maxdd_worse_than_minus_60pct": true
+      },
+      "passes_all_validation_gates": true
+    },
+    {
+      "shortlist_rank": 3,
+      "role": "BACKUP_2",
+      "discovery_rank": 7,
+      "policy_id": "I25_AADD_25_TO_CAP_S75_WHOLD_RSELL_FIRST",
+      "policy": {
+        "initial": 0.25,
+        "add_mode": "ADD_25_TO_CAP",
+        "sell_reduction": 0.75,
+        "wait_mode": "HOLD",
+        "resolution": "SELL_FIRST"
+      },
+      "validation_batches": [
+        {
+          "batch": 5,
+          "baseline_5bps": {
+            "total_return": 0.24301306920477717,
+            "cagr": 0.03278578251266162,
+            "max_drawdown": -0.2356933787884884,
+            "calmar": 0.13910353647262885,
+            "turnover_mean": 10.118654630552019,
+            "position_changes_sum": 342,
+            "time_in_market_mean": 0.9741002949852507
+          },
+          "stress_10bps": {
+            "total_return": 0.23644307326981906,
+            "cagr": 0.03197443837676506,
+            "max_drawdown": -0.23619412898590808,
+            "calmar": 0.13537355273836096,
+            "turnover_mean": 10.11793596604711,
+            "position_changes_sum": 342,
+            "time_in_market_mean": 0.9741002949852507
+          }
+        },
+        {
+          "batch": 6,
+          "baseline_5bps": {
+            "total_return": 0.34657276950287885,
+            "cagr": 0.0451150617064926,
+            "max_drawdown": -0.14441680831237358,
+            "calmar": 0.31239481216693776,
+            "turnover_mean": 12.98316591982613,
+            "position_changes_sum": 449,
+            "time_in_market_mean": 0.9828908554572271
+          },
+          "stress_10bps": {
+            "total_return": 0.33787800559659575,
+            "cagr": 0.044111566736871444,
+            "max_drawdown": -0.1446373513905138,
+            "calmar": 0.3049804653693662,
+            "turnover_mean": 12.982481028920883,
+            "position_changes_sum": 449,
+            "time_in_market_mean": 0.9828908554572271
+          }
+        },
+        {
+          "batch": 7,
+          "baseline_5bps": {
+            "total_return": 0.9721687822284975,
+            "cagr": 0.10595807087189923,
+            "max_drawdown": -0.2629200649748319,
+            "calmar": 0.40300488622670205,
+            "turnover_mean": 10.77391429482324,
+            "position_changes_sum": 363,
+            "time_in_market_mean": 0.9815339233038349
+          },
+          "stress_10bps": {
+            "total_return": 0.9624985635013872,
+            "cagr": 0.10515220020842286,
+            "max_drawdown": -0.26341581686248217,
+            "calmar": 0.3991871158720822,
+            "turnover_mean": 10.773042923239938,
+            "position_changes_sum": 363,
+            "time_in_market_mean": 0.9815339233038349
+          }
+        },
+        {
+          "batch": 8,
+          "baseline_5bps": {
+            "total_return": 0.3412066806619585,
+            "cagr": 0.04449639585146392,
+            "max_drawdown": -0.21092680715044787,
+            "calmar": 0.21095657044543398,
+            "turnover_mean": 10.97476826817073,
+            "position_changes_sum": 383,
+            "time_in_market_mean": 0.9899115044247788
+          },
+          "stress_10bps": {
+            "total_return": 0.3339755683184735,
+            "cagr": 0.04365936498634193,
+            "max_drawdown": -0.21107240029648777,
+            "calmar": 0.20684544698887578,
+            "turnover_mean": 10.974125625013292,
+            "position_changes_sum": 383,
+            "time_in_market_mean": 0.9899115044247788
+          }
+        }
+      ],
+      "summary": {
+        "positive_calmar_batches": 4,
+        "median_validation_calmar": 0.26167569130618584,
+        "median_validation_cagr": 0.04480572877897826,
+        "median_10bps_validation_calmar": 0.25591295617912097,
+        "worst_validation_max_drawdown": -0.2629200649748319
+      },
+      "gates": {
+        "at_least_3_of_4_calmar_gt_0": true,
+        "median_validation_calmar_gt_0": true,
+        "median_validation_cagr_gt_0": true,
+        "median_10bps_validation_calmar_gt_0": true,
+        "no_validation_batch_maxdd_worse_than_minus_60pct": true
+      },
+      "passes_all_validation_gates": true
+    },
+    {
+      "shortlist_rank": 4,
+      "role": "BACKUP_3",
+      "discovery_rank": 11,
+      "policy_id": "I25_AADD_25_TO_CAP_S75_WHOLD_RNO_CHANGE_MIXED",
+      "policy": {
+        "initial": 0.25,
+        "add_mode": "ADD_25_TO_CAP",
+        "sell_reduction": 0.75,
+        "wait_mode": "HOLD",
+        "resolution": "NO_CHANGE_MIXED"
+      },
+      "validation_batches": [
+        {
+          "batch": 5,
+          "baseline_5bps": {
+            "total_return": 0.24301306920477717,
+            "cagr": 0.03278578251266162,
+            "max_drawdown": -0.2356933787884884,
+            "calmar": 0.13910353647262885,
+            "turnover_mean": 10.118654630552019,
+            "position_changes_sum": 342,
+            "time_in_market_mean": 0.9741002949852507
+          },
+          "stress_10bps": {
+            "total_return": 0.23644307326981906,
+            "cagr": 0.03197443837676506,
+            "max_drawdown": -0.23619412898590808,
+            "calmar": 0.13537355273836096,
+            "turnover_mean": 10.11793596604711,
+            "position_changes_sum": 342,
+            "time_in_market_mean": 0.9741002949852507
+          }
+        },
+        {
+          "batch": 6,
+          "baseline_5bps": {
+            "total_return": 0.3478603359945849,
+            "cagr": 0.045263195104272125,
+            "max_drawdown": -0.14441680831237358,
+            "calmar": 0.3134205473255428,
+            "turnover_mean": 12.944200259003647,
+            "position_changes_sum": 447,
+            "time_in_market_mean": 0.9828908554572271
+          },
+          "stress_10bps": {
+            "total_return": 0.33917325845831847,
+            "cagr": 0.044261408123420276,
+            "max_drawdown": -0.1446373513905138,
+            "calmar": 0.30601644525359584,
+            "turnover_mean": 12.943514168546915,
+            "position_changes_sum": 447,
+            "time_in_market_mean": 0.9828908554572271
+          }
+        },
+        {
+          "batch": 7,
+          "baseline_5bps": {
+            "total_return": 0.9808001952445058,
+            "cagr": 0.10667453473087263,
+            "max_drawdown": -0.2629200649748319,
+            "calmar": 0.4057299116409548,
+            "turnover_mean": 10.681375633188846,
+            "position_changes_sum": 359,
+            "time_in_market_mean": 0.9815339233038349
+          },
+          "stress_10bps": {
+            "total_return": 0.9711679741084853,
+            "cagr": 0.10587482454346309,
+            "max_drawdown": -0.26341581686248217,
+            "calmar": 0.401930399641627,
+            "turnover_mean": 10.680486003404168,
+            "position_changes_sum": 359,
+            "time_in_market_mean": 0.9815339233038349
+          }
+        },
+        {
+          "batch": 8,
+          "baseline_5bps": {
+            "total_return": 0.34120768728193585,
+            "cagr": 0.044496512104005514,
+            "max_drawdown": -0.21092680715044787,
+            "calmar": 0.21095712159653307,
+            "turnover_mean": 10.97449251259365,
+            "position_changes_sum": 382,
+            "time_in_market_mean": 0.9899115044247788
+          },
+          "stress_10bps": {
+            "total_return": 0.33397669587470635,
+            "cagr": 0.043659495806528836,
+            "max_drawdown": -0.21107240029648777,
+            "calmar": 0.20684606677709405,
+            "turnover_mean": 10.973850314992372,
+            "position_changes_sum": 382,
+            "time_in_market_mean": 0.9899115044247788
+          }
+        }
+      ],
+      "summary": {
+        "positive_calmar_batches": 4,
+        "median_validation_calmar": 0.2621888344610379,
+        "median_validation_cagr": 0.04487985360413882,
+        "median_10bps_validation_calmar": 0.25643125601534494,
+        "worst_validation_max_drawdown": -0.2629200649748319
+      },
+      "gates": {
+        "at_least_3_of_4_calmar_gt_0": true,
+        "median_validation_calmar_gt_0": true,
+        "median_validation_cagr_gt_0": true,
+        "median_10bps_validation_calmar_gt_0": true,
+        "no_validation_batch_maxdd_worse_than_minus_60pct": true
+      },
+      "passes_all_validation_gates": true
+    },
+    {
+      "shortlist_rank": 5,
+      "role": "BACKUP_4",
+      "discovery_rank": 13,
+      "policy_id": "I25_AADD_25_TO_CAP_S75_WTRIM_25_RSELL_FIRST",
+      "policy": {
+        "initial": 0.25,
+        "add_mode": "ADD_25_TO_CAP",
+        "sell_reduction": 0.75,
+        "wait_mode": "TRIM_25",
+        "resolution": "SELL_FIRST"
+      },
+      "validation_batches": [
+        {
+          "batch": 5,
+          "baseline_5bps": {
+            "total_return": 0.22103979487790681,
+            "cagr": 0.030057758941553603,
+            "max_drawdown": -0.22519433618003182,
+            "calmar": 0.13347475541091716,
+            "turnover_mean": 10.612281495956852,
+            "position_changes_sum": 392,
+            "time_in_market_mean": 0.9741002949852507
+          },
+          "stress_10bps": {
+            "total_return": 0.2143063372898777,
+            "cagr": 0.029213417959388144,
+            "max_drawdown": -0.22577455964423665,
+            "calmar": 0.12939198289400305,
+            "turnover_mean": 10.611623293099072,
+            "position_changes_sum": 392,
+            "time_in_market_mean": 0.9741002949852507
+          }
+        },
+        {
+          "batch": 6,
+          "baseline_5bps": {
+            "total_return": 0.3036938236354134,
+            "cagr": 0.04011159879918691,
+            "max_drawdown": -0.13680974699557558,
+            "calmar": 0.2931925515547084,
+            "turnover_mean": 13.541491425743027,
+            "position_changes_sum": 506,
+            "time_in_market_mean": 0.9828908554572271
+          },
+          "stress_10bps": {
+            "total_return": 0.29490982886661166,
+            "cagr": 0.03906934918888427,
+            "max_drawdown": -0.1370558921311099,
+            "calmar": 0.2850614342906899,
+            "turnover_mean": 13.540809166369794,
+            "position_changes_sum": 506,
+            "time_in_market_mean": 0.9828908554572271
+          }
+        },
+        {
+          "batch": 7,
+          "baseline_5bps": {
+            "total_return": 0.9912165874711896,
+            "cagr": 0.1075356313355833,
+            "max_drawdown": -0.24494346551282387,
+            "calmar": 0.43902224993200867,
+            "turnover_mean": 11.127855736987193,
+            "position_changes_sum": 405,
+            "time_in_market_mean": 0.9815339233038349
+          },
+          "stress_10bps": {
+            "total_return": 0.980868123839024,
+            "cagr": 0.10668016269532732,
+            "max_drawdown": -0.24549235101649292,
+            "calmar": 0.4345559535912393,
+            "turnover_mean": 11.127092829980612,
+            "position_changes_sum": 405,
+            "time_in_market_mean": 0.9815339233038349
+          }
+        },
+        {
+          "batch": 8,
+          "baseline_5bps": {
+            "total_return": 0.26917199574592887,
+            "cagr": 0.035980414714240405,
+            "max_drawdown": -0.21092680715044787,
+            "calmar": 0.17058246507555883,
+            "turnover_mean": 11.748742195108944,
+            "position_changes_sum": 441,
+            "time_in_market_mean": 0.9899115044247788
+          },
+          "stress_10bps": {
+            "total_return": 0.2618467298291709,
+            "cagr": 0.0350915202147104,
+            "max_drawdown": -0.21107240029648777,
+            "calmar": 0.16625347589461378,
+            "turnover_mean": 11.747992348269964,
+            "position_changes_sum": 441,
+            "time_in_market_mean": 0.9899115044247788
+          }
+        }
+      ],
+      "summary": {
+        "positive_calmar_batches": 4,
+        "median_validation_calmar": 0.2318875083151336,
+        "median_validation_cagr": 0.03804600675671366,
+        "median_10bps_validation_calmar": 0.22565745509265184,
+        "worst_validation_max_drawdown": -0.24494346551282387
+      },
+      "gates": {
+        "at_least_3_of_4_calmar_gt_0": true,
+        "median_validation_calmar_gt_0": true,
+        "median_validation_cagr_gt_0": true,
+        "median_10bps_validation_calmar_gt_0": true,
+        "no_validation_batch_maxdd_worse_than_minus_60pct": true
+      },
+      "passes_all_validation_gates": true
+    }
+  ],
+  "decision": {
+    "stock_policy_promoted": true,
+    "result": "I25_AADD_25_TO_CAP_S25_WHOLD_RNO_CHANGE_MIXED",
+    "role": "PRIMARY",
+    "shortlist_rank": 1,
+    "policy": {
+      "initial": 0.25,
+      "add_mode": "ADD_25_TO_CAP",
+      "sell_reduction": 0.25,
+      "wait_mode": "HOLD",
+      "resolution": "NO_CHANGE_MIXED"
+    }
+  }
+}
