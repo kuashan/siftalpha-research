@@ -31,6 +31,7 @@ STRATEGY_SOURCE_COMMIT = "5f9ea4d8fa434b54afdbf32a1cb21ef2f3cb4042"
 POSITION_POLICY_ID = "I25_AADD_25_TO_CAP_S25_WHOLD_RNO_CHANGE_MIXED"
 HARD_EXIT_ID = "C2_FULL_CANDLE_BELOW_SLOW_BAND"
 POLICY_START_DATE = "2020-01-02"
+MIN_WARMUP_BARS = 120
 
 REMOVED_V6_RULES = (
     "BUY_RECENT_BLUE_GRAY_LIGHT_SUPPORT",
@@ -158,7 +159,7 @@ def _validate_candles(candles: Iterable[dict]) -> list[dict]:
         out.append(item)
         last_date = date
     if len(out) < 120:
-        raise ValueError("at least 120 daily candles are required")
+        raise ValueError("at least 120 completed K-line bars are required")
     return out
 
 
@@ -394,9 +395,12 @@ def simulate_policy(
     equity_curve: list[float] = []
     execution_by_signal_date: dict[str, dict] = {}
 
-    start_index = next((i for i, b in enumerate(bars) if b["date"] >= POLICY_START_DATE), None)
-    if start_index is None:
-        raise ValueError(f"no candles on or after {POLICY_START_DATE}")
+    formal_index = next((i for i, b in enumerate(bars) if b["date"] >= POLICY_START_DATE), 0)
+    # The research daily dataset already has years of warmup before 2020. For
+    # shorter intraday histories, never replay orders before a minimum warmup.
+    warmup_index = min(MIN_WARMUP_BARS, len(bars) - 1)
+    start_index = max(formal_index, warmup_index)
+    policy_start_key = bars[start_index]["date"]
 
     for j, bar in enumerate(bars):
         if j < start_index:
@@ -482,7 +486,7 @@ def simulate_policy(
 
     events: list[dict] = []
     for row in ledger:
-        if row["date"] < POLICY_START_DATE:
+        if row["date"] < policy_start_key:
             continue
         classes = action_classes(row)
         if not classes:
@@ -524,7 +528,7 @@ def simulate_policy(
 
 def next_action_text(row: dict, position_fraction: float, risk_armed: bool) -> tuple[str, str]:
     if risk_armed and c2_condition(row):
-        return "HARD_EXIT", "C2 已触发：下一交易日开盘清空全部剩余仓位"
+        return "HARD_EXIT", "C2 已触发：下一根所选周期 K 线开盘清空全部剩余仓位"
 
     classes = action_classes(row)
     action = resolve_action(row)
@@ -532,10 +536,10 @@ def next_action_text(row: dict, position_fraction: float, risk_armed: bool) -> t
         return "MIXED", "同一根 K 线出现冲突动作：NO_CHANGE_MIXED，不调整仓位"
     if action == "BUY":
         if position_fraction <= 1e-9:
-            return "BUY", "下一交易日开盘建立约 25% 仓位"
-        return "BUY", "下一交易日开盘增加约 25 个百分点，上限 100%"
+            return "BUY", "下一根所选周期 K 线开盘建立约 25% 仓位"
+        return "BUY", "下一根所选周期 K 线开盘增加约 25 个百分点，上限 100%"
     if action == "SELL":
-        return "SELL", "下一交易日开盘卖出当前仓位的 25%，执行后进入 ARMED"
+        return "SELL", "下一根所选周期 K 线开盘卖出当前仓位的 25%，执行后进入 ARMED"
     if action == "HOLD":
         return "HOLD", "保持当前仓位，不下新订单"
     if action == "WAIT":
@@ -564,7 +568,7 @@ def build_snapshot(symbol: str, ledger: list[dict], simulation: dict) -> Strateg
     )
 
 
-def analyze(symbol: str, candles: Iterable[dict], display_limit: int = 300) -> dict:
+def analyze(symbol: str, candles: Iterable[dict], display_limit: int = 300, timeframe: str = "1d") -> dict:
     bars = _validate_candles(candles)
     ledger = build_ledger(bars, symbol)
     simulation = simulate_policy(bars, ledger, friction_bps=5.0)
@@ -611,6 +615,8 @@ def analyze(symbol: str, candles: Iterable[dict], display_limit: int = 300) -> d
             "removed_v6_rules": REMOVED_V6_RULES,
             "display_candles": limit,
             "policy_start_date": POLICY_START_DATE,
+            "timeframe": str(timeframe),
+            "bar_close_contract": "CONFIRMED_ON_SELECTED_BAR_CLOSE_EXECUTE_ON_NEXT_SELECTED_BAR_OPEN",
         },
         "snapshot": {
             "symbol": snapshot.symbol,
