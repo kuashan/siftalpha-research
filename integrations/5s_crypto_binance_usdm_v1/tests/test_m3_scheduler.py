@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from engine.scheduler import StrategyScheduler, decide_actions
+from engine.scheduler import BAR_CLOSE_CONTRACT, StrategyScheduler, decide_actions
 from storage import StateStore
 from strategy.frozen_signal_engine import BarEvaluation
 
@@ -117,6 +117,11 @@ class SchedulerLoopTests(unittest.TestCase):
             evaluator=fake_evaluator,
             minimum_closed_bars=64,
         )
+
+    def test_forming_bar_is_never_part_of_confirmed_signal_window(self):
+        rows = [[1, 100], [2, 101], [3, 102]]
+        self.assertEqual(StrategyScheduler._closed_rows(rows), rows[:-1])
+        self.assertEqual(BAR_CLOSE_CONTRACT, "SELECTED_TIMEFRAME_BAR_CLOSE_TO_NEXT_SELECTED_BAR_OPEN")
 
     def test_each_enabled_slot_uses_its_own_timeframe_and_bootstraps(self):
         out = self.scheduler().run_once()
