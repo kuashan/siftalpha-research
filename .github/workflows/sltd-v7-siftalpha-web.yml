@@ -40,8 +40,11 @@ jobs:
           python -m unittest discover -s integrations/sltd_v7_siftalpha_v1/tests -v
 
       - name: Live Yahoo timeframe probe
+        env:
+          SLTD_RUNTIME_DATA_DIR: /tmp/sltd-live-probe-cache
         run: |
           set -euo pipefail
+          rm -rf "$SLTD_RUNTIME_DATA_DIR"
           python - <<'PY'
           import sys
           import time
@@ -83,6 +86,7 @@ jobs:
           mkdir -p /tmp/sltd_v7_package
           cp -R integrations/sltd_v7_siftalpha_v1/. /tmp/sltd_v7_package/
           rm -rf /tmp/sltd_v7_package/tests
+          rm -rf /tmp/sltd_v7_package/runtime_data
           rm -rf /tmp/sltd_v7_package/__pycache__
           find /tmp/sltd_v7_package -type d -name __pycache__ -prune -exec rm -rf {} +
           find /tmp/sltd_v7_package -type f -name '*.pyc' -delete
@@ -102,6 +106,7 @@ jobs:
           assert not missing, missing
           assert '.project.json' not in names
           assert 'README-STUDIO.txt' not in names
+          assert not any(name.startswith('runtime_data/') for name in names)
           app=z.read('app.py').decode('utf-8')
           assert 'ThreadingHTTPServer' in app
           assert 'SIFTALPHA_WEB_URL=' in app
