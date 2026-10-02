@@ -13,6 +13,7 @@ import re
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
@@ -54,6 +55,15 @@ TIMEFRAMES: dict[str, dict[str, object]] = {
         "seconds": 60 * 60,
         "validated": False,
         "cache_seconds": 30,
+    },
+    "4h": {
+        "label": "4 小时",
+        "interval": "60m",
+        "range": "1y",
+        "seconds": 4 * 60 * 60,
+        "validated": False,
+        "cache_seconds": 45,
+        "aggregate_from": "1h",
     },
     "1d": {
         "label": "1 天",
@@ -221,6 +231,79 @@ def _is_complete(
     return now_ts >= theoretical_end
 
 
+def _aggregate_four_hour_bars(
+    ordered: list[dict],
+    *,
+    exchange_timezone: str | None,
+    regular_start: int | None,
+    regular_end: int | None,
+    now_ts: int,
+) -> list[dict]:
+    """Aggregate provider 1h bars into exchange-session anchored 4h bars.
+
+    U.S. regular sessions do not divide evenly into 4 hours. Therefore the first
+    block is four 1h source bars and the final session block is shorter. The final
+    shortened block is not considered complete until the regular session closes.
+    """
+    if not ordered:
+        return []
+
+    try:
+        tz = ZoneInfo(str(exchange_timezone or "UTC"))
+    except Exception:
+        tz = timezone.utc
+
+    current_session_date = None
+    if regular_start is not None:
+        current_session_date = datetime.fromtimestamp(regular_start, tz=tz).date()
+
+    by_date: dict[object, list[dict]] = {}
+    for row in ordered:
+        day = datetime.fromtimestamp(int(row["open_time"]), tz=tz).date()
+        by_date.setdefault(day, []).append(row)
+
+    out: list[dict] = []
+    for day in sorted(by_date):
+        rows = sorted(by_date[day], key=lambda x: int(x["open_time"]))
+        for offset in range(0, len(rows), 4):
+            chunk = rows[offset : offset + 4]
+            if not chunk:
+                continue
+
+            all_source_complete = all(bool(x.get("complete")) for x in chunk)
+            full_block = len(chunk) == 4
+            if current_session_date is None or day < current_session_date:
+                aggregate_complete = all_source_complete
+            elif day == current_session_date:
+                if full_block:
+                    aggregate_complete = all_source_complete
+                else:
+                    aggregate_complete = bool(
+                        all_source_complete
+                        and regular_end is not None
+                        and now_ts >= regular_end
+                    )
+            else:
+                aggregate_complete = False
+
+            out.append(
+                {
+                    "date": datetime.fromtimestamp(
+                        int(chunk[0]["open_time"]), tz=timezone.utc
+                    ).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    "open_time": int(chunk[0]["open_time"]),
+                    "open": float(chunk[0]["open"]),
+                    "high": max(float(x["high"]) for x in chunk),
+                    "low": min(float(x["low"]) for x in chunk),
+                    "close": float(chunk[-1]["close"]),
+                    "volume": sum(float(x.get("volume") or 0.0) for x in chunk),
+                    "complete": aggregate_complete,
+                    "source_bars": len(chunk),
+                }
+            )
+    return out
+
+
 def _parse_chart(
     payload: dict,
     symbol: str,
@@ -260,6 +343,7 @@ def _parse_chart(
     closes = q.get("close") or []
     volumes = q.get("volume") or []
     now_ts = int(time.time())
+    source_timeframe = "1h" if timeframe == "4h" else timeframe
 
     bars: list[dict] = []
     for i, raw_ts in enumerate(timestamps):
@@ -278,7 +362,7 @@ def _parse_chart(
             continue
 
         try:
-            if timeframe == "1d":
+            if source_timeframe == "1d":
                 label = datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%Y-%m-%d")
             else:
                 label = datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -292,7 +376,7 @@ def _parse_chart(
                 "volume": float(values[4] or 0.0),
                 "complete": _is_complete(
                     ts,
-                    timeframe,
+                    source_timeframe,
                     now_ts,
                     regular_start,
                     regular_end,
@@ -307,6 +391,15 @@ def _parse_chart(
     # Provider may occasionally duplicate a timestamp during session transitions.
     dedup: dict[int, dict] = {int(c["open_time"]): c for c in bars}
     ordered = [dedup[k] for k in sorted(dedup)]
+    if timeframe == "4h":
+        ordered = _aggregate_four_hour_bars(
+            ordered,
+            exchange_timezone=provider_meta.get("exchangeTimezoneName"),
+            regular_start=regular_start,
+            regular_end=regular_end,
+            now_ts=now_ts,
+        )
+
     completed = [
         {k: v for k, v in c.items() if k != "complete"}
         for c in ordered
