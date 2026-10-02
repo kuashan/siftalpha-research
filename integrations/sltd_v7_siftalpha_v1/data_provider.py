@@ -26,7 +26,7 @@ TIMEFRAMES: dict[str, dict[str, object]] = {
     "5m": {
         "label": "5 分钟",
         "interval": "5m",
-        "range": "1mo",
+        "lookback_days": 30,
         "seconds": 5 * 60,
         "validated": False,
         "cache_seconds": 15,
@@ -34,7 +34,7 @@ TIMEFRAMES: dict[str, dict[str, object]] = {
     "15m": {
         "label": "15 分钟",
         "interval": "15m",
-        "range": "2mo",
+        "lookback_days": 55,
         "seconds": 15 * 60,
         "validated": False,
         "cache_seconds": 20,
@@ -42,7 +42,7 @@ TIMEFRAMES: dict[str, dict[str, object]] = {
     "30m": {
         "label": "30 分钟",
         "interval": "30m",
-        "range": "2mo",
+        "lookback_days": 55,
         "seconds": 30 * 60,
         "validated": False,
         "cache_seconds": 30,
@@ -50,7 +50,7 @@ TIMEFRAMES: dict[str, dict[str, object]] = {
     "1h": {
         "label": "1 小时",
         "interval": "60m",
-        "range": "1y",
+        "lookback_days": 365,
         "seconds": 60 * 60,
         "validated": False,
         "cache_seconds": 30,
@@ -58,7 +58,7 @@ TIMEFRAMES: dict[str, dict[str, object]] = {
     "4h": {
         "label": "4 小时",
         "interval": "60m",
-        "range": "1y",
+        "lookback_days": 365,
         "seconds": 4 * 60 * 60,
         "validated": False,
         "cache_seconds": 45,
@@ -167,8 +167,21 @@ def _write_cache(
     tmp.replace(path)
 
 
-def _request_chart(symbol: str, timeframe: str, start_date: str) -> dict:
+def _request_params(
+    timeframe: str,
+    start_date: str,
+    *,
+    now_ts: int | None = None,
+) -> dict[str, object]:
+    """生成雅虎财经请求参数。
+
+    分钟/小时周期不再使用容易产生 422 的 range 组合，而统一使用明确的
+    period1/period2 时间窗。每个周期都使用保守且足够 SLTD 预热的历史长度。
+    """
+    timeframe = normalize_timeframe(timeframe)
     cfg = TIMEFRAMES[timeframe]
+    now = int(now_ts if now_ts is not None else time.time())
+
     params: dict[str, object] = {
         "interval": str(cfg["interval"]),
         "events": "history",
@@ -178,10 +191,18 @@ def _request_chart(symbol: str, timeframe: str, start_date: str) -> dict:
 
     if timeframe == "1d":
         params["period1"] = _utc_timestamp(start_date)
-        params["period2"] = int(datetime.now(timezone.utc).timestamp()) + 2 * 86400
+        params["period2"] = now + 2 * 86400
     else:
-        params["range"] = str(cfg["range"])
+        lookback_days = int(cfg["lookback_days"])
+        params["period1"] = now - lookback_days * 86400
+        # 只稍微越过“现在”，避免把盘中查询窗口无意中扩大到数据源限制之外。
+        params["period2"] = now + 3600
 
+    return params
+
+
+def _request_chart(symbol: str, timeframe: str, start_date: str) -> dict:
+    params = _request_params(timeframe, start_date)
     query = urlencode(params)
     errors: list[str] = []
     for host in ("query1.finance.yahoo.com", "query2.finance.yahoo.com"):
@@ -454,6 +475,11 @@ def fetch_bars(
                     "timeframe": timeframe,
                     "timeframe_label": timeframe_label(timeframe),
                     "validated_timeframe": bool(cfg["validated"]),
+                    "history_window": (
+                        "2010年至今"
+                        if timeframe == "1d"
+                        else f"最近约 {int(cfg['lookback_days'])} 天"
+                    ),
                 }
             )
             return completed, forming, cached_meta
@@ -472,6 +498,11 @@ def fetch_bars(
                 "timeframe": timeframe,
                 "timeframe_label": timeframe_label(timeframe),
                 "validated_timeframe": bool(cfg["validated"]),
+                "history_window": (
+                    "2010年至今"
+                    if timeframe == "1d"
+                    else f"最近约 {int(cfg['lookback_days'])} 天"
+                ),
             }
         )
         return completed, forming, meta
@@ -490,6 +521,11 @@ def fetch_bars(
                     "timeframe": timeframe,
                     "timeframe_label": timeframe_label(timeframe),
                     "validated_timeframe": bool(cfg["validated"]),
+                    "history_window": (
+                        "2010年至今"
+                        if timeframe == "1d"
+                        else f"最近约 {int(cfg['lookback_days'])} 天"
+                    ),
                     "warning": f"网络刷新失败，已使用缓存：{type(exc).__name__}",
                 }
             )
