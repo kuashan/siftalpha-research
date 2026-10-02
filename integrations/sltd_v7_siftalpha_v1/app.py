@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-"""SiftAlpha-ready Web host for the frozen SLTD V7 candidate strategy."""
+"""供 SiftAlpha 运行的 SLTD V7 冻结候选策略本地网页服务。"""
 
 import argparse
 import html
@@ -23,7 +23,10 @@ from data_provider import (
 from strategy import (
     ACTIVE_RULES,
     HARD_EXIT_ID,
+    HARD_EXIT_NAME_ZH,
     POSITION_POLICY_ID,
+    POSITION_POLICY_NAME_ZH,
+    RULE_NAMES_ZH,
     STRATEGY_SOURCE_COMMIT,
     STRATEGY_VERSION,
     analyze,
@@ -106,8 +109,8 @@ def render_index() -> str:
         .replace("__TIMEFRAME_OPTIONS__", _timeframe_options())
         .replace("__STRATEGY_VERSION__", html.escape(STRATEGY_VERSION))
         .replace("__SOURCE_COMMIT_SHORT__", html.escape(STRATEGY_SOURCE_COMMIT[:8]))
-        .replace("__POSITION_POLICY_ID__", html.escape(POSITION_POLICY_ID))
-        .replace("__HARD_EXIT_ID__", html.escape(HARD_EXIT_ID))
+        .replace("__POSITION_POLICY_NAME_ZH__", html.escape(POSITION_POLICY_NAME_ZH))
+        .replace("__HARD_EXIT_NAME_ZH__", html.escape(HARD_EXIT_NAME_ZH))
     )
 
 
@@ -142,7 +145,7 @@ class Handler(BaseHTTPRequestHandler):
                 200,
                 {
                     "ok": True,
-                    "app": "SLTD V7 for SiftAlpha",
+                    "app": "SLTD V7 · SiftAlpha 中文版",
                     "strategy": STRATEGY_VERSION,
                     "source_commit": STRATEGY_SOURCE_COMMIT,
                     "active_rules": sum(len(v) for v in ACTIVE_RULES.values()),
@@ -160,11 +163,15 @@ class Handler(BaseHTTPRequestHandler):
                 {
                     "strategy": STRATEGY_VERSION,
                     "active_rules": ACTIVE_RULES,
+                    "active_rules_zh": {
+                        group: [RULE_NAMES_ZH.get(rule, rule) for rule in rules]
+                        for group, rules in ACTIVE_RULES.items()
+                    },
                     "position_policy": POSITION_POLICY_ID,
+                    "position_policy_zh": POSITION_POLICY_NAME_ZH,
                     "hard_exit": HARD_EXIT_ID,
-                    "bar_close_contract": (
-                        "selected timeframe bar close -> confirm -> next selected bar open"
-                    ),
+                    "hard_exit_zh": HARD_EXIT_NAME_ZH,
+                    "bar_close_contract": "所选周期 K 线结束后确认信号，并在下一根同周期 K 线开盘执行",
                 },
             )
             return
@@ -206,7 +213,7 @@ def create_server(host: str = "127.0.0.1", port: int = 0) -> ThreadingHTTPServer
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="SLTD V7 SiftAlpha Web")
+    parser = argparse.ArgumentParser(description="SLTD V7 · SiftAlpha 中文版网页服务")
     parser.add_argument("--host", default=os.environ.get("SLTD_HOST", "127.0.0.1"))
     parser.add_argument("--port", type=int, default=int(os.environ.get("SLTD_PORT", "0")))
     return parser.parse_args()
@@ -218,12 +225,12 @@ def main() -> None:
     actual_port = int(server.server_address[1])
     url = f"http://127.0.0.1:{actual_port}"
 
-    print("SLTD V7 · SiftAlpha Web", flush=True)
-    print(f"strategy={STRATEGY_VERSION}", flush=True)
-    print(f"active_rules={sum(len(v) for v in ACTIVE_RULES.values())}", flush=True)
-    print("decision_contract=SELECTED_BAR_CLOSE_TO_NEXT_SELECTED_BAR_OPEN", flush=True)
-    print(f"default_symbol={DEFAULT_SYMBOL}", flush=True)
-    print(f"default_timeframe={DEFAULT_TIMEFRAME}", flush=True)
+    print("SLTD V7 · SiftAlpha 中文版网页服务", flush=True)
+    print(f"策略版本={STRATEGY_VERSION}", flush=True)
+    print(f"启用规则数量={sum(len(v) for v in ACTIVE_RULES.values())}", flush=True)
+    print("执行边界=所选周期K线结束确认_下一根同周期K线开盘执行", flush=True)
+    print(f"默认股票代码={DEFAULT_SYMBOL}", flush=True)
+    print(f"默认K线周期={DEFAULT_TIMEFRAME}", flush=True)
     print(f"SIFTALPHA_WEB_URL={url}", flush=True)
     print(f"网页服务已启动：{url}", flush=True)
 
