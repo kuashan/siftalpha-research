@@ -1,4 +1,6 @@
-# SSSS — Formal 15-Rule Action Taxonomy v1
+# SLTD V6 — Formal 15-Rule Action Taxonomy
+
+Official strategy name: **SLTD V6**
 
 Status: **ORGANIZED / FORMAL RULE SET**
 Date: 2026-10-02
@@ -10,6 +12,8 @@ Source:
 Representation:
 - FIRST_OBSERVED
 - XMA unchanged
+
+**SLTD V6** is the official name of the current strategy represented by this rule set.
 
 This document reorganizes the current **15 formal rules** into four direct
 operation categories:
@@ -544,5 +548,7 @@ Also excluded:
 Reason:
 - V6 stock direction was strong, but breadth was insufficient.
 - final V6 disposition = HOLD_FOR_MORE_DATA.
+
+`SLTD_V6 = OFFICIAL`
 
 `SSSS_FORMAL_15_ACTION_TAXONOMY_v1 = COMPLETE`
