@@ -30,9 +30,42 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Vendor pinned chan.py core
+        run: |
+          set -euo pipefail
+          vendor="integrations/sltd_v7_siftalpha_v1/vendor/chanpy"
+          rm -rf "$vendor"
+          mkdir -p "$(dirname "$vendor")"
+          git clone --quiet https://github.com/Vespa314/chan.py.git "$vendor"
+          git -C "$vendor" checkout --quiet 429d6ed3043e27c93a003ba2b10e70a05575e1f5
+          test "$(git -C "$vendor" rev-parse HEAD)" = "429d6ed3043e27c93a003ba2b10e70a05575e1f5"
+          rm -rf "$vendor/.git"
+          find "$vendor" -mindepth 1 -maxdepth 1 \
+            ! -name Bi \
+            ! -name BuySellPoint \
+            ! -name ChanModel \
+            ! -name Combiner \
+            ! -name Common \
+            ! -name DataAPI \
+            ! -name KLine \
+            ! -name Math \
+            ! -name Seg \
+            ! -name ZS \
+            ! -name Chan.py \
+            ! -name ChanConfig.py \
+            ! -name LICENSE \
+            ! -name __init__.py \
+            -exec rm -rf {} +
+          find "$vendor/DataAPI" -mindepth 1 -maxdepth 1 \
+            ! -name CommonStockAPI.py \
+            ! -name __init__.py \
+            -exec rm -rf {} +
+          echo "CHANPY_VENDOR_READY=$(find "$vendor" -type f | wc -l)"
+
       - name: Compile
         run: |
           python -m compileall -q integrations/shared_market_data
+          python -m compileall -q integrations/sltd_v7_siftalpha_v1/vendor/chanpy
           python -m compileall -q integrations/sltd_v7_siftalpha_v1
 
       - name: Run regression tests
@@ -74,7 +107,9 @@ jobs:
           assert payload["ok"] is True
           assert "support_resistance" in payload["available_strategies"]
           assert payload["support_resistance_active_rules"] == 0
-          print("SUPPORT_RESISTANCE_HEALTH_PASS")
+          assert "chan.py" in payload["available_strategies"]["chan"]
+          assert payload["chan_active_rules"] == 12
+          print("SUPPORT_RESISTANCE_AND_CHANPY_HEALTH_PASS")
           PY
           kill "$(cat /tmp/sltd-sr.pid)" || true
 
@@ -111,6 +146,9 @@ jobs:
               "data_provider.py",
               "templates/index.html",
               "shared_market_data/__init__.py",
+              "vendor/chanpy/Chan.py",
+              "vendor/chanpy/ChanConfig.py",
+              "vendor/chanpy/LICENSE",
           }
           missing=required-names
           assert not missing, missing
