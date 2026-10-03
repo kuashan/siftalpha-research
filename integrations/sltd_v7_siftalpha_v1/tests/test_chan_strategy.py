@@ -362,7 +362,7 @@ class ChanStandaloneStrategyTest(unittest.TestCase):
         self.assertTrue(any(x["kind"] == "B1" for x in sig), sig)
 
 
-    def test_s1_can_occur_without_a_new_high(self) -> None:
+    def test_s1_requires_new_high_in_standard_trend_divergence(self) -> None:
         units = [
             U("up", 5, 20, 0),
             U("down", 20, 12, 1),
@@ -395,9 +395,9 @@ class ChanStandaloneStrategyTest(unittest.TestCase):
             level,
             {"dif": [2.0] * 140, "dea": [0.0] * 140, "hist": [2.0] * 140},
         )
-        self.assertTrue(any(x["kind"] == "S1" for x in sig), sig)
+        self.assertFalse(any(x["kind"] == "S1" for x in sig), sig)
 
-    def test_b1_can_occur_without_a_new_low(self) -> None:
+    def test_b1_requires_new_low_in_standard_trend_divergence(self) -> None:
         units = [
             U("down", 60, 45, 0),
             U("up", 45, 53, 1),
@@ -430,12 +430,12 @@ class ChanStandaloneStrategyTest(unittest.TestCase):
             level,
             {"dif": [-2.0] * 140, "dea": [0.0] * 140, "hist": [-2.0] * 140},
         )
-        self.assertTrue(any(x["kind"] == "B1" for x in sig), sig)
+        self.assertFalse(any(x["kind"] == "B1" for x in sig), sig)
 
-    def test_s1_can_diverge_without_new_high(self) -> None:
-        # Original lesson 38: C does not have to make a new high.  If the
-        # trend's final up movement leaves the second center but cannot even
-        # exceed the earlier trend extreme, its force is already weaker.
+    def test_lesson38_does_not_override_lesson37_new_high_requirement(self) -> None:
+        # Lesson 37 requires c to make a new high/low in standard trend
+        # divergence.  Lesson 38 same-level decomposition must not be used to
+        # loosen that B1/S1 definition.
         units = [
             U("up", 5, 20, 0),
             U("down", 20, 12, 1),
@@ -476,7 +476,7 @@ class ChanStandaloneStrategyTest(unittest.TestCase):
                 "hist": [2.0] * 140,
             },
         )
-        self.assertTrue(any(x["kind"] == "S1" for x in sig), sig)
+        self.assertFalse(any(x["kind"] == "S1" for x in sig), sig)
 
     def test_b2_accepts_consolidation_divergence_new_low(self) -> None:
         units = [
