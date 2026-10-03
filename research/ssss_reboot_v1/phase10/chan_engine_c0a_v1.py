@@ -26,7 +26,7 @@ class RawBar:
     low: float
     open: float | None = None
     close: float | None = None
-    index: int = 0
+    index: int | None = None
 
 
 @dataclass
@@ -84,7 +84,7 @@ def merge_inclusion(raw_bars: Iterable[RawBar]) -> list[MergedBar]:
     """Causal left-to-right inclusion handling from lessons 62/65."""
     out: list[MergedBar] = []
     for seq, raw in enumerate(raw_bars):
-        idx = raw.index if raw.index is not None else seq
+        idx = seq if raw.index is None else raw.index
         cur = MergedBar(float(raw.high), float(raw.low), idx, idx)
         if not out:
             out.append(cur)
