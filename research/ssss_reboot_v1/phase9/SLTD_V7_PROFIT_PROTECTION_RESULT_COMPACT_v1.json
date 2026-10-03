@@ -1,0 +1,178 @@
+{
+  "meta": {
+    "study": "SLTD_V7_PROFIT_PROTECTION_STUDY_V1",
+    "status": "COMPLETE",
+    "representation": "FIRST_OBSERVED",
+    "window": "2020-01-02..2026-09-30",
+    "universe": 89,
+    "prior79": 79,
+    "oos10": 10,
+    "primary_friction_bps": 5,
+    "stress_friction_bps": 10,
+    "v7_frozen_commit": "5f9ea4d8fa434b54afdbf32a1cb21ef2f3cb4042",
+    "v7_89_parity": "PASS"
+  },
+  "all89_5bps": {
+    "V7_BASELINE": {
+      "return": 1.8612883730674468,
+      "cagr": 0.1687071432417555,
+      "maxdd": -0.1981325923797953,
+      "calmar": 0.8514860741253771,
+      "capture": 0.27255931244107096,
+      "giveback_ratio": 0.727440687558929
+    },
+    "P1_STRUCT_TREND_FAILURE": {
+      "return": 0.6791703656309818,
+      "cagr": 0.07989212499677945,
+      "maxdd": -0.10563866945943623,
+      "calmar": 0.756277274274615,
+      "capture": 0.6097846795904437,
+      "giveback_ratio": 0.39021532040955625
+    },
+    "P2_CHANDELIER_22_3_PROFIT": {
+      "return": 0.23850827159448373,
+      "cagr": 0.03222986942751849,
+      "maxdd": -0.06750327602779416,
+      "calmar": 0.4774563743283806,
+      "capture": 0.11445301754666393,
+      "giveback_ratio": 0.8855469824533361
+    },
+    "P3_BS_SCALEOUT_25": {
+      "return": 1.2101211385072497,
+      "cagr": 0.1247994635219456,
+      "maxdd": -0.1500641870360646,
+      "calmar": 0.831640553198431,
+      "capture": 0.30714809576710617,
+      "giveback_ratio": 0.6928519042328938
+    },
+    "P4_BS25_PLUS_CHANDELIER": {
+      "return": 0.21757725635094882,
+      "cagr": 0.029624071102609006,
+      "maxdd": -0.06120160684975995,
+      "calmar": 0.4840407405532883,
+      "capture": 0.20933852633165972,
+      "giveback_ratio": 0.7906614736683403
+    }
+  },
+  "oos10_5bps": {
+    "V7_BASELINE": {
+      "return": 0.877342239003061,
+      "maxdd": -0.16434961768255918,
+      "calmar": 0.5957163479071221,
+      "giveback_ratio": 1.1103225708103093
+    },
+    "P1_STRUCT_TREND_FAILURE": {
+      "return": 0.5924180324871084,
+      "maxdd": -0.11479213330735305,
+      "calmar": 0.6222595952859091,
+      "giveback_ratio": 0.37686934904225133
+    },
+    "P2_CHANDELIER_22_3_PROFIT": {
+      "return": 0.12829551779634185,
+      "maxdd": -0.08158597029635384,
+      "calmar": 0.22138060476277635,
+      "giveback_ratio": 0.9339691275137735
+    },
+    "P3_BS_SCALEOUT_25": {
+      "return": 0.8707797387336129,
+      "maxdd": -0.15529557769304847,
+      "calmar": 0.6267774619949271,
+      "giveback_ratio": 0.8178340390903345
+    },
+    "P4_BS25_PLUS_CHANDELIER": {
+      "return": 0.1486595664304864,
+      "maxdd": -0.07878149656230449,
+      "calmar": 0.2635857431758417,
+      "giveback_ratio": 0.8368387909922992
+    }
+  },
+  "classifications": {
+    "P1_STRUCT_TREND_FAILURE": "MIXED_NOT_ADMITTED",
+    "P2_CHANDELIER_22_3_PROFIT": "REJECTED_NOT_ADMITTED",
+    "P3_BS_SCALEOUT_25": "MIXED_NOT_ADMITTED",
+    "P4_BS25_PLUS_CHANDELIER": "REJECTED_NOT_ADMITTED"
+  },
+  "breadth_5bps": {
+    "P1": {
+      "better_return": "29/89",
+      "better_maxdd": "86/89",
+      "better_calmar": "52/89",
+      "better_giveback": "75/84"
+    },
+    "P2": {
+      "better_return": "19/89",
+      "better_maxdd": "83/89",
+      "better_calmar": "30/89",
+      "better_giveback": "34/84"
+    },
+    "P3": {
+      "better_return": "37/89",
+      "better_maxdd": "84/89",
+      "better_calmar": "56/89",
+      "better_giveback": "66/83"
+    },
+    "P4": {
+      "better_return": "17/89",
+      "better_maxdd": "84/89",
+      "better_calmar": "32/89",
+      "better_giveback": "43/84"
+    }
+  },
+  "trigger_totals_5bps": {
+    "V7_BASELINE": {
+      "buy_exec": 1306,
+      "sell_exec": 430,
+      "c2_exec": 205
+    },
+    "P1": {
+      "trend_failure_exec": 1365
+    },
+    "P2": {
+      "chandelier_exit_exec": 2119
+    },
+    "P3": {
+      "bs_scale25_exec": 3022
+    },
+    "P4": {
+      "chandelier_exit_exec": 2116,
+      "bs_scale25_exec": 1605
+    }
+  },
+  "aapl_5bps": {
+    "V7_BASELINE": {
+      "return": 2.4963362441230927,
+      "maxdd": -0.3343370956600402,
+      "calmar": 0.6100672879919778,
+      "capture": 0.7121211184365741,
+      "giveback_ratio": 0.2878788815634259
+    },
+    "P1": {
+      "return": 1.7268730539281627,
+      "maxdd": -0.18363549459264328,
+      "calmar": 0.8734564688876639,
+      "capture": 0.6436176024275755,
+      "giveback_ratio": 0.3563823975724245
+    },
+    "P2": {
+      "return": 0.23478079801590646,
+      "maxdd": -0.07918466119469847,
+      "calmar": 0.40119611197502164,
+      "capture": -0.030702445677865297,
+      "giveback_ratio": 1.0307024456778653
+    },
+    "P3": {
+      "return": 1.6089722711351508,
+      "maxdd": -0.3243226323821755,
+      "calmar": 0.47118712753171393,
+      "capture": 0.7772240396733792,
+      "giveback_ratio": 0.2227759603266209
+    },
+    "P4": {
+      "return": 0.18292332299547076,
+      "maxdd": -0.07436655142568116,
+      "calmar": 0.33919479837404193,
+      "capture": -0.03070244567793126,
+      "giveback_ratio": 1.0307024456779312
+    }
+  }
+}
