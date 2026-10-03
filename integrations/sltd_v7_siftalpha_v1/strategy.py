@@ -652,6 +652,7 @@ def analyze(symbol: str, candles: Iterable[dict], display_limit: int = 300, time
                 "ZD1": row["ZD1"],
                 "ZK1": row["ZK1"],
                 "BS": row["BS"],
+                "BD": row["BD"],
                 "position": float(pos.get("fraction") or 0.0),
                 "risk_armed": bool(pos.get("risk_armed")),
             }
@@ -663,7 +664,7 @@ def analyze(symbol: str, candles: Iterable[dict], display_limit: int = 300, time
     return {
         "strategy": {
             "id": "v7",
-            "selector_label": "12条策略",
+            "selector_label": "SLTD",
             "version": STRATEGY_VERSION,
             "source_commit": STRATEGY_SOURCE_COMMIT,
             "position_policy": POSITION_POLICY_ID,
@@ -718,6 +719,7 @@ def analyze(symbol: str, candles: Iterable[dict], display_limit: int = 300, time
             "ZD1": ledger[-1]["ZD1"],
             "ZK1": ledger[-1]["ZK1"],
             "BS": ledger[-1]["BS"],
+            "BD": ledger[-1]["BD"],
         },
         "chart": chart,
         "markers": markers,
