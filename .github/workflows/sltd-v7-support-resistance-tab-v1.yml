@@ -16,6 +16,8 @@ jobs:
   test-package:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      PYTHONPATH: integrations/sltd_v7_siftalpha_v1
     steps:
       - name: Checkout exact commit
         uses: actions/checkout@v4
@@ -32,6 +34,17 @@ jobs:
 
       - name: Run regression tests
         run: python -m unittest discover -s integrations/sltd_v7_siftalpha_v1/tests -v
+
+      - name: Check embedded JavaScript syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          page=Path("integrations/sltd_v7_siftalpha_v1/templates/index.html").read_text(encoding="utf-8")
+          start=page.index("<script>")+len("<script>")
+          end=page.rindex("</script>")
+          Path("/tmp/sltd-index.js").write_text(page[start:end], encoding="utf-8")
+          PY
+          node --check /tmp/sltd-index.js
 
       - name: Health smoke
         run: |
