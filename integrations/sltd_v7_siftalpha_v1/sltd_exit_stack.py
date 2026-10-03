@@ -138,7 +138,7 @@ def build_chan_sell_observations(
             (0, kl.bs_point_lst),
             (1, kl.seg_bs_point_lst),
         ):
-            for point in bsp_list.getSortedBspList():
+            for point in bsp_list.get_latest_bsp(16):
                 if bool(point.is_buy):
                     continue
                 anchor_index = int(point.klu.idx)
