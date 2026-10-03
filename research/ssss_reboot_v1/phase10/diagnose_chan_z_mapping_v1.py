@@ -102,6 +102,35 @@ for path in sorted(DATA_ROOT.glob("batch_*_stocks/*.csv.gz")):
                             }
                         )
 
+                if a.direction == "up" and b.direction == "down":
+                    std_gap = abs(float(a.high) - float(b.high))
+                    std_boundary = "high"
+                elif a.direction == "down" and b.direction == "up":
+                    std_gap = abs(float(a.low) - float(b.low))
+                    std_boundary = "low"
+                else:
+                    std_gap = 0.0
+                    std_boundary = "same_direction"
+
+                if std_gap > 1e-9:
+                    key = f"{seq_name}_standardized_price_chain_break"
+                    c[key] += 1
+                    tot[key] += 1
+                    if len(examples[key]) < 20:
+                        examples[key].append(
+                            {
+                                "symbol": sym,
+                                "level": level,
+                                "boundary": std_boundary,
+                                "left_high": a.high,
+                                "left_low": a.low,
+                                "right_high": b.high,
+                                "right_low": b.low,
+                                "left_to_price": a.to_price,
+                                "right_from_price": b.from_price,
+                            }
+                        )
+
         # Audit each current Zhongshu against lesson-20 Z-movement
         # semantics.  start_sub/end_sub are indices in the completed-unit
         # stream used by build_zhongshus().
