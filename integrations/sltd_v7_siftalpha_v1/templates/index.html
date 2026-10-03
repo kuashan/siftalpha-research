@@ -87,6 +87,7 @@ button.badge{appearance:none}
 .legend-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}
 .legend-blue{background:#5b8cff}.legend-gray{background:#8d99aa}.legend-green{background:#52d49a}
 .legend-band{background:#68778e}.legend-buy{background:#52d49a}.legend-sell{background:#ff7b82}.legend-exit{background:#eab464}
+.legend-bi{background:#9ec0ff}.legend-seg{background:#eab464}.legend-zs{background:#8d99aa}.legend-chan-buy{background:#52d49a}.legend-chan-sell{background:#ff7b82}
 
 .indicator-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;padding:0 12px 12px}
 .indicator{background:var(--panel2);border-radius:9px;padding:9px;min-width:0}
@@ -150,6 +151,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
         <button class="badge strategy-chip active" type="button" data-strategy="v7" aria-pressed="true">12条策略</button>
         <button class="badge strategy-chip" type="button" data-strategy="e" aria-pressed="false">E</button>
         <button class="badge strategy-chip" type="button" data-strategy="5s_stocks" aria-pressed="false">5s Stocks</button>
+        <button class="badge strategy-chip" type="button" data-strategy="chan" aria-pressed="false">缠论</button>
         <span class="badge" id="timeframe-badge">__DEFAULT_TIMEFRAME__</span>
         <span class="badge c2" id="c2-badge">C2 强制清仓</span>
         <span class="badge local">本地网页</span>
@@ -211,7 +213,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
   <section class="chart-card">
     <div class="chart-head">
       <div class="chart-identity">
-        <small>SLTD 主图 · 最近 300 根仅用于显示</small>
+        <small id="chart-kicker">SLTD 主图 · 最近 300 根仅用于显示</small>
         <strong id="chart-title">—</strong>
         <span id="chart-candle-meta">移动或点击 K 线查看细节</span>
       </div>
@@ -235,6 +237,11 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       <span><i class="legend-dot legend-buy"></i>买入标记</span>
       <span><i class="legend-dot legend-sell"></i>普通卖出标记</span>
       <span><i class="legend-dot legend-exit"></i>全部清仓标记</span>
+      <span data-chan-only style="display:none"><i class="legend-dot legend-bi"></i>笔</span>
+      <span data-chan-only style="display:none"><i class="legend-dot legend-seg"></i>线段</span>
+      <span data-chan-only style="display:none"><i class="legend-dot legend-zs"></i>中枢</span>
+      <span data-chan-only style="display:none"><i class="legend-dot legend-chan-buy"></i>一/二/三买</span>
+      <span data-chan-only style="display:none"><i class="legend-dot legend-chan-sell"></i>一/二/三卖</span>
     </div>
     <div class="indicator-grid">
       <div class="indicator" data-structure-only><small>GZB4 · 慢灰带下轨</small><b id="value-gzb4">—</b></div>
@@ -242,6 +249,10 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       <div class="indicator" data-structure-only><small>ZK1 · 上轨</small><b id="value-zk1">—</b></div>
       <div class="indicator" data-structure-only><small>BS · 上外轨</small><b id="value-bs">—</b></div>
       <div class="indicator"><small>策略版本</small><b id="strategy-version">__STRATEGY_VERSION__</b></div>
+      <div class="indicator" data-chan-only style="display:none"><small>当前笔</small><b id="chan-bi">—</b></div>
+      <div class="indicator" data-chan-only style="display:none"><small>当前线段</small><b id="chan-segment">—</b></div>
+      <div class="indicator" data-chan-only style="display:none"><small>最近中枢</small><b id="chan-zhongshu">—</b></div>
+      <div class="indicator" data-chan-only style="display:none"><small>最近买卖点</small><b id="chan-last-signal">—</b></div>
     </div>
   </section>
 
@@ -262,7 +273,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
 
   <section class="events-card">
     <div class="section-title">
-      <h2>最近 SLTD 信号记录</h2>
+      <h2>最近策略 / 缠论信号记录</h2>
       <span>所选周期 K 线收盘确认；下一根同周期 K 线开盘执行</span>
     </div>
     <div class="table-wrap">
@@ -417,6 +428,8 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
   function drawChart(payload){
     const candles = Array.isArray(payload.chart) ? payload.chart : [];
     const markers = Array.isArray(payload.markers) ? payload.markers : [];
+    const chan = payload.chan || {};
+    const isChan = String((payload.strategy||{}).id||"") === "chan";
     if(!candles.length) return;
 
     const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
@@ -433,11 +446,11 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
 
     const plotRight = logicalWidth-right;
     const priceTop = 16;
-    const priceBottom = logicalHeight*0.57;
+    const priceBottom = logicalHeight*(isChan?0.70:0.57);
     const stateTop = priceBottom+9;
     const stateBottom = stateTop+10;
-    const volumeTop = stateBottom+13;
-    const volumeBottom = logicalHeight*0.78;
+    const volumeTop = isChan ? priceBottom+16 : stateBottom+13;
+    const volumeBottom = logicalHeight*(isChan?0.88:0.78);
     const positionTop = logicalHeight*0.84;
     const positionBottom = logicalHeight-23;
 
@@ -499,6 +512,42 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     drawLine('ZK1','#c28bd8',[4,3]);
     drawLine('BS','#eab464',[2,3]);
 
+    const dateIndex=new Map(candles.map((x,i)=>[String(x.date),i]));
+    function chartX(date){
+      const i=dateIndex.get(String(date));
+      return i==null?null:left+i*step+step/2;
+    }
+
+    if(isChan){
+      const zss=Array.isArray(chan.zhongshus)?chan.zhongshus:[];
+      zss.forEach(z=>{
+        const x1=chartX(z.start_date),x2=chartX(z.end_date);
+        const zg=Number(z.ZG),zd=Number(z.ZD);
+        if(x1==null||x2==null||!Number.isFinite(zg)||!Number.isFinite(zd))return;
+        const y1=yPrice(zg),y2=yPrice(zd);
+        ctx.save();ctx.fillStyle='rgba(141,153,170,.12)';ctx.strokeStyle='rgba(141,153,170,.72)';ctx.lineWidth=1;
+        ctx.fillRect(Math.min(x1,x2),Math.min(y1,y2),Math.max(2,Math.abs(x2-x1)),Math.max(2,Math.abs(y2-y1)));
+        ctx.strokeRect(Math.min(x1,x2),Math.min(y1,y2),Math.max(2,Math.abs(x2-x1)),Math.max(2,Math.abs(y2-y1)));
+        ctx.restore();
+      });
+
+      const bis=Array.isArray(chan.bis)?chan.bis:[];
+      bis.forEach(b=>{
+        const x1=chartX(b.start_date),x2=chartX(b.end_date);
+        if(x1==null||x2==null)return;
+        ctx.save();ctx.strokeStyle='rgba(158,192,255,.55)';ctx.lineWidth=1;ctx.setLineDash([3,2]);
+        ctx.beginPath();ctx.moveTo(x1,yPrice(b.start_price));ctx.lineTo(x2,yPrice(b.end_price));ctx.stroke();ctx.restore();
+      });
+
+      const segs=Array.isArray(chan.segments)?chan.segments:[];
+      segs.forEach(s=>{
+        const x1=chartX(s.start_date),x2=chartX(s.end_date);
+        if(x1==null||x2==null)return;
+        ctx.save();ctx.strokeStyle=s.direction==='up'?'#52d49a':'#ff7b82';ctx.lineWidth=2.1;ctx.setLineDash(s.pending?[5,3]:[]);
+        ctx.beginPath();ctx.moveTo(x1,yPrice(s.start_price));ctx.lineTo(x2,yPrice(s.end_price));ctx.stroke();ctx.restore();
+      });
+    }
+
     const markerMap=new Map();
     markers.forEach(m=>{
       const key=String(m.execution_date);
@@ -515,9 +564,11 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       ctx.beginPath();ctx.moveTo(x,yh);ctx.lineTo(x,yl);ctx.stroke();
       ctx.fillRect(x-2,Math.min(yo,yc),4,Math.max(1,Math.abs(yc-yo)));
 
-      const stateColor={BLUE:'#5b8cff',GRAY:'#8d99aa',GREEN:'#52d49a',OTHER:'#344055'}[c.state]||'#344055';
-      ctx.fillStyle=stateColor;
-      ctx.fillRect(x-step/2+0.5,stateTop,step-1,stateBottom-stateTop);
+      if(!isChan){
+        const stateColor={BLUE:'#5b8cff',GRAY:'#8d99aa',GREEN:'#52d49a',OTHER:'#344055'}[c.state]||'#344055';
+        ctx.fillStyle=stateColor;
+        ctx.fillRect(x-step/2+0.5,stateTop,step-1,stateBottom-stateTop);
+      }
 
       const vh=(Number(c.volume)||0)/maxVolume*(volumeBottom-volumeTop);
       ctx.globalAlpha=.55;ctx.fillStyle=color;ctx.fillRect(x-2,volumeBottom-vh,4,vh);ctx.globalAlpha=1;
@@ -532,6 +583,25 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       });
     });
 
+    if(isChan){
+      const fxs=Array.isArray(chan.fractals)?chan.fractals:[];
+      fxs.forEach(f=>{
+        const x=chartX(f.anchor_date),p=Number(f.price);if(x==null||!Number.isFinite(p))return;
+        const y=yPrice(p),top=f.type==='top';
+        ctx.save();ctx.fillStyle=top?'#ffb0b4':'#8be7bd';ctx.font='8px system-ui';ctx.textAlign='center';
+        ctx.fillText(top?'顶':'底',x,top?Math.max(priceTop+8,y-5):Math.min(priceBottom-2,y+11));ctx.restore();
+      });
+      const sigs=Array.isArray(chan.signals)?chan.signals:[];
+      sigs.forEach((s,si)=>{
+        const x=chartX(s.anchor_date),p=Number(s.price);if(x==null||!Number.isFinite(p))return;
+        const buy=String(s.kind||'').startsWith('B');
+        const y0=yPrice(p);const y=buy?Math.min(priceBottom-10,y0+16+(si%2)*11):Math.max(priceTop+10,y0-16-(si%2)*11);
+        ctx.save();ctx.fillStyle=buy?'#52d49a':'#ff7b82';ctx.beginPath();ctx.arc(x,y,9,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle='#081018';ctx.font='bold 8px system-ui';ctx.textAlign='center';ctx.fillText(String(s.kind||''),x,y+3);ctx.restore();
+      });
+    }
+
+    if(!isChan){
     ctx.strokeStyle='#243047';ctx.fillStyle='#71819a';ctx.font='9px system-ui';ctx.textAlign='right';
     [0,.25,.5,.75,1].forEach(frac=>{
       const y=positionBottom-frac*(positionBottom-positionTop);
@@ -551,6 +621,10 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     ctx.fillText('状态带',left,stateTop-2);
     ctx.fillText('成交量',left,volumeTop-3);
     ctx.fillText('仓位轨迹',left,positionTop-3);
+    } else {
+      ctx.fillStyle='#71819a';ctx.textAlign='left';ctx.font='9px system-ui';
+      ctx.fillText('成交量',left,volumeTop-3);
+    }
 
     const labelEvery=Math.max(1,Math.floor(candles.length/8));
     candles.forEach((c,i)=>{
@@ -599,21 +673,26 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     const c2Badge=q('c2-badge');
     if(c2Badge)c2Badge.style.display=currentStrategy==='v7'?'':'none';
     document.querySelectorAll('[data-structure-only]').forEach(node=>{
-      node.style.display=currentStrategy==='5s_stocks'?'none':'';
+      node.style.display=(currentStrategy==='5s_stocks'||currentStrategy==='chan')?'none':'';
+    });
+    document.querySelectorAll('[data-chan-only]').forEach(node=>{
+      node.style.display=currentStrategy==='chan'?'':'none';
     });
 
     const actionNode=q('summary-action');
     actionNode.textContent=s.resolved_action_zh||actionLabels[s.resolved_action]||s.resolved_action||'—';
     setActionClass(actionNode,'action-',s.resolved_action||'NONE');
     safeText('summary-action-sub',(s.rule_ids||[]).length ? (s.rule_ids||[]).length+' 条规则命中' : '当前无新规则命中');
-    safeText('summary-position',formatPct(s.position_fraction));
+    safeText('summary-position',currentStrategy==='chan'?'结构模式':formatPct(s.position_fraction));
 
     const stateNode=q('summary-state');
     stateNode.textContent=s.state_zh||stateLabels[s.state]||s.state||'—';
     setActionClass(stateNode,'state-',s.state||'OTHER');
     safeText('summary-age',currentStrategy==='5s_stocks'
       ? (s.age_bucket||'冻结 5s Stocks v1')
-      : ('持续 '+(s.run_age==null?'—':s.run_age)+' 根 · '+(s.age_bucket||'—')));
+      : currentStrategy==='chan'
+        ? (s.age_bucket||'结构首次确认')
+        : ('持续 '+(s.run_age==null?'—':s.run_age)+' 根 · '+(s.age_bucket||'—')));
 
     const riskNode=q('summary-risk');
     riskNode.textContent=s.risk_state_zh||riskLabels[s.risk_state]||s.risk_state||'—';
@@ -627,6 +706,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     safeText('meta-origin',stateLabels[s.origin]||s.origin||'—');
     safeText('meta-forming',forming ? ('形成中 · '+formatPrice(forming.close)) : '当前无未完成 K 线');
     safeText('chart-title',(s.symbol||'')+' · '+(contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe)+' · '+(strategy.selector_label||strategy.version||'SLTD'));
+    safeText('chart-kicker',currentStrategy==='chan'?'缠论结构主图 · 最近 300 根仅用于显示':'SLTD 主图 · 最近 300 根仅用于显示');
     safeText('timeframe-badge',contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe);
     safeText('latest-price',formatPrice(s.latest_close));
     safeText('market-source',(meta.provider||'雅虎财经')+' · '+(meta.source||'网络'));
@@ -635,6 +715,10 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     safeText('value-zk1',formatPrice(s.ZK1));
     safeText('value-bs',formatPrice(s.BS));
     safeText('strategy-version',strategy.version||'—');
+    safeText('chan-bi',s.chan_bi);
+    safeText('chan-segment',s.chan_segment);
+    safeText('chan-zhongshu',s.chan_zhongshu);
+    safeText('chan-last-signal',s.chan_last_signal);
     safeText('policy-title',strategy.policy_title_zh||'仓位 / 退出执行策略');
     safeText('policy-subtitle',(strategy.position_policy_zh||'')+(strategy.hard_exit_zh?' · '+strategy.hard_exit_zh:''));
     safeText('rules-title',strategy.rules_title_zh||'SLTD 当前规则');
@@ -643,7 +727,9 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
         ? 'E 为独立可选策略，不修改冻结的 V7 12 条策略'
         : currentStrategy==='5s_stocks'
           ? '5s Stocks v1 为独立冻结策略；A/B 首次半卖，C / 多重 / 后续不同 SELL 全清'
-          : '由冻结候选基线驱动，不在运行脚本内自动调参'
+          : currentStrategy==='chan'
+            ? '缠论为独立结构标签；三买三卖不自动修改冻结 V7 仓位'
+            : '由冻结候选基线驱动，不在运行脚本内自动调参'
     );
 
     const hit=q('rule-hit-row');
@@ -674,7 +760,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       if(!response.ok)throw new Error(payload.error||payload.detail||'分析失败');
       applyPayload(payload);
     }catch(err){
-      showError('无法完成 SLTD 分析：'+(err&&err.message?err.message:String(err)));
+      showError('无法完成策略分析：'+(err&&err.message?err.message:String(err)));
     }finally{
       setLoading(false);
     }
