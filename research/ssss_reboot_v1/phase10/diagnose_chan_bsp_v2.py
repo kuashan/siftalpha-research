@@ -82,17 +82,14 @@ for path in sorted(DATA_ROOT.glob("batch_*_stocks/*.csv.gz")):
                 funnel["all_b1s1"]+=1
                 examples["all_b1s1"].append((sym,info["level"],zi,"B1" if down else "S1"))
 
-    # Replay output counts
-    replay=ch.replay_first_observed_signals(bars)
-    replay_counts=Counter(x["kind"] for x in replay)
+    replay_counts=Counter()
     per[sym]={
         "final":dict(kind_final),
-        "replay":dict(replay_counts),
+        "replay":{},
         "funnel":dict(funnel),
         "levels":[{"level":x["level"],"zss":len(x["zss"]),"links":x["links"]} for x in snap["levels"]],
     }
     tot.update({f"final_{k}":v for k,v in kind_final.items()})
-    tot.update({f"replay_{k}":v for k,v in replay_counts.items()})
     tot.update(funnel)
 
 out={"totals":dict(tot),"examples":{k:v[:40] for k,v in examples.items()},"per_symbol":per}
