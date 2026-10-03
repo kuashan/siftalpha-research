@@ -22,6 +22,41 @@ DATA_ROOT = REPO / "research" / "ssss_reboot_v1" / "phase7" / "data_snapshot"
 
 VARIANTS = [
     exits.ExitStackConfig(
+        name="L0_ANY_FLAT25_ONLY",
+        chan_levels="l0",
+        chan_certainty="any",
+        chan_fraction_mode="flat25",
+        chandelier=False,
+    ),
+    exits.ExitStackConfig(
+        name="L0_ANY_GRADED_ONLY",
+        chan_levels="l0",
+        chan_certainty="any",
+        chan_fraction_mode="graded",
+        chandelier=False,
+    ),
+    exits.ExitStackConfig(
+        name="L1_ANY_GRADED_ONLY",
+        chan_levels="l1",
+        chan_certainty="any",
+        chan_fraction_mode="graded",
+        chandelier=False,
+    ),
+    exits.ExitStackConfig(
+        name="ALL_ANY_GRADED_ONLY",
+        chan_levels="all",
+        chan_certainty="any",
+        chan_fraction_mode="graded",
+        chandelier=False,
+    ),
+    exits.ExitStackConfig(
+        name="ALL_SURE_GRADED_ONLY",
+        chan_levels="all",
+        chan_certainty="sure",
+        chan_fraction_mode="graded",
+        chandelier=False,
+    ),
+    exits.ExitStackConfig(
         name="CHAND_ONLY_22_3",
         chan_levels="none",
         chandelier=True,
