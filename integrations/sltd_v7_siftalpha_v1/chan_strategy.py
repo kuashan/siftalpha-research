@@ -22,8 +22,8 @@ from math import isfinite
 from typing import Iterable, Literal
 
 CHAN_STRATEGY_ID = "chan"
-CHAN_STRATEGY_VERSION = "独立缠论 v2.1"
-CHAN_SOURCE = "CHAN_STANDALONE_BSP_REPAIR_V2_1"
+CHAN_STRATEGY_VERSION = "独立缠论 v2.2"
+CHAN_SOURCE = "CHAN_STANDALONE_BSP_CANONICAL_V2_2"
 CHAN_MIN_BARS = 120
 CHAN_ANALYSIS_MAX_BARS = 1600
 CHAN_CAUSAL_REPLAY_BARS = 480
@@ -1163,34 +1163,68 @@ def compute_level_signals(
             ):
                 context_zs = candidate_zs
 
+        prior_same = units[pivot]
+
         if turn.direction == "down":
             # Down parent movement ends at a structural low.  Then an up
-            # move and a down return that stays above that low -> B2.
+            # move and a down return form the B2 test.  Source lessons 53/57
+            # allow either "no new low" or a consolidation-divergence return.
             if (
                 departure.direction == "up"
                 and returned.direction == "down"
-                and returned.low > turn.to_price
             ):
-                emit(
-                    "B2",
-                    returned,
-                    context_zs,
-                    "结构低点后首次反弹完成，再次回试不创新低",
+                no_new_low = returned.low > turn.to_price
+                sign = -1
+                pz_divergence = (
+                    prior_same.direction == "down"
+                    and not no_new_low
+                    and (
+                        _movement_force(returned, hist, sign)
+                        < _movement_force(prior_same, hist, sign)
+                        or abs(_dif_extreme(returned, dif, sign))
+                        < abs(_dif_extreme(prior_same, dif, sign))
+                    )
                 )
+                if no_new_low or pz_divergence:
+                    emit(
+                        "B2",
+                        returned,
+                        context_zs,
+                        (
+                            "结构低点后首次反弹完成，再次回试不创新低"
+                            if no_new_low
+                            else "首次回试虽创新低，但形成盘整背驰"
+                        ),
+                    )
         else:
-            # Up parent movement ends at a structural high.  Then a down
-            # move and an up return that stays below that high -> S2.
+            # Symmetric S2 rule: no new high OR consolidation divergence.
             if (
                 departure.direction == "down"
                 and returned.direction == "up"
-                and returned.high < turn.to_price
             ):
-                emit(
-                    "S2",
-                    returned,
-                    context_zs,
-                    "结构高点后首次回落完成，再次反抽不创新高",
+                no_new_high = returned.high < turn.to_price
+                sign = 1
+                pz_divergence = (
+                    prior_same.direction == "up"
+                    and not no_new_high
+                    and (
+                        _movement_force(returned, hist, sign)
+                        < _movement_force(prior_same, hist, sign)
+                        or abs(_dif_extreme(returned, dif, sign))
+                        < abs(_dif_extreme(prior_same, dif, sign))
+                    )
                 )
+                if no_new_high or pz_divergence:
+                    emit(
+                        "S2",
+                        returned,
+                        context_zs,
+                        (
+                            "结构高点后首次回落完成，再次反抽不创新高"
+                            if no_new_high
+                            else "首次反抽虽创新高，但形成盘整背驰"
+                        ),
+                    )
 
     # Deduplicate a structural point rediscovered through overlapping scans.
     unique: dict[tuple[int, str, int], dict] = {}
@@ -1622,7 +1656,7 @@ def analyze_chan(
                 "② 有效分型 → 严格笔",
                 "③ 笔 → 特征序列 → 线段",
                 "④ L0笔级 + L1线段级中枢；走势类型继续递归生成更高级别",
-                "⑤ 同级别趋势背驰 → 一买/一卖；结构高低点后的首次不创新极值回试 → 二买/二卖",
+                "⑤ 严格同级趋势背驰 → 一买/一卖；结构高低点后的首次回试不创新极值或盘整背驰 → 二买/二卖",
                 "⑥ 离开中枢后第一次不回中枢的回试/回抽 → 三买/三卖",
                 "⑦ 所有B/S使用逐Bar FIRST_OBSERVED 首次确认时间，不用最终历史图倒推",
             ],
