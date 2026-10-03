@@ -18,7 +18,7 @@ from math import isfinite
 from typing import Iterable, Sequence
 
 SUPPORT_RESISTANCE_ID = "support_resistance"
-SUPPORT_RESISTANCE_VERSION = "长短支压 v1"
+SUPPORT_RESISTANCE_VERSION = "顺势 v1"
 SUPPORT_RESISTANCE_SOURCE = "USER_TDX_FORMULA_DIRECT_PORT_VAR3_VAR7"
 SHORT_PERIOD = 3
 LONG_PERIOD = 7
@@ -402,7 +402,7 @@ def analyze_support_resistance(
             {
                 **bar,
                 "state": "OTHER",
-                "state_zh": "长短支压",
+                "state_zh": "顺势",
                 "position": 0.0,
                 "risk_armed": False,
                 "sr_short_pressure": short["pressure"][i],
@@ -416,7 +416,7 @@ def analyze_support_resistance(
     return {
         "strategy": {
             "id": SUPPORT_RESISTANCE_ID,
-            "selector_label": "长短支压",
+            "selector_label": "顺势",
             "version": SUPPORT_RESISTANCE_VERSION,
             "source_commit": SUPPORT_RESISTANCE_SOURCE,
             "active_rule_count": 0,
@@ -435,8 +435,8 @@ def analyze_support_resistance(
             "timeframe": str(timeframe),
             "bar_close_contract": "VISUAL_OVERLAY_WITH_BACKSET_REPAINT",
             "bar_close_contract_zh": "保留原公式 BACKSET 语义；历史转折点可能随后续 K 线重新确认",
-            "rules_title_zh": "长短支压 · 四线显示",
-            "policy_title_zh": "独立可视化策略",
+            "rules_title_zh": "顺势 · 四线显示",
+            "policy_title_zh": "顺势独立可视化策略",
             "summary_state_label_zh": "支压结构",
             "policy_steps_zh": [],
             "repainting": True,
