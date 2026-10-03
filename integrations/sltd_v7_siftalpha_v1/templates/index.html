@@ -91,7 +91,7 @@ button.badge{appearance:none}
 .legend-line{display:inline-block;width:18px;height:0;margin:0 5px 3px 0;vertical-align:middle;border-top-style:solid}
 .legend-line.sr-pressure{border-top-color:#52d49a}
 .legend-line.sr-support{border-top-color:#ff7b82}
-.legend-line.sr-long{border-top-width:2px}
+.legend-line.sr-long{border-top-width:1px}
 .legend-line.sr-short{border-top-width:1px;border-top-style:dashed}
 
 .indicator-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;padding:0 12px 12px}
@@ -540,8 +540,8 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     if(isSR){
       drawLine('sr_short_pressure','#52d49a',[5,4],1);
       drawLine('sr_short_support','#ff7b82',[5,4],1);
-      drawLine('sr_long_pressure','#52d49a',[],2);
-      drawLine('sr_long_support','#ff7b82',[],2);
+      drawLine('sr_long_pressure','#52d49a',[],1);
+      drawLine('sr_long_support','#ff7b82',[],1);
     }
 
     const dateIndex=new Map(candles.map((x,i)=>[String(x.date),i]));
