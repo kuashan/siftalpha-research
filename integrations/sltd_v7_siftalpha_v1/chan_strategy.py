@@ -23,7 +23,7 @@ from typing import Iterable, Literal
 
 CHAN_STRATEGY_ID = "chan"
 CHAN_STRATEGY_VERSION = "独立缠论 v2.2"
-CHAN_SOURCE = "CHAN_STANDALONE_BSP_CANONICAL_V2_2"
+CHAN_SOURCE = "CHAN_STANDALONE_BSP_CANDIDATE_V2_2_THEORY_AUDITED"
 CHAN_MIN_BARS = 120
 CHAN_ANALYSIS_MAX_BARS = 1600
 CHAN_CAUSAL_REPLAY_BARS = 480
@@ -1026,20 +1026,21 @@ def compute_level_signals(
 
             enter_dif = _dif_extreme(enter, dif, sign)
 
-            # MACD is an auxiliary force measure, not an extra proprietary
-            # eligibility gate.  Source lesson 38 explicitly notes that when
-            # the leaving C movement cannot even make a new low/high, its
-            # force is already weaker and MACD confirmation is unnecessary.
-            # If C DOES make a new extreme, compare B vs C force.
+            # Standard trend B1/S1 follows lesson 37: in a true
+            # a+A+b+B+c trend-divergence context, c must first make the
+            # corresponding new low/high.  A c movement that does not make a
+            # new extreme is handled as consolidation-divergence context, not
+            # promoted to a standard trend B1/S1.
+            #
+            # MACD remains only an auxiliary force comparison (lesson 24);
+            # there is no proprietary fixed DIF-reset eligibility gate.
             weaker = (
                 _movement_force(leave, hist, sign)
                 < _movement_force(enter, hist, sign)
                 or abs(_dif_extreme(leave, dif, sign))
                 < abs(enter_dif)
             )
-            divergence = outside_center and (
-                (not new_extreme) or weaker
-            )
+            divergence = outside_center and new_extreme and weaker
 
             expected_link = "down" if down else "up"
             if (
