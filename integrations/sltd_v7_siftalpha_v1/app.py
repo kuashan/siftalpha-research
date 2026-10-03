@@ -49,7 +49,7 @@ ROOT = Path(__file__).resolve().parent
 TEMPLATE = (ROOT / "templates" / "index.html").read_text(encoding="utf-8")
 
 DEFAULT_SYMBOL = normalize_symbol(os.environ.get("SLTD_SYMBOL", "AAPL"))
-DISPLAY_KLINE_LIMIT = 300
+DISPLAY_KLINE_LIMIT = 500
 
 _ANALYSIS_CACHE: dict[tuple[str, str, str], tuple[float, dict]] = {}
 _ANALYSIS_LOCK = threading.RLock()
@@ -131,6 +131,23 @@ def _payload_for(
             display_limit=DISPLAY_KLINE_LIMIT,
             timeframe=timeframe,
         )
+        # SLTD keeps its own structure/position model, but also exposes the
+        # already-adopted chan.py BSP layer as signal-only annotations.
+        # The independent Chan strategy remains available with full
+        # Bi/Segment/Zhongshu structure rendering.
+        chan_overlay = analyze_chan(
+            symbol,
+            completed,
+            display_limit=DISPLAY_KLINE_LIMIT,
+            timeframe=timeframe,
+        )
+        chan_payload = dict(chan_overlay.get("chan") or {})
+        result["chan_signal_overlay"] = list(chan_payload.get("signals") or [])
+        result["chan_signal_overlay_meta"] = {
+            "engine": chan_payload.get("engine"),
+            "upstream_sha": chan_payload.get("upstream_sha"),
+            "mode": "SIGNALS_ONLY_NO_STRUCTURE_LINES",
+        }
     result["forming_bar"] = forming
     result["market_data"] = market_meta
     result["market_data"]["analysis_cache"] = False
