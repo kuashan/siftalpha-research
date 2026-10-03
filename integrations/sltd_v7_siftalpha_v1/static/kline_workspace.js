@@ -211,6 +211,12 @@
 
       if (this.dataKey !== key) {
         this.dataKey = key;
+        chart.setSymbol({
+          ticker: String(config.symbol || '—'),
+          pricePrecision: 4,
+          volumePrecision: 0,
+        });
+        chart.setPeriod(this.periodOf(config.timeframe));
         chart.setDataLoader({
           getBars: ({ callback }) => {
             callback(bars.map(({ __source, ...x }) => x), false);
@@ -220,12 +226,6 @@
             });
           },
         });
-        chart.setSymbol({
-          ticker: String(config.symbol || '—'),
-          pricePrecision: 4,
-          volumePrecision: 0,
-        });
-        chart.setPeriod(this.periodOf(config.timeframe));
         try { chart.resetData(); } catch (_) {}
       } else {
         this.scheduleRedraw();
