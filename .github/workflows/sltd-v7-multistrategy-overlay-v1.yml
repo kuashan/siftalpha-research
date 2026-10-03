@@ -1,0 +1,146 @@
+name: SLTD V7 Multi Strategy Overlay
+
+on:
+  push:
+    branches:
+      - feature/sltd-v7-multistrategy-overlay-v1
+    paths:
+      - "integrations/shared_market_data/**"
+      - "integrations/sltd_v7_siftalpha_v1/**"
+      - ".github/workflows/sltd-v7-multistrategy-overlay-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: integrations/sltd_v7_siftalpha_v1
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Vendor pinned chan.py core
+        run: |
+          set -euo pipefail
+          vendor="integrations/sltd_v7_siftalpha_v1/vendor/chanpy"
+          rm -rf "$vendor"
+          mkdir -p "$(dirname "$vendor")"
+          git clone --quiet https://github.com/Vespa314/chan.py.git "$vendor"
+          git -C "$vendor" checkout --quiet 429d6ed3043e27c93a003ba2b10e70a05575e1f5
+          test "$(git -C "$vendor" rev-parse HEAD)" = "429d6ed3043e27c93a003ba2b10e70a05575e1f5"
+          rm -rf "$vendor/.git"
+          printf '%s\n' 'Vespa314/chan.py' '429d6ed3043e27c93a003ba2b10e70a05575e1f5' > "$vendor/UPSTREAM_PIN.txt"
+
+      - name: Compile
+        run: |
+          python -m compileall -q integrations/shared_market_data
+          python -m compileall -q integrations/sltd_v7_siftalpha_v1
+
+      - name: Run regression tests
+        run: python -m unittest discover -s integrations/sltd_v7_siftalpha_v1/tests -v
+
+      - name: Check embedded JavaScript syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          page=Path("integrations/sltd_v7_siftalpha_v1/templates/index.html").read_text(encoding="utf-8")
+          start=page.index("<script>")+len("<script>")
+          end=page.rindex("</script>")
+          Path("/tmp/sltd-multi.js").write_text(page[start:end],encoding="utf-8")
+          PY
+          node --check /tmp/sltd-multi.js
+
+      - name: Verify multi-strategy UI contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          page=Path("integrations/sltd_v7_siftalpha_v1/templates/index.html").read_text(encoding="utf-8")
+          required=[
+              "selected=new Set(['v7'])",
+              "payloads=new Map()",
+              "strategy-panels",
+              "至少保留一个策略显示",
+              "多策略叠加主图",
+              "drawLine('BD','#eab464',[2,3],1)",
+              "drawLine('sr_long_pressure','#52d49a',[],1)",
+              "drawLine('sr_long_support','#ff7b82',[],1)",
+              "缠'+String(s.kind||'')",
+          ]
+          for item in required:
+              assert item in page, item
+          assert 'data-strategy="v7" aria-pressed="true">SLTD</button>' in page
+          print("MULTI_STRATEGY_UI_CONTRACT_PASS")
+          PY
+
+      - name: Build direct-import package
+        run: |
+          set -euo pipefail
+          src="integrations/sltd_v7_siftalpha_v1"
+          out="/tmp/sltd_multi_package"
+          rm -rf "$out"
+          mkdir -p "$out"
+          cp "$src/app.py" "$out/"
+          cp "$src/strategy.py" "$out/"
+          cp "$src/e_strategy.py" "$out/"
+          cp "$src/five_s_signal_engine.py" "$out/"
+          cp "$src/five_s_stocks_strategy.py" "$out/"
+          cp "$src/chan_strategy.py" "$out/"
+          cp "$src/support_resistance_strategy.py" "$out/"
+          cp "$src/data_provider.py" "$out/"
+          cp "$src/requirements.txt" "$out/"
+          cp -R "$src/providers" "$out/providers"
+          cp -R "$src/templates" "$out/templates"
+          cp -R "$src/vendor" "$out/vendor"
+          cp -R integrations/shared_market_data "$out/shared_market_data"
+          if [ -f "$src/README.md" ]; then cp "$src/README.md" "$out/"; fi
+          cd "$out"
+          zip -qr /tmp/SLTD-V7-SiftAlpha-multi-strategy-overlay-v1.zip .
+
+      - name: Verify package contents
+        run: |
+          python - <<'PY'
+          import zipfile
+          z=zipfile.ZipFile("/tmp/SLTD-V7-SiftAlpha-multi-strategy-overlay-v1.zip")
+          names=set(z.namelist())
+          required={
+              "app.py","strategy.py","e_strategy.py","five_s_stocks_strategy.py",
+              "chan_strategy.py","support_resistance_strategy.py","data_provider.py",
+              "requirements.txt","templates/index.html","shared_market_data/__init__.py",
+              "vendor/chanpy/Chan.py","vendor/chanpy/ChanConfig.py",
+              "vendor/chanpy/UPSTREAM_PIN.txt",
+          }
+          missing=sorted(required-names)
+          assert not missing, missing
+          page=z.read("templates/index.html").decode("utf-8")
+          assert "多策略叠加主图" in page
+          assert "strategy-panels" in page
+          assert "BD · 下外轨" in page
+          print("PACKAGE_CONTENT_PASS")
+          PY
+
+      - name: Upload direct-import folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-v7-multi-strategy-direct-import-v1
+          path: /tmp/sltd_multi_package/*
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-v7-multi-strategy-zip-v1
+          path: /tmp/SLTD-V7-SiftAlpha-multi-strategy-overlay-v1.zip
+          if-no-files-found: error
+          retention-days: 30
