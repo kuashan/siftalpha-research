@@ -127,5 +127,10 @@ for sym in ("AAPL","NVDA","ABT","GOOGL","KO"):
         x["kind"] for x in replay if int(x["anchor_index"])>=visible_start
     ))
 
-out={"totals":dict(tot),"examples":{k:v[:40] for k,v in examples.items()},"per_symbol":per}
+visible_examples={k:[] for k in ("B1","B2","S1","S2")}
+for sym,row in per.items():
+    for kind,count in row.get("visible300",{}).items():
+        if kind in visible_examples and count:
+            visible_examples[kind].append((sym,count))
+out={"totals":dict(tot),"examples":{k:v[:40] for k,v in examples.items()},"visible_examples":visible_examples,"per_symbol":per}
 print(json.dumps(out,ensure_ascii=False,indent=2))
