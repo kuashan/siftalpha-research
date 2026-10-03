@@ -1074,38 +1074,69 @@ def compute_level_signals(
                                 ),
                             )
 
-        # B3 / S3: a completed departure followed by the first completed
-        # return that stays outside the Zhongshu boundary.
-        departure_index = zs.end_sub + 1
-        return_index = zs.end_sub + 2
-        if return_index < len(units):
-            departure = units[departure_index]
-            returned = units[return_index]
-            if not departure.pending and not returned.pending:
-                if (
-                    departure.direction == "up"
-                    and departure.high > zs.zg
-                    and returned.direction == "down"
-                    and returned.low >= zs.zg
-                ):
-                    emit(
-                        "B3",
-                        returned,
-                        zs,
-                        "向上离开中枢后首次回试不跌回 ZG",
-                    )
-                elif (
-                    departure.direction == "down"
-                    and departure.low < zs.zd
-                    and returned.direction == "up"
-                    and returned.high <= zs.zd
-                ):
-                    emit(
-                        "S3",
-                        returned,
-                        zs,
-                        "向下离开中枢后首次回抽不升回 ZD",
-                    )
+        # B3 / S3: the first completed return after leaving Zhongshu.
+        #
+        # Two structural forms are possible:
+        # 1) the last unit absorbed into the Zhongshu already extends outside
+        #    the boundary; the immediately following opposite unit is the
+        #    first return;
+        # 2) the next unit is the explicit departure and the following unit
+        #    is the first return.
+        first = units[zs.end_sub + 1] if zs.end_sub + 1 < len(units) else None
+        second = units[zs.end_sub + 2] if zs.end_sub + 2 < len(units) else None
+        last_inside = units[zs.end_sub]
+
+        if first is not None and not first.pending:
+            if (
+                first.direction == "down"
+                and last_inside.high > zs.zg
+                and first.low >= zs.zg
+            ):
+                emit(
+                    "B3",
+                    first,
+                    zs,
+                    "中枢末段向上脱离后，首次回试不跌回 ZG",
+                )
+            elif (
+                first.direction == "up"
+                and last_inside.low < zs.zd
+                and first.high <= zs.zd
+            ):
+                emit(
+                    "S3",
+                    first,
+                    zs,
+                    "中枢末段向下脱离后，首次回抽不升回 ZD",
+                )
+            elif (
+                second is not None
+                and not second.pending
+                and first.direction == "up"
+                and first.high > zs.zg
+                and second.direction == "down"
+                and second.low >= zs.zg
+            ):
+                emit(
+                    "B3",
+                    second,
+                    zs,
+                    "向上离开中枢后首次回试不跌回 ZG",
+                )
+            elif (
+                second is not None
+                and not second.pending
+                and first.direction == "down"
+                and first.low < zs.zd
+                and second.direction == "up"
+                and second.high <= zs.zd
+            ):
+                emit(
+                    "S3",
+                    second,
+                    zs,
+                    "向下离开中枢后首次回抽不升回 ZD",
+                )
 
     # Deduplicate a structural point rediscovered through overlapping scans.
     unique: dict[tuple[int, str, int], dict] = {}
