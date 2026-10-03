@@ -100,6 +100,24 @@ jobs:
           kinds=sorted({x["kind"] for x in chan["chan"]["signals"]})
           print("ABNB_CHAN_SIGNAL_PASS", kinds, len(chan["chan"]["signals"]))
           print("ABNB_CHAN_COUNTS", chan["chan"]["counts"])
+
+          # Real-market visibility checks for the repaired four classes.
+          checks = {
+              "ADBE": {"B1"},
+              "NVDA": {"S1"},
+              "ABNB": {"B2", "S2"},
+          }
+          for sym, required in checks.items():
+              p=app._payload_for(
+                  sym,
+                  "1d",
+                  strategy_id="chan",
+                  force_refresh=True,
+              )
+              kinds={x["kind"] for x in p["chan"]["signals"]}
+              missing=required-kinds
+              assert not missing, (sym, missing, kinds, p["chan"]["counts"])
+              print("CHAN_REAL_BSP_PASS", sym, sorted(required), sorted(kinds))
           PY
 
       - name: Build direct-import ZIP
