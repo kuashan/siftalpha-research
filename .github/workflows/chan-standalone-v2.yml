@@ -53,6 +53,10 @@ jobs:
         run: |
           python tests/diagnose_chan_bsp.py
 
+      - name: Diagnose B1P S1P causal candidates
+        run: |
+          python research/ssss_reboot_v1/phase10/diagnose_chan_b1p_v1.py
+
       - name: Diagnose canonical Z-movement mapping
         run: |
           python research/ssss_reboot_v1/phase10/diagnose_chan_z_mapping_v1.py
