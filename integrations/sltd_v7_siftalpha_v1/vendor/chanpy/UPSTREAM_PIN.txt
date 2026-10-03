@@ -1,0 +1,4 @@
+Upstream: Vespa314/chan.py
+Commit: 429d6ed3043e27c93a003ba2b10e70a05575e1f5
+License: MIT (see LICENSE)
+Integration policy: upstream core files are vendored unchanged; SiftAlpha adapter lives in ../../chan_strategy.py.

@@ -1,4 +1,4 @@
-name: SLTD V7 Shunshi Tab
+name: SLTD V7 Shunshi + Upstream Chan
 
 on:
   push:
@@ -91,18 +91,23 @@ jobs:
           find /tmp/sltd_v7_sr_package -type f -name '*.pyc' -delete
           cp -R /tmp/sltd_v7_sr_package/. direct-import/
           cd /tmp/sltd_v7_sr_package
-          zip -r "$GITHUB_WORKSPACE/SLTD-V7-SiftAlpha-顺势-v1.zip" .
+          zip -r "$GITHUB_WORKSPACE/SLTD-V7-SiftAlpha-顺势-缠论-chanpy-v1.zip" .
 
       - name: Verify package
         run: |
           python - <<'PY'
           import zipfile
-          z=zipfile.ZipFile("SLTD-V7-SiftAlpha-顺势-v1.zip")
+          z=zipfile.ZipFile("SLTD-V7-SiftAlpha-顺势-缠论-chanpy-v1.zip")
           names=set(z.namelist())
           required={
               "app.py",
               "strategy.py",
               "support_resistance_strategy.py",
+              "chan_strategy.py",
+              "vendor/chanpy/Chan.py",
+              "vendor/chanpy/ChanConfig.py",
+              "vendor/chanpy/LICENSE",
+              "vendor/chanpy/UPSTREAM_PIN.txt",
               "data_provider.py",
               "templates/index.html",
               "shared_market_data/__init__.py",
@@ -116,7 +121,12 @@ jobs:
           assert 'data-strategy="support_resistance"' in page
           assert ">顺势<" in page
           assert "顺势 v1" in sr
-          print("SHUNSHI_PACKAGE_PASS")
+          chan=z.read("chan_strategy.py").decode("utf-8")
+          assert "429d6ed3043e27c93a003ba2b10e70a05575e1f5" in chan
+          assert "Vespa314/chan.py" in chan
+          assert "drawLine('sr_long_pressure','#52d49a',[],1)" in page
+          assert "drawLine('sr_long_support','#ff7b82',[],1)" in page
+          print("SHUNSHI_CHANPY_PACKAGE_PASS")
           PY
 
       - name: Packaged web smoke
@@ -144,14 +154,15 @@ jobs:
               health=json.load(r)
           assert health["ok"] is True
           assert health["available_strategies"]["support_resistance"] == "顺势 v1"
-          print("PACKAGED_SHUNSHI_WEB_PASS", base)
+          assert health["available_strategies"]["chan"] == "缠论 · chan.py upstream 429d6ed"
+          print("PACKAGED_SHUNSHI_CHANPY_WEB_PASS", base)
           PY
           kill "$(cat /tmp/shunshi.pid)" || true
 
       - name: Upload direct SiftAlpha import artifact
         uses: actions/upload-artifact@v4
         with:
-          name: sltd-v7-shunshi-direct-import-v1
+          name: sltd-v7-shunshi-chanpy-direct-import-v1
           path: direct-import/
           include-hidden-files: true
           if-no-files-found: error
@@ -160,7 +171,7 @@ jobs:
       - name: Upload ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: sltd-v7-shunshi-zip-v1
-          path: SLTD-V7-SiftAlpha-顺势-v1.zip
+          name: sltd-v7-shunshi-chanpy-zip-v1
+          path: SLTD-V7-SiftAlpha-顺势-缠论-chanpy-v1.zip
           if-no-files-found: error
           retention-days: 30

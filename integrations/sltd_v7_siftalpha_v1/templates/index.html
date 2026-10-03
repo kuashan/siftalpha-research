@@ -732,11 +732,11 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     const isChan=currentStrategy==='chan';
     const isSR=currentStrategy==='support_resistance';
     safeText('brand-title',isChan?'缠论':isSR?'顺势':'SLTD V7');
-    safeText('brand-subtitle',isChan?'SiftAlpha · 独立缠论结构 / 三买三卖 / 多级别':isSR?'SiftAlpha · 独立四线叠加 · 短3 / 长7':'SiftAlpha · 结构信号 / 仓位 / C2 风险退出');
+    safeText('brand-subtitle',isChan?'SiftAlpha · Vespa314/chan.py 原版核心 / 笔 / 线段 / 中枢 / 买卖点':isSR?'SiftAlpha · 独立四线叠加 · 短3 / 长7':'SiftAlpha · 结构信号 / 仓位 / C2 风险退出');
     safeText('summary-action-label',isChan?'当前买卖点':'当前决策');
     safeText('summary-position-label',isChan?'运行模式':'当前仓位');
     safeText('summary-state-label',isChan?'缠论状态':'SLTD 状态');
-    safeText('footer-note',isChan?'独立缠论 · SiftAlpha · 结构锚点用于画图，FIRST_OBSERVED 确认时间用于信号。':isSR?'顺势 · 保留 BACKSET 原公式语义 · 仅显示四线，不产生交易信号。':'SLTD V7 · SiftAlpha 中文版 · 当前仅做策略分析与模拟仓位，不连接真实券商下单。');
+    safeText('footer-note',isChan?'缠论 · Vespa314/chan.py 原版核心 · 当前帧虚结构与 BSP 允许随后续 K 线修正。':isSR?'顺势 · 保留 BACKSET 原公式语义 · 仅显示四线，不产生交易信号。':'SLTD V7 · SiftAlpha 中文版 · 当前仅做策略分析与模拟仓位，不连接真实券商下单。');
 
     const actionNode=q('summary-action');
     actionNode.textContent=s.resolved_action_zh||actionLabels[s.resolved_action]||s.resolved_action||'—';
@@ -765,7 +765,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     safeText('meta-origin',isChan?'缠论独立':(stateLabels[s.origin]||s.origin||'—'));
     safeText('meta-forming',forming ? ('形成中 · '+formatPrice(forming.close)) : '当前无未完成 K 线');
     safeText('chart-title',(s.symbol||'')+' · '+(contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe)+' · '+(strategy.selector_label||strategy.version||'SLTD'));
-    safeText('chart-kicker',currentStrategy==='chan'?'缠论结构主图 · 最近 300 根仅用于显示':currentStrategy==='support_resistance'?'顺势主图 · 短3 / 长7 · 最近 300 根仅用于显示':'SLTD 主图 · 最近 300 根仅用于显示');
+    safeText('chart-kicker',currentStrategy==='chan'?'缠论结构主图 · chan.py upstream · 最近 300 根仅用于显示':currentStrategy==='support_resistance'?'顺势主图 · 短3 / 长7 · 最近 300 根仅用于显示':'SLTD 主图 · 最近 300 根仅用于显示');
     safeText('timeframe-badge',contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe);
     safeText('latest-price',formatPrice(s.latest_close));
     safeText('market-source',(meta.provider||'雅虎财经')+' · '+(meta.source||'网络'));
@@ -787,7 +787,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
         : currentStrategy==='5s_stocks'
           ? '5s Stocks v1 为独立冻结策略；A/B 首次半卖，C / 多重 / 后续不同 SELL 全清'
           : currentStrategy==='chan'
-            ? '独立缠论引擎；不读取12条/E/5s Stocks，三买三卖按自身多级别结构产生'
+            ? 'Vespa314/chan.py 原版开源核心；当前帧 BSP 可能随新 K 线修正或消失'
             : '由冻结候选基线驱动，不在运行脚本内自动调参'
     );
 
