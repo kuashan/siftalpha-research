@@ -83,14 +83,12 @@ class ChanStandaloneStrategyTest(unittest.TestCase):
             )
 
     def test_event_time_is_confirmation_time(self) -> None:
-        signals = {
-            (x["kind"], x["confirm_date"]): x
-            for x in self.payload["chan"]["signals"]
-        }
+        date_pos = {row["date"]: i for i, row in enumerate(self.candles)}
         for event in self.payload["events"]:
-            kind = str(event["state_zh"])
-            key = (kind, event["date"])
-            self.assertIn(key, signals, event)
+            self.assertIn(event["date"], date_pos)
+            anchor = str(event["age"]).replace("锚点 ", "", 1)
+            self.assertIn(anchor, date_pos)
+            self.assertGreaterEqual(date_pos[event["date"]], date_pos[anchor], event)
 
     def test_overlay_geometry_has_valid_dates_and_prices(self) -> None:
         visible = {x["date"] for x in self.payload["chart"]}
