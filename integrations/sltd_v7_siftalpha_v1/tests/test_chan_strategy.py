@@ -334,7 +334,7 @@ class ChanStandaloneStrategyTest(unittest.TestCase):
         )
         z1 = chan_strategy.Zhongshu(
             level=0, unit_kind="TEST", start_sub=5, end_sub=7,
-            zg=29, zd=21, gg=31, dd=20,
+            zg=29, zd=25, gg=31, dd=20,
             start_index=50, end_index=79, confirm_index=79,
             count=3, pending=False, upgraded=False,
         )
@@ -405,9 +405,9 @@ class ChanStandaloneStrategyTest(unittest.TestCase):
             U("up", 43, 51, 3),
             U("down", 51, 20, 4),
             U("up", 20, 31, 5),
-            U("down", 31, 21, 6),
-            U("up", 21, 29, 7),
-            U("down", 29, 22, 8),  # leaves ZD but does not exceed b low
+            U("down", 31, 25, 6),
+            U("up", 25, 29, 7),
+            U("down", 29, 22, 8),  # below ZD=25, but above b low=20
         ]
         z0 = chan_strategy.Zhongshu(
             level=0, unit_kind="TEST", start_sub=1, end_sub=3,
