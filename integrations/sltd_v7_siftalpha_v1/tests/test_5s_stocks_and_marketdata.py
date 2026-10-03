@@ -200,20 +200,20 @@ class WebUiContractTests(unittest.TestCase):
         self.assertIn("sr_long_support", page)
 
     def test_shunshi_four_line_visual_contract(self) -> None:
-        page = (Path(__file__).resolve().parents[1] / "templates" / "index.html").read_text(
-            encoding="utf-8"
-        )
-        # Missing overlay values must break the path instead of Number(null) -> 0,
-        # which previously created vertical spikes from the chart floor.
-        self.assertIn("v==null||v===''", page)
-        self.assertIn("started=false;", page)
+        root = Path(__file__).resolve().parents[1]
+        page = (root / "templates" / "index.html").read_text(encoding="utf-8")
+        workspace = (root / "static" / "kline_workspace.js").read_text(encoding="utf-8")
+
+        # Missing overlay values break the path instead of becoming zero.
+        self.assertIn("value == null || value === ''", workspace)
+        self.assertIn("started = false", workspace)
 
         # Pressure is green, support is red. Long lines are solid width 1;
         # short lines are dashed width 1.
-        self.assertIn("drawLine('sr_short_pressure','#52d49a',[5,4],1)", page)
-        self.assertIn("drawLine('sr_short_support','#ff7b82',[5,4],1)", page)
-        self.assertIn("drawLine('sr_long_pressure','#52d49a',[],1)", page)
-        self.assertIn("drawLine('sr_long_support','#ff7b82',[],1)", page)
+        self.assertIn("['sr_short_pressure', '#52d49a', [5, 4], 1]", workspace)
+        self.assertIn("['sr_short_support', '#ff7b82', [5, 4], 1]", workspace)
+        self.assertIn("['sr_long_pressure', '#52d49a', [], 1]", workspace)
+        self.assertIn("['sr_long_support', '#ff7b82', [], 1]", workspace)
         self.assertIn("短压 · 绿虚线", page)
         self.assertIn("短支 · 红虚线", page)
         self.assertIn("长压 · 绿实线", page)
