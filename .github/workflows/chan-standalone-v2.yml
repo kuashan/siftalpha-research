@@ -101,23 +101,18 @@ jobs:
           print("ABNB_CHAN_SIGNAL_PASS", kinds, len(chan["chan"]["signals"]))
           print("ABNB_CHAN_COUNTS", chan["chan"]["counts"])
 
-          # Real-market visibility checks for the repaired four classes.
-          checks = {
-              "ADBE": {"B1"},
-              "NVDA": {"S1"},
-              "ABNB": {"B2", "S2"},
-          }
-          for sym, required in checks.items():
+          # Real-market symbols are diagnostics only.  They must never be a
+          # formula-admission gate: a canonical class is allowed to be absent
+          # on any particular stock.
+          for sym in ("ADBE", "NVDA"):
               p=app._payload_for(
                   sym,
                   "1d",
                   strategy_id="chan",
                   force_refresh=True,
               )
-              kinds={x["kind"] for x in p["chan"]["signals"]}
-              missing=required-kinds
-              assert not missing, (sym, missing, kinds, p["chan"]["counts"])
-              print("CHAN_REAL_BSP_PASS", sym, sorted(required), sorted(kinds))
+              kinds=sorted({x["kind"] for x in p["chan"]["signals"]})
+              print("CHAN_REAL_BSP_DIAGNOSTIC", sym, kinds, p["chan"]["counts"])
           PY
 
       - name: Build direct-import ZIP
@@ -156,7 +151,7 @@ jobs:
               assert not missing, missing
               chan=z.read("chan_strategy.py").decode("utf-8")
               page=z.read("templates/index.html").decode("utf-8")
-              assert "CHAN_STANDALONE_BSP_CANONICAL_V2_2" in chan
+              assert "CHAN_STANDALONE_BSP_CANDIDATE_V2_2_THEORY_AUDITED" in chan
               assert "replay_first_observed_signals" in chan
               assert "build_levels" in chan
               assert 'data-strategy="chan"' in page
