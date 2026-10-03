@@ -1,0 +1,196 @@
+name: SLTD V7 KLineChart v1
+
+on:
+  push:
+    branches:
+      - feature/sltd-v7-klinechart-v1
+    paths:
+      - "integrations/shared_market_data/**"
+      - "integrations/sltd_v7_siftalpha_v1/**"
+      - ".github/workflows/sltd-v7-klinechart-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: integrations/sltd_v7_siftalpha_v1
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Vendor pinned chan.py core
+        run: |
+          set -euo pipefail
+          vendor="integrations/sltd_v7_siftalpha_v1/vendor/chanpy"
+          rm -rf "$vendor"
+          mkdir -p "$(dirname "$vendor")"
+          git clone --quiet https://github.com/Vespa314/chan.py.git "$vendor"
+          git -C "$vendor" checkout --quiet 429d6ed3043e27c93a003ba2b10e70a05575e1f5
+          test "$(git -C "$vendor" rev-parse HEAD)" = "429d6ed3043e27c93a003ba2b10e70a05575e1f5"
+          rm -rf "$vendor/.git"
+          printf '%s\n' 'Vespa314/chan.py' '429d6ed3043e27c93a003ba2b10e70a05575e1f5' > "$vendor/UPSTREAM_PIN.txt"
+
+      - name: Vendor KLineChart 10.0.3
+        run: |
+          set -euo pipefail
+          work="$(mktemp -d)"
+          cd "$work"
+          npm pack klinecharts@10.0.3 --silent >/tmp/klinecharts-pack.txt
+          pkg="$(cat /tmp/klinecharts-pack.txt | tail -n1)"
+          tar -xzf "$pkg"
+          test "$(node -p "require('./package/package.json').version")" = "10.0.3"
+          out="$GITHUB_WORKSPACE/integrations/sltd_v7_siftalpha_v1/vendor/klinecharts"
+          rm -rf "$out"
+          mkdir -p "$out"
+          cp package/dist/umd/klinecharts.min.js "$out/klinecharts.min.js"
+          cp package/LICENSE "$out/LICENSE"
+          if [ -f package/NOTICE ]; then cp package/NOTICE "$out/NOTICE"; fi
+          printf '%s\n' 'klinecharts/KLineChart' 'v10.0.3' 'Apache-2.0' > "$out/UPSTREAM_PIN.txt"
+          test -s "$out/klinecharts.min.js"
+          sha256sum "$out/klinecharts.min.js"
+
+      - name: Compile Python
+        run: |
+          python -m compileall -q integrations/shared_market_data
+          python -m compileall -q integrations/sltd_v7_siftalpha_v1
+
+      - name: Check JavaScript syntax
+        run: |
+          node --check integrations/sltd_v7_siftalpha_v1/static/kline_workspace.js
+          python - <<'PY'
+          from pathlib import Path
+          page=Path("integrations/sltd_v7_siftalpha_v1/templates/index.html").read_text(encoding="utf-8")
+          start=page.index("<script>")+len("<script>")
+          end=page.rindex("</script>")
+          Path("/tmp/sltd-inline.js").write_text(page[start:end],encoding="utf-8")
+          PY
+          node --check /tmp/sltd-inline.js
+
+      - name: Run regression tests
+        run: python -m unittest discover -s integrations/sltd_v7_siftalpha_v1/tests -v
+
+      - name: Verify KLineChart integration contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          page=Path("integrations/sltd_v7_siftalpha_v1/templates/index.html").read_text(encoding="utf-8")
+          js=Path("integrations/sltd_v7_siftalpha_v1/static/kline_workspace.js").read_text(encoding="utf-8")
+          app=Path("integrations/sltd_v7_siftalpha_v1/app.py").read_text(encoding="utf-8")
+          assert '/vendor/klinecharts/klinecharts.min.js' in page
+          assert '/static/kline_workspace.js' in page
+          assert 'id="kline-chart"' in page
+          assert 'id="strategy-overlay"' in page
+          assert 'id="state-strip"' in page
+          assert 'id="position-strip"' in page
+          assert 'KLineChart 10.0.3' in js
+          assert 'setZoomEnabled(true)' in js
+          assert 'setScrollEnabled(true)' in js
+          assert "onCrosshairChange" in js
+          assert "STATE_COLORS" in js
+          assert "chan_signal_overlay" in js
+          assert "ch.zhongshus || []" in js
+          assert "['sr_long_pressure', '#52d49a', [], 1]" in js
+          assert "DISPLAY_KLINE_LIMIT = 500" in app
+          assert 'parsed.path == "/vendor/klinecharts/klinecharts.min.js"' in app
+          print("KLINECHART_INTEGRATION_CONTRACT_PASS")
+          PY
+
+      - name: Smoke test local web server assets
+        run: |
+          set -euo pipefail
+          python integrations/sltd_v7_siftalpha_v1/app.py --host 127.0.0.1 --port 18887 >/tmp/sltd-web.log 2>&1 &
+          pid=$!
+          trap 'kill $pid 2>/dev/null || true' EXIT
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:18887/api/health >/tmp/health.json; then break; fi
+            sleep 1
+          done
+          python - <<'PY'
+          import json
+          x=json.load(open("/tmp/health.json"))
+          assert x["ok"] is True
+          assert x["display_kline_limit"] == 500
+          PY
+          curl -fsS http://127.0.0.1:18887/ | grep -q '/vendor/klinecharts/klinecharts.min.js'
+          curl -fsS http://127.0.0.1:18887/vendor/klinecharts/klinecharts.min.js >/tmp/klinecharts.js
+          curl -fsS http://127.0.0.1:18887/static/kline_workspace.js >/tmp/workspace.js
+          test -s /tmp/klinecharts.js
+          test -s /tmp/workspace.js
+          echo "KLINECHART_ASSET_SMOKE_PASS"
+
+      - name: Build direct-import package
+        run: |
+          set -euo pipefail
+          src="integrations/sltd_v7_siftalpha_v1"
+          out="/tmp/sltd_klinechart_package"
+          rm -rf "$out"
+          mkdir -p "$out"
+          cp "$src/app.py" "$out/"
+          cp "$src/strategy.py" "$out/"
+          cp "$src/e_strategy.py" "$out/"
+          cp "$src/five_s_signal_engine.py" "$out/"
+          cp "$src/five_s_stocks_strategy.py" "$out/"
+          cp "$src/chan_strategy.py" "$out/"
+          cp "$src/support_resistance_strategy.py" "$out/"
+          cp "$src/data_provider.py" "$out/"
+          cp "$src/requirements.txt" "$out/"
+          cp -R "$src/providers" "$out/providers"
+          cp -R "$src/templates" "$out/templates"
+          cp -R "$src/static" "$out/static"
+          cp -R "$src/vendor" "$out/vendor"
+          cp -R integrations/shared_market_data "$out/shared_market_data"
+          if [ -f "$src/README.md" ]; then cp "$src/README.md" "$out/"; fi
+          cd "$out"
+          zip -qr /tmp/SLTD-V7-SiftAlpha-KLineChart-v1.zip .
+
+      - name: Verify package contents
+        run: |
+          python - <<'PY'
+          import zipfile
+          z=zipfile.ZipFile("/tmp/SLTD-V7-SiftAlpha-KLineChart-v1.zip")
+          names=set(z.namelist())
+          required={
+              "app.py","strategy.py","e_strategy.py","five_s_stocks_strategy.py",
+              "chan_strategy.py","support_resistance_strategy.py","data_provider.py",
+              "requirements.txt","templates/index.html","static/kline_workspace.js",
+              "shared_market_data/__init__.py","vendor/chanpy/Chan.py",
+              "vendor/chanpy/UPSTREAM_PIN.txt","vendor/klinecharts/klinecharts.min.js",
+              "vendor/klinecharts/LICENSE","vendor/klinecharts/UPSTREAM_PIN.txt",
+          }
+          missing=sorted(required-names)
+          assert not missing, missing
+          page=z.read("templates/index.html").decode("utf-8")
+          assert "KLineChart" in page
+          assert "kline_workspace.js" in page
+          js=z.read("static/kline_workspace.js").decode("utf-8")
+          assert "KLineChart 10.0.3" in js
+          print("KLINECHART_PACKAGE_CONTENT_PASS")
+          PY
+
+      - name: Upload direct-import folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-v7-klinechart-direct-import-v1
+          path: /tmp/sltd_klinechart_package/*
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-v7-klinechart-zip-v1
+          path: /tmp/SLTD-V7-SiftAlpha-KLineChart-v1.zip
+          if-no-files-found: error
+          retention-days: 30
