@@ -55,6 +55,7 @@ class FiveSStocksPolicyTests(unittest.TestCase):
         self.assertIn("v7", app.AVAILABLE_STRATEGIES)
         self.assertIn("e", app.AVAILABLE_STRATEGIES)
         self.assertIn("5s_stocks", app.AVAILABLE_STRATEGIES)
+        self.assertIn("support_resistance", app.AVAILABLE_STRATEGIES)
 
     def test_frozen_half_sell_and_later_distinct_full_exit(self) -> None:
         signals = {
@@ -185,14 +186,18 @@ class MarketDataBoundaryTests(unittest.TestCase):
 
 
 class WebUiContractTests(unittest.TestCase):
-    def test_three_independent_strategy_tabs_exist(self) -> None:
+    def test_independent_strategy_tabs_exist(self) -> None:
         page = (Path(__file__).resolve().parents[1] / "templates" / "index.html").read_text(
             encoding="utf-8"
         )
         self.assertIn('data-strategy="v7"', page)
         self.assertIn('data-strategy="e"', page)
         self.assertIn('data-strategy="5s_stocks"', page)
+        self.assertIn('data-strategy="support_resistance"', page)
         self.assertIn(">5s Stocks<", page)
+        self.assertIn(">长短支压<", page)
+        self.assertIn("sr_short_pressure", page)
+        self.assertIn("sr_long_support", page)
 
 
 if __name__ == "__main__":
