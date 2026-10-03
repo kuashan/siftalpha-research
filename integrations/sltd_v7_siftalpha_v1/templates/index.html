@@ -615,9 +615,10 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
 
     if(structureId){
       const m=dateMaps[structureId];
-      drawSeries(m,'GZB3','#728096',[],1);drawSeries(m,'GZB4','#9ba6b7',[],1);
-      drawSeries(m,'ZD1','#65c5d8',[4,3],1);drawSeries(m,'ZK1','#c28bd8',[4,3],1);
-      drawSeries(m,'BS','#eab464',[2,3],1);drawSeries(m,'BD','#eab464',[2,3],1);
+      const drawLine=(key,stroke,dash=[],width=1)=>drawSeries(m,key,stroke,dash,width);
+      drawLine('GZB3','#728096',[],1);drawLine('GZB4','#9ba6b7',[],1);
+      drawLine('ZD1','#65c5d8',[4,3],1);drawLine('ZK1','#c28bd8',[4,3],1);
+      drawLine('BS','#eab464',[2,3],1);drawLine('BD','#eab464',[2,3],1);
     }
     if(selected.has('support_resistance')){
       const m=dateMaps.support_resistance;
