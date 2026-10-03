@@ -1,0 +1,31 @@
+name: Diagnose Chan Visibility v2
+
+on:
+  push:
+    branches:
+      - feature/chan-standalone-v2
+    paths:
+      - "research/ssss_reboot_v1/phase10/diagnose_chan_visibility_v2.py"
+      - ".github/workflows/diagnose-chan-visibility-v2.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/chan-standalone-v2
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run live visibility diagnostic
+        env:
+          SLTD_RUNTIME_DATA_DIR: /tmp/chan-visibility-cache
+        run: |
+          python research/ssss_reboot_v1/phase10/diagnose_chan_visibility_v2.py
