@@ -200,6 +200,27 @@ class ChanStandaloneStrategyTest(unittest.TestCase):
             [x.kind for x in trends],
         )
 
+    def test_segment_requires_three_bi_overlap_seed(self) -> None:
+        # Lesson 65/77: at least three Bi is not enough; the first three Bi
+        # of a segment must also have a common overlapping price interval.
+        bis = [
+            U("up", 0, 10, 0),
+            U("down", 10, -5, 1),
+            U("up", -5, -1, 2),   # first three have no common overlap
+            U("down", -1, -6, 3),
+            U("up", -6, -2, 4),
+        ]
+        self.assertFalse(chan_strategy._segment_seed_overlaps(bis, 0))
+        segments = chan_strategy.build_segments(bis)
+        self.assertTrue(segments)
+        self.assertNotEqual(0, segments[0].source_start)
+        for seg in segments:
+            self.assertTrue(
+                chan_strategy._segment_seed_overlaps(bis, seg.source_start),
+                seg,
+            )
+
+
     def test_third_class_buy_is_structural_not_macd_only(self) -> None:
         units = [
             U("down", 12, 8, 0),   # entering movement
