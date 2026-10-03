@@ -195,7 +195,7 @@ class WebUiContractTests(unittest.TestCase):
         self.assertIn('data-strategy="5s_stocks"', page)
         self.assertIn('data-strategy="support_resistance"', page)
         self.assertIn(">5s Stocks<", page)
-        self.assertIn(">长短支压<", page)
+        self.assertIn(">顺势<", page)
         self.assertIn("sr_short_pressure", page)
         self.assertIn("sr_long_support", page)
 
