@@ -21,6 +21,7 @@ from data_provider import (
     normalize_timeframe,
 )
 from e_strategy import E_RULES, E_STRATEGY_VERSION, analyze_e
+from chan_strategy import CHAN_RULES, CHAN_STRATEGY_VERSION, analyze_chan
 from five_s_stocks_strategy import (
     FIVE_S_STOCKS_RULES,
     FIVE_S_STOCKS_VERSION,
@@ -52,6 +53,7 @@ AVAILABLE_STRATEGIES = {
     "v7": STRATEGY_VERSION,
     "e": E_STRATEGY_VERSION,
     "5s_stocks": FIVE_S_STOCKS_VERSION,
+    "chan": CHAN_STRATEGY_VERSION,
 }
 
 
@@ -97,6 +99,13 @@ def _payload_for(
         )
     elif strategy_id == "5s_stocks":
         result = analyze_5s_stocks(
+            symbol,
+            completed,
+            display_limit=DISPLAY_KLINE_LIMIT,
+            timeframe=timeframe,
+        )
+    elif strategy_id == "chan":
+        result = analyze_chan(
             symbol,
             completed,
             display_limit=DISPLAY_KLINE_LIMIT,
@@ -195,6 +204,7 @@ class Handler(BaseHTTPRequestHandler):
                     "five_s_stocks_active_rules": sum(
                         len(v) for v in FIVE_S_STOCKS_RULES.values()
                     ),
+                    "chan_active_rules": sum(len(v) for v in CHAN_RULES.values()),
                 },
             )
             return
