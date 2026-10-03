@@ -248,6 +248,12 @@
       this.scheduleRedraw();
     }
 
+    resetView() {
+      this.fitMobileBarSpace();
+      try { this.chart && this.chart.scrollToRealTime(); } catch (_) {}
+      this.scheduleRedraw();
+    }
+
     scheduleRedraw() {
       if (this.raf) cancelAnimationFrame(this.raf);
       this.raf = requestAnimationFrame(() => {
