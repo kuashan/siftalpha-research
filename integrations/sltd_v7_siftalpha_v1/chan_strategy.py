@@ -1018,25 +1018,32 @@ def compute_level_signals(
                 if down
                 else leave.high > max(enter.high, zs.gg)
             )
+            outside_center = (
+                leave.low < zs.zd
+                if down
+                else leave.high > zs.zg
+            )
 
             enter_dif = _dif_extreme(enter, dif, sign)
 
             # MACD is an auxiliary force measure, not an extra proprietary
-            # eligibility gate.  The original theory first requires a valid
-            # same-level trend structure, then compares the entering /
-            # leaving same-direction movements.  A literal numerical
-            # "0.25 x DIF" threshold is not part of the source theory.
+            # eligibility gate.  Source lesson 38 explicitly notes that when
+            # the leaving C movement cannot even make a new low/high, its
+            # force is already weaker and MACD confirmation is unnecessary.
+            # If C DOES make a new extreme, compare B vs C force.
             weaker = (
                 _movement_force(leave, hist, sign)
                 < _movement_force(enter, hist, sign)
                 or abs(_dif_extreme(leave, dif, sign))
                 < abs(enter_dif)
             )
+            divergence = outside_center and (
+                (not new_extreme) or weaker
+            )
 
             expected_link = "down" if down else "up"
             if (
-                new_extreme
-                and weaker
+                divergence
                 and zi < len(links)
                 and links[zi] == expected_link
             ):
