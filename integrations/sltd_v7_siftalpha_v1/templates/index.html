@@ -153,7 +153,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
         <button class="badge strategy-chip" type="button" data-strategy="e" aria-pressed="false">E</button>
         <button class="badge strategy-chip" type="button" data-strategy="5s_stocks" aria-pressed="false">5s Stocks</button>
         <button class="badge strategy-chip" type="button" data-strategy="chan" aria-pressed="false">缠论</button>
-        <button class="badge strategy-chip" type="button" data-strategy="support_resistance" aria-pressed="false">长短支压</button>
+        <button class="badge strategy-chip" type="button" data-strategy="support_resistance" aria-pressed="false">顺势</button>
         <span class="badge" id="timeframe-badge">__DEFAULT_TIMEFRAME__</span>
         <span class="badge c2" id="c2-badge">C2 强制清仓</span>
         <span class="badge local">本地网页</span>
@@ -716,12 +716,12 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
 
     const isChan=currentStrategy==='chan';
     const isSR=currentStrategy==='support_resistance';
-    safeText('brand-title',isChan?'缠论':isSR?'长短支压':'SLTD V7');
+    safeText('brand-title',isChan?'缠论':isSR?'顺势':'SLTD V7');
     safeText('brand-subtitle',isChan?'SiftAlpha · 独立缠论结构 / 三买三卖 / 多级别':isSR?'SiftAlpha · 独立四线叠加 · 短3 / 长7':'SiftAlpha · 结构信号 / 仓位 / C2 风险退出');
     safeText('summary-action-label',isChan?'当前买卖点':'当前决策');
     safeText('summary-position-label',isChan?'运行模式':'当前仓位');
     safeText('summary-state-label',isChan?'缠论状态':'SLTD 状态');
-    safeText('footer-note',isChan?'独立缠论 · SiftAlpha · 结构锚点用于画图，FIRST_OBSERVED 确认时间用于信号。':isSR?'长短支压 · 保留 BACKSET 原公式语义 · 仅显示四线，不产生交易信号。':'SLTD V7 · SiftAlpha 中文版 · 当前仅做策略分析与模拟仓位，不连接真实券商下单。');
+    safeText('footer-note',isChan?'独立缠论 · SiftAlpha · 结构锚点用于画图，FIRST_OBSERVED 确认时间用于信号。':isSR?'顺势 · 保留 BACKSET 原公式语义 · 仅显示四线，不产生交易信号。':'SLTD V7 · SiftAlpha 中文版 · 当前仅做策略分析与模拟仓位，不连接真实券商下单。');
 
     const actionNode=q('summary-action');
     actionNode.textContent=s.resolved_action_zh||actionLabels[s.resolved_action]||s.resolved_action||'—';
@@ -750,7 +750,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     safeText('meta-origin',isChan?'缠论独立':(stateLabels[s.origin]||s.origin||'—'));
     safeText('meta-forming',forming ? ('形成中 · '+formatPrice(forming.close)) : '当前无未完成 K 线');
     safeText('chart-title',(s.symbol||'')+' · '+(contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe)+' · '+(strategy.selector_label||strategy.version||'SLTD'));
-    safeText('chart-kicker',currentStrategy==='chan'?'缠论结构主图 · 最近 300 根仅用于显示':currentStrategy==='support_resistance'?'长短支压主图 · 短3 / 长7 · 最近 300 根仅用于显示':'SLTD 主图 · 最近 300 根仅用于显示');
+    safeText('chart-kicker',currentStrategy==='chan'?'缠论结构主图 · 最近 300 根仅用于显示':currentStrategy==='support_resistance'?'顺势主图 · 短3 / 长7 · 最近 300 根仅用于显示':'SLTD 主图 · 最近 300 根仅用于显示');
     safeText('timeframe-badge',contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe);
     safeText('latest-price',formatPrice(s.latest_close));
     safeText('market-source',(meta.provider||'雅虎财经')+' · '+(meta.source||'网络'));
