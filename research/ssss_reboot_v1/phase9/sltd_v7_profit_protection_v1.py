@@ -543,14 +543,16 @@ def main() -> None:
         )
 
     per_symbol = {
-        s: {
-            "group": groups[s],
-            friction: {
-                variant: compact(sims[friction][variant][s])
-                for variant in VARIANTS
+        s: (
+            {"group": groups[s]}
+            | {
+                friction: {
+                    variant: compact(sims[friction][variant][s])
+                    for variant in VARIANTS
+                }
+                for friction in ("5bps", "10bps")
             }
-            for friction in ("5bps", "10bps")
-        }
+        )
         for s in ALL89
     }
 
