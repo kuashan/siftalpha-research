@@ -126,6 +126,17 @@ class ChanUpstreamAdapterTest(unittest.TestCase):
         self.assertIn("(ch.signals||[])", page)
         self.assertIn("缠'+String(s.kind||'')", page)
 
+    def test_sltd_restores_state_band_and_embeds_chan_signals(self) -> None:
+        page = PAGE.read_text(encoding="utf-8")
+        app_source = (PROJECT / "app.py").read_text(encoding="utf-8")
+        self.assertEqual(500, app.DISPLAY_KLINE_LIMIT)
+        self.assertIn("SLTD 三色状态", page)
+        self.assertIn("stateColor={BLUE:", page)
+        self.assertIn("chanSignalSource=selected.has('chan')", page)
+        self.assertIn("chan_signal_overlay", page)
+        self.assertIn('result["chan_signal_overlay"]', app_source)
+        self.assertIn('"chan": CHAN_STRATEGY_VERSION', app_source)
+
     def test_shunshi_long_lines_remain_width_one(self) -> None:
         page = PAGE.read_text(encoding="utf-8")
         self.assertIn("drawLine('sr_long_pressure','#52d49a',[],1)", page)
