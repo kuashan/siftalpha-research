@@ -153,7 +153,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
         <p id="brand-subtitle">SiftAlpha · 结构信号 / 仓位 / C2 风险退出</p>
       </div>
       <div class="badges">
-        <button class="badge strategy-chip active" type="button" data-strategy="v7" aria-pressed="true">12条策略</button>
+        <button class="badge strategy-chip active" type="button" data-strategy="v7" aria-pressed="true">SLTD</button>
         <button class="badge strategy-chip" type="button" data-strategy="e" aria-pressed="false">E</button>
         <button class="badge strategy-chip" type="button" data-strategy="5s_stocks" aria-pressed="false">5s Stocks</button>
         <button class="badge strategy-chip" type="button" data-strategy="chan" aria-pressed="false">缠论</button>
@@ -258,6 +258,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       <div class="indicator" data-structure-only><small>ZD1 · 下轨</small><b id="value-zd1">—</b></div>
       <div class="indicator" data-structure-only><small>ZK1 · 上轨</small><b id="value-zk1">—</b></div>
       <div class="indicator" data-structure-only><small>BS · 上外轨</small><b id="value-bs">—</b></div>
+      <div class="indicator" data-structure-only><small>BD · 下外轨</small><b id="value-bd">—</b></div>
       <div class="indicator"><small>策略版本</small><b id="strategy-version">__STRATEGY_VERSION__</b></div>
       <div class="indicator" data-chan-only style="display:none"><small>当前笔</small><b id="chan-bi">—</b></div>
       <div class="indicator" data-chan-only style="display:none"><small>当前线段</small><b id="chan-segment">—</b></div>
@@ -468,7 +469,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
 
     const priceValues = [];
     candles.forEach(c => {
-      [c.low,c.high,c.GZB3,c.GZB4,c.ZD1,c.ZK1,c.BS,c.sr_short_pressure,c.sr_short_support,c.sr_long_pressure,c.sr_long_support].forEach(v => {
+      [c.low,c.high,c.GZB3,c.GZB4,c.ZD1,c.ZK1,c.BS,c.BD,c.sr_short_pressure,c.sr_short_support,c.sr_long_pressure,c.sr_long_support].forEach(v => {
         const n=Number(v); if(Number.isFinite(n)) priceValues.push(n);
       });
     });
@@ -535,6 +536,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     drawLine('ZD1','#65c5d8',[4,3]);
     drawLine('ZK1','#c28bd8',[4,3]);
     drawLine('BS','#eab464',[2,3]);
+    drawLine('BD','#eab464',[2,3]);
     }
 
     if(isSR){
@@ -773,6 +775,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     safeText('value-zd1',formatPrice(s.ZD1));
     safeText('value-zk1',formatPrice(s.ZK1));
     safeText('value-bs',formatPrice(s.BS));
+    safeText('value-bd',formatPrice(s.BD));
     safeText('strategy-version',strategy.version||'—');
     safeText('chan-bi',s.chan_bi);
     safeText('chan-segment',s.chan_segment);
