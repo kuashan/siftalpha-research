@@ -117,30 +117,32 @@ class ChanUpstreamAdapterTest(unittest.TestCase):
 
     def test_page_has_multi_strategy_chan_visual_layers(self) -> None:
         page = PAGE.read_text(encoding="utf-8")
+        workspace = (PROJECT / "static" / "kline_workspace.js").read_text(encoding="utf-8")
         self.assertIn('data-strategy="chan"', page)
         self.assertIn("selected=new Set(['v7'])", page)
         self.assertIn("payloads=new Map()", page)
         self.assertIn("strategy-panels", page)
-        self.assertIn("(ch.zhongshus||[])", page)
-        self.assertIn("(ch.segments||[])", page)
-        self.assertIn("(ch.signals||[])", page)
-        self.assertIn("缠'+String(s.kind||'')", page)
+        self.assertIn("ch.zhongshus || []", workspace)
+        self.assertIn("ch.bis || []", workspace)
+        self.assertIn("ch.segments || []", workspace)
+        self.assertIn("ch.signals || []", workspace)
+        self.assertIn("'缠' + String(s.kind || '')", workspace)
 
     def test_sltd_restores_state_band_and_embeds_chan_signals(self) -> None:
         page = PAGE.read_text(encoding="utf-8")
+        workspace = (PROJECT / "static" / "kline_workspace.js").read_text(encoding="utf-8")
         app_source = (PROJECT / "app.py").read_text(encoding="utf-8")
         self.assertEqual(500, app.DISPLAY_KLINE_LIMIT)
-        self.assertIn("SLTD 三色状态", page)
-        self.assertIn("stateColor={BLUE:", page)
-        self.assertIn("chanSignalSource=selected.has('chan')", page)
-        self.assertIn("chan_signal_overlay", page)
+        self.assertIn('aria-label="SLTD 三色状态"', page)
+        self.assertIn("STATE_COLORS", workspace)
+        self.assertIn("chan_signal_overlay", workspace)
         self.assertIn('result["chan_signal_overlay"]', app_source)
         self.assertIn('"chan": CHAN_STRATEGY_VERSION', app_source)
 
     def test_shunshi_long_lines_remain_width_one(self) -> None:
-        page = PAGE.read_text(encoding="utf-8")
-        self.assertIn("drawLine('sr_long_pressure','#52d49a',[],1)", page)
-        self.assertIn("drawLine('sr_long_support','#ff7b82',[],1)", page)
+        workspace = (PROJECT / "static" / "kline_workspace.js").read_text(encoding="utf-8")
+        self.assertIn("['sr_long_pressure', '#52d49a', [], 1]", workspace)
+        self.assertIn("['sr_long_support', '#ff7b82', [], 1]", workspace)
 
 
 if __name__ == "__main__":
