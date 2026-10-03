@@ -361,6 +361,77 @@ class ChanStandaloneStrategyTest(unittest.TestCase):
         )
         self.assertTrue(any(x["kind"] == "B1" for x in sig), sig)
 
+
+    def test_s1_can_occur_without_a_new_high(self) -> None:
+        units = [
+            U("up", 5, 20, 0),
+            U("down", 20, 12, 1),
+            U("up", 12, 22, 2),
+            U("down", 22, 14, 3),
+            U("up", 14, 45, 4),
+            U("down", 45, 34, 5),
+            U("up", 34, 44, 6),
+            U("down", 44, 36, 7),
+            U("up", 36, 43, 8),  # leaves ZG but does not exceed b high
+        ]
+        z0 = chan_strategy.Zhongshu(
+            level=0, unit_kind="TEST", start_sub=1, end_sub=3,
+            zg=18, zd=14, gg=22, dd=12,
+            start_index=10, end_index=39, confirm_index=39,
+            count=3, pending=False, upgraded=False,
+        )
+        z1 = chan_strategy.Zhongshu(
+            level=0, unit_kind="TEST", start_sub=5, end_sub=7,
+            zg=40, zd=36, gg=44, dd=34,
+            start_index=50, end_index=79, confirm_index=79,
+            count=3, pending=False, upgraded=False,
+        )
+        level = {
+            "level": 0, "label": "L0 测试", "units": units,
+            "zss": [z0, z1], "links": [None, "up"], "parent_turns": [],
+        }
+        sig = chan_strategy.compute_level_signals(
+            self._signal_fixture_bars(),
+            level,
+            {"dif": [2.0] * 140, "dea": [0.0] * 140, "hist": [2.0] * 140},
+        )
+        self.assertTrue(any(x["kind"] == "S1" for x in sig), sig)
+
+    def test_b1_can_occur_without_a_new_low(self) -> None:
+        units = [
+            U("down", 60, 45, 0),
+            U("up", 45, 53, 1),
+            U("down", 53, 43, 2),
+            U("up", 43, 51, 3),
+            U("down", 51, 20, 4),
+            U("up", 20, 31, 5),
+            U("down", 31, 21, 6),
+            U("up", 21, 29, 7),
+            U("down", 29, 22, 8),  # leaves ZD but does not exceed b low
+        ]
+        z0 = chan_strategy.Zhongshu(
+            level=0, unit_kind="TEST", start_sub=1, end_sub=3,
+            zg=51, zd=45, gg=53, dd=43,
+            start_index=10, end_index=39, confirm_index=39,
+            count=3, pending=False, upgraded=False,
+        )
+        z1 = chan_strategy.Zhongshu(
+            level=0, unit_kind="TEST", start_sub=5, end_sub=7,
+            zg=29, zd=21, gg=31, dd=20,
+            start_index=50, end_index=79, confirm_index=79,
+            count=3, pending=False, upgraded=False,
+        )
+        level = {
+            "level": 0, "label": "L0 测试", "units": units,
+            "zss": [z0, z1], "links": [None, "down"], "parent_turns": [],
+        }
+        sig = chan_strategy.compute_level_signals(
+            self._signal_fixture_bars(),
+            level,
+            {"dif": [-2.0] * 140, "dea": [0.0] * 140, "hist": [-2.0] * 140},
+        )
+        self.assertTrue(any(x["kind"] == "B1" for x in sig), sig)
+
     def test_b2_does_not_require_a_b1(self) -> None:
         units = [
             U("up", 20, 30, 0),
