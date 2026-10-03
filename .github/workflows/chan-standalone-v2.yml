@@ -8,6 +8,7 @@ on:
       - "integrations/shared_market_data/**"
       - "integrations/sltd_v7_siftalpha_v1/**"
       - ".github/workflows/chan-standalone-v2.yml"
+      - "research/ssss_reboot_v1/phase10/diagnose_chan_*.py"
   workflow_dispatch:
 
 permissions:
