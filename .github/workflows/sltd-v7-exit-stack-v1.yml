@@ -1,0 +1,83 @@
+name: SLTD V7 Exit Stack Study
+
+on:
+  push:
+    branches:
+      - research/sltd-v7-exit-stack-v1
+    paths:
+      - "integrations/shared_market_data/**"
+      - "integrations/sltd_v7_siftalpha_v1/**"
+      - "research/ssss_reboot_v1/phase10/diagnose_sltd_exit_stack_v1.py"
+      - ".github/workflows/sltd-v7-exit-stack-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      PYTHONPATH: integrations/sltd_v7_siftalpha_v1
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Vendor pinned chan.py core
+        run: |
+          set -euo pipefail
+          vendor="integrations/sltd_v7_siftalpha_v1/vendor/chanpy"
+          rm -rf "$vendor"
+          mkdir -p "$(dirname "$vendor")"
+          git clone --quiet https://github.com/Vespa314/chan.py.git "$vendor"
+          git -C "$vendor" checkout --quiet 429d6ed3043e27c93a003ba2b10e70a05575e1f5
+          test "$(git -C "$vendor" rev-parse HEAD)" = "429d6ed3043e27c93a003ba2b10e70a05575e1f5"
+          rm -rf "$vendor/.git"
+          printf '%s\n' 'Vespa314/chan.py' '429d6ed3043e27c93a003ba2b10e70a05575e1f5' > "$vendor/UPSTREAM_PIN.txt"
+
+      - name: Compile
+        run: |
+          python -m compileall -q integrations/shared_market_data
+          python -m compileall -q integrations/sltd_v7_siftalpha_v1
+          python -m compileall -q research/ssss_reboot_v1/phase10/diagnose_sltd_exit_stack_v1.py
+
+      - name: Run V7 regression tests
+        run: python -m unittest discover -s integrations/sltd_v7_siftalpha_v1/tests -v
+
+      - name: Verify SLTD label and BD
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          sys.path.insert(0, "integrations/sltd_v7_siftalpha_v1")
+          import strategy
+          page=Path("integrations/sltd_v7_siftalpha_v1/templates/index.html").read_text(encoding="utf-8")
+          assert 'data-strategy="v7" aria-pressed="true">SLTD</button>' in page
+          assert "BD · 下外轨" in page
+          assert "drawLine('BD','#eab464',[2,3])" in page
+          assert "'BD':" not in page  # data comes from payload, not hardcoded JS
+          assert '"selector_label": "SLTD"' in Path("integrations/sltd_v7_siftalpha_v1/strategy.py").read_text(encoding="utf-8")
+          print("SLTD_LABEL_BD_PASS")
+          PY
+
+      - name: Check embedded JavaScript syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          page=Path("integrations/sltd_v7_siftalpha_v1/templates/index.html").read_text(encoding="utf-8")
+          start=page.index("<script>")+len("<script>")
+          end=page.rindex("</script>")
+          Path("/tmp/sltd-index.js").write_text(page[start:end], encoding="utf-8")
+          PY
+          node --check /tmp/sltd-index.js
+
+      - name: Run 79-stock exit-stack study
+        run: python research/ssss_reboot_v1/phase10/diagnose_sltd_exit_stack_v1.py
