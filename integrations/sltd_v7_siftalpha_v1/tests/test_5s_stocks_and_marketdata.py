@@ -205,7 +205,7 @@ class WebUiContractTests(unittest.TestCase):
         )
         # Missing overlay values must break the path instead of Number(null) -> 0,
         # which previously created vertical spikes from the chart floor.
-        self.assertIn("raw===null||raw===undefined||raw===''", page)
+        self.assertIn("v==null||v===''", page)
         self.assertIn("started=false;", page)
 
         # Pressure is green, support is red. Long lines are solid width 1;
