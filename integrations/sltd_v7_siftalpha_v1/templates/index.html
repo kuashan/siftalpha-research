@@ -741,7 +741,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     const actionNode=q('summary-action');
     actionNode.textContent=s.resolved_action_zh||actionLabels[s.resolved_action]||s.resolved_action||'—';
     setActionClass(actionNode,'action-',s.resolved_action||'NONE');
-    safeText('summary-action-sub',(s.rule_ids||[]).length ? (isChan?'本根首次确认缠论买卖点':(s.rule_ids||[]).length+' 条规则命中') : (isChan?'本根无新确认买卖点':'当前无新规则命中'));
+    safeText('summary-action-sub',(s.rule_ids||[]).length ? (isChan?'当前 K 线 chan.py 买卖点':(s.rule_ids||[]).length+' 条规则命中') : (isChan?'本根无新确认买卖点':'当前无新规则命中'));
     safeText('summary-position',isChan?'独立运行':formatPct(s.position_fraction));
 
     const stateNode=q('summary-state');
@@ -750,7 +750,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     safeText('summary-age',currentStrategy==='5s_stocks'
       ? (s.age_bucket||'冻结 5s Stocks v1')
       : currentStrategy==='chan'
-        ? (s.age_bucket||'结构首次确认')
+        ? (s.age_bucket||'chan.py 当前帧')
         : ('持续 '+(s.run_age==null?'—':s.run_age)+' 根 · '+(s.age_bucket||'—')));
 
     const riskNode=q('summary-risk');
