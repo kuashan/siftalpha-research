@@ -1,0 +1,39 @@
+name: Chan C0-A Reconstruction
+
+on:
+  push:
+    branches:
+      - research/sltd-chan-structure-v1
+    paths:
+      - "research/ssss_reboot_v1/phase10/**"
+      - ".github/workflows/chan-c0a-reconstruction.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/sltd-chan-structure-v1
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile
+        run: |
+          python -m py_compile research/ssss_reboot_v1/phase10/chan_engine_c0a_v1.py
+          python -m py_compile research/ssss_reboot_v1/phase10/test_chan_engine_c0a_v1.py
+
+      - name: Run source fixtures
+        run: |
+          python research/ssss_reboot_v1/phase10/test_chan_engine_c0a_v1.py
