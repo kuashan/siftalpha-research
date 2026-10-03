@@ -57,6 +57,14 @@ jobs:
         run: |
           python research/ssss_reboot_v1/phase10/diagnose_chan_b1p_v1.py
 
+      - name: Run pinned upstream chan.py on 79 stocks
+        run: |
+          rm -rf /tmp/chanpy
+          git clone --quiet https://github.com/Vespa314/chan.py.git /tmp/chanpy
+          git -C /tmp/chanpy checkout --quiet 429d6ed3043e27c93a003ba2b10e70a05575e1f5
+          test "$(git -C /tmp/chanpy rev-parse HEAD)" = "429d6ed3043e27c93a003ba2b10e70a05575e1f5"
+          python research/ssss_reboot_v1/phase10/diagnose_upstream_chanpy_v1.py
+
       - name: Diagnose canonical Z-movement mapping
         run: |
           python research/ssss_reboot_v1/phase10/diagnose_chan_z_mapping_v1.py
