@@ -114,5 +114,18 @@ for path in sorted(DATA_ROOT.glob("batch_*_stocks/*.csv.gz")):
     tot.update({f"visible300_{k}":v for k,v in kind_visible.items()})
     tot.update(funnel)
 
+for sym in ("AAPL","NVDA","ABT","GOOGL","KO"):
+    if sym not in per:
+        continue
+    p=next(DATA_ROOT.glob(f"batch_*_stocks/{sym}.csv.gz"))
+    bars0=ch._validate_candles(load(p))
+    bars,_=ch._slice_analysis_window(bars0)
+    replay=ch.replay_first_observed_signals(bars)
+    per[sym]["replay"] = dict(Counter(x["kind"] for x in replay))
+    visible_start=max(0,len(bars)-300)
+    per[sym]["replay_visible300"] = dict(Counter(
+        x["kind"] for x in replay if int(x["anchor_index"])>=visible_start
+    ))
+
 out={"totals":dict(tot),"examples":{k:v[:40] for k,v in examples.items()},"per_symbol":per}
 print(json.dumps(out,ensure_ascii=False,indent=2))
