@@ -47,6 +47,11 @@ jobs:
         run: |
           python -m unittest discover -s tests -v
 
+      - name: Diagnose B1 B2 S1 S2 gates
+        working-directory: integrations/sltd_v7_siftalpha_v1
+        run: |
+          python tests/diagnose_chan_bsp.py
+
       - name: Inline JavaScript syntax
         run: |
           python - <<'PY'
