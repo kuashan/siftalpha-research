@@ -182,6 +182,31 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
   .strategy-detail-body .policy-flow,.strategy-detail-body .rules-groups{grid-template-columns:1fr}
 }
 
+
+/* KLineChart v10 workspace */
+.kline-shell{position:relative;width:100%;background:#080d17}
+.kline-host{width:100%;height:430px;min-height:340px}
+.strategy-overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}
+.strip-wrap{position:relative;width:100%;background:#080d17;border-top:1px solid #182338}
+.state-strip{display:block;width:100%;height:26px}
+.position-strip{display:block;width:100%;height:62px}
+.strip-title{position:absolute;left:7px;top:3px;z-index:2;font-size:8px;color:#71819a;pointer-events:none}
+.chart-scroll{margin:6px 8px 0;overflow:hidden;border-radius:9px;background:#080d17;position:relative;user-select:none}
+.chart-gesture-hint{padding:6px 12px 9px}
+@media(max-width:640px){
+  .shell{padding:6px}
+  .topbar{margin:-6px -6px 0;padding:8px 6px}
+  .chart-card{margin-left:-3px;margin-right:-3px;border-radius:10px}
+  .chart-head{grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:8px 9px}
+  .chart-price{border-right:0;padding-right:0}
+  .chart-status{grid-column:1/-1;text-align:left;border-top:1px solid #1f2a3e;padding-top:6px}
+  .chart-scroll{margin:3px 0 0;border-radius:0}
+  .kline-host{height:min(58vh,440px);min-height:350px}
+  .combined-legend{padding:7px 8px 9px;font-size:8px}
+  .chart-identity strong{font-size:13px}
+  .chart-price strong{font-size:18px}
+}
+
 </style>
 </head>
 <body>
@@ -234,17 +259,28 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       </div>
     </div>
     <div class="chart-scroll" id="chart-scroll">
-      <canvas class="chart-canvas" id="chart-canvas" aria-label="多策略叠加 K 线图"></canvas>
+      <div class="kline-shell" id="kline-shell">
+        <div class="kline-host" id="kline-chart" aria-label="KLineChart 多策略叠加 K 线图"></div>
+        <canvas class="strategy-overlay" id="strategy-overlay" aria-hidden="true"></canvas>
+      </div>
+      <div class="strip-wrap">
+        <canvas class="state-strip" id="state-strip" aria-label="SLTD 三色状态"></canvas>
+      </div>
+      <div class="strip-wrap">
+        <canvas class="position-strip" id="position-strip" aria-label="策略仓位轨迹"></canvas>
+      </div>
     </div>
     <div class="combined-legend" id="combined-legend"></div>
   </section>
 
-  <div class="chart-gesture-hint">图表：拖动平移 · 双指/滚轮缩放 · 点击锁定 K 线十字光标 · 双击恢复最新视图</div><div class="multi-hint">顶部策略按钮支持多选：点亮即叠加到同一张图；再次点击取消。下方每个已选策略都有独立折叠详情。</div>
+  <div class="chart-gesture-hint">KLineChart：拖动平移 · 双指/滚轮缩放 · 十字光标查看单根 K 线 · 默认最多载入 500 根</div><div class="multi-hint">顶部策略按钮支持多选：点亮即叠加到同一张图；再次点击取消。下方每个已选策略都有独立折叠详情。</div>
   <section class="strategy-panels" id="strategy-panels" aria-label="已选策略详情"></section>
 
-  <div class="footer-note" id="footer-note">SLTD V7 · SiftAlpha 中文版 · 当前仅做策略分析与模拟仓位，不连接真实券商下单。</div>
+  <div class="footer-note" id="footer-note">SLTD V7 · SiftAlpha 中文版 · KLineChart v10.0.3 · 当前仅做策略分析与模拟仓位，不连接真实券商下单。</div>
 </main>
 
+<script src="/vendor/klinecharts/klinecharts.min.js"></script>
+<script src="/static/kline_workspace.js"></script>
 <script>
 (() => {
   const root=document.getElementById('sltd-root');
@@ -257,8 +293,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
   const loadButton=document.getElementById('load-button');
   const refreshButton=document.getElementById('refresh-button');
   const notice=document.getElementById('notice');
-  const canvas=document.getElementById('chart-canvas');
-  const scroll=document.getElementById('chart-scroll');
+  let klineWorkspace=null;
   const legend=document.getElementById('combined-legend');
   const panels=document.getElementById('strategy-panels');
   const strategyButtons=Array.from(document.querySelectorAll('[data-strategy]'));
@@ -271,20 +306,6 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
 
   let currentSymbol=String(input.value||'AAPL').toUpperCase();
   let currentTimeframe=String(timeframeSelect.value||'__DEFAULT_TIMEFRAME__');
-  let lastHoverIndex=null;
-  let viewStart=null;
-  let viewCount=90;
-  let selectedIndex=null;
-  let selectedCrosshairY=null;
-  let viewportSeriesKey='';
-  const activePointers=new Map();
-  let panStartX=null;
-  let panStartView=null;
-  let gestureMoved=false;
-  let pinchStartDistance=null;
-  let pinchStartCount=null;
-  let pinchAnchorIndex=null;
-  let pinchAnchorFraction=.5;
 
   const actionLabels={BUY:'买入',SELL:'卖出',HOLD:'持有',WAIT:'等待',HARD_EXIT:'全部清仓',MIXED:'冲突信号不动作',NONE:'无新动作'};
   const sideLabels={B:'买',S:'卖',X:'清'};
@@ -516,7 +537,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
   }
 
   function resetViewport(){
-    viewStart=null;viewCount=90;selectedIndex=null;selectedCrosshairY=null;lastHoverIndex=null;viewportSeriesKey='';
+    if(klineWorkspace)klineWorkspace.resetView();
   }
 
   function signalSummariesForDate(date){
@@ -547,257 +568,45 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     return out;
   }
 
+  function updateChartMeta(c){
+    if(!c)return;
+    const signals=signalSummariesForDate(c.date);
+    q('chart-candle-meta').textContent=
+      c.date+' · 开 '+formatPrice(c.open)+' 高 '+formatPrice(c.high)+' 低 '+formatPrice(c.low)+' 收 '+formatPrice(c.close)+
+      ' · 量 '+formatVolume(c.volume)+(signals.length?' · 信号 '+signals.join(' / '):'');
+  }
+
   function renderChart(){
-    const allCandles=combinedCandles();
-    if(!allCandles.length)return;
-
-    const seriesKey=(allCandles[0]?.date||'')+'|'+(allCandles[allCandles.length-1]?.date||'')+'|'+allCandles.length;
-    if(viewportSeriesKey!==seriesKey){
-      viewportSeriesKey=seriesKey;
-      viewCount=Math.min(allCandles.length,90);
-      viewStart=Math.max(0,allCandles.length-viewCount);
-      selectedIndex=allCandles.length-1;
-      selectedCrosshairY=null;
-    }
-
-    const minView=Math.min(25,allCandles.length);
-    const maxView=Math.min(500,allCandles.length);
-    viewCount=Math.max(minView,Math.min(maxView,Math.round(viewCount)));
-    const maxStart=Math.max(0,allCandles.length-viewCount);
-    if(viewStart==null)viewStart=maxStart;
-    viewStart=Math.max(0,Math.min(maxStart,Math.round(viewStart)));
-
-    const candles=allCandles.slice(viewStart,viewStart+viewCount);
+    const candles=combinedCandles();
     if(!candles.length)return;
-
-    const dpr=Math.max(1,window.devicePixelRatio||1);
-    const cssW=Math.max(320,scroll.clientWidth||320);
-    const cssH=460;
-    canvas.style.width=cssW+'px';canvas.style.height=cssH+'px';
-    canvas.width=Math.floor(cssW*dpr);canvas.height=Math.floor(cssH*dpr);
-    const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
-    ctx.clearRect(0,0,cssW,cssH);
-
-    const left=24,right=72,top=16,priceBottom=276,stateTop=286,stateBottom=298,volTop=310,volBottom=350,posTop=366,posBottom=406,dateY=447;
-    const plotW=Math.max(1,cssW-left-right),step=plotW/Math.max(1,candles.length);
-    const xAt=i=>left+i*step+step/2;
-    const dateMaps={};activeIds().forEach(id=>dateMaps[id]=lineMap(payloadFor(id)));
-
-    const prices=[];
-    candles.forEach(c=>{prices.push(Number(c.low),Number(c.high));});
-    function addVal(v){if(v==null||v==='')return;const n=Number(v);if(Number.isFinite(n))prices.push(n);}
-    const structureId=selected.has('v7')?'v7':selected.has('e')?'e':null;
-    if(structureId){
-      const m=dateMaps[structureId];
-      candles.forEach(c=>{const x=m.get(String(c.date))||{};['GZB3','GZB4','ZD1','ZK1','BS','BD'].forEach(k=>addVal(x[k]));});
-    }
-    if(selected.has('support_resistance')){
-      const m=dateMaps.support_resistance;
-      candles.forEach(c=>{const x=m.get(String(c.date))||{};['sr_short_pressure','sr_short_support','sr_long_pressure','sr_long_support'].forEach(k=>addVal(x[k]));});
-    }
-    if(selected.has('chan')){
-      const ch=(payloadFor('chan')||{}).chan||{};
-      (ch.zhongshus||[]).forEach(z=>{if(String(z.end_date)>=String(candles[0].date)&&String(z.start_date)<=String(candles[candles.length-1].date)){addVal(z.ZG);addVal(z.ZD);}});
-      (ch.bis||[]).forEach(x=>{addVal(x.start_price);addVal(x.end_price);});
-      (ch.segments||[]).forEach(x=>{addVal(x.start_price);addVal(x.end_price);});
-      (ch.signals||[]).forEach(x=>addVal(x.price));
-    }
-    let minP=Math.min(...prices),maxP=Math.max(...prices);
-    if(!(maxP>minP)){maxP=minP+1;}
-    const pad=(maxP-minP)*.06;minP-=pad;maxP+=pad;
-    const yPrice=v=>priceBottom-(Number(v)-minP)/(maxP-minP)*(priceBottom-top);
-    const priceAtY=y=>maxP-(Math.max(top,Math.min(priceBottom,y))-top)/(priceBottom-top)*(maxP-minP);
-
-    ctx.strokeStyle='#1a2638';ctx.lineWidth=1;ctx.fillStyle='#8292aa';ctx.font='10px system-ui';
-    for(let k=0;k<5;k++){
-      const y=top+(priceBottom-top)*k/4;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(cssW-right,y);ctx.stroke();
-      const pv=maxP-(maxP-minP)*k/4;ctx.fillText(formatPrice(pv),cssW-right+7,y+3);
-    }
-
-    const drawSeries=(m,key,stroke,dash=[],width=1)=>{
-      ctx.save();ctx.strokeStyle=stroke;ctx.lineWidth=width;ctx.setLineDash(dash);ctx.beginPath();let started=false;
-      candles.forEach((c,i)=>{const row=m.get(String(c.date))||{},v=row[key];if(v==null||v===''){started=false;return;}const n=Number(v);if(!Number.isFinite(n)){started=false;return;}const x=xAt(i),y=yPrice(n);if(!started){ctx.moveTo(x,y);started=true;}else ctx.lineTo(x,y);});
-      ctx.stroke();ctx.restore();
-    };
-
-    if(structureId){
-      const m=dateMaps[structureId];
-      const drawLine=(key,stroke,dash=[],width=1)=>drawSeries(m,key,stroke,dash,width);
-      drawLine('GZB3','#728096',[],1);drawLine('GZB4','#9ba6b7',[],1);
-      drawLine('ZD1','#65c5d8',[4,3],1);drawLine('ZK1','#c28bd8',[4,3],1);
-      drawLine('BS','#eab464',[2,3],1);drawLine('BD','#eab464',[2,3],1);
-    }
-    if(selected.has('support_resistance')){
-      const m=dateMaps.support_resistance;
-      const drawLine=(key,stroke,dash=[],width=1)=>drawSeries(m,key,stroke,dash,width);
-      drawLine('sr_short_pressure','#52d49a',[5,4],1);drawLine('sr_short_support','#ff7b82',[5,4],1);
-      drawLine('sr_long_pressure','#52d49a',[],1);drawLine('sr_long_support','#ff7b82',[],1);
-    }
-
-    const dateIndex=new Map(candles.map((x,i)=>[String(x.date),i]));
-    const absoluteDateIndex=new Map(allCandles.map((x,i)=>[String(x.date),i]));
-    const chartX=date=>{const i=dateIndex.get(String(date));return i==null?null:xAt(i);};
-
-    if(selected.has('chan')){
-      const ch=(payloadFor('chan')||{}).chan||{};
-      (ch.zhongshus||[]).forEach(z=>{
-        const x1=chartX(z.start_date),x2=chartX(z.end_date),zg=Number(z.ZG),zd=Number(z.ZD);
-        if(x1==null||x2==null||!Number.isFinite(zg)||!Number.isFinite(zd))return;
-        ctx.save();ctx.fillStyle='rgba(234,180,100,.09)';ctx.strokeStyle='rgba(234,180,100,.55)';if(z.pending)ctx.setLineDash([5,3]);
-        const rx=Math.min(x1,x2),rw=Math.max(2,Math.abs(x2-x1)),ry=Math.min(yPrice(zg),yPrice(zd)),rh=Math.max(2,Math.abs(yPrice(zg)-yPrice(zd)));
-        ctx.fillRect(rx,ry,rw,rh);ctx.strokeRect(rx,ry,rw,rh);ctx.restore();
-      });
-      const drawSegments=(rows,color,width)=>{
-        (rows||[]).forEach(seg=>{const x1=chartX(seg.start_date),x2=chartX(seg.end_date);if(x1==null||x2==null)return;ctx.save();ctx.strokeStyle=color;ctx.lineWidth=width;if(seg.pending)ctx.setLineDash([5,3]);ctx.beginPath();ctx.moveTo(x1,yPrice(seg.start_price));ctx.lineTo(x2,yPrice(seg.end_price));ctx.stroke();ctx.restore();});
-      };
-      drawSegments(ch.bis,'rgba(120,170,255,.55)',1);drawSegments(ch.segments,'rgba(235,195,98,.88)',1.4);
-    }
-
-    let maxVol=1;candles.forEach(c=>maxVol=Math.max(maxVol,Number(c.volume)||0));
-    const sltdMap=selected.has('v7')?dateMaps.v7:null;
-    candles.forEach((c,i)=>{
-      const x=xAt(i),o=Number(c.open),cl=Number(c.close),hi=Number(c.high),lo=Number(c.low),up=cl>=o;
-      const color=up?'#52d49a':'#ff7b82';
-      ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=1;
-      ctx.beginPath();ctx.moveTo(x,yPrice(hi));ctx.lineTo(x,yPrice(lo));ctx.stroke();
-      const y1=yPrice(o),y2=yPrice(cl),bw=Math.max(2.2,Math.min(8,step*.62)),bh=Math.max(1,Math.abs(y2-y1));
-      ctx.fillRect(x-bw/2,Math.min(y1,y2),bw,bh);
-
-      if(sltdMap){
-        const stateRow=sltdMap.get(String(c.date))||{};
-        const stateColor={BLUE:'#5b8cff',GRAY:'#8d99aa',GREEN:'#52d49a',OTHER:'#344055'}[stateRow.state]||'#344055';
-        ctx.fillStyle=stateColor;
-        ctx.fillRect(x-step/2+0.5,stateTop,Math.max(1,step-1),stateBottom-stateTop);
-      }
-
-      const vh=(Number(c.volume)||0)/maxVol*(volBottom-volTop);ctx.globalAlpha=.58;ctx.fillStyle=color;ctx.fillRect(x-bw/2,volBottom-vh,bw,vh);ctx.globalAlpha=1;
-    });
-    if(sltdMap){
-      ctx.fillStyle='#71819a';ctx.font='8px system-ui';ctx.textAlign='left';
-      ctx.fillText('SLTD 三色状态',left,stateTop-2);
-    }
-
-    // All buy/sell reminders use arrows on the signal/anchor bar.
-    const arrowStacks=new Map();
-    function nextArrowSlot(date,buy){
-      const key=String(date)+'|'+(buy?'B':'S'),n=arrowStacks.get(key)||0;arrowStacks.set(key,n+1);return n;
-    }
-    function triangle(x,y,buy,color,label){
-      ctx.save();ctx.fillStyle=color;ctx.strokeStyle='rgba(6,10,18,.9)';ctx.lineWidth=1;ctx.beginPath();
-      if(buy){ctx.moveTo(x,y-6);ctx.lineTo(x-5,y+4);ctx.lineTo(x+5,y+4);}
-      else{ctx.moveTo(x,y+6);ctx.lineTo(x-5,y-4);ctx.lineTo(x+5,y-4);}
-      ctx.closePath();ctx.fill();ctx.stroke();
-      ctx.font='bold 8px system-ui';ctx.textAlign='center';ctx.fillStyle=color;ctx.fillText(label,x,y+(buy?14:-10));ctx.restore();
-    }
-    function drawStrategyMarkers(id,label,color){
-      const p=payloadFor(id);if(!p)return;
-      (p.markers||[]).forEach(m=>{
-        const date=String(m.signal_date||m.execution_date||'');const i=dateIndex.get(date);if(i==null)return;
-        const candle=candles[i],buy=m.side==='B';const slot=nextArrowSlot(date,buy);
-        const y=buy?yPrice(candle.low)+15+slot*15:yPrice(candle.high)-15-slot*15;
-        triangle(xAt(i),y,buy,color,label+(m.side==='X'?'清':(buy?'买':'卖')));
-      });
-    }
-    if(selected.has('v7'))drawStrategyMarkers('v7','SL','#71e0b0');
-    if(selected.has('e'))drawStrategyMarkers('e','E','#dba6ff');
-    if(selected.has('5s_stocks'))drawStrategyMarkers('5s_stocks','5S','#6ea1ff');
-    const chanSignalSource=selected.has('chan')
-      ? (((payloadFor('chan')||{}).chan||{}).signals||[])
-      : (selected.has('v7')?((payloadFor('v7')||{}).chan_signal_overlay||[]):[]);
-    chanSignalSource.forEach(s=>{
-      const date=String(s.anchor_date||''),i=dateIndex.get(date),p=Number(s.price);if(i==null||!Number.isFinite(p))return;
-      const buy=String(s.kind||'').startsWith('B'),slot=nextArrowSlot(date,buy);
-      const candle=candles[i],base=buy?Math.max(yPrice(candle.low)+15,yPrice(p)+10):Math.min(yPrice(candle.high)-15,yPrice(p)-10);
-      triangle(xAt(i),base+(buy?slot*15:-slot*15),buy,buy?'#52d49a':'#ff7b82','缠'+String(s.kind||''));
-    });
-
-    // Compact position panel: one line per position-bearing selected strategy.
-    ctx.strokeStyle='#27344a';ctx.lineWidth=1;
-    [0,.5,1].forEach(v=>{const y=posBottom-(posBottom-posTop)*v;ctx.strokeStyle='#1f2c41';ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(cssW-right,y);ctx.stroke();ctx.fillStyle='#7f8fa7';ctx.font='8px system-ui';ctx.fillText((v*100)+'%',cssW-right+7,y+3);});
-    const posDefs=[['v7','SLTD','#5b8cff'],['e','E','#dba6ff'],['5s_stocks','5s','#65c5d8']];
-    for(const [id,label,color] of posDefs){
-      if(!selected.has(id)||!payloadFor(id))continue;
-      const pm=lineMap(payloadFor(id));ctx.save();ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.beginPath();let started=false;let lastV=null;
-      candles.forEach((c,i)=>{const row=pm.get(String(c.date))||{},v=Number(row.position);if(!Number.isFinite(v))return;lastV=Math.max(0,Math.min(1,v));const x=xAt(i),y=posBottom-(posBottom-posTop)*lastV;if(!started){ctx.moveTo(x,y);started=true;}else ctx.lineTo(x,y);});
-      ctx.stroke();if(lastV!=null){ctx.fillStyle=color;ctx.font='bold 8px system-ui';ctx.textAlign='right';ctx.fillText(label+' '+Math.round(lastV*100)+'%',cssW-right-3,posTop+9+posDefs.findIndex(x=>x[0]===id)*10);}ctx.restore();
-    }
-
-    // Persistent crosshair on selected K line.
-    if(selectedIndex==null)selectedIndex=allCandles.length-1;
-    if(selectedIndex<viewStart||selectedIndex>=viewStart+viewCount)selectedIndex=Math.min(allCandles.length-1,viewStart+viewCount-1);
-    const rel=selectedIndex-viewStart;
-    if(rel>=0&&rel<candles.length){
-      const csel=allCandles[selectedIndex],x=xAt(rel);
-      const cy=selectedCrosshairY==null?yPrice(csel.close):Math.max(top,Math.min(priceBottom,selectedCrosshairY));
-      ctx.save();ctx.strokeStyle='rgba(210,222,240,.58)';ctx.lineWidth=1;ctx.setLineDash([4,3]);
-      ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,posBottom);ctx.stroke();
-      ctx.beginPath();ctx.moveTo(left,cy);ctx.lineTo(cssW-right,cy);ctx.stroke();ctx.setLineDash([]);
-      ctx.fillStyle='#dce5f2';ctx.font='9px system-ui';ctx.textAlign='center';ctx.fillText(String(csel.date),x,dateY);
-      const ptxt=formatPrice(priceAtY(cy)),tw=ctx.measureText(ptxt).width+8;ctx.fillStyle='#26344d';ctx.fillRect(cssW-right+2,cy-8,Math.min(right-4,tw),16);ctx.fillStyle='#f1f5fb';ctx.textAlign='left';ctx.fillText(ptxt,cssW-right+6,cy+3);
-      ctx.restore();
-    }
-
     const p=firstPayload(),s=(p&&p.snapshot)||{},meta=(p&&p.market_data)||{},contract=(p&&p.decision_contract)||{};
     q('chart-title').textContent=(s.symbol||currentSymbol)+' · '+(contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe)+' · '+activeIds().map(x=>LABELS[x]).join(' + ');
     q('latest-price').textContent=formatPrice(s.latest_close);
     const sourceState=meta.source||(meta.cached?'缓存':'网络');
     q('market-source').textContent=(meta.provider||meta.provider_id||'—')+' · '+sourceState;
-    q('chart-kicker').textContent='多策略叠加主图 · '+activeIds().length+' 个策略 · 显示 '+candles.length+'/'+allCandles.length+' 根';
+    q('chart-kicker').textContent='KLineChart · '+activeIds().length+' 个策略 · 最多 500 根';
+    updateChartMeta(candles[candles.length-1]);
 
-    const metaNode=q('chart-candle-meta');
-    function updateMetaByAbsolute(i){
-      const cc=allCandles[Math.max(0,Math.min(allCandles.length-1,i))];if(!cc)return;
-      const signals=signalSummariesForDate(cc.date);
-      metaNode.textContent=cc.date+' · 开 '+formatPrice(cc.open)+' 高 '+formatPrice(cc.high)+' 低 '+formatPrice(cc.low)+' 收 '+formatPrice(cc.close)+' · 量 '+formatVolume(cc.volume)+(signals.length?' · 信号 '+signals.join(' / '):'');
+    if(!window.SiftAlphaKLineWorkspace){
+      throw new Error('KLineChart 工作区脚本未加载');
     }
-    updateMetaByAbsolute(selectedIndex);
-
-    function localPoint(ev){const rect=canvas.getBoundingClientRect();return{x:ev.clientX-rect.left,y:ev.clientY-rect.top};}
-    function selectAt(x,y){const relIndex=Math.max(0,Math.min(candles.length-1,Math.floor((x-left)/step)));selectedIndex=viewStart+relIndex;selectedCrosshairY=Math.max(top,Math.min(priceBottom,y));updateMetaByAbsolute(selectedIndex);renderChart();}
-    function zoomAt(x,factor){
-      const fraction=Math.max(0,Math.min(1,(x-left)/plotW));
-      const anchor=viewStart+fraction*viewCount;
-      const newCount=Math.max(minView,Math.min(maxView,Math.round(viewCount*factor)));
-      viewCount=newCount;viewStart=Math.round(anchor-fraction*newCount);renderChart();
+    if(!klineWorkspace){
+      klineWorkspace=window.SiftAlphaKLineWorkspace.create({
+        hostId:'kline-chart',
+        overlayId:'strategy-overlay',
+        stateId:'state-strip',
+        positionId:'position-strip',
+        onCrosshair:(bar)=>{if(bar)updateChartMeta(bar);}
+      });
     }
-
-    canvas.onwheel=ev=>{ev.preventDefault();const pt=localPoint(ev);zoomAt(pt.x,ev.deltaY>0?1.16:.86);};
-
-    canvas.onpointerdown=ev=>{
-      canvas.setPointerCapture?.(ev.pointerId);activePointers.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});
-      gestureMoved=false;
-      if(activePointers.size===1){panStartX=ev.clientX;panStartView=viewStart;}
-      if(activePointers.size===2){
-        const pts=Array.from(activePointers.values()),dx=pts[0].x-pts[1].x,dy=pts[0].y-pts[1].y;
-        pinchStartDistance=Math.hypot(dx,dy);pinchStartCount=viewCount;
-        const rect=canvas.getBoundingClientRect(),mid=((pts[0].x+pts[1].x)/2)-rect.left;
-        pinchAnchorFraction=Math.max(0,Math.min(1,(mid-left)/plotW));pinchAnchorIndex=viewStart+pinchAnchorFraction*viewCount;
-      }
-    };
-    canvas.onpointermove=ev=>{
-      if(activePointers.has(ev.pointerId)){
-        activePointers.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});
-        if(activePointers.size===2&&pinchStartDistance){
-          const pts=Array.from(activePointers.values()),dx=pts[0].x-pts[1].x,dy=pts[0].y-pts[1].y,dist=Math.hypot(dx,dy);
-          if(Math.abs(dist-pinchStartDistance)>3){gestureMoved=true;viewCount=Math.max(minView,Math.min(maxView,Math.round(pinchStartCount*(pinchStartDistance/dist))));viewStart=Math.round(pinchAnchorIndex-pinchAnchorFraction*viewCount);renderChart();}
-          return;
-        }
-        if(activePointers.size===1&&panStartX!=null){
-          const dx=ev.clientX-panStartX;if(Math.abs(dx)>4){gestureMoved=true;viewStart=Math.round(panStartView-dx/Math.max(2,step));renderChart();}
-          return;
-        }
-      }else if(ev.pointerType==='mouse'){
-        const pt=localPoint(ev);selectAt(pt.x,pt.y);
-      }
-    };
-    canvas.onpointerup=ev=>{
-      const pt=localPoint(ev),wasSingle=activePointers.size===1;activePointers.delete(ev.pointerId);
-      if(wasSingle&&!gestureMoved)selectAt(pt.x,pt.y);
-      if(activePointers.size===0){panStartX=null;panStartView=null;pinchStartDistance=null;pinchStartCount=null;pinchAnchorIndex=null;}
-    };
-    canvas.onpointercancel=canvas.onpointerup;
-    canvas.ondblclick=ev=>{ev.preventDefault();viewCount=Math.min(allCandles.length,90);viewStart=Math.max(0,allCandles.length-viewCount);selectedIndex=allCandles.length-1;selectedCrosshairY=null;renderChart();};
-    canvas.oncontextmenu=ev=>ev.preventDefault();
+    klineWorkspace.render({
+      symbol:s.symbol||currentSymbol,
+      timeframe:contract.selected_timeframe||meta.timeframe||currentTimeframe,
+      candles,
+      payloads,
+      selected,
+      labels:LABELS,
+    });
   }
 
   function renderAll(){syncButtons();renderLegend();renderChart();renderPanels();}
@@ -827,7 +636,6 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     currentTimeframe=String(timeframeSelect.value||'__DEFAULT_TIMEFRAME__');
     payloads.clear();resetViewport();loadSelected(true);
   });
-  window.addEventListener('resize',()=>{if(firstPayload())renderChart();});
 
   syncButtons();
   loadSelected(false);
