@@ -88,7 +88,11 @@ button.badge{appearance:none}
 .legend-blue{background:#5b8cff}.legend-gray{background:#8d99aa}.legend-green{background:#52d49a}
 .legend-band{background:#68778e}.legend-buy{background:#52d49a}.legend-sell{background:#ff7b82}.legend-exit{background:#eab464}
 .legend-bi{background:#9ec0ff}.legend-seg{background:#eab464}.legend-zs{background:#8d99aa}.legend-chan-buy{background:#52d49a}.legend-chan-sell{background:#ff7b82}
-.legend-sr-short-pressure{background:#ff7b82}.legend-sr-short-support{background:#52d49a}.legend-sr-long-pressure{background:#9ec0ff}.legend-sr-long-support{background:#f3f6fb}
+.legend-line{display:inline-block;width:18px;height:0;margin:0 5px 3px 0;vertical-align:middle;border-top-style:solid}
+.legend-line.sr-pressure{border-top-color:#52d49a}
+.legend-line.sr-support{border-top-color:#ff7b82}
+.legend-line.sr-long{border-top-width:2px}
+.legend-line.sr-short{border-top-width:1px;border-top-style:dashed}
 
 .indicator-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;padding:0 12px 12px}
 .indicator{background:var(--panel2);border-radius:9px;padding:9px;min-width:0}
@@ -244,10 +248,10 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       <span data-chan-only style="display:none"><i class="legend-dot legend-zs"></i>中枢</span>
       <span data-chan-only style="display:none"><i class="legend-dot legend-chan-buy"></i>一/二/三买</span>
       <span data-chan-only style="display:none"><i class="legend-dot legend-chan-sell"></i>一/二/三卖</span>
-      <span data-sr-only style="display:none"><i class="legend-dot legend-sr-short-pressure"></i>短压 · VAR=3</span>
-      <span data-sr-only style="display:none"><i class="legend-dot legend-sr-short-support"></i>短支 · VAR=3</span>
-      <span data-sr-only style="display:none"><i class="legend-dot legend-sr-long-pressure"></i>长压 · VAR=7</span>
-      <span data-sr-only style="display:none"><i class="legend-dot legend-sr-long-support"></i>长支 · VAR=7</span>
+      <span data-sr-only style="display:none"><i class="legend-line sr-pressure sr-short"></i>短压 · 绿虚线 · VAR=3</span>
+      <span data-sr-only style="display:none"><i class="legend-line sr-support sr-short"></i>短支 · 红虚线 · VAR=3</span>
+      <span data-sr-only style="display:none"><i class="legend-line sr-pressure sr-long"></i>长压 · 绿实线 · VAR=7</span>
+      <span data-sr-only style="display:none"><i class="legend-line sr-support sr-long"></i>长支 · 红实线 · VAR=7</span>
     </div>
     <div class="indicator-grid">
       <div class="indicator" data-structure-only><small>GZB4 · 慢灰带下轨</small><b id="value-gzb4">—</b></div>
@@ -485,13 +489,24 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       ctx.fillText(formatPrice(p),plotRight+5,y+3);
     }
 
-    function drawLine(key,color,dash){
+    function drawLine(key,color,dash,width){
       ctx.save();
-      ctx.strokeStyle=color; ctx.lineWidth=1.1; ctx.setLineDash(dash||[]);
+      ctx.strokeStyle=color;
+      ctx.lineWidth=Number.isFinite(Number(width))?Number(width):1.1;
+      ctx.setLineDash(dash||[]);
       ctx.beginPath();
       let started=false;
       candles.forEach((c,i)=>{
-        const v=Number(c[key]); if(!Number.isFinite(v)) return;
+        const raw=c[key];
+        if(raw===null||raw===undefined||raw===''){
+          started=false;
+          return;
+        }
+        const v=Number(raw);
+        if(!Number.isFinite(v)){
+          started=false;
+          return;
+        }
         const x=left+i*step+step/2, y=yPrice(v);
         if(!started){ctx.moveTo(x,y);started=true;} else ctx.lineTo(x,y);
       });
@@ -523,10 +538,10 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     }
 
     if(isSR){
-      drawLine('sr_short_pressure','#ff7b82',[]);
-      drawLine('sr_short_support','#52d49a',[]);
-      drawLine('sr_long_pressure','#9ec0ff',[]);
-      drawLine('sr_long_support','#f3f6fb',[]);
+      drawLine('sr_short_pressure','#52d49a',[5,4],1);
+      drawLine('sr_short_support','#ff7b82',[5,4],1);
+      drawLine('sr_long_pressure','#52d49a',[],2);
+      drawLine('sr_long_support','#ff7b82',[],2);
     }
 
     const dateIndex=new Map(candles.map((x,i)=>[String(x.date),i]));
