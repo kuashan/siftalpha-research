@@ -1,0 +1,183 @@
+name: Standalone Chan v2
+
+on:
+  push:
+    branches:
+      - feature/chan-standalone-v2
+    paths:
+      - "integrations/shared_market_data/**"
+      - "integrations/sltd_v7_siftalpha_v1/**"
+      - ".github/workflows/chan-standalone-v2.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/chan-standalone-v2
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile
+        run: |
+          python -m compileall -q integrations/shared_market_data
+          python -m compileall -q integrations/sltd_v7_siftalpha_v1
+
+      - name: Frozen 5s engine parity
+        run: |
+          cmp \
+            integrations/5s_crypto_binance_usdm_v1/strategy/frozen_signal_engine.py \
+            integrations/sltd_v7_siftalpha_v1/five_s_signal_engine.py
+          echo "FIVE_S_SIGNAL_ENGINE_BYTE_PARITY_PASS"
+
+      - name: Full regression tests
+        working-directory: integrations/sltd_v7_siftalpha_v1
+        run: |
+          python -m unittest discover -s tests -v
+
+      - name: Inline JavaScript syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          page=Path("integrations/sltd_v7_siftalpha_v1/templates/index.html").read_text(encoding="utf-8")
+          blocks=re.findall(r"<script>(.*?)</script>", page, flags=re.S)
+          assert blocks
+          js=blocks[-1].replace("__DEFAULT_TIMEFRAME__", "1d")
+          Path("/tmp/chan-v2.js").write_text(js, encoding="utf-8")
+          print("INLINE_JS_EXTRACT_PASS", len(js))
+          PY
+          node --check /tmp/chan-v2.js
+
+      - name: Live selector smoke
+        env:
+          SLTD_RUNTIME_DATA_DIR: /tmp/chan-v2-cache
+        working-directory: integrations/sltd_v7_siftalpha_v1
+        run: |
+          python - <<'PY'
+          import app
+
+          for strategy_id in ("v7", "e", "5s_stocks", "chan"):
+              payload=app._payload_for(
+                  "AAPL",
+                  "1d",
+                  strategy_id=strategy_id,
+                  force_refresh=(strategy_id=="v7"),
+              )
+              assert payload["strategy"]["id"] == strategy_id
+              assert len(payload["chart"]) <= 300
+              assert payload["market_data"]["provider_id"] == "YAHOO_FINANCE_CHART"
+              print("SELECTOR_PASS", strategy_id, payload["strategy"]["version"])
+
+          chan=app._payload_for(
+              "ABNB",
+              "1d",
+              strategy_id="chan",
+              force_refresh=True,
+          )
+          assert chan["strategy"]["version"] == "独立缠论 v2"
+          assert chan["chan"]["counts"]["bis"] > 0
+          assert chan["chan"]["counts"]["segments"] > 0
+          assert len(chan["chan"]["levels"]) >= 1
+          assert len(chan["chan"]["signals"]) > 0, chan["chan"]["counts"]
+          kinds=sorted({x["kind"] for x in chan["chan"]["signals"]})
+          print("ABNB_CHAN_SIGNAL_PASS", kinds, len(chan["chan"]["signals"]))
+          print("ABNB_CHAN_COUNTS", chan["chan"]["counts"])
+          PY
+
+      - name: Build direct-import ZIP
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/chan_standalone_package
+          mkdir -p /tmp/chan_standalone_package
+          cp -R integrations/sltd_v7_siftalpha_v1/. /tmp/chan_standalone_package/
+          cp -R integrations/shared_market_data /tmp/chan_standalone_package/shared_market_data
+          rm -rf /tmp/chan_standalone_package/tests
+          rm -rf /tmp/chan_standalone_package/runtime_data
+          find /tmp/chan_standalone_package -type d -name __pycache__ -prune -exec rm -rf {} +
+          find /tmp/chan_standalone_package -type f -name '*.pyc' -delete
+          cd /tmp/chan_standalone_package
+          zip -r "$GITHUB_WORKSPACE/SLTD-独立缠论-v2.zip" .
+
+      - name: Verify ZIP
+        run: |
+          python - <<'PY'
+          import zipfile
+          name="SLTD-独立缠论-v2.zip"
+          with zipfile.ZipFile(name) as z:
+              names=set(z.namelist())
+              required={
+                  "app.py",
+                  "chan_strategy.py",
+                  "strategy.py",
+                  "e_strategy.py",
+                  "five_s_stocks_strategy.py",
+                  "data_provider.py",
+                  "templates/index.html",
+                  "shared_market_data/__init__.py",
+                  "requirements.txt",
+              }
+              missing=required-names
+              assert not missing, missing
+              chan=z.read("chan_strategy.py").decode("utf-8")
+              page=z.read("templates/index.html").decode("utf-8")
+              assert "CHAN_STANDALONE_RECONSTRUCTION_V2" in chan
+              assert "replay_first_observed_signals" in chan
+              assert "build_levels" in chan
+              assert 'data-strategy="chan"' in page
+              assert "chan.endpoints" in page
+          print("CHAN_V2_ZIP_VERIFY_PASS")
+          PY
+
+      - name: Packaged web smoke
+        run: |
+          set -euo pipefail
+          rm -f /tmp/chan-v2.log /tmp/chan-v2.pid
+          (
+            cd /tmp/chan_standalone_package
+            python app.py > /tmp/chan-v2.log 2>&1 &
+            echo $! > /tmp/chan-v2.pid
+          )
+          for i in $(seq 1 60); do
+            if grep -q '^SIFTALPHA_WEB_URL=' /tmp/chan-v2.log; then
+              break
+            fi
+            sleep 0.25
+          done
+          cat /tmp/chan-v2.log
+          url="$(sed -n 's/^SIFTALPHA_WEB_URL=//p' /tmp/chan-v2.log | tail -n 1)"
+          test -n "$url"
+          python - "$url" <<'PY'
+          import json, sys, urllib.request
+          base=sys.argv[1].rstrip("/")
+          with urllib.request.urlopen(base+"/api/health", timeout=5) as r:
+              health=json.load(r)
+          assert health["ok"] is True
+          assert "chan" in health["available_strategies"]
+          with urllib.request.urlopen(base+"/api/analyze?symbol=ABNB&timeframe=1d&strategy=chan", timeout=30) as r:
+              payload=json.load(r)
+          assert payload["strategy"]["version"]=="独立缠论 v2"
+          assert len(payload["chan"]["signals"]) > 0
+          print("PACKAGED_CHAN_V2_PASS", base, len(payload["chan"]["signals"]))
+          PY
+          kill "$(cat /tmp/chan-v2.pid)" || true
+
+      - name: Upload direct-import artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: standalone-chan-v2
+          path: SLTD-独立缠论-v2.zip
+          if-no-files-found: error
+          retention-days: 30
