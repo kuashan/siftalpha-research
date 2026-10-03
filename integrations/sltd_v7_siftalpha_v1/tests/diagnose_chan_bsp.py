@@ -174,9 +174,15 @@ def exact_b1s1_funnel(bars: list[cs.RawBar], info: dict) -> Counter:
         if not weaker:
             continue
         c["06_weaker_force"] += 1
+        c["06_weaker_down"] += int(down)
+        c["06_weaker_up"] += int(not down)
 
         expected = "down" if down else "up"
-        if zi >= len(links) or links[zi] != expected:
+        actual = links[zi] if zi < len(links) else None
+        c[f"06_link_actual_{actual or 'none'}"] += 1
+        c[f"06_link_expected_{expected}"] += 1
+        if actual != expected:
+            c["07_link_mismatch"] += 1
             continue
         c["07_link_match"] += 1
         c["08_final_b1s1"] += 1
