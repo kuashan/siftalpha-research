@@ -1,4 +1,4 @@
-name: Standalone Chan v2
+name: Standalone Chan v2.2
 
 on:
   push:
@@ -92,7 +92,7 @@ jobs:
               strategy_id="chan",
               force_refresh=True,
           )
-          assert chan["strategy"]["version"] == "独立缠论 v2.1"
+          assert chan["strategy"]["version"] == "独立缠论 v2.2"
           assert chan["chan"]["counts"]["bis"] > 0
           assert chan["chan"]["counts"]["segments"] > 0
           assert len(chan["chan"]["levels"]) >= 1
@@ -132,13 +132,13 @@ jobs:
           find /tmp/chan_standalone_package -type d -name __pycache__ -prune -exec rm -rf {} +
           find /tmp/chan_standalone_package -type f -name '*.pyc' -delete
           cd /tmp/chan_standalone_package
-          zip -r "$GITHUB_WORKSPACE/SLTD-独立缠论-v2.1.zip" .
+          zip -r "$GITHUB_WORKSPACE/SLTD-独立缠论-v2.2.zip" .
 
       - name: Verify ZIP
         run: |
           python - <<'PY'
           import zipfile
-          name="SLTD-独立缠论-v2.1.zip"
+          name="SLTD-独立缠论-v2.2.zip"
           with zipfile.ZipFile(name) as z:
               names=set(z.namelist())
               required={
@@ -156,7 +156,7 @@ jobs:
               assert not missing, missing
               chan=z.read("chan_strategy.py").decode("utf-8")
               page=z.read("templates/index.html").decode("utf-8")
-              assert "CHAN_STANDALONE_BSP_REPAIR_V2_1" in chan
+              assert "CHAN_STANDALONE_BSP_CANONICAL_V2_2" in chan
               assert "replay_first_observed_signals" in chan
               assert "build_levels" in chan
               assert 'data-strategy="chan"' in page
@@ -191,7 +191,7 @@ jobs:
           assert "chan" in health["available_strategies"]
           with urllib.request.urlopen(base+"/api/analyze?symbol=ABNB&timeframe=1d&strategy=chan", timeout=30) as r:
               payload=json.load(r)
-          assert payload["strategy"]["version"]=="独立缠论 v2.1"
+          assert payload["strategy"]["version"]=="独立缠论 v2.2"
           assert len(payload["chan"]["signals"]) > 0
           print("PACKAGED_CHAN_V2_PASS", base, len(payload["chan"]["signals"]))
           PY
@@ -200,7 +200,7 @@ jobs:
       - name: Upload direct-import artifact
         uses: actions/upload-artifact@v4
         with:
-          name: standalone-chan-v2
-          path: SLTD-独立缠论-v2.1.zip
+          name: standalone-chan-v2-2
+          path: SLTD-独立缠论-v2.2.zip
           if-no-files-found: error
           retention-days: 30
