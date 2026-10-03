@@ -93,7 +93,7 @@ Current v2.2 implementation decisions are additionally labeled:
 | B2/S2 with consolidation divergence | The return may make a new extreme and still form B2/S2 if a valid consolidation divergence exists. | Lessons 53, 101 | LATER_SOURCE_CLARIFICATION | KEEP concept, but current implementation is too loose |
 | Current B2 consolidation-divergence proxy | v2.2 labels a weaker MACD force comparison against `prior_same` as consolidation divergence without requiring the full relevant consolidation/center geometry. | Current code vs lessons 24/53/101 | NEEDS_CORRECTION | REVISE_OVERMODIFIED |
 | B3/S3 | A completed lower-level trend type leaves an already formed center; the first completed lower-level trend type returns; its low/high does not re-enter `ZG/ZD`. It must be the first return. | Lesson 20 | CANONICAL_SOURCE_CONFIRMED | Keep only when lower-level unit semantics are valid |
-| B3/S3 "absorbed last unit is departure" form | Reusing a unit already absorbed as part of the center as the departure is not supported by the canonical definition; an overlapping Z movement belongs to center extension. | Lesson 20 | NEEDS_CORRECTION | REJECT_UNSUPPORTED unless a separate source proof is produced |
+| B3/S3 "absorbed last unit is departure" form | The source requires an already formed center, a lower-level departure, then the first lower-level return. Whether a center-forming/extension unit whose tail exits the center can simultaneously supply the departure leg depends on the exact Z-movement decomposition and is not resolved by the current generic StructUnit abstraction. | Lessons 18, 20 | ENGINEERING_CHOICE_EXPLICIT / NEEDS_SOURCE_MAPPING | DO_NOT_CHANGE_YET; first freeze canonical Z-movement mapping |
 | Anchor vs confirmation | Structural anchor and first-observed confirmation must be separate. A trading event cannot be backdated to the anchor. | Original theory's real-time uniqueness principle + causal engineering contract | ENGINEERING_CHOICE_EXPLICIT, source-consistent | KEEP |
 | Prefix replay ledger | Recomputing each prefix is a valid anti-lookahead method, but a structure marked confirmed should not later disappear/reassign if the underlying canonical confirmation was correct. | Lessons 65, 77 real-time uniqueness + engineering contract | ENGINEERING_CHOICE_EXPLICIT | KEEP mechanism; add invalidation/reassignment regressions |
 | Fixed 1600-bar window | Truncating history at an arbitrary window can change path-dependent inclusion/segment/level state near the left boundary. | Engineering | ENGINEERING_CHOICE_EXPLICIT | Must add warm-up/stability contract; not canonical |
@@ -134,9 +134,9 @@ That conflicts with lesson 20 central theorem 1: overlap with `[ZD,ZG]` is the c
 
 Therefore:
 
-`V2_2_ZHONGSHU_LOOKAHEAD_ABSORPTION = NEEDS_CORRECTION`
+`V2_2_ZHONGSHU_Z_MOVEMENT_MAPPING = NEEDS_CORRECTION`
 
-The center must be determined by the lower-level movement intervals themselves; a later non-return cannot retroactively remove an overlapping movement from the center.
+Important refinement: lesson 20's extension theorem is stated for Z-movements (the lower-level trend types in the same direction as center formation), while the current generic implementation scans every alternating StructUnit. Therefore the safe correction is **not** to mechanically absorb every unit that touches [ZD,ZG]. The implementation must first encode which units are the canonical Z-movements, then apply the overlap theorem to those units. Until that mapping is explicit, the current look-ahead heuristic is not canonical, but it must not be replaced by an equally unsourced all-unit rule.
 
 ## 6. Critical segment correction
 
@@ -167,21 +167,21 @@ Therefore:
 
 ## 8. B3/S3 audit
 
-Lesson 20 is strict:
+Lessons 18/20 are strict about the semantic objects:
 
-- center already exists;
-- one completed lower-level trend type leaves it;
+- a center must already be formed;
+- a completed lower-level trend type leaves it;
 - the first completed lower-level trend type returns;
 - the return remains outside the center boundary.
 
 The current explicit "departure unit + next return unit" form can approximate this only when the unit at that level truly represents a completed lower-level trend type.
 
-The current alternative form, where the last unit already absorbed into the center is also treated as the departure, lacks canonical source support and conflicts with center-extension semantics when that unit overlaps the center.
+For the alternative form where the last center-related unit's tail already exits and the following opposite unit is treated as the first return, the source text found so far does not uniquely settle the machine-level attribution because the current StructUnit abstraction does not encode the canonical Z-movement subsequence. Removing it now would itself risk over-modification.
 
 Therefore:
 
 - explicit departure + first return: `KEEP_CONCEPT_REQUIRES_VALID_UNIT_LEVEL`
-- absorbed-last-unit departure form: `REJECT_UNSUPPORTED`
+- absorbed-last-unit form: `DO_NOT_CHANGE_YET__NEEDS_Z_MOVEMENT_MAPPING`
 
 ## 9. L0 / recursive level audit
 
@@ -262,16 +262,16 @@ They are useful to reveal ambiguity and edge cases, but do not override the orig
 
 1. B1/S1 accepting `not new_extreme` as standard trend divergence.
 2. B2/S2 "consolidation divergence" being reduced to generic weaker MACD force without sufficient structural context.
-3. Zhongshu look-ahead absorption/departure rule that violates extension-by-overlap.
-4. B3/S3 absorbed-last-unit departure form.
 
 ### NEEDS_CORRECTION / CANNOT YET CERTIFY
 
-1. segment first-three-Bi overlap is not explicitly enforced for every emitted segment;
-2. feature-sequence second-case/recovery behavior requires adversarial fixtures;
-3. recursive `build_trend_types/build_levels` remains an engineering partition, not proven canonical;
-4. L0 proxy signals must not be represented as canonical;
-5. fixed left-window boundary and replay horizon require structural stability contracts.
+1. Zhongshu implementation lacks an explicit canonical Z-movement mapping; current look-ahead heuristic is not certifiable yet;
+2. B3/S3 form attribution depends on that unresolved Z-movement mapping and must not be changed prematurely;
+3. segment first-three-Bi overlap is not explicitly enforced for every emitted segment;
+4. feature-sequence second-case/recovery behavior requires adversarial fixtures;
+5. recursive `build_trend_types/build_levels` remains an engineering partition, not proven canonical;
+6. L0 proxy signals must not be represented as canonical;
+7. fixed left-window boundary and replay horizon require structural stability contracts.
 
 ## 13. Mandatory implementation order after this audit
 
@@ -288,12 +288,15 @@ Correct only source-confirmed mismatches in this order:
 - standard trend B1/S1 requires the c movement to make the required new extreme and then show weaker force;
 - non-new-extreme case must not emit standard trend B1/S1 merely for that reason.
 
-### C3 — Zhongshu extension correction
-- implement lesson-20 extension by overlap without look-ahead retroactive reclassification.
+### C3 — Zhongshu Z-movement mapping
+- first encode the center-formation direction and canonical Z-movement subsequence;
+- only then apply lesson-20 extension/new-center rules;
+- do not replace the current heuristic with an all-unit overlap heuristic.
 
-### C4 — B3/S3 correction
-- remove unsupported absorbed-last-unit departure form;
-- require explicit completed lower-level departure and first completed lower-level return.
+### C4 — B3/S3 after C3
+- re-audit both engineering forms against the explicit Z-movement mapping;
+- change only the form that becomes demonstrably inconsistent;
+- require completed lower-level departure/return semantics.
 
 ### C5 — B2/S2 structural consolidation-divergence correction
 - preserve independence from B1/S1;
@@ -327,11 +330,11 @@ The B2/S2 tests should be strengthened so that a generic weak return is insuffic
 
 ## 15. Closure state
 
-T1 canonical matrix: **COMPLETE**  
-T2 audit against v2.2: **COMPLETE**  
+T1 canonical matrix: **COMPLETE WITH EXPLICIT UNRESOLVED ENGINEERING MAPPINGS**  
+T2 audit against v2.2: **COMPLETE FOR ADMISSION/REJECTION DECISIONS; CENTER/B3 HELD FROM CODE CHANGE PENDING Z-MAPPING**  
 Code correction: **NOT STARTED IN THIS AUDIT DOCUMENT**  
 Canonical engine closure: **NOT COMPLETE**
 
 Blocking corrections were identified from source theory; therefore the next phase may modify code, but only the items listed above and only with regression fixtures tied to the cited source rules.
 
-`CHAN_CANONICAL_THEORY_AUDIT_v1 = T1_T2_CLOSED_WITH_CORRECTIONS_REQUIRED`
+`CHAN_CANONICAL_THEORY_AUDIT_v1 = T1_T2_CLOSED_WITH_B1_CORRECTION_AND_CENTER_B3_MAPPING_BLOCKER`
