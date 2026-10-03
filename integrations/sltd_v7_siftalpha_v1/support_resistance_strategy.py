@@ -199,9 +199,11 @@ def _line_from_markers(
 def _period_overlay(highs: list[float], lows: list[float], n: int) -> dict:
     size = len(highs)
 
+    high_window = _rolling_extreme(highs, 2 * n + 1, high=True)
+    low_window = _rolling_extreme(lows, 2 * n + 1, high=False)
+
     var2 = [
-        i >= n
-        and highs[i - n] == _rolling_extreme(highs, 2 * n + 1, high=True)[i]
+        i >= n and highs[i - n] == high_window[i]
         for i in range(size)
     ]
     var3 = _filter(var2, n)
@@ -209,8 +211,7 @@ def _period_overlay(highs: list[float], lows: list[float], n: int) -> dict:
     var5 = _filter(var4, n)
 
     var6 = [
-        i >= n
-        and lows[i - n] == _rolling_extreme(lows, 2 * n + 1, high=False)[i]
+        i >= n and lows[i - n] == low_window[i]
         for i in range(size)
     ]
     var7 = _filter(var6, n)
