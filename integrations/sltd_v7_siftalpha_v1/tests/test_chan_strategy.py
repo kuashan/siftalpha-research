@@ -125,7 +125,7 @@ class ChanUpstreamAdapterTest(unittest.TestCase):
         self.assertIn("ch.zhongshus || []", workspace)
         self.assertIn("ch.bis || []", workspace)
         self.assertIn("ch.segments || []", workspace)
-        self.assertIn("ch.signals || []", workspace)
+        self.assertIn("chanSignals = get('chan')?.chan?.signals || []", workspace)
         self.assertIn("'缠' + String(s.kind || '')", workspace)
 
     def test_sltd_restores_state_band_and_embeds_chan_signals(self) -> None:
