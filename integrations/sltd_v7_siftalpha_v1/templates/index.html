@@ -406,6 +406,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       if(selected.has('v7')){
         items.push('<span class="legend-tag"><i class="legend-dot legend-buy"></i>SLTD 买</span>');
         items.push('<span class="legend-tag"><i class="legend-dot legend-sell"></i>SLTD 卖</span>');
+        items.push('<span class="legend-tag"><i class="legend-dot legend-chan-sell"></i>SLTD 内置缠论 BSP</span>');
       }
       if(selected.has('e'))items.push('<span class="legend-tag"><i class="legend-dot legend-exit"></i>E 买卖</span>');
     }
@@ -529,6 +530,12 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
         const side=m.side==='B'?'买':(m.side==='S'?'卖':'清');
         out.push(LABELS[id]+' '+side);
       }
+      if(id==='v7'&&!selected.has('chan')){
+        for(const s of (p.chan_signal_overlay||[])){
+          if(String(s.anchor_date||'')!==target)continue;
+          out.push('缠论 '+String(s.kind||''));
+        }
+      }
       if(id==='chan'){
         const ch=(p.chan||{});
         for(const s of (ch.signals||[])){
@@ -554,7 +561,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     }
 
     const minView=Math.min(25,allCandles.length);
-    const maxView=Math.min(300,allCandles.length);
+    const maxView=Math.min(500,allCandles.length);
     viewCount=Math.max(minView,Math.min(maxView,Math.round(viewCount)));
     const maxStart=Math.max(0,allCandles.length-viewCount);
     if(viewStart==null)viewStart=maxStart;
@@ -571,7 +578,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
     ctx.clearRect(0,0,cssW,cssH);
 
-    const left=24,right=72,top=16,priceBottom=292,volTop=306,volBottom=356,posTop=376,posBottom=416,dateY=447;
+    const left=24,right=72,top=16,priceBottom=276,stateTop=286,stateBottom=298,volTop=310,volBottom=350,posTop=366,posBottom=406,dateY=447;
     const plotW=Math.max(1,cssW-left-right),step=plotW/Math.max(1,candles.length);
     const xAt=i=>left+i*step+step/2;
     const dateMaps={};activeIds().forEach(id=>dateMaps[id]=lineMap(payloadFor(id)));
@@ -647,6 +654,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     }
 
     let maxVol=1;candles.forEach(c=>maxVol=Math.max(maxVol,Number(c.volume)||0));
+    const sltdMap=selected.has('v7')?dateMaps.v7:null;
     candles.forEach((c,i)=>{
       const x=xAt(i),o=Number(c.open),cl=Number(c.close),hi=Number(c.high),lo=Number(c.low),up=cl>=o;
       const color=up?'#52d49a':'#ff7b82';
@@ -654,8 +662,20 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       ctx.beginPath();ctx.moveTo(x,yPrice(hi));ctx.lineTo(x,yPrice(lo));ctx.stroke();
       const y1=yPrice(o),y2=yPrice(cl),bw=Math.max(2.2,Math.min(8,step*.62)),bh=Math.max(1,Math.abs(y2-y1));
       ctx.fillRect(x-bw/2,Math.min(y1,y2),bw,bh);
-      const vh=(Number(c.volume)||0)/maxVol*(volBottom-volTop);ctx.globalAlpha=.58;ctx.fillRect(x-bw/2,volBottom-vh,bw,vh);ctx.globalAlpha=1;
+
+      if(sltdMap){
+        const stateRow=sltdMap.get(String(c.date))||{};
+        const stateColor={BLUE:'#5b8cff',GRAY:'#8d99aa',GREEN:'#52d49a',OTHER:'#344055'}[stateRow.state]||'#344055';
+        ctx.fillStyle=stateColor;
+        ctx.fillRect(x-step/2+0.5,stateTop,Math.max(1,step-1),stateBottom-stateTop);
+      }
+
+      const vh=(Number(c.volume)||0)/maxVol*(volBottom-volTop);ctx.globalAlpha=.58;ctx.fillStyle=color;ctx.fillRect(x-bw/2,volBottom-vh,bw,vh);ctx.globalAlpha=1;
     });
+    if(sltdMap){
+      ctx.fillStyle='#71819a';ctx.font='8px system-ui';ctx.textAlign='left';
+      ctx.fillText('SLTD 三色状态',left,stateTop-2);
+    }
 
     // All buy/sell reminders use arrows on the signal/anchor bar.
     const arrowStacks=new Map();
@@ -681,15 +701,15 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     if(selected.has('v7'))drawStrategyMarkers('v7','SL','#71e0b0');
     if(selected.has('e'))drawStrategyMarkers('e','E','#dba6ff');
     if(selected.has('5s_stocks'))drawStrategyMarkers('5s_stocks','5S','#6ea1ff');
-    if(selected.has('chan')){
-      const ch=(payloadFor('chan')||{}).chan||{};
-      (ch.signals||[]).forEach(s=>{
-        const date=String(s.anchor_date||''),i=dateIndex.get(date),p=Number(s.price);if(i==null||!Number.isFinite(p))return;
-        const buy=String(s.kind||'').startsWith('B'),slot=nextArrowSlot(date,buy);
-        const candle=candles[i],base=buy?Math.max(yPrice(candle.low)+15,yPrice(p)+10):Math.min(yPrice(candle.high)-15,yPrice(p)-10);
-        triangle(xAt(i),base+(buy?slot*15:-slot*15),buy,buy?'#52d49a':'#ff7b82','缠'+String(s.kind||''));
-      });
-    }
+    const chanSignalSource=selected.has('chan')
+      ? (((payloadFor('chan')||{}).chan||{}).signals||[])
+      : (selected.has('v7')?((payloadFor('v7')||{}).chan_signal_overlay||[]):[]);
+    chanSignalSource.forEach(s=>{
+      const date=String(s.anchor_date||''),i=dateIndex.get(date),p=Number(s.price);if(i==null||!Number.isFinite(p))return;
+      const buy=String(s.kind||'').startsWith('B'),slot=nextArrowSlot(date,buy);
+      const candle=candles[i],base=buy?Math.max(yPrice(candle.low)+15,yPrice(p)+10):Math.min(yPrice(candle.high)-15,yPrice(p)-10);
+      triangle(xAt(i),base+(buy?slot*15:-slot*15),buy,buy?'#52d49a':'#ff7b82','缠'+String(s.kind||''));
+    });
 
     // Compact position panel: one line per position-bearing selected strategy.
     ctx.strokeStyle='#27344a';ctx.lineWidth=1;
