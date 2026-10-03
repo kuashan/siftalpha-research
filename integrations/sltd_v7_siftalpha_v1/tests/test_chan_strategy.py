@@ -115,13 +115,16 @@ class ChanUpstreamAdapterTest(unittest.TestCase):
             app.AVAILABLE_STRATEGIES["chan"],
         )
 
-    def test_page_has_independent_chan_visual_layers(self) -> None:
+    def test_page_has_multi_strategy_chan_visual_layers(self) -> None:
         page = PAGE.read_text(encoding="utf-8")
         self.assertIn('data-strategy="chan"', page)
-        self.assertIn("chan.zhongshus", page)
-        self.assertIn("chan.segments", page)
-        self.assertIn("chan.signals", page)
-        self.assertIn("chan.endpoints", page)
+        self.assertIn("selected=new Set(['v7'])", page)
+        self.assertIn("payloads=new Map()", page)
+        self.assertIn("strategy-panels", page)
+        self.assertIn("(ch.zhongshus||[])", page)
+        self.assertIn("(ch.segments||[])", page)
+        self.assertIn("(ch.signals||[])", page)
+        self.assertIn("缠'+String(s.kind||'')", page)
 
     def test_shunshi_long_lines_remain_width_one(self) -> None:
         page = PAGE.read_text(encoding="utf-8")
