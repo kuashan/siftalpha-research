@@ -84,7 +84,7 @@ class ChanStandaloneStrategyTest(unittest.TestCase):
         p = self.payload
         self.assertEqual("chan", p["strategy"]["id"])
         self.assertEqual("缠论", p["strategy"]["selector_label"])
-        self.assertEqual("独立缠论 v2.1", p["strategy"]["version"])
+        self.assertEqual("独立缠论 v2.2", p["strategy"]["version"])
         self.assertEqual(6, p["strategy"]["active_rule_count"])
         self.assertEqual(
             "CHAN_SIGNAL_ONLY_V2",
@@ -431,6 +431,103 @@ class ChanStandaloneStrategyTest(unittest.TestCase):
             {"dif": [-2.0] * 140, "dea": [0.0] * 140, "hist": [-2.0] * 140},
         )
         self.assertTrue(any(x["kind"] == "B1" for x in sig), sig)
+
+    def test_s1_can_diverge_without_new_high(self) -> None:
+        # Original lesson 38: C does not have to make a new high.  If the
+        # trend's final up movement leaves the second center but cannot even
+        # exceed the earlier trend extreme, its force is already weaker.
+        units = [
+            U("up", 5, 20, 0),
+            U("down", 20, 12, 1),
+            U("up", 12, 22, 2),
+            U("down", 22, 14, 3),
+            U("up", 14, 45, 4),
+            U("down", 45, 34, 5),
+            U("up", 34, 44, 6),
+            U("down", 44, 36, 7),
+            U("up", 36, 43, 8),   # leaves ZG=40, but no new trend high
+        ]
+        z0 = chan_strategy.Zhongshu(
+            level=0, unit_kind="TEST", start_sub=1, end_sub=3,
+            zg=18, zd=14, gg=22, dd=12,
+            start_index=10, end_index=39, confirm_index=39,
+            count=3, pending=False, upgraded=False,
+        )
+        z1 = chan_strategy.Zhongshu(
+            level=0, unit_kind="TEST", start_sub=5, end_sub=7,
+            zg=40, zd=36, gg=44, dd=34,
+            start_index=50, end_index=79, confirm_index=79,
+            count=3, pending=False, upgraded=False,
+        )
+        level = {
+            "level": 0,
+            "label": "L0 测试",
+            "units": units,
+            "zss": [z0, z1],
+            "links": [None, "up"],
+            "parent_turns": [],
+        }
+        sig = chan_strategy.compute_level_signals(
+            self._signal_fixture_bars(),
+            level,
+            {
+                "dif": [2.0] * 140,
+                "dea": [0.0] * 140,
+                "hist": [2.0] * 140,
+            },
+        )
+        self.assertTrue(any(x["kind"] == "S1" for x in sig), sig)
+
+    def test_b2_accepts_consolidation_divergence_new_low(self) -> None:
+        units = [
+            U("up", 20, 30, 0),
+            U("down", 30, 18, 1),
+            U("down", 18, 10, 2),  # parent structural low
+            U("up", 10, 22, 3),
+            U("down", 22, 9, 4),   # new low, but much weaker down force
+            U("up", 9, 25, 5),
+        ]
+        turn = chan_strategy.StructUnit(
+            direction="down",
+            from_index=units[0].from_index,
+            from_price=30,
+            to_index=units[2].to_index,
+            to_price=10,
+            high=30,
+            low=10,
+            start_index=units[0].start_index,
+            end_index=units[2].end_index,
+            confirm_index=units[2].confirm_index,
+            pending=False,
+            count=3,
+            kind="SEGMENT",
+            source_start=0,
+            source_end=2,
+        )
+        hist = [0.0] * 140
+        dif = [0.0] * 140
+        for i in range(units[2].start_index, units[2].end_index + 1):
+            hist[i] = -2.0
+            dif[i] = -2.0
+        for i in range(units[4].start_index, units[4].end_index + 1):
+            hist[i] = -0.25
+            dif[i] = -0.5
+        level = {
+            "level": 0,
+            "label": "L0 测试",
+            "units": units,
+            "zss": [],
+            "links": [],
+            "parent_turns": [turn],
+        }
+        sig = chan_strategy.compute_level_signals(
+            self._signal_fixture_bars(),
+            level,
+            {"dif": dif, "dea": [0.0] * 140, "hist": hist},
+        )
+        b2 = [x for x in sig if x["kind"] == "B2"]
+        self.assertTrue(b2, sig)
+        self.assertIn("盘整背驰", b2[0]["note"])
 
     def test_b2_does_not_require_a_b1(self) -> None:
         units = [
