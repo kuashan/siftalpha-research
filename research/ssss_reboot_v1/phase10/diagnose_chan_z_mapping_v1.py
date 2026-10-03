@@ -147,6 +147,42 @@ for path in sorted(DATA_ROOT.glob("batch_*_stocks/*.csv.gz")):
                         }
                     )
 
+            z_indices = list(
+                range(start, min(end, len(completed) - 1) + 1, 2)
+            )
+            source_gg = max(completed[j].high for j in z_indices)
+            source_dd = min(completed[j].low for j in z_indices)
+            if abs(float(zs.gg) - source_gg) > 1e-9:
+                c["zs_gg_formula_mismatch"] += 1
+                tot["zs_gg_formula_mismatch"] += 1
+                if len(examples["zs_gg_formula_mismatch"]) < 20:
+                    examples["zs_gg_formula_mismatch"].append(
+                        {
+                            "symbol": sym,
+                            "level": level,
+                            "zs": zi,
+                            "stored": zs.gg,
+                            "source": source_gg,
+                            "start": start,
+                            "end": end,
+                        }
+                    )
+            if abs(float(zs.dd) - source_dd) > 1e-9:
+                c["zs_dd_formula_mismatch"] += 1
+                tot["zs_dd_formula_mismatch"] += 1
+                if len(examples["zs_dd_formula_mismatch"]) < 20:
+                    examples["zs_dd_formula_mismatch"].append(
+                        {
+                            "symbol": sym,
+                            "level": level,
+                            "zs": zi,
+                            "stored": zs.dd,
+                            "source": source_dd,
+                            "start": start,
+                            "end": end,
+                        }
+                    )
+
             # Every same-parity Z movement absorbed by the center must still
             # overlap [ZD,ZG].  Strict outside means the source extension
             # theorem has already stopped.
@@ -290,6 +326,8 @@ print(
             for k in (
                 "zs_zg_formula_mismatch",
                 "zs_zd_formula_mismatch",
+                "zs_gg_formula_mismatch",
+                "zs_dd_formula_mismatch",
                 "zs_absorbs_outside_z",
                 "zs_completed_end_wrong_parity",
                 "zs_ends_before_overlapping_next_z",
