@@ -88,6 +88,7 @@ button.badge{appearance:none}
 .legend-blue{background:#5b8cff}.legend-gray{background:#8d99aa}.legend-green{background:#52d49a}
 .legend-band{background:#68778e}.legend-buy{background:#52d49a}.legend-sell{background:#ff7b82}.legend-exit{background:#eab464}
 .legend-bi{background:#9ec0ff}.legend-seg{background:#eab464}.legend-zs{background:#8d99aa}.legend-chan-buy{background:#52d49a}.legend-chan-sell{background:#ff7b82}
+.legend-sr-short-pressure{background:#ff7b82}.legend-sr-short-support{background:#52d49a}.legend-sr-long-pressure{background:#9ec0ff}.legend-sr-long-support{background:#f3f6fb}
 
 .indicator-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;padding:0 12px 12px}
 .indicator{background:var(--panel2);border-radius:9px;padding:9px;min-width:0}
@@ -152,6 +153,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
         <button class="badge strategy-chip" type="button" data-strategy="e" aria-pressed="false">E</button>
         <button class="badge strategy-chip" type="button" data-strategy="5s_stocks" aria-pressed="false">5s Stocks</button>
         <button class="badge strategy-chip" type="button" data-strategy="chan" aria-pressed="false">缠论</button>
+        <button class="badge strategy-chip" type="button" data-strategy="support_resistance" aria-pressed="false">长短支压</button>
         <span class="badge" id="timeframe-badge">__DEFAULT_TIMEFRAME__</span>
         <span class="badge c2" id="c2-badge">C2 强制清仓</span>
         <span class="badge local">本地网页</span>
@@ -234,14 +236,18 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       <span data-structure-only><i class="legend-dot legend-blue"></i>蓝色</span>
       <span data-structure-only><i class="legend-dot legend-gray"></i>灰色</span>
       <span data-structure-only><i class="legend-dot legend-green"></i>绿色</span>
-      <span><i class="legend-dot legend-buy"></i>买入标记</span>
-      <span><i class="legend-dot legend-sell"></i>普通卖出标记</span>
-      <span><i class="legend-dot legend-exit"></i>全部清仓标记</span>
+      <span data-signal-legend><i class="legend-dot legend-buy"></i>买入标记</span>
+      <span data-signal-legend><i class="legend-dot legend-sell"></i>普通卖出标记</span>
+      <span data-signal-legend><i class="legend-dot legend-exit"></i>全部清仓标记</span>
       <span data-chan-only style="display:none"><i class="legend-dot legend-bi"></i>笔</span>
       <span data-chan-only style="display:none"><i class="legend-dot legend-seg"></i>线段</span>
       <span data-chan-only style="display:none"><i class="legend-dot legend-zs"></i>中枢</span>
       <span data-chan-only style="display:none"><i class="legend-dot legend-chan-buy"></i>一/二/三买</span>
       <span data-chan-only style="display:none"><i class="legend-dot legend-chan-sell"></i>一/二/三卖</span>
+      <span data-sr-only style="display:none"><i class="legend-dot legend-sr-short-pressure"></i>短压 · VAR=3</span>
+      <span data-sr-only style="display:none"><i class="legend-dot legend-sr-short-support"></i>短支 · VAR=3</span>
+      <span data-sr-only style="display:none"><i class="legend-dot legend-sr-long-pressure"></i>长压 · VAR=7</span>
+      <span data-sr-only style="display:none"><i class="legend-dot legend-sr-long-support"></i>长支 · VAR=7</span>
     </div>
     <div class="indicator-grid">
       <div class="indicator" data-structure-only><small>GZB4 · 慢灰带下轨</small><b id="value-gzb4">—</b></div>
@@ -429,7 +435,9 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     const candles = Array.isArray(payload.chart) ? payload.chart : [];
     const markers = Array.isArray(payload.markers) ? payload.markers : [];
     const chan = payload.chan || {};
-    const isChan = String((payload.strategy||{}).id||"") === "chan";
+    const strategyId = String((payload.strategy||{}).id||"");
+    const isChan = strategyId === "chan";
+    const isSR = strategyId === "support_resistance";
     if(!candles.length) return;
 
     const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
@@ -446,17 +454,17 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
 
     const plotRight = logicalWidth-right;
     const priceTop = 16;
-    const priceBottom = logicalHeight*(isChan?0.70:0.57);
+    const priceBottom = logicalHeight*((isChan||isSR)?0.76:0.57);
     const stateTop = priceBottom+9;
     const stateBottom = stateTop+10;
-    const volumeTop = isChan ? priceBottom+16 : stateBottom+13;
-    const volumeBottom = logicalHeight*(isChan?0.88:0.78);
+    const volumeTop = (isChan||isSR) ? priceBottom+16 : stateBottom+13;
+    const volumeBottom = logicalHeight*((isChan||isSR)?0.92:0.78);
     const positionTop = logicalHeight*0.84;
     const positionBottom = logicalHeight-23;
 
     const priceValues = [];
     candles.forEach(c => {
-      [c.low,c.high,c.GZB3,c.GZB4,c.ZD1,c.ZK1,c.BS].forEach(v => {
+      [c.low,c.high,c.GZB3,c.GZB4,c.ZD1,c.ZK1,c.BS,c.sr_short_pressure,c.sr_short_support,c.sr_long_pressure,c.sr_long_support].forEach(v => {
         const n=Number(v); if(Number.isFinite(n)) priceValues.push(n);
       });
     });
@@ -490,6 +498,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       ctx.stroke();ctx.restore();
     }
 
+    if(!isChan && !isSR){
     ctx.save();
     ctx.fillStyle='rgba(130,145,166,.13)';
     ctx.beginPath();
@@ -511,6 +520,14 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     drawLine('ZD1','#65c5d8',[4,3]);
     drawLine('ZK1','#c28bd8',[4,3]);
     drawLine('BS','#eab464',[2,3]);
+    }
+
+    if(isSR){
+      drawLine('sr_short_pressure','#ff7b82',[]);
+      drawLine('sr_short_support','#52d49a',[]);
+      drawLine('sr_long_pressure','#9ec0ff',[]);
+      drawLine('sr_long_support','#f3f6fb',[]);
+    }
 
     const dateIndex=new Map(candles.map((x,i)=>[String(x.date),i]));
     function chartX(date){
@@ -569,7 +586,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       ctx.beginPath();ctx.moveTo(x,yh);ctx.lineTo(x,yl);ctx.stroke();
       ctx.fillRect(x-2,Math.min(yo,yc),4,Math.max(1,Math.abs(yc-yo)));
 
-      if(!isChan){
+      if(!isChan && !isSR){
         const stateColor={BLUE:'#5b8cff',GRAY:'#8d99aa',GREEN:'#52d49a',OTHER:'#344055'}[c.state]||'#344055';
         ctx.fillStyle=stateColor;
         ctx.fillRect(x-step/2+0.5,stateTop,step-1,stateBottom-stateTop);
@@ -608,7 +625,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       });
     }
 
-    if(!isChan){
+    if(!isChan && !isSR){
     ctx.strokeStyle='#243047';ctx.fillStyle='#71819a';ctx.font='9px system-ui';ctx.textAlign='right';
     [0,.25,.5,.75,1].forEach(frac=>{
       const y=positionBottom-frac*(positionBottom-positionTop);
@@ -644,8 +661,9 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       if(!c)return;
       q('chart-candle-meta').textContent =
         c.date+' · 开 '+formatPrice(c.open)+' 高 '+formatPrice(c.high)+' 低 '+formatPrice(c.low)+' 收 '+formatPrice(c.close)+
-        ' · 量 '+formatVolume(c.volume)+' · '+(c.state_zh||stateLabels[c.state]||c.state)+
-        (isChan?'':' · 仓位 '+formatPct(c.position));
+        ' · 量 '+formatVolume(c.volume)+
+        (isSR?'':(' · '+(c.state_zh||stateLabels[c.state]||c.state)))+
+        ((isChan||isSR)?'':' · 仓位 '+formatPct(c.position));
     }
     showCandle(candles[candles.length-1]);
 
@@ -681,19 +699,29 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     const c2Badge=q('c2-badge');
     if(c2Badge)c2Badge.style.display=currentStrategy==='v7'?'':'none';
     document.querySelectorAll('[data-structure-only]').forEach(node=>{
-      node.style.display=(currentStrategy==='5s_stocks'||currentStrategy==='chan')?'none':'';
+      node.style.display=(currentStrategy==='5s_stocks'||currentStrategy==='chan'||currentStrategy==='support_resistance')?'none':'';
     });
     document.querySelectorAll('[data-chan-only]').forEach(node=>{
       node.style.display=currentStrategy==='chan'?'':'none';
     });
+    document.querySelectorAll('[data-sr-only]').forEach(node=>{
+      node.style.display=currentStrategy==='support_resistance'?'':'none';
+    });
+    document.querySelectorAll('[data-signal-legend]').forEach(node=>{
+      node.style.display=currentStrategy==='support_resistance'?'none':'';
+    });
+    document.querySelectorAll('.summary-grid,.decision-panel,.policy-card,.events-card,.rules-card,.indicator-grid').forEach(node=>{
+      node.style.display=currentStrategy==='support_resistance'?'none':'';
+    });
 
     const isChan=currentStrategy==='chan';
-    safeText('brand-title',isChan?'缠论':'SLTD V7');
-    safeText('brand-subtitle',isChan?'SiftAlpha · 独立缠论结构 / 三买三卖 / 多级别':'SiftAlpha · 结构信号 / 仓位 / C2 风险退出');
+    const isSR=currentStrategy==='support_resistance';
+    safeText('brand-title',isChan?'缠论':isSR?'长短支压':'SLTD V7');
+    safeText('brand-subtitle',isChan?'SiftAlpha · 独立缠论结构 / 三买三卖 / 多级别':isSR?'SiftAlpha · 独立四线叠加 · 短3 / 长7':'SiftAlpha · 结构信号 / 仓位 / C2 风险退出');
     safeText('summary-action-label',isChan?'当前买卖点':'当前决策');
     safeText('summary-position-label',isChan?'运行模式':'当前仓位');
     safeText('summary-state-label',isChan?'缠论状态':'SLTD 状态');
-    safeText('footer-note',isChan?'独立缠论 · SiftAlpha · 结构锚点用于画图，FIRST_OBSERVED 确认时间用于信号。':'SLTD V7 · SiftAlpha 中文版 · 当前仅做策略分析与模拟仓位，不连接真实券商下单。');
+    safeText('footer-note',isChan?'独立缠论 · SiftAlpha · 结构锚点用于画图，FIRST_OBSERVED 确认时间用于信号。':isSR?'长短支压 · 保留 BACKSET 原公式语义 · 仅显示四线，不产生交易信号。':'SLTD V7 · SiftAlpha 中文版 · 当前仅做策略分析与模拟仓位，不连接真实券商下单。');
 
     const actionNode=q('summary-action');
     actionNode.textContent=s.resolved_action_zh||actionLabels[s.resolved_action]||s.resolved_action||'—';
@@ -722,7 +750,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
     safeText('meta-origin',isChan?'缠论独立':(stateLabels[s.origin]||s.origin||'—'));
     safeText('meta-forming',forming ? ('形成中 · '+formatPrice(forming.close)) : '当前无未完成 K 线');
     safeText('chart-title',(s.symbol||'')+' · '+(contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe)+' · '+(strategy.selector_label||strategy.version||'SLTD'));
-    safeText('chart-kicker',currentStrategy==='chan'?'缠论结构主图 · 最近 300 根仅用于显示':'SLTD 主图 · 最近 300 根仅用于显示');
+    safeText('chart-kicker',currentStrategy==='chan'?'缠论结构主图 · 最近 300 根仅用于显示':currentStrategy==='support_resistance'?'长短支压主图 · 短3 / 长7 · 最近 300 根仅用于显示':'SLTD 主图 · 最近 300 根仅用于显示');
     safeText('timeframe-badge',contract.selected_timeframe_label||meta.timeframe_label||currentTimeframe);
     safeText('latest-price',formatPrice(s.latest_close));
     safeText('market-source',(meta.provider||'雅虎财经')+' · '+(meta.source||'网络'));
