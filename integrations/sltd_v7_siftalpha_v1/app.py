@@ -46,6 +46,8 @@ from strategy import (
 
 
 ROOT = Path(__file__).resolve().parent
+STATIC_ROOT = ROOT / "static"
+VENDOR_ROOT = ROOT / "vendor"
 TEMPLATE = (ROOT / "templates" / "index.html").read_text(encoding="utf-8")
 
 DEFAULT_SYMBOL = normalize_symbol(os.environ.get("SLTD_SYMBOL", "AAPL"))
@@ -214,6 +216,24 @@ class Handler(BaseHTTPRequestHandler):
 
         if parsed.path == "/":
             self._send(200, render_index().encode("utf-8"), "text/html; charset=utf-8")
+            return
+
+        if parsed.path.startswith("/static/"):
+            rel = parsed.path[len("/static/"):]
+            target = (STATIC_ROOT / rel).resolve()
+            if STATIC_ROOT.resolve() not in target.parents or not target.is_file():
+                self._send(404, b"not found", "text/plain; charset=utf-8")
+                return
+            content_type = "text/javascript; charset=utf-8" if target.suffix == ".js" else "application/octet-stream"
+            self._send(200, target.read_bytes(), content_type)
+            return
+
+        if parsed.path == "/vendor/klinecharts/klinecharts.min.js":
+            target = VENDOR_ROOT / "klinecharts" / "klinecharts.min.js"
+            if not target.is_file():
+                self._send(503, b"klinecharts vendor missing", "text/plain; charset=utf-8")
+                return
+            self._send(200, target.read_bytes(), "text/javascript; charset=utf-8")
             return
 
         if parsed.path == "/api/health":
