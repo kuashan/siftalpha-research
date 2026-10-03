@@ -1,0 +1,43 @@
+name: Diagnose Chan BSP v2
+
+on:
+  push:
+    branches:
+      - feature/chan-standalone-v2
+    paths:
+      - "research/ssss_reboot_v1/phase10/diagnose_chan_bsp_v2.py"
+      - ".github/workflows/diagnose-chan-bsp-v2.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/chan-standalone-v2
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run funnel diagnostic
+        run: |
+          python research/ssss_reboot_v1/phase10/diagnose_chan_bsp_v2.py > /tmp/chan-bsp-v2.json
+          python - <<'PY'
+          import json
+          d=json.load(open("/tmp/chan-bsp-v2.json"))
+          print("TOTALS", json.dumps(d["totals"], ensure_ascii=False, sort_keys=True))
+          print("EXAMPLES", json.dumps(d["examples"], ensure_ascii=False))
+          for s in ("AAPL","AMD","NVDA","AMZN","ABT"):
+              if s in d["per_symbol"]:
+                  print("SYMBOL",s,json.dumps(d["per_symbol"][s],ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: chan-bsp-v2-diagnostic
+          path: /tmp/chan-bsp-v2.json
+          retention-days: 14
