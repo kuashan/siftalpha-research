@@ -417,13 +417,24 @@ def _is_new_segment_extreme(
     return True
 
 
+def _segment_seed_overlaps(
+    bis: list[StructUnit],
+    start: int,
+) -> bool:
+    """Lesson 65/77 prerequisite: a segment starts with 3 overlapping Bi."""
+    if start < 0 or start + 2 >= len(bis):
+        return False
+    seed = bis[start : start + 3]
+    return max(x.low for x in seed) <= min(x.high for x in seed)
+
+
 def _find_segment_division(
     bis: list[StructUnit],
     start: int,
     min_end: int = -1,
 ) -> tuple[int, int] | None:
     """Return (segment-anchor Bi index, confirming Bi index)."""
-    if start >= len(bis):
+    if start >= len(bis) or not _segment_seed_overlaps(bis, start):
         return None
 
     direction = bis[start].direction
@@ -610,15 +621,28 @@ def build_segments(bis: list[StructUnit]) -> list[StructUnit]:
         start = anchor + 1
 
     if start < len(bis):
-        out.append(
-            _make_segment(
-                bis,
-                start,
-                len(bis) - 1,
-                None,
-                True,
+        pending_start = start
+
+        # A truncated analysis window can begin before the first valid segment
+        # seed.  Only before any confirmed segment exists may we advance to the
+        # first 3-Bi-overlap seed; after a confirmed segment, its next start is
+        # structurally fixed and must not be skipped.
+        if not out and not _segment_seed_overlaps(bis, pending_start):
+            for candidate in range(pending_start + 1, max(pending_start + 1, len(bis) - 2)):
+                if _segment_seed_overlaps(bis, candidate):
+                    pending_start = candidate
+                    break
+
+        if _segment_seed_overlaps(bis, pending_start):
+            out.append(
+                _make_segment(
+                    bis,
+                    pending_start,
+                    len(bis) - 1,
+                    None,
+                    True,
+                )
             )
-        )
     return out
 
 
