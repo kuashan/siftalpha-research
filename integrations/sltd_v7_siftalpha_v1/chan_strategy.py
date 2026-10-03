@@ -26,7 +26,7 @@ from typing import Iterable
 
 CHAN_STRATEGY_ID = "chan"
 CHANPY_UPSTREAM_SHA = "429d6ed3043e27c93a003ba2b10e70a05575e1f5"
-CHAN_STRATEGY_VERSION = "缠论 · chan.py upstream"
+CHAN_STRATEGY_VERSION = "缠论 · chan.py upstream 429d6ed"
 CHAN_SOURCE = f"Vespa314/chan.py@{CHANPY_UPSTREAM_SHA}"
 CHAN_MIN_BARS = 120
 
