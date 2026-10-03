@@ -1,22 +1,20 @@
 from __future__ import annotations
 
-"""Standalone Chan-theory structure view for the SLTD web page.
+"""Independent Chan-theory strategy / structure engine.
 
-This module is intentionally independent from frozen SLTD V7 / E / 5s Stocks.
-It implements a causal, completed-bar structure pipeline:
+This module does not consume SLTD V7, E, 5s Stocks, XMA rails, SLTD states,
+or any other strategy output.  It only consumes completed OHLCV bars.
 
-raw K -> inclusion merge -> fractal -> Bi -> segment -> Zhongshu
--> consolidation/trend divergence -> B1/B2/B3/S1/S2/S3.
+Pipeline:
+raw K -> inclusion handling -> fractal -> Bi -> feature-sequence segment
+-> multi-level Zhongshu / trend type -> divergence -> B1/B2/B3/S1/S2/S3.
 
-Important:
-- chart anchors are drawn at the structural turning point;
-- signal confirmation time is stored separately;
-- a signal is never considered tradable before its confirmation bar closes;
-- this module produces structure analysis only and does not place simulated orders.
+Two display / execution times are intentionally separated:
+- anchor_index: where the structural turning point belongs on the chart;
+- confirm_index: the first completed bar on which the signal was observable.
 
-The implementation follows the original Chan-theory definitions audited in
-research/sltd-chan-structure-v1, with explicit engineering choices documented
-in CHAN_IMPLEMENTATION_NOTE_v1.md.
+The visible historical B/S ledger is produced by prefix replay, so a signal is
+never backdated to its anchor for trading purposes.
 """
 
 from dataclasses import dataclass
@@ -24,9 +22,12 @@ from math import isfinite
 from typing import Iterable, Literal
 
 CHAN_STRATEGY_ID = "chan"
-CHAN_STRATEGY_VERSION = "缠论结构 v1"
-CHAN_SOURCE = "CHAN_THEORY_LEARNING_COMPLETE_C0A_VERIFIED"
-CHAN_MIN_BARS = 80
+CHAN_STRATEGY_VERSION = "独立缠论 v2"
+CHAN_SOURCE = "CHAN_STANDALONE_RECONSTRUCTION_V2"
+CHAN_MIN_BARS = 120
+CHAN_ANALYSIS_MAX_BARS = 1600
+CHAN_CAUSAL_REPLAY_BARS = 480
+CHAN_MAX_RECURSIVE_LEVELS = 4
 
 Direction = Literal["up", "down"]
 FractalType = Literal["top", "bottom"]
@@ -41,10 +42,10 @@ CHAN_RULES = {
 
 CHAN_RULE_NAMES_ZH = {
     "CHAN_B1": "一买 · 下跌趋势背驰后的第一类买点",
-    "CHAN_B2": "二买 · 一买后回试不创新低",
+    "CHAN_B2": "二买 · 一买后第一次回试不创新低",
     "CHAN_B3": "三买 · 向上离开中枢后首次回试不跌回中枢",
     "CHAN_S1": "一卖 · 上涨趋势背驰后的第一类卖点",
-    "CHAN_S2": "二卖 · 一卖后反抽不创新高",
+    "CHAN_S2": "二卖 · 一卖后第一次反抽不创新高",
     "CHAN_S3": "三卖 · 向下离开中枢后首次回抽不升回中枢",
 }
 
@@ -55,7 +56,7 @@ ACTION_NAMES_ZH = {
 }
 
 
-@dataclass
+@dataclass(frozen=True)
 class RawBar:
     date: str
     open: float
@@ -81,48 +82,33 @@ class Fractal:
     kind: FractalType
     merged_index: int
     price: float
-    anchor_raw_index: int
-    confirm_raw_index: int
+    anchor_index: int
+    confirm_index: int
 
 
 @dataclass(frozen=True)
-class Point:
-    price: float
-    raw_index: int
-    confirm_raw_index: int
-
-
-@dataclass(frozen=True)
-class Bi:
+class StructUnit:
     direction: Direction
-    start: Point
-    end: Point
+    from_index: int
+    from_price: float
+    to_index: int
+    to_price: float
     high: float
     low: float
     start_index: int
     end_index: int
-    confirm_raw_index: int
-    index: int
-
-
-@dataclass(frozen=True)
-class Segment:
-    direction: Direction
-    start_bi: int
-    end_bi: int
-    start: Point
-    end: Point
-    high: float
-    low: float
-    start_index: int
-    end_index: int
-    confirm_raw_index: int | None
+    confirm_index: int | None
     pending: bool
     count: int
+    kind: str
+    source_start: int
+    source_end: int
 
 
 @dataclass(frozen=True)
 class Zhongshu:
+    level: int
+    unit_kind: str
     start_sub: int
     end_sub: int
     zg: float
@@ -131,8 +117,9 @@ class Zhongshu:
     dd: float
     start_index: int
     end_index: int
-    confirm_raw_index: int
+    confirm_index: int
     count: int
+    pending: bool
     upgraded: bool
 
 
@@ -166,11 +153,29 @@ def _validate_candles(candles: Iterable[dict]) -> list[RawBar]:
         )
         last_date = date
     if len(out) < CHAN_MIN_BARS:
-        raise ValueError(f"缠论结构至少需要 {CHAN_MIN_BARS} 根已结束 K 线")
+        raise ValueError(f"缠论至少需要 {CHAN_MIN_BARS} 根已结束 K 线")
     return out
 
 
-def _contains(a: MergedBar, b: MergedBar) -> bool:
+def _slice_analysis_window(bars: list[RawBar]) -> tuple[list[RawBar], int]:
+    offset = max(0, len(bars) - CHAN_ANALYSIS_MAX_BARS)
+    sliced = bars[offset:]
+    rebased = [
+        RawBar(
+            date=x.date,
+            open=x.open,
+            high=x.high,
+            low=x.low,
+            close=x.close,
+            volume=x.volume,
+            index=i,
+        )
+        for i, x in enumerate(sliced)
+    ]
+    return rebased, offset
+
+
+def _has_inclusion(a: MergedBar, b: MergedBar) -> bool:
     return (
         (a.high >= b.high and a.low <= b.low)
         or (b.high >= a.high and b.low <= a.low)
@@ -178,7 +183,7 @@ def _contains(a: MergedBar, b: MergedBar) -> bool:
 
 
 def merge_inclusion(bars: list[RawBar]) -> list[MergedBar]:
-    """Direction-aware, left-to-right inclusion handling."""
+    """Direction-aware left-to-right inclusion handling."""
     out: list[MergedBar] = []
     for raw in bars:
         cur = MergedBar(
@@ -192,8 +197,9 @@ def merge_inclusion(bars: list[RawBar]) -> list[MergedBar]:
         if not out:
             out.append(cur)
             continue
+
         last = out[-1]
-        if not _contains(last, cur):
+        if not _has_inclusion(last, cur):
             out.append(cur)
             continue
 
@@ -201,30 +207,36 @@ def merge_inclusion(bars: list[RawBar]) -> list[MergedBar]:
             prev = out[-2]
             rising = last.high >= prev.high
         else:
+            # Source beginning has no prior direction.  Keep this engineering
+            # choice explicit and deterministic.
             rising = True
 
         if rising:
-            if cur.high > last.high:
-                new_high, high_index = cur.high, cur.high_index
-            else:
-                new_high, high_index = last.high, last.high_index
-            if cur.low > last.low:
-                new_low, low_index = cur.low, cur.low_index
-            else:
-                new_low, low_index = last.low, last.low_index
+            high, high_index = (
+                (cur.high, cur.high_index)
+                if cur.high > last.high
+                else (last.high, last.high_index)
+            )
+            low, low_index = (
+                (cur.low, cur.low_index)
+                if cur.low > last.low
+                else (last.low, last.low_index)
+            )
         else:
-            if cur.high < last.high:
-                new_high, high_index = cur.high, cur.high_index
-            else:
-                new_high, high_index = last.high, last.high_index
-            if cur.low < last.low:
-                new_low, low_index = cur.low, cur.low_index
-            else:
-                new_low, low_index = last.low, last.low_index
+            high, high_index = (
+                (cur.high, cur.high_index)
+                if cur.high < last.high
+                else (last.high, last.high_index)
+            )
+            low, low_index = (
+                (cur.low, cur.low_index)
+                if cur.low < last.low
+                else (last.low, last.low_index)
+            )
 
         out[-1] = MergedBar(
-            high=new_high,
-            low=new_low,
+            high=high,
+            low=low,
             raw_start=last.raw_start,
             raw_end=cur.raw_end,
             high_index=high_index,
@@ -236,23 +248,27 @@ def merge_inclusion(bars: list[RawBar]) -> list[MergedBar]:
 def find_fractals(merged: list[MergedBar]) -> list[Fractal]:
     out: list[Fractal] = []
     for i in range(1, len(merged) - 1):
-        a, b, c = merged[i - 1], merged[i], merged[i + 1]
+        left, mid, right = merged[i - 1], merged[i], merged[i + 1]
         top = (
-            b.high > a.high and b.high > c.high
-            and b.low > a.low and b.low > c.low
+            mid.high > left.high
+            and mid.high > right.high
+            and mid.low > left.low
+            and mid.low > right.low
         )
         bottom = (
-            b.low < a.low and b.low < c.low
-            and b.high < a.high and b.high < c.high
+            mid.low < left.low
+            and mid.low < right.low
+            and mid.high < left.high
+            and mid.high < right.high
         )
         if top:
             out.append(
                 Fractal(
                     "top",
                     i,
-                    b.high,
-                    b.high_index,
-                    c.raw_end,
+                    mid.high,
+                    mid.high_index,
+                    right.raw_end,
                 )
             )
         elif bottom:
@@ -260,9 +276,9 @@ def find_fractals(merged: list[MergedBar]) -> list[Fractal]:
                 Fractal(
                     "bottom",
                     i,
-                    b.low,
-                    b.low_index,
-                    c.raw_end,
+                    mid.low,
+                    mid.low_index,
+                    right.raw_end,
                 )
             )
     return out
@@ -273,8 +289,8 @@ def _can_link_bi(
     left: Fractal,
     right: Fractal,
 ) -> bool:
-    # Lesson-77 strict separation: at least one merged K not belonging to
-    # either fractal -> center-index gap >= 4.
+    # Strict lesson-77 research convention: at least one merged K is not part
+    # of either endpoint fractal, so center-index distance must be >= 4.
     if right.merged_index - left.merged_index < 4:
         return False
     top = left if left.kind == "top" else right
@@ -294,7 +310,11 @@ def select_bi_points(
 
         last = points[-1]
         if fx.kind == last.kind:
-            stronger = fx.price > last.price if fx.kind == "top" else fx.price < last.price
+            stronger = (
+                fx.price > last.price
+                if fx.kind == "top"
+                else fx.price < last.price
+            )
             if stronger:
                 points[-1] = fx
             continue
@@ -304,23 +324,27 @@ def select_bi_points(
     return points
 
 
-def build_bis(points: list[Fractal]) -> list[Bi]:
-    out: list[Bi] = []
+def build_bis(points: list[Fractal]) -> list[StructUnit]:
+    out: list[StructUnit] = []
     for i in range(1, len(points)):
         a, b = points[i - 1], points[i]
-        start = Point(a.price, a.anchor_raw_index, a.confirm_raw_index)
-        end = Point(b.price, b.anchor_raw_index, b.confirm_raw_index)
         out.append(
-            Bi(
+            StructUnit(
                 direction="up" if a.kind == "bottom" else "down",
-                start=start,
-                end=end,
+                from_index=a.anchor_index,
+                from_price=a.price,
+                to_index=b.anchor_index,
+                to_price=b.price,
                 high=max(a.price, b.price),
                 low=min(a.price, b.price),
-                start_index=start.raw_index,
-                end_index=end.raw_index,
-                confirm_raw_index=b.confirm_raw_index,
-                index=len(out),
+                start_index=a.anchor_index,
+                end_index=b.anchor_index,
+                confirm_index=b.confirm_index,
+                pending=False,
+                count=1,
+                kind="BI",
+                source_start=i - 1,
+                source_end=i,
             )
         )
     return out
@@ -341,15 +365,18 @@ def _append_feature(
     if not seq:
         seq.append([feature[0], feature[1]])
         return
+
     last = seq[-1]
     if not _strict_feature_contains(last, feature):
         seq.append([feature[0], feature[1]])
         return
+
     if len(seq) >= 2:
         prev = seq[-2]
         rising = last[0] >= prev[0]
     else:
         rising = default_rising
+
     if rising:
         last[0] = max(last[0], feature[0])
         last[1] = max(last[1], feature[1])
@@ -358,18 +385,25 @@ def _append_feature(
         last[1] = min(last[1], feature[1])
 
 
-def _normalize_features(
-    features: list[tuple[float, float]],
-    default_rising: bool,
+def _feature_sequence_before(
+    bis: list[StructUnit],
+    start: int,
+    end_exclusive: int,
+    main_direction: Direction,
 ) -> list[list[float]]:
     out: list[list[float]] = []
-    for item in features:
-        _append_feature(out, item, default_rising)
+    for bi in bis[start:end_exclusive]:
+        if bi.direction != main_direction:
+            _append_feature(
+                out,
+                (bi.high, bi.low),
+                main_direction == "up",
+            )
     return out
 
 
-def _is_new_extreme(
-    bis: list[Bi],
+def _is_new_segment_extreme(
+    bis: list[StructUnit],
     start: int,
     idx: int,
     rising: bool,
@@ -383,96 +417,105 @@ def _is_new_extreme(
     return True
 
 
-def _feature_before(
-    bis: list[Bi],
-    start: int,
-    end_exclusive: int,
-    main_direction: Direction,
-) -> list[list[float]]:
-    raw = [
-        (b.high, b.low)
-        for b in bis[start:end_exclusive]
-        if b.direction != main_direction
-    ]
-    return _normalize_features(raw, main_direction == "up")
-
-
 def _find_segment_division(
-    bis: list[Bi],
+    bis: list[StructUnit],
     start: int,
     min_end: int = -1,
 ) -> tuple[int, int] | None:
-    """Return (anchor Bi index, confirming Bi index)."""
+    """Return (segment-anchor Bi index, confirming Bi index)."""
     if start >= len(bis):
         return None
-    main_direction = bis[start].direction
-    rising = main_direction == "up"
-    cand: dict | None = None
+
+    direction = bis[start].direction
+    rising = direction == "up"
+    candidate: dict | None = None
 
     for idx in range(start, len(bis)):
         bi = bis[idx]
 
-        if cand is not None:
-            exceeded = bi.high > cand["extreme"] if rising else bi.low < cand["extreme"]
+        if candidate is not None:
+            exceeded = (
+                bi.high > candidate["extreme"]
+                if rising
+                else bi.low < candidate["extreme"]
+            )
             if exceeded:
-                cand = None
+                candidate = None
 
-        if cand is not None:
-            if cand["case"] is None:
-                if bi.direction != main_direction and idx > cand["at"]:
-                    last_char = cand["last_char"]
-                    gap = bi.low > last_char[0] if rising else bi.high < last_char[1]
-                    cand["case"] = 2 if gap else 1
-                    cand["confirm_seq"] = []
-                    cand["post_seq"] = [] if gap else [[bi.high, bi.low]]
+        if candidate is not None:
+            if candidate["case"] is None:
+                if bi.direction != direction and idx > candidate["at"]:
+                    edge = candidate["edge"]
+                    has_gap = (
+                        bi.low > edge[0]
+                        if rising
+                        else bi.high < edge[1]
+                    )
+                    candidate["case"] = 2 if has_gap else 1
+                    candidate["after"] = []
+                    candidate["confirm"] = []
+                    if not has_gap:
+                        candidate["after"].append([bi.high, bi.low])
 
-            elif cand["case"] == 1:
-                if bi.direction != main_direction and idx > cand["at"] + 1:
-                    _append_feature(cand["post_seq"], (bi.high, bi.low), rising)
-                    seq = cand["post_seq"]
+            elif candidate["case"] == 1:
+                if bi.direction != direction and idx > candidate["at"] + 1:
+                    _append_feature(
+                        candidate["after"],
+                        (bi.high, bi.low),
+                        rising,
+                    )
+                    seq = candidate["after"]
                     if len(seq) >= 2:
-                        turned = seq[-1][0] < seq[0][0] if rising else seq[-1][1] > seq[0][1]
+                        turned = (
+                            seq[-1][0] < seq[0][0]
+                            if rising
+                            else seq[-1][1] > seq[0][1]
+                        )
                         if turned:
-                            return int(cand["at"]), idx
+                            return int(candidate["at"]), idx
 
             else:
-                if bi.direction == main_direction and idx > cand["at"] + 1:
-                    _append_feature(cand["confirm_seq"], (bi.high, bi.low), not rising)
-                    seq = cand["confirm_seq"]
+                if bi.direction == direction and idx > candidate["at"] + 1:
+                    _append_feature(
+                        candidate["confirm"],
+                        (bi.high, bi.low),
+                        not rising,
+                    )
+                    seq = candidate["confirm"]
                     if len(seq) >= 3:
                         a, b, c = seq[-3], seq[-2], seq[-1]
-                        confirmed = (
+                        ok = (
                             b[1] < a[1] and b[1] < c[1]
                             if rising
                             else b[0] > a[0] and b[0] > c[0]
                         )
-                        if confirmed:
-                            return int(cand["at"]), idx
+                        if ok:
+                            return int(candidate["at"]), idx
 
         if (
-            cand is None
-            and bi.direction == main_direction
+            candidate is None
+            and bi.direction == direction
             and idx >= start + 2
             and idx > min_end
-            and _is_new_extreme(bis, start, idx, rising)
+            and _is_new_segment_extreme(bis, start, idx, rising)
         ):
-            pre = _feature_before(bis, start, idx, main_direction)
+            pre = _feature_sequence_before(bis, start, idx, direction)
             if pre:
-                cand = {
+                candidate = {
                     "at": idx,
                     "extreme": bi.high if rising else bi.low,
-                    "last_char": pre[-1],
+                    "edge": pre[-1],
                     "case": None,
                 }
 
     return None
 
 
-def _segment_start_broken(bis: list[Bi], start: int) -> bool:
+def _segment_start_broken(bis: list[StructUnit], start: int) -> bool:
     first = bis[start]
-    origin = first.start.price
+    origin = first.from_price
     rising = first.direction == "up"
-    for bi in bis[start + 1:]:
+    for bi in bis[start + 1 :]:
         if rising and bi.low < origin:
             return True
         if (not rising) and bi.high > origin:
@@ -480,7 +523,7 @@ def _segment_start_broken(bis: list[Bi], start: int) -> bool:
     return False
 
 
-def _choose_start(bis: list[Bi]) -> int:
+def _choose_segment_start(bis: list[StructUnit]) -> int:
     if len(bis) < 2:
         return 0
     a = _find_segment_division(bis, 0)
@@ -493,52 +536,64 @@ def _choose_start(bis: list[Bi]) -> int:
 
 
 def _make_segment(
-    bis: list[Bi],
+    bis: list[StructUnit],
     start: int,
     end: int,
     confirm_bi: int | None,
     pending: bool,
-) -> Segment:
-    chunk = bis[start:end + 1]
-    return Segment(
+) -> StructUnit:
+    chunk = bis[start : end + 1]
+    return StructUnit(
         direction=bis[start].direction,
-        start_bi=start,
-        end_bi=end,
-        start=bis[start].start,
-        end=bis[end].end,
+        from_index=bis[start].from_index,
+        from_price=bis[start].from_price,
+        to_index=bis[end].to_index,
+        to_price=bis[end].to_price,
         high=max(x.high for x in chunk),
         low=min(x.low for x in chunk),
         start_index=bis[start].start_index,
         end_index=bis[end].end_index,
-        confirm_raw_index=None if confirm_bi is None else bis[confirm_bi].confirm_raw_index,
+        confirm_index=(
+            None
+            if confirm_bi is None
+            else bis[confirm_bi].confirm_index
+        ),
         pending=pending,
         count=end - start + 1,
+        kind="SEGMENT",
+        source_start=start,
+        source_end=end,
     )
 
 
-def build_segments(bis: list[Bi]) -> list[Segment]:
+def build_segments(bis: list[StructUnit]) -> list[StructUnit]:
     if not bis:
         return []
-    out: list[Segment] = []
-    start = _choose_start(bis)
-    guard = 0
+
+    out: list[StructUnit] = []
+    start = _choose_segment_start(bis)
+    recovery_guard = 0
 
     while start < len(bis):
         division = _find_segment_division(bis, start)
         if division is None:
-            if out and _segment_start_broken(bis, start) and guard < len(bis):
-                guard += 1
-                prev = out.pop()
+            if (
+                out
+                and _segment_start_broken(bis, start)
+                and recovery_guard < len(bis)
+            ):
+                recovery_guard += 1
+                previous = out.pop()
                 later = _find_segment_division(
                     bis,
-                    prev.start_bi,
-                    prev.end_bi,
+                    previous.source_start,
+                    previous.source_end,
                 )
                 if later is not None:
                     out.append(
                         _make_segment(
                             bis,
-                            prev.start_bi,
+                            previous.source_start,
                             later[0],
                             later[1],
                             False,
@@ -546,7 +601,7 @@ def build_segments(bis: list[Bi]) -> list[Segment]:
                     )
                     start = later[0] + 1
                     continue
-                start = prev.start_bi
+                start = previous.source_start
                 continue
             break
 
@@ -555,47 +610,78 @@ def build_segments(bis: list[Bi]) -> list[Segment]:
         start = anchor + 1
 
     if start < len(bis):
-        out.append(_make_segment(bis, start, len(bis) - 1, None, True))
+        out.append(
+            _make_segment(
+                bis,
+                start,
+                len(bis) - 1,
+                None,
+                True,
+            )
+        )
     return out
 
 
-def build_zhongshus(segments: list[Segment]) -> list[Zhongshu]:
-    """Build canonical current-level Zhongshu from consecutive lower-level segments.
+def _completed_units(units: list[StructUnit]) -> list[StructUnit]:
+    return [
+        x
+        for x in units
+        if not x.pending and x.confirm_index is not None
+    ]
 
-    Only completed segments participate in confirmed Zhongshu construction.
-    """
-    subs = [x for x in segments if not x.pending and x.confirm_raw_index is not None]
+
+def build_zhongshus(
+    units: list[StructUnit],
+    *,
+    level: int,
+    unit_kind: str,
+) -> list[Zhongshu]:
+    """Build Zhongshu from consecutive completed lower-level units."""
+    subs = _completed_units(units)
     out: list[Zhongshu] = []
-    i = 1  # sub[0] is the entering movement
+    i = 1  # unit 0 acts as the entering movement
+
     while i + 2 < len(subs):
-        trio = subs[i:i + 3]
-        zg = min(x.high for x in trio)
-        zd = max(x.low for x in trio)
+        seed = subs[i : i + 3]
+        zg = min(x.high for x in seed)
+        zd = max(x.low for x in seed)
         if not zg > zd:
             i += 2
             continue
 
-        def touch(s: Segment) -> bool:
-            return s.low <= zg and s.high >= zd
+        def touches(unit: StructUnit) -> bool:
+            return unit.low <= zg and unit.high >= zd
 
         end = i + 2
         j = i + 3
         while j < len(subs):
-            tj = touch(subs[j])
-            tn = touch(subs[j + 1]) if j + 1 < len(subs) else False
-            if tj and tn:
+            current_touch = touches(subs[j])
+            next_touch = (
+                touches(subs[j + 1])
+                if j + 1 < len(subs)
+                else None
+            )
+
+            if current_touch:
                 end = j
+                if next_touch is False:
+                    break
                 j += 1
                 continue
-            if (not tj) and tn:
+
+            if next_touch is True:
                 end = j + 1
                 j += 2
                 continue
+
             break
 
-        chunk = subs[i:end + 1]
+        chunk = subs[i : end + 1]
+        pending = end >= len(subs) - 1
         out.append(
             Zhongshu(
+                level=level,
+                unit_kind=unit_kind,
                 start_sub=i,
                 end_sub=end,
                 zg=zg,
@@ -604,26 +690,209 @@ def build_zhongshus(segments: list[Segment]) -> list[Zhongshu]:
                 dd=min(x.low for x in chunk),
                 start_index=chunk[0].start_index,
                 end_index=chunk[-1].end_index,
-                confirm_raw_index=max(int(x.confirm_raw_index) for x in trio if x.confirm_raw_index is not None),
+                confirm_index=max(
+                    int(x.confirm_index)
+                    for x in seed
+                    if x.confirm_index is not None
+                ),
                 count=end - i + 1,
+                pending=pending,
                 upgraded=(end - i + 1) >= 9,
             )
         )
         i = end + 2
+
     return out
 
 
 def link_zhongshus(zss: list[Zhongshu]) -> list[str | None]:
-    links: list[str | None] = [None]
-    for k in range(1, len(zss)):
-        a, b = zss[k - 1], zss[k]
-        if b.dd > a.gg:
+    links: list[str | None] = [None] if zss else []
+    for i in range(1, len(zss)):
+        prev, cur = zss[i - 1], zss[i]
+        if cur.dd > prev.gg:
             links.append("up")
-        elif b.gg < a.dd:
+        elif cur.gg < prev.dd:
             links.append("down")
         else:
-            links.append("expand")
+            links.append("overlap")
     return links
+
+
+def _group_zhongshus(
+    zss: list[Zhongshu],
+) -> list[dict]:
+    groups: list[dict] = []
+    current: dict | None = None
+    for idx, zs in enumerate(zss):
+        if current is None:
+            current = {"a": idx, "b": idx, "direction": None}
+            continue
+
+        prev = zss[current["b"]]
+        if zs.dd > prev.gg:
+            rel = "up"
+        elif zs.gg < prev.dd:
+            rel = "down"
+        else:
+            rel = "overlap"
+
+        if (
+            rel != "overlap"
+            and (
+                current["direction"] is None
+                or current["direction"] == rel
+            )
+        ):
+            current["direction"] = rel
+            current["b"] = idx
+        else:
+            groups.append(current)
+            current = {"a": idx, "b": idx, "direction": None}
+
+    if current is not None:
+        groups.append(current)
+    return groups
+
+
+def build_trend_types(
+    units: list[StructUnit],
+    zss: list[Zhongshu],
+    *,
+    level: int,
+) -> list[StructUnit]:
+    """Deterministically partition units into consolidation / trend types."""
+    if not units or not zss:
+        return []
+
+    groups = _group_zhongshus(zss)
+    trends: list[StructUnit] = []
+
+    for gi, group in enumerate(groups):
+        start_u = 0 if gi == 0 else trends[-1].source_end + 1
+
+        if gi < len(groups) - 1:
+            next_zs = zss[groups[gi + 1]["a"]]
+            end_u = max(start_u, next_zs.start_sub - 2)
+        else:
+            end_u = len(units) - 1
+
+        end_u = min(end_u, len(units) - 1)
+        if end_u < start_u:
+            continue
+
+        chunk = units[start_u : end_u + 1]
+        zcount = int(group["b"] - group["a"] + 1)
+        trend_direction = group["direction"]
+        if trend_direction is None:
+            trend_direction = (
+                "up"
+                if chunk[-1].to_price >= chunk[0].from_price
+                else "down"
+            )
+
+        structural_kind = (
+            "UP_TREND"
+            if zcount >= 2 and trend_direction == "up"
+            else "DOWN_TREND"
+            if zcount >= 2 and trend_direction == "down"
+            else "CONSOLIDATION"
+        )
+        pending = gi == len(groups) - 1
+        confirm_index = (
+            None
+            if pending
+            else max(
+                x.confirm_index or x.end_index
+                for x in chunk
+            )
+        )
+
+        trends.append(
+            StructUnit(
+                direction=trend_direction,
+                from_index=chunk[0].from_index,
+                from_price=chunk[0].from_price,
+                to_index=chunk[-1].to_index,
+                to_price=chunk[-1].to_price,
+                high=max(x.high for x in chunk),
+                low=min(x.low for x in chunk),
+                start_index=chunk[0].start_index,
+                end_index=chunk[-1].end_index,
+                confirm_index=confirm_index,
+                pending=pending,
+                count=end_u - start_u + 1,
+                kind=f"L{level}_{structural_kind}",
+                source_start=start_u,
+                source_end=end_u,
+            )
+        )
+    return trends
+
+
+def build_levels(
+    bis: list[StructUnit],
+    segments: list[StructUnit],
+) -> list[dict]:
+    """Build practical L0 plus canonical recursive levels.
+
+    L0 uses Bi as the lower-level unit so the selected chart can expose local
+    Chan structure.  L1 starts from confirmed feature-sequence segments and is
+    the canonical segment-derived Zhongshu layer.  L2+ recurse through trend
+    types.
+    """
+    levels: list[dict] = []
+
+    if len(bis) >= 4:
+        z0 = build_zhongshus(bis, level=0, unit_kind="BI")
+        levels.append(
+            {
+                "level": 0,
+                "label": "L0 笔级",
+                "unit_kind": "BI",
+                "units": bis,
+                "zss": z0,
+                "links": link_zhongshus(z0),
+                "trends": build_trend_types(bis, z0, level=0),
+                "canonical": False,
+            }
+        )
+
+    units = segments
+    for lv in range(1, CHAN_MAX_RECURSIVE_LEVELS + 1):
+        if len(units) < 4:
+            break
+
+        zss = build_zhongshus(
+            units,
+            level=lv,
+            unit_kind=units[0].kind if units else "UNKNOWN",
+        )
+        if not zss:
+            break
+
+        trends = build_trend_types(units, zss, level=lv)
+        levels.append(
+            {
+                "level": lv,
+                "label": f"L{lv} 线段级" if lv == 1 else f"L{lv} 递归级",
+                "unit_kind": units[0].kind if units else "UNKNOWN",
+                "units": units,
+                "zss": zss,
+                "links": link_zhongshus(zss),
+                "trends": trends,
+                "canonical": True,
+            }
+        )
+
+        completed_trends = _completed_units(trends)
+        if (
+            len(completed_trends) < 4
+            or len(completed_trends) >= len(units)
+        ):
+            break
+        units = completed_trends
+
+    return levels
 
 
 def _ema(values: list[float], period: int) -> list[float]:
@@ -636,7 +905,7 @@ def _ema(values: list[float], period: int) -> list[float]:
     return out
 
 
-def macd(closes: list[float]) -> dict[str, list[float]]:
+def compute_macd(closes: list[float]) -> dict[str, list[float]]:
     fast = _ema(closes, 12)
     slow = _ema(closes, 26)
     dif = [a - b for a, b in zip(fast, slow)]
@@ -645,59 +914,97 @@ def macd(closes: list[float]) -> dict[str, list[float]]:
     return {"dif": dif, "dea": dea, "hist": hist}
 
 
-def _force(sub: Segment, hist: list[float], sign: int) -> float:
+def _movement_force(
+    unit: StructUnit,
+    hist: list[float],
+    sign: int,
+) -> float:
     total = 0.0
-    a = max(0, sub.start_index)
-    b = min(len(hist) - 1, sub.end_index)
+    a = max(0, unit.start_index)
+    b = min(len(hist) - 1, unit.end_index)
     for i in range(a, b + 1):
-        h = hist[i]
-        if (sign > 0 and h > 0) or (sign < 0 and h < 0):
-            total += abs(h)
+        value = hist[i]
+        if (sign > 0 and value > 0) or (sign < 0 and value < 0):
+            total += abs(value)
     return total
 
 
-def _dif_ext(sub: Segment, dif: list[float], sign: int) -> float:
-    a = max(0, sub.start_index)
-    b = min(len(dif) - 1, sub.end_index)
-    vals = dif[a:b + 1]
-    if not vals:
+def _dif_extreme(
+    unit: StructUnit,
+    dif: list[float],
+    sign: int,
+) -> float:
+    a = max(0, unit.start_index)
+    b = min(len(dif) - 1, unit.end_index)
+    values = dif[a : b + 1]
+    if not values:
         return 0.0
-    return max(vals) if sign > 0 else min(vals)
+    return max(values) if sign > 0 else min(values)
 
 
-def compute_signals(
+def compute_level_signals(
     bars: list[RawBar],
-    segments: list[Segment],
-    zss: list[Zhongshu],
-    links: list[str | None],
+    level_info: dict,
+    macd: dict[str, list[float]],
 ) -> list[dict]:
-    """Compute six Chan BSP classes on confirmed segment/Zhongshu structure."""
-    subs = [x for x in segments if not x.pending and x.confirm_raw_index is not None]
-    if not subs or not zss:
-        return []
+    units: list[StructUnit] = level_info["units"]
+    zss: list[Zhongshu] = level_info["zss"]
+    links: list[str | None] = level_info["links"]
+    dif = macd["dif"]
+    hist = macd["hist"]
+    level = int(level_info["level"])
+    label = str(level_info["label"])
+    out: list[dict] = []
 
-    m = macd([x.close for x in bars])
-    signals: list[dict] = []
-
-    def add(kind: str, seg: Segment, zs_idx: int, note: str) -> None:
-        confirm_idx = int(seg.confirm_raw_index if seg.confirm_raw_index is not None else seg.end_index)
-        signals.append(
+    def emit(
+        kind: str,
+        unit: StructUnit,
+        zs: Zhongshu,
+        note: str,
+    ) -> None:
+        out.append(
             {
                 "kind": kind,
                 "rule_id": f"CHAN_{kind}",
-                "anchor_index": seg.end.raw_index,
-                "confirm_index": confirm_idx,
-                "price": seg.end.price,
-                "zs_index": zs_idx,
+                "level": level,
+                "level_label": label,
+                "anchor_index": unit.to_index,
+                "source_confirm_index": (
+                    unit.confirm_index
+                    if unit.confirm_index is not None
+                    else unit.end_index
+                ),
+                "price": unit.to_price,
+                "zs_start_index": zs.start_index,
+                "zs_end_index": zs.end_index,
+                "ZG": zs.zg,
+                "ZD": zs.zd,
                 "note": note,
             }
         )
 
-    for k, zs in enumerate(zss):
-        enter = subs[zs.start_sub - 1] if zs.start_sub > 0 else None
-        leave = subs[zs.end_sub + 1] if zs.end_sub + 1 < len(subs) else None
+    for zi, zs in enumerate(zss):
+        if zs.pending:
+            continue
 
-        if enter and leave and enter.direction == leave.direction:
+        enter = (
+            units[zs.start_sub - 1]
+            if zs.start_sub > 0
+            else None
+        )
+        leave = (
+            units[zs.end_sub + 1]
+            if zs.end_sub + 1 < len(units)
+            else None
+        )
+
+        # B1 / S1: trend context + new extreme + weaker same-direction move.
+        if (
+            enter is not None
+            and leave is not None
+            and not leave.pending
+            and enter.direction == leave.direction
+        ):
             down = enter.direction == "down"
             sign = -1 if down else 1
             new_extreme = (
@@ -705,90 +1012,238 @@ def compute_signals(
                 if down
                 else leave.high > max(enter.high, zs.gg)
             )
-            dif_enter = _dif_ext(enter, m["dif"], sign)
 
-            pulled = False
-            lo = max(0, subs[zs.start_sub].start_index)
-            hi = min(len(bars) - 1, subs[zs.end_sub].end_index)
-            for i in range(lo, hi + 1):
+            enter_dif = _dif_extreme(enter, dif, sign)
+            pulled_near_zero = False
+            center_start = max(0, zs.start_index)
+            center_end = min(len(bars) - 1, zs.end_index)
+            for i in range(center_start, center_end + 1):
                 if down:
-                    if m["dif"][i] >= 0.25 * dif_enter:
-                        pulled = True
+                    if dif[i] >= 0.25 * enter_dif:
+                        pulled_near_zero = True
                         break
                 else:
-                    if m["dif"][i] <= 0.25 * dif_enter:
-                        pulled = True
+                    if dif[i] <= 0.25 * enter_dif:
+                        pulled_near_zero = True
                         break
 
             weaker = (
-                _force(leave, m["hist"], sign) < _force(enter, m["hist"], sign)
-                or abs(_dif_ext(leave, m["dif"], sign)) < abs(dif_enter)
+                _movement_force(leave, hist, sign)
+                < _movement_force(enter, hist, sign)
+                or abs(_dif_extreme(leave, dif, sign))
+                < abs(enter_dif)
             )
 
-            if new_extreme and pulled and weaker:
-                trend_link = links[k] if k < len(links) else None
-                if trend_link == ("down" if down else "up"):
-                    first_kind = "B1" if down else "S1"
-                    add(
-                        first_kind,
-                        leave,
-                        k,
-                        "下跌趋势背驰" if down else "上涨趋势背驰",
-                    )
+            expected_link = "down" if down else "up"
+            if (
+                new_extreme
+                and pulled_near_zero
+                and weaker
+                and zi < len(links)
+                and links[zi] == expected_link
+            ):
+                first_kind = "B1" if down else "S1"
+                emit(
+                    first_kind,
+                    leave,
+                    zs,
+                    "下跌趋势背驰" if down else "上涨趋势背驰",
+                )
 
-                    s1_idx = zs.end_sub + 2
-                    s2_idx = zs.end_sub + 3
-                    if s2_idx < len(subs):
-                        s2 = subs[s2_idx]
-                        valid = s2.low > leave.low if down else s2.high < leave.high
+                # After the first-class point, the first rebound/retracement
+                # pair is the second-class test.  It must not exceed the first
+                # point's extreme.
+                second_index = zs.end_sub + 3
+                if second_index < len(units):
+                    second = units[second_index]
+                    if not second.pending:
+                        valid = (
+                            second.low > leave.low
+                            if down
+                            else second.high < leave.high
+                        )
                         if valid:
-                            add(
+                            emit(
                                 "B2" if down else "S2",
-                                s2,
-                                k,
-                                "一买后回试不创新低" if down else "一卖后反抽不创新高",
+                                second,
+                                zs,
+                                (
+                                    "一买后第一次回试不创新低"
+                                    if down
+                                    else "一卖后第一次反抽不创新高"
+                                ),
                             )
 
-        # B3 / S3: first return after leaving Zhongshu.
-        a = subs[zs.end_sub + 1] if zs.end_sub + 1 < len(subs) else None
-        b = subs[zs.end_sub + 2] if zs.end_sub + 2 < len(subs) else None
-        last_in = subs[zs.end_sub]
+        # B3 / S3: a completed departure followed by the first completed
+        # return that stays outside the Zhongshu boundary.
+        departure_index = zs.end_sub + 1
+        return_index = zs.end_sub + 2
+        if return_index < len(units):
+            departure = units[departure_index]
+            returned = units[return_index]
+            if not departure.pending and not returned.pending:
+                if (
+                    departure.direction == "up"
+                    and departure.high > zs.zg
+                    and returned.direction == "down"
+                    and returned.low >= zs.zg
+                ):
+                    emit(
+                        "B3",
+                        returned,
+                        zs,
+                        "向上离开中枢后首次回试不跌回 ZG",
+                    )
+                elif (
+                    departure.direction == "down"
+                    and departure.low < zs.zd
+                    and returned.direction == "up"
+                    and returned.high <= zs.zd
+                ):
+                    emit(
+                        "S3",
+                        returned,
+                        zs,
+                        "向下离开中枢后首次回抽不升回 ZD",
+                    )
 
-        if a and a.direction == "down" and last_in.high > zs.zg and a.low >= zs.zg:
-            add("B3", a, k, "向上离开后首次回试不跌回 ZG")
-        elif a and a.direction == "up" and last_in.low < zs.zd and a.high <= zs.zd:
-            add("S3", a, k, "向下离开后首次回抽不升回 ZD")
-        elif a and b and a.direction == "up" and a.high > zs.zg and b.low >= zs.zg:
-            add("B3", b, k, "向上离开后首次回试不跌回 ZG")
-        elif a and b and a.direction == "down" and a.low < zs.zd and b.high <= zs.zd:
-            add("S3", b, k, "向下离开后首次回抽不升回 ZD")
-
-    # A structural point can be rediscovered through overlapping Zhongshu scans.
-    # Keep the earliest confirmed instance for each class/anchor.
-    unique: dict[tuple[str, int], dict] = {}
-    for item in sorted(signals, key=lambda x: (x["confirm_index"], x["anchor_index"], x["kind"])):
-        key = (item["kind"], item["anchor_index"])
+    # Deduplicate a structural point rediscovered through overlapping scans.
+    unique: dict[tuple[int, str, int], dict] = {}
+    for item in sorted(
+        out,
+        key=lambda x: (
+            x["source_confirm_index"],
+            x["anchor_index"],
+            x["kind"],
+        ),
+    ):
+        key = (
+            int(item["level"]),
+            str(item["kind"]),
+            int(item["anchor_index"]),
+        )
         unique.setdefault(key, item)
-    return sorted(unique.values(), key=lambda x: (x["confirm_index"], x["anchor_index"], x["kind"]))
+    return list(unique.values())
 
 
-def _structure_state(
-    segments: list[Segment],
-    zss: list[Zhongshu],
-    latest_index: int,
-) -> str:
-    if zss:
-        zs = zss[-1]
-        if zs.start_index <= latest_index <= zs.end_index:
-            return "中枢震荡"
-    if segments:
-        return "向上线段" if segments[-1].direction == "up" else "向下线段"
-    return "结构形成中"
+def build_structure_snapshot(bars: list[RawBar]) -> dict:
+    merged = merge_inclusion(bars)
+    fractals = find_fractals(merged)
+    bi_points = select_bi_points(merged, fractals)
+    bis = build_bis(bi_points)
+    segments = build_segments(bis)
+    levels = build_levels(bis, segments)
+    macd = compute_macd([x.close for x in bars])
+
+    signals: list[dict] = []
+    for level in levels:
+        signals.extend(
+            compute_level_signals(
+                bars,
+                level,
+                macd,
+            )
+        )
+    signals.sort(
+        key=lambda x: (
+            x["source_confirm_index"],
+            x["level"],
+            x["anchor_index"],
+            x["kind"],
+        )
+    )
+
+    return {
+        "merged": merged,
+        "fractals": fractals,
+        "bi_points": bi_points,
+        "bis": bis,
+        "segments": segments,
+        "levels": levels,
+        "signals": signals,
+    }
+
+
+def replay_first_observed_signals(
+    bars: list[RawBar],
+) -> list[dict]:
+    """Recompute finite prefixes and persist each signal at first observation."""
+    n = len(bars)
+    start = max(CHAN_MIN_BARS - 1, n - CHAN_CAUSAL_REPLAY_BARS)
+    seen: set[tuple[int, str, int]] = set()
+    ledger: list[dict] = []
+
+    # Seed existing structures one bar before the replay horizon.  We do not
+    # emit them because their first-observed time predates the causal window.
+    if start > 0:
+        seed = build_structure_snapshot(bars[:start])
+        for s in seed["signals"]:
+            seen.add(
+                (
+                    int(s["level"]),
+                    str(s["kind"]),
+                    int(s["anchor_index"]),
+                )
+            )
+
+    for end in range(start, n):
+        snap = build_structure_snapshot(bars[: end + 1])
+        for signal in snap["signals"]:
+            key = (
+                int(signal["level"]),
+                str(signal["kind"]),
+                int(signal["anchor_index"]),
+            )
+            if key in seen:
+                continue
+            seen.add(key)
+            row = dict(signal)
+            row["confirm_index"] = end
+            row["status"] = "CONFIRMED_FIRST_OBSERVED"
+            ledger.append(row)
+
+    return ledger
 
 
 def _date(bars: list[RawBar], index: int) -> str:
     index = max(0, min(len(bars) - 1, int(index)))
     return bars[index].date
+
+
+def _clip_index(index: int, start: int, end: int) -> int:
+    return max(start, min(end, int(index)))
+
+
+def _current_structure_text(snapshot: dict) -> str:
+    levels = snapshot["levels"]
+    if levels:
+        highest = levels[-1]
+        trends = highest["trends"]
+        if trends:
+            current = trends[-1]
+            if "UP_TREND" in current.kind:
+                return f"{highest['label']} · 上涨走势"
+            if "DOWN_TREND" in current.kind:
+                return f"{highest['label']} · 下跌走势"
+            return f"{highest['label']} · 盘整走势"
+
+        zss = highest["zss"]
+        if zss:
+            return f"{highest['label']} · 中枢震荡"
+
+    segments = snapshot["segments"]
+    if segments:
+        last = segments[-1]
+        return (
+            "向上线段 · 未完成"
+            if last.direction == "up" and last.pending
+            else "向下线段 · 未完成"
+            if last.direction == "down" and last.pending
+            else "向上线段 · 已确认"
+            if last.direction == "up"
+            else "向下线段 · 已确认"
+        )
+    return "结构形成中"
 
 
 def analyze_chan(
@@ -798,19 +1253,16 @@ def analyze_chan(
     display_limit: int = 300,
     timeframe: str = "1d",
 ) -> dict:
-    bars = _validate_candles(candles)
-    merged = merge_inclusion(bars)
-    fractals = find_fractals(merged)
-    points = select_bi_points(merged, fractals)
-    bis = build_bis(points)
-    segments = build_segments(bis)
-    zss = build_zhongshus(segments)
-    links = link_zhongshus(zss)
-    signals = compute_signals(bars, segments, zss, links)
+    all_bars = _validate_candles(candles)
+    bars, source_offset = _slice_analysis_window(all_bars)
+
+    final = build_structure_snapshot(bars)
+    signal_ledger = replay_first_observed_signals(bars)
 
     limit = max(80, min(int(display_limit), 500))
-    start = max(0, len(bars) - limit)
-    visible_dates = {x.date for x in bars[start:]}
+    visible_start = max(0, len(bars) - limit)
+    visible_end = len(bars) - 1
+    visible_dates = {x.date for x in bars[visible_start:]}
 
     chart = [
         {
@@ -821,126 +1273,241 @@ def analyze_chan(
             "close": b.close,
             "volume": b.volume,
             "state": "OTHER",
-            "state_zh": "缠论结构",
+            "state_zh": "独立缠论",
             "position": 0.0,
             "risk_armed": False,
         }
-        for b in bars[start:]
+        for b in bars[visible_start:]
     ]
 
-    fractal_overlay = [
+    # Default top/bottom display uses valid Bi endpoints rather than every raw
+    # fractal.  This removes the wall of duplicate top/bottom labels.
+    endpoints = [
         {
-            "type": f.kind,
-            "anchor_date": _date(bars, f.anchor_raw_index),
-            "confirm_date": _date(bars, f.confirm_raw_index),
-            "price": f.price,
+            "type": p.kind,
+            "anchor_date": _date(bars, p.anchor_index),
+            "confirm_date": _date(bars, p.confirm_index),
+            "price": p.price,
         }
-        for f in fractals
-        if _date(bars, f.anchor_raw_index) in visible_dates
-    ]
-    bi_overlay = [
-        {
-            "direction": b.direction,
-            "start_date": _date(bars, b.start.raw_index),
-            "start_price": b.start.price,
-            "end_date": _date(bars, b.end.raw_index),
-            "end_price": b.end.price,
-            "confirm_date": _date(bars, b.confirm_raw_index),
-        }
-        for b in bis
-        if _date(bars, b.end.raw_index) in visible_dates or _date(bars, b.start.raw_index) in visible_dates
-    ]
-    segment_overlay = [
-        {
-            "direction": s.direction,
-            "start_date": _date(bars, s.start.raw_index),
-            "start_price": s.start.price,
-            "end_date": _date(bars, s.end.raw_index),
-            "end_price": s.end.price,
-            "confirm_date": (
-                _date(bars, s.confirm_raw_index)
-                if s.confirm_raw_index is not None
-                else None
-            ),
-            "pending": s.pending,
-            "count": s.count,
-        }
-        for s in segments
-        if _date(bars, s.end.raw_index) in visible_dates or _date(bars, s.start.raw_index) in visible_dates
-    ]
-    zs_overlay = [
-        {
-            "start_date": _date(bars, z.start_index),
-            "end_date": _date(bars, z.end_index),
-            "confirm_date": _date(bars, z.confirm_raw_index),
-            "ZG": z.zg,
-            "ZD": z.zd,
-            "GG": z.gg,
-            "DD": z.dd,
-            "count": z.count,
-            "upgraded": z.upgraded,
-        }
-        for z in zss
-        if _date(bars, z.end_index) in visible_dates or _date(bars, z.start_index) in visible_dates
-    ]
-    signal_overlay = [
-        {
-            **s,
-            "anchor_date": _date(bars, s["anchor_index"]),
-            "confirm_date": _date(bars, s["confirm_index"]),
-            "rule_name_zh": CHAN_RULE_NAMES_ZH[s["rule_id"]],
-        }
-        for s in signals
-        if _date(bars, s["anchor_index"]) in visible_dates
+        for p in final["bi_points"]
+        if p.anchor_index >= visible_start
     ]
 
-    latest_signal = None
-    if signals and int(signals[-1]["confirm_index"]) == len(bars) - 1:
-        latest_signal = signals[-1]
-
-    events = []
-    for s in signals[-80:]:
-        action = "BUY" if s["kind"].startswith("B") else "SELL"
-        events.append(
+    bis_overlay = []
+    for unit in final["bis"]:
+        if unit.end_index < visible_start or unit.start_index > visible_end:
+            continue
+        bis_overlay.append(
             {
-                "date": _date(bars, s["confirm_index"]),
-                "state": "OTHER",
-                "state_zh": s["kind"],
-                "age": f"锚点 {_date(bars, s['anchor_index'])}",
-                "origin": None,
-                "action": action,
-                "action_zh": ACTION_NAMES_ZH[action],
-                "rule_ids": [s["rule_id"]],
-                "rule_names_zh": [CHAN_RULE_NAMES_ZH[s["rule_id"]]],
-                "execution_date": None,
-                "execution_price": None,
-                "position_after": None,
-                "risk_after": "仅结构信号",
-                "note": s["note"],
+                "direction": unit.direction,
+                "start_date": _date(
+                    bars,
+                    _clip_index(unit.start_index, visible_start, visible_end),
+                ),
+                "start_price": (
+                    bars[visible_start].close
+                    if unit.start_index < visible_start
+                    else unit.from_price
+                ),
+                "actual_start_date": _date(bars, unit.start_index),
+                "actual_start_price": unit.from_price,
+                "end_date": _date(
+                    bars,
+                    _clip_index(unit.end_index, visible_start, visible_end),
+                ),
+                "end_price": (
+                    bars[visible_end].close
+                    if unit.end_index > visible_end
+                    else unit.to_price
+                ),
+                "actual_end_date": _date(bars, unit.end_index),
+                "actual_end_price": unit.to_price,
+                "confirm_date": (
+                    _date(bars, unit.confirm_index)
+                    if unit.confirm_index is not None
+                    else None
+                ),
             }
         )
 
-    latest = bars[-1]
-    state_text = _structure_state(segments, zss, len(bars) - 1)
-    latest_kind = latest_signal["kind"] if latest_signal else None
+    segments_overlay = []
+    for unit in final["segments"]:
+        if unit.end_index < visible_start or unit.start_index > visible_end:
+            continue
+        segments_overlay.append(
+            {
+                "direction": unit.direction,
+                "start_date": _date(
+                    bars,
+                    _clip_index(unit.start_index, visible_start, visible_end),
+                ),
+                "start_price": (
+                    bars[visible_start].close
+                    if unit.start_index < visible_start
+                    else unit.from_price
+                ),
+                "actual_start_date": _date(bars, unit.start_index),
+                "actual_start_price": unit.from_price,
+                "end_date": _date(
+                    bars,
+                    _clip_index(unit.end_index, visible_start, visible_end),
+                ),
+                "end_price": (
+                    bars[visible_end].close
+                    if unit.end_index > visible_end
+                    else unit.to_price
+                ),
+                "actual_end_date": _date(bars, unit.end_index),
+                "actual_end_price": unit.to_price,
+                "confirm_date": (
+                    _date(bars, unit.confirm_index)
+                    if unit.confirm_index is not None
+                    else None
+                ),
+                "pending": unit.pending,
+                "count": unit.count,
+            }
+        )
+
+    zhongshu_overlay: list[dict] = []
+    trends_overlay: list[dict] = []
+    level_summary: list[dict] = []
+    for info in final["levels"]:
+        level = int(info["level"])
+        level_summary.append(
+            {
+                "level": level,
+                "label": info["label"],
+                "canonical": bool(info["canonical"]),
+                "units": len(info["units"]),
+                "zhongshus": len(info["zss"]),
+                "trends": len(info["trends"]),
+            }
+        )
+
+        for zs in info["zss"]:
+            if zs.end_index < visible_start or zs.start_index > visible_end:
+                continue
+            zhongshu_overlay.append(
+                {
+                    "level": level,
+                    "level_label": info["label"],
+                    "canonical": bool(info["canonical"]),
+                    "start_date": _date(
+                        bars,
+                        _clip_index(zs.start_index, visible_start, visible_end),
+                    ),
+                    "end_date": _date(
+                        bars,
+                        _clip_index(zs.end_index, visible_start, visible_end),
+                    ),
+                    "actual_start_date": _date(bars, zs.start_index),
+                    "actual_end_date": _date(bars, zs.end_index),
+                    "confirm_date": _date(bars, zs.confirm_index),
+                    "ZG": zs.zg,
+                    "ZD": zs.zd,
+                    "GG": zs.gg,
+                    "DD": zs.dd,
+                    "count": zs.count,
+                    "pending": zs.pending,
+                    "upgraded": zs.upgraded,
+                }
+            )
+
+        for trend in info["trends"]:
+            if trend.end_index < visible_start or trend.start_index > visible_end:
+                continue
+            trends_overlay.append(
+                {
+                    "level": level,
+                    "level_label": info["label"],
+                    "kind": trend.kind,
+                    "direction": trend.direction,
+                    "start_date": _date(
+                        bars,
+                        _clip_index(trend.start_index, visible_start, visible_end),
+                    ),
+                    "end_date": _date(
+                        bars,
+                        _clip_index(trend.end_index, visible_start, visible_end),
+                    ),
+                    "actual_start_date": _date(bars, trend.start_index),
+                    "actual_end_date": _date(bars, trend.end_index),
+                    "pending": trend.pending,
+                    "count": trend.count,
+                }
+            )
+
+    signal_overlay = []
+    for signal in signal_ledger:
+        anchor = int(signal["anchor_index"])
+        if anchor < visible_start or anchor > visible_end:
+            continue
+        signal_overlay.append(
+            {
+                **signal,
+                "anchor_date": _date(bars, anchor),
+                "confirm_date": _date(bars, signal["confirm_index"]),
+                "rule_name_zh": CHAN_RULE_NAMES_ZH[signal["rule_id"]],
+            }
+        )
+
+    events = []
+    for signal in signal_ledger[-100:]:
+        action = "BUY" if signal["kind"].startswith("B") else "SELL"
+        next_index = int(signal["confirm_index"]) + 1
+        events.append(
+            {
+                "date": _date(bars, signal["confirm_index"]),
+                "state": "OTHER",
+                "state_zh": f"{signal['kind']} · {signal['level_label']}",
+                "age": f"锚点 {_date(bars, signal['anchor_index'])}",
+                "origin": signal["level_label"],
+                "action": action,
+                "action_zh": ACTION_NAMES_ZH[action],
+                "rule_ids": [signal["rule_id"]],
+                "rule_names_zh": [CHAN_RULE_NAMES_ZH[signal["rule_id"]]],
+                "execution_date": (
+                    _date(bars, next_index)
+                    if next_index < len(bars)
+                    else None
+                ),
+                "execution_price": (
+                    bars[next_index].open
+                    if next_index < len(bars)
+                    else None
+                ),
+                "position_after": None,
+                "risk_after": "独立缠论信号",
+                "note": signal["note"],
+            }
+        )
+
+    latest_signal = (
+        signal_ledger[-1]
+        if signal_ledger
+        and int(signal_ledger[-1]["confirm_index"]) == len(bars) - 1
+        else None
+    )
     resolved_action = (
-        "BUY" if latest_kind and latest_kind.startswith("B")
-        else "SELL" if latest_kind and latest_kind.startswith("S")
+        "BUY"
+        if latest_signal and latest_signal["kind"].startswith("B")
+        else "SELL"
+        if latest_signal and latest_signal["kind"].startswith("S")
         else "NONE"
     )
-    latest_rules = [latest_signal["rule_id"]] if latest_signal else []
 
-    last_bi = bis[-1] if bis else None
-    last_segment = segments[-1] if segments else None
-    last_zs = zss[-1] if zss else None
-    last_signal = signals[-1] if signals else None
-
-    next_action = (
-        f"本根确认 {latest_kind}（{CHAN_RULE_NAMES_ZH[latest_signal['rule_id']]}）；"
-        "这是独立缠论结构信号，不自动修改 V7 仓位。"
-        if latest_signal
-        else "等待新的已确认分型 / 笔 / 线段 / 中枢买卖点；未确认结构只画线，不生成交易信号。"
+    last_bi = final["bis"][-1] if final["bis"] else None
+    last_segment = final["segments"][-1] if final["segments"] else None
+    last_zs = (
+        zhongshu_overlay[-1]
+        if zhongshu_overlay
+        else None
     )
+    last_seen_signal = signal_ledger[-1] if signal_ledger else None
+
+    current_structure = _current_structure_text(final)
+    latest = bars[-1]
 
     return {
         "strategy": {
@@ -954,24 +1521,25 @@ def analyze_chan(
                 group: [CHAN_RULE_NAMES_ZH[x] for x in ids]
                 for group, ids in CHAN_RULES.items()
             },
-            "position_policy": "STRUCTURE_ONLY_NO_POSITION",
-            "position_policy_zh": "独立缠论结构分析；本版本不自动管理 V7 / E / 5s Stocks 仓位",
+            "position_policy": "CHAN_SIGNAL_ONLY_V2",
+            "position_policy_zh": "独立缠论信号；三买三卖不读取或修改任何其他策略仓位",
             "hard_exit": "NONE",
-            "hard_exit_zh": "无独立强制清仓；一二三卖仅作为缠论结构卖点",
+            "hard_exit_zh": "无外部策略退出规则",
             "display_candles": limit,
             "timeframe": str(timeframe),
-            "bar_close_contract": "CHAN_ANCHOR_DRAWN_AT_STRUCTURE_POINT_CONFIRMATION_USED_FOR_SIGNAL",
-            "bar_close_contract_zh": "图形画在线段/买卖点锚点；信号只在结构首次确认的已结束K线产生",
-            "rules_title_zh": "缠论三买三卖",
-            "policy_title_zh": "缠论结构链",
+            "bar_close_contract": "CHAN_FIRST_OBSERVED_CONFIRM_THEN_NEXT_BAR_OPEN",
+            "bar_close_contract_zh": "结构画在锚点；买卖信号按首次确认K线记录，若用于交易则下一根同周期K线开盘执行",
+            "rules_title_zh": "独立缠论 · 三买三卖",
+            "policy_title_zh": "缠论完整结构链",
             "summary_state_label_zh": "当前缠论结构",
             "policy_steps_zh": [
                 "① K线包含处理 → 顶/底分型",
-                "② 顶底分型 → 严格笔（第77课口径）",
+                "② 有效分型 → 严格笔",
                 "③ 笔 → 特征序列 → 线段",
-                "④ 连续次级别线段重叠 → 中枢",
-                "⑤ 趋势/盘整结构 + 力度比较 → 一买/一卖；随后确认二买/二卖",
-                "⑥ 离开中枢后的第一次不回中枢回试/回抽 → 三买/三卖",
+                "④ L0笔级 + L1线段级中枢；走势类型继续递归生成更高级别",
+                "⑤ 趋势背驰 → 一买/一卖；第一次不创新极值回试 → 二买/二卖",
+                "⑥ 离开中枢后第一次不回中枢的回试/回抽 → 三买/三卖",
+                "⑦ 所有B/S使用逐Bar FIRST_OBSERVED 首次确认时间，不用最终历史图倒推",
             ],
         },
         "snapshot": {
@@ -979,53 +1547,88 @@ def analyze_chan(
             "latest_date": latest.date,
             "latest_close": latest.close,
             "state": "OTHER",
-            "state_zh": state_text,
+            "state_zh": current_structure,
             "run_age": None,
-            "age_bucket": "FIRST_OBSERVED 确认",
+            "age_bucket": "FIRST_OBSERVED 逐Bar确认",
             "origin": None,
             "resolved_action": resolved_action,
             "resolved_action_zh": ACTION_NAMES_ZH[resolved_action],
-            "rule_ids": latest_rules,
-            "rule_names_zh": [CHAN_RULE_NAMES_ZH[x] for x in latest_rules],
+            "rule_ids": [latest_signal["rule_id"]] if latest_signal else [],
+            "rule_names_zh": (
+                [CHAN_RULE_NAMES_ZH[latest_signal["rule_id"]]]
+                if latest_signal
+                else []
+            ),
             "position_fraction": 0.0,
             "risk_state": "NORMAL",
-            "risk_state_zh": state_text,
-            "risk_sub_zh": "结构锚点与首次确认时间分离；不把历史回画位置当成当时已知信号",
-            "next_action": next_action,
+            "risk_state_zh": current_structure,
+            "risk_sub_zh": "独立缠论引擎；与12条/E/5s Stocks完全隔离",
+            "next_action": (
+                f"本根首次确认 {latest_signal['kind']} · {latest_signal['level_label']}；"
+                "若用于交易，下一根同周期K线开盘才可执行。"
+                if latest_signal
+                else "等待新的已确认缠论买卖点；未完成结构只参与当下结构显示。"
+            ),
             "chan_bi": (
                 ("向上笔" if last_bi.direction == "up" else "向下笔")
-                if last_bi else "尚未形成"
+                if last_bi
+                else "尚未形成"
             ),
             "chan_segment": (
-                ("向上线段" if last_segment.direction == "up" else "向下线段")
+                (
+                    "向上线段"
+                    if last_segment.direction == "up"
+                    else "向下线段"
+                )
                 + (" · 未完成" if last_segment.pending else " · 已确认")
-                if last_segment else "尚未形成"
+                if last_segment
+                else "尚未形成"
             ),
             "chan_zhongshu": (
-                f"ZG {last_zs.zg:.3f} / ZD {last_zs.zd:.3f}"
-                if last_zs else "当前无已确认中枢"
+                f"{last_zs['level_label']} · ZG {last_zs['ZG']:.3f} / ZD {last_zs['ZD']:.3f}"
+                if last_zs
+                else "当前可视区无中枢"
             ),
             "chan_last_signal": (
-                f"{last_signal['kind']} · {_date(bars, last_signal['confirm_index'])}"
-                if last_signal else "暂无"
+                f"{last_seen_signal['kind']} · {last_seen_signal['level_label']} · "
+                f"{_date(bars, last_seen_signal['confirm_index'])}"
+                if last_seen_signal
+                else "暂无"
             ),
         },
         "chart": chart,
         "markers": [],
         "events": events,
         "chan": {
-            "fractals": fractal_overlay,
-            "bis": bi_overlay,
-            "segments": segment_overlay,
-            "zhongshus": zs_overlay,
+            "endpoints": endpoints,
+            "bis": bis_overlay,
+            "segments": segments_overlay,
+            "zhongshus": zhongshu_overlay,
+            "trends": trends_overlay,
             "signals": signal_overlay,
+            "levels": level_summary,
             "counts": {
-                "fractals": len(fractals),
-                "bis": len(bis),
-                "segments": len(segments),
-                "zhongshus": len(zss),
-                "signals": len(signals),
+                "raw_bars_total": len(all_bars),
+                "analysis_bars": len(bars),
+                "source_offset": source_offset,
+                "merged": len(final["merged"]),
+                "all_fractals": len(final["fractals"]),
+                "bi_endpoints": len(final["bi_points"]),
+                "bis": len(final["bis"]),
+                "segments": len(final["segments"]),
+                "levels": len(final["levels"]),
+                "zhongshus": sum(
+                    len(x["zss"]) for x in final["levels"]
+                ),
+                "first_observed_signals": len(signal_ledger),
             },
-            "display_contract_zh": "锚点用于画图；确认日用于信号列表与任何后续交易研究。",
+            "causal_replay_bars": min(
+                CHAN_CAUSAL_REPLAY_BARS,
+                len(bars),
+            ),
+            "display_contract_zh": (
+                "图上的顶/底只显示有效笔端点；笔、线段、中枢按结构锚点绘制；"
+                "B1/B2/B3/S1/S2/S3只采用逐Bar首次确认时间。"
+            ),
         },
     }
