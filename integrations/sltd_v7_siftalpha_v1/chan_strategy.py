@@ -984,6 +984,7 @@ def compute_level_signals(
     hist = macd["hist"]
     level = int(level_info["level"])
     label = str(level_info["label"])
+    canonical_level = bool(level_info.get("canonical", False))
     out: list[dict] = []
 
     def emit(
@@ -998,6 +999,7 @@ def compute_level_signals(
                 "rule_id": f"CHAN_{kind}",
                 "level": level,
                 "level_label": label,
+                "canonical_level": canonical_level,
                 "anchor_index": unit.to_index,
                 "source_confirm_index": (
                     unit.confirm_index
@@ -1281,6 +1283,12 @@ def build_structure_snapshot(bars: list[RawBar]) -> dict:
 
     signals: list[dict] = []
     for level in levels:
+        # L0 is an explicitly non-canonical Bi-overlap proxy retained for
+        # structural visualization/diagnostics only.  Formal B1/B2/B3/S1/S2/S3
+        # are emitted only from levels built on completed segment/recursive
+        # lower-level movement units.
+        if not bool(level.get("canonical", False)):
+            continue
         signals.extend(
             compute_level_signals(
                 bars,
@@ -1666,7 +1674,7 @@ def analyze_chan(
                 for group, ids in CHAN_RULES.items()
             },
             "position_policy": "CHAN_SIGNAL_ONLY_V2",
-            "position_policy_zh": "独立缠论信号；三买三卖不读取或修改任何其他策略仓位",
+            "position_policy_zh": "独立缠论信号；正式三买三卖仅来自 canonical 结构级别，L0 笔级仅作结构代理显示；不读取或修改任何其他策略仓位",
             "hard_exit": "NONE",
             "hard_exit_zh": "无外部策略退出规则",
             "display_candles": limit,
@@ -1680,7 +1688,7 @@ def analyze_chan(
                 "① K线包含处理 → 顶/底分型",
                 "② 有效分型 → 严格笔",
                 "③ 笔 → 特征序列 → 线段",
-                "④ L0笔级 + L1线段级中枢；走势类型继续递归生成更高级别",
+                "④ L0笔级中枢仅作代理显示；L1线段级起作为正式结构级别，走势类型继续递归生成更高级别",
                 "⑤ 严格同级趋势背驰 → 一买/一卖；结构高低点后的首次回试不创新极值或盘整背驰 → 二买/二卖",
                 "⑥ 离开中枢后第一次不回中枢的回试/回抽 → 三买/三卖",
                 "⑦ 所有B/S使用逐Bar FIRST_OBSERVED 首次确认时间，不用最终历史图倒推",
