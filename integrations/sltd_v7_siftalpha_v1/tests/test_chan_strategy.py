@@ -112,6 +112,14 @@ class ChanStandaloneStrategyTest(unittest.TestCase):
         self.assertIn("levels", chan)
         self.assertGreaterEqual(len(chan["levels"]), 1)
         self.assertEqual(0, chan["levels"][0]["level"])
+        self.assertFalse(chan["levels"][0]["canonical"])
+        if len(chan["levels"]) > 1:
+            self.assertTrue(chan["levels"][1]["canonical"])
+
+    def test_production_signals_exclude_l0_proxy_level(self) -> None:
+        for sig in self.payload["chan"]["signals"]:
+            self.assertTrue(sig["canonical_level"], sig)
+            self.assertGreaterEqual(int(sig["level"]), 1, sig)
 
     def test_signal_confirmation_never_precedes_anchor(self) -> None:
         date_pos = {row["date"]: i for i, row in enumerate(self.candles)}
