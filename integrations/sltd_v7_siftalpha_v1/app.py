@@ -27,6 +27,11 @@ from five_s_stocks_strategy import (
     FIVE_S_STOCKS_VERSION,
     analyze_5s_stocks,
 )
+from support_resistance_strategy import (
+    SUPPORT_RESISTANCE_RULES,
+    SUPPORT_RESISTANCE_VERSION,
+    analyze_support_resistance,
+)
 from strategy import (
     ACTIVE_RULES,
     HARD_EXIT_ID,
@@ -54,6 +59,7 @@ AVAILABLE_STRATEGIES = {
     "e": E_STRATEGY_VERSION,
     "5s_stocks": FIVE_S_STOCKS_VERSION,
     "chan": CHAN_STRATEGY_VERSION,
+    "support_resistance": SUPPORT_RESISTANCE_VERSION,
 }
 
 
@@ -106,6 +112,13 @@ def _payload_for(
         )
     elif strategy_id == "chan":
         result = analyze_chan(
+            symbol,
+            completed,
+            display_limit=DISPLAY_KLINE_LIMIT,
+            timeframe=timeframe,
+        )
+    elif strategy_id == "support_resistance":
+        result = analyze_support_resistance(
             symbol,
             completed,
             display_limit=DISPLAY_KLINE_LIMIT,
@@ -205,6 +218,9 @@ class Handler(BaseHTTPRequestHandler):
                         len(v) for v in FIVE_S_STOCKS_RULES.values()
                     ),
                     "chan_active_rules": sum(len(v) for v in CHAN_RULES.values()),
+                    "support_resistance_active_rules": sum(
+                        len(v) for v in SUPPORT_RESISTANCE_RULES.values()
+                    ),
                 },
             )
             return
