@@ -91,7 +91,7 @@ Current v2.2 implementation decisions are additionally labeled:
 | B2/S2 independence | A same-level B2/S2 can exist when a small-level-to-large-level transition means no standard same-level B1/S1 was emitted. | Lesson 53 | LATER_SOURCE_CLARIFICATION | KEEP_AS_CANONICAL in principle |
 | Standard B2/S2 | After a structural high/low, one lower-level move leaves and the next lower-level move returns; no new high/low gives S2/B2 symmetrically. | Lessons 17, 21, 53 | CANONICAL_SOURCE_CONFIRMED / LATER_SOURCE_CLARIFICATION | KEEP concept |
 | B2/S2 with consolidation divergence | The return may make a new extreme and still form B2/S2 if a valid consolidation divergence exists. | Lessons 53, 101 | LATER_SOURCE_CLARIFICATION | KEEP concept, but current implementation is too loose |
-| Current B2 consolidation-divergence proxy | v2.2 labels a weaker MACD force comparison against `prior_same` as consolidation divergence without requiring the full relevant consolidation/center geometry. | Current code vs lessons 24/53/101 | NEEDS_CORRECTION | REVISE_OVERMODIFIED |
+| Current B2 consolidation-divergence proxy | v2.2 compares the same-direction movement into the structural turn with the returned movement using MACD force. Lesson 53 permits the a/c consolidation-divergence force comparison around an implied/formed B, so the concept is source-supported; the exact MACD OR-metric remains an engineering measurement choice rather than a canonical formula. | Lessons 24, 53, 101 | ENGINEERING_CHOICE_EXPLICIT | KEEP_AS_ENGINEERING_CHOICE pending force-metric validation; do not remove the new-extreme B2/S2 case |
 | B3/S3 | A completed lower-level trend type leaves an already formed center; the first completed lower-level trend type returns; its low/high does not re-enter `ZG/ZD`. It must be the first return. | Lesson 20 | CANONICAL_SOURCE_CONFIRMED | Keep only when lower-level unit semantics are valid |
 | B3/S3 "absorbed last unit is departure" form | The source requires an already formed center, a lower-level departure, then the first lower-level return. Whether a center-forming/extension unit whose tail exits the center can simultaneously supply the departure leg depends on the exact Z-movement decomposition and is not resolved by the current generic StructUnit abstraction. | Lessons 18, 20 | ENGINEERING_CHOICE_EXPLICIT / NEEDS_SOURCE_MAPPING | DO_NOT_CHANGE_YET; first freeze canonical Z-movement mapping |
 | Anchor vs confirmation | Structural anchor and first-observed confirmation must be separate. A trading event cannot be backdated to the anchor. | Original theory's real-time uniqueness principle + causal engineering contract | ENGINEERING_CHOICE_EXPLICIT, source-consistent | KEEP |
@@ -157,13 +157,13 @@ Two recent v2.2 directions are source-supported:
 1. B2/S2 must not be hard-dependent on a previously emitted same-level B1/S1.
 2. A return that creates a new extreme may still be B2/S2 when it forms a genuine consolidation divergence.
 
-However, v2.2 currently computes the second case with a generic weaker-force comparison against `prior_same`, without requiring the structural consolidation context used by the source definition.
+Lesson 53 also explains that a/c consolidation divergence can be understood as force comparison around the center B even when that center was not yet visible at the time of a. Therefore the present prior-same vs returned force comparison is not rejected merely because it does not instantiate a separate center object first. The exact MACD metric is still an engineering choice and needs dedicated fixtures.
 
 Therefore:
 
 - `B2_S2_NO_B1_DEPENDENCY = KEEP_AS_CANONICAL`
 - `B2_S2_NEW_EXTREME_PZ_DIVERGENCE_CONCEPT = KEEP_AS_CANONICAL`
-- `CURRENT_PZ_DIVERGENCE_IMPLEMENTATION = REVISE_OVERMODIFIED`
+- `CURRENT_PZ_DIVERGENCE_FORCE_METRIC = KEEP_AS_ENGINEERING_CHOICE__NEEDS_VALIDATION`
 
 ## 8. B3/S3 audit
 
@@ -261,7 +261,6 @@ They are useful to reveal ambiguity and edge cases, but do not override the orig
 ### REVISE_OVERMODIFIED
 
 1. B1/S1 accepting `not new_extreme` as standard trend divergence.
-2. B2/S2 "consolidation divergence" being reduced to generic weaker MACD force without sufficient structural context.
 
 ### NEEDS_CORRECTION / CANNOT YET CERTIFY
 
@@ -298,10 +297,10 @@ Correct only source-confirmed mismatches in this order:
 - change only the form that becomes demonstrably inconsistent;
 - require completed lower-level departure/return semantics.
 
-### C5 — B2/S2 structural consolidation-divergence correction
+### C5 — B2/S2 force-metric validation
 - preserve independence from B1/S1;
-- preserve source-supported consolidation-divergence case;
-- require the correct consolidation/center structural context before force comparison.
+- preserve source-supported consolidation-divergence case, including new-extreme returns;
+- validate the exact MACD force proxy as an engineering measurement without turning it into a new theory eligibility gate.
 
 ### C6 — Segment canonical gate
 - enforce first-three-Bi overlap;
