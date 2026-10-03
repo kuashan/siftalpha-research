@@ -1,10 +1,11 @@
-name: SLTD V7 Support Resistance Tab
+name: SLTD V7 Shunshi Tab
 
 on:
   push:
     branches:
       - feature/sltd-v7-support-resistance-tab-v1
     paths:
+      - "integrations/shared_market_data/**"
       - "integrations/sltd_v7_siftalpha_v1/**"
       - ".github/workflows/sltd-v7-support-resistance-tab-v1.yml"
   workflow_dispatch:
@@ -30,7 +31,9 @@ jobs:
           python-version: "3.12"
 
       - name: Compile
-        run: python -m compileall -q integrations/sltd_v7_siftalpha_v1
+        run: |
+          python -m compileall -q integrations/shared_market_data
+          python -m compileall -q integrations/sltd_v7_siftalpha_v1
 
       - name: Run regression tests
         run: python -m unittest discover -s integrations/sltd_v7_siftalpha_v1/tests -v
@@ -81,19 +84,20 @@ jobs:
           rm -rf /tmp/sltd_v7_sr_package direct-import
           mkdir -p /tmp/sltd_v7_sr_package direct-import
           cp -R integrations/sltd_v7_siftalpha_v1/. /tmp/sltd_v7_sr_package/
+          cp -R integrations/shared_market_data /tmp/sltd_v7_sr_package/shared_market_data
           rm -rf /tmp/sltd_v7_sr_package/tests
           rm -rf /tmp/sltd_v7_sr_package/runtime_data
           find /tmp/sltd_v7_sr_package -type d -name __pycache__ -prune -exec rm -rf {} +
           find /tmp/sltd_v7_sr_package -type f -name '*.pyc' -delete
           cp -R /tmp/sltd_v7_sr_package/. direct-import/
           cd /tmp/sltd_v7_sr_package
-          zip -r "$GITHUB_WORKSPACE/SLTD-V7-SiftAlpha-长短支压-v1.zip" .
+          zip -r "$GITHUB_WORKSPACE/SLTD-V7-SiftAlpha-顺势-v1.zip" .
 
       - name: Verify package
         run: |
           python - <<'PY'
           import zipfile
-          z=zipfile.ZipFile("SLTD-V7-SiftAlpha-长短支压-v1.zip")
+          z=zipfile.ZipFile("SLTD-V7-SiftAlpha-顺势-v1.zip")
           names=set(z.namelist())
           required={
               "app.py",
@@ -101,6 +105,7 @@ jobs:
               "support_resistance_strategy.py",
               "data_provider.py",
               "templates/index.html",
+              "shared_market_data/__init__.py",
           }
           missing=required-names
           assert not missing, missing
@@ -109,14 +114,44 @@ jobs:
           assert "SHORT_PERIOD = 3" in sr
           assert "LONG_PERIOD = 7" in sr
           assert 'data-strategy="support_resistance"' in page
-          assert ">长短支压<" in page
-          print("SUPPORT_RESISTANCE_PACKAGE_PASS")
+          assert ">顺势<" in page
+          assert "顺势 v1" in sr
+          print("SHUNSHI_PACKAGE_PASS")
           PY
+
+      - name: Packaged web smoke
+        run: |
+          set -euo pipefail
+          rm -f /tmp/shunshi.log /tmp/shunshi.pid
+          (
+            cd /tmp/sltd_v7_sr_package
+            python app.py > /tmp/shunshi.log 2>&1 &
+            echo $! > /tmp/shunshi.pid
+          )
+          for i in $(seq 1 60); do
+            if grep -q '^SIFTALPHA_WEB_URL=' /tmp/shunshi.log; then
+              break
+            fi
+            sleep 0.25
+          done
+          cat /tmp/shunshi.log
+          url="$(sed -n 's/^SIFTALPHA_WEB_URL=//p' /tmp/shunshi.log | tail -n 1)"
+          test -n "$url"
+          python - "$url" <<'PY'
+          import json, sys, urllib.request
+          base=sys.argv[1].rstrip("/")
+          with urllib.request.urlopen(base+"/api/health", timeout=5) as r:
+              health=json.load(r)
+          assert health["ok"] is True
+          assert health["available_strategies"]["support_resistance"] == "顺势 v1"
+          print("PACKAGED_SHUNSHI_WEB_PASS", base)
+          PY
+          kill "$(cat /tmp/shunshi.pid)" || true
 
       - name: Upload direct SiftAlpha import artifact
         uses: actions/upload-artifact@v4
         with:
-          name: sltd-v7-support-resistance-tab-v1
+          name: sltd-v7-shunshi-direct-import-v1
           path: direct-import/
           include-hidden-files: true
           if-no-files-found: error
@@ -125,7 +160,7 @@ jobs:
       - name: Upload ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: sltd-v7-support-resistance-zip-v1
-          path: SLTD-V7-SiftAlpha-长短支压-v1.zip
+          name: sltd-v7-shunshi-zip-v1
+          path: SLTD-V7-SiftAlpha-顺势-v1.zip
           if-no-files-found: error
           retention-days: 30
