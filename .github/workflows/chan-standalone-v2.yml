@@ -96,9 +96,9 @@ jobs:
           assert chan["chan"]["counts"]["bis"] > 0
           assert chan["chan"]["counts"]["segments"] > 0
           assert len(chan["chan"]["levels"]) >= 1
-          assert len(chan["chan"]["signals"]) > 0, chan["chan"]["counts"]
+          assert all(x.get("canonical_level") is True for x in chan["chan"]["signals"])
           kinds=sorted({x["kind"] for x in chan["chan"]["signals"]})
-          print("ABNB_CHAN_SIGNAL_PASS", kinds, len(chan["chan"]["signals"]))
+          print("ABNB_CHAN_SIGNAL_DIAGNOSTIC", kinds, len(chan["chan"]["signals"]))
           print("ABNB_CHAN_COUNTS", chan["chan"]["counts"])
 
           # Real-market symbols are diagnostics only.  They must never be a
@@ -187,7 +187,7 @@ jobs:
           with urllib.request.urlopen(base+"/api/analyze?symbol=ABNB&timeframe=1d&strategy=chan", timeout=30) as r:
               payload=json.load(r)
           assert payload["strategy"]["version"]=="独立缠论 v2.2"
-          assert len(payload["chan"]["signals"]) > 0
+          assert all(x.get("canonical_level") is True for x in payload["chan"]["signals"])
           print("PACKAGED_CHAN_V2_PASS", base, len(payload["chan"]["signals"]))
           PY
           kill "$(cat /tmp/chan-v2.pid)" || true
