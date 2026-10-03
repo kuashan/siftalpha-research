@@ -1,0 +1,118 @@
+name: SLTD V7 Support Resistance Tab
+
+on:
+  push:
+    branches:
+      - feature/sltd-v7-support-resistance-tab-v1
+    paths:
+      - "integrations/sltd_v7_siftalpha_v1/**"
+      - ".github/workflows/sltd-v7-support-resistance-tab-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile
+        run: python -m compileall -q integrations/sltd_v7_siftalpha_v1
+
+      - name: Run regression tests
+        run: python -m unittest discover -s integrations/sltd_v7_siftalpha_v1/tests -v
+
+      - name: Health smoke
+        run: |
+          set -euo pipefail
+          (
+            cd integrations/sltd_v7_siftalpha_v1
+            python app.py > /tmp/sltd-sr.log 2>&1 &
+            echo $! > /tmp/sltd-sr.pid
+          )
+          for i in $(seq 1 40); do
+            if grep -q '^SIFTALPHA_WEB_URL=' /tmp/sltd-sr.log; then
+              break
+            fi
+            sleep 0.25
+          done
+          cat /tmp/sltd-sr.log
+          url="$(sed -n 's/^SIFTALPHA_WEB_URL=//p' /tmp/sltd-sr.log | tail -n 1)"
+          test -n "$url"
+          python - "$url" <<'PY'
+          import json, sys, urllib.request
+          url=sys.argv[1].rstrip('/')+'/api/health'
+          with urllib.request.urlopen(url, timeout=5) as r:
+              payload=json.load(r)
+          assert payload["ok"] is True
+          assert "support_resistance" in payload["available_strategies"]
+          assert payload["support_resistance_active_rules"] == 0
+          print("SUPPORT_RESISTANCE_HEALTH_PASS")
+          PY
+          kill "$(cat /tmp/sltd-sr.pid)" || true
+
+      - name: Build SiftAlpha import ZIP
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/sltd_v7_sr_package direct-import
+          mkdir -p /tmp/sltd_v7_sr_package direct-import
+          cp -R integrations/sltd_v7_siftalpha_v1/. /tmp/sltd_v7_sr_package/
+          rm -rf /tmp/sltd_v7_sr_package/tests
+          rm -rf /tmp/sltd_v7_sr_package/runtime_data
+          find /tmp/sltd_v7_sr_package -type d -name __pycache__ -prune -exec rm -rf {} +
+          find /tmp/sltd_v7_sr_package -type f -name '*.pyc' -delete
+          cp -R /tmp/sltd_v7_sr_package/. direct-import/
+          cd /tmp/sltd_v7_sr_package
+          zip -r "$GITHUB_WORKSPACE/SLTD-V7-SiftAlpha-长短支压-v1.zip" .
+
+      - name: Verify package
+        run: |
+          python - <<'PY'
+          import zipfile
+          z=zipfile.ZipFile("SLTD-V7-SiftAlpha-长短支压-v1.zip")
+          names=set(z.namelist())
+          required={
+              "app.py",
+              "strategy.py",
+              "support_resistance_strategy.py",
+              "data_provider.py",
+              "templates/index.html",
+          }
+          missing=required-names
+          assert not missing, missing
+          sr=z.read("support_resistance_strategy.py").decode("utf-8")
+          page=z.read("templates/index.html").decode("utf-8")
+          assert "SHORT_PERIOD = 3" in sr
+          assert "LONG_PERIOD = 7" in sr
+          assert 'data-strategy="support_resistance"' in page
+          assert ">长短支压<" in page
+          print("SUPPORT_RESISTANCE_PACKAGE_PASS")
+          PY
+
+      - name: Upload direct SiftAlpha import artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-v7-support-resistance-tab-v1
+          path: direct-import/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-v7-support-resistance-zip-v1
+          path: SLTD-V7-SiftAlpha-长短支压-v1.zip
+          if-no-files-found: error
+          retention-days: 30
