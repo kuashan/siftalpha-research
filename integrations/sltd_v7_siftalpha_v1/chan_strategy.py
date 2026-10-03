@@ -22,8 +22,8 @@ from math import isfinite
 from typing import Iterable, Literal
 
 CHAN_STRATEGY_ID = "chan"
-CHAN_STRATEGY_VERSION = "独立缠论 v2"
-CHAN_SOURCE = "CHAN_STANDALONE_RECONSTRUCTION_V2"
+CHAN_STRATEGY_VERSION = "独立缠论 v2.1"
+CHAN_SOURCE = "CHAN_STANDALONE_BSP_REPAIR_V2_1"
 CHAN_MIN_BARS = 120
 CHAN_ANALYSIS_MAX_BARS = 1600
 CHAN_CAUSAL_REPLAY_BARS = 480
@@ -857,6 +857,7 @@ def build_levels(
                 "zss": z0,
                 "links": link_zhongshus(z0),
                 "trends": build_trend_types(bis, z0, level=0),
+                "parent_turns": segments,
                 "canonical": False,
             }
         )
@@ -884,6 +885,7 @@ def build_levels(
                 "zss": zss,
                 "links": link_zhongshus(zss),
                 "trends": trends,
+                "parent_turns": trends,
                 "canonical": True,
             }
         )
@@ -963,7 +965,7 @@ def compute_level_signals(
     def emit(
         kind: str,
         unit: StructUnit,
-        zs: Zhongshu,
+        zs: Zhongshu | None,
         note: str,
     ) -> None:
         out.append(
@@ -979,10 +981,10 @@ def compute_level_signals(
                     else unit.end_index
                 ),
                 "price": unit.to_price,
-                "zs_start_index": zs.start_index,
-                "zs_end_index": zs.end_index,
-                "ZG": zs.zg,
-                "ZD": zs.zd,
+                "zs_start_index": zs.start_index if zs else None,
+                "zs_end_index": zs.end_index if zs else None,
+                "ZG": zs.zg if zs else None,
+                "ZD": zs.zd if zs else None,
                 "note": note,
             }
         )
@@ -1018,19 +1020,12 @@ def compute_level_signals(
             )
 
             enter_dif = _dif_extreme(enter, dif, sign)
-            pulled_near_zero = False
-            center_start = max(0, zs.start_index)
-            center_end = min(len(bars) - 1, zs.end_index)
-            for i in range(center_start, center_end + 1):
-                if down:
-                    if dif[i] >= 0.25 * enter_dif:
-                        pulled_near_zero = True
-                        break
-                else:
-                    if dif[i] <= 0.25 * enter_dif:
-                        pulled_near_zero = True
-                        break
 
+            # MACD is an auxiliary force measure, not an extra proprietary
+            # eligibility gate.  The original theory first requires a valid
+            # same-level trend structure, then compares the entering /
+            # leaving same-direction movements.  A literal numerical
+            # "0.25 x DIF" threshold is not part of the source theory.
             weaker = (
                 _movement_force(leave, hist, sign)
                 < _movement_force(enter, hist, sign)
@@ -1041,7 +1036,6 @@ def compute_level_signals(
             expected_link = "down" if down else "up"
             if (
                 new_extreme
-                and pulled_near_zero
                 and weaker
                 and zi < len(links)
                 and links[zi] == expected_link
@@ -1053,30 +1047,6 @@ def compute_level_signals(
                     zs,
                     "下跌趋势背驰" if down else "上涨趋势背驰",
                 )
-
-                # After the first-class point, the first rebound/retracement
-                # pair is the second-class test.  It must not exceed the first
-                # point's extreme.
-                second_index = zs.end_sub + 3
-                if second_index < len(units):
-                    second = units[second_index]
-                    if not second.pending:
-                        valid = (
-                            second.low > leave.low
-                            if down
-                            else second.high < leave.high
-                        )
-                        if valid:
-                            emit(
-                                "B2" if down else "S2",
-                                second,
-                                zs,
-                                (
-                                    "一买后第一次回试不创新低"
-                                    if down
-                                    else "一卖后第一次反抽不创新高"
-                                ),
-                            )
 
         # B3 / S3: the first completed return after leaving Zhongshu.
         #
@@ -1140,6 +1110,79 @@ def compute_level_signals(
                     second,
                     zs,
                     "向下离开中枢后首次回抽不升回 ZD",
+                )
+
+    # B2 / S2 are an independent same-level structure class.
+    #
+    # Source-theory point (lesson 53 / 101): after a structural low/high,
+    # one lower-level movement moves away and the following lower-level
+    # movement returns.  If that return does not create a new low/high,
+    # the endpoint is a second-class buy/sell.  A standard B1/S1 may be
+    # absent in a small-level-to-large-level transition, so B2/S2 MUST NOT
+    # be hard-dependent on a previously emitted B1/S1.
+    parent_turns: list[StructUnit] = list(level_info.get("parent_turns") or [])
+    for turn in parent_turns:
+        if turn.pending or turn.confirm_index is None:
+            continue
+
+        # Find the lower-level unit that ends at the parent turn.  The next
+        # two completed lower-level units are respectively the departure and
+        # the first return used by the second-class definition.
+        pivot = None
+        for ui, unit in enumerate(units):
+            if unit.to_index == turn.to_index:
+                pivot = ui
+                break
+        if pivot is None or pivot + 2 >= len(units):
+            continue
+
+        departure = units[pivot + 1]
+        returned = units[pivot + 2]
+        if departure.pending or returned.pending:
+            continue
+        if (
+            departure.confirm_index is None
+            or returned.confirm_index is None
+        ):
+            continue
+
+        # Attach the nearest already-formed Zhongshu only as structural
+        # context / metadata.  It is not used as an eligibility dependency.
+        context_zs = None
+        for candidate_zs in zss:
+            if (
+                not candidate_zs.pending
+                and candidate_zs.end_index <= turn.to_index
+            ):
+                context_zs = candidate_zs
+
+        if turn.direction == "down":
+            # Down parent movement ends at a structural low.  Then an up
+            # move and a down return that stays above that low -> B2.
+            if (
+                departure.direction == "up"
+                and returned.direction == "down"
+                and returned.low > turn.to_price
+            ):
+                emit(
+                    "B2",
+                    returned,
+                    context_zs,
+                    "结构低点后首次反弹完成，再次回试不创新低",
+                )
+        else:
+            # Up parent movement ends at a structural high.  Then a down
+            # move and an up return that stays below that high -> S2.
+            if (
+                departure.direction == "down"
+                and returned.direction == "up"
+                and returned.high < turn.to_price
+            ):
+                emit(
+                    "S2",
+                    returned,
+                    context_zs,
+                    "结构高点后首次回落完成，再次反抽不创新高",
                 )
 
     # Deduplicate a structural point rediscovered through overlapping scans.
@@ -1572,7 +1615,7 @@ def analyze_chan(
                 "② 有效分型 → 严格笔",
                 "③ 笔 → 特征序列 → 线段",
                 "④ L0笔级 + L1线段级中枢；走势类型继续递归生成更高级别",
-                "⑤ 趋势背驰 → 一买/一卖；第一次不创新极值回试 → 二买/二卖",
+                "⑤ 同级别趋势背驰 → 一买/一卖；结构高低点后的首次不创新极值回试 → 二买/二卖",
                 "⑥ 离开中枢后第一次不回中枢的回试/回抽 → 三买/三卖",
                 "⑦ 所有B/S使用逐Bar FIRST_OBSERVED 首次确认时间，不用最终历史图倒推",
             ],
