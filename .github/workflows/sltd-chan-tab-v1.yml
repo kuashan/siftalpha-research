@@ -1,0 +1,174 @@
+name: SLTD Chan Tab v1
+
+on:
+  push:
+    branches:
+      - feature/sltd-chan-tab-v1
+    paths:
+      - "integrations/shared_market_data/**"
+      - "integrations/sltd_v7_siftalpha_v1/**"
+      - ".github/workflows/sltd-chan-tab-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/sltd-chan-tab-v1
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile SLTD package
+        run: |
+          python -m compileall -q integrations/shared_market_data
+          python -m compileall -q integrations/sltd_v7_siftalpha_v1
+
+      - name: Frozen 5s signal engine byte parity
+        run: |
+          cmp             integrations/5s_crypto_binance_usdm_v1/strategy/frozen_signal_engine.py             integrations/sltd_v7_siftalpha_v1/five_s_signal_engine.py
+          echo "FIVE_S_SIGNAL_ENGINE_BYTE_PARITY_PASS"
+
+      - name: SLTD full regression tests
+        working-directory: integrations/sltd_v7_siftalpha_v1
+        run: |
+          python -m unittest discover -s tests -v
+
+      - name: Inline JavaScript syntax check
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          page=Path("integrations/sltd_v7_siftalpha_v1/templates/index.html").read_text(encoding="utf-8")
+          blocks=re.findall(r"<script>(.*?)</script>", page, flags=re.S)
+          assert blocks, "no inline script"
+          js=blocks[-1]
+          js=js.replace("__DEFAULT_TIMEFRAME__", "1d")
+          Path("/tmp/sltd-inline.js").write_text(js, encoding="utf-8")
+          print("INLINE_JS_EXTRACT_PASS", len(js))
+          PY
+          node --check /tmp/sltd-inline.js
+
+      - name: Live Yahoo strategy selector smoke
+        env:
+          SLTD_RUNTIME_DATA_DIR: /tmp/sltd-chan-cache
+        working-directory: integrations/sltd_v7_siftalpha_v1
+        run: |
+          python - <<'PY'
+          import app
+          for strategy_id in ("v7", "e", "5s_stocks", "chan"):
+              payload=app._payload_for(
+                  "AAPL",
+                  "1d",
+                  strategy_id=strategy_id,
+                  force_refresh=(strategy_id=="v7"),
+              )
+              assert payload["strategy"]["id"] == strategy_id
+              assert len(payload["chart"]) <= 300
+              assert payload["market_data"]["provider_id"] == "YAHOO_FINANCE_CHART"
+              if strategy_id=="chan":
+                  assert payload["strategy"]["active_rule_count"] == 6
+                  assert "chan" in payload
+                  assert "segments" in payload["chan"]
+                  assert "zhongshus" in payload["chan"]
+              print("STRATEGY_SELECTOR_PASS", strategy_id, payload["strategy"]["version"])
+          PY
+
+      - name: Build direct-import ZIP
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/sltd_chan_package
+          mkdir -p /tmp/sltd_chan_package
+          cp -R integrations/sltd_v7_siftalpha_v1/. /tmp/sltd_chan_package/
+          cp -R integrations/shared_market_data /tmp/sltd_chan_package/shared_market_data
+          rm -rf /tmp/sltd_chan_package/tests
+          rm -rf /tmp/sltd_chan_package/runtime_data
+          find /tmp/sltd_chan_package -type d -name __pycache__ -prune -exec rm -rf {} +
+          find /tmp/sltd_chan_package -type f -name '*.pyc' -delete
+          cd /tmp/sltd_chan_package
+          zip -r "$GITHUB_WORKSPACE/SLTD-统一行情-12条-E-5sStocks-缠论-v1.zip" .
+
+      - name: Verify ZIP contents
+        run: |
+          python - <<'PY'
+          import zipfile
+          name="SLTD-统一行情-12条-E-5sStocks-缠论-v1.zip"
+          with zipfile.ZipFile(name) as z:
+              names=set(z.namelist())
+              required={
+                  "app.py",
+                  "strategy.py",
+                  "e_strategy.py",
+                  "five_s_signal_engine.py",
+                  "five_s_stocks_strategy.py",
+                  "chan_strategy.py",
+                  "data_provider.py",
+                  "providers/yahoo.py",
+                  "shared_market_data/__init__.py",
+                  "templates/index.html",
+                  "requirements.txt",
+              }
+              missing=required-names
+              assert not missing, missing
+              app=z.read("app.py").decode("utf-8")
+              page=z.read("templates/index.html").decode("utf-8")
+              chan=z.read("chan_strategy.py").decode("utf-8")
+              assert '"chan": CHAN_STRATEGY_VERSION' in app
+              assert 'data-strategy="chan"' in page
+              assert "CHAN_B1" in chan and "CHAN_S3" in chan
+              assert "anchor_date" in chan and "confirm_date" in chan
+          print("SLTD_CHAN_ZIP_VERIFY_PASS")
+          PY
+
+      - name: Packaged startup smoke
+        run: |
+          set -euo pipefail
+          rm -f /tmp/sltd-chan.log /tmp/sltd-chan.pid
+          (
+            cd /tmp/sltd_chan_package
+            python app.py > /tmp/sltd-chan.log 2>&1 &
+            echo $! > /tmp/sltd-chan.pid
+          )
+          for i in $(seq 1 40); do
+            if grep -q '^SIFTALPHA_WEB_URL=' /tmp/sltd-chan.log; then
+              break
+            fi
+            sleep 0.25
+          done
+          cat /tmp/sltd-chan.log
+          url="$(sed -n 's/^SIFTALPHA_WEB_URL=//p' /tmp/sltd-chan.log | tail -n 1)"
+          test -n "$url"
+          python - "$url" <<'PY'
+          import json, sys, urllib.request
+          base=sys.argv[1].rstrip("/")
+          with urllib.request.urlopen(base+"/api/health", timeout=5) as r:
+              health=json.load(r)
+          assert health["ok"] is True
+          assert "chan" in health["available_strategies"]
+          assert health["chan_active_rules"] == 6
+          with urllib.request.urlopen(base+"/api/analyze?symbol=AAPL&timeframe=1d&strategy=chan", timeout=20) as r:
+              payload=json.load(r)
+          assert payload["strategy"]["id"]=="chan"
+          assert "chan" in payload
+          print("PACKAGED_CHAN_WEB_PASS", base)
+          PY
+          kill "$(cat /tmp/sltd-chan.pid)" || true
+
+      - name: Upload direct-import artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-12rules-e-5s-stocks-chan-v1
+          path: SLTD-统一行情-12条-E-5sStocks-缠论-v1.zip
+          if-no-files-found: error
+          retention-days: 30
