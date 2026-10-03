@@ -62,7 +62,9 @@ for path in sorted(DATA_ROOT.glob("batch_*_stocks/*.csv.gz")):
             funnel["same_direction"]+=1
             down=enter.direction=="down"; sign=-1 if down else 1
             new_extreme=(leave.low<min(enter.low,zs.dd)) if down else (leave.high>max(enter.high,zs.gg))
+            outside_center=(leave.low<zs.zd) if down else (leave.high>zs.zg)
             if new_extreme: funnel["new_extreme"]+=1
+            if outside_center: funnel["outside_center"]+=1
             enter_dif=ch._dif_extreme(enter,dif,sign)
             pulled=False
             for i in range(max(0,zs.start_index),min(len(bars)-1,zs.end_index)+1):
@@ -77,6 +79,9 @@ for path in sorted(DATA_ROOT.glob("batch_*_stocks/*.csv.gz")):
             if new_extreme and pulled and weaker:
                 funnel["divergence_geometry"]+=1
                 examples["divergence_geometry"].append((sym,info["level"],zi,"B1" if down else "S1"))
+            source_divergence = outside_center and ((not new_extreme) or weaker)
+            if source_divergence:
+                funnel["source_divergence"]+=1
             expected="down" if down else "up"
             link=(links[zi] if zi<len(links) else None)
             if link==expected: funnel["link_match"]+=1
@@ -97,6 +102,12 @@ for path in sorted(DATA_ROOT.glob("batch_*_stocks/*.csv.gz")):
                     funnel["b1s1_medium_relation"]+=1
                 if new_extreme and pulled and weaker and strict==expected:
                     funnel["b1s1_strict_relation"]+=1
+                if source_divergence and strict==expected:
+                    funnel["b1s1_source_rule_strict"]+=1
+                if source_divergence and medium==expected:
+                    funnel["b1s1_source_rule_medium"]+=1
+                if source_divergence and loose==expected:
+                    funnel["b1s1_source_rule_loose"]+=1
 
             if new_extreme and pulled and weaker and link==expected:
                 funnel["all_b1s1"]+=1
