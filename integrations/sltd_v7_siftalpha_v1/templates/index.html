@@ -607,7 +607,7 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       const pv=maxP-(maxP-minP)*k/4;ctx.fillText(formatPrice(pv),cssW-right+7,y+3);
     }
 
-    const drawPayloadLine=(m,key,stroke,dash=[],width=1)=>{
+    const drawLine=(m,key,stroke,dash=[],width=1)=>{
       ctx.save();ctx.strokeStyle=stroke;ctx.lineWidth=width;ctx.setLineDash(dash);ctx.beginPath();let started=false;
       candles.forEach((c,i)=>{const row=m.get(String(c.date))||{},v=row[key];if(v==null||v===''){started=false;return;}const n=Number(v);if(!Number.isFinite(n)){started=false;return;}const x=xAt(i),y=yPrice(n);if(!started){ctx.moveTo(x,y);started=true;}else ctx.lineTo(x,y);});
       ctx.stroke();ctx.restore();
@@ -615,14 +615,14 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
 
     if(structureId){
       const m=dateMaps[structureId];
-      drawPayloadLine(m,'GZB3','#728096',[],1);drawPayloadLine(m,'GZB4','#9ba6b7',[],1);
-      drawPayloadLine(m,'ZD1','#65c5d8',[4,3],1);drawPayloadLine(m,'ZK1','#c28bd8',[4,3],1);
-      drawPayloadLine(m,'BS','#eab464',[2,3],1);drawPayloadLine(m,'BD','#eab464',[2,3],1);
+      drawLine(m,'GZB3','#728096',[],1);drawLine(m,'GZB4','#9ba6b7',[],1);
+      drawLine(m,'ZD1','#65c5d8',[4,3],1);drawLine(m,'ZK1','#c28bd8',[4,3],1);
+      drawLine(m,'BS','#eab464',[2,3],1);drawLine(m,'BD','#eab464',[2,3],1);
     }
     if(selected.has('support_resistance')){
       const m=dateMaps.support_resistance;
-      drawPayloadLine(m,'sr_short_pressure','#52d49a',[5,4],1);drawPayloadLine(m,'sr_short_support','#ff7b82',[5,4],1);
-      drawPayloadLine(m,'sr_long_pressure','#52d49a',[],1);drawPayloadLine(m,'sr_long_support','#ff7b82',[],1);
+      drawLine(m,'sr_short_pressure','#52d49a',[5,4],1);drawLine(m,'sr_short_support','#ff7b82',[5,4],1);
+      drawLine(m,'sr_long_pressure','#52d49a',[],1);drawLine(m,'sr_long_support','#ff7b82',[],1);
     }
 
     const dateIndex=new Map(candles.map((x,i)=>[String(x.date),i]));
