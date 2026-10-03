@@ -417,7 +417,7 @@ class ChanStandaloneStrategyTest(unittest.TestCase):
         )
         z1 = chan_strategy.Zhongshu(
             level=0, unit_kind="TEST", start_sub=5, end_sub=7,
-            zg=29, zd=21, gg=31, dd=20,
+            zg=29, zd=25, gg=31, dd=20,
             start_index=50, end_index=79, confirm_index=79,
             count=3, pending=False, upgraded=False,
         )
