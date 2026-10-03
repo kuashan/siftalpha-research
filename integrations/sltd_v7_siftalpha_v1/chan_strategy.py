@@ -662,14 +662,18 @@ def build_zhongshus(
                 else None
             )
 
-            if current_touch:
+            # A unit that touches the Zhongshu but is immediately followed by
+            # a one-way non-return is treated as the departure, not absorbed
+            # into the Zhongshu.  This prevents a valid trend from being
+            # swallowed into one giant center.
+            if current_touch and next_touch is not False:
                 end = j
-                if next_touch is False:
-                    break
                 j += 1
                 continue
 
-            if next_touch is True:
+            # A single excursion outside that is immediately pulled back is
+            # still part of the Zhongshu extension.
+            if (not current_touch) and next_touch is True:
                 end = j + 1
                 j += 2
                 continue
@@ -677,7 +681,7 @@ def build_zhongshus(
             break
 
         chunk = subs[i : end + 1]
-        pending = end >= len(subs) - 1
+        pending = end + 1 >= len(subs)
         out.append(
             Zhongshu(
                 level=level,
