@@ -38,6 +38,8 @@ for path in sorted(DATA_ROOT.glob("batch_*_stocks/*.csv.gz")):
 
     funnel=Counter()
     kind_final=Counter(x["kind"] for x in snap["signals"])
+    visible_start=max(0,len(bars)-300)
+    kind_visible=Counter(x["kind"] for x in snap["signals"] if int(x["anchor_index"])>=visible_start)
 
     for info in snap["levels"]:
         units=info["units"]; zss=info["zss"]; links=info["links"]
@@ -103,11 +105,13 @@ for path in sorted(DATA_ROOT.glob("batch_*_stocks/*.csv.gz")):
     replay_counts=Counter()
     per[sym]={
         "final":dict(kind_final),
+        "visible300":dict(kind_visible),
         "replay":{},
         "funnel":dict(funnel),
         "levels":[{"level":x["level"],"zss":len(x["zss"]),"links":x["links"]} for x in snap["levels"]],
     }
     tot.update({f"final_{k}":v for k,v in kind_final.items()})
+    tot.update({f"visible300_{k}":v for k,v in kind_visible.items()})
     tot.update(funnel)
 
 out={"totals":dict(tot),"examples":{k:v[:40] for k,v in examples.items()},"per_symbol":per}
