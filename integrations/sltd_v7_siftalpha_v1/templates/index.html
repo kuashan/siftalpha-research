@@ -404,10 +404,10 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       items.push('<span class="legend-tag"><i class="legend-dot legend-chan-sell"></i>缠论 BSP</span>');
     }
     if(selected.has('support_resistance')){
-      items.push('<span class="legend-tag"><i class="legend-line sr-pressure sr-short"></i>顺势 短压</span>');
-      items.push('<span class="legend-tag"><i class="legend-line sr-support sr-short"></i>顺势 短支</span>');
-      items.push('<span class="legend-tag"><i class="legend-line sr-pressure sr-long"></i>顺势 长压</span>');
-      items.push('<span class="legend-tag"><i class="legend-line sr-support sr-long"></i>顺势 长支</span>');
+      items.push('<span class="legend-tag"><i class="legend-line sr-pressure sr-short"></i>短压 · 绿虚线</span>');
+      items.push('<span class="legend-tag"><i class="legend-line sr-support sr-short"></i>短支 · 红虚线</span>');
+      items.push('<span class="legend-tag"><i class="legend-line sr-pressure sr-long"></i>长压 · 绿实线</span>');
+      items.push('<span class="legend-tag"><i class="legend-line sr-support sr-long"></i>长支 · 红实线</span>');
     }
     legend.innerHTML=items.join('');
   }
