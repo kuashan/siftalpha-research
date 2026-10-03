@@ -60,6 +60,7 @@ jobs:
             ! -name CommonStockAPI.py \
             ! -name __init__.py \
             -exec rm -rf {} +
+          printf '%s\n' 'Vespa314/chan.py' '429d6ed3043e27c93a003ba2b10e70a05575e1f5' > "$vendor/UPSTREAM_PIN.txt"
           echo "CHANPY_VENDOR_READY=$(find "$vendor" -type f | wc -l)"
 
       - name: Compile
