@@ -78,6 +78,24 @@ for path in sorted(DATA_ROOT.glob("batch_*_stocks/*.csv.gz")):
             expected="down" if down else "up"
             link=(links[zi] if zi<len(links) else None)
             if link==expected: funnel["link_match"]+=1
+
+            # Compare three common Zhongshu-position relations.
+            if zi > 0:
+                prev=zss[zi-1]
+                cur=zs
+                loose = "up" if cur.zd > prev.zg else "down" if cur.zg < prev.zd else "overlap"
+                medium = "up" if cur.zd > prev.gg else "down" if cur.zg < prev.dd else "overlap"
+                strict = "up" if cur.dd > prev.gg else "down" if cur.gg < prev.dd else "overlap"
+                if loose==expected: funnel["link_loose_match"]+=1
+                if medium==expected: funnel["link_medium_match"]+=1
+                if strict==expected: funnel["link_strict_match"]+=1
+                if new_extreme and pulled and weaker and loose==expected:
+                    funnel["b1s1_loose_relation"]+=1
+                if new_extreme and pulled and weaker and medium==expected:
+                    funnel["b1s1_medium_relation"]+=1
+                if new_extreme and pulled and weaker and strict==expected:
+                    funnel["b1s1_strict_relation"]+=1
+
             if new_extreme and pulled and weaker and link==expected:
                 funnel["all_b1s1"]+=1
                 examples["all_b1s1"].append((sym,info["level"],zi,"B1" if down else "S1"))
