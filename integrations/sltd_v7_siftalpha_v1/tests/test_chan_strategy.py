@@ -84,7 +84,7 @@ class ChanStandaloneStrategyTest(unittest.TestCase):
         p = self.payload
         self.assertEqual("chan", p["strategy"]["id"])
         self.assertEqual("缠论", p["strategy"]["selector_label"])
-        self.assertEqual("独立缠论 v2", p["strategy"]["version"])
+        self.assertEqual("独立缠论 v2.1", p["strategy"]["version"])
         self.assertEqual(6, p["strategy"]["active_rule_count"])
         self.assertEqual(
             "CHAN_SIGNAL_ONLY_V2",
@@ -251,6 +251,199 @@ class ChanStandaloneStrategyTest(unittest.TestCase):
             any(x["kind"] == "B3" for x in sig),
             sig,
         )
+
+
+    def _signal_fixture_bars(self, n: int = 140):
+        return [
+            chan_strategy.RawBar(
+                date=f"{2020 + i // 360:04d}-{(i // 30) % 12 + 1:02d}-{i % 28 + 1:02d}",
+                open=10.0,
+                high=11.0,
+                low=9.0,
+                close=10.0,
+                volume=1.0,
+                index=i,
+            )
+            for i in range(n)
+        ]
+
+    def test_standard_uptrend_divergence_emits_s1(self) -> None:
+        units = [
+            U("up", 5, 20, 0),
+            U("down", 20, 12, 1),
+            U("up", 12, 22, 2),
+            U("down", 22, 14, 3),
+            U("up", 14, 45, 4),   # b: enter second center
+            U("down", 45, 34, 5),
+            U("up", 34, 44, 6),
+            U("down", 44, 36, 7),
+            U("up", 36, 50, 8),   # c: new high, weaker
+        ]
+        z0 = chan_strategy.Zhongshu(
+            level=0, unit_kind="TEST", start_sub=1, end_sub=3,
+            zg=18, zd=14, gg=22, dd=12,
+            start_index=10, end_index=39, confirm_index=39,
+            count=3, pending=False, upgraded=False,
+        )
+        z1 = chan_strategy.Zhongshu(
+            level=0, unit_kind="TEST", start_sub=5, end_sub=7,
+            zg=40, zd=36, gg=44, dd=34,
+            start_index=50, end_index=79, confirm_index=79,
+            count=3, pending=False, upgraded=False,
+        )
+        hist = [0.0] * 140
+        dif = [0.0] * 140
+        for i in range(units[4].start_index, units[4].end_index + 1):
+            hist[i] = 2.0
+            dif[i] = 2.0
+        for i in range(units[8].start_index, units[8].end_index + 1):
+            hist[i] = 0.5
+            dif[i] = 0.8
+        level = {
+            "level": 0,
+            "label": "L0 测试",
+            "units": units,
+            "zss": [z0, z1],
+            "links": [None, "up"],
+            "parent_turns": [],
+        }
+        sig = chan_strategy.compute_level_signals(
+            self._signal_fixture_bars(),
+            level,
+            {"dif": dif, "dea": [0.0] * 140, "hist": hist},
+        )
+        self.assertTrue(any(x["kind"] == "S1" for x in sig), sig)
+
+    def test_standard_downtrend_divergence_emits_b1(self) -> None:
+        units = [
+            U("down", 60, 45, 0),
+            U("up", 45, 53, 1),
+            U("down", 53, 43, 2),
+            U("up", 43, 51, 3),
+            U("down", 51, 20, 4),  # b
+            U("up", 20, 31, 5),
+            U("down", 31, 21, 6),
+            U("up", 21, 29, 7),
+            U("down", 29, 15, 8),  # c: new low, weaker
+        ]
+        z0 = chan_strategy.Zhongshu(
+            level=0, unit_kind="TEST", start_sub=1, end_sub=3,
+            zg=51, zd=45, gg=53, dd=43,
+            start_index=10, end_index=39, confirm_index=39,
+            count=3, pending=False, upgraded=False,
+        )
+        z1 = chan_strategy.Zhongshu(
+            level=0, unit_kind="TEST", start_sub=5, end_sub=7,
+            zg=29, zd=21, gg=31, dd=20,
+            start_index=50, end_index=79, confirm_index=79,
+            count=3, pending=False, upgraded=False,
+        )
+        hist = [0.0] * 140
+        dif = [0.0] * 140
+        for i in range(units[4].start_index, units[4].end_index + 1):
+            hist[i] = -2.0
+            dif[i] = -2.0
+        for i in range(units[8].start_index, units[8].end_index + 1):
+            hist[i] = -0.5
+            dif[i] = -0.8
+        level = {
+            "level": 0,
+            "label": "L0 测试",
+            "units": units,
+            "zss": [z0, z1],
+            "links": [None, "down"],
+            "parent_turns": [],
+        }
+        sig = chan_strategy.compute_level_signals(
+            self._signal_fixture_bars(),
+            level,
+            {"dif": dif, "dea": [0.0] * 140, "hist": hist},
+        )
+        self.assertTrue(any(x["kind"] == "B1" for x in sig), sig)
+
+    def test_b2_does_not_require_a_b1(self) -> None:
+        units = [
+            U("up", 20, 30, 0),
+            U("down", 30, 18, 1),
+            U("down", 18, 10, 2),  # parent low endpoint
+            U("up", 10, 22, 3),
+            U("down", 22, 13, 4),  # first return, no new low
+            U("up", 13, 25, 5),
+        ]
+        turn = chan_strategy.StructUnit(
+            direction="down",
+            from_index=units[0].from_index,
+            from_price=30,
+            to_index=units[2].to_index,
+            to_price=10,
+            high=30,
+            low=10,
+            start_index=units[0].start_index,
+            end_index=units[2].end_index,
+            confirm_index=units[2].confirm_index,
+            pending=False,
+            count=3,
+            kind="SEGMENT",
+            source_start=0,
+            source_end=2,
+        )
+        level = {
+            "level": 0,
+            "label": "L0 测试",
+            "units": units,
+            "zss": [],
+            "links": [],
+            "parent_turns": [turn],
+        }
+        sig = chan_strategy.compute_level_signals(
+            self._signal_fixture_bars(),
+            level,
+            {"dif": [0.0] * 140, "dea": [0.0] * 140, "hist": [0.0] * 140},
+        )
+        self.assertTrue(any(x["kind"] == "B2" for x in sig), sig)
+        self.assertFalse(any(x["kind"] == "B1" for x in sig), sig)
+
+    def test_s2_does_not_require_an_s1(self) -> None:
+        units = [
+            U("down", 30, 20, 0),
+            U("up", 20, 32, 1),
+            U("up", 32, 40, 2),    # parent high endpoint
+            U("down", 40, 28, 3),
+            U("up", 28, 37, 4),    # first return, no new high
+            U("down", 37, 24, 5),
+        ]
+        turn = chan_strategy.StructUnit(
+            direction="up",
+            from_index=units[0].from_index,
+            from_price=20,
+            to_index=units[2].to_index,
+            to_price=40,
+            high=40,
+            low=20,
+            start_index=units[0].start_index,
+            end_index=units[2].end_index,
+            confirm_index=units[2].confirm_index,
+            pending=False,
+            count=3,
+            kind="SEGMENT",
+            source_start=0,
+            source_end=2,
+        )
+        level = {
+            "level": 0,
+            "label": "L0 测试",
+            "units": units,
+            "zss": [],
+            "links": [],
+            "parent_turns": [turn],
+        }
+        sig = chan_strategy.compute_level_signals(
+            self._signal_fixture_bars(),
+            level,
+            {"dif": [0.0] * 140, "dea": [0.0] * 140, "hist": [0.0] * 140},
+        )
+        self.assertTrue(any(x["kind"] == "S2" for x in sig), sig)
+        self.assertFalse(any(x["kind"] == "S1" for x in sig), sig)
 
     def test_app_selector_accepts_chan(self) -> None:
         self.assertEqual("chan", app.normalize_strategy("chan"))
