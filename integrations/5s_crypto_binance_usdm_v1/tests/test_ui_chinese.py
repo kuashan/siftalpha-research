@@ -27,7 +27,7 @@ class ChineseUiTests(unittest.TestCase):
             "接口私钥",
             "币种策略",
             "策略总盈亏",
-            "5s crypto v 1",
+            "Siftalpha crypto V5",
         ]
         for phrase in required:
             self.assertIn(phrase, text)
@@ -66,6 +66,13 @@ class ChineseUiTests(unittest.TestCase):
         self.assertIn("live-price-value", text)
         self.assertIn("chart-ohlc", text)
         self.assertIn("@ticker", text)
+        self.assertIn("}, 1000);", text)
+        self.assertNotIn("}, 30000);", text)
+        self.assertIn(".kline-chart{display:block;width:100%;height:416px", text)
+        self.assertIn("panes[0]?.setHeight(264)", text)
+        self.assertNotIn("chart-candle-meta", text)
+        self.assertNotIn("chart-candle-meta", app_text)
+        self.assertNotIn("最新 K 线 ·", text)
         self.assertIn("data-ohlc", app_text)
         self.assertNotIn("最近 {DISPLAY_KLINE_LIMIT} 根", app_text)
         self.assertIn("U本位永续", app_text)
@@ -78,6 +85,14 @@ class ChineseUiTests(unittest.TestCase):
         self.assertIn("data-timeframe-option", text)
 
         self.assertEqual(app_text.count("snapshot-grid snapshot-above-chart"), 1)
+        for label in ("保证金比率", "开仓价格", "强平价格"):
+            self.assertIn(label, app_text)
+        self.assertIn("逐仓保证金管理", app_text)
+        self.assertIn('action="/position-margin"', app_text)
+        self.assertIn('value="add">追加保证金', app_text)
+        self.assertIn('value="reduce">减少保证金', app_text)
+        self.assertIn("与策略资金独立", app_text)
+        self.assertIn(".snapshot{padding:4px 5px}", text)
         self.assertLess(app_text.index("snapshot-above-chart"), app_text.index('class="market-chart"'))
         self.assertIn("list_trade_markers", app_text)
         self.assertIn("STRATEGY_SSSS", app_text)
