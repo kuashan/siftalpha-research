@@ -7,7 +7,6 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlparse
 
 from charting import DISPLAY_KLINE_LIMIT, normalize_chart_klines
-from datetime import datetime, timezone
 from config import Settings
 from engine.paper import preview_exposure
 from engine.execution import M3Executor
@@ -23,7 +22,6 @@ from strategy.registry import (
     strategy_options,
     strategy_signal_label,
 )
-from strategy.e_strategy import analyze_e
 from strategy.ssss_strategy import chart_overlay as ssss_chart_overlay, source_sha256 as ssss_source_sha256
 
 
@@ -140,86 +138,6 @@ def run_m4_recovery() -> dict[str, object]:
             except Exception as exc:
                 store.append_audit("M4_ACCOUNTING_REFRESH_ERROR", symbol, f"{type(exc).__name__}:{exc}")
     return summary
-
-
-def _analysis_candles(rows: list[object]) -> list[dict[str, object]]:
-    out: list[dict[str, object]] = []
-    for row in rows:
-        if not isinstance(row, (list, tuple)) or len(row) < 6:
-            continue
-        open_time = int(row[0])
-        out.append(
-            {
-                "date": datetime.fromtimestamp(open_time / 1000.0, tz=timezone.utc).isoformat(),
-                "open_time": open_time,
-                "open": float(row[1]),
-                "high": float(row[2]),
-                "low": float(row[3]),
-                "close": float(row[4]),
-                "volume": float(row[5]),
-            }
-        )
-    return out
-
-
-def _e_chart_analysis(symbol: str, timeframe: str, rows: list[object]) -> dict[str, object]:
-    closed_rows = rows[:-1] if len(rows) >= 2 else []
-    candles = _analysis_candles(closed_rows)
-    result = analyze_e(
-        symbol,
-        candles,
-        display_limit=DISPLAY_KLINE_LIMIT,
-        timeframe=timeframe,
-        market_meta={"exchange_timezone": "UTC", "continuous_24_7": True},
-    )
-
-    date_to_open = {str(x["date"]): int(x["open_time"]) for x in candles}
-    overlay: list[dict[str, object]] = []
-    for row in result.get("chart") or []:
-        open_time = date_to_open.get(str(row.get("date")))
-        if open_time is None:
-            continue
-        overlay.append(
-            {
-                "open_time": open_time,
-                "state": row.get("state"),
-                "ZK1": row.get("ZK1"),
-                "ZD1": row.get("ZD1"),
-                "GZB3": row.get("GZB3"),
-                "GZB4": row.get("GZB4"),
-                "BS": row.get("BS"),
-                "position": row.get("position"),
-            }
-        )
-
-    markers: list[dict[str, object]] = []
-    for marker in result.get("markers") or []:
-        open_time = date_to_open.get(str(marker.get("execution_date")))
-        if open_time is None:
-            continue
-        side = str(marker.get("side") or "")
-        markers.append(
-            {
-                "open_time": open_time,
-                "side": side,
-                "signal": "/".join(marker.get("rule_ids") or []),
-                "source": "E_HISTORY",
-            }
-        )
-
-    snapshot = result.get("snapshot") or {}
-    return {
-        "overlay": overlay,
-        "markers": markers,
-        "snapshot": {
-            "state_zh": snapshot.get("state_zh"),
-            "resolved_action_zh": snapshot.get("resolved_action_zh"),
-            "risk_state_zh": snapshot.get("risk_state_zh"),
-            "next_action": snapshot.get("next_action"),
-            "higher_timeframe": snapshot.get("higher_timeframe"),
-            "higher_below_ZD1": snapshot.get("higher_below_ZD1"),
-        },
-    }
 
 
 def _ssss_chart_analysis(rows: list[object]) -> dict[str, object]:
