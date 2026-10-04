@@ -15,19 +15,80 @@ permissions:
 jobs:
   package:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: integrations/sltd_v7_siftalpha_v1
 
-      - name: Build flat project ZIP
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Binance runtime dependency
+        run: pip install -q binance-sdk-derivatives-trading-usds-futures==17.5.0
+
+      - name: Vendor pinned full ChanPy runtime
         run: |
           set -euo pipefail
-          rm -rf package dist
-          mkdir -p package dist
+          vendor="integrations/sltd_v7_siftalpha_v1/vendor/chanpy"
+          rm -rf "$vendor"
+          mkdir -p "$(dirname "$vendor")"
+          git clone --quiet https://github.com/Vespa314/chan.py.git "$vendor"
+          git -C "$vendor" checkout --quiet 429d6ed3043e27c93a003ba2b10e70a05575e1f5
+          test "$(git -C "$vendor" rev-parse HEAD)" = "429d6ed3043e27c93a003ba2b10e70a05575e1f5"
+          rm -rf "$vendor/.git"
+          printf '%s\n' 'Vespa314/chan.py' '429d6ed3043e27c93a003ba2b10e70a05575e1f5' > "$vendor/UPSTREAM_PIN.txt"
 
-          cp -a integrations/sltd_v7_siftalpha_v1/. package/
-          cp -a integrations/shared_market_data package/shared_market_data
+      - name: Compile project
+        run: |
+          python -m compileall -q integrations/shared_market_data
+          python -m compileall -q integrations/sltd_v7_siftalpha_v1
+
+      - name: Run regressions
+        working-directory: integrations/sltd_v7_siftalpha_v1
+        run: |
+          python -m unittest             tests.test_binance_demo_foundation             tests.test_regression             tests.test_5s_stocks_and_marketdata             tests.test_chan_strategy             tests.test_support_resistance_strategy -v
+
+      - name: Build full direct-import ZIP
+        run: |
+          set -euo pipefail
+          src="integrations/sltd_v7_siftalpha_v1"
+          out="/tmp/sltd_v7_binance_demo_package"
+          rm -rf "$out" dist
+          mkdir -p "$out" dist
+
+          cp "$src/app.py" "$out/"
+          cp "$src/strategy.py" "$out/"
+          cp "$src/e_strategy.py" "$out/"
+          cp "$src/five_s_signal_engine.py" "$out/"
+          cp "$src/five_s_stocks_strategy.py" "$out/"
+          cp "$src/chan_strategy.py" "$out/"
+          cp "$src/support_resistance_strategy.py" "$out/"
+          cp "$src/sltd_exit_stack.py" "$out/"
+          cp "$src/data_provider.py" "$out/"
+          cp "$src/requirements.txt" "$out/"
+
+          cp "$src/binance_demo_controller.py" "$out/"
+          cp "$src/binance_demo_exchange.py" "$out/"
+          cp "$src/binance_demo_executor.py" "$out/"
+          cp "$src/binance_demo_live_strategies.py" "$out/"
+          cp "$src/binance_demo_session.py" "$out/"
+          cp "$src/binance_demo_store.py" "$out/"
+
+          cp -R "$src/providers" "$out/providers"
+          cp -R "$src/templates" "$out/templates"
+          cp -R "$src/vendor" "$out/vendor"
+          cp -R integrations/shared_market_data "$out/shared_market_data"
+
+          if [ -f "$src/README.md" ]; then cp "$src/README.md" "$out/"; fi
+          if [ -f "$src/E_STRATEGY_SPEC_v1.md" ]; then cp "$src/E_STRATEGY_SPEC_v1.md" "$out/"; fi
+          if [ -f "$src/BINANCE_USDM_DEMO_V1_BOUNDARY.md" ]; then cp "$src/BINANCE_USDM_DEMO_V1_BOUNDARY.md" "$out/"; fi
 
           printf '%s\n' \
             'Branch: feature/sltd-v7-binance-usdm-demo-v1' \
@@ -35,36 +96,50 @@ jobs:
             'Status: IMPLEMENTED_AND_VERIFIED' \
             'Package layout: FLAT_PROJECT_ROOT' \
             'Entry point: app.py' \
+            'ChanPy: Vespa314/chan.py@429d6ed3043e27c93a003ba2b10e70a05575e1f5' \
             'Binance timestamp contract: NATIVE_MILLISECONDS_VERIFIED' \
-            > package/PACKAGE_INFO.txt
+            > "$out/PACKAGE_INFO.txt"
 
-          test -f package/app.py
-          test -f package/requirements.txt
-          test -d package/templates
-          test -d package/providers
-          test -d package/vendor
-          test -d package/shared_market_data
+          (cd "$out" && zip -qr "$GITHUB_WORKSPACE/dist/SiftAlpha-V7-Binance-Demo.zip" .)
 
-          (cd package && zip -qr ../dist/SiftAlpha-V7-Binance-Demo.zip .)
-
+      - name: Verify full package contract
+        run: |
+          set -euo pipefail
           python - <<'PY'
-          import zipfile
+          import os, zipfile
           p='dist/SiftAlpha-V7-Binance-Demo.zip'
+          size=os.path.getsize(p)
+          assert size > 5_000_000, f'package unexpectedly small: {size}'
           with zipfile.ZipFile(p) as z:
               names=set(z.namelist())
-              required={'app.py','requirements.txt','PACKAGE_INFO.txt'}
+              required={
+                  'app.py',
+                  'requirements.txt',
+                  'templates/index.html',
+                  'shared_market_data/__init__.py',
+                  'vendor/chanpy/Chan.py',
+                  'vendor/chanpy/ChanConfig.py',
+                  'vendor/chanpy/Image/chan.py_image_6.gif',
+                  'vendor/chanpy/App/ashare_bsp_scanner_gui.py',
+                  'vendor/chanpy/UPSTREAM_PIN.txt',
+                  'binance_demo_controller.py',
+                  'binance_demo_exchange.py',
+                  'binance_demo_executor.py',
+                  'binance_demo_live_strategies.py',
+                  'binance_demo_session.py',
+                  'binance_demo_store.py',
+                  'providers/binance_usdm.py',
+              }
               missing=sorted(required-names)
-              if missing:
-                  raise SystemExit(f'ZIP root contract failed, missing: {missing}')
-              bad=[x for x in names if x.startswith('SiftAlpha-V7-Binance-Demo/') or x.startswith('integrations/')]
-              if bad:
-                  raise SystemExit(f'ZIP has forbidden outer wrapper: {bad[:5]}')
-              print('FLAT_ZIP_ROOT_PASS')
+              assert not missing, missing
+              forbidden=[n for n in names if n.startswith('SiftAlpha-V7-Binance-Demo/') or n.startswith('integrations/')]
+              assert not forbidden, forbidden[:5]
+              assert z.getinfo('vendor/chanpy/Image/chan.py_image_6.gif').file_size > 1_000_000
+              print('FULL_DIRECT_IMPORT_PACKAGE_PASS', size)
           PY
-
           sha256sum dist/SiftAlpha-V7-Binance-Demo.zip > dist/SiftAlpha-V7-Binance-Demo.zip.sha256
 
-      - name: Commit ZIP
+      - name: Commit full ZIP
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
@@ -74,13 +149,14 @@ jobs:
           cp dist/SiftAlpha-V7-Binance-Demo.zip.sha256 releases/sltd-v7-binance-demo/
           git add releases/sltd-v7-binance-demo
           if ! git diff --cached --quiet; then
-            git commit -m "build: package flat V7 Binance Demo ZIP"
+            git commit -m "build: package full V7 Binance Demo direct-import ZIP"
             git pull --rebase origin feature/sltd-v7-binance-usdm-demo-v1
             git push origin HEAD:feature/sltd-v7-binance-usdm-demo-v1
           fi
 
       - uses: actions/upload-artifact@v4
         with:
-          name: SiftAlpha-V7-Binance-Demo
+          name: SiftAlpha-V7-Binance-Demo-full-direct-import
           path: dist/*
+          if-no-files-found: error
           retention-days: 30
