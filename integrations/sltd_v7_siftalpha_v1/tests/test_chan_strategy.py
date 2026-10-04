@@ -128,15 +128,18 @@ class ChanUpstreamAdapterTest(unittest.TestCase):
         self.assertIn("chanSignals = get('chan')?.chan?.signals || []", workspace)
         self.assertIn("'缠' + String(s.kind || '')", workspace)
 
-    def test_sltd_restores_state_band_and_embeds_chan_signals(self) -> None:
+    def test_sltd_is_pure_and_chan_remains_independent(self) -> None:
         page = PAGE.read_text(encoding="utf-8")
         workspace = (PROJECT / "static" / "kline_workspace.js").read_text(encoding="utf-8")
         app_source = (PROJECT / "app.py").read_text(encoding="utf-8")
         self.assertEqual(500, app.DISPLAY_KLINE_LIMIT)
         self.assertIn('aria-label="SLTD 三色状态"', page)
         self.assertIn("STATE_COLORS", workspace)
-        self.assertIn("chan_signal_overlay", workspace)
-        self.assertIn('result["chan_signal_overlay"]', app_source)
+        self.assertNotIn("chan_signal_overlay", workspace)
+        self.assertNotIn('result["chan_signal_overlay"]', app_source)
+        self.assertNotIn("SLTD 内置缠论 BSP", page)
+        self.assertIn("selected.has('chan')", workspace)
+        self.assertIn('data-strategy="chan"', page)
         self.assertIn('"chan": CHAN_STRATEGY_VERSION', app_source)
 
     def test_shunshi_long_lines_remain_width_one(self) -> None:
