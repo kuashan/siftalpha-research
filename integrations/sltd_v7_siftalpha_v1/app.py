@@ -127,29 +127,15 @@ def _payload_for(
             timeframe=timeframe,
         )
     else:
+        # Keep SLTD pure: V7 contains only its own frozen structure,
+        # signals, position policy and C2 exit. Chan remains an independent
+        # selectable strategy and is never injected into the SLTD payload.
         result = analyze(
             symbol,
             completed,
             display_limit=DISPLAY_KLINE_LIMIT,
             timeframe=timeframe,
         )
-        # SLTD keeps its own structure/position model, but also exposes the
-        # already-adopted chan.py BSP layer as signal-only annotations.
-        # The independent Chan strategy remains available with full
-        # Bi/Segment/Zhongshu structure rendering.
-        chan_overlay = analyze_chan(
-            symbol,
-            completed,
-            display_limit=DISPLAY_KLINE_LIMIT,
-            timeframe=timeframe,
-        )
-        chan_payload = dict(chan_overlay.get("chan") or {})
-        result["chan_signal_overlay"] = list(chan_payload.get("signals") or [])
-        result["chan_signal_overlay_meta"] = {
-            "engine": chan_payload.get("engine"),
-            "upstream_sha": chan_payload.get("upstream_sha"),
-            "mode": "SIGNALS_ONLY_NO_STRUCTURE_LINES",
-        }
     result["forming_bar"] = forming
     result["market_data"] = market_meta
     result["market_data"]["analysis_cache"] = False
