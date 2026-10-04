@@ -117,6 +117,15 @@ def _zone(market_meta: dict | None):
         return timezone.utc
 
 
+def _open_time_epoch_seconds(value: int | float) -> float:
+    """Convert only for calendar/timezone bucketing; preserve source open_time elsewhere.
+
+    Binance uses epoch milliseconds. Existing stock providers use epoch seconds.
+    """
+    raw = float(value)
+    return raw / 1000.0 if abs(raw) >= 10_000_000_000 else raw
+
+
 def _aggregate_chunk(chunk: list[tuple[int, dict]], label: str) -> dict:
     first_i, first = chunk[0]
     last_i, last = chunk[-1]
@@ -143,7 +152,7 @@ def _aggregate_intraday_factor(
     tz = _zone(market_meta)
     by_day: dict[object, list[tuple[int, dict]]] = {}
     for i, bar in enumerate(bars):
-        day = datetime.fromtimestamp(int(bar["open_time"]), tz=tz).date()
+        day = datetime.fromtimestamp(_open_time_epoch_seconds(bar["open_time"]), tz=tz).date()
         by_day.setdefault(day, []).append((i, bar))
 
     if not by_day:
