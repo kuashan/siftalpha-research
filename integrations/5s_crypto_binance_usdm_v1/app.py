@@ -49,6 +49,7 @@ strategy_scheduler = StrategyScheduler(
     allowed_timeframes=settings.allowed_timeframes,
     on_decision=m3_executor.execute,
     on_poll=m3_executor.refresh_accounting,
+    market_data=probe,
 )
 TEMPLATE = (Path(__file__).parent / "templates" / "index.html").read_text(encoding="utf-8")
 
