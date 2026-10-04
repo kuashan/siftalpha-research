@@ -343,6 +343,8 @@ class M4Recovery:
             base = symbol[:-4] if symbol.endswith("USDT") else symbol
             prefix = get_spec(strategy_id).order_prefix
             client_id = f"{prefix}-{base}-{int(time.time() * 1000)}-EMG"
+            bars = adapter.klines(symbol, str(cfg["timeframe"]), limit=2)
+            execution_bar = int(bars[-1][0]) if isinstance(bars, list) and bars else int(time.time() * 1000)
             self.store.begin_order(
                 symbol,
                 client_id,
@@ -352,6 +354,10 @@ class M4Recovery:
                 strategy_id=strategy_id,
                 target_fraction_after=0.0,
                 strategy_state_after={},
+                signal_bar_open_time=execution_bar,
+                execution_bar_open_time=execution_bar,
+                marker_side="X",
+                strategy_signal="EMERGENCY_FLAT",
             )
             order = adapter.submit_market_sell_reduce_only(
                 symbol, quantity=quantity, client_order_id=client_id
