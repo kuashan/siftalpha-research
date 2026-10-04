@@ -10,6 +10,7 @@ import tempfile
 import unittest
 
 from engine.execution import M3Executor
+from engine.scheduler import StrategyScheduler
 from exchange.binance_usdm_testnet import SymbolRules
 from storage import StateStore
 from strategy.registry import (
@@ -175,7 +176,7 @@ class SSSSTradingRuleTests(unittest.TestCase):
         self.assertEqual(decision.steps, ())
 
     @patch("strategy.registry.ssss_strategy.evaluate_ssss")
-    def test_person_icon_full_exit_has_same_bar_priority(self, mocked):
+    def test_explosion_icon_full_exit_has_same_bar_priority(self, mocked):
         mocked.return_value = [fake_bar(buy=True, exit_=True)]
         decision = decide_ssss([], {"current_fraction": 0.75}, "15m")
         self.assertEqual(decision.signal, "SSSS_EXIT_15")
@@ -212,7 +213,7 @@ class SSSSExecutionTests(unittest.TestCase):
             },
         )
 
-    def test_filled_money_buy_and_person_exit_leave_b_and_x(self):
+    def test_filled_money_buy_and_explosion_exit_leave_b_and_x(self):
         buy = StrategyDecision(
             strategy_id=STRATEGY_SSSS,
             signal="SSSS_BUY_9",
@@ -260,6 +261,110 @@ class SSSSExecutionTests(unittest.TestCase):
         self.assertTrue(all(x["strategy_id"] == STRATEGY_SSSS for x in orders))
         self.assertTrue(all(str(x["client_order_id"]).startswith("ssss-BTC-") for x in orders))
         self.assertTrue(all(str(x["status"]).upper() == "FILLED" for x in orders))
+
+
+
+class _SchedulerSession:
+    def credentials(self):
+        return "demo-key", "demo-secret"
+
+    def recovery_ready(self, symbol):
+        return True
+
+
+class _SchedulerAdapter(FakeAdapter):
+    def __init__(self):
+        super().__init__()
+        self.generation = 0
+
+    def klines(self, symbol, timeframe, limit):
+        base = 1700000000000
+        rows = []
+        # 180 closed bars are enough for the SSSS registry minimum.
+        for i in range(180 + self.generation):
+            t = base + i * 900000
+            rows.append([t, 100.0, 101.0, 99.0, 100.0, 1000.0])
+        # Current open bar; scheduler excludes this from signal calculation and
+        # uses its open as the execution reference.
+        i = 180 + self.generation
+        t = base + i * 900000
+        rows.append([t, 100.0, 101.0, 99.0, 100.0, 1000.0])
+        return rows
+
+
+class SSSSEndToEndAutomationTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.store = StateStore(Path(self.tmp.name) / "state.db")
+        self.store.seed(("BTCUSDT",), 2, 100, "15m")
+        self.store.set_symbol_strategy("BTCUSDT", STRATEGY_SSSS, "15m")
+        self.store.set_symbol_enabled("BTCUSDT", True)
+        self.adapter = _SchedulerAdapter()
+        self.executor = M3Executor(self.store, pnl_refresh_seconds=10)
+        self.scheduler = StrategyScheduler(
+            store=self.store,
+            session=_SchedulerSession(),
+            symbols=("BTCUSDT",),
+            allowed_timeframes=("15m",),
+            adapter_factory=lambda **kwargs: self.adapter,
+            minimum_closed_bars=64,
+            on_decision=self.executor.execute,
+        )
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    @patch("strategy.registry.ssss_strategy.evaluate_ssss")
+    def test_money_signal_buys_and_explosion_signal_fully_exits(self, mocked):
+        base = 1700000000000
+
+        def evaluate(rows):
+            latest = int(rows[-1][0])
+            buy_time = base + 180 * 900000
+            exit_time = base + 181 * 900000
+            return [fake_bar(
+                buy=latest == buy_time,
+                exit_=latest == exit_time,
+                open_time=latest,
+            )]
+
+        mocked.side_effect = evaluate
+
+        # First poll establishes the baseline and must never replay old history.
+        first = self.scheduler.run_once()
+        self.assertEqual(first["BTCUSDT"]["state"], "MONITORING")
+        self.assertEqual(self.adapter.submits, 0)
+
+        # Next closed bar shows 💰: scheduler must reach the Binance adapter BUY.
+        self.adapter.generation = 1
+        second = self.scheduler.run_once()
+        self.assertEqual(second["BTCUSDT"]["signal"], "SSSS_BUY_9")
+        self.assertEqual(second["BTCUSDT"]["actions"], ["SSSS_BUY_25"])
+        self.assertEqual(self.adapter.submits, 1)
+        self.assertGreater(self.adapter.position, Decimal("0"))
+        self.assertAlmostEqual(
+            float(self.store.get_runtime_states()["BTCUSDT"]["current_fraction"]),
+            0.25,
+        )
+
+        # Following closed bar shows 💥: scheduler must issue reduce-only full exit.
+        self.adapter.generation = 2
+        third = self.scheduler.run_once()
+        self.assertEqual(third["BTCUSDT"]["signal"], "SSSS_EXIT_15")
+        self.assertEqual(third["BTCUSDT"]["actions"], ["SSSS_EXIT_ALL"])
+        self.assertEqual(self.adapter.submits, 2)
+        self.assertEqual(self.adapter.position, Decimal("0"))
+        self.assertAlmostEqual(
+            float(self.store.get_runtime_states()["BTCUSDT"]["current_fraction"]),
+            0.0,
+        )
+
+        orders = self.store.list_orders("BTCUSDT")
+        self.assertEqual([str(x["status"]).upper() for x in orders], ["FILLED", "FILLED"])
+        self.assertEqual([x["side"] for x in orders], ["BUY", "SELL"])
+        markers = self.store.list_trade_markers("BTCUSDT", STRATEGY_SSSS)
+        self.assertEqual([x["side"] for x in markers], ["B", "X"])
+
 
 
 if __name__ == "__main__":
