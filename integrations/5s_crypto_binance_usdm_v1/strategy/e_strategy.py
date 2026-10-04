@@ -523,7 +523,7 @@ def analyze_e(
     last_pair = higher_at_primary[-1]
     last_higher = last_pair[1] if last_pair is not None else None
 
-    limit = max(80, min(int(display_limit), 500))
+    limit = max(80, min(int(display_limit), 1000))
     start = max(0, len(bars) - limit)
     position_by_date = {x["date"]: x for x in positions}
     chart = []
