@@ -1,0 +1,77 @@
+{
+  "study": "SLTD_V7_ORIGINAL_VS_BUYHOLD_79_V1",
+  "status": "COMPLETE",
+  "source_base_commit": "e05919539328407cb7a67f8a995f6b90f0d4156b",
+  "run_id": 37175465122,
+  "variant": "DROP_B3_S1_S3",
+  "chan_integration": false,
+  "window": "2020-01-02..2026-09-30",
+  "friction": "5bps",
+  "universe_count": 79,
+  "winner_count": 29,
+  "loser_or_tie_count": 50,
+  "winner_symbols": [
+    "AMD",
+    "INTU",
+    "INTC",
+    "MU",
+    "NFLX",
+    "TGT",
+    "CVX",
+    "NKE",
+    "DIS",
+    "SBUX",
+    "GOOGL",
+    "BA",
+    "HON",
+    "RTX",
+    "CSCO",
+    "TXN",
+    "ISRG",
+    "SYK",
+    "BAC",
+    "ABT",
+    "BKNG",
+    "LOW",
+    "UPS",
+    "PEP",
+    "LIN",
+    "SCHW",
+    "ROST",
+    "AVGO",
+    "BMY"
+  ],
+  "top5": [
+    {
+      "symbol": "AMD",
+      "sltd_return": 15.800623634773729,
+      "buy_hold_return": 11.459471054526867,
+      "delta": 4.341152580246861
+    },
+    {
+      "symbol": "INTU",
+      "sltd_return": 1.7939340636932726,
+      "buy_hold_return": 0.035880626922039305,
+      "delta": 1.7580534367712333
+    },
+    {
+      "symbol": "INTC",
+      "sltd_return": 2.5357968671265962,
+      "buy_hold_return": 0.976167045617923,
+      "delta": 1.5596298215086732
+    },
+    {
+      "symbol": "MU",
+      "sltd_return": 19.550302365307797,
+      "buy_hold_return": 18.22928321155778,
+      "delta": 1.321019153750015
+    },
+    {
+      "symbol": "NFLX",
+      "sltd_return": 2.2217132141993017,
+      "buy_hold_return": 1.10969964390683,
+      "delta": 1.1120135702924716
+    }
+  ],
+  "note": "Beating buy-and-hold does not imply positive absolute return; e.g. NKE and BA."
+}
