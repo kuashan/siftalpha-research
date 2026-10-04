@@ -22,6 +22,7 @@ except ImportError:
         sys.path.insert(0, str(_integrations_root))
     from shared_market_data import MarketDataRouter
 
+from providers.binance_usdm import BINANCE_CRYPTO_SYMBOLS, BinanceUsdMProvider
 from providers.yahoo import (
     DEFAULT_START,
     DEFAULT_TIMEFRAME,
@@ -42,7 +43,9 @@ from providers.yahoo import (
 
 _ROUTER = MarketDataRouter()
 _ROUTER.register(YahooFinanceProvider())
+_ROUTER.register(BinanceUsdMProvider())
 _STOCK_MARKET = _ROUTER.for_market("US_EQUITY")
+_CRYPTO_MARKET = _ROUTER.for_market("CRYPTO")
 _SAFE_CACHE_PART = re.compile(r"[^A-Z0-9_.\-]+")
 
 
@@ -167,6 +170,10 @@ def _decorate_meta(
     return meta
 
 
+def _market_id_for_symbol(symbol: str) -> str:
+    return "CRYPTO" if symbol in BINANCE_CRYPTO_SYMBOLS else "US_EQUITY"
+
+
 def fetch_bars(
     symbol: str,
     timeframe: str,
@@ -179,7 +186,9 @@ def fetch_bars(
     timeframe = normalize_timeframe(timeframe)
     cfg = TIMEFRAMES[timeframe]
     cache_age = int(cfg["cache_seconds"])
-    provider_ids = _ROUTER.provider_ids("US_EQUITY")
+    market_id = _market_id_for_symbol(symbol)
+    provider_ids = _ROUTER.provider_ids(market_id)
+    bound_market = _CRYPTO_MARKET if market_id == "CRYPTO" else _STOCK_MARKET
 
     if not force_refresh:
         for provider_id in provider_ids:
@@ -192,7 +201,7 @@ def fetch_bars(
                 dict(cached.get("meta") or {}),
                 provider_id=provider_id,
                 provider_label=str(cached.get("provider_label") or provider_id),
-                market_id=str(cached.get("market_id") or "US_EQUITY"),
+                market_id=str(cached.get("market_id") or market_id),
                 source="缓存",
                 cached=True,
                 timeframe=timeframe,
@@ -200,7 +209,7 @@ def fetch_bars(
             )
 
     try:
-        fetched = _STOCK_MARKET.fetch(
+        fetched = bound_market.fetch(
             symbol,
             timeframe,
             start_date=start_date,
@@ -248,7 +257,7 @@ def fetch_bars(
                 dict(stale.get("meta") or {}),
                 provider_id=provider_id,
                 provider_label=str(stale.get("provider_label") or provider_id),
-                market_id=str(stale.get("market_id") or "US_EQUITY"),
+                market_id=str(stale.get("market_id") or market_id),
                 source="过期缓存",
                 cached=True,
                 timeframe=timeframe,
