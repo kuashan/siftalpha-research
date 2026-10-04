@@ -1,0 +1,66 @@
+name: SLTD State Level Probability Exposure v4 Stage C
+
+on:
+  push:
+    branches:
+      - research/sltd-state-level-probability-exposure-v4
+    paths:
+      - "research/ssss_reboot_v1/phase15/SLTD_STATE_LEVEL_PROBABILITY_EXPOSURE_V4_PROTOCOL.md"
+      - "research/ssss_reboot_v1/phase15/sltd_state_level_probability_exposure_v4_stage_c.py"
+      - ".github/workflows/sltd-state-level-probability-exposure-v4-stage-c.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  stage-c:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -q numpy pandas yfinance
+      - name: Run Stage C
+        run: python research/ssss_reboot_v1/phase15/sltd_state_level_probability_exposure_v4_stage_c.py
+      - name: Verify result contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("research/ssss_reboot_v1/phase15")
+          j=root/"SLTD_STATE_LEVEL_PROBABILITY_EXPOSURE_V4_STAGE_C_RESULT.json"
+          m=root/"SLTD_STATE_LEVEL_PROBABILITY_EXPOSURE_V4_STAGE_C_RESULT.md"
+          assert j.is_file() and m.is_file()
+          x=json.loads(j.read_text(encoding="utf-8"))
+          assert x["meta"]["chan_used"] is False
+          assert x["meta"]["v7_used_as_signal"] is False
+          assert x["meta"]["momentum_used"] is False
+          assert x["meta"]["fresh_oos_consumed"] is False
+          assert x["decision"] in {"PROMOTED_TO_FRESH_OOS","REJECTED_NOT_ADMITTED"}
+          print(json.dumps({"decision":x["decision"],"gates":x["gates"],"temporal":x["temporal"]},indent=2))
+          PY
+      - name: Commit Stage C result
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             research/ssss_reboot_v1/phase15/SLTD_STATE_LEVEL_PROBABILITY_EXPOSURE_V4_STAGE_C_RESULT.json             research/ssss_reboot_v1/phase15/SLTD_STATE_LEVEL_PROBABILITY_EXPOSURE_V4_STAGE_C_RESULT.md
+          if ! git diff --cached --quiet; then
+            git commit -m "research: archive SLTD state-level probability exposure v4 stage C"
+            git push origin HEAD:research/sltd-state-level-probability-exposure-v4
+          fi
+      - name: Upload result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-state-level-probability-exposure-v4-stage-c
+          path: |
+            research/ssss_reboot_v1/phase15/SLTD_STATE_LEVEL_PROBABILITY_EXPOSURE_V4_STAGE_C_RESULT.json
+            research/ssss_reboot_v1/phase15/SLTD_STATE_LEVEL_PROBABILITY_EXPOSURE_V4_STAGE_C_RESULT.md
+          if-no-files-found: error
+          retention-days: 30
