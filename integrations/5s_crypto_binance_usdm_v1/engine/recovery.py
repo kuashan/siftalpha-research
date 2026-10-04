@@ -9,12 +9,12 @@ import time
 from typing import Any
 
 from exchange.binance_usdm_testnet import floor_to_step
-from strategy.registry import STRATEGY_5S, get_spec
+from strategy.registry import STRATEGY_5S, get_spec, strategy_ids
 
 
 TERMINAL_ORDER_STATES = {"FILLED", "CANCELED", "EXPIRED", "REJECTED", "NOT_FOUND"}
 ACTIVE_ORDER_STATES = {"NEW", "PARTIALLY_FILLED", "PENDING"}
-STRATEGY_PREFIXES = ("5sv1-", "ev1-")
+STRATEGY_PREFIXES = tuple(f"{get_spec(sid).order_prefix}-" for sid in strategy_ids())
 
 
 class RecoveryBlocked(RuntimeError):
