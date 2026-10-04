@@ -77,8 +77,12 @@ Historical signals are never replayed as new Binance orders.
 
 ## Crypto timestamp boundary
 
-Binance raw millisecond timestamps are normalized once at the Provider boundary
-to the V7 host's epoch-second contract so E XMA higher-timeframe aggregation
-remains causal and consistent.
+Binance `openTime` / `closeTime` remain **epoch milliseconds end-to-end** for
+crypto bars, live strategy identity, scheduler/recovery state and deterministic
+order IDs.
+
+E XMA/higher-timeframe code converts milliseconds to seconds only transiently
+when Python must construct a datetime for timezone/calendar bucketing; the
+stored strategy `open_time` remains the original Binance millisecond value.
 
 `SLTD_V7_BINANCE_USDM_DEMO_V1 = IMPLEMENTED_AND_VERIFIED`
