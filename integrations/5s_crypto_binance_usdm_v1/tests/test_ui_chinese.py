@@ -42,8 +42,18 @@ class ChineseUiTests(unittest.TestCase):
 
     def test_chart_and_compact_layout_contract(self):
         text = (pathlib.Path(__file__).parents[1] / "templates" / "index.html").read_text(encoding="utf-8")
-        self.assertIn("kline-canvas", text)
         app_text = (pathlib.Path(__file__).parents[1] / "app.py").read_text(encoding="utf-8")
+
+        self.assertIn("kline-chart", text)
+        self.assertIn("/vendor/lightweight-charts.standalone.production.js", text)
+        self.assertIn("window.LightweightCharts", text)
+        self.assertIn("CandlestickSeries", text)
+        self.assertIn("createSeriesMarkers", text)
+        self.assertIn("vertTouchDrag: false", text)
+        self.assertIn("horzTouchDrag: true", text)
+        self.assertIn("touch-action:pan-y", text)
+        self.assertNotIn("touch-action:none", text)
+
         self.assertIn("红涨", app_text)
         self.assertIn("绿跌", app_text)
         self.assertIn("买入", app_text)
@@ -63,14 +73,10 @@ class ChineseUiTests(unittest.TestCase):
         self.assertIn('type="hidden" name="timeframe"', app_text)
         self.assertNotIn('<select name="timeframe"', app_text)
         self.assertIn("data-timeframe-option", text)
-        self.assertIn("chartViewStates", text)
-        self.assertIn("onpointerdown", text)
-        self.assertIn("onwheel", text)
-        self.assertIn("ondblclick", text)
-        self.assertIn("Math.min(1000, allCandles.length)", text)
-        self.assertIn("up ? '#ff7b82' : '#52d49a'", text)
-        self.assertIn("snapshot-above-chart", app_text)
+
+        self.assertEqual(app_text.count("snapshot-grid snapshot-above-chart"), 1)
         self.assertLess(app_text.index("snapshot-above-chart"), app_text.index('class="market-chart"'))
+        self.assertIn("list_trade_markers", app_text)
 
 
 if __name__ == "__main__":
