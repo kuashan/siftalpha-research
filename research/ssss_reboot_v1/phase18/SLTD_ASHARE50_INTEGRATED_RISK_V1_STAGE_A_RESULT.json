@@ -1,0 +1,3204 @@
+{
+  "meta": {
+    "study": "SLTD_ASHARE50_INTEGRATED_RISK_V1_STAGE_A",
+    "protocol": "SLTD_ASHARE50_INTEGRATED_RISK_V1_PROTOCOL.md",
+    "amendment": "SLTD_ASHARE50_INTEGRATED_RISK_V1_AMENDMENT_A.md",
+    "market": "China A-share main board",
+    "development_symbols": [
+      "600036",
+      "601398",
+      "601166",
+      "601318",
+      "600030",
+      "600519",
+      "000858",
+      "600887",
+      "002714",
+      "000333",
+      "000651",
+      "601888",
+      "600104",
+      "002594",
+      "000625",
+      "002415",
+      "000725",
+      "002475",
+      "002241",
+      "600031",
+      "601766",
+      "000338",
+      "600009",
+      "601857",
+      "600028",
+      "601088",
+      "601899",
+      "600309",
+      "600900",
+      "600886",
+      "600276",
+      "000538",
+      "600436",
+      "601668",
+      "600048"
+    ],
+    "fresh_symbols_read_for_performance": false,
+    "fresh_oos_consumed": false,
+    "us_fitted_weights_used": false,
+    "chan_used": false,
+    "score_momentum_used": false,
+    "generated_at_utc": "2026-10-04T08:20:32.969087+00:00"
+  },
+  "normalization": {
+    "RETURN": {
+      "active": true,
+      "center": 0.0,
+      "scale": 0.00335008375209378,
+      "method": "MEDIAN_ABS_FROM_ZERO"
+    },
+    "UP_PROB": {
+      "active": true,
+      "center": 0.0,
+      "scale": 0.021634615384615363,
+      "method": "MEDIAN_ABS_FROM_ZERO"
+    },
+    "MFE": {
+      "active": true,
+      "center": 0.0,
+      "scale": 0.0023574547671212365,
+      "method": "MEDIAN_ABS_FROM_ZERO"
+    },
+    "MAE_SAFETY": {
+      "active": true,
+      "center": 0.0,
+      "scale": 0.0026534140284576457,
+      "method": "MEDIAN_ABS_FROM_ZERO"
+    },
+    "RR": {
+      "active": true,
+      "center": 0.0,
+      "scale": 0.09105049133586993,
+      "method": "MEDIAN_ABS_FROM_ZERO"
+    }
+  },
+  "summary": {
+    "discovery_state_keys": 290,
+    "discovery_supported": 191,
+    "stable_negative_states": 28,
+    "stable_negative_components": [
+      "EVENT",
+      "INNER",
+      "REGIME",
+      "SLOW"
+    ],
+    "severe_threshold": -1.3266519339840837
+  },
+  "discovery_severe": {
+    "threshold": -1.3266519339840837,
+    "event_count": 4760,
+    "symbol_count": 35,
+    "horizons": {
+      "5": {
+        "return_excess": -0.0016520311310929126,
+        "return_excess_symbol_n": 35,
+        "mae_safety_lift": -0.0024012748475488177,
+        "mae_safety_lift_symbol_n": 35,
+        "mfe_excess": 0.0009584709624788079,
+        "mfe_excess_symbol_n": 35,
+        "loss_prob_lift": 0.020768352985926164,
+        "loss_prob_lift_symbol_n": 35,
+        "fdd_difference": -0.00223175618713245,
+        "fdd_difference_symbol_n": 35,
+        "tail_p10_difference": -0.0009810220659017127,
+        "tail_p10_difference_symbol_n": 35
+      },
+      "10": {
+        "return_excess": -0.0060886812320969375,
+        "return_excess_symbol_n": 35,
+        "mae_safety_lift": -0.0032828282828284427,
+        "mae_safety_lift_symbol_n": 35,
+        "mfe_excess": 0.0010636685246471211,
+        "mfe_excess_symbol_n": 35,
+        "loss_prob_lift": 0.05925107234020155,
+        "loss_prob_lift_symbol_n": 35,
+        "fdd_difference": -0.002984158186731589,
+        "fdd_difference_symbol_n": 35,
+        "tail_p10_difference": 0.0007694245197969324,
+        "tail_p10_difference_symbol_n": 35
+      },
+      "20": {
+        "return_excess": -0.012677256429824257,
+        "return_excess_symbol_n": 35,
+        "mae_safety_lift": -0.006379845002758122,
+        "mae_safety_lift_symbol_n": 35,
+        "mfe_excess": -0.002024560238964357,
+        "mfe_excess_symbol_n": 35,
+        "loss_prob_lift": 0.06857842637003775,
+        "loss_prob_lift_symbol_n": 35,
+        "fdd_difference": -0.0021869676408141636,
+        "fdd_difference_symbol_n": 35,
+        "tail_p10_difference": 0.0063913900587436595,
+        "tail_p10_difference_symbol_n": 35
+      }
+    }
+  },
+  "temporal_severe": {
+    "threshold": -1.3266519339840837,
+    "event_count": 2182,
+    "symbol_count": 35,
+    "horizons": {
+      "5": {
+        "return_excess": -0.0002463891258057127,
+        "return_excess_symbol_n": 35,
+        "mae_safety_lift": -0.0012056361055794995,
+        "mae_safety_lift_symbol_n": 35,
+        "mfe_excess": 0.0011289086560478667,
+        "mfe_excess_symbol_n": 35,
+        "loss_prob_lift": 0.0034893267651888715,
+        "loss_prob_lift_symbol_n": 35,
+        "fdd_difference": -0.0022558087074214805,
+        "fdd_difference_symbol_n": 35,
+        "tail_p10_difference": -0.0019253421829066378,
+        "tail_p10_difference_symbol_n": 35
+      },
+      "10": {
+        "return_excess": -0.000128421212329477,
+        "return_excess_symbol_n": 35,
+        "mae_safety_lift": -0.0022617164665933998,
+        "mae_safety_lift_symbol_n": 35,
+        "mfe_excess": 0.001575175191257161,
+        "mfe_excess_symbol_n": 35,
+        "loss_prob_lift": 0.034588750706613935,
+        "loss_prob_lift_symbol_n": 35,
+        "fdd_difference": -0.003904131656523424,
+        "fdd_difference_symbol_n": 35,
+        "tail_p10_difference": -0.0025302292157014725,
+        "tail_p10_difference_symbol_n": 35
+      },
+      "20": {
+        "return_excess": -0.0031698303155549,
+        "return_excess_symbol_n": 35,
+        "mae_safety_lift": -0.0024918848546414685,
+        "mae_safety_lift_symbol_n": 35,
+        "mfe_excess": -7.082734355456921e-05,
+        "mfe_excess_symbol_n": 35,
+        "loss_prob_lift": 0.006180871828236845,
+        "loss_prob_lift_symbol_n": 35,
+        "fdd_difference": -0.005250994213978011,
+        "fdd_difference_symbol_n": 35,
+        "tail_p10_difference": 0.002000146306907577,
+        "tail_p10_difference_symbol_n": 35
+      }
+    }
+  },
+  "stable_negative_states_ranked": [
+    {
+      "id": "F6_COLOR_AGE_EVENT::BLUE|11_20|LIGHT_SUPPORT",
+      "family": "F6_COLOR_AGE_EVENT",
+      "key": "BLUE|11_20|LIGHT_SUPPORT",
+      "component": "EVENT",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F6_COLOR_AGE_EVENT",
+        "key": "BLUE|11_20|LIGHT_SUPPORT",
+        "component": "EVENT",
+        "n": 122,
+        "symbol_count": 31,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": 0.00045299444097057773,
+            "up_prob_lift": -0.0071129707112970175,
+            "mfe_excess": -0.0042828437264806896,
+            "mae_safety_lift": 5.3252944848036776e-05,
+            "rr_log_lift": 0.02515928004546865,
+            "symbol_effect_count": 31
+          },
+          "10": {
+            "return_excess": -0.003741626291127287,
+            "up_prob_lift": -0.017991631799163188,
+            "mfe_excess": -0.00660812395524224,
+            "mae_safety_lift": -0.007422545766756716,
+            "rr_log_lift": -0.2558315771228412,
+            "symbol_effect_count": 31
+          },
+          "20": {
+            "return_excess": -0.015472105499459654,
+            "up_prob_lift": -0.21694560669456064,
+            "mfe_excess": -0.012966757252467653,
+            "mae_safety_lift": -0.012676732296528825,
+            "rr_log_lift": -0.5507957949818312,
+            "symbol_effect_count": 31
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.003741626291127287,
+          "UP_PROB": -0.017991631799163188,
+          "MFE": -0.00660812395524224,
+          "MAE_SAFETY": -0.007422545766756716,
+          "RR": -0.2558315771228412
+        },
+        "z_vector": {
+          "RETURN": -1.1168754479015026,
+          "UP_PROB": -0.8316132031613215,
+          "MFE": -2.8030756082381303,
+          "MAE_SAFETY": -2.7973567966214574,
+          "RR": -2.809777008002314
+        },
+        "utility": -2.7973567966214574
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F6_COLOR_AGE_EVENT",
+        "key": "BLUE|11_20|LIGHT_SUPPORT",
+        "component": "EVENT",
+        "n": 52,
+        "symbol_count": 24,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0012054937420257483,
+            "up_prob_lift": -0.14195402298850573,
+            "mfe_excess": -0.0016880353115732438,
+            "mae_safety_lift": 0.0015179372509043776,
+            "rr_log_lift": 0.01381071833029851,
+            "symbol_effect_count": 24
+          },
+          "10": {
+            "return_excess": -0.004542490393725757,
+            "up_prob_lift": -0.30208333333333337,
+            "mfe_excess": -0.003903026731643555,
+            "mae_safety_lift": -0.004800787287920355,
+            "rr_log_lift": -0.24840442314418107,
+            "symbol_effect_count": 24
+          },
+          "20": {
+            "return_excess": 0.0023546259952089144,
+            "up_prob_lift": 0.30854885057471265,
+            "mfe_excess": -0.00250774450392216,
+            "mae_safety_lift": -0.0024540508868859112,
+            "rr_log_lift": -0.08989524262461165,
+            "symbol_effect_count": 24
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.0012054937420257483,
+          "UP_PROB": -0.14195402298850573,
+          "MFE": -0.00250774450392216,
+          "MAE_SAFETY": -0.0024540508868859112,
+          "RR": -0.08989524262461165
+        },
+        "z_vector": {
+          "RETURN": -0.3598398819946883,
+          "UP_PROB": -6.561430395913161,
+          "MFE": -1.0637508464200343,
+          "MAE_SAFETY": -0.924865422646605,
+          "RR": -0.9873119991522423
+        },
+        "utility": -0.9873119991522423
+      },
+      "reasons": []
+    },
+    {
+      "id": "F7_COLOR_AGE_EVENT_SUBTYPE::BLUE|11_20|LIGHT_SUPPORT|CONTACT",
+      "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+      "key": "BLUE|11_20|LIGHT_SUPPORT|CONTACT",
+      "component": "EVENT",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+        "key": "BLUE|11_20|LIGHT_SUPPORT|CONTACT",
+        "component": "EVENT",
+        "n": 122,
+        "symbol_count": 31,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": 0.00045299444097057773,
+            "up_prob_lift": -0.0071129707112970175,
+            "mfe_excess": -0.0042828437264806896,
+            "mae_safety_lift": 5.3252944848036776e-05,
+            "rr_log_lift": 0.02515928004546865,
+            "symbol_effect_count": 31
+          },
+          "10": {
+            "return_excess": -0.003741626291127287,
+            "up_prob_lift": -0.017991631799163188,
+            "mfe_excess": -0.00660812395524224,
+            "mae_safety_lift": -0.007422545766756716,
+            "rr_log_lift": -0.2558315771228412,
+            "symbol_effect_count": 31
+          },
+          "20": {
+            "return_excess": -0.015472105499459654,
+            "up_prob_lift": -0.21694560669456064,
+            "mfe_excess": -0.012966757252467653,
+            "mae_safety_lift": -0.012676732296528825,
+            "rr_log_lift": -0.5507957949818312,
+            "symbol_effect_count": 31
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.003741626291127287,
+          "UP_PROB": -0.017991631799163188,
+          "MFE": -0.00660812395524224,
+          "MAE_SAFETY": -0.007422545766756716,
+          "RR": -0.2558315771228412
+        },
+        "z_vector": {
+          "RETURN": -1.1168754479015026,
+          "UP_PROB": -0.8316132031613215,
+          "MFE": -2.8030756082381303,
+          "MAE_SAFETY": -2.7973567966214574,
+          "RR": -2.809777008002314
+        },
+        "utility": -2.7973567966214574
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+        "key": "BLUE|11_20|LIGHT_SUPPORT|CONTACT",
+        "component": "EVENT",
+        "n": 52,
+        "symbol_count": 24,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0012054937420257483,
+            "up_prob_lift": -0.14195402298850573,
+            "mfe_excess": -0.0016880353115732438,
+            "mae_safety_lift": 0.0015179372509043776,
+            "rr_log_lift": 0.01381071833029851,
+            "symbol_effect_count": 24
+          },
+          "10": {
+            "return_excess": -0.004542490393725757,
+            "up_prob_lift": -0.30208333333333337,
+            "mfe_excess": -0.003903026731643555,
+            "mae_safety_lift": -0.004800787287920355,
+            "rr_log_lift": -0.24840442314418107,
+            "symbol_effect_count": 24
+          },
+          "20": {
+            "return_excess": 0.0023546259952089144,
+            "up_prob_lift": 0.30854885057471265,
+            "mfe_excess": -0.00250774450392216,
+            "mae_safety_lift": -0.0024540508868859112,
+            "rr_log_lift": -0.08989524262461165,
+            "symbol_effect_count": 24
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.0012054937420257483,
+          "UP_PROB": -0.14195402298850573,
+          "MFE": -0.00250774450392216,
+          "MAE_SAFETY": -0.0024540508868859112,
+          "RR": -0.08989524262461165
+        },
+        "z_vector": {
+          "RETURN": -0.3598398819946883,
+          "UP_PROB": -6.561430395913161,
+          "MFE": -1.0637508464200343,
+          "MAE_SAFETY": -0.924865422646605,
+          "RR": -0.9873119991522423
+        },
+        "utility": -0.9873119991522423
+      },
+      "reasons": []
+    },
+    {
+      "id": "F7_COLOR_AGE_EVENT_SUBTYPE::GRAY|21_PLUS|LOWER|CLOSE_BELOW",
+      "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+      "key": "GRAY|21_PLUS|LOWER|CLOSE_BELOW",
+      "component": "EVENT",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+        "key": "GRAY|21_PLUS|LOWER|CLOSE_BELOW",
+        "component": "EVENT",
+        "n": 103,
+        "symbol_count": 31,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.002939696389637758,
+            "up_prob_lift": -0.0514644351464435,
+            "mfe_excess": -0.007802861443305664,
+            "mae_safety_lift": -0.0031287182081068954,
+            "rr_log_lift": -0.589336337262903,
+            "symbol_effect_count": 31
+          },
+          "10": {
+            "return_excess": -0.006357361997261557,
+            "up_prob_lift": -0.15705128205128205,
+            "mfe_excess": -0.009870092958211285,
+            "mae_safety_lift": -0.003300634755726728,
+            "rr_log_lift": -0.5208530722580728,
+            "symbol_effect_count": 31
+          },
+          "20": {
+            "return_excess": -0.0047309570561171466,
+            "up_prob_lift": -0.023929471032745564,
+            "mfe_excess": -0.006898058147273178,
+            "mae_safety_lift": -0.004466859086247443,
+            "rr_log_lift": -0.08484506727752,
+            "symbol_effect_count": 31
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.0047309570561171466,
+          "UP_PROB": -0.0514644351464435,
+          "MFE": -0.007802861443305664,
+          "MAE_SAFETY": -0.003300634755726728,
+          "RR": -0.5208530722580728
+        },
+        "z_vector": {
+          "RETURN": -1.4121906812509777,
+          "UP_PROB": -2.3788005578800573,
+          "MFE": -3.3098668751273594,
+          "MAE_SAFETY": -1.2439199915006454,
+          "RR": -5.720486123866521
+        },
+        "utility": -2.3788005578800573
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+        "key": "GRAY|21_PLUS|LOWER|CLOSE_BELOW",
+        "component": "EVENT",
+        "n": 59,
+        "symbol_count": 28,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": 0.00021821659291390572,
+            "up_prob_lift": 0.06573275862068967,
+            "mfe_excess": -0.005970235511541855,
+            "mae_safety_lift": -0.00458781483893797,
+            "rr_log_lift": -0.3421748415492607,
+            "symbol_effect_count": 28
+          },
+          "10": {
+            "return_excess": -0.0018724069260407095,
+            "up_prob_lift": 0.021551724137931022,
+            "mfe_excess": -0.003673881687623004,
+            "mae_safety_lift": -0.005103809243739016,
+            "rr_log_lift": -0.2255681040345755,
+            "symbol_effect_count": 28
+          },
+          "20": {
+            "return_excess": -0.0038436146848865593,
+            "up_prob_lift": -0.0959051724137931,
+            "mfe_excess": -0.011855996480460707,
+            "mae_safety_lift": -0.006944335382308986,
+            "rr_log_lift": -0.27009454681545586,
+            "symbol_effect_count": 28
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.0018724069260407095,
+          "UP_PROB": 0.021551724137931022,
+          "MFE": -0.005970235511541855,
+          "MAE_SAFETY": -0.005103809243739016,
+          "RR": -0.27009454681545586
+        },
+        "z_vector": {
+          "RETURN": -0.5589134674231555,
+          "UP_PROB": 0.9961685823754793,
+          "MFE": -2.532492073573187,
+          "MAE_SAFETY": -1.9234876988668501,
+          "RR": -2.966426022009289
+        },
+        "utility": -1.9234876988668501
+      },
+      "reasons": []
+    },
+    {
+      "id": "F7_COLOR_AGE_EVENT_SUBTYPE::BLUE|21_PLUS|UPPER|WICK_ONLY",
+      "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+      "key": "BLUE|21_PLUS|UPPER|WICK_ONLY",
+      "component": "EVENT",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+        "key": "BLUE|21_PLUS|UPPER|WICK_ONLY",
+        "component": "EVENT",
+        "n": 252,
+        "symbol_count": 34,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": 0.0011274911619487682,
+            "up_prob_lift": 0.019373409017760468,
+            "mfe_excess": 0.006903073864314324,
+            "mae_safety_lift": -0.002135746456474269,
+            "rr_log_lift": 0.04001595817812716,
+            "symbol_effect_count": 34
+          },
+          "10": {
+            "return_excess": -0.00821271370359869,
+            "up_prob_lift": -0.04814341864551072,
+            "mfe_excess": 0.004252735477491665,
+            "mae_safety_lift": -0.00752751495684717,
+            "rr_log_lift": 0.1582302964079802,
+            "symbol_effect_count": 34
+          },
+          "20": {
+            "return_excess": -0.010617043318579544,
+            "up_prob_lift": -0.050342335488779005,
+            "mfe_excess": 0.0014406750398294754,
+            "mae_safety_lift": -0.009378106188803581,
+            "rr_log_lift": -0.14554971545294876,
+            "symbol_effect_count": 34
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.00821271370359869,
+          "UP_PROB": -0.04814341864551072,
+          "MFE": 0.004252735477491665,
+          "MAE_SAFETY": -0.00752751495684717,
+          "RR": 0.04001595817812716
+        },
+        "z_vector": {
+          "RETURN": -2.4514950405242253,
+          "UP_PROB": -2.2252957951702754,
+          "MFE": 1.803952099867781,
+          "MAE_SAFETY": -2.8369168460387995,
+          "RR": 0.4394919521138555
+        },
+        "utility": -2.2252957951702754
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+        "key": "BLUE|21_PLUS|UPPER|WICK_ONLY",
+        "component": "EVENT",
+        "n": 102,
+        "symbol_count": 30,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.007392818995582945,
+            "up_prob_lift": -0.02801724137931033,
+            "mfe_excess": -0.0011108054368146325,
+            "mae_safety_lift": -0.007763406452320265,
+            "rr_log_lift": -0.4867200992331823,
+            "symbol_effect_count": 30
+          },
+          "10": {
+            "return_excess": -0.028822762835590432,
+            "up_prob_lift": -0.2669848111658457,
+            "mfe_excess": -0.006958096904834954,
+            "mae_safety_lift": -0.017006082540085066,
+            "rr_log_lift": -0.6956839341842231,
+            "symbol_effect_count": 30
+          },
+          "20": {
+            "return_excess": -0.025096488792716504,
+            "up_prob_lift": -0.22034072249589493,
+            "mfe_excess": -0.01749087471741151,
+            "mae_safety_lift": -0.015027585315585512,
+            "rr_log_lift": -0.6818634746926113,
+            "symbol_effect_count": 30
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.025096488792716504,
+          "UP_PROB": -0.22034072249589493,
+          "MFE": -0.006958096904834954,
+          "MAE_SAFETY": -0.015027585315585512,
+          "RR": -0.6818634746926113
+        },
+        "z_vector": {
+          "RETURN": -7.491301904625927,
+          "UP_PROB": -10.184637839810264,
+          "MFE": -2.951529336586894,
+          "MAE_SAFETY": -5.663490565142079,
+          "RR": -7.488850029126497
+        },
+        "utility": -7.488850029126497
+      },
+      "reasons": []
+    },
+    {
+      "id": "F3_COLOR_AGE_INNER::BLUE|21_PLUS|UPPER_HALF",
+      "family": "F3_COLOR_AGE_INNER",
+      "key": "BLUE|21_PLUS|UPPER_HALF",
+      "component": "INNER",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F3_COLOR_AGE_INNER",
+        "key": "BLUE|21_PLUS|UPPER_HALF",
+        "component": "INNER",
+        "n": 3512,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0033222591362126463,
+            "up_prob_lift": -0.031599325547992274,
+            "mfe_excess": 0.0005856801318315785,
+            "mae_safety_lift": -0.0033922907648280543,
+            "rr_log_lift": -0.13305424424706855,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.006637083690124723,
+            "up_prob_lift": -0.04275276337975398,
+            "mfe_excess": -0.0006926166806067169,
+            "mae_safety_lift": -0.0049266236100452,
+            "rr_log_lift": -0.256805468422008,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.014818692543411838,
+            "up_prob_lift": -0.08226280436607891,
+            "mfe_excess": -0.0025372732598659686,
+            "mae_safety_lift": -0.009252089545568554,
+            "rr_log_lift": -0.2560084857512325,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.006637083690124723,
+          "UP_PROB": -0.04275276337975398,
+          "MFE": -0.0006926166806067169,
+          "MAE_SAFETY": -0.0049266236100452,
+          "RR": -0.2560084857512325
+        },
+        "z_vector": {
+          "RETURN": -1.9811694815022431,
+          "UP_PROB": -1.9761277295530746,
+          "MFE": -0.2937985026336235,
+          "MAE_SAFETY": -1.856711224561101,
+          "RR": -2.811719980805598
+        },
+        "utility": -1.9761277295530746
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F3_COLOR_AGE_INNER",
+        "key": "BLUE|21_PLUS|UPPER_HALF",
+        "component": "INNER",
+        "n": 1380,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.00883987089751237,
+            "up_prob_lift": -0.11268472906403942,
+            "mfe_excess": -0.0010150950844544093,
+            "mae_safety_lift": -0.0077853085466010885,
+            "rr_log_lift": -0.34618769167016533,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.011010531243788813,
+            "up_prob_lift": -0.16020114942528735,
+            "mfe_excess": -0.005063441186128448,
+            "mae_safety_lift": -0.009645471926989169,
+            "rr_log_lift": -0.4296981971841383,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.016027847662381633,
+            "up_prob_lift": -0.09876311844077967,
+            "mfe_excess": -0.007728287482542617,
+            "mae_safety_lift": -0.009930034030290857,
+            "rr_log_lift": -0.4697932356802294,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.011010531243788813,
+          "UP_PROB": -0.11268472906403942,
+          "MFE": -0.005063441186128448,
+          "MAE_SAFETY": -0.009645471926989169,
+          "RR": -0.4296981971841383
+        },
+        "z_vector": {
+          "RETURN": -3.2866435762709827,
+          "UP_PROB": -5.208538587848938,
+          "MFE": -2.147842349616565,
+          "MAE_SAFETY": -3.63511755931878,
+          "RR": -4.719339685922771
+        },
+        "utility": -3.63511755931878
+      },
+      "reasons": []
+    },
+    {
+      "id": "F4_COLOR_AGE_SLOWPOS::GREEN|21_PLUS|ABOVE_GZB3",
+      "family": "F4_COLOR_AGE_SLOWPOS",
+      "key": "GREEN|21_PLUS|ABOVE_GZB3",
+      "component": "SLOW",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F4_COLOR_AGE_SLOWPOS",
+        "key": "GREEN|21_PLUS|ABOVE_GZB3",
+        "component": "SLOW",
+        "n": 347,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.010838090719351268,
+            "up_prob_lift": -0.13061366806136682,
+            "mfe_excess": -0.00031538395975871936,
+            "mae_safety_lift": -0.004621118905643817,
+            "rr_log_lift": -0.2202407916562381,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.007458732312913607,
+            "up_prob_lift": -0.0347280334728034,
+            "mfe_excess": -0.002516209622358545,
+            "mae_safety_lift": -0.005235267635508245,
+            "rr_log_lift": -0.39217541220236574,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": 0.01989007760848127,
+            "up_prob_lift": 0.07529843893480248,
+            "mfe_excess": 0.01119002282170467,
+            "mae_safety_lift": -0.011647424107815885,
+            "rr_log_lift": 0.09112391624251565,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.007458732312913607,
+          "UP_PROB": -0.0347280334728034,
+          "MFE": -0.00031538395975871936,
+          "MAE_SAFETY": -0.005235267635508245,
+          "RR": -0.2202407916562381
+        },
+        "z_vector": {
+          "RETURN": -2.2264315954047267,
+          "UP_PROB": -1.605206880520692,
+          "MFE": -0.13378155295163724,
+          "MAE_SAFETY": -1.9730308121387892,
+          "RR": -2.418886361017064
+        },
+        "utility": -1.9730308121387892
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F4_COLOR_AGE_SLOWPOS",
+        "key": "GREEN|21_PLUS|ABOVE_GZB3",
+        "component": "SLOW",
+        "n": 222,
+        "symbol_count": 30,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.019227113610193608,
+            "up_prob_lift": -0.23395593869731804,
+            "mfe_excess": -0.004176033790973477,
+            "mae_safety_lift": -0.01911030221284643,
+            "rr_log_lift": -0.953151320834642,
+            "symbol_effect_count": 30
+          },
+          "10": {
+            "return_excess": -0.014094283691425152,
+            "up_prob_lift": -0.21348180076628354,
+            "mfe_excess": -0.004755152457616985,
+            "mae_safety_lift": -0.013328844149135627,
+            "rr_log_lift": -0.44905770215970114,
+            "symbol_effect_count": 30
+          },
+          "20": {
+            "return_excess": 0.003324714441950427,
+            "up_prob_lift": 0.03663793103448276,
+            "mfe_excess": 0.003434652242858327,
+            "mae_safety_lift": -0.008518571054467156,
+            "rr_log_lift": 0.16294531893778386,
+            "symbol_effect_count": 30
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.014094283691425152,
+          "UP_PROB": -0.21348180076628354,
+          "MFE": -0.004176033790973477,
+          "MAE_SAFETY": -0.013328844149135627,
+          "RR": -0.44905770215970114
+        },
+        "z_vector": {
+          "RETURN": -4.207143681890436,
+          "UP_PROB": -9.867603235419338,
+          "MFE": -1.7714162957505928,
+          "MAE_SAFETY": -5.023280952834679,
+          "RR": -4.9319635245372035
+        },
+        "utility": -4.9319635245372035
+      },
+      "reasons": []
+    },
+    {
+      "id": "F7_COLOR_AGE_EVENT_SUBTYPE::BLUE|11_20|LOWER|WICK_ONLY",
+      "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+      "key": "BLUE|11_20|LOWER|WICK_ONLY",
+      "component": "EVENT",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+        "key": "BLUE|11_20|LOWER|WICK_ONLY",
+        "component": "EVENT",
+        "n": 62,
+        "symbol_count": 29,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0025569988871232963,
+            "up_prob_lift": 0.009623430962343082,
+            "mfe_excess": -0.0015687669009405436,
+            "mae_safety_lift": -0.0020868896630479306,
+            "rr_log_lift": -0.09710159357171189,
+            "symbol_effect_count": 29
+          },
+          "10": {
+            "return_excess": -0.00575720019157927,
+            "up_prob_lift": 0.007359307359307343,
+            "mfe_excess": -0.004304853764474537,
+            "mae_safety_lift": -0.011407105080506297,
+            "rr_log_lift": -0.37286618904436086,
+            "symbol_effect_count": 29
+          },
+          "20": {
+            "return_excess": -0.016571887316337852,
+            "up_prob_lift": -0.10264993026499303,
+            "mfe_excess": -0.007458860497808639,
+            "mae_safety_lift": -0.011956005010551052,
+            "rr_log_lift": -0.32061246877497596,
+            "symbol_effect_count": 29
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.00575720019157927,
+          "UP_PROB": 0.007359307359307343,
+          "MFE": -0.004304853764474537,
+          "MAE_SAFETY": -0.011407105080506297,
+          "RR": -0.32061246877497596
+        },
+        "z_vector": {
+          "RETURN": -1.7185242571864237,
+          "UP_PROB": 0.3401635401635398,
+          "MFE": -1.8260599628519412,
+          "MAE_SAFETY": -4.29902946097595,
+          "RR": -3.5212601719225276
+        },
+        "utility": -1.8260599628519412
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+        "key": "BLUE|11_20|LOWER|WICK_ONLY",
+        "component": "EVENT",
+        "n": 26,
+        "symbol_count": 19,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0057636887608069065,
+            "up_prob_lift": -0.39655172413793105,
+            "mfe_excess": 0.001253086915201873,
+            "mae_safety_lift": -0.0002838116463429463,
+            "rr_log_lift": 0.030268912383587587,
+            "symbol_effect_count": 19
+          },
+          "10": {
+            "return_excess": -0.004000348699884748,
+            "up_prob_lift": -0.42887931034482757,
+            "mfe_excess": -0.004324599628047765,
+            "mae_safety_lift": -0.0022540415069478015,
+            "rr_log_lift": -0.20000467040918973,
+            "symbol_effect_count": 19
+          },
+          "20": {
+            "return_excess": -0.01046018861500364,
+            "up_prob_lift": -0.0625,
+            "mfe_excess": -0.01151195029876062,
+            "mae_safety_lift": 0.0006203288107597404,
+            "rr_log_lift": 0.03689190054479818,
+            "symbol_effect_count": 19
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.0057636887608069065,
+          "UP_PROB": -0.39655172413793105,
+          "MFE": -0.004324599628047765,
+          "MAE_SAFETY": -0.0002838116463429463,
+          "RR": 0.030268912383587587
+        },
+        "z_vector": {
+          "RETURN": -1.7204610951008732,
+          "UP_PROB": -18.329501915708832,
+          "MFE": -1.8344358875350437,
+          "MAE_SAFETY": -0.10696093534559248,
+          "RR": 0.33244095599584045
+        },
+        "utility": -1.7204610951008732
+      },
+      "reasons": []
+    },
+    {
+      "id": "F3_COLOR_AGE_INNER::BLUE|4_10|ABOVE_ZK1",
+      "family": "F3_COLOR_AGE_INNER",
+      "key": "BLUE|4_10|ABOVE_ZK1",
+      "component": "INNER",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F3_COLOR_AGE_INNER",
+        "key": "BLUE|4_10|ABOVE_ZK1",
+        "component": "INNER",
+        "n": 812,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0029999999999998916,
+            "up_prob_lift": -0.03832965023241636,
+            "mfe_excess": 0.0034910415300168918,
+            "mae_safety_lift": -0.004849504615358324,
+            "rr_log_lift": -0.13367364025087664,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.010515491569669466,
+            "up_prob_lift": -0.06366806136680614,
+            "mfe_excess": 0.002907326875602023,
+            "mae_safety_lift": -0.004489385738673413,
+            "rr_log_lift": -0.1375538037581074,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.009958489103723933,
+            "up_prob_lift": -0.010041841004184093,
+            "mfe_excess": 0.0016494833926944397,
+            "mae_safety_lift": -0.006052635811519769,
+            "rr_log_lift": -0.2212628565077629,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.009958489103723933,
+          "UP_PROB": -0.03832965023241636,
+          "MFE": 0.002907326875602023,
+          "MAE_SAFETY": -0.004849504615358324,
+          "RR": -0.1375538037581074
+        },
+        "z_vector": {
+          "RETURN": -2.972608997461614,
+          "UP_PROB": -1.7716816107428022,
+          "MFE": 1.233248211651693,
+          "MAE_SAFETY": -1.8276471607324711,
+          "RR": -1.5107420260995035
+        },
+        "utility": -1.7716816107428022
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F3_COLOR_AGE_INNER",
+        "key": "BLUE|4_10|ABOVE_ZK1",
+        "component": "INNER",
+        "n": 339,
+        "symbol_count": 32,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.001195832427284188,
+            "up_prob_lift": -0.01498824451410663,
+            "mfe_excess": 0.003150472185210196,
+            "mae_safety_lift": -0.002695109465381623,
+            "rr_log_lift": -0.14261650863716716,
+            "symbol_effect_count": 32
+          },
+          "10": {
+            "return_excess": -0.004499929495879934,
+            "up_prob_lift": -0.03213943623426385,
+            "mfe_excess": 0.006253402079080261,
+            "mae_safety_lift": -0.0060373102908467535,
+            "rr_log_lift": 0.021023283889114813,
+            "symbol_effect_count": 32
+          },
+          "20": {
+            "return_excess": -0.007008645350474879,
+            "up_prob_lift": -0.10528372489579385,
+            "mfe_excess": 0.0028115834606344814,
+            "mae_safety_lift": -0.0019142395352017283,
+            "rr_log_lift": -0.08385035312719365,
+            "symbol_effect_count": 32
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.004499929495879934,
+          "UP_PROB": -0.03213943623426385,
+          "MFE": 0.003150472185210196,
+          "MAE_SAFETY": -0.002695109465381623,
+          "RR": -0.08385035312719365
+        },
+        "z_vector": {
+          "RETURN": -1.3432289545201694,
+          "UP_PROB": -1.4855561637170862,
+          "MFE": 1.3363871193411436,
+          "MAE_SAFETY": -1.0157138827475838,
+          "RR": -0.9209214788076631
+        },
+        "utility": -1.0157138827475838
+      },
+      "reasons": []
+    },
+    {
+      "id": "F3_COLOR_AGE_INNER::BLUE|21_PLUS|LOWER_HALF",
+      "family": "F3_COLOR_AGE_INNER",
+      "key": "BLUE|21_PLUS|LOWER_HALF",
+      "component": "INNER",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F3_COLOR_AGE_INNER",
+        "key": "BLUE|21_PLUS|LOWER_HALF",
+        "component": "INNER",
+        "n": 3647,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0029514336561241583,
+            "up_prob_lift": -0.031119246861924688,
+            "mfe_excess": -0.0005079535925864853,
+            "mae_safety_lift": -0.005662393162393142,
+            "rr_log_lift": -0.20786335402769426,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.007906333630687046,
+            "up_prob_lift": -0.050451442413565306,
+            "mfe_excess": -0.0020658171361721545,
+            "mae_safety_lift": -0.010069315606116125,
+            "rr_log_lift": -0.29505040076271327,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.005876694094101076,
+            "up_prob_lift": -0.030998726578133518,
+            "mfe_excess": -0.005453975728114235,
+            "mae_safety_lift": -0.010929044812313105,
+            "rr_log_lift": -0.22337192830358954,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.005876694094101076,
+          "UP_PROB": -0.031119246861924688,
+          "MFE": -0.0020658171361721545,
+          "MAE_SAFETY": -0.010069315606116125,
+          "RR": -0.22337192830358954
+        },
+        "z_vector": {
+          "RETURN": -1.754193187089183,
+          "UP_PROB": -1.4384007438400759,
+          "MFE": -0.8762913142527821,
+          "MAE_SAFETY": -3.794852781406727,
+          "RR": -2.4532753753036665
+        },
+        "utility": -1.754193187089183
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F3_COLOR_AGE_INNER",
+        "key": "BLUE|21_PLUS|LOWER_HALF",
+        "component": "INNER",
+        "n": 1527,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0027708356656980238,
+            "up_prob_lift": -0.026313151563752912,
+            "mfe_excess": -0.0014959146509008203,
+            "mae_safety_lift": -0.002007203486132092,
+            "rr_log_lift": -0.16273924090303835,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.004168516889919371,
+            "up_prob_lift": -0.0350705329153605,
+            "mfe_excess": -0.0028072068448135035,
+            "mae_safety_lift": -0.004626132994927146,
+            "rr_log_lift": -0.1746499306690751,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.012387205663960121,
+            "up_prob_lift": -0.051416256157635454,
+            "mfe_excess": -0.007330117288041671,
+            "mae_safety_lift": -0.004933528801690623,
+            "rr_log_lift": -0.20268534016290646,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.004168516889919371,
+          "UP_PROB": -0.0350705329153605,
+          "MFE": -0.0028072068448135035,
+          "MAE_SAFETY": -0.004626132994927146,
+          "RR": -0.1746499306690751
+        },
+        "z_vector": {
+          "RETURN": -1.2443022916409407,
+          "UP_PROB": -1.6210379658655534,
+          "MFE": -1.1907786668761724,
+          "MAE_SAFETY": -1.7434644368772654,
+          "RR": -1.9181657134042356
+        },
+        "utility": -1.6210379658655534
+      },
+      "reasons": []
+    },
+    {
+      "id": "F4_COLOR_AGE_SLOWPOS::BLUE|4_10|ABOVE_GZB3",
+      "family": "F4_COLOR_AGE_SLOWPOS",
+      "key": "BLUE|4_10|ABOVE_GZB3",
+      "component": "SLOW",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F4_COLOR_AGE_SLOWPOS",
+        "key": "BLUE|4_10|ABOVE_GZB3",
+        "component": "SLOW",
+        "n": 1791,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0038355185724138208,
+            "up_prob_lift": -0.023391113767682825,
+            "mfe_excess": 0.004766077408328129,
+            "mae_safety_lift": -0.0029738566320990367,
+            "rr_log_lift": -0.09654534922905857,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.010113203993219133,
+            "up_prob_lift": -0.07328585393101522,
+            "mfe_excess": 0.000516399375210641,
+            "mae_safety_lift": -0.00496365190981185,
+            "rr_log_lift": -0.27410811401851354,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.009802526240882403,
+            "up_prob_lift": -0.035532668168651416,
+            "mfe_excess": -0.0009461466249943706,
+            "mae_safety_lift": -0.004613132455228763,
+            "rr_log_lift": -0.19620209122512466,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.009802526240882403,
+          "UP_PROB": -0.035532668168651416,
+          "MFE": 0.000516399375210641,
+          "MAE_SAFETY": -0.004613132455228763,
+          "RR": -0.19620209122512466
+        },
+        "z_vector": {
+          "RETURN": -2.926054082903417,
+          "UP_PROB": -1.6423988842398893,
+          "MFE": 0.21904953698909477,
+          "MAE_SAFETY": -1.7385648849946898,
+          "RR": -2.1548713065300023
+        },
+        "utility": -1.7385648849946898
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F4_COLOR_AGE_SLOWPOS",
+        "key": "BLUE|4_10|ABOVE_GZB3",
+        "component": "SLOW",
+        "n": 780,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": 0.0008584277456629152,
+            "up_prob_lift": 0.011107427055702945,
+            "mfe_excess": 0.002510088218556028,
+            "mae_safety_lift": -0.00014661045352654112,
+            "rr_log_lift": 0.13313071864851322,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.0028787107923604616,
+            "up_prob_lift": -0.00954433497536944,
+            "mfe_excess": 0.0030347420749265996,
+            "mae_safety_lift": 0.0008708176356876929,
+            "rr_log_lift": 0.14760508783388288,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.00013808061760545165,
+            "up_prob_lift": -0.04649014778325122,
+            "mfe_excess": 0.004982528053557922,
+            "mae_safety_lift": -0.0002459705814206181,
+            "rr_log_lift": 0.04939471222468661,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.00013808061760545165,
+          "UP_PROB": -0.00954433497536944,
+          "MFE": 0.0030347420749265996,
+          "MAE_SAFETY": -0.00014661045352654112,
+          "RR": 0.13313071864851322
+        },
+        "z_vector": {
+          "RETURN": -0.041217064355227595,
+          "UP_PROB": -0.44116037219485454,
+          "MFE": 1.2872959928017709,
+          "MAE_SAFETY": -0.055253515642171236,
+          "RR": 1.4621636489298715
+        },
+        "utility": -0.041217064355227595
+      },
+      "reasons": []
+    },
+    {
+      "id": "F3_COLOR_AGE_INNER::BLUE|11_20|ABOVE_ZK1",
+      "family": "F3_COLOR_AGE_INNER",
+      "key": "BLUE|11_20|ABOVE_ZK1",
+      "component": "INNER",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F3_COLOR_AGE_INNER",
+        "key": "BLUE|11_20|ABOVE_ZK1",
+        "component": "INNER",
+        "n": 570,
+        "symbol_count": 34,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.005961147624642393,
+            "up_prob_lift": -0.08637063937585249,
+            "mfe_excess": 0.0033354148896773683,
+            "mae_safety_lift": -0.01011273294485901,
+            "rr_log_lift": -0.3408575929182127,
+            "symbol_effect_count": 34
+          },
+          "10": {
+            "return_excess": -0.0035318055664226855,
+            "up_prob_lift": -0.07658134383460496,
+            "mfe_excess": 0.01040360869736584,
+            "mae_safety_lift": -0.01740848732733799,
+            "rr_log_lift": -0.15723793382480628,
+            "symbol_effect_count": 34
+          },
+          "20": {
+            "return_excess": -0.004576150264379436,
+            "up_prob_lift": -0.04483801755180608,
+            "mfe_excess": 0.01649810452246675,
+            "mae_safety_lift": -0.01727004699953394,
+            "rr_log_lift": -0.050101973619878545,
+            "symbol_effect_count": 34
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.004576150264379436,
+          "UP_PROB": -0.07658134383460496,
+          "MFE": 0.01040360869736584,
+          "MAE_SAFETY": -0.01727004699953394,
+          "RR": -0.15723793382480628
+        },
+        "z_vector": {
+          "RETURN": -1.3659808539172709,
+          "UP_PROB": -3.539759892799522,
+          "MFE": 4.413068213423251,
+          "MAE_SAFETY": -6.508613738494677,
+          "RR": -1.7269311951846809
+        },
+        "utility": -1.7269311951846809
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F3_COLOR_AGE_INNER",
+        "key": "BLUE|11_20|ABOVE_ZK1",
+        "component": "INNER",
+        "n": 276,
+        "symbol_count": 33,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0032570316444153757,
+            "up_prob_lift": -0.059195402298850563,
+            "mfe_excess": -0.00018763787727060777,
+            "mae_safety_lift": -0.003748341981551384,
+            "rr_log_lift": -0.21774115250459192,
+            "symbol_effect_count": 33
+          },
+          "10": {
+            "return_excess": -0.0033224987207400303,
+            "up_prob_lift": 0.015394088669950734,
+            "mfe_excess": 0.0019448912589878908,
+            "mae_safety_lift": -0.004190730250583863,
+            "rr_log_lift": 0.06632501052430452,
+            "symbol_effect_count": 33
+          },
+          "20": {
+            "return_excess": -0.020038104628318565,
+            "up_prob_lift": -0.14525862068965512,
+            "mfe_excess": -0.0045557383516607874,
+            "mae_safety_lift": -0.007094422210051465,
+            "rr_log_lift": -0.26155430032807625,
+            "symbol_effect_count": 33
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.0033224987207400303,
+          "UP_PROB": -0.059195402298850563,
+          "MFE": -0.00018763787727060777,
+          "MAE_SAFETY": -0.004190730250583863,
+          "RR": -0.21774115250459192
+        },
+        "z_vector": {
+          "RETURN": -0.9917658681409057,
+          "UP_PROB": -2.7361430395913175,
+          "MFE": -0.079593415698804,
+          "MAE_SAFETY": -1.5793729156620973,
+          "RR": -2.3914330313867445
+        },
+        "utility": -1.5793729156620973
+      },
+      "reasons": []
+    },
+    {
+      "id": "F2_COLOR_AGE_ORIGIN::BLUE|4_10|GRAY",
+      "family": "F2_COLOR_AGE_ORIGIN",
+      "key": "BLUE|4_10|GRAY",
+      "component": "REGIME",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F2_COLOR_AGE_ORIGIN",
+        "key": "BLUE|4_10|GRAY",
+        "component": "REGIME",
+        "n": 1886,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.003972064600611169,
+            "up_prob_lift": -0.0331141661685595,
+            "mfe_excess": 0.0037816468724637398,
+            "mae_safety_lift": -0.0037099912033971005,
+            "rr_log_lift": -0.11480872074273507,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.00963829958423984,
+            "up_prob_lift": -0.0671012941519899,
+            "mfe_excess": 0.000516399375210641,
+            "mae_safety_lift": -0.005141557638687455,
+            "rr_log_lift": -0.1561147165611303,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.011263740302843994,
+            "up_prob_lift": -0.038075313807531375,
+            "mfe_excess": -0.0007481958932014088,
+            "mae_safety_lift": -0.00436512286471169,
+            "rr_log_lift": -0.23586153436353835,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.00963829958423984,
+          "UP_PROB": -0.038075313807531375,
+          "MFE": 0.000516399375210641,
+          "MAE_SAFETY": -0.00436512286471169,
+          "RR": -0.1561147165611303
+        },
+        "z_vector": {
+          "RETURN": -2.8770324258956115,
+          "UP_PROB": -1.7599256159925631,
+          "MFE": 0.21904953698909477,
+          "MAE_SAFETY": -1.6450967764156323,
+          "RR": -1.7145949930709259
+        },
+        "utility": -1.7145949930709259
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F2_COLOR_AGE_ORIGIN",
+        "key": "BLUE|4_10|GRAY",
+        "component": "REGIME",
+        "n": 755,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0017141224213986783,
+            "up_prob_lift": 0.009852216748768461,
+            "mfe_excess": 0.0024011395474958785,
+            "mae_safety_lift": -0.00012502134942821153,
+            "rr_log_lift": 0.05358665199809404,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.0023758289076963313,
+            "up_prob_lift": -0.019704433497536977,
+            "mfe_excess": 0.002355176248084123,
+            "mae_safety_lift": -0.00210933933077867,
+            "rr_log_lift": 0.20717337994510282,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.00013808061760545165,
+            "up_prob_lift": -0.04649014778325122,
+            "mfe_excess": 0.0024707446061731364,
+            "mae_safety_lift": -0.00437590368285018,
+            "rr_log_lift": 0.0416721554322597,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.0017141224213986783,
+          "UP_PROB": -0.019704433497536977,
+          "MFE": 0.0024011395474958785,
+          "MAE_SAFETY": -0.00210933933077867,
+          "RR": 0.05358665199809404
+        },
+        "z_vector": {
+          "RETURN": -0.5116655427875089,
+          "UP_PROB": -0.9107827038861546,
+          "MFE": 1.0185304850739456,
+          "MAE_SAFETY": -0.794952958021696,
+          "RR": 0.5885377575879509
+        },
+        "utility": -0.5116655427875089
+      },
+      "reasons": []
+    },
+    {
+      "id": "F7_COLOR_AGE_EVENT_SUBTYPE::BLUE|21_PLUS|UPPER|CLOSE_ABOVE",
+      "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+      "key": "BLUE|21_PLUS|UPPER|CLOSE_ABOVE",
+      "component": "EVENT",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+        "key": "BLUE|21_PLUS|UPPER|CLOSE_ABOVE",
+        "component": "EVENT",
+        "n": 267,
+        "symbol_count": 34,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.006915525939850481,
+            "up_prob_lift": -0.03298465829846581,
+            "mfe_excess": 0.0013089194694431705,
+            "mae_safety_lift": -0.002812179930572034,
+            "rr_log_lift": -0.068008643885933,
+            "symbol_effect_count": 34
+          },
+          "10": {
+            "return_excess": -0.014148379264979527,
+            "up_prob_lift": 0.002510460251046037,
+            "mfe_excess": 0.0020039760764272163,
+            "mae_safety_lift": -0.0082832615551367,
+            "rr_log_lift": -0.15122568562214908,
+            "symbol_effect_count": 34
+          },
+          "20": {
+            "return_excess": -0.030977342341020064,
+            "up_prob_lift": -0.135486710153884,
+            "mfe_excess": 0.008638850106018003,
+            "mae_safety_lift": -0.020174410324737657,
+            "rr_log_lift": -0.402508682101098,
+            "symbol_effect_count": 34
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.014148379264979527,
+          "UP_PROB": -0.03298465829846581,
+          "MFE": 0.0020039760764272163,
+          "MAE_SAFETY": -0.0082832615551367,
+          "RR": -0.15122568562214908
+        },
+        "z_vector": {
+          "RETURN": -4.223291210596417,
+          "UP_PROB": -1.5246242057957544,
+          "MFE": 0.8500591843271443,
+          "MAE_SAFETY": -3.1217373038279765,
+          "RR": -1.6608991714751213
+        },
+        "utility": -1.6608991714751213
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+        "key": "BLUE|21_PLUS|UPPER|CLOSE_ABOVE",
+        "component": "EVENT",
+        "n": 85,
+        "symbol_count": 28,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.002465516187031197,
+            "up_prob_lift": -0.07902298850574713,
+            "mfe_excess": 0.00829531762231489,
+            "mae_safety_lift": -0.0004890758545887941,
+            "rr_log_lift": 0.09504138407374314,
+            "symbol_effect_count": 28
+          },
+          "10": {
+            "return_excess": -0.009291502277188834,
+            "up_prob_lift": -0.060344827586206906,
+            "mfe_excess": 0.004623737374593873,
+            "mae_safety_lift": -0.0012536596031743064,
+            "rr_log_lift": 0.022726098000981354,
+            "symbol_effect_count": 28
+          },
+          "20": {
+            "return_excess": -0.012271166426130575,
+            "up_prob_lift": -0.084051724137931,
+            "mfe_excess": -0.005106813633995011,
+            "mae_safety_lift": -0.005994472285434677,
+            "rr_log_lift": -0.2611012515612029,
+            "symbol_effect_count": 28
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.009291502277188834,
+          "UP_PROB": -0.07902298850574713,
+          "MFE": 0.004623737374593873,
+          "MAE_SAFETY": -0.0012536596031743064,
+          "RR": 0.022726098000981354
+        },
+        "z_vector": {
+          "RETURN": -2.773513429740886,
+          "UP_PROB": -3.6526181353767595,
+          "MFE": 1.961326019518952,
+          "MAE_SAFETY": -0.4724704059483032,
+          "RR": 0.24959885078652247
+        },
+        "utility": -0.4724704059483032
+      },
+      "reasons": []
+    },
+    {
+      "id": "F2_COLOR_AGE_ORIGIN::GRAY|11_20|GREEN",
+      "family": "F2_COLOR_AGE_ORIGIN",
+      "key": "GRAY|11_20|GREEN",
+      "component": "REGIME",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F2_COLOR_AGE_ORIGIN",
+        "key": "GRAY|11_20|GREEN",
+        "component": "REGIME",
+        "n": 1179,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0007325578621308892,
+            "up_prob_lift": -0.00949903878774172,
+            "mfe_excess": -0.0022393359933703394,
+            "mae_safety_lift": 0.0033080301337601314,
+            "rr_log_lift": 0.034047112404400004,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.005365315687896333,
+            "up_prob_lift": -0.03917839482693042,
+            "mfe_excess": -0.006940632613110842,
+            "mae_safety_lift": 0.002763685808006955,
+            "rr_log_lift": -0.13064186180173826,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.006829379176902017,
+            "up_prob_lift": -0.04996513249651324,
+            "mfe_excess": -0.008700607902735635,
+            "mae_safety_lift": 0.0027718627061753542,
+            "rr_log_lift": -0.10944864341230416,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.005365315687896333,
+          "UP_PROB": -0.03917839482693042,
+          "MFE": -0.006940632613110842,
+          "MAE_SAFETY": 0.0027718627061753542,
+          "RR": -0.10944864341230416
+        },
+        "z_vector": {
+          "RETURN": -1.601546732837066,
+          "UP_PROB": -1.8109124720003411,
+          "MFE": -2.9441212234100553,
+          "MAE_SAFETY": 1.0446401038237365,
+          "RR": -1.2020653794010463
+        },
+        "utility": -1.601546732837066
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F2_COLOR_AGE_ORIGIN",
+        "key": "GRAY|11_20|GREEN",
+        "component": "REGIME",
+        "n": 556,
+        "symbol_count": 29,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": 0.0034860851344326593,
+            "up_prob_lift": 0.03189655172413797,
+            "mfe_excess": -0.002371504384667711,
+            "mae_safety_lift": 9.190936182679188e-05,
+            "rr_log_lift": -0.040630177248479546,
+            "symbol_effect_count": 29
+          },
+          "10": {
+            "return_excess": -0.0023907241521335942,
+            "up_prob_lift": 0.06496305418719206,
+            "mfe_excess": -0.002022770939898888,
+            "mae_safety_lift": 0.0018843743926116319,
+            "rr_log_lift": -0.054904787144437306,
+            "symbol_effect_count": 29
+          },
+          "20": {
+            "return_excess": -0.007621337962791186,
+            "up_prob_lift": -0.03793103448275864,
+            "mfe_excess": 0.0021346287739730796,
+            "mae_safety_lift": -0.0002985938576473002,
+            "rr_log_lift": -0.1903737839506659,
+            "symbol_effect_count": 29
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.0023907241521335942,
+          "UP_PROB": 0.03189655172413797,
+          "MFE": -0.002022770939898888,
+          "MAE_SAFETY": 9.190936182679188e-05,
+          "RR": -0.054904787144437306
+        },
+        "z_vector": {
+          "RETURN": -0.7136311594118827,
+          "UP_PROB": 1.4743295019157119,
+          "MFE": -0.8580317078019521,
+          "MAE_SAFETY": 0.03463815327765346,
+          "RR": -0.6030147266520813
+        },
+        "utility": -0.6030147266520813
+      },
+      "reasons": []
+    },
+    {
+      "id": "F6_COLOR_AGE_EVENT::GRAY|21_PLUS|LOWER",
+      "family": "F6_COLOR_AGE_EVENT",
+      "key": "GRAY|21_PLUS|LOWER",
+      "component": "EVENT",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F6_COLOR_AGE_EVENT",
+        "key": "GRAY|21_PLUS|LOWER",
+        "component": "EVENT",
+        "n": 228,
+        "symbol_count": 32,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0026398581566664803,
+            "up_prob_lift": -0.02922893006575017,
+            "mfe_excess": -0.005947929674129937,
+            "mae_safety_lift": 3.416042449586043e-05,
+            "rr_log_lift": -0.21030407709140708,
+            "symbol_effect_count": 32
+          },
+          "10": {
+            "return_excess": -0.003197940584122483,
+            "up_prob_lift": -0.05496114763897192,
+            "mfe_excess": -0.0067539042152509055,
+            "mae_safety_lift": 0.0004901159525671495,
+            "rr_log_lift": -0.22686773698936613,
+            "symbol_effect_count": 32
+          },
+          "20": {
+            "return_excess": -0.014059434394339043,
+            "up_prob_lift": -0.034425198232729604,
+            "mfe_excess": -0.001878536382863838,
+            "mae_safety_lift": 0.004555380011812216,
+            "rr_log_lift": 0.02287568470388064,
+            "symbol_effect_count": 32
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.003197940584122483,
+          "UP_PROB": -0.034425198232729604,
+          "MFE": -0.005947929674129937,
+          "MAE_SAFETY": 0.0004901159525671495,
+          "RR": -0.21030407709140708
+        },
+        "z_vector": {
+          "RETURN": -0.9545852643605676,
+          "UP_PROB": -1.591209162757281,
+          "MFE": -2.5230302430757323,
+          "MAE_SAFETY": 0.18471144996999958,
+          "RR": -2.309752248514846
+        },
+        "utility": -1.591209162757281
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F6_COLOR_AGE_EVENT",
+        "key": "GRAY|21_PLUS|LOWER",
+        "component": "EVENT",
+        "n": 97,
+        "symbol_count": 31,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": 0.0009102403310501939,
+            "up_prob_lift": 0.04741379310344829,
+            "mfe_excess": -0.006027234602657527,
+            "mae_safety_lift": -0.0038545475071717905,
+            "rr_log_lift": -0.43590007223440586,
+            "symbol_effect_count": 31
+          },
+          "10": {
+            "return_excess": -0.021797813732267024,
+            "up_prob_lift": -0.17313218390804602,
+            "mfe_excess": -0.012379349815133112,
+            "mae_safety_lift": -0.007282210861736582,
+            "rr_log_lift": -0.5662365650327817,
+            "symbol_effect_count": 31
+          },
+          "20": {
+            "return_excess": -0.014234321587062171,
+            "up_prob_lift": -0.1875,
+            "mfe_excess": -0.021716626722375176,
+            "mae_safety_lift": -0.010013555593059276,
+            "rr_log_lift": -0.5589017727584087,
+            "symbol_effect_count": 31
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.014234321587062171,
+          "UP_PROB": -0.17313218390804602,
+          "MFE": -0.012379349815133112,
+          "MAE_SAFETY": -0.007282210861736582,
+          "RR": -0.5589017727584087
+        },
+        "z_vector": {
+          "RETURN": -4.248944993738086,
+          "UP_PROB": -8.002554278416357,
+          "MFE": -5.2511505152864215,
+          "MAE_SAFETY": -2.74446836552286,
+          "RR": -6.138371847953178
+        },
+        "utility": -5.2511505152864215
+      },
+      "reasons": []
+    },
+    {
+      "id": "F6_COLOR_AGE_EVENT::BLUE|21_PLUS|UPPER",
+      "family": "F6_COLOR_AGE_EVENT",
+      "key": "BLUE|21_PLUS|UPPER",
+      "component": "EVENT",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F6_COLOR_AGE_EVENT",
+        "key": "BLUE|21_PLUS|UPPER",
+        "component": "EVENT",
+        "n": 529,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0029261676252264612,
+            "up_prob_lift": -0.01966527196652723,
+            "mfe_excess": 0.0039025678951053466,
+            "mae_safety_lift": -0.0026248052563841995,
+            "rr_log_lift": 0.07092762634021002,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.009986155266126506,
+            "up_prob_lift": -0.03054393305439329,
+            "mfe_excess": 0.002858068330782837,
+            "mae_safety_lift": -0.006368778712082024,
+            "rr_log_lift": -0.0616980532367974,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.011049282579780828,
+            "up_prob_lift": -0.05781032078103204,
+            "mfe_excess": 0.0012566860635985222,
+            "mae_safety_lift": -0.01650359447512384,
+            "rr_log_lift": 0.0030142840929948678,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.009986155266126506,
+          "UP_PROB": -0.03054393305439329,
+          "MFE": 0.002858068330782837,
+          "MAE_SAFETY": -0.006368778712082024,
+          "RR": 0.0030142840929948678
+        },
+        "z_vector": {
+          "RETURN": -2.980867346938782,
+          "UP_PROB": -1.4118084611808468,
+          "MFE": 1.2123534120966044,
+          "MAE_SAFETY": -2.400220487182701,
+          "RR": 0.03310563236694332
+        },
+        "utility": -1.4118084611808468
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F6_COLOR_AGE_EVENT",
+        "key": "BLUE|21_PLUS|UPPER",
+        "component": "EVENT",
+        "n": 190,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.00576635659142144,
+            "up_prob_lift": -0.028017241379310387,
+            "mfe_excess": -6.617682319831619e-05,
+            "mae_safety_lift": -0.0037283260093472492,
+            "rr_log_lift": -0.21510616320110532,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.019534197887712212,
+            "up_prob_lift": -0.20955882352941174,
+            "mfe_excess": -0.0018854208622435253,
+            "mae_safety_lift": -0.013397439762779684,
+            "rr_log_lift": -0.5177226913569623,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.024973347420181646,
+            "up_prob_lift": -0.23563218390804602,
+            "mfe_excess": -0.008620157066114076,
+            "mae_safety_lift": -0.013538665771732794,
+            "rr_log_lift": -0.6150231053413635,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.019534197887712212,
+          "UP_PROB": -0.20955882352941174,
+          "MFE": -0.0018854208622435253,
+          "MAE_SAFETY": -0.013397439762779684,
+          "RR": -0.5177226913569623
+        },
+        "z_vector": {
+          "RETURN": -5.830958069482135,
+          "UP_PROB": -9.68627450980393,
+          "MFE": -0.7997696874353493,
+          "MAE_SAFETY": -5.049132784817315,
+          "RR": -5.686105409878245
+        },
+        "utility": -5.686105409878245
+      },
+      "reasons": []
+    },
+    {
+      "id": "F2_COLOR_AGE_ORIGIN::BLUE|11_20|GRAY",
+      "family": "F2_COLOR_AGE_ORIGIN",
+      "key": "BLUE|11_20|GRAY",
+      "component": "REGIME",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F2_COLOR_AGE_ORIGIN",
+        "key": "BLUE|11_20|GRAY",
+        "component": "REGIME",
+        "n": 2411,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0011074200515999166,
+            "up_prob_lift": -0.014510632791269518,
+            "mfe_excess": 0.00013576566805850732,
+            "mae_safety_lift": -0.002658467986000501,
+            "rr_log_lift": -0.08003857363922329,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.005904624970045624,
+            "up_prob_lift": -0.05801646052692078,
+            "mfe_excess": 0.001497755615379348,
+            "mae_safety_lift": -0.003520156852513834,
+            "rr_log_lift": -0.08090067635083498,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.010028039455424742,
+            "up_prob_lift": -0.06069934249850567,
+            "mfe_excess": -0.00016848735299146433,
+            "mae_safety_lift": -0.006639995585178804,
+            "rr_log_lift": -0.19345883234210925,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.005904624970045624,
+          "UP_PROB": -0.05801646052692078,
+          "MFE": 0.00013576566805850732,
+          "MAE_SAFETY": -0.003520156852513834,
+          "RR": -0.08090067635083498
+        },
+        "z_vector": {
+          "RETURN": -1.7625305535586306,
+          "UP_PROB": -2.6816497310221186,
+          "MFE": 0.057589935532165105,
+          "MAE_SAFETY": -1.3266519339840837,
+          "RR": -0.888525423244626
+        },
+        "utility": -1.3266519339840837
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F2_COLOR_AGE_ORIGIN",
+        "key": "BLUE|11_20|GRAY",
+        "component": "REGIME",
+        "n": 1051,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": 0.0007394354337069142,
+            "up_prob_lift": -0.005541871921182273,
+            "mfe_excess": 0.001397775074732377,
+            "mae_safety_lift": -0.000380077078358132,
+            "rr_log_lift": -0.021765037709191137,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.0016443062187566637,
+            "up_prob_lift": -0.004718080149114567,
+            "mfe_excess": 0.010585816975588469,
+            "mae_safety_lift": -0.0018914962985934758,
+            "rr_log_lift": 0.3233726326758124,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.0003733894635703505,
+            "up_prob_lift": -0.030626134301270425,
+            "mfe_excess": 0.007075860348813912,
+            "mae_safety_lift": -0.0009990541508888007,
+            "rr_log_lift": 0.211990644064323,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.0003733894635703505,
+          "UP_PROB": -0.005541871921182273,
+          "MFE": 0.007075860348813912,
+          "MAE_SAFETY": -0.0009990541508888007,
+          "RR": 0.211990644064323
+        },
+        "z_vector": {
+          "RETURN": -0.11145675487575038,
+          "UP_PROB": -0.25615763546798087,
+          "MFE": 3.0014829754101586,
+          "MAE_SAFETY": -0.3765164954183658,
+          "RR": 2.3282756737942822
+        },
+        "utility": -0.11145675487575038
+      },
+      "reasons": []
+    },
+    {
+      "id": "F6_COLOR_AGE_EVENT::BLUE|11_20|LOWER",
+      "family": "F6_COLOR_AGE_EVENT",
+      "key": "BLUE|11_20|LOWER",
+      "component": "EVENT",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F6_COLOR_AGE_EVENT",
+        "key": "BLUE|11_20|LOWER",
+        "component": "EVENT",
+        "n": 98,
+        "symbol_count": 31,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0005912009137816199,
+            "up_prob_lift": -0.00339558573853993,
+            "mfe_excess": -0.0015687669009405436,
+            "mae_safety_lift": -0.0020868896630479306,
+            "rr_log_lift": -0.02447022568861909,
+            "symbol_effect_count": 31
+          },
+          "10": {
+            "return_excess": -0.0038749171689120843,
+            "up_prob_lift": 0.007359307359307343,
+            "mfe_excess": -0.00254482216411156,
+            "mae_safety_lift": -0.009233023049615707,
+            "rr_log_lift": 0.040840521919251534,
+            "symbol_effect_count": 31
+          },
+          "20": {
+            "return_excess": -0.01608161474330838,
+            "up_prob_lift": -0.09136822773186415,
+            "mfe_excess": -0.00402256054327732,
+            "mae_safety_lift": -0.008768735543285944,
+            "rr_log_lift": -0.1998108071946398,
+            "symbol_effect_count": 31
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.0038749171689120843,
+          "UP_PROB": -0.00339558573853993,
+          "MFE": -0.00254482216411156,
+          "MAE_SAFETY": -0.008768735543285944,
+          "RR": -0.02447022568861909
+        },
+        "z_vector": {
+          "RETURN": -1.156662774920265,
+          "UP_PROB": -0.15695151858140138,
+          "MFE": -1.0794786816712176,
+          "MAE_SAFETY": -3.304699322925854,
+          "RR": -0.26875446062506736
+        },
+        "utility": -1.0794786816712176
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F6_COLOR_AGE_EVENT",
+        "key": "BLUE|11_20|LOWER",
+        "component": "EVENT",
+        "n": 44,
+        "symbol_count": 22,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.010486016052035696,
+            "up_prob_lift": -0.4181034482758621,
+            "mfe_excess": -0.0008128949531414076,
+            "mae_safety_lift": -0.005788867655135532,
+            "rr_log_lift": -0.46201714317582954,
+            "symbol_effect_count": 22
+          },
+          "10": {
+            "return_excess": -0.010476959942838732,
+            "up_prob_lift": -0.13433908045977014,
+            "mfe_excess": -0.004829615838703227,
+            "mae_safety_lift": -0.0034556050032990004,
+            "rr_log_lift": -0.24710084839331348,
+            "symbol_effect_count": 22
+          },
+          "20": {
+            "return_excess": -0.0038300862817403636,
+            "up_prob_lift": 0.05280172413793102,
+            "mfe_excess": -0.007136349191040836,
+            "mae_safety_lift": -0.004202408971692689,
+            "rr_log_lift": -0.06916222589057934,
+            "symbol_effect_count": 22
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.010476959942838732,
+          "UP_PROB": -0.13433908045977014,
+          "MFE": -0.004829615838703227,
+          "MAE_SAFETY": -0.004202408971692689,
+          "RR": -0.24710084839331348
+        },
+        "z_vector": {
+          "RETURN": -3.1273725429373824,
+          "UP_PROB": -6.209450830140493,
+          "MFE": -2.0486568421420133,
+          "MAE_SAFETY": -1.583774309859751,
+          "RR": -2.7138881379761046
+        },
+        "utility": -2.7138881379761046
+      },
+      "reasons": []
+    },
+    {
+      "id": "F4_COLOR_AGE_SLOWPOS::BLUE|21_PLUS|ABOVE_GZB3",
+      "family": "F4_COLOR_AGE_SLOWPOS",
+      "key": "BLUE|21_PLUS|ABOVE_GZB3",
+      "component": "SLOW",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F4_COLOR_AGE_SLOWPOS",
+        "key": "BLUE|21_PLUS|ABOVE_GZB3",
+        "component": "SLOW",
+        "n": 9757,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0006610862791671113,
+            "up_prob_lift": -0.009166398455101366,
+            "mfe_excess": 0.001698417280123543,
+            "mae_safety_lift": -0.004753432270873936,
+            "rr_log_lift": -0.03168852632877721,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.0055593602707166845,
+            "up_prob_lift": -0.02296606229660625,
+            "mfe_excess": 0.0007178209346863085,
+            "mae_safety_lift": -0.006123087051870479,
+            "rr_log_lift": -0.0632942240902245,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.010478337776227753,
+            "up_prob_lift": -0.048747445130498945,
+            "mfe_excess": 0.0006040782428722302,
+            "mae_safety_lift": -0.009913134222610864,
+            "rr_log_lift": -0.17158400937594415,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.0055593602707166845,
+          "UP_PROB": -0.02296606229660625,
+          "MFE": 0.0007178209346863085,
+          "MAE_SAFETY": -0.006123087051870479,
+          "RR": -0.0632942240902245
+        },
+        "z_vector": {
+          "RETURN": -1.6594690408089414,
+          "UP_PROB": -1.0615424350431344,
+          "MFE": 0.3044898017546536,
+          "MAE_SAFETY": -2.3076259438598266,
+          "RR": -0.6951552173040206
+        },
+        "utility": -1.0615424350431344
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F4_COLOR_AGE_SLOWPOS",
+        "key": "BLUE|21_PLUS|ABOVE_GZB3",
+        "component": "SLOW",
+        "n": 3818,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.006593807868980506,
+            "up_prob_lift": -0.06380524526469161,
+            "mfe_excess": -0.000641983248900968,
+            "mae_safety_lift": -0.004055764015506391,
+            "rr_log_lift": -0.23337997380373465,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.008871807417637712,
+            "up_prob_lift": -0.11433756805807627,
+            "mfe_excess": -0.00433155553060971,
+            "mae_safety_lift": -0.006604441424848673,
+            "rr_log_lift": -0.3732633543242093,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.019306050090420523,
+            "up_prob_lift": -0.11896551724137933,
+            "mfe_excess": -0.009728207992374283,
+            "mae_safety_lift": -0.008595450951772554,
+            "rr_log_lift": -0.4059990700201186,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.008871807417637712,
+          "UP_PROB": -0.11433756805807627,
+          "MFE": -0.00433155553060971,
+          "MAE_SAFETY": -0.006604441424848673,
+          "RR": -0.3732633543242093
+        },
+        "z_vector": {
+          "RETURN": -2.6482345141648747,
+          "UP_PROB": -5.284936479128864,
+          "MFE": -1.837386486061453,
+          "MAE_SAFETY": -2.489035391392593,
+          "RR": -4.099520484159758
+        },
+        "utility": -2.6482345141648747
+      },
+      "reasons": []
+    },
+    {
+      "id": "F1_COLOR_AGE::BLUE|21_PLUS",
+      "family": "F1_COLOR_AGE",
+      "key": "BLUE|21_PLUS",
+      "component": "REGIME",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F1_COLOR_AGE",
+        "key": "BLUE|21_PLUS",
+        "component": "REGIME",
+        "n": 10963,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0010660980810233145,
+            "up_prob_lift": -0.012839150773659602,
+            "mfe_excess": 0.001746595152383179,
+            "mae_safety_lift": -0.005143020922900532,
+            "rr_log_lift": -0.010298648134443186,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.003461721281541541,
+            "up_prob_lift": -0.019101327997089357,
+            "mfe_excess": 0.0016220515372443733,
+            "mae_safety_lift": -0.007594078674042937,
+            "rr_log_lift": -0.048300680478304214,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.009007838243215827,
+            "up_prob_lift": -0.039318486006776565,
+            "mfe_excess": -0.00032786898708403456,
+            "mae_safety_lift": -0.007587411845214942,
+            "rr_log_lift": -0.1202963885816482,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.003461721281541541,
+          "UP_PROB": -0.019101327997089357,
+          "MFE": 0.0016220515372443733,
+          "MAE_SAFETY": -0.007587411845214942,
+          "RR": -0.048300680478304214
+        },
+        "z_vector": {
+          "RETURN": -1.033323802540157,
+          "UP_PROB": -0.8829058274210201,
+          "MFE": 0.6880520296154451,
+          "MAE_SAFETY": -2.859490363675091,
+          "RR": -0.5304823704918971
+        },
+        "utility": -0.8829058274210201
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F1_COLOR_AGE",
+        "key": "BLUE|21_PLUS",
+        "component": "REGIME",
+        "n": 4311,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.003566712873641964,
+            "up_prob_lift": -0.04302411677596785,
+            "mfe_excess": 0.0012012094435739362,
+            "mae_safety_lift": -0.003010522857356146,
+            "rr_log_lift": -0.047602715339748136,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.005743884107694663,
+            "up_prob_lift": -0.05456222506030939,
+            "mfe_excess": -0.0021517211028058147,
+            "mae_safety_lift": -0.00618082634015138,
+            "rr_log_lift": -0.21541614994129,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.014540580143312831,
+            "up_prob_lift": -0.051416256157635454,
+            "mfe_excess": -0.00811728860484795,
+            "mae_safety_lift": -0.005805680237857769,
+            "rr_log_lift": -0.23841652325840756,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.005743884107694663,
+          "UP_PROB": -0.051416256157635454,
+          "MFE": -0.0021517211028058147,
+          "MAE_SAFETY": -0.005805680237857769,
+          "RR": -0.21541614994129
+        },
+        "z_vector": {
+          "RETURN": -1.7145494061468685,
+          "UP_PROB": -2.37657361795293,
+          "MFE": -0.9127305994648416,
+          "MAE_SAFETY": -2.1880038982203036,
+          "RR": -2.3658977209321814
+        },
+        "utility": -2.1880038982203036
+      },
+      "reasons": []
+    },
+    {
+      "id": "F2_COLOR_AGE_ORIGIN::BLUE|21_PLUS|GRAY",
+      "family": "F2_COLOR_AGE_ORIGIN",
+      "key": "BLUE|21_PLUS|GRAY",
+      "component": "REGIME",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F2_COLOR_AGE_ORIGIN",
+        "key": "BLUE|21_PLUS|GRAY",
+        "component": "REGIME",
+        "n": 10901,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0010245124603053268,
+            "up_prob_lift": -0.012839150773659602,
+            "mfe_excess": 0.001746595152383179,
+            "mae_safety_lift": -0.005143020922900532,
+            "rr_log_lift": -0.010298648134443186,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.003184113270549349,
+            "up_prob_lift": -0.019101327997089357,
+            "mfe_excess": 0.0016220515372443733,
+            "mae_safety_lift": -0.007594078674042937,
+            "rr_log_lift": -0.048300680478304214,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.009007838243215827,
+            "up_prob_lift": -0.039318486006776565,
+            "mfe_excess": -0.00032786898708403456,
+            "mae_safety_lift": -0.007587411845214942,
+            "rr_log_lift": -0.10212665462061499,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.003184113270549349,
+          "UP_PROB": -0.019101327997089357,
+          "MFE": 0.0016220515372443733,
+          "MAE_SAFETY": -0.007587411845214942,
+          "RR": -0.048300680478304214
+        },
+        "z_vector": {
+          "RETURN": -0.9504578112589871,
+          "UP_PROB": -0.8829058274210201,
+          "MFE": 0.6880520296154451,
+          "MAE_SAFETY": -2.859490363675091,
+          "RR": -0.5304823704918971
+        },
+        "utility": -0.8829058274210201
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F2_COLOR_AGE_ORIGIN",
+        "key": "BLUE|21_PLUS|GRAY",
+        "component": "REGIME",
+        "n": 4203,
+        "symbol_count": 34,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0038254063394662086,
+            "up_prob_lift": -0.04313827005173729,
+            "mfe_excess": 0.0011912122176607753,
+            "mae_safety_lift": -0.0032812560352236397,
+            "rr_log_lift": -0.04998558565098707,
+            "symbol_effect_count": 34
+          },
+          "10": {
+            "return_excess": -0.00685516243743281,
+            "up_prob_lift": -0.0631168386244903,
+            "mfe_excess": -0.002195079911751663,
+            "mae_safety_lift": -0.006244665259043075,
+            "rr_log_lift": -0.22274121883911566,
+            "symbol_effect_count": 34
+          },
+          "20": {
+            "return_excess": -0.014875188131998673,
+            "up_prob_lift": -0.06317531269638549,
+            "mfe_excess": -0.008847564203892377,
+            "mae_safety_lift": -0.00715304419968818,
+            "rr_log_lift": -0.3674876786831286,
+            "symbol_effect_count": 34
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.00685516243743281,
+          "UP_PROB": -0.0631168386244903,
+          "MFE": -0.002195079911751663,
+          "MAE_SAFETY": -0.006244665259043075,
+          "RR": -0.22274121883911566
+        },
+        "z_vector": {
+          "RETURN": -2.0462659875737077,
+          "UP_PROB": -2.9174005408653323,
+          "MFE": -0.931122811926587,
+          "MAE_SAFETY": -2.3534454827138007,
+          "RR": -2.446348345529085
+        },
+        "utility": -2.3534454827138007
+      },
+      "reasons": []
+    },
+    {
+      "id": "F5_COLOR_AGE_SLOWTREND::BLUE|21_PLUS|UP",
+      "family": "F5_COLOR_AGE_SLOWTREND",
+      "key": "BLUE|21_PLUS|UP",
+      "component": "SLOW",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F5_COLOR_AGE_SLOWTREND",
+        "key": "BLUE|21_PLUS|UP",
+        "component": "SLOW",
+        "n": 10963,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0010660980810233145,
+            "up_prob_lift": -0.012839150773659602,
+            "mfe_excess": 0.001746595152383179,
+            "mae_safety_lift": -0.005143020922900532,
+            "rr_log_lift": -0.010298648134443186,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.003461721281541541,
+            "up_prob_lift": -0.019101327997089357,
+            "mfe_excess": 0.0016220515372443733,
+            "mae_safety_lift": -0.007594078674042937,
+            "rr_log_lift": -0.048300680478304214,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.009007838243215827,
+            "up_prob_lift": -0.039318486006776565,
+            "mfe_excess": -0.00032786898708403456,
+            "mae_safety_lift": -0.007587411845214942,
+            "rr_log_lift": -0.1202963885816482,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.003461721281541541,
+          "UP_PROB": -0.019101327997089357,
+          "MFE": 0.0016220515372443733,
+          "MAE_SAFETY": -0.007587411845214942,
+          "RR": -0.048300680478304214
+        },
+        "z_vector": {
+          "RETURN": -1.033323802540157,
+          "UP_PROB": -0.8829058274210201,
+          "MFE": 0.6880520296154451,
+          "MAE_SAFETY": -2.859490363675091,
+          "RR": -0.5304823704918971
+        },
+        "utility": -0.8829058274210201
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F5_COLOR_AGE_SLOWTREND",
+        "key": "BLUE|21_PLUS|UP",
+        "component": "SLOW",
+        "n": 4311,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.003566712873641964,
+            "up_prob_lift": -0.04302411677596785,
+            "mfe_excess": 0.0012012094435739362,
+            "mae_safety_lift": -0.003010522857356146,
+            "rr_log_lift": -0.047602715339748136,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.005743884107694663,
+            "up_prob_lift": -0.05456222506030939,
+            "mfe_excess": -0.0021517211028058147,
+            "mae_safety_lift": -0.00618082634015138,
+            "rr_log_lift": -0.21541614994129,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.014540580143312831,
+            "up_prob_lift": -0.051416256157635454,
+            "mfe_excess": -0.00811728860484795,
+            "mae_safety_lift": -0.005805680237857769,
+            "rr_log_lift": -0.23841652325840756,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.005743884107694663,
+          "UP_PROB": -0.051416256157635454,
+          "MFE": -0.0021517211028058147,
+          "MAE_SAFETY": -0.005805680237857769,
+          "RR": -0.21541614994129
+        },
+        "z_vector": {
+          "RETURN": -1.7145494061468685,
+          "UP_PROB": -2.37657361795293,
+          "MFE": -0.9127305994648416,
+          "MAE_SAFETY": -2.1880038982203036,
+          "RR": -2.3658977209321814
+        },
+        "utility": -2.1880038982203036
+      },
+      "reasons": []
+    },
+    {
+      "id": "F7_COLOR_AGE_EVENT_SUBTYPE::BLUE|21_PLUS|LOWER|WICK_ONLY",
+      "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+      "key": "BLUE|21_PLUS|LOWER|WICK_ONLY",
+      "component": "EVENT",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+        "key": "BLUE|21_PLUS|LOWER|WICK_ONLY",
+        "component": "EVENT",
+        "n": 307,
+        "symbol_count": 34,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.00041701615882344667,
+            "up_prob_lift": -0.013226563383467116,
+            "mfe_excess": 0.0028568403007602217,
+            "mae_safety_lift": -0.0021359982656865006,
+            "rr_log_lift": -0.031892837093169535,
+            "symbol_effect_count": 34
+          },
+          "10": {
+            "return_excess": -0.007585736381599151,
+            "up_prob_lift": -0.054565982599455415,
+            "mfe_excess": -0.0021515896977267746,
+            "mae_safety_lift": -0.009528655948640274,
+            "rr_log_lift": -0.23092188592215018,
+            "symbol_effect_count": 34
+          },
+          "20": {
+            "return_excess": 0.0027363721155931886,
+            "up_prob_lift": 0.025842631334263177,
+            "mfe_excess": -0.0008256643343172998,
+            "mae_safety_lift": -0.004032925232564211,
+            "rr_log_lift": -0.04889702350885912,
+            "symbol_effect_count": 34
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.00041701615882344667,
+          "UP_PROB": -0.013226563383467116,
+          "MFE": -0.0008256643343172998,
+          "MAE_SAFETY": -0.004032925232564211,
+          "RR": -0.04889702350885912
+        },
+        "z_vector": {
+          "RETURN": -0.12447932340879966,
+          "UP_PROB": -0.6113611519469251,
+          "MFE": -0.350235493733585,
+          "MAE_SAFETY": -1.519900471359321,
+          "RR": -0.537031956571066
+        },
+        "utility": -0.537031956571066
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+        "key": "BLUE|21_PLUS|LOWER|WICK_ONLY",
+        "component": "EVENT",
+        "n": 99,
+        "symbol_count": 29,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0027306511264667543,
+            "up_prob_lift": -0.06982758620689655,
+            "mfe_excess": 0.0008246804378410078,
+            "mae_safety_lift": -0.004527816065621859,
+            "rr_log_lift": -0.10952836409699696,
+            "symbol_effect_count": 29
+          },
+          "10": {
+            "return_excess": -0.0056459930923606905,
+            "up_prob_lift": -0.09999999999999998,
+            "mfe_excess": -0.00442289027103393,
+            "mae_safety_lift": -0.0022969416050501734,
+            "rr_log_lift": -0.26655405470129506,
+            "symbol_effect_count": 29
+          },
+          "20": {
+            "return_excess": -0.003958054915587317,
+            "up_prob_lift": 0.03448275862068967,
+            "mfe_excess": -0.00934599227156796,
+            "mae_safety_lift": -0.003029613016968913,
+            "rr_log_lift": -0.4192019970267301,
+            "symbol_effect_count": 29
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.003958054915587317,
+          "UP_PROB": -0.06982758620689655,
+          "MFE": -0.00442289027103393,
+          "MAE_SAFETY": -0.003029613016968913,
+          "RR": -0.26655405470129506
+        },
+        "z_vector": {
+          "RETURN": -1.181479392302822,
+          "UP_PROB": -3.227586206896555,
+          "MFE": -1.8761294310791223,
+          "MAE_SAFETY": -1.141779226489558,
+          "RR": -2.9275410905584467
+        },
+        "utility": -1.8761294310791223
+      },
+      "reasons": []
+    },
+    {
+      "id": "F3_COLOR_AGE_INNER::BLUE|11_20|UPPER_HALF",
+      "family": "F3_COLOR_AGE_INNER",
+      "key": "BLUE|11_20|UPPER_HALF",
+      "component": "INNER",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F3_COLOR_AGE_INNER",
+        "key": "BLUE|11_20|UPPER_HALF",
+        "component": "INNER",
+        "n": 876,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0015188335358444771,
+            "up_prob_lift": -0.012970711297071169,
+            "mfe_excess": 0.004435858952370864,
+            "mae_safety_lift": -0.004605587970289982,
+            "rr_log_lift": 0.07998376958748286,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.00899187848877614,
+            "up_prob_lift": -0.05899581589958158,
+            "mfe_excess": 0.014898989898989745,
+            "mae_safety_lift": -0.004295051353874979,
+            "rr_log_lift": 0.13621358208371653,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": 0.0008588360675475526,
+            "up_prob_lift": 0.008195914349003242,
+            "mfe_excess": 0.004737255788074712,
+            "mae_safety_lift": -0.004790503374111743,
+            "rr_log_lift": 0.020784570921546064,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.0015188335358444771,
+          "UP_PROB": -0.012970711297071169,
+          "MFE": 0.004737255788074712,
+          "MAE_SAFETY": -0.004605587970289982,
+          "RR": 0.07998376958748286
+        },
+        "z_vector": {
+          "RETURN": -0.45337181044957947,
+          "UP_PROB": -0.5995350999535124,
+          "MFE": 2.009478974588992,
+          "MAE_SAFETY": -1.7357215726213218,
+          "RR": 0.8784551122567391
+        },
+        "utility": -0.45337181044957947
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F3_COLOR_AGE_INNER",
+        "key": "BLUE|11_20|UPPER_HALF",
+        "component": "INNER",
+        "n": 424,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": 0.00148285706366591,
+            "up_prob_lift": -0.012931034482758674,
+            "mfe_excess": 0.003783248448682386,
+            "mae_safety_lift": -0.001833764769284818,
+            "rr_log_lift": 0.039775567866192345,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.008183317019463454,
+            "up_prob_lift": -0.03663793103448276,
+            "mfe_excess": 0.01963566972868891,
+            "mae_safety_lift": -0.003025609532023854,
+            "rr_log_lift": 0.5204303307397615,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.009368772519852242,
+            "up_prob_lift": -0.09674329501915713,
+            "mfe_excess": 0.018115251486292783,
+            "mae_safety_lift": -0.005047334378209978,
+            "rr_log_lift": 0.05746997535488324,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.008183317019463454,
+          "UP_PROB": -0.03663793103448276,
+          "MFE": 0.018115251486292783,
+          "MAE_SAFETY": -0.003025609532023854,
+          "RR": 0.05746997535488324
+        },
+        "z_vector": {
+          "RETURN": -2.4427201303098576,
+          "UP_PROB": -1.693486590038316,
+          "MFE": 7.68424138564232,
+          "MAE_SAFETY": -1.1402704212665051,
+          "RR": 0.6311879761624369
+        },
+        "utility": -1.1402704212665051
+      },
+      "reasons": []
+    },
+    {
+      "id": "F5_COLOR_AGE_SLOWTREND::GRAY|11_20|DOWN",
+      "family": "F5_COLOR_AGE_SLOWTREND",
+      "key": "GRAY|11_20|DOWN",
+      "component": "SLOW",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F5_COLOR_AGE_SLOWTREND",
+        "key": "GRAY|11_20|DOWN",
+        "component": "SLOW",
+        "n": 1924,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.000622332703222539,
+            "up_prob_lift": 0.0022981327671267038,
+            "mfe_excess": -0.003666320842638404,
+            "mae_safety_lift": 0.0020082142095156907,
+            "rr_log_lift": 0.010357776422727054,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.000918012633219667,
+            "up_prob_lift": -0.005890035261851945,
+            "mfe_excess": -0.0027268760907501743,
+            "mae_safety_lift": 0.0006234252809595997,
+            "rr_log_lift": 0.0525996573159522,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": -0.002733813017910869,
+            "up_prob_lift": -0.004708885894617376,
+            "mfe_excess": -0.005603508296795678,
+            "mae_safety_lift": -0.001185279680523621,
+            "rr_log_lift": -0.14698649130334393,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.000918012633219667,
+          "UP_PROB": -0.004708885894617376,
+          "MFE": -0.003666320842638404,
+          "MAE_SAFETY": 0.0006234252809595997,
+          "RR": 0.010357776422727054
+        },
+        "z_vector": {
+          "RETURN": -0.2740267710160724,
+          "UP_PROB": -0.21765517024009226,
+          "MFE": -1.5552030493952875,
+          "MAE_SAFETY": 0.23495213120659467,
+          "RR": 0.11375859998952627
+        },
+        "utility": -0.21765517024009226
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F5_COLOR_AGE_SLOWTREND",
+        "key": "GRAY|11_20|DOWN",
+        "component": "SLOW",
+        "n": 612,
+        "symbol_count": 35,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.00448295804708182,
+            "up_prob_lift": -0.028213166144200663,
+            "mfe_excess": -0.003804755817919059,
+            "mae_safety_lift": -0.0029546346376640997,
+            "rr_log_lift": -0.3333566153152662,
+            "symbol_effect_count": 35
+          },
+          "10": {
+            "return_excess": -0.003946821194898642,
+            "up_prob_lift": -0.0237068965517242,
+            "mfe_excess": -0.004354785610821366,
+            "mae_safety_lift": -0.00025987161008250714,
+            "rr_log_lift": -0.22613588255495126,
+            "symbol_effect_count": 35
+          },
+          "20": {
+            "return_excess": 0.005918076451038035,
+            "up_prob_lift": -0.020258620689655116,
+            "mfe_excess": -0.001306536019437976,
+            "mae_safety_lift": -0.0001442742721926571,
+            "rr_log_lift": -0.116656653022369,
+            "symbol_effect_count": 35
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.003946821194898642,
+          "UP_PROB": -0.0237068965517242,
+          "MFE": -0.003804755817919059,
+          "MAE_SAFETY": -0.00025987161008250714,
+          "RR": -0.22613588255495126
+        },
+        "z_vector": {
+          "RETURN": -1.1781261266772525,
+          "UP_PROB": -1.0957854406130307,
+          "MFE": -1.613925268464501,
+          "MAE_SAFETY": -0.09793858300868452,
+          "RR": -2.4836316557675024
+        },
+        "utility": -1.1781261266772525
+      },
+      "reasons": []
+    },
+    {
+      "id": "F6_COLOR_AGE_EVENT::GREEN|11_20|UPPER",
+      "family": "F6_COLOR_AGE_EVENT",
+      "key": "GREEN|11_20|UPPER",
+      "component": "EVENT",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F6_COLOR_AGE_EVENT",
+        "key": "GREEN|11_20|UPPER",
+        "component": "EVENT",
+        "n": 92,
+        "symbol_count": 32,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0007236483728703114,
+            "up_prob_lift": -0.026602272247004066,
+            "mfe_excess": -0.004335682390773921,
+            "mae_safety_lift": 0.0013525330859493478,
+            "rr_log_lift": -0.11070895187357625,
+            "symbol_effect_count": 32
+          },
+          "10": {
+            "return_excess": -0.0010809355254572384,
+            "up_prob_lift": -0.015368577334820388,
+            "mfe_excess": -0.0027943184069443294,
+            "mae_safety_lift": 0.003822977626149082,
+            "rr_log_lift": 0.19921294510154977,
+            "symbol_effect_count": 32
+          },
+          "20": {
+            "return_excess": 0.003529619202354728,
+            "up_prob_lift": -0.038075313807531375,
+            "mfe_excess": 0.0030499194456572454,
+            "mae_safety_lift": 0.001674677698689675,
+            "rr_log_lift": 0.12152310146058642,
+            "symbol_effect_count": 32
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.0007236483728703114,
+          "UP_PROB": -0.026602272247004066,
+          "MFE": -0.0027943184069443294,
+          "MAE_SAFETY": 0.001674677698689675,
+          "RR": 0.12152310146058642
+        },
+        "z_vector": {
+          "RETURN": -0.21600903930178939,
+          "UP_PROB": -1.2296161394170781,
+          "MFE": -1.1853115681861253,
+          "MAE_SAFETY": 0.6311407419757699,
+          "RR": 1.334678151404018
+        },
+        "utility": -0.21600903930178939
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F6_COLOR_AGE_EVENT",
+        "key": "GREEN|11_20|UPPER",
+        "component": "EVENT",
+        "n": 37,
+        "symbol_count": 18,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.020440195025044128,
+            "up_prob_lift": -0.41594827586206895,
+            "mfe_excess": -0.00545496521576827,
+            "mae_safety_lift": -0.004504448722103094,
+            "rr_log_lift": -0.5332519708262865,
+            "symbol_effect_count": 18
+          },
+          "10": {
+            "return_excess": -0.023809986887959905,
+            "up_prob_lift": -0.41271551724137934,
+            "mfe_excess": -0.012562339311698367,
+            "mae_safety_lift": -0.015394425843779536,
+            "rr_log_lift": -0.6383046163563308,
+            "symbol_effect_count": 18
+          },
+          "20": {
+            "return_excess": -0.00029109287900619396,
+            "up_prob_lift": -0.2719109195402299,
+            "mfe_excess": -0.02159547893753838,
+            "mae_safety_lift": -0.018854623827794154,
+            "rr_log_lift": -0.727371100482538,
+            "symbol_effect_count": 18
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.020440195025044128,
+          "UP_PROB": -0.41271551724137934,
+          "MFE": -0.012562339311698367,
+          "MAE_SAFETY": -0.015394425843779536,
+          "RR": -0.6383046163563308
+        },
+        "z_vector": {
+          "RETURN": -6.101398214975713,
+          "UP_PROB": -19.07662835249044,
+          "MFE": -5.32877215160257,
+          "MAE_SAFETY": -5.801742840987345,
+          "RR": -7.01044669821421
+        },
+        "utility": -6.101398214975713
+      },
+      "reasons": []
+    },
+    {
+      "id": "F6_COLOR_AGE_EVENT::GRAY|21_PLUS|LIGHT_SUPPORT",
+      "family": "F6_COLOR_AGE_EVENT",
+      "key": "GRAY|21_PLUS|LIGHT_SUPPORT",
+      "component": "EVENT",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F6_COLOR_AGE_EVENT",
+        "key": "GRAY|21_PLUS|LIGHT_SUPPORT",
+        "component": "EVENT",
+        "n": 312,
+        "symbol_count": 34,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0002790593580769829,
+            "up_prob_lift": 0.009623430962343082,
+            "mfe_excess": -0.0021897883234826554,
+            "mae_safety_lift": 0.0011184896256034582,
+            "rr_log_lift": -0.1397133811466531,
+            "symbol_effect_count": 34
+          },
+          "10": {
+            "return_excess": -0.008887407805112768,
+            "up_prob_lift": -0.05488145048814505,
+            "mfe_excess": -0.005432984473192126,
+            "mae_safety_lift": -0.0018453685703295752,
+            "rr_log_lift": -0.23670591532782098,
+            "symbol_effect_count": 34
+          },
+          "20": {
+            "return_excess": 0.007183046266347581,
+            "up_prob_lift": -0.0009310076255683031,
+            "mfe_excess": 0.012145078088372785,
+            "mae_safety_lift": 0.0019994836694281204,
+            "rr_log_lift": 0.41181565297043254,
+            "symbol_effect_count": 34
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.0002790593580769829,
+          "UP_PROB": -0.0009310076255683031,
+          "MFE": -0.0021897883234826554,
+          "MAE_SAFETY": 0.0011184896256034582,
+          "RR": -0.1397133811466531
+        },
+        "z_vector": {
+          "RETURN": -0.08329921838597995,
+          "UP_PROB": -0.043033241359601605,
+          "MFE": -0.9288781927114877,
+          "MAE_SAFETY": 0.42152849634762973,
+          "RR": -1.5344604855702972
+        },
+        "utility": -0.08329921838597995
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F6_COLOR_AGE_EVENT",
+        "key": "GRAY|21_PLUS|LIGHT_SUPPORT",
+        "component": "EVENT",
+        "n": 123,
+        "symbol_count": 31,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.007908869674056795,
+            "up_prob_lift": -0.17087438423645324,
+            "mfe_excess": -0.006230309188265282,
+            "mae_safety_lift": 0.00027839041978089396,
+            "rr_log_lift": -0.3182485837798543,
+            "symbol_effect_count": 31
+          },
+          "10": {
+            "return_excess": -0.01941244694996258,
+            "up_prob_lift": -0.15373563218390807,
+            "mfe_excess": -0.008050569844995192,
+            "mae_safety_lift": -0.00876049382603733,
+            "rr_log_lift": -0.7342940728940062,
+            "symbol_effect_count": 31
+          },
+          "20": {
+            "return_excess": -0.03935268170570172,
+            "up_prob_lift": -0.35129310344827586,
+            "mfe_excess": -0.017387846752237257,
+            "mae_safety_lift": -0.022126306477283808,
+            "rr_log_lift": -0.9014333554288434,
+            "symbol_effect_count": 31
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.01941244694996258,
+          "UP_PROB": -0.17087438423645324,
+          "MFE": -0.008050569844995192,
+          "MAE_SAFETY": -0.00876049382603733,
+          "RR": -0.7342940728940062
+        },
+        "z_vector": {
+          "RETURN": -5.794615414563869,
+          "UP_PROB": -7.8981937602627355,
+          "MFE": -3.414941383934166,
+          "MAE_SAFETY": -3.3015932425478116,
+          "RR": -8.064690943680018
+        },
+        "utility": -5.794615414563869
+      },
+      "reasons": []
+    },
+    {
+      "id": "F7_COLOR_AGE_EVENT_SUBTYPE::GRAY|21_PLUS|LIGHT_SUPPORT|CONTACT",
+      "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+      "key": "GRAY|21_PLUS|LIGHT_SUPPORT|CONTACT",
+      "component": "EVENT",
+      "discovery": {
+        "split": "A35_DISCOVERY_2018_2022",
+        "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+        "key": "GRAY|21_PLUS|LIGHT_SUPPORT|CONTACT",
+        "component": "EVENT",
+        "n": 312,
+        "symbol_count": 34,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.0002790593580769829,
+            "up_prob_lift": 0.009623430962343082,
+            "mfe_excess": -0.0021897883234826554,
+            "mae_safety_lift": 0.0011184896256034582,
+            "rr_log_lift": -0.1397133811466531,
+            "symbol_effect_count": 34
+          },
+          "10": {
+            "return_excess": -0.008887407805112768,
+            "up_prob_lift": -0.05488145048814505,
+            "mfe_excess": -0.005432984473192126,
+            "mae_safety_lift": -0.0018453685703295752,
+            "rr_log_lift": -0.23670591532782098,
+            "symbol_effect_count": 34
+          },
+          "20": {
+            "return_excess": 0.007183046266347581,
+            "up_prob_lift": -0.0009310076255683031,
+            "mfe_excess": 0.012145078088372785,
+            "mae_safety_lift": 0.0019994836694281204,
+            "rr_log_lift": 0.41181565297043254,
+            "symbol_effect_count": 34
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.0002790593580769829,
+          "UP_PROB": -0.0009310076255683031,
+          "MFE": -0.0021897883234826554,
+          "MAE_SAFETY": 0.0011184896256034582,
+          "RR": -0.1397133811466531
+        },
+        "z_vector": {
+          "RETURN": -0.08329921838597995,
+          "UP_PROB": -0.043033241359601605,
+          "MFE": -0.9288781927114877,
+          "MAE_SAFETY": 0.42152849634762973,
+          "RR": -1.5344604855702972
+        },
+        "utility": -0.08329921838597995
+      },
+      "temporal": {
+        "split": "A35_TEMPORAL_2023_2024",
+        "family": "F7_COLOR_AGE_EVENT_SUBTYPE",
+        "key": "GRAY|21_PLUS|LIGHT_SUPPORT|CONTACT",
+        "component": "EVENT",
+        "n": 123,
+        "symbol_count": 31,
+        "support_pass": true,
+        "horizons": {
+          "5": {
+            "return_excess": -0.007908869674056795,
+            "up_prob_lift": -0.17087438423645324,
+            "mfe_excess": -0.006230309188265282,
+            "mae_safety_lift": 0.00027839041978089396,
+            "rr_log_lift": -0.3182485837798543,
+            "symbol_effect_count": 31
+          },
+          "10": {
+            "return_excess": -0.01941244694996258,
+            "up_prob_lift": -0.15373563218390807,
+            "mfe_excess": -0.008050569844995192,
+            "mae_safety_lift": -0.00876049382603733,
+            "rr_log_lift": -0.7342940728940062,
+            "symbol_effect_count": 31
+          },
+          "20": {
+            "return_excess": -0.03935268170570172,
+            "up_prob_lift": -0.35129310344827586,
+            "mfe_excess": -0.017387846752237257,
+            "mae_safety_lift": -0.022126306477283808,
+            "rr_log_lift": -0.9014333554288434,
+            "symbol_effect_count": 31
+          }
+        },
+        "raw_vector": {
+          "RETURN": -0.01941244694996258,
+          "UP_PROB": -0.17087438423645324,
+          "MFE": -0.008050569844995192,
+          "MAE_SAFETY": -0.00876049382603733,
+          "RR": -0.7342940728940062
+        },
+        "z_vector": {
+          "RETURN": -5.794615414563869,
+          "UP_PROB": -7.8981937602627355,
+          "MFE": -3.414941383934166,
+          "MAE_SAFETY": -3.3015932425478116,
+          "RR": -8.064690943680018
+        },
+        "utility": -5.794615414563869
+      },
+      "reasons": []
+    }
+  ],
+  "gates": {
+    "temporal_event_count_ge_500": true,
+    "temporal_symbol_count_ge_20": true,
+    "temporal_ret10_excess_negative": true,
+    "temporal_ret20_excess_negative": true,
+    "temporal_mae10_safety_negative": true,
+    "temporal_mae20_safety_negative": true,
+    "temporal_loss10_lift_positive": true,
+    "temporal_loss20_lift_positive": true,
+    "temporal_fdd10_worse": true,
+    "temporal_fdd20_worse": true
+  },
+  "decision": "PROMOTED_TO_INTEGRATED_HOLDOUT"
+}
