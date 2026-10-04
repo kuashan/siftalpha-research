@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -79,42 +80,54 @@ def main():
 
     rows={}
     failures=[]
-    for item in symbols:
-        try:
-            df=fetch_one(item["yahoo"])
-            path=DATA_DIR/f'{item["code"]}.csv.gz'
-            df.to_csv(path,index=False,compression="gzip")
-            pre=df.loc[df["Date"]<FORMAL_START]
-            formal=df.loc[(df["Date"]>=FORMAL_START)&(df["Date"]<=FORMAL_END)]
-            one_price=((df["High"]-df["Low"]).abs()<=np.maximum(0.001,df["Close"].abs()*1e-8))
-            prev=df["Close"].shift(1)
-            gap=df["Open"]/prev-1.0
-            locked_up=int((one_price & (gap>=0.095)).sum())
-            locked_dn=int((one_price & (gap<=-0.095)).sum())
-            rec={
-                "code":item["code"],
-                "ticker":item["yahoo"],
-                "name":item["name"],
-                "sector":item["sector"],
-                "role":item["role"],
-                "rows":int(len(df)),
-                "first":df["Date"].min().strftime("%Y-%m-%d"),
-                "last":df["Date"].max().strftime("%Y-%m-%d"),
-                "preformal_rows":int(len(pre)),
-                "formal_rows":int(len(formal)),
-                "locked_up_candidates":locked_up,
-                "locked_down_candidates":locked_dn,
-                "sha256":sha256_file(path),
-            }
-            rows[item["code"]]=rec
-            if len(pre)<120:
-                failures.append(f'{item["code"]}: preformal_rows={len(pre)} < 120')
-            if len(formal)<1500:
-                failures.append(f'{item["code"]}: formal_rows={len(formal)} < 1500')
-            if df["Date"].max()<FORMAL_END:
-                failures.append(f'{item["code"]}: ends {df["Date"].max().date()} before {FORMAL_END.date()}')
-        except Exception as e:
-            failures.append(str(e))
+
+    def audit_item(item):
+        df=fetch_one(item["yahoo"])
+        pre=df.loc[df["Date"]<FORMAL_START]
+        formal=df.loc[(df["Date"]>=FORMAL_START)&(df["Date"]<=FORMAL_END)]
+        one_price=((df["High"]-df["Low"]).abs()<=np.maximum(0.001,df["Close"].abs()*1e-8))
+        prev=df["Close"].shift(1)
+        gap=df["Open"]/prev-1.0
+        locked_up=int((one_price & (gap>=0.095)).sum())
+        locked_dn=int((one_price & (gap<=-0.095)).sum())
+        local_fail=[]
+        if len(pre)<120:
+            local_fail.append(f'{item["code"]}: preformal_rows={len(pre)} < 120')
+        if len(formal)<1500:
+            local_fail.append(f'{item["code"]}: formal_rows={len(formal)} < 1500')
+        if df["Date"].max()<FORMAL_END:
+            local_fail.append(f'{item["code"]}: ends {df["Date"].max().date()} before {FORMAL_END.date()}')
+        return item, df, locked_up, locked_dn, local_fail
+
+    with ThreadPoolExecutor(max_workers=5) as ex:
+        futs={ex.submit(audit_item,item):item for item in symbols}
+        for fut in as_completed(futs):
+            item=futs[fut]
+            try:
+                item,df,locked_up,locked_dn,local_fail=fut.result()
+                path=DATA_DIR/f'{item["code"]}.csv.gz'
+                df.to_csv(path,index=False,compression="gzip")
+                pre=df.loc[df["Date"]<FORMAL_START]
+                formal=df.loc[(df["Date"]>=FORMAL_START)&(df["Date"]<=FORMAL_END)]
+                rec={
+                    "code":item["code"],
+                    "ticker":item["yahoo"],
+                    "name":item["name"],
+                    "sector":item["sector"],
+                    "role":item["role"],
+                    "rows":int(len(df)),
+                    "first":df["Date"].min().strftime("%Y-%m-%d"),
+                    "last":df["Date"].max().strftime("%Y-%m-%d"),
+                    "preformal_rows":int(len(pre)),
+                    "formal_rows":int(len(formal)),
+                    "locked_up_candidates":locked_up,
+                    "locked_down_candidates":locked_dn,
+                    "sha256":sha256_file(path),
+                }
+                rows[item["code"]]=rec
+                failures.extend(local_fail)
+            except Exception as e:
+                failures.append(f'{item["code"]}: {e}')
 
     manifest={
         "study":"SLTD_ASHARE50_INTEGRATED_RISK_V1_DATA_AUDIT",
