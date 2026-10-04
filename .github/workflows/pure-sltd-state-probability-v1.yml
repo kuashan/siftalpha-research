@@ -1,0 +1,74 @@
+name: Pure SLTD State Probability v1
+
+on:
+  push:
+    branches:
+      - research/sltd-pure-state-probability-v1
+    paths:
+      - "research/ssss_reboot_v1/phase11/PURE_SLTD_STATE_PROBABILITY_PROTOCOL_v1.md"
+      - "research/ssss_reboot_v1/phase11/pure_sltd_state_probability_v1.py"
+      - ".github/workflows/pure-sltd-state-probability-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -q numpy pandas
+
+      - name: Run pure SLTD state probability study
+        run: python research/ssss_reboot_v1/phase11/pure_sltd_state_probability_v1.py
+
+      - name: Verify study outputs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("research/ssss_reboot_v1/phase11")
+          j=root/"PURE_SLTD_STATE_PROBABILITY_RESULT_v1.json"
+          m=root/"PURE_SLTD_STATE_PROBABILITY_RESULT_v1.md"
+          assert j.is_file() and j.stat().st_size > 100
+          assert m.is_file() and m.stat().st_size > 100
+          x=json.loads(j.read_text(encoding="utf-8"))
+          assert x["meta"]["chan_used"] is False
+          assert x["meta"]["representation"] == "FIRST_OBSERVED_CAUSAL"
+          assert x["meta"]["outcome_entry"] == "NEXT_BAR_OPEN"
+          assert x["meta"]["external_oos"] == ["WFC","LMT","PM","ADP","WM","UNP","SO","VZ","PANW","CVS"]
+          print(json.dumps(x["summary"], indent=2))
+          PY
+
+      - name: Commit immutable study result
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             research/ssss_reboot_v1/phase11/PURE_SLTD_STATE_PROBABILITY_RESULT_v1.json             research/ssss_reboot_v1/phase11/PURE_SLTD_STATE_PROBABILITY_RESULT_v1.md
+          if git diff --cached --quiet; then
+            echo "No result change"
+          else
+            git commit -m "research: archive pure SLTD state probability result"
+            git push origin HEAD:research/sltd-pure-state-probability-v1
+          fi
+
+      - name: Upload result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pure-sltd-state-probability-v1
+          path: |
+            research/ssss_reboot_v1/phase11/PURE_SLTD_STATE_PROBABILITY_RESULT_v1.json
+            research/ssss_reboot_v1/phase11/PURE_SLTD_STATE_PROBABILITY_RESULT_v1.md
+          if-no-files-found: error
+          retention-days: 30
