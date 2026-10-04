@@ -5,11 +5,12 @@ from datetime import datetime, timezone
 from typing import Any
 
 from strategy.frozen_signal_engine import evaluate_candles
-from strategy import e_strategy
+from strategy import e_strategy, ssss_strategy
 
 
 STRATEGY_5S = "5s_crypto_v1"
-STRATEGY_E = "e"
+STRATEGY_E = "e"  # legacy only; no longer registered for new trading
+STRATEGY_SSSS = "ssss"
 
 
 @dataclass(frozen=True)
@@ -58,18 +59,16 @@ _SPECS = {
         order_prefix="5sv1",
         description="冻结 5s Crypto V1：A/B 60% 开仓，W3 内 C 补至 100%，首个 SELL 全部退出。",
     ),
-    STRATEGY_E: StrategySpec(
-        strategy_id=STRATEGY_E,
-        label="E",
-        # E 的 1d -> 5d 固定分组在实时滚动窗口下需要独立锚点协议；
-        # 在该协议冻结前，不把 1d 自动交易冒充为已验证。
-        supported_timeframes=("5m", "15m", "1h", "4h"),
+    STRATEGY_SSSS: StrategySpec(
+        strategy_id=STRATEGY_SSSS,
+        label="SSSS",
+        supported_timeframes=("3m", "5m", "15m", "1h", "2h", "4h", "6h", "12h", "1d"),
         default_timeframe="15m",
-        fetch_limit=900,
-        minimum_closed_bars=760,
-        max_fraction=0.75,
-        order_prefix="ev1",
-        description="E v1：条件 1/2/3 分层建仓，最高 75%；退出序列按冻结规则减仓或清仓。",
+        fetch_limit=1000,
+        minimum_closed_bars=180,
+        max_fraction=1.0,
+        order_prefix="ssss",
+        description="原始富途 SSSS.ftindex：图标 9 每次买入 25%，图标 15 全部清仓；同根同时出现时清仓优先。",
     ),
 }
 
@@ -338,12 +337,65 @@ def decide_e(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> Strate
     )
 
 
+def decide_ssss(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> StrategyDecision:
+    spec = get_spec(STRATEGY_SSSS)
+    tf = str(timeframe).lower()
+    if tf not in spec.supported_timeframes:
+        raise ValueError(f"SSSS 当前自动交易不支持周期：{tf}")
+
+    evaluated = ssss_strategy.evaluate_ssss(rows)
+    if not evaluated:
+        raise ValueError("SSSS 原始指标没有返回计算结果")
+    latest = evaluated[-1]
+    fraction = min(max(float(runtime.get("current_fraction") or 0.0), 0.0), 1.0)
+    state = _state(runtime)
+    state.update({
+        "source_sha256": ssss_strategy.source_sha256(),
+        "last_icon_bar_open_time": int(latest.open_time),
+    })
+
+    steps: list[StrategyStep] = []
+    signal = "HOLD"
+
+    # User-frozen priority: if both icons somehow exist on one bar, exit wins.
+    if latest.exit_icon_15:
+        signal = "SSSS_EXIT_15"
+        state["last_icon"] = 15
+        if fraction > 1e-12:
+            steps.append(StrategyStep(
+                code="SSSS_EXIT_ALL",
+                order_code="X100",
+                target_fraction=0.0,
+                rule_ids=("DRAWICON_15",),
+                state_after={},
+            ))
+    elif latest.buy_icon_9:
+        signal = "SSSS_BUY_9"
+        state["last_icon"] = 9
+        if fraction < 1.0 - 1e-12:
+            target = min(1.0, fraction + 0.25)
+            steps.append(StrategyStep(
+                code="SSSS_BUY_25",
+                order_code="B25",
+                target_fraction=target,
+                rule_ids=("DRAWICON_9",),
+                state_after=dict(state),
+            ))
+
+    return StrategyDecision(
+        strategy_id=STRATEGY_SSSS,
+        signal=signal,
+        steps=tuple(steps),
+        bar_open_time=int(latest.open_time),
+    )
+
+
 def decide(strategy_id: str, rows: list[Any], runtime: dict[str, Any], timeframe: str) -> StrategyDecision:
     sid = get_spec(strategy_id).strategy_id
     if sid == STRATEGY_5S:
         return decide_5s(rows, runtime)
-    if sid == STRATEGY_E:
-        return decide_e(rows, runtime, timeframe)
+    if sid == STRATEGY_SSSS:
+        return decide_ssss(rows, runtime, timeframe)
     raise ValueError(f"不支持的策略：{strategy_id}")
 
 
@@ -363,14 +415,11 @@ def strategy_signal_label(strategy_id: str, raw: object) -> str:
             "HOLD": "观望",
         }
         return " + ".join(labels.get(part, part) for part in text.split("+"))
-    labels = {
-        "E_BUY_1": "条件1买入",
-        "E_BUY_2": "条件2买入",
-        "E_BUY_3": "条件3买入",
-        "E_SELL_1": "卖出1",
-        "E_SELL_2": "卖出2",
-        "E_SELL_3": "卖出3·清仓",
-        "E_SELL_4": "卖出4·清仓",
-        "HOLD": "观望",
-    }
-    return " + ".join(labels.get(part, part) for part in text.split("+"))
+    if strategy_id == STRATEGY_SSSS:
+        labels = {
+            "SSSS_BUY_9": "💰 买入 25%",
+            "SSSS_EXIT_15": "人型图标·全部清仓",
+            "HOLD": "观望",
+        }
+        return " + ".join(labels.get(part, part) for part in text.split("+"))
+    return text
