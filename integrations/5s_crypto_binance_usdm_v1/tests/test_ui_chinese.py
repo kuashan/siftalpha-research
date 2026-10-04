@@ -68,8 +68,8 @@ class ChineseUiTests(unittest.TestCase):
         self.assertIn("@ticker", text)
         self.assertIn("}, 1000);", text)
         self.assertNotIn("}, 30000);", text)
-        self.assertIn(".kline-chart{display:block;width:100%;height:416px", text)
-        self.assertIn("panes[0]?.setHeight(264)", text)
+        self.assertIn(".kline-chart{display:block;width:100%;height:468px", text)
+        self.assertIn("panes[0]?.setHeight(297)", text)
         self.assertNotIn("chart-candle-meta", text)
         self.assertNotIn("chart-candle-meta", app_text)
         self.assertNotIn("最新 K 线 ·", text)
@@ -83,9 +83,18 @@ class ChineseUiTests(unittest.TestCase):
         self.assertIn('type="hidden" name="timeframe"', app_text)
         self.assertNotIn('<select name="timeframe"', app_text)
         self.assertIn("data-timeframe-option", text)
+        self.assertIn("data-strategy-picker", app_text)
+        self.assertIn('type="hidden" name="strategy_id"', app_text)
+        self.assertNotIn('<select name="strategy_id"', app_text)
+        self.assertIn("data-strategy-option", app_text)
+        self.assertIn("strategy-menu", text)
+        self.assertIn("picker.requestSubmit()", text)
 
         self.assertEqual(app_text.count("snapshot-grid snapshot-above-chart"), 1)
-        for label in ("保证金比率", "开仓价格", "强平价格"):
+        for label in (
+            "当前仓位", "最新信号", "浮动盈亏", "已实现盈亏",
+            "保证金比率", "开仓价格", "强平价格",
+        ):
             self.assertIn(label, app_text)
         self.assertIn("逐仓保证金管理", app_text)
         self.assertIn('action="/position-margin"', app_text)
@@ -100,6 +109,8 @@ class ChineseUiTests(unittest.TestCase):
         self.assertIn("SSSS 每个 💰 买入 25%", app_text)
         self.assertIn("💰=买入25%", text)
         self.assertIn("💥=全部清仓", text)
+        self.assertNotIn("SSSS：原始富途指标", text)
+        self.assertIn("SSSS：💰=买入25%", text)
         self.assertNotIn("=== 'e'", text)
         self.assertNotIn("E：三色状态", text)
         self.assertNotIn("positionSeries", text)
