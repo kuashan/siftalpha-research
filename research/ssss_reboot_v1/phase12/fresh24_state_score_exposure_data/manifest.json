@@ -1,0 +1,245 @@
+{
+  "study": "PURE_SLTD_STATE_SCORE_EXPOSURE_MAP_V1",
+  "symbols": [
+    "COF",
+    "MCO",
+    "AJG",
+    "BSX",
+    "EW",
+    "ZTS",
+    "GD",
+    "NOC",
+    "ROK",
+    "NEM",
+    "ECL",
+    "DD",
+    "KR",
+    "KHC",
+    "DG",
+    "CHTR",
+    "TTWO",
+    "FOXA",
+    "EQIX",
+    "PSA",
+    "O",
+    "MPC",
+    "OXY",
+    "VLO"
+  ],
+  "industries": {
+    "COF": "Financial",
+    "MCO": "Financial",
+    "AJG": "Financial",
+    "BSX": "Healthcare",
+    "EW": "Healthcare",
+    "ZTS": "Healthcare",
+    "GD": "Industrials",
+    "NOC": "Industrials",
+    "ROK": "Industrials",
+    "NEM": "Materials",
+    "ECL": "Materials",
+    "DD": "Materials",
+    "KR": "Consumer",
+    "KHC": "Consumer",
+    "DG": "Consumer",
+    "CHTR": "Communication",
+    "TTWO": "Communication",
+    "FOXA": "Communication",
+    "EQIX": "RealEstate",
+    "PSA": "RealEstate",
+    "O": "RealEstate",
+    "MPC": "Energy",
+    "OXY": "Energy",
+    "VLO": "Energy"
+  },
+  "prior_overlap": [],
+  "provider": "Yahoo Finance via yfinance",
+  "auto_adjust": false,
+  "fetch_start": "2010-01-04",
+  "fetch_end_exclusive": "2026-10-01",
+  "formal_window": [
+    "2020-01-02",
+    "2026-09-30"
+  ],
+  "calibration": {
+    "pos_scale": 0.012623481323093523,
+    "neg_scale": 0.004775218399549849,
+    "nonzero_n": 40907,
+    "positive_n": 12855,
+    "negative_n": 28052,
+    "score_p10": -0.004908372711081958,
+    "score_p50": -0.002894079882180836,
+    "score_p90": 0.01405569427120195
+  },
+  "files": {
+    "COF": {
+      "industry": "Financial",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "3a3b65c78c42a29c27911a4ebc305c020551ee810c20f86565e9a5232d21f59e"
+    },
+    "MCO": {
+      "industry": "Financial",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "5a6cf9c0e0a66805dc88b37bb391fe44fa9bd1a7e5cdfd072cc9026af311b88a"
+    },
+    "AJG": {
+      "industry": "Financial",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "13712761b7a8e9addfd2d5908f86b730909430f21f563248f07db593e10f6d15"
+    },
+    "BSX": {
+      "industry": "Healthcare",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "919ca2c1a3411dba50a074226955aa9deb5811a83386e21b408a911c2a02f2e5"
+    },
+    "EW": {
+      "industry": "Healthcare",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "3d4255fb804491f3997d6b9815263439f9924620e671bbd26cc0a7479e28af4d"
+    },
+    "ZTS": {
+      "industry": "Healthcare",
+      "rows": 3436,
+      "first": "2013-02-01",
+      "last": "2026-09-30",
+      "sha256": "25ebdf51094e5d7b48b9ac57920b232bc34eb1bd6b3e3111e7cb9df93797c4d4"
+    },
+    "GD": {
+      "industry": "Industrials",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "b661217eb00bffc7d516fda82e3e555fa8ac8d40ca0972c9917786ba0f65746d"
+    },
+    "NOC": {
+      "industry": "Industrials",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "ce28fbf6edf15c5682c075ad2c22f5594598d353842fae0e45934674a59f07d6"
+    },
+    "ROK": {
+      "industry": "Industrials",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "e35dc2de47aa4ba88163c4eeff6dfb14eacc3d9b5ead122765926843575d4e61"
+    },
+    "NEM": {
+      "industry": "Materials",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "259825f48e8236c83b0d4e9cffdfe630847b1f951289dfda2117d37bb00f823e"
+    },
+    "ECL": {
+      "industry": "Materials",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "5534ea8ba841a05c1f97f4257109625cdc25f4e953aa8d20cc6b234c22f21eee"
+    },
+    "DD": {
+      "industry": "Materials",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "05456f6a2e7f749138a1981ab3320635eeb8f2674146a6e04237e702047c495e"
+    },
+    "KR": {
+      "industry": "Consumer",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "237cfe20bf395aab06e43bbb6800da9c7b428689ffdca1e39a323d2de09b14c5"
+    },
+    "KHC": {
+      "industry": "Consumer",
+      "rows": 2827,
+      "first": "2015-07-06",
+      "last": "2026-09-30",
+      "sha256": "68edcfd0a3cd922a09c413b2b922069f7f717454fa28d9c60eecf9d1d37c5790"
+    },
+    "DG": {
+      "industry": "Consumer",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "fe7ecf09c460bdae1e0a43ff0daa829d05dfb16ee8b615f0be0f0f01ab64bc22"
+    },
+    "CHTR": {
+      "industry": "Communication",
+      "rows": 4210,
+      "first": "2010-01-05",
+      "last": "2026-09-30",
+      "sha256": "44c8dfe92e642f1e9400660bcc99c398559197c421707948c1cac81896f5b426"
+    },
+    "TTWO": {
+      "industry": "Communication",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "d9ae19d46e4fe5aeefef5cc1a8cfe09d941feb32e0cfce8f1694de5baec28e8a"
+    },
+    "FOXA": {
+      "industry": "Communication",
+      "rows": 1900,
+      "first": "2019-03-12",
+      "last": "2026-09-30",
+      "sha256": "933e57d889bc7aac66e166157c43c64c9a885cb496d92765f4e44a81c109792d"
+    },
+    "EQIX": {
+      "industry": "RealEstate",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "f1f3918d6f5e2f2432231784e1a96d4ae6934060601bd6497cfc48f86e8faabb"
+    },
+    "PSA": {
+      "industry": "RealEstate",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "74474873e60f28720e9e1dad03291b057e66a93fbc5ef63eaa7568ab275b24af"
+    },
+    "O": {
+      "industry": "RealEstate",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "87af36329aa91b7c6365e2f15d53c0a7639dadc2bc114339821a5c4c26873931"
+    },
+    "MPC": {
+      "industry": "Energy",
+      "rows": 3839,
+      "first": "2011-06-24",
+      "last": "2026-09-30",
+      "sha256": "8238b42ffb90e7c08e5ac7feb31826e19dce085f2909d90a5f63b54ed1a4d90f"
+    },
+    "OXY": {
+      "industry": "Energy",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "e52fe9e32e7e5d7319121d9e2860dded23f8e1213a53acdb3417f94d238a209d"
+    },
+    "VLO": {
+      "industry": "Energy",
+      "rows": 4211,
+      "first": "2010-01-04",
+      "last": "2026-09-30",
+      "sha256": "a37c6a724c0eb9cb6d0faf9175253cca4d7f41de684f3cd9724ac6a99c2b4178"
+    }
+  },
+  "generated_at_utc": "2026-10-04T04:59:10.753070+00:00"
+}
