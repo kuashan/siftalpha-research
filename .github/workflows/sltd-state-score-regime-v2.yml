@@ -1,0 +1,87 @@
+name: SLTD State Score Regime v2
+
+on:
+  push:
+    branches:
+      - research/sltd-state-score-regime-v2
+    paths:
+      - "research/ssss_reboot_v1/phase13/SLTD_STATE_SCORE_REGIME_MODE_V2_PROTOCOL.md"
+      - "research/ssss_reboot_v1/phase13/sltd_state_score_regime_mode_v2.py"
+      - ".github/workflows/sltd-state-score-regime-v2.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -q numpy pandas yfinance
+
+      - name: Run standalone score-regime v2
+        run: python research/ssss_reboot_v1/phase13/sltd_state_score_regime_mode_v2.py
+
+      - name: Verify result contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("research/ssss_reboot_v1/phase13")
+          result=root/"SLTD_STATE_SCORE_REGIME_MODE_V2_RESULT.json"
+          report=root/"SLTD_STATE_SCORE_REGIME_MODE_V2_RESULT.md"
+          manifest=root/"fresh30_score_regime_v2_data"/"manifest.json"
+          assert result.is_file() and report.is_file() and manifest.is_file()
+          x=json.loads(result.read_text(encoding="utf-8"))
+          assert x["meta"]["standalone_mode"] is True
+          assert x["meta"]["uses_v7_rules"] is False
+          assert x["meta"]["uses_v7_c2"] is False
+          assert x["meta"]["chan_used"] is False
+          assert x["meta"]["prior_overlap"] == []
+          assert len(x["meta"]["fresh30"]) == 30
+          assert len(list((root/"fresh30_score_regime_v2_data").glob("*.csv.gz"))) == 30
+          assert x["decision"] in {
+            "PROMOTE_STANDALONE_SCORE_REGIME_TO_ENGINEERING_CANDIDATE",
+            "RESEARCH_ONLY_SCORE_REGIME_HAS_VALUE",
+            "REJECTED_SCORE_REGIME_V2",
+          }
+          print(json.dumps({
+            "decision":x["decision"],
+            "portfolio_5bps":x["portfolio"]["5bps"],
+            "breadth_5bps":x["breadth_5bps"],
+            "triggers":x["trigger_diagnostic"],
+            "gates":x["gates"],
+          },indent=2))
+          PY
+
+      - name: Commit frozen Fresh30 v2 data and result
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             research/ssss_reboot_v1/phase13/fresh30_score_regime_v2_data             research/ssss_reboot_v1/phase13/SLTD_STATE_SCORE_REGIME_MODE_V2_RESULT.json             research/ssss_reboot_v1/phase13/SLTD_STATE_SCORE_REGIME_MODE_V2_RESULT.md
+          if ! git diff --cached --quiet; then
+            git commit -m "research: archive standalone SLTD score-regime v2"
+            git push origin HEAD:research/sltd-state-score-regime-v2
+          fi
+
+      - name: Upload result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-state-score-regime-v2
+          path: |
+            research/ssss_reboot_v1/phase13/SLTD_STATE_SCORE_REGIME_MODE_V2_RESULT.json
+            research/ssss_reboot_v1/phase13/SLTD_STATE_SCORE_REGIME_MODE_V2_RESULT.md
+            research/ssss_reboot_v1/phase13/fresh30_score_regime_v2_data/manifest.json
+          if-no-files-found: error
+          retention-days: 30
