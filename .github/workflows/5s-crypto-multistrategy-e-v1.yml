@@ -1,0 +1,109 @@
+name: 5s Crypto Multi-Strategy E v1
+
+on:
+  push:
+    branches:
+      - feature/5s-crypto-multistrategy-e-v1
+    paths:
+      - "integrations/5s_crypto_binance_usdm_v1/**"
+      - ".github/workflows/5s-crypto-multistrategy-e-v1.yml"
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: integrations/5s_crypto_binance_usdm_v1
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: integrations/5s_crypto_binance_usdm_v1/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Compile all
+        run: python -m compileall -q .
+
+      - name: Full legacy and multi-strategy regression
+        run: python -m unittest discover -s tests -v
+
+      - name: Frozen JS Python parity
+        run: python -m unittest tests.test_m3_signal_engine_parity -v
+
+      - name: Multi-strategy contract
+        run: python -m unittest tests.test_multistrategy_e -v
+
+      - name: UI contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          app = Path("app.py").read_text(encoding="utf-8")
+          page = Path("templates/index.html").read_text(encoding="utf-8")
+          config = Path("config.py").read_text(encoding="utf-8")
+          assert 'symbols: tuple[str, ...] = ("BTCUSDT", "ETHUSDT", "BNBUSDT", "SOLUSDT")' in config
+          assert 'action="/symbol-strategy"' in app
+          assert '5s Crypto V1' in app or 'strategy_options' in app
+          assert 'strategy-switch' in page
+          assert '搜索' not in page
+          print("FOUR_SYMBOL_STRATEGY_SELECTOR_UI_PASS")
+          PY
+
+      - name: PAPER import
+        env:
+          FIVES_MODE: PAPER
+          FIVES_DB_PATH: /tmp/5s_crypto_multistrategy.db
+        run: |
+          python - <<'PY'
+          import app
+          cfg = app.store.get_symbol_configs()
+          assert tuple(app.settings.symbols) == ("BTCUSDT","ETHUSDT","BNBUSDT","SOLUSDT")
+          assert all(x["strategy_id"] == "5s_crypto_v1" for x in cfg.values())
+          print("MULTISTRATEGY_APP_IMPORT_PASS")
+          PY
+
+      - name: Build flat direct-import package
+        run: |
+          set -euo pipefail
+          out=/tmp/5s_crypto_multistrategy_e_v1
+          rm -rf "$out"
+          mkdir -p "$out"
+          cp app.py charting.py config.py m2_testnet_check.py requirements.txt runtime_testnet_session.py storage.py "$out/"
+          cp -R engine exchange strategy templates "$out/"
+          cd "$out"
+          zip -qr /tmp/5s-crypto-multistrategy-e-v1.zip .
+
+      - name: Verify package root
+        run: |
+          python - <<'PY'
+          import zipfile
+          p="/tmp/5s-crypto-multistrategy-e-v1.zip"
+          with zipfile.ZipFile(p) as z:
+              names=set(z.namelist())
+              required={
+                  "app.py","requirements.txt","templates/index.html",
+                  "strategy/frozen_signal_engine.py","strategy/registry.py",
+                  "strategy/e_strategy.py","strategy/e_sltd_core.py",
+                  "engine/execution.py","engine/recovery.py","engine/scheduler.py",
+              }
+              missing=sorted(required-names)
+              assert not missing, missing
+              assert not any(x.startswith("5s-crypto-multistrategy-e-v1/") for x in names)
+          print("FLAT_DIRECT_IMPORT_PACKAGE_PASS")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 5s-crypto-multistrategy-e-v1-direct-import
+          path: /tmp/5s-crypto-multistrategy-e-v1.zip
+          if-no-files-found: error
+          retention-days: 30
