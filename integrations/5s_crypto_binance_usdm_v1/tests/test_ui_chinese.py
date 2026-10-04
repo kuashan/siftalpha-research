@@ -77,6 +77,13 @@ class ChineseUiTests(unittest.TestCase):
         self.assertEqual(app_text.count("snapshot-grid snapshot-above-chart"), 1)
         self.assertLess(app_text.index("snapshot-above-chart"), app_text.index('class="market-chart"'))
         self.assertIn("list_trade_markers", app_text)
+        self.assertIn("STRATEGY_SSSS", app_text)
+        self.assertIn("strategy_indicator_markers", app_text)
+        self.assertIn("SSSS 每个 💰 买入 25%", app_text)
+        self.assertIn("💰=买入25%", text)
+        self.assertIn("人型=全部清仓", text)
+        self.assertNotIn("=== 'e'", text)
+        self.assertNotIn("E：三色状态", text)
 
 
 if __name__ == "__main__":
