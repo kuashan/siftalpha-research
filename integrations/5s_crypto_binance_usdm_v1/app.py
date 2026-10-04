@@ -7,6 +7,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlparse
 
 from charting import DISPLAY_KLINE_LIMIT, normalize_chart_klines
+from datetime import datetime, timezone
 from config import Settings
 from engine.paper import preview_exposure
 from engine.execution import M3Executor
@@ -21,6 +22,7 @@ from strategy.registry import (
     strategy_options,
     strategy_signal_label,
 )
+from strategy.e_strategy import analyze_e
 
 
 settings = Settings.from_env()
@@ -137,6 +139,85 @@ def run_m4_recovery() -> dict[str, object]:
     return summary
 
 
+def _analysis_candles(rows: list[object]) -> list[dict[str, object]]:
+    out: list[dict[str, object]] = []
+    for row in rows:
+        if not isinstance(row, (list, tuple)) or len(row) < 6:
+            continue
+        open_time = int(row[0])
+        out.append(
+            {
+                "date": datetime.fromtimestamp(open_time / 1000.0, tz=timezone.utc).isoformat(),
+                "open_time": open_time,
+                "open": float(row[1]),
+                "high": float(row[2]),
+                "low": float(row[3]),
+                "close": float(row[4]),
+                "volume": float(row[5]),
+            }
+        )
+    return out
+
+
+def _e_chart_analysis(symbol: str, timeframe: str, rows: list[object]) -> dict[str, object]:
+    closed_rows = rows[:-1] if len(rows) >= 2 else []
+    candles = _analysis_candles(closed_rows)
+    result = analyze_e(
+        symbol,
+        candles,
+        display_limit=DISPLAY_KLINE_LIMIT,
+        timeframe=timeframe,
+        market_meta={"exchange_timezone": "UTC", "continuous_24_7": True},
+    )
+
+    date_to_open = {str(x["date"]): int(x["open_time"]) for x in candles}
+    overlay: list[dict[str, object]] = []
+    for row in result.get("chart") or []:
+        open_time = date_to_open.get(str(row.get("date")))
+        if open_time is None:
+            continue
+        overlay.append(
+            {
+                "open_time": open_time,
+                "state": row.get("state"),
+                "ZK1": row.get("ZK1"),
+                "ZD1": row.get("ZD1"),
+                "GZB3": row.get("GZB3"),
+                "GZB4": row.get("GZB4"),
+                "BS": row.get("BS"),
+            }
+        )
+
+    markers: list[dict[str, object]] = []
+    for marker in result.get("markers") or []:
+        open_time = date_to_open.get(str(marker.get("execution_date")))
+        if open_time is None:
+            continue
+        side = str(marker.get("side") or "")
+        markers.append(
+            {
+                "open_time": open_time,
+                "side": side,
+                "signal": "/".join(marker.get("rule_ids") or []),
+                "source": "E_HISTORY",
+            }
+        )
+
+    snapshot = result.get("snapshot") or {}
+    return {
+        "overlay": overlay,
+        "markers": markers,
+        "snapshot": {
+            "state_zh": snapshot.get("state_zh"),
+            "resolved_action_zh": snapshot.get("resolved_action_zh"),
+            "risk_state_zh": snapshot.get("risk_state_zh"),
+            "next_action": snapshot.get("next_action"),
+            "higher_timeframe": snapshot.get("higher_timeframe"),
+            "higher_below_ZD1": snapshot.get("higher_below_ZD1"),
+        },
+    }
+
+
 def chart_payload(symbol: str) -> dict[str, object]:
     symbol = symbol.upper().strip()
     if symbol not in settings.symbols:
@@ -144,23 +225,43 @@ def chart_payload(symbol: str) -> dict[str, object]:
     cfg = store.get_symbol_configs()[symbol]
     timeframe = str(cfg["timeframe"])
     strategy_id = str(cfg.get("strategy_id") or STRATEGY_5S)
+    spec = get_spec(strategy_id)
+
+    # Display remains 300 bars. Strategy analysis may need a much longer warmup.
+    request_limit = max(DISPLAY_KLINE_LIMIT, int(spec.fetch_limit)) + 1
 
     source = "币安公开行情"
     try:
         api_key, api_secret = testnet_session.credentials()
         if api_key and api_secret:
             rows = testnet_session.adapter().klines(
-                symbol, timeframe, limit=DISPLAY_KLINE_LIMIT
+                symbol, timeframe, limit=request_limit
             )
             source = "币安模拟交易行情"
         else:
-            rows = probe.klines(symbol, timeframe, limit=DISPLAY_KLINE_LIMIT)
+            rows = probe.klines(symbol, timeframe, limit=request_limit)
     except Exception:
-        rows = probe.klines(symbol, timeframe, limit=DISPLAY_KLINE_LIMIT)
+        rows = probe.klines(symbol, timeframe, limit=request_limit)
         source = "币安公开行情"
 
-    candles = normalize_chart_klines(rows if isinstance(rows, list) else [])
-    markers = store.list_signal_markers(symbol, strategy_id)
+    all_rows = rows if isinstance(rows, list) else []
+    display_rows = all_rows[-DISPLAY_KLINE_LIMIT:]
+    candles = normalize_chart_klines(display_rows)
+
+    strategy_overlay: list[dict[str, object]] = []
+    strategy_snapshot: dict[str, object] = {}
+    if strategy_id == "e":
+        try:
+            e_view = _e_chart_analysis(symbol, timeframe, all_rows)
+            markers = list(e_view["markers"])
+            strategy_overlay = list(e_view["overlay"])
+            strategy_snapshot = dict(e_view["snapshot"])
+        except Exception as exc:
+            markers = []
+            strategy_snapshot = {"analysis_error": str(exc)}
+    else:
+        markers = store.list_signal_markers(symbol, strategy_id)
+
     if candles:
         first_time = int(candles[0]["open_time"])
         last_time = int(candles[-1]["open_time"])
@@ -168,19 +269,26 @@ def chart_payload(symbol: str) -> dict[str, object]:
             marker for marker in markers
             if first_time <= int(marker["open_time"]) <= last_time
         ]
+        strategy_overlay = [
+            row for row in strategy_overlay
+            if first_time <= int(row["open_time"]) <= last_time
+        ]
     else:
         markers = []
+        strategy_overlay = []
 
     return {
         "symbol": symbol,
         "timeframe": timeframe,
         "strategy_id": strategy_id,
-        "strategy_label": get_spec(strategy_id).label,
+        "strategy_label": spec.label,
         "timeframe_label": _TIMEFRAME_LABELS.get(timeframe, timeframe),
         "display_limit": DISPLAY_KLINE_LIMIT,
         "source": source,
         "candles": candles,
         "markers": markers,
+        "strategy_overlay": strategy_overlay,
+        "strategy_snapshot": strategy_snapshot,
     }
 
 
@@ -231,7 +339,7 @@ def render_index(selected_symbol: str | None = None) -> str:
         selected = symbol == initial_symbol
         strategy_locked = enabled or current_fraction > 1e-12
         strategy_option_html = "".join(
-            f'<option value="{html.escape(sid)}"{" selected" if is_selected else ""}>{html.escape(label)}</option>'
+            f'<option value="{html.escape(sid)}"{" selected" if is_selected else ""}>{html.escape("5s V1" if sid == STRATEGY_5S else label)}</option>'
             for sid, label, is_selected in strategy_options(strategy_id)
         )
         strategy_lock_note = "运行中/有仓位，禁止切换" if strategy_locked else "停止且空仓时可切换"
