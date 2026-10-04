@@ -18,11 +18,13 @@ from runtime_testnet_session import TestnetSession
 from storage import StateStore
 from strategy.registry import (
     STRATEGY_5S,
+    STRATEGY_SSSS,
     get_spec,
     strategy_options,
     strategy_signal_label,
 )
 from strategy.e_strategy import analyze_e
+from strategy.ssss_strategy import chart_overlay as ssss_chart_overlay, source_sha256 as ssss_source_sha256
 
 
 settings = Settings.from_env()
@@ -100,7 +102,7 @@ def _timeframe_options(selected_timeframe: str, strategy_id: str) -> str:
         if strategy_id == STRATEGY_5S:
             status = "已验证基线" if interval in settings.validated_timeframes else "实验周期"
         else:
-            status = "E 支持周期"
+            status = "SSSS 原始指标周期"
         options.append(
             '<button '
             'type="button" '
@@ -220,6 +222,36 @@ def _e_chart_analysis(symbol: str, timeframe: str, rows: list[object]) -> dict[s
     }
 
 
+def _ssss_chart_analysis(rows: list[object]) -> dict[str, object]:
+    closed_rows = rows[:-1] if len(rows) >= 2 else []
+    overlay = ssss_chart_overlay(closed_rows, display_limit=DISPLAY_KLINE_LIMIT)
+    indicators: list[dict[str, object]] = []
+    for row in overlay:
+        if bool(row.get("buy_icon_9")):
+            indicators.append({
+                "open_time": int(row["open_time"]),
+                "kind": "BUY_ICON_9",
+                "text": "💰",
+            })
+        if bool(row.get("exit_icon_15")):
+            indicators.append({
+                "open_time": int(row["open_time"]),
+                "kind": "EXIT_ICON_15",
+                "text": "人",
+            })
+    latest = overlay[-1] if overlay else {}
+    return {
+        "overlay": overlay,
+        "indicator_markers": indicators,
+        "snapshot": {
+            "source_sha256": ssss_source_sha256(),
+            "buy_icon_9": bool(latest.get("buy_icon_9")),
+            "exit_icon_15": bool(latest.get("exit_icon_15")),
+            "state": latest.get("state"),
+        },
+    }
+
+
 def chart_payload(symbol: str) -> dict[str, object]:
     symbol = symbol.upper().strip()
     if symbol not in settings.symbols:
@@ -253,12 +285,14 @@ def chart_payload(symbol: str) -> dict[str, object]:
 
     strategy_overlay: list[dict[str, object]] = []
     strategy_snapshot: dict[str, object] = {}
+    strategy_indicator_markers: list[dict[str, object]] = []
     markers = store.list_trade_markers(symbol, strategy_id)
-    if strategy_id == "e":
+    if strategy_id == STRATEGY_SSSS:
         try:
-            e_view = _e_chart_analysis(symbol, timeframe, all_rows)
-            strategy_overlay = list(e_view["overlay"])
-            strategy_snapshot = dict(e_view["snapshot"])
+            ssss_view = _ssss_chart_analysis(all_rows)
+            strategy_overlay = list(ssss_view["overlay"])
+            strategy_snapshot = dict(ssss_view["snapshot"])
+            strategy_indicator_markers = list(ssss_view["indicator_markers"])
         except Exception as exc:
             strategy_snapshot = {"analysis_error": str(exc)}
 
@@ -273,9 +307,14 @@ def chart_payload(symbol: str) -> dict[str, object]:
             row for row in strategy_overlay
             if first_time <= int(row["open_time"]) <= last_time
         ]
+        strategy_indicator_markers = [
+            row for row in strategy_indicator_markers
+            if first_time <= int(row["open_time"]) <= last_time
+        ]
     else:
         markers = []
         strategy_overlay = []
+        strategy_indicator_markers = []
 
     return {
         "symbol": symbol,
@@ -288,6 +327,7 @@ def chart_payload(symbol: str) -> dict[str, object]:
         "candles": candles,
         "markers": markers,
         "strategy_overlay": strategy_overlay,
+        "strategy_indicator_markers": strategy_indicator_markers,
         "strategy_snapshot": strategy_snapshot,
         "runtime_state": str(runtime.get("run_state") or "STOPPED"),
         "runtime_state_label": _RUN_STATE_LABELS.get(str(runtime.get("run_state") or "STOPPED"), str(runtime.get("run_state") or "STOPPED")),
@@ -324,13 +364,11 @@ def render_index(selected_symbol: str | None = None) -> str:
         enabled = bool(cfg["enabled"])
         initial = preview_exposure(symbol, budget, 0.60, leverage)
         full = preview_exposure(symbol, budget, 1.00, leverage)
-        e25 = preview_exposure(symbol, budget, 0.25, leverage)
-        e50 = preview_exposure(symbol, budget, 0.50, leverage)
-        e75 = preview_exposure(symbol, budget, 0.75, leverage)
+        ssss25 = preview_exposure(symbol, budget, 0.25, leverage)
         if strategy_id == STRATEGY_5S:
             validation = "已验证基线" if timeframe in settings.validated_timeframes else "实验周期"
         else:
-            validation = "E 支持周期" if timeframe in spec.supported_timeframes else "当前周期不支持"
+            validation = "SSSS 原始指标" if timeframe in spec.supported_timeframes else "当前周期不支持"
         run_state = str(rt.get("run_state") or ("ARMED" if enabled else "STOPPED"))
         status_label = _RUN_STATE_LABELS.get(run_state, "运行中" if enabled else "未启动")
         status_class = "running" if enabled and run_state in {"ARMED", "MONITORING", "SIGNAL_READY"} else "stopped"
@@ -352,14 +390,11 @@ def render_index(selected_symbol: str | None = None) -> str:
             f'<div><small>补仓后 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
             if strategy_id == STRATEGY_5S
             else
-            f'<div><small>E 单次 25% 名义价值</small><b>{e25.target_notional_usdt:.2f} USDT</b></div>'
-            f'<div><small>E 条件1+2 50% 名义价值</small><b>{e50.target_notional_usdt:.2f} USDT</b></div>'
+            f'<div><small>SSSS 每个 💰 买入 25% 名义价值</small><b>{ssss25.target_notional_usdt:.2f} USDT</b></div>'
+            f'<div><small>SSSS 满仓 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
         )
         exposure_html += (
             f'<div><small>资金费与手续费净额</small><b>{p["funding_fee"] - p["trading_fee"]:+.2f} USDT</b></div>'
-            if strategy_id == STRATEGY_5S
-            else
-            f'<div><small>E 最高 75% 名义价值</small><b>{e75.target_notional_usdt:.2f} USDT</b></div>'
         )
 
         tabs.append(
