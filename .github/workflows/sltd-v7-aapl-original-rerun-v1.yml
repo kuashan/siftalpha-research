@@ -1,0 +1,91 @@
+name: SLTD V7 Original AAPL Rerun
+
+on:
+  push:
+    branches:
+      - research/sltd-v7-aapl-original-rerun-v1
+    paths:
+      - ".github/workflows/sltd-v7-aapl-original-rerun-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rerun:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install research dependencies
+        run: pip install -q numpy pandas yfinance
+
+      - name: Re-run original SLTD V7 on AAPL
+        run: |
+          python - <<'PY'
+          import json, sys
+          from pathlib import Path
+          import numpy as np
+
+          root=Path("research/ssss_reboot_v1/phase8").resolve()
+          sys.path.insert(0,str(root))
+          import sltd_v7_combination_ablation_v1 as v7
+
+          symbol="AAPL"
+          batch=1
+          frame=v7.read_frame(batch,symbol)
+          ledger=v7.read_ledger(batch,symbol)
+          prep=v7.prepare_symbol(frame,ledger)
+          variant="DROP_B3_S1_S3"
+
+          out={
+            "study":"SLTD_V7_ORIGINAL_AAPL_RERUN_V1",
+            "symbol":symbol,
+            "branch":"research/sltd-v7-aapl-original-rerun-v1",
+            "source_base_commit":"e05919539328407cb7a67f8a995f6b90f0d4156b",
+            "strategy_variant":variant,
+            "strategy_meaning":"Original SLTD V7 12-rule candidate; no Chan integration",
+            "window":{"start":prep["dates"][0],"end":prep["dates"][-1],"bars":len(prep["dates"])},
+            "execution":"signal close -> next available open",
+            "position_policy":"first/next BUY +25pp capped 100%; ordinary SELL -25% of current position; SELL arms C2; BUY resets C2; armed C2 full exit",
+            "friction":{},
+          }
+          for label,bps in (("5bps",5.0),("10bps",10.0)):
+            sim=v7.simulate(prep,variant,bps)
+            out["friction"][label]={
+              k:(int(v) if k in {"position_changes","hard_exit_count"} else float(v))
+              for k,v in sim.items() if k!="curve"
+            }
+
+          closes=np.asarray(prep["closes"],dtype=float)
+          out["buy_hold"]={
+            "start_close":float(closes[0]),
+            "end_close":float(closes[-1]),
+            "total_return":float(closes[-1]/closes[0]-1.0),
+          }
+          actions=np.asarray(prep["actions"][variant],dtype=np.int8)
+          out["signal_counts"]={
+            "BUY":int(np.sum(actions==1)),
+            "HOLD":int(np.sum(actions==2)),
+            "WAIT":int(np.sum(actions==3)),
+            "SELL":int(np.sum(actions==4)),
+            "NO_ACTION":int(np.sum(actions==0)),
+          }
+          Path("/tmp/AAPL_SLTD_V7_ORIGINAL_RERUN_v1.json").write_text(
+            json.dumps(out,indent=2,ensure_ascii=False),encoding="utf-8"
+          )
+          print(json.dumps(out,indent=2,ensure_ascii=False))
+          PY
+
+      - name: Upload AAPL result
+        uses: actions/upload-artifact@v4
+        with:
+          name: aapl-sltd-v7-original-rerun-v1
+          path: /tmp/AAPL_SLTD_V7_ORIGINAL_RERUN_v1.json
+          if-no-files-found: error
+          retention-days: 30
