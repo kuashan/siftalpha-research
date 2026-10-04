@@ -15,6 +15,12 @@ from engine.scheduler import StrategyScheduler
 from exchange.binance_usdm_public import BinanceUsdMPublicProbe
 from runtime_testnet_session import TestnetSession
 from storage import StateStore
+from strategy.registry import (
+    STRATEGY_5S,
+    get_spec,
+    strategy_options,
+    strategy_signal_label,
+)
 
 
 settings = Settings.from_env()
@@ -82,12 +88,16 @@ _SIGNAL_LABELS = {
 }
 
 
-def _timeframe_options(selected_timeframe: str) -> str:
+def _timeframe_options(selected_timeframe: str, strategy_id: str) -> str:
     options = []
-    for interval in settings.allowed_timeframes:
+    spec = get_spec(strategy_id)
+    for interval in spec.supported_timeframes:
         selected = interval == selected_timeframe
         label = _TIMEFRAME_LABELS.get(interval, interval)
-        status = "已验证基线" if interval in settings.validated_timeframes else "实验周期"
+        if strategy_id == STRATEGY_5S:
+            status = "已验证基线" if interval in settings.validated_timeframes else "实验周期"
+        else:
+            status = "E 支持周期"
         options.append(
             '<button '
             'type="button" '
@@ -106,11 +116,8 @@ def _pnl_class(value: float) -> str:
     return "positive" if value > 0 else "negative" if value < 0 else "neutral"
 
 
-def _signal_label(value: object) -> str:
-    raw = str(value or "").strip().upper()
-    if not raw:
-        return "等待信号"
-    return " + ".join(_SIGNAL_LABELS.get(part, part) for part in raw.split("+"))
+def _signal_label(value: object, strategy_id: str) -> str:
+    return strategy_signal_label(strategy_id, value)
 
 
 def _short_symbol(symbol: str) -> str:
@@ -136,6 +143,7 @@ def chart_payload(symbol: str) -> dict[str, object]:
         raise ValueError("不支持这个币种")
     cfg = store.get_symbol_configs()[symbol]
     timeframe = str(cfg["timeframe"])
+    strategy_id = str(cfg.get("strategy_id") or STRATEGY_5S)
 
     source = "币安公开行情"
     try:
@@ -152,7 +160,7 @@ def chart_payload(symbol: str) -> dict[str, object]:
         source = "币安公开行情"
 
     candles = normalize_chart_klines(rows if isinstance(rows, list) else [])
-    markers = store.list_signal_markers(symbol)
+    markers = store.list_signal_markers(symbol, strategy_id)
     if candles:
         first_time = int(candles[0]["open_time"])
         last_time = int(candles[-1]["open_time"])
@@ -166,6 +174,8 @@ def chart_payload(symbol: str) -> dict[str, object]:
     return {
         "symbol": symbol,
         "timeframe": timeframe,
+        "strategy_id": strategy_id,
+        "strategy_label": get_spec(strategy_id).label,
         "timeframe_label": _TIMEFRAME_LABELS.get(timeframe, timeframe),
         "display_limit": DISPLAY_KLINE_LIMIT,
         "source": source,
@@ -197,10 +207,18 @@ def render_index(selected_symbol: str | None = None) -> str:
         budget = float(cfg["capital_budget_usdt"])
         leverage = int(cfg["leverage"])
         timeframe = str(cfg["timeframe"])
+        strategy_id = str(cfg.get("strategy_id") or STRATEGY_5S)
+        spec = get_spec(strategy_id)
         enabled = bool(cfg["enabled"])
         initial = preview_exposure(symbol, budget, 0.60, leverage)
         full = preview_exposure(symbol, budget, 1.00, leverage)
-        validation = "已验证基线" if timeframe in settings.validated_timeframes else "实验周期"
+        e25 = preview_exposure(symbol, budget, 0.25, leverage)
+        e50 = preview_exposure(symbol, budget, 0.50, leverage)
+        e75 = preview_exposure(symbol, budget, 0.75, leverage)
+        if strategy_id == STRATEGY_5S:
+            validation = "已验证基线" if timeframe in settings.validated_timeframes else "实验周期"
+        else:
+            validation = "E 支持周期" if timeframe in spec.supported_timeframes else "当前周期不支持"
         run_state = str(rt.get("run_state") or ("ARMED" if enabled else "STOPPED"))
         status_label = _RUN_STATE_LABELS.get(run_state, "运行中" if enabled else "未启动")
         status_class = "running" if enabled and run_state in {"ARMED", "MONITORING", "SIGNAL_READY"} else "stopped"
@@ -208,9 +226,29 @@ def render_index(selected_symbol: str | None = None) -> str:
         action_label = "停止" if enabled else "启动"
         action_class = "danger" if enabled else "primary"
         current_fraction = float(rt.get("current_fraction") or 0.0)
-        last_signal = _signal_label(rt.get("last_signal"))
+        last_signal = _signal_label(rt.get("last_signal"), strategy_id)
         base = _short_symbol(symbol)
         selected = symbol == initial_symbol
+        strategy_locked = enabled or current_fraction > 1e-12
+        strategy_option_html = "".join(
+            f'<option value="{html.escape(sid)}"{" selected" if is_selected else ""}>{html.escape(label)}</option>'
+            for sid, label, is_selected in strategy_options(strategy_id)
+        )
+        strategy_lock_note = "运行中/有仓位，禁止切换" if strategy_locked else "停止且空仓时可切换"
+        exposure_html = (
+            f'<div><small>首次买入 60% 名义价值</small><b>{initial.target_notional_usdt:.2f} USDT</b></div>'
+            f'<div><small>补仓后 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
+            if strategy_id == STRATEGY_5S
+            else
+            f'<div><small>E 单次 25% 名义价值</small><b>{e25.target_notional_usdt:.2f} USDT</b></div>'
+            f'<div><small>E 条件1+2 50% 名义价值</small><b>{e50.target_notional_usdt:.2f} USDT</b></div>'
+        )
+        exposure_html += (
+            f'<div><small>资金费与手续费净额</small><b>{p["funding_fee"] - p["trading_fee"]:+.2f} USDT</b></div>'
+            if strategy_id == STRATEGY_5S
+            else
+            f'<div><small>E 最高 75% 名义价值</small><b>{e75.target_notional_usdt:.2f} USDT</b></div>'
+        )
 
         tabs.append(
             f"""
@@ -241,10 +279,21 @@ def render_index(selected_symbol: str | None = None) -> str:
                     <span class="status-pill {status_class}">{status_label}</span>
                   </div>
                 </div>
-                <div class="hero-pnl">
-                  <small>该币总盈亏</small>
-                  <strong class="{_pnl_class(p['total_pnl'])}">{p['total_pnl']:+.2f}</strong>
-                  <span>USDT</span>
+                <div class="hero-right">
+                  <form class="strategy-switch" method="post" action="/symbol-strategy">
+                    <input type="hidden" name="symbol" value="{html.escape(symbol)}">
+                    <label>策略
+                      <select name="strategy_id" onchange="this.form.submit()" {'disabled' if strategy_locked else ''}>
+                        {strategy_option_html}
+                      </select>
+                    </label>
+                    <small>{html.escape(strategy_lock_note)}</small>
+                  </form>
+                  <div class="hero-pnl">
+                    <small>该币总盈亏</small>
+                    <strong class="{_pnl_class(p['total_pnl'])}">{p['total_pnl']:+.2f}</strong>
+                    <span>USDT</span>
+                  </div>
                 </div>
               </div>
 
@@ -329,15 +378,13 @@ def render_index(selected_symbol: str | None = None) -> str:
                             <span class="timeframe-chevron" aria-hidden="true">⌄</span>
                           </button>
                           <div class="timeframe-menu" role="listbox" hidden>
-                            {_timeframe_options(timeframe)}
+                            {_timeframe_options(timeframe, strategy_id)}
                           </div>
                         </div>
                       </div>
                     </div>
                     <div class="exposure-row">
-                      <div><small>首次买入 60% 名义价值</small><b>{initial.target_notional_usdt:.2f} USDT</b></div>
-                      <div><small>补仓后 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>
-                      <div><small>资金费与手续费净额</small><b>{p['funding_fee'] - p['trading_fee']:+.2f} USDT</b></div>
+                      {exposure_html}
                     </div>
                     <button class="secondary save-button" type="submit">保存设置</button>
                   </form>
@@ -347,7 +394,7 @@ def render_index(selected_symbol: str | None = None) -> str:
                 <section class="control-block">
                   <div>
                     <small>运行控制</small>
-                    <strong>{'策略已启用' if enabled else '策略未启动'}</strong>
+                    <strong>{html.escape(spec.label)} · {'已启用' if enabled else '未启动'}</strong>
                     <p>{'停止只影响当前币种，不影响其他币种。' if enabled else '启动后仅启用当前币种，并按该币设置自动监测模拟交易。'}</p>
                   </div>
                   <div class="control-actions">
@@ -592,6 +639,35 @@ class Handler(BaseHTTPRequestHandler):
                 self._redirect_home(symbol)
                 return
 
+            if self.path == "/symbol-strategy":
+                symbol = self._symbol_from_form(form)
+                requested = form.get("strategy_id", [""])[0].strip().lower()
+                spec = get_spec(requested)
+                cfg = store.get_symbol_configs()[symbol]
+                rt = store.get_runtime_states()[symbol]
+                if bool(cfg["enabled"]):
+                    raise ValueError("策略运行中，必须先停止后才能切换")
+                if float(rt.get("current_fraction") or 0.0) > 1e-12:
+                    raise ValueError("当前仍有策略仓位，必须先清仓后才能切换")
+
+                api_key, api_secret = testnet_session.credentials()
+                if api_key and api_secret:
+                    adapter = testnet_session.adapter()
+                    if abs(float(adapter.position_amount(symbol))) > 1e-12:
+                        raise ValueError("币安模拟账户仍有该币种仓位，禁止切换策略")
+                    open_orders = adapter.open_orders(symbol)
+                    if open_orders:
+                        raise ValueError("该币种仍有挂单，取消挂单后才能切换策略")
+
+                timeframe = str(cfg["timeframe"])
+                if timeframe not in spec.supported_timeframes:
+                    timeframe = spec.default_timeframe
+                store.set_symbol_strategy(symbol, spec.strategy_id, timeframe)
+                if api_key and api_secret:
+                    run_m4_recovery()
+                self._redirect_home(symbol)
+                return
+
             if self.path == "/symbol-settings":
                 symbol = self._symbol_from_form(form)
                 budget = float(form.get("capital_budget_usdt", ["0"])[0])
@@ -601,8 +677,9 @@ class Handler(BaseHTTPRequestHandler):
                     raise ValueError("策略资金必须大于零")
                 if not settings.min_leverage <= leverage <= settings.max_leverage:
                     raise ValueError("杠杆倍数超出允许范围")
-                if timeframe not in settings.allowed_timeframes:
-                    raise ValueError("不支持这个周期")
+                strategy_id = str(store.get_symbol_configs()[symbol].get("strategy_id") or STRATEGY_5S)
+                if timeframe not in get_spec(strategy_id).supported_timeframes:
+                    raise ValueError("当前策略不支持这个周期")
                 store.set_symbol_config(
                     symbol,
                     capital_budget_usdt=budget,
@@ -617,19 +694,24 @@ class Handler(BaseHTTPRequestHandler):
                 action = form.get("action", [""])[0].lower().strip()
                 if action not in {"start", "stop"}:
                     raise ValueError("不支持这个操作")
+                if action == "start":
+                    cfg = store.get_symbol_configs()[symbol]
+                    spec = get_spec(str(cfg.get("strategy_id") or STRATEGY_5S))
+                    if str(cfg["timeframe"]) not in spec.supported_timeframes:
+                        raise ValueError("当前策略不支持所选 K 线周期")
                 store.set_symbol_enabled(symbol, action == "start")
                 self._redirect_home(symbol)
                 return
 
             self._send(404, "页面不存在".encode("utf-8"), "text/plain; charset=utf-8")
-        except Exception:
+        except Exception as exc:
             if self.path.startswith("/testnet-") or self.path == "/reconcile":
                 self._redirect_home()
                 return
             body = (
                 "<!doctype html><meta charset='utf-8'><title>操作失败</title>"
                 "<body style='font-family:system-ui;background:#0b1020;color:#edf2f7;padding:24px'>"
-                "<h2>操作失败</h2><p>请返回控制台检查输入内容后重试。</p>"
+                f"<h2>操作失败</h2><p>{html.escape(str(exc) or '请返回控制台检查输入内容后重试。')}</p>"
                 "<p><a style='color:#9ecbff' href='/'>返回控制台</a></p></body>"
             )
             self._send(400, body.encode("utf-8"), "text/html; charset=utf-8")
