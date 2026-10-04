@@ -605,8 +605,6 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       const runtime = payload.runtime_state_label || '未知状态';
       const fraction = Number(payload.runtime_fraction || 0) * 100;
       if (String(payload.strategy_id || '') === 'ssss') {
-        const eState = strategySnapshot.state_zh || '状态未知';
-        const action = strategySnapshot.resolved_action_zh || '无新动作';
         const iconText = strategySnapshot.exit_icon_15
           ? '人型图标'
           : (strategySnapshot.buy_icon_9 ? '💰图标' : '无新图标');
