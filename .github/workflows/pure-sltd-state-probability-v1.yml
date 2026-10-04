@@ -27,7 +27,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install -q numpy pandas
+        run: pip install -q numpy pandas yfinance
 
       - name: Run pure SLTD state probability study
         run: python research/ssss_reboot_v1/phase11/pure_sltd_state_probability_v1.py
