@@ -5,7 +5,7 @@ on:
     branches:
       - research/sltd-ashare50-integrated-risk-v1
     paths:
-      - "research/ssss_reboot_v1/phase18/ashare50_data_snapshot_v2/manifest.json"
+      - "research/ssss_reboot_v1/phase18/ashare50_data_snapshot_v3/manifest.json"
   workflow_dispatch:
 
 permissions:
