@@ -1,0 +1,72 @@
+name: SLTD A-share50 Integrated Risk v1 Stage A
+
+on:
+  push:
+    branches:
+      - research/sltd-ashare50-integrated-risk-v1
+    paths:
+      - "research/ssss_reboot_v1/phase18/ashare50_data_snapshot_v1/manifest.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  stage-a:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -q numpy pandas
+      - name: Run A-share severe-risk Stage A
+        run: python research/ssss_reboot_v1/phase18/sltd_ashare50_integrated_risk_v1_stage_a.py
+      - name: Verify result contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("research/ssss_reboot_v1/phase18")
+          j=root/"SLTD_ASHARE50_INTEGRATED_RISK_V1_STAGE_A_RESULT.json"
+          m=root/"SLTD_ASHARE50_INTEGRATED_RISK_V1_STAGE_A_RESULT.md"
+          assert j.is_file() and m.is_file()
+          x=json.loads(j.read_text(encoding="utf-8"))
+          assert len(x["meta"]["development_symbols"])==35
+          assert x["meta"]["fresh_symbols_read_for_performance"] is False
+          assert x["meta"]["fresh_oos_consumed"] is False
+          assert x["meta"]["us_fitted_weights_used"] is False
+          assert x["meta"]["chan_used"] is False
+          assert x["meta"]["score_momentum_used"] is False
+          assert x["decision"] in {"PROMOTED_TO_INTEGRATED_HOLDOUT","REJECTED_NOT_ADMITTED"}
+          print(json.dumps({
+            "decision":x["decision"],
+            "summary":x["summary"],
+            "temporal_severe":x["temporal_severe"],
+            "gates":x["gates"],
+          },indent=2,ensure_ascii=False))
+          PY
+      - name: Commit Stage A result
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             research/ssss_reboot_v1/phase18/SLTD_ASHARE50_INTEGRATED_RISK_V1_STAGE_A_RESULT.json             research/ssss_reboot_v1/phase18/SLTD_ASHARE50_INTEGRATED_RISK_V1_STAGE_A_RESULT.md
+          if ! git diff --cached --quiet; then
+            git commit -m "research: archive A-share severe-risk stage A"
+            git pull --rebase origin research/sltd-ashare50-integrated-risk-v1
+            git push origin HEAD:research/sltd-ashare50-integrated-risk-v1
+          fi
+      - name: Upload Stage A artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-ashare50-integrated-risk-v1-stage-a
+          path: |
+            research/ssss_reboot_v1/phase18/SLTD_ASHARE50_INTEGRATED_RISK_V1_STAGE_A_RESULT.json
+            research/ssss_reboot_v1/phase18/SLTD_ASHARE50_INTEGRATED_RISK_V1_STAGE_A_RESULT.md
+          if-no-files-found: error
+          retention-days: 30
