@@ -230,7 +230,7 @@ def chart_payload(symbol: str) -> dict[str, object]:
     strategy_id = str(cfg.get("strategy_id") or STRATEGY_5S)
     spec = get_spec(strategy_id)
 
-    # Display remains 300 bars. Strategy analysis may need a much longer warmup.
+    # Display may expose up to 1000 bars. Strategy analysis warmup remains independent.
     request_limit = max(DISPLAY_KLINE_LIMIT, int(spec.fetch_limit)) + 1
 
     source = "币安公开行情"
@@ -410,6 +410,13 @@ def render_index(selected_symbol: str | None = None) -> str:
                     <span>USDT</span>
                   </div>
                 </div>
+              </div>
+
+              <div class="snapshot-grid snapshot-above-chart">
+                <div class="snapshot"><small>当前仓位</small><b>{current_fraction * 100:.0f}%</b></div>
+                <div class="snapshot"><small>最新信号</small><b>{html.escape(last_signal)}</b></div>
+                <div class="snapshot"><small>浮动盈亏</small><b class="{_pnl_class(p['unrealized_pnl'])}">{p['unrealized_pnl']:+.2f}</b></div>
+                <div class="snapshot"><small>已实现盈亏</small><b class="{_pnl_class(p['realized_pnl'])}">{p['realized_pnl']:+.2f}</b></div>
               </div>
 
               <div class="snapshot-grid snapshot-above-chart">
