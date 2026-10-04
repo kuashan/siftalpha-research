@@ -1,0 +1,89 @@
+name: SLTD V7 vs BuyHold 79
+
+on:
+  push:
+    branches:
+      - research/sltd-v7-vs-buyhold-79-v1
+    paths:
+      - ".github/workflows/sltd-v7-vs-buyhold-79-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -q numpy pandas yfinance
+      - name: Compare original SLTD V7 with buy-and-hold on all 79 stocks
+        run: |
+          python - <<'PY'
+          import json, sys
+          from pathlib import Path
+          import numpy as np
+
+          root=Path("research/ssss_reboot_v1/phase8").resolve()
+          sys.path.insert(0,str(root))
+          import sltd_v7_combination_ablation_v1 as v7
+
+          variant="DROP_B3_S1_S3"
+          rows=[]
+          for batch,symbols in v7.core.BATCHES.items():
+              for symbol in symbols:
+                  prep=v7.prepare_symbol(v7.read_frame(batch,symbol),v7.read_ledger(batch,symbol))
+                  sim=v7.simulate(prep,variant,5.0)
+                  closes=np.asarray(prep["closes"],dtype=float)
+                  bh=float(closes[-1]/closes[0]-1.0)
+                  sr=float(sim["total_return"])
+                  rows.append({
+                      "symbol":symbol,
+                      "batch":batch,
+                      "start":prep["dates"][0],
+                      "end":prep["dates"][-1],
+                      "sltd_return_5bps":sr,
+                      "buy_hold_return":bh,
+                      "delta_sltd_minus_buyhold":sr-bh,
+                      "sltd_cagr":float(sim["cagr"]),
+                      "sltd_max_drawdown":float(sim["max_drawdown"]),
+                      "sltd_time_in_market":float(sim["time_in_market"]),
+                  })
+          rows.sort(key=lambda x:x["delta_sltd_minus_buyhold"],reverse=True)
+          winners=[r for r in rows if r["delta_sltd_minus_buyhold"]>0]
+          losers=[r for r in rows if r["delta_sltd_minus_buyhold"]<=0]
+          out={
+              "study":"SLTD_V7_ORIGINAL_VS_BUYHOLD_79_V1",
+              "status":"COMPLETE",
+              "source_base_commit":"e05919539328407cb7a67f8a995f6b90f0d4156b",
+              "variant":variant,
+              "window":"2020-01-02..2026-09-30",
+              "friction":"5bps",
+              "universe_count":len(rows),
+              "winner_count":len(winners),
+              "loser_or_tie_count":len(losers),
+              "winner_symbols":[r["symbol"] for r in winners],
+              "top_20_by_delta":rows[:20],
+              "bottom_20_by_delta":rows[-20:],
+              "per_symbol":rows,
+          }
+          Path("/tmp/SLTD_V7_VS_BUYHOLD_79_v1.json").write_text(json.dumps(out,indent=2),encoding="utf-8")
+          print(json.dumps({
+              "winner_count":out["winner_count"],
+              "loser_or_tie_count":out["loser_or_tie_count"],
+              "winner_symbols":out["winner_symbols"],
+              "top_20_by_delta":out["top_20_by_delta"],
+          },indent=2))
+          PY
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-v7-vs-buyhold-79-v1
+          path: /tmp/SLTD_V7_VS_BUYHOLD_79_v1.json
+          if-no-files-found: error
+          retention-days: 30
