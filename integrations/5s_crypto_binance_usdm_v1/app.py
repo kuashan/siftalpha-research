@@ -223,6 +223,7 @@ def chart_payload(symbol: str) -> dict[str, object]:
     if symbol not in settings.symbols:
         raise ValueError("不支持这个币种")
     cfg = store.get_symbol_configs()[symbol]
+    runtime = store.get_runtime_states()[symbol]
     timeframe = str(cfg["timeframe"])
     strategy_id = str(cfg.get("strategy_id") or STRATEGY_5S)
     spec = get_spec(strategy_id)
@@ -289,6 +290,10 @@ def chart_payload(symbol: str) -> dict[str, object]:
         "markers": markers,
         "strategy_overlay": strategy_overlay,
         "strategy_snapshot": strategy_snapshot,
+        "runtime_state": str(runtime.get("run_state") or "STOPPED"),
+        "runtime_state_label": _RUN_STATE_LABELS.get(str(runtime.get("run_state") or "STOPPED"), str(runtime.get("run_state") or "STOPPED")),
+        "runtime_last_signal": strategy_signal_label(strategy_id, runtime.get("last_signal")),
+        "runtime_fraction": float(runtime.get("current_fraction") or 0.0),
     }
 
 
@@ -342,7 +347,7 @@ def render_index(selected_symbol: str | None = None) -> str:
             f'<option value="{html.escape(sid)}"{" selected" if is_selected else ""}>{html.escape("5s V1" if sid == STRATEGY_5S else label)}</option>'
             for sid, label, is_selected in strategy_options(strategy_id)
         )
-        strategy_lock_note = "运行中/有仓位，禁止切换" if strategy_locked else "停止且空仓时可切换"
+        strategy_lock_note = "已锁定" if strategy_locked else "可切换"
         exposure_html = (
             f'<div><small>首次买入 60% 名义价值</small><b>{initial.target_notional_usdt:.2f} USDT</b></div>'
             f'<div><small>补仓后 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
