@@ -9,6 +9,9 @@ on:
       - ".github/workflows/5s-crypto-multistrategy-e-v1.yml"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   verify:
     runs-on: ubuntu-latest
