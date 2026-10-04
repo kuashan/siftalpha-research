@@ -58,8 +58,8 @@ class DemoExecutor:
     @classmethod
     def client_id(cls, symbol: str, signal_open_time: int, action: str, index: int) -> str:
         base=symbol[:-4] if symbol.endswith("USDT") else symbol
-        # Binance open_time is ms; seconds keep IDs compact and deterministic.
-        sec=int(signal_open_time)//1000
+        # V7 host normalizes strategy open_time to epoch seconds.
+        sec=int(signal_open_time)
         value=f"sv7-{base}-{sec}-{cls._code(action)}-{index}"
         if len(value)>36:
             raise RuntimeError("clientOrderId too long")
