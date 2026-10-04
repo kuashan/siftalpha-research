@@ -81,10 +81,33 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 .status-pill{padding:4px 7px;border-radius:999px;font-size:10px;border:1px solid var(--line)}
 .status-pill.running{color:#8ce6bc;border-color:#285945;background:#122b23}.status-pill.stopped{color:#aab6c9;background:#1a2230}
 .hero-right{display:flex;align-items:center;justify-content:flex-end;gap:12px;min-width:0}
-.strategy-switch{width:98px;min-width:98px;text-align:left}
-.strategy-switch label{display:block;font-size:10px;color:var(--muted)}
-.strategy-switch select{width:100%;min-height:32px;margin-top:3px;padding:5px 24px 5px 8px;font-size:11px;font-weight:700}
-.strategy-switch select:disabled{opacity:.62;cursor:not-allowed}
+.strategy-switch{width:116px;min-width:116px;text-align:left;position:relative}
+.strategy-field-label{display:block;font-size:10px;color:var(--muted)}
+.strategy-trigger{
+  width:100%;min-height:32px;margin-top:3px;padding:5px 8px;display:grid;
+  grid-template-columns:minmax(0,1fr) 16px;align-items:center;gap:5px;
+  border:1px solid #33415d;border-radius:8px;background:#0a1120;color:var(--text);
+  text-align:left;outline:none
+}
+.strategy-trigger:focus,.strategy-switch.open .strategy-trigger{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,255,.12)}
+.strategy-trigger:disabled{opacity:.62;cursor:not-allowed}
+.strategy-current{font-size:11px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.strategy-chevron{color:#8fa0ba;font-size:15px;line-height:1;text-align:center;transition:transform .16s ease}
+.strategy-switch.open .strategy-chevron{transform:rotate(180deg)}
+.strategy-menu{
+  position:absolute;z-index:30;right:0;top:48px;width:230px;padding:7px;display:grid;gap:6px;
+  border:1px solid #2b3953;border-radius:10px;background:#0a1120;box-shadow:0 14px 34px rgba(0,0,0,.38)
+}
+.strategy-menu[hidden]{display:none}
+.strategy-option{
+  width:100%;min-height:52px;padding:8px 9px;border:1px solid #26344d;border-radius:8px;
+  background:#10192a;color:var(--text);display:flex;flex-direction:column;align-items:flex-start;
+  justify-content:center;gap:3px;text-align:left
+}
+.strategy-option span{font-size:12px;font-weight:750}
+.strategy-option small{font-size:9px;color:var(--muted);line-height:1.35}
+.strategy-option.selected{border-color:#5b8cff;background:#162746;box-shadow:inset 0 0 0 1px rgba(91,140,255,.18)}
+.strategy-option.selected span{color:#d9e6ff}.strategy-option.selected small{color:#9dbbff}
 .strategy-switch>small{display:block;margin-top:2px;color:var(--muted);font-size:8px;white-space:nowrap}
 .hero-pnl{text-align:right;min-width:92px}.hero-pnl small{display:block;color:var(--muted);font-size:10px}.hero-pnl strong{font-size:23px}.hero-pnl span{font-size:10px;color:var(--muted)}
 .market-chart{margin:10px 14px 0;background:var(--panel2);border:1px solid #1f2a3e;border-radius:11px;padding:10px}
@@ -100,7 +123,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 .chart-ohlc small{color:var(--muted);font-size:9px}
 .chart-ohlc b{font-size:10px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}
 .chart-scroll{margin:10px 0 0;overflow:hidden;border-radius:9px;background:#080d17;position:relative;user-select:none}
-.kline-chart{display:block;width:100%;height:416px;touch-action:pan-y;position:relative}
+.kline-chart{display:block;width:100%;height:468px;touch-action:pan-y;position:relative}
 .chart-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:7px;color:var(--muted);font-size:10px;align-items:center}
 .chart-legend b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;color:#08110d}
 .legend-buy{background:#ff7b82;color:#1a0708!important}.legend-sell{background:#52d49a;color:#07130e!important}.legend-exit{background:#eab464;color:#1a1207!important}
@@ -180,7 +203,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
   .connect-form{grid-template-columns:1fr 1fr}.connect-form label:nth-child(2),.connect-form label:nth-child(3){grid-column:1/-1}.connect-form button{grid-column:1/-1;width:100%}
   .section-head{margin-top:12px}
   .coin-tabs{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.coin-tab{min-width:0;min-height:50px;padding:7px 5px}.coin-tab strong{font-size:12px}
-  .coin-hero{padding:12px}.market-chart{margin:8px 2px 0;padding:8px 4px}.chart-head{grid-template-columns:minmax(0,1fr) minmax(88px,.72fr) minmax(88px,auto);gap:7px}.chart-identity strong{font-size:11px}.live-price{padding:2px 6px}.live-price-value{font-size:16px}.live-price-status{font-size:8px}.chart-ohlc{min-width:84px}.chart-ohlc div{gap:5px}.chart-ohlc small{font-size:8px}.chart-ohlc b{font-size:9px}.kline-canvas{height:300px}.snapshot-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px 12px 0}.snapshot{padding:4px 5px}.snapshot small{font-size:8px;margin-bottom:1px}.snapshot b{font-size:11px}
+  .coin-hero{padding:12px}.strategy-switch{width:108px;min-width:108px}.strategy-menu{width:218px;right:0}.market-chart{margin:8px 2px 0;padding:8px 4px}.chart-head{grid-template-columns:minmax(0,1fr) minmax(88px,.72fr) minmax(88px,auto);gap:7px}.chart-identity strong{font-size:11px}.live-price{padding:2px 6px}.live-price-value{font-size:16px}.live-price-status{font-size:8px}.chart-ohlc{min-width:84px}.chart-ohlc div{gap:5px}.chart-ohlc small{font-size:8px}.chart-ohlc b{font-size:9px}.kline-canvas{height:300px}.snapshot-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px 12px 0}.snapshot{padding:4px 5px}.snapshot small{font-size:8px;margin-bottom:1px}.snapshot b{font-size:11px}
   .panel-body{grid-template-columns:1fr;padding:8px 12px 12px}
   .isolated-margin-form{grid-template-columns:1fr 1fr}.isolated-margin-form label{grid-column:1/-1}
   .field-grid{grid-template-columns:1fr 1fr}.budget-field{grid-column:1/-1}.timeframe-field{grid-column:1/-1}
@@ -543,7 +566,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     );
 
     const panes = state.chart.panes();
-    panes[0]?.setHeight(264);
+    panes[0]?.setHeight(297);
     let paneIndex = 1;
     if (state.stateSeries) panes[paneIndex++]?.setHeight(30);
     panes[paneIndex++]?.setHeight(80);
@@ -591,7 +614,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     const legend = section.querySelector('.strategy-legend');
     if (legend) {
       legend.textContent = String(payload.strategy_id || '') === 'ssss'
-        ? 'SSSS：原始富途指标 · 💰=买入25% · 💥=全部清仓 · B/X仅代表真实成交'
+        ? 'SSSS：💰=买入25% · 💥=全部清仓 · B/X仅代表真实成交'
         : '5s V1：仅成交成功后显示 B/S/X';
     }
   }
@@ -699,6 +722,56 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     }
   }
 
+  function closeStrategyPicker(picker) {
+    if (!picker) return;
+    picker.classList.remove('open');
+    const menu = picker.querySelector('.strategy-menu');
+    const trigger = picker.querySelector('.strategy-trigger');
+    if (menu) menu.hidden = true;
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  root.querySelectorAll('[data-strategy-picker]').forEach((picker) => {
+    const trigger = picker.querySelector('.strategy-trigger');
+    const menu = picker.querySelector('.strategy-menu');
+    const hidden = picker.querySelector('input[name="strategy_id"]');
+    const current = picker.querySelector('[data-strategy-current]');
+    const options = Array.from(picker.querySelectorAll('[data-strategy-option]'));
+    if (!trigger || !menu || !hidden || trigger.disabled) return;
+
+    trigger.addEventListener('click', () => {
+      const opening = !picker.classList.contains('open');
+      root.querySelectorAll('[data-strategy-picker].open').forEach((other) => {
+        if (other !== picker) closeStrategyPicker(other);
+      });
+      root.querySelectorAll('[data-timeframe-picker].open').forEach(closeTimeframePicker);
+      picker.classList.toggle('open', opening);
+      menu.hidden = !opening;
+      trigger.setAttribute('aria-expanded', opening ? 'true' : 'false');
+    });
+
+    options.forEach((option) => {
+      option.addEventListener('click', () => {
+        const value = option.dataset.strategyOption || '';
+        if (!value) return;
+        if (hidden.value === value) {
+          closeStrategyPicker(picker);
+          return;
+        }
+        hidden.value = value;
+        options.forEach((item) => {
+          const selected = item === option;
+          item.classList.toggle('selected', selected);
+          item.setAttribute('aria-selected', selected ? 'true' : 'false');
+        });
+        const label = option.querySelector('span');
+        if (current && label) current.textContent = label.textContent || value;
+        closeStrategyPicker(picker);
+        picker.requestSubmit();
+      });
+    });
+  });
+
   function closeTimeframePicker(picker) {
     if (!picker) return;
     picker.classList.remove('open');
@@ -750,11 +823,15 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     root.querySelectorAll('[data-timeframe-picker].open').forEach((picker) => {
       if (!picker.contains(event.target)) closeTimeframePicker(picker);
     });
+    root.querySelectorAll('[data-strategy-picker].open').forEach((picker) => {
+      if (!picker.contains(event.target)) closeStrategyPicker(picker);
+    });
   });
 
   document.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
     root.querySelectorAll('[data-timeframe-picker].open').forEach(closeTimeframePicker);
+    root.querySelectorAll('[data-strategy-picker].open').forEach(closeStrategyPicker);
   });
 
   function activate(symbol) {
