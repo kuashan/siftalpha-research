@@ -150,6 +150,10 @@ jobs:
           git add releases/sltd-v7-binance-demo
           if ! git diff --cached --quiet; then
             git commit -m "build: package full V7 Binance Demo direct-import ZIP"
+            # Vendored ChanPy is CI-only package material. Remove temporary worktree
+            # changes before rebasing/pushing the release ZIP commit.
+            git reset --hard HEAD
+            git clean -fd integrations/sltd_v7_siftalpha_v1/vendor/chanpy
             git pull --rebase origin feature/sltd-v7-binance-usdm-demo-v1
             git push origin HEAD:feature/sltd-v7-binance-usdm-demo-v1
           fi
