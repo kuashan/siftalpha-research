@@ -98,6 +98,10 @@ class StateStore:
             self._ensure_column(conn, "orders", "strategy_id", "TEXT NOT NULL DEFAULT '5s_crypto_v1'")
             self._ensure_column(conn, "orders", "target_fraction_after", "REAL")
             self._ensure_column(conn, "orders", "strategy_state_after_json", "TEXT")
+            self._ensure_column(conn, "orders", "signal_bar_open_time", "INTEGER")
+            self._ensure_column(conn, "orders", "execution_bar_open_time", "INTEGER")
+            self._ensure_column(conn, "orders", "marker_side", "TEXT")
+            self._ensure_column(conn, "orders", "strategy_signal", "TEXT")
 
             if "capital_budget_usdt" not in old_symbol_columns:
                 row = conn.execute("SELECT value FROM app_settings WHERE key='capital_budget_usdt'").fetchone()
@@ -450,6 +454,10 @@ class StateStore:
         strategy_id: str = "5s_crypto_v1",
         target_fraction_after: float | None = None,
         strategy_state_after: dict[str, object] | None = None,
+        signal_bar_open_time: int | None = None,
+        execution_bar_open_time: int | None = None,
+        marker_side: str | None = None,
+        strategy_signal: str | None = None,
     ) -> bool:
         state_json = json.dumps(strategy_state_after or {}, ensure_ascii=False, sort_keys=True)
         with self._connect() as conn:
@@ -457,14 +465,19 @@ class StateStore:
                 """
                 INSERT OR IGNORE INTO orders(
                     symbol, client_order_id, side, quantity, price, status,
-                    strategy_id, target_fraction_after, strategy_state_after_json
-                ) VALUES(?, ?, ?, ?, ?, 'PENDING', ?, ?, ?)
+                    strategy_id, target_fraction_after, strategy_state_after_json,
+                    signal_bar_open_time, execution_bar_open_time, marker_side, strategy_signal
+                ) VALUES(?, ?, ?, ?, ?, 'PENDING', ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     symbol, client_order_id, side, float(quantity), float(price),
                     str(strategy_id),
                     float(target_fraction_after) if target_fraction_after is not None else None,
                     state_json,
+                    int(signal_bar_open_time) if signal_bar_open_time is not None else None,
+                    int(execution_bar_open_time) if execution_bar_open_time is not None else None,
+                    str(marker_side) if marker_side else None,
+                    str(strategy_signal) if strategy_signal else None,
                 ),
             )
             return cur.rowcount == 1
@@ -474,7 +487,8 @@ class StateStore:
             row = conn.execute(
                 """
                 SELECT symbol, client_order_id, binance_order_id, side, quantity, price, status,
-                       strategy_id, target_fraction_after, strategy_state_after_json
+                       strategy_id, target_fraction_after, strategy_state_after_json,
+                       signal_bar_open_time, execution_bar_open_time, marker_side, strategy_signal
                 FROM orders WHERE symbol=? AND client_order_id=?
                 """,
                 (symbol, client_order_id),
@@ -487,7 +501,9 @@ class StateStore:
                 """
                 SELECT id, symbol, client_order_id, binance_order_id, side,
                        quantity, price, status, strategy_id, target_fraction_after,
-                       strategy_state_after_json, created_at, updated_at
+                       strategy_state_after_json, signal_bar_open_time,
+                       execution_bar_open_time, marker_side, strategy_signal,
+                       created_at, updated_at
                 FROM orders WHERE symbol=? ORDER BY id ASC
                 """,
                 (symbol,),
@@ -558,53 +574,51 @@ class StateStore:
             if cur.rowcount != 1:
                 raise KeyError(f"unknown order: {symbol}/{client_order_id}")
 
-    def list_signal_markers(self, symbol: str, strategy_id: str = "5s_crypto_v1") -> list[dict[str, object]]:
+    def list_trade_markers(self, symbol: str, strategy_id: str = "5s_crypto_v1") -> list[dict[str, object]]:
+        """Expose chart labels only for orders that actually reached FILLED."""
         with self._connect() as conn:
             rows = conn.execute(
                 """
-                SELECT id, detail
-                FROM audit_events
-                WHERE symbol=? AND event_type='M3_SIGNAL_BAR'
+                SELECT id, client_order_id, binance_order_id, side, price,
+                       target_fraction_after, execution_bar_open_time,
+                       marker_side, strategy_signal
+                FROM orders
+                WHERE symbol=? AND strategy_id=? AND status='FILLED'
+                      AND execution_bar_open_time IS NOT NULL
+                      AND marker_side IS NOT NULL
                 ORDER BY id ASC
                 """,
-                (symbol,),
+                (symbol, strategy_id),
             ).fetchall()
 
         markers: list[dict[str, object]] = []
         seen: set[tuple[int, str, str]] = set()
         for row in rows:
-            fields: dict[str, str] = {}
-            for part in str(row["detail"] or "").split(";"):
-                if "=" not in part:
-                    continue
-                key, value = part.split("=", 1)
-                fields[key.strip()] = value.strip()
-            try:
-                open_time = int(fields.get("bar_open_time", ""))
-            except ValueError:
+            open_time = int(row["execution_bar_open_time"])
+            side = str(row["marker_side"] or "").upper()
+            if side not in {"B", "S", "X"}:
                 continue
-            event_strategy = fields.get("strategy") or "5s_crypto_v1"
-            if event_strategy != strategy_id:
+            signal = str(row["strategy_signal"] or "")
+            key = (open_time, side, str(row["client_order_id"]))
+            if key in seen:
                 continue
-            signal = fields.get("signal", "").upper()
-            sides: list[str] = []
-            if "BUY_" in signal:
-                sides.append("B")
-            if "SELL_" in signal or "MULTI_SELL" in signal:
-                sides.append("S")
-            for side in sides:
-                key = (open_time, side, signal)
-                if key in seen:
-                    continue
-                seen.add(key)
-                markers.append(
-                    {
-                        "open_time": open_time,
-                        "side": side,
-                        "signal": signal,
-                    }
-                )
+            seen.add(key)
+            markers.append(
+                {
+                    "open_time": open_time,
+                    "side": side,
+                    "signal": signal,
+                    "price": float(row["price"] or 0.0),
+                    "client_order_id": str(row["client_order_id"]),
+                    "binance_order_id": str(row["binance_order_id"] or ""),
+                    "source": "FILLED_ORDER",
+                }
+            )
         return markers
+
+    # Backward name retained for callers/tests while semantics are now FILLED-only.
+    def list_signal_markers(self, symbol: str, strategy_id: str = "5s_crypto_v1") -> list[dict[str, object]]:
+        return self.list_trade_markers(symbol, strategy_id)
 
     def get_pnl(self) -> dict[str, dict[str, float]]:
         with self._connect() as conn:
