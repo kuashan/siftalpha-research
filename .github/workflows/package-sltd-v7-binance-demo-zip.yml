@@ -1,0 +1,49 @@
+name: Package SLTD V7 Binance Demo ZIP
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/sltd-v7-binance-usdm-demo-v1
+    paths:
+      - ".github/workflows/package-sltd-v7-binance-demo-zip.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build ZIP
+        run: |
+          set -euo pipefail
+          rm -rf package dist
+          mkdir -p package/SiftAlpha-V7-Binance-Demo/integrations dist
+          cp -a integrations/sltd_v7_siftalpha_v1 package/SiftAlpha-V7-Binance-Demo/integrations/
+          cp -a integrations/shared_market_data package/SiftAlpha-V7-Binance-Demo/integrations/
+          printf '%s\n'             'Branch: feature/sltd-v7-binance-usdm-demo-v1'             "HEAD: $(git rev-parse HEAD)"             'Status: IMPLEMENTED_AND_VERIFIED'             'Binance timestamp contract: NATIVE_MILLISECONDS_VERIFIED'             > package/SiftAlpha-V7-Binance-Demo/PACKAGE_INFO.txt
+          (cd package && zip -qr ../dist/SiftAlpha-V7-Binance-Demo.zip SiftAlpha-V7-Binance-Demo)
+          sha256sum dist/SiftAlpha-V7-Binance-Demo.zip > dist/SiftAlpha-V7-Binance-Demo.zip.sha256
+      - name: Commit ZIP
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p releases/sltd-v7-binance-demo
+          cp dist/SiftAlpha-V7-Binance-Demo.zip releases/sltd-v7-binance-demo/
+          cp dist/SiftAlpha-V7-Binance-Demo.zip.sha256 releases/sltd-v7-binance-demo/
+          git add releases/sltd-v7-binance-demo
+          if ! git diff --cached --quiet; then
+            git commit -m "build: package V7 Binance Demo ZIP"
+            git pull --rebase origin feature/sltd-v7-binance-usdm-demo-v1
+            git push origin HEAD:feature/sltd-v7-binance-usdm-demo-v1
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SiftAlpha-V7-Binance-Demo
+          path: dist/*
+          retention-days: 30
