@@ -29,6 +29,23 @@ jobs:
           cache: "pip"
           cache-dependency-path: integrations/5s_crypto_binance_usdm_v1/requirements.txt
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Vendor HuntAlpha chart runtime
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/lwc-pack vendor
+          mkdir -p /tmp/lwc-pack vendor
+          npm pack lightweight-charts@5.2.1 --pack-destination /tmp/lwc-pack >/tmp/lwc-pack/name.txt
+          tgz="$(find /tmp/lwc-pack -maxdepth 1 -name 'lightweight-charts-*.tgz' | head -n1)"
+          test -n "$tgz"
+          mkdir -p /tmp/lwc-pack/unpacked
+          tar -xzf "$tgz" -C /tmp/lwc-pack/unpacked
+          cp /tmp/lwc-pack/unpacked/package/dist/lightweight-charts.standalone.production.js             vendor/lightweight-charts.standalone.production.js
+          test -s vendor/lightweight-charts.standalone.production.js
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -81,7 +98,7 @@ jobs:
           rm -rf "$out"
           mkdir -p "$out"
           cp app.py charting.py config.py m2_testnet_check.py requirements.txt runtime_testnet_session.py storage.py "$out/"
-          cp -R engine exchange strategy templates "$out/"
+          cp -R engine exchange strategy templates vendor "$out/"
           cd "$out"
           zip -qr /tmp/5s-crypto-multistrategy-e-v1.zip .
 
@@ -97,6 +114,7 @@ jobs:
                   "strategy/frozen_signal_engine.py","strategy/registry.py",
                   "strategy/e_strategy.py","strategy/e_sltd_core.py",
                   "engine/execution.py","engine/recovery.py","engine/scheduler.py",
+                  "vendor/lightweight-charts.standalone.production.js",
               }
               missing=sorted(required-names)
               assert not missing, missing
@@ -109,14 +127,17 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          mkdir -p releases/5s-crypto-multistrategy-e-v1
-          cp /tmp/5s-crypto-multistrategy-e-v1.zip releases/5s-crypto-multistrategy-e-v1/5s-crypto-multistrategy-e-v1.zip
-          sha256sum /tmp/5s-crypto-multistrategy-e-v1.zip > releases/5s-crypto-multistrategy-e-v1/5s-crypto-multistrategy-e-v1.zip.sha256
-          git add releases/5s-crypto-multistrategy-e-v1
-          if ! git diff --cached --quiet; then
-            git commit -m "build: publish 5s E multi-strategy ZIP"
-            git pull --rebase origin feature/5s-crypto-multistrategy-e-v1
-            git push origin HEAD:feature/5s-crypto-multistrategy-e-v1
+          release_dir="$GITHUB_WORKSPACE/releases/5s-crypto-multistrategy-e-v1"
+          mkdir -p "$release_dir"
+          cp /tmp/5s-crypto-multistrategy-e-v1.zip "$release_dir/5s-crypto-multistrategy-e-v1.zip"
+          sha256sum /tmp/5s-crypto-multistrategy-e-v1.zip > "$release_dir/5s-crypto-multistrategy-e-v1.zip.sha256"
+          git -C "$GITHUB_WORKSPACE" add releases/5s-crypto-multistrategy-e-v1
+          if ! git -C "$GITHUB_WORKSPACE" diff --cached --quiet; then
+            git -C "$GITHUB_WORKSPACE" commit -m "build: publish 5s E multi-strategy ZIP"
+            git -C "$GITHUB_WORKSPACE" reset --hard HEAD
+            git -C "$GITHUB_WORKSPACE" clean -fd integrations/5s_crypto_binance_usdm_v1/vendor
+            git -C "$GITHUB_WORKSPACE" pull --rebase origin feature/5s-crypto-multistrategy-e-v1
+            git -C "$GITHUB_WORKSPACE" push origin HEAD:feature/5s-crypto-multistrategy-e-v1
           fi
 
       - uses: actions/upload-artifact@v4
