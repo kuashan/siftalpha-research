@@ -125,7 +125,7 @@ class ChanUpstreamAdapterTest(unittest.TestCase):
         self.assertIn("ch.zhongshus || []", workspace)
         self.assertIn("ch.bis || []", workspace)
         self.assertIn("ch.segments || []", workspace)
-        self.assertIn("chanSignals = get('chan')?.chan?.signals || []", workspace)
+        self.assertIn("const chanSignals = selected.has('chan')", workspace)
         self.assertIn("'缠' + String(s.kind || '')", workspace)
 
     def test_sltd_is_pure_and_chan_remains_independent(self) -> None:
