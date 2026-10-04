@@ -335,7 +335,9 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     function lineData(field) {
       return overlay
         .map(row => {
-          const value = Number(row[field]);
+          const raw = row[field];
+          if (raw == null) return null;
+          const value = Number(raw);
           if (!Number.isFinite(value)) return null;
           return {time: Math.floor(Number(row.open_time) / 1000), value};
         })
