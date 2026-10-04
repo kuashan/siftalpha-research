@@ -190,7 +190,7 @@ def _aggregate_session_day(
     tz = _zone(market_meta)
     by_day: dict[object, list[tuple[int, dict]]] = {}
     for i, bar in enumerate(bars):
-        day = datetime.fromtimestamp(int(bar["open_time"]), tz=tz).date()
+        day = datetime.fromtimestamp(_open_time_epoch_seconds(bar["open_time"]), tz=tz).date()
         by_day.setdefault(day, []).append((i, bar))
 
     if not by_day:
