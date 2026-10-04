@@ -173,20 +173,18 @@ def robust_normalization(discovery: dict[str, dict]) -> dict:
     for d in DIMS:
         vals = np.asarray([r["raw_vector"][d] for r in supported if finite(r["raw_vector"][d])], dtype=float)
         if not len(vals):
-            norm[d] = {"active": False, "center": None, "scale": None, "method": "none"}
+            norm[d] = {"active": False, "center": 0.0, "scale": None, "method": "none"}
             continue
-        center = float(np.median(vals))
-        mad = float(np.median(np.abs(vals - center)))
-        scale = mad
-        method = "MAD"
+        absvals = np.abs(vals)
+        scale = float(np.median(absvals))
+        method = "MEDIAN_ABS_FROM_ZERO"
         if scale <= 1e-15:
-            q25, q75 = np.quantile(vals, [0.25, 0.75])
-            scale = float((q75 - q25) / 1.349)
-            method = "IQR_1.349"
+            scale = float(np.quantile(absvals, 0.75))
+            method = "P75_ABS_FROM_ZERO"
         if scale <= 1e-15:
-            norm[d] = {"active": False, "center": center, "scale": None, "method": "degenerate"}
+            norm[d] = {"active": False, "center": 0.0, "scale": None, "method": "degenerate"}
         else:
-            norm[d] = {"active": True, "center": center, "scale": scale, "method": method}
+            norm[d] = {"active": True, "center": 0.0, "scale": scale, "method": method}
     return norm
 
 
@@ -333,7 +331,7 @@ def main():
             "study": "SLTD_STATE_SCORE_RISK_EXPOSURE_V3_STAGE_A",
             "status": decision,
             "master_protocol": "SLTD_STATE_SCORE_RISK_EXPOSURE_V3_PROTOCOL.md",
-            "amendment": "SLTD_STATE_SCORE_RISK_EXPOSURE_V3_AMENDMENT_A.md",
+            "amendments": ["SLTD_STATE_SCORE_RISK_EXPOSURE_V3_AMENDMENT_A.md", "SLTD_STATE_SCORE_RISK_EXPOSURE_V3_AMENDMENT_B.md"],
             "branch_base": "a7b10493450867960e9bdd8ff05f9e3905e854a6",
             "pure_sltd_base": "09cc68d20ba3b1005cc67caa5c459bb5b21c78d9",
             "chan_used": False,
