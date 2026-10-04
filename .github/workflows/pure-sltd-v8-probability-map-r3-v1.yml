@@ -1,0 +1,81 @@
+name: Pure SLTD V8 Probability Map R3
+
+on:
+  push:
+    branches:
+      - research/sltd-v8-probability-map-r3-v1
+    paths:
+      - "research/ssss_reboot_v1/phase11/PURE_SLTD_V8_PROBABILITY_MAP_R3_PROTOCOL_v1.md"
+      - "research/ssss_reboot_v1/phase11/pure_sltd_v8_probability_map_r3_v1.py"
+      - ".github/workflows/pure-sltd-v8-probability-map-r3-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -q numpy pandas yfinance
+      - name: Run R3
+        run: python research/ssss_reboot_v1/phase11/pure_sltd_v8_probability_map_r3_v1.py
+      - name: Verify R3 contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("research/ssss_reboot_v1/phase11")
+          j=root/"PURE_SLTD_V8_PROBABILITY_MAP_R3_RESULT_v1.json"
+          m=root/"PURE_SLTD_V8_PROBABILITY_MAP_R3_RESULT_v1.md"
+          manifest=root/"fresh20_probability_map_r3_data"/"manifest.json"
+          assert j.is_file() and m.is_file() and manifest.is_file()
+          x=json.loads(j.read_text(encoding="utf-8"))
+          assert x["meta"]["chan_used"] is False
+          assert len(x["meta"]["universe"]) == 20
+          assert x["meta"]["prior_overlap"] == []
+          assert x["meta"]["candidate_rules"] == [
+              "PM_BUY_1_GREEN_21P_LOWER_CLOSE_BELOW",
+              "PM_SELL_1_BLUE_21P_UPPER_WICK_ONLY",
+          ]
+          assert x["decision"] in {
+              "PROMOTE_TO_ENGINEERING_CANDIDATE",
+              "RESEARCH_ONLY_NOT_PROMOTED",
+              "REJECTED_NOT_ADMITTED",
+          }
+          assert len(list((root/"fresh20_probability_map_r3_data").glob("*.csv.gz"))) == 20
+          print(json.dumps({
+            "decision":x["decision"],
+            "breadth":x["breadth_5bps"],
+            "events":x["event_validation"],
+            "gates":x["gates"],
+          },indent=2))
+          PY
+      - name: Commit frozen R3 data and result
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             research/ssss_reboot_v1/phase11/fresh20_probability_map_r3_data             research/ssss_reboot_v1/phase11/PURE_SLTD_V8_PROBABILITY_MAP_R3_RESULT_v1.json             research/ssss_reboot_v1/phase11/PURE_SLTD_V8_PROBABILITY_MAP_R3_RESULT_v1.md
+          if ! git diff --cached --quiet; then
+            git commit -m "research: archive pure SLTD probability-map R3"
+            git push origin HEAD:research/sltd-v8-probability-map-r3-v1
+          fi
+      - name: Upload R3 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pure-sltd-v8-probability-map-r3-v1
+          path: |
+            research/ssss_reboot_v1/phase11/PURE_SLTD_V8_PROBABILITY_MAP_R3_RESULT_v1.json
+            research/ssss_reboot_v1/phase11/PURE_SLTD_V8_PROBABILITY_MAP_R3_RESULT_v1.md
+            research/ssss_reboot_v1/phase11/fresh20_probability_map_r3_data/manifest.json
+          if-no-files-found: error
+          retention-days: 30
