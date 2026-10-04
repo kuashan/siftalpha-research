@@ -1,0 +1,66 @@
+# SLTD State Score Risk-Exposure v3 — Stage A Result
+
+Status: **IMPLEMENTED_AND_VERIFIED**
+
+Chan/缠论: **NOT USED**
+Representation: **FIRST_OBSERVED / causal**
+Fresh OOS consumed: **NO**
+
+## Funnel
+
+- Discovery state keys: **359**
+- Discovery support-pass states: **198**
+- Temporal-stable states: **82**
+- Stable positive utilities: **43**
+- Stable negative utilities: **39**
+- Stable live components: **EVENT, INNER, REGIME, SLOW, TRANSITION**
+
+## Family funnel
+
+| Family | Discovery keys | Supported | Temporal stable |
+|---|---:|---:|---:|
+| F1_COLOR_AGE | 15 | 12 | 5 |
+| F2_COLOR_AGE_ORIGIN | 34 | 16 | 6 |
+| F3_COLOR_AGE_INNER | 57 | 38 | 14 |
+| F4_COLOR_AGE_SLOWPOS | 44 | 24 | 11 |
+| F5_COLOR_AGE_SLOWTREND | 22 | 16 | 8 |
+| F6_COLOR_AGE_EVENT | 58 | 37 | 14 |
+| F7_COLOR_AGE_EVENT_SUBTYPE | 104 | 45 | 22 |
+| F8_TRANSITION_EVENT | 25 | 10 | 2 |
+
+## Strongest temporally stable states
+
+| Direction | Component | State | Discovery utility | Temporal utility | 10d return excess D/T |
+|---|---|---|---:|---:|---:|
+| POSITIVE | INNER | `F3_COLOR_AGE_INNER::GREEN|21_PLUS|BELOW_ZD1` | 6.096 | 5.352 | 2.11% / 1.65% |
+| POSITIVE | EVENT | `F7_COLOR_AGE_EVENT_SUBTYPE::GREEN|21_PLUS|LOWER|CLOSE_BELOW` | 5.829 | 3.956 | 2.52% / 1.32% |
+| POSITIVE | EVENT | `F6_COLOR_AGE_EVENT::GREEN|21_PLUS|LIGHT_SUPPORT` | 4.540 | 0.431 | 2.29% / 0.14% |
+| POSITIVE | EVENT | `F7_COLOR_AGE_EVENT_SUBTYPE::GREEN|21_PLUS|LIGHT_SUPPORT|CONTACT` | 4.540 | 0.431 | 2.29% / 0.14% |
+| NEGATIVE | EVENT | `F7_COLOR_AGE_EVENT_SUBTYPE::BLUE|21_PLUS|LOWER|FULL_BELOW` | -4.430 | -0.646 | -1.48% / -0.06% |
+| POSITIVE | EVENT | `F6_COLOR_AGE_EVENT::GREEN|21_PLUS|LOWER` | 4.426 | 3.493 | 2.05% / 1.17% |
+| POSITIVE | INNER | `F3_COLOR_AGE_INNER::GREEN|11_20|BELOW_ZD1` | 4.203 | 6.531 | 1.49% / 2.18% |
+| POSITIVE | EVENT | `F7_COLOR_AGE_EVENT_SUBTYPE::GREEN|21_PLUS|LOWER|WICK_ONLY` | 4.004 | 4.591 | 1.55% / 1.13% |
+| POSITIVE | INNER | `F3_COLOR_AGE_INNER::GREEN|21_PLUS|LOWER_HALF` | 3.857 | 3.979 | 1.87% / 1.39% |
+| POSITIVE | SLOW | `F4_COLOR_AGE_SLOWPOS::GREEN|21_PLUS|ABOVE_GZB3` | 3.829 | 2.028 | 1.62% / 0.80% |
+| POSITIVE | SLOW | `F4_COLOR_AGE_SLOWPOS::GREEN|21_PLUS|BELOW_GZB4` | 3.166 | 2.396 | 1.71% / 0.80% |
+| POSITIVE | INNER | `F3_COLOR_AGE_INNER::GREEN|11_20|LOWER_HALF` | 3.141 | 0.565 | 1.16% / 0.26% |
+| POSITIVE | EVENT | `F6_COLOR_AGE_EVENT::GRAY|1_3|LOWER` | 2.946 | 0.965 | 0.16% / 0.60% |
+| NEGATIVE | SLOW | `F4_COLOR_AGE_SLOWPOS::BLUE|21_PLUS|BELOW_GZB4` | -2.636 | -0.664 | -0.85% / -0.03% |
+| POSITIVE | REGIME | `F1_COLOR_AGE::GREEN|21_PLUS` | 2.552 | 2.074 | 1.37% / 0.63% |
+| POSITIVE | SLOW | `F5_COLOR_AGE_SLOWTREND::GREEN|21_PLUS|DOWN` | 2.552 | 2.074 | 1.37% / 0.63% |
+| POSITIVE | INNER | `F3_COLOR_AGE_INNER::GREEN|21_PLUS|UPPER_HALF` | 2.411 | 1.949 | 0.98% / 0.65% |
+| POSITIVE | REGIME | `F2_COLOR_AGE_ORIGIN::GREEN|21_PLUS|GRAY` | 2.395 | 2.074 | 1.50% / 0.63% |
+| POSITIVE | REGIME | `F1_COLOR_AGE::GREEN|11_20` | 2.358 | 0.370 | 0.98% / 0.12% |
+| POSITIVE | SLOW | `F5_COLOR_AGE_SLOWTREND::GREEN|11_20|DOWN` | 2.358 | 0.370 | 0.98% / 0.12% |
+| NEGATIVE | EVENT | `F7_COLOR_AGE_EVENT_SUBTYPE::GRAY|11_20|LOWER|CLOSE_BELOW` | -2.280 | -0.024 | -0.58% / -0.94% |
+| POSITIVE | REGIME | `F2_COLOR_AGE_ORIGIN::GREEN|11_20|GRAY` | 2.122 | 0.370 | 0.82% / 0.12% |
+| NEGATIVE | EVENT | `F7_COLOR_AGE_EVENT_SUBTYPE::GRAY|11_20|LOWER|WICK_ONLY` | -2.065 | -0.068 | -0.99% / -0.08% |
+| NEGATIVE | EVENT | `F7_COLOR_AGE_EVENT_SUBTYPE::BLUE|21_PLUS|LOWER|WICK_ONLY` | -2.034 | -0.754 | -0.64% / -0.64% |
+| POSITIVE | EVENT | `F7_COLOR_AGE_EVENT_SUBTYPE::GREEN|21_PLUS|UPPER|WICK_ONLY` | 1.842 | 2.899 | 0.62% / 1.12% |
+
+## What Stage A means
+
+Stage A does not define a trading system and does not map score to exposure.
+It only determines whether a bidirectional, risk-adjusted SLTD state layer survives temporal validation.
+
+`SLTD_STATE_SCORE_RISK_EXPOSURE_V3_STAGE_A = IMPLEMENTED_AND_VERIFIED`
