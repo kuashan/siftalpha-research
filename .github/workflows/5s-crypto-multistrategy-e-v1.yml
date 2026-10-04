@@ -46,41 +46,6 @@ jobs:
       - name: Multi-strategy contract
         run: python -m unittest tests.test_multistrategy_e -v
 
-      - name: Current Binance E signal diagnostic
-        run: |
-          python - <<'PY'
-          from datetime import datetime, timezone
-          from exchange.binance_usdm_public import BinanceUsdMPublicProbe
-          from strategy.e_strategy import analyze_e
-
-          probe = BinanceUsdMPublicProbe("https://fapi.binance.com", 10)
-          for symbol in ("BTCUSDT","ETHUSDT","BNBUSDT","SOLUSDT"):
-              for tf in ("5m","15m","1h","4h"):
-                  rows = probe.klines(symbol, tf, limit=1000)
-                  candles = []
-                  for r in rows[:-1]:
-                      ot = int(r[0])
-                      candles.append({
-                          "date": datetime.fromtimestamp(ot/1000, tz=timezone.utc).isoformat(),
-                          "open_time": ot,
-                          "open": float(r[1]), "high": float(r[2]), "low": float(r[3]),
-                          "close": float(r[4]), "volume": float(r[5]),
-                      })
-                  try:
-                      out = analyze_e(
-                          symbol, candles, display_limit=300, timeframe=tf,
-                          market_meta={"exchange_timezone":"UTC","continuous_24_7":True},
-                      )
-                      ev = out.get("events") or []
-                      last = ev[-5:]
-                      print("E_DIAG", symbol, tf, "bars", len(candles),
-                            "events_last60", len(ev),
-                            "latest_action", (out.get("snapshot") or {}).get("resolved_action"),
-                            "last_events", [(x.get("date"),x.get("action")) for x in last])
-                  except Exception as exc:
-                      print("E_DIAG_ERROR", symbol, tf, type(exc).__name__, str(exc))
-          PY
-
       - name: UI contract
         run: |
           python - <<'PY'
