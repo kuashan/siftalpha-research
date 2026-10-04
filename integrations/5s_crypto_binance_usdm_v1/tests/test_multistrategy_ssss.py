@@ -4,6 +4,7 @@ from decimal import Decimal
 from pathlib import Path
 from unittest.mock import patch
 import hashlib
+import json
 import math
 import tempfile
 import unittest
@@ -138,6 +139,11 @@ class SSSSFormulaTests(unittest.TestCase):
         result = evaluate_ssss(rows)
         self.assertEqual(len(result), len(rows))
         self.assertTrue(all("ZK1" in bar.values and "ZD1" in bar.values for bar in result[-20:]))
+
+        from strategy.ssss_strategy import chart_overlay
+        overlay = chart_overlay(rows)
+        encoded = json.dumps(overlay, allow_nan=False)
+        self.assertIn("null", encoded)
 
 
 class SSSSTradingRuleTests(unittest.TestCase):
