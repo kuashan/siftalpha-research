@@ -329,8 +329,17 @@ def render_index(selected_symbol: str | None = None) -> str:
             position_metrics.get("isolated_margin_usdt"), suffix=" USDT", digits=2
         )
         strategy_locked = enabled or current_fraction > 1e-12
+        strategy_current_label = "5s V1" if strategy_id == STRATEGY_5S else spec.label
         strategy_option_html = "".join(
-            f'<option value="{html.escape(sid)}"{" selected" if is_selected else ""}>{html.escape("5s V1" if sid == STRATEGY_5S else label)}</option>'
+            (
+                f'<button type="button" '
+                f'class="strategy-option{" selected" if is_selected else ""}" '
+                f'data-strategy-option="{html.escape(sid)}" '
+                f'role="option" aria-selected="{"true" if is_selected else "false"}">'
+                f'<span>{html.escape("5s V1" if sid == STRATEGY_5S else label)}</span>'
+                f'<small>{html.escape("A/B 60% · C 补至 100% · SELL 全退" if sid == STRATEGY_5S else "💰 +25% · 💥 全部清仓")}</small>'
+                f'</button>'
+            )
             for sid, label, is_selected in strategy_options(strategy_id)
         )
         strategy_lock_note = "已锁定" if strategy_locked else "可切换"
@@ -376,13 +385,23 @@ def render_index(selected_symbol: str | None = None) -> str:
                   </div>
                 </div>
                 <div class="hero-right">
-                  <form class="strategy-switch" method="post" action="/symbol-strategy">
+                  <form class="strategy-switch" method="post" action="/symbol-strategy" data-strategy-picker>
                     <input type="hidden" name="symbol" value="{html.escape(symbol)}">
-                    <label>策略
-                      <select name="strategy_id" onchange="this.form.submit()" {'disabled' if strategy_locked else ''}>
-                        {strategy_option_html}
-                      </select>
-                    </label>
+                    <input type="hidden" name="strategy_id" value="{html.escape(strategy_id)}">
+                    <span class="strategy-field-label">策略</span>
+                    <button
+                      class="strategy-trigger"
+                      type="button"
+                      aria-haspopup="listbox"
+                      aria-expanded="false"
+                      {'disabled' if strategy_locked else ''}
+                    >
+                      <span class="strategy-current" data-strategy-current>{html.escape(strategy_current_label)}</span>
+                      <span class="strategy-chevron" aria-hidden="true">⌄</span>
+                    </button>
+                    <div class="strategy-menu" role="listbox" hidden>
+                      {strategy_option_html}
+                    </div>
                     <small>{html.escape(strategy_lock_note)}</small>
                   </form>
                   <div class="hero-pnl">
