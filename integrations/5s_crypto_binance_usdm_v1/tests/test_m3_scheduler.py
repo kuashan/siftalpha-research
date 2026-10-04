@@ -31,6 +31,16 @@ class FakeSession:
         return self.key, self.secret
 
 
+class FakePublicMarket:
+    def __init__(self, rows):
+        self.rows = rows
+        self.calls = []
+
+    def klines(self, symbol, timeframe, limit):
+        self.calls.append((symbol, timeframe, limit))
+        return list(self.rows)
+
+
 class FakeAdapter:
     calls = []
     generation = 0
@@ -144,6 +154,30 @@ class SchedulerLoopTests(unittest.TestCase):
         out = self.scheduler(FakeSession("", "")).run_once()
         self.assertEqual(out["BTCUSDT"]["state"], "WAITING_DEMO")
         self.assertEqual(out["ETHUSDT"]["state"], "WAITING_DEMO")
+
+
+    def test_public_history_fallback_when_demo_history_is_short(self):
+        class ShortAdapter(FakeAdapter):
+            def klines(self, symbol, timeframe, limit):
+                base = 100 if symbol == "BTCUSDT" else 200
+                return [[i, base, base + 1, base - 1, base + 0.5, 1000] for i in range(10)]
+
+        rows = [[i, 100, 101, 99, 100.5, 1000] for i in range(90)] + [[90,100,101,99,100.5,1000]]
+        market = FakePublicMarket(rows)
+        scheduler = StrategyScheduler(
+            store=self.store,
+            session=FakeSession(),
+            symbols=self.symbols,
+            allowed_timeframes=("15m", "1h", "1d"),
+            adapter_factory=ShortAdapter,
+            evaluator=fake_evaluator,
+            minimum_closed_bars=64,
+            market_data=market,
+        )
+        out = scheduler.run_once()
+        self.assertEqual(out["BTCUSDT"]["state"], "MONITORING")
+        self.assertEqual(out["BTCUSDT"]["market_source"], "PUBLIC")
+        self.assertTrue(market.calls)
 
 
 if __name__ == "__main__":
