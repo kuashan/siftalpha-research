@@ -39,7 +39,7 @@ TEMP_START = pd.Timestamp("2023-01-03")
 TEMP_END = pd.Timestamp("2024-12-31")
 
 UNIVERSE_PATH = ROOT / "A_SHARE_50_UNIVERSE_V1.json"
-DATA_DIR = ROOT / "ashare50_data_snapshot_v1"
+DATA_DIR = ROOT / "ashare50_data_snapshot_v2"
 MANIFEST_PATH = DATA_DIR / "manifest.json"
 OUT_JSON = ROOT / "SLTD_ASHARE50_INTEGRATED_RISK_V1_STAGE_A_RESULT.json"
 OUT_MD = ROOT / "SLTD_ASHARE50_INTEGRATED_RISK_V1_STAGE_A_RESULT.md"
@@ -235,6 +235,8 @@ def main():
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     if manifest.get("status") != "PASS":
         raise RuntimeError("A-share data audit is not PASS")
+    if manifest.get("source") != "Eastmoney via AkShare" or manifest.get("adjust") != "qfq":
+        raise RuntimeError("unexpected A-share data source / adjustment mode")
 
     dev = [x for x in universe["symbols"] if x["role"] == "DEVELOPMENT"]
     fresh = [x for x in universe["symbols"] if x["role"] == "FRESH_OOS"]
