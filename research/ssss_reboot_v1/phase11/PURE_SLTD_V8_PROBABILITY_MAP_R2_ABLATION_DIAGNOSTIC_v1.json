@@ -1,0 +1,2111 @@
+{
+  "study": "PURE_SLTD_V8_PROBABILITY_MAP_R2_ABLATION_DIAGNOSTIC_v1",
+  "status": "COMPLETE_DIAGNOSTIC_ONLY_NOT_OOS",
+  "fresh20_already_seen": true,
+  "portfolio": {
+    "5bps": {
+      "V7_BASE": {
+        "start": "2020-01-02",
+        "end": "2026-09-30",
+        "total_return": 0.4294602055595338,
+        "cagr": 0.05441410092542065,
+        "max_drawdown": -0.20854122864015867,
+        "calmar": 0.2609273057430436,
+        "turnover_mean": 5.708182515828598,
+        "time_in_market_mean": 0.8939233038348082
+      },
+      "BUY_ONLY": {
+        "start": "2020-01-02",
+        "end": "2026-09-30",
+        "total_return": 0.5386838164007286,
+        "cagr": 0.06599035131347053,
+        "max_drawdown": -0.22154354528577247,
+        "calmar": 0.2978662782901147,
+        "turnover_mean": 5.886326443325471,
+        "time_in_market_mean": 0.9176106194690267
+      },
+      "SELL_ONLY": {
+        "start": "2020-01-02",
+        "end": "2026-09-30",
+        "total_return": 0.405121164669223,
+        "cagr": 0.051732221037885884,
+        "max_drawdown": -0.19219128169191735,
+        "calmar": 0.2691704877686005,
+        "turnover_mean": 10.508455082673818,
+        "time_in_market_mean": 0.8939233038348082
+      },
+      "BOTH": {
+        "start": "2020-01-02",
+        "end": "2026-09-30",
+        "total_return": 0.5003319459973552,
+        "cagr": 0.06200769176207799,
+        "max_drawdown": -0.21279256673974445,
+        "calmar": 0.2913997077628956,
+        "turnover_mean": 10.769435669027784,
+        "time_in_market_mean": 0.9176106194690267
+      }
+    },
+    "10bps": {
+      "V7_BASE": {
+        "start": "2020-01-02",
+        "end": "2026-09-30",
+        "total_return": 0.4255394253441067,
+        "cagr": 0.05398471749084788,
+        "max_drawdown": -0.2087866682671521,
+        "calmar": 0.2585640066911359,
+        "turnover_mean": 5.707492478918058,
+        "time_in_market_mean": 0.8939233038348082
+      },
+      "BUY_ONLY": {
+        "start": "2020-01-02",
+        "end": "2026-09-30",
+        "total_return": 0.5343449204064092,
+        "cagr": 0.06554404702583949,
+        "max_drawdown": -0.22179374756730097,
+        "calmar": 0.2955180105153814,
+        "turnover_mean": 5.885535918768744,
+        "time_in_market_mean": 0.9176106194690267
+      },
+      "SELL_ONLY": {
+        "start": "2020-01-02",
+        "end": "2026-09-30",
+        "total_return": 0.3977648669045566,
+        "cagr": 0.0509138564541467,
+        "max_drawdown": -0.1926707395739744,
+        "calmar": 0.26425318430149447,
+        "turnover_mean": 10.50700757035349,
+        "time_in_market_mean": 0.8939233038348082
+      },
+      "BOTH": {
+        "start": "2020-01-02",
+        "end": "2026-09-30",
+        "total_return": 0.4922946257392431,
+        "cagr": 0.06116208138736923,
+        "max_drawdown": -0.21326471204783404,
+        "calmar": 0.2867895058684201,
+        "turnover_mean": 10.767839524465245,
+        "time_in_market_mean": 0.9176106194690267
+      }
+    }
+  },
+  "breadth_5bps": {
+    "BUY_ONLY": {
+      "return_better": 10,
+      "calmar_better": 10
+    },
+    "SELL_ONLY": {
+      "return_better": 12,
+      "calmar_better": 13
+    },
+    "BOTH": {
+      "return_better": 13,
+      "calmar_better": 13
+    }
+  },
+  "per_symbol": {
+    "5bps": {
+      "AXP": {
+        "V7_BASE": {
+          "total_return": 0.9990670750026329,
+          "cagr": 0.10818207941279967,
+          "max_drawdown": -0.2899315590364885,
+          "calmar": 0.3731297129995591,
+          "turnover": 5.979671689917673,
+          "position_changes": 22,
+          "time_in_market": 0.9238938053097345,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 1.5099181805661481,
+          "cagr": 0.14621851708011158,
+          "max_drawdown": -0.2899315590364885,
+          "calmar": 0.5043208044202931,
+          "turnover": 5.893273793673255,
+          "position_changes": 21,
+          "time_in_market": 0.9581120943952802,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.9898634818995742,
+          "cagr": 0.10742399067113073,
+          "max_drawdown": -0.28240364682292163,
+          "calmar": 0.38039165527663976,
+          "turnover": 12.396318248797083,
+          "position_changes": 54,
+          "time_in_market": 0.9238938053097345,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 17
+        },
+        "BOTH": {
+          "total_return": 1.482530112532868,
+          "cagr": 0.1443550482167799,
+          "max_drawdown": -0.28240364682292185,
+          "calmar": 0.5111656660273094,
+          "turnover": 12.456757527008666,
+          "position_changes": 53,
+          "time_in_market": 0.9581120943952802,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 17
+        }
+      },
+      "PGR": {
+        "V7_BASE": {
+          "total_return": 0.7102469879289905,
+          "cagr": 0.08283280496039769,
+          "max_drawdown": -0.34619877378481145,
+          "calmar": 0.23926371562449408,
+          "turnover": 5.093456544520441,
+          "position_changes": 18,
+          "time_in_market": 0.9463126843657818,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.7102469879289905,
+          "cagr": 0.08283280496039769,
+          "max_drawdown": -0.34619877378481145,
+          "calmar": 0.23926371562449408,
+          "turnover": 5.093456544520441,
+          "position_changes": 18,
+          "time_in_market": 0.9463126843657818,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.6481781072658557,
+          "cagr": 0.07691289577316973,
+          "max_drawdown": -0.3405832224973978,
+          "calmar": 0.22582702462320314,
+          "turnover": 10.737938024101929,
+          "position_changes": 51,
+          "time_in_market": 0.9463126843657818,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 17
+        },
+        "BOTH": {
+          "total_return": 0.6481781072658557,
+          "cagr": 0.07691289577316973,
+          "max_drawdown": -0.3405832224973978,
+          "calmar": 0.22582702462320314,
+          "turnover": 10.737938024101929,
+          "position_changes": 51,
+          "time_in_market": 0.9463126843657818,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 17
+        }
+      },
+      "CB": {
+        "V7_BASE": {
+          "total_return": 0.4892706087954455,
+          "cagr": 0.06084291858795754,
+          "max_drawdown": -0.19986154783185706,
+          "calmar": 0.30442533467790667,
+          "turnover": 6.233119839387004,
+          "position_changes": 25,
+          "time_in_market": 0.8424778761061947,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.6515236443137402,
+          "cagr": 0.07723678238091658,
+          "max_drawdown": -0.19986154783185694,
+          "calmar": 0.3864514371013263,
+          "turnover": 6.8043188271397,
+          "position_changes": 27,
+          "time_in_market": 0.8424778761061947,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 2,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.38652446369780313,
+          "cagr": 0.04965628452389503,
+          "max_drawdown": -0.19125812804041253,
+          "calmar": 0.25962966924680314,
+          "turnover": 14.353239493783922,
+          "position_changes": 67,
+          "time_in_market": 0.8424778761061947,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 24
+        },
+        "BOTH": {
+          "total_return": 0.5375835134948745,
+          "cagr": 0.06587727432020984,
+          "max_drawdown": -0.19125812804041253,
+          "calmar": 0.3444416976950129,
+          "turnover": 14.924438481536619,
+          "position_changes": 69,
+          "time_in_market": 0.8424778761061947,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 2,
+          "pm_sell_exec_count": 24
+        }
+      },
+      "ICE": {
+        "V7_BASE": {
+          "total_return": 0.6723090483450846,
+          "cagr": 0.07923662017275768,
+          "max_drawdown": -0.35148765775989843,
+          "calmar": 0.2254321550797789,
+          "turnover": 3.956385800059318,
+          "position_changes": 15,
+          "time_in_market": 0.9728613569321534,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.6723090483450846,
+          "cagr": 0.07923662017275768,
+          "max_drawdown": -0.35148765775989843,
+          "calmar": 0.2254321550797789,
+          "turnover": 3.956385800059318,
+          "position_changes": 15,
+          "time_in_market": 0.9728613569321534,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.6788482714992798,
+          "cagr": 0.07986140439514555,
+          "max_drawdown": -0.3487330479517057,
+          "calmar": 0.22900440570291222,
+          "turnover": 9.745968938451725,
+          "position_changes": 44,
+          "time_in_market": 0.9728613569321534,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 14
+        },
+        "BOTH": {
+          "total_return": 0.7231282562146379,
+          "cagr": 0.08403839112818856,
+          "max_drawdown": -0.3487330479517057,
+          "calmar": 0.24098201080107162,
+          "turnover": 9.763059428394005,
+          "position_changes": 44,
+          "time_in_market": 0.9728613569321534,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 1,
+          "pm_sell_exec_count": 14
+        }
+      },
+      "T": {
+        "V7_BASE": {
+          "total_return": -0.14503138143678462,
+          "cagr": -0.022968496753066336,
+          "max_drawdown": -0.5387674631479895,
+          "calmar": -0.04263155874124736,
+          "turnover": 1.0017491967384768,
+          "position_changes": 5,
+          "time_in_market": 0.9952802359882006,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": -0.14503138143678462,
+          "cagr": -0.022968496753066336,
+          "max_drawdown": -0.5387674631479895,
+          "calmar": -0.04263155874124736,
+          "turnover": 1.0017491967384768,
+          "position_changes": 5,
+          "time_in_market": 0.9952802359882006,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": -0.13319083245269792,
+          "cagr": -0.020973652738721538,
+          "max_drawdown": -0.5200399530940604,
+          "calmar": -0.04033084883946984,
+          "turnover": 6.971104513600032,
+          "position_changes": 35,
+          "time_in_market": 0.9952802359882006,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 14
+        },
+        "BOTH": {
+          "total_return": -0.1328005578198923,
+          "cagr": -0.020908296994407327,
+          "max_drawdown": -0.5200399530940604,
+          "calmar": -0.04020517437171912,
+          "turnover": 6.971548787634426,
+          "position_changes": 35,
+          "time_in_market": 0.9952802359882006,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 1,
+          "pm_sell_exec_count": 14
+        }
+      },
+      "TMUS": {
+        "V7_BASE": {
+          "total_return": 1.1303834253671003,
+          "cagr": 0.11868693918941164,
+          "max_drawdown": -0.31985810684808225,
+          "calmar": 0.3710612194856216,
+          "turnover": 2.7092899208510337,
+          "position_changes": 10,
+          "time_in_market": 0.9663716814159292,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.9864145189002127,
+          "cagr": 0.10713913440434819,
+          "max_drawdown": -0.31985810684808225,
+          "calmar": 0.3349583209258295,
+          "turnover": 2.987413536078437,
+          "position_changes": 12,
+          "time_in_market": 0.9663716814159292,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.9677506552848794,
+          "cagr": 0.10559030342685594,
+          "max_drawdown": -0.3112792532399683,
+          "calmar": 0.3392140733049604,
+          "turnover": 10.347801255042386,
+          "position_changes": 48,
+          "time_in_market": 0.9663716814159292,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 20
+        },
+        "BOTH": {
+          "total_return": 0.8347722877912209,
+          "cagr": 0.094177690524194,
+          "max_drawdown": -0.3112792532399683,
+          "calmar": 0.3025504897738606,
+          "turnover": 10.62592487026979,
+          "position_changes": 50,
+          "time_in_market": 0.9663716814159292,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 20
+        }
+      },
+      "CMCSA": {
+        "V7_BASE": {
+          "total_return": -0.35679401534235866,
+          "cagr": -0.06334572392308979,
+          "max_drawdown": -0.5355465472506349,
+          "calmar": -0.11828238693404199,
+          "turnover": 4.432034431215289,
+          "position_changes": 16,
+          "time_in_market": 0.6684365781710915,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": -0.24642836867799123,
+          "cagr": -0.04108919349664075,
+          "max_drawdown": -0.5355465472506349,
+          "calmar": -0.07672385100339575,
+          "turnover": 4.8812784757676955,
+          "position_changes": 17,
+          "time_in_market": 0.768141592920354,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": -0.24425270270401933,
+          "cagr": -0.04067914203557055,
+          "max_drawdown": -0.3778133260938049,
+          "calmar": -0.10766995027981247,
+          "turnover": 8.689567346569197,
+          "position_changes": 38,
+          "time_in_market": 0.6684365781710915,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 11
+        },
+        "BOTH": {
+          "total_return": -0.233316283048425,
+          "cagr": -0.03863303925707784,
+          "max_drawdown": -0.4660625421845689,
+          "calmar": -0.08289239267329594,
+          "turnover": 9.227399708543194,
+          "position_changes": 40,
+          "time_in_market": 0.768141592920354,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 5,
+          "pm_sell_exec_count": 12
+        }
+      },
+      "CL": {
+        "V7_BASE": {
+          "total_return": 0.23375752650133186,
+          "cagr": 0.031641736385266794,
+          "max_drawdown": -0.20612101018983187,
+          "calmar": 0.15351048569054465,
+          "turnover": 4.21585092384467,
+          "position_changes": 17,
+          "time_in_market": 0.9091445427728614,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.2699069913119694,
+          "cagr": 0.03606936237207181,
+          "max_drawdown": -0.20612101018983187,
+          "calmar": 0.1749911973498136,
+          "turnover": 5.751576731919292,
+          "position_changes": 21,
+          "time_in_market": 0.9622418879056047,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.20305256555001083,
+          "cagr": 0.027793309348035367,
+          "max_drawdown": -0.1975626166446326,
+          "calmar": 0.14068101455665985,
+          "turnover": 8.078639125543749,
+          "position_changes": 35,
+          "time_in_market": 0.9091445427728614,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 10
+        },
+        "BOTH": {
+          "total_return": 0.2383023658142691,
+          "cagr": 0.032204418558756664,
+          "max_drawdown": -0.1975626166446326,
+          "calmar": 0.1630086658382574,
+          "turnover": 9.61436493361837,
+          "position_changes": 39,
+          "time_in_market": 0.9622418879056047,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 10
+        }
+      },
+      "MDLZ": {
+        "V7_BASE": {
+          "total_return": 0.007508280567973813,
+          "cagr": 0.0011098949625079069,
+          "max_drawdown": -0.3211464075111057,
+          "calmar": 0.003456040411940542,
+          "turnover": 8.449960436487865,
+          "position_changes": 34,
+          "time_in_market": 0.8607669616519174,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.032382158754581836,
+          "cagr": 0.004737177164708228,
+          "max_drawdown": -0.3043865238537814,
+          "calmar": 0.015563031847572309,
+          "turnover": 8.454014112142845,
+          "position_changes": 34,
+          "time_in_market": 0.8607669616519174,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.018053624750107078,
+          "cagr": 0.0026569011981774082,
+          "max_drawdown": -0.3211464075111057,
+          "calmar": 0.008273177392107457,
+          "turnover": 9.330853483886804,
+          "position_changes": 38,
+          "time_in_market": 0.8607669616519174,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 2
+        },
+        "BOTH": {
+          "total_return": 0.04318785177124185,
+          "cagr": 0.00628978860737206,
+          "max_drawdown": -0.3043865238537816,
+          "calmar": 0.020663820880563986,
+          "turnover": 9.334907159541784,
+          "position_changes": 38,
+          "time_in_market": 0.8607669616519174,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 2
+        }
+      },
+      "GIS": {
+        "V7_BASE": {
+          "total_return": -0.34656496244509616,
+          "cagr": -0.061151565469203195,
+          "max_drawdown": -0.47855952337970686,
+          "calmar": -0.12778256931830667,
+          "turnover": 8.299013404797005,
+          "position_changes": 28,
+          "time_in_market": 0.8920353982300885,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": -0.5397258727503103,
+          "cagr": -0.10869340235645475,
+          "max_drawdown": -0.6423874900107636,
+          "calmar": -0.169202240153577,
+          "turnover": 8.82617794228842,
+          "position_changes": 31,
+          "time_in_market": 0.9026548672566371,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": -0.2892671407161974,
+          "cagr": -0.04937586764259916,
+          "max_drawdown": -0.4511137478626339,
+          "calmar": -0.10945325403302567,
+          "turnover": 11.234626523277045,
+          "position_changes": 49,
+          "time_in_market": 0.8920353982300885,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 12
+        },
+        "BOTH": {
+          "total_return": -0.5156075671125891,
+          "cagr": -0.10191712370776196,
+          "max_drawdown": -0.6357772022100485,
+          "calmar": -0.16030320582978455,
+          "turnover": 11.829923699967084,
+          "position_changes": 52,
+          "time_in_market": 0.9026548672566371,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 12
+        }
+      },
+      "MMM": {
+        "V7_BASE": {
+          "total_return": 0.19212542455518977,
+          "cagr": 0.026403550092080064,
+          "max_drawdown": -0.5871316253393672,
+          "calmar": 0.04497041030078831,
+          "turnover": 1.8323835381815348,
+          "position_changes": 8,
+          "time_in_market": 0.9238938053097345,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.19212542455518977,
+          "cagr": 0.026403550092080064,
+          "max_drawdown": -0.5871316253393672,
+          "calmar": 0.04497041030078831,
+          "turnover": 1.8323835381815348,
+          "position_changes": 8,
+          "time_in_market": 0.9238938053097345,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.020289141096329733,
+          "cagr": 0.002983097924960987,
+          "max_drawdown": -0.5801458166129686,
+          "calmar": 0.005141979549860469,
+          "turnover": 6.497932559624997,
+          "position_changes": 33,
+          "time_in_market": 0.9238938053097345,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 14
+        },
+        "BOTH": {
+          "total_return": 0.020289141096329733,
+          "cagr": 0.002983097924960987,
+          "max_drawdown": -0.5801458166129686,
+          "calmar": 0.005141979549860469,
+          "turnover": 6.497932559624997,
+          "position_changes": 33,
+          "time_in_market": 0.9238938053097345,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 14
+        }
+      },
+      "FDX": {
+        "V7_BASE": {
+          "total_return": 0.7070461616422539,
+          "cagr": 0.08253203331868608,
+          "max_drawdown": -0.5471973178927156,
+          "calmar": 0.15082682356068755,
+          "turnover": 5.300834839276352,
+          "position_changes": 20,
+          "time_in_market": 0.8442477876106195,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 1.6451802373623479,
+          "cagr": 0.15517532554543334,
+          "max_drawdown": -0.5471973178927156,
+          "calmar": 0.2835820287698436,
+          "turnover": 5.427680624120523,
+          "position_changes": 21,
+          "time_in_market": 0.8973451327433628,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.7367300149484188,
+          "cagr": 0.08530310616809267,
+          "max_drawdown": -0.5267773727290059,
+          "calmar": 0.16193388437733028,
+          "turnover": 10.20018979143979,
+          "position_changes": 47,
+          "time_in_market": 0.8442477876106195,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 14
+        },
+        "BOTH": {
+          "total_return": 1.5691373410462348,
+          "cagr": 0.150189274523423,
+          "max_drawdown": -0.5267773727290059,
+          "calmar": 0.28510957816080307,
+          "turnover": 10.993013933024473,
+          "position_changes": 50,
+          "time_in_market": 0.8973451327433628,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 14
+        }
+      },
+      "EMR": {
+        "V7_BASE": {
+          "total_return": 1.0495564308260619,
+          "cagr": 0.11228870713086625,
+          "max_drawdown": -0.48209252736308505,
+          "calmar": 0.2329194101909335,
+          "turnover": 1.9816212023248563,
+          "position_changes": 9,
+          "time_in_market": 0.9899705014749263,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 1.0495564308260619,
+          "cagr": 0.11228870713086625,
+          "max_drawdown": -0.48209252736308505,
+          "calmar": 0.2329194101909335,
+          "turnover": 1.9816212023248563,
+          "position_changes": 9,
+          "time_in_market": 0.9899705014749263,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 1.047409685605099,
+          "cagr": 0.11211586175607202,
+          "max_drawdown": -0.48209252736308505,
+          "calmar": 0.23256087865396977,
+          "turnover": 7.668056618163341,
+          "position_changes": 36,
+          "time_in_market": 0.9899705014749263,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 14
+        },
+        "BOTH": {
+          "total_return": 1.047409685605099,
+          "cagr": 0.11211586175607202,
+          "max_drawdown": -0.48209252736308505,
+          "calmar": 0.23256087865396977,
+          "turnover": 7.668056618163341,
+          "position_changes": 36,
+          "time_in_market": 0.9899705014749263,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 14
+        }
+      },
+      "DUK": {
+        "V7_BASE": {
+          "total_return": 0.13627455525937515,
+          "cagr": 0.019125996683559077,
+          "max_drawdown": -0.24187813726052199,
+          "calmar": 0.07907286247602799,
+          "turnover": 11.40218330345343,
+          "position_changes": 45,
+          "time_in_market": 0.8702064896755162,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.13627455525937515,
+          "cagr": 0.019125996683559077,
+          "max_drawdown": -0.24187813726052199,
+          "calmar": 0.07907286247602799,
+          "turnover": 11.40218330345343,
+          "position_changes": 45,
+          "time_in_market": 0.8702064896755162,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.14760005050071578,
+          "cagr": 0.020625997885787672,
+          "max_drawdown": -0.2418781372605221,
+          "calmar": 0.08527433739731435,
+          "turnover": 14.498646721637222,
+          "position_changes": 63,
+          "time_in_market": 0.8702064896755162,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 8
+        },
+        "BOTH": {
+          "total_return": 0.14760005050071578,
+          "cagr": 0.020625997885787672,
+          "max_drawdown": -0.2418781372605221,
+          "calmar": 0.08527433739731435,
+          "turnover": 14.498646721637222,
+          "position_changes": 63,
+          "time_in_market": 0.8702064896755162,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 8
+        }
+      },
+      "D": {
+        "V7_BASE": {
+          "total_return": -0.15011420439222456,
+          "cagr": -0.023832054428399196,
+          "max_drawdown": -0.33319793773435935,
+          "calmar": -0.07152521588353647,
+          "turnover": 6.805167903290496,
+          "position_changes": 28,
+          "time_in_market": 0.95929203539823,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": -0.26293548331819583,
+          "cagr": -0.044233596935190245,
+          "max_drawdown": -0.5255731501733054,
+          "calmar": -0.08416258882441847,
+          "turnover": 7.048492264390787,
+          "position_changes": 29,
+          "time_in_market": 0.9634218289085545,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": -0.1314334350510159,
+          "cagr": -0.020679554774043152,
+          "max_drawdown": -0.32530871464948397,
+          "calmar": -0.06356901565433042,
+          "turnover": 10.864982601702089,
+          "position_changes": 48,
+          "time_in_market": 0.95929203539823,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 11
+        },
+        "BOTH": {
+          "total_return": -0.24322650851745475,
+          "cagr": -0.04048608232259632,
+          "max_drawdown": -0.5199600012831834,
+          "calmar": -0.07786383995438635,
+          "turnover": 11.488774068626388,
+          "position_changes": 51,
+          "time_in_market": 0.9634218289085545,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 11
+        }
+      },
+      "EXC": {
+        "V7_BASE": {
+          "total_return": 0.3434457857356257,
+          "cagr": 0.044754802076559796,
+          "max_drawdown": -0.21708765022507137,
+          "calmar": 0.20616005576622654,
+          "turnover": 9.332033087784005,
+          "position_changes": 34,
+          "time_in_market": 0.831858407079646,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.3940604072532672,
+          "cagr": 0.05050035755104787,
+          "max_drawdown": -0.2170876502250716,
+          "calmar": 0.2326265796266634,
+          "turnover": 9.45306774311552,
+          "position_changes": 34,
+          "time_in_market": 0.831858407079646,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 1,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.4118279199251389,
+          "cagr": 0.052475152267065006,
+          "max_drawdown": -0.18791873354930355,
+          "calmar": 0.2792438586400823,
+          "turnover": 14.336768955759323,
+          "position_changes": 59,
+          "time_in_market": 0.831858407079646,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 13
+        },
+        "BOTH": {
+          "total_return": 0.46501885369692664,
+          "cagr": 0.05826316526384834,
+          "max_drawdown": -0.18791873354930333,
+          "calmar": 0.310044475946631,
+          "turnover": 14.457803611090839,
+          "position_changes": 59,
+          "time_in_market": 0.831858407079646,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 1,
+          "pm_sell_exec_count": 13
+        }
+      },
+      "SLB": {
+        "V7_BASE": {
+          "total_return": 0.1092603173782285,
+          "cagr": 0.015496027303464555,
+          "max_drawdown": -0.500183172555972,
+          "calmar": 0.03098070497709617,
+          "turnover": 7.1183203055579005,
+          "position_changes": 28,
+          "time_in_market": 0.8772861356932153,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.36379363266808706,
+          "cagr": 0.04708640355365867,
+          "max_drawdown": -0.5001831725559719,
+          "calmar": 0.09413831999394097,
+          "turnover": 7.009281616759908,
+          "position_changes": 28,
+          "time_in_market": 0.9132743362831859,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 1,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.17388393345583997,
+          "cagr": 0.024059159435757538,
+          "max_drawdown": -0.4742731633727041,
+          "calmar": 0.050728485804816294,
+          "turnover": 10.46617124406221,
+          "position_changes": 47,
+          "time_in_market": 0.8772861356932153,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 11
+        },
+        "BOTH": {
+          "total_return": 0.4244195896706682,
+          "cagr": 0.05386189425854537,
+          "max_drawdown": -0.4743863951468903,
+          "calmar": 0.11354013270525481,
+          "turnover": 10.532113036212841,
+          "position_changes": 48,
+          "time_in_market": 0.9132743362831859,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 2,
+          "pm_sell_exec_count": 12
+        }
+      },
+      "EOG": {
+        "V7_BASE": {
+          "total_return": 0.8622779521992838,
+          "cagr": 0.09659480777425622,
+          "max_drawdown": -0.37789997049156243,
+          "calmar": 0.25560946101320997,
+          "turnover": 7.664696950578458,
+          "position_changes": 27,
+          "time_in_market": 0.9156342182890855,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.8622779521992838,
+          "cagr": 0.09659480777425622,
+          "max_drawdown": -0.37789997049156243,
+          "calmar": 0.25560946101320997,
+          "turnover": 7.664696950578458,
+          "position_changes": 27,
+          "time_in_market": 0.9156342182890855,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.8815099317835833,
+          "cagr": 0.09826685853353023,
+          "max_drawdown": -0.3501085784345782,
+          "calmar": 0.2806753806859163,
+          "turnover": 13.142224053622407,
+          "position_changes": 59,
+          "time_in_market": 0.9156342182890855,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 17
+        },
+        "BOTH": {
+          "total_return": 0.8815099317835833,
+          "cagr": 0.09826685853353023,
+          "max_drawdown": -0.3501085784345782,
+          "calmar": 0.2806753806859163,
+          "turnover": 13.142224053622407,
+          "position_changes": 59,
+          "time_in_market": 0.9156342182890855,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 17
+        }
+      },
+      "F": {
+        "V7_BASE": {
+          "total_return": 0.9419706344402625,
+          "cagr": 0.10343022666027712,
+          "max_drawdown": -0.6088756397617712,
+          "calmar": 0.16987085688096384,
+          "turnover": 5.454432016608986,
+          "position_changes": 23,
+          "time_in_market": 0.8365781710914454,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 1.2543894537258868,
+          "cagr": 0.12811232332030253,
+          "max_drawdown": -0.6271010388970935,
+          "calmar": 0.20429295340607084,
+          "turnover": 5.4352662151593245,
+          "position_changes": 23,
+          "time_in_market": 0.9380530973451328,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.994765705932638,
+          "cagr": 0.10782815170066073,
+          "max_drawdown": -0.6088756397617712,
+          "calmar": 0.17709388364239634,
+          "turnover": 8.46233828588683,
+          "position_changes": 38,
+          "time_in_market": 0.8365781710914454,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 7
+        },
+        "BOTH": {
+          "total_return": 1.2872888853408435,
+          "cagr": 0.1305386786142333,
+          "max_drawdown": -0.6271010388970937,
+          "calmar": 0.20816211506173968,
+          "turnover": 8.531459339267096,
+          "position_changes": 38,
+          "time_in_market": 0.9380530973451328,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 7
+        }
+      },
+      "GM": {
+        "V7_BASE": {
+          "total_return": 1.0032084602622926,
+          "cagr": 0.10852223090408275,
+          "max_drawdown": -0.5736074022517097,
+          "calmar": 0.18919252171097534,
+          "turnover": 6.901444981697165,
+          "position_changes": 29,
+          "time_in_market": 0.8519174041297936,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 1.2374378102276244,
+          "cagr": 0.12685033322363348,
+          "max_drawdown": -0.5835195265343877,
+          "calmar": 0.21738832627764343,
+          "turnover": 6.822210448097183,
+          "position_changes": 27,
+          "time_in_market": 0.9333333333333333,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.5942798511131155,
+          "cagr": 0.07161618164468453,
+          "max_drawdown": -0.5736074022517095,
+          "calmar": 0.12485226195400113,
+          "turnover": 12.145733868524278,
+          "position_changes": 57,
+          "time_in_market": 0.8519174041297936,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 16
+        },
+        "BOTH": {
+          "total_return": 0.7812338628200983,
+          "cagr": 0.08938302236847506,
+          "max_drawdown": -0.5835195265343879,
+          "calmar": 0.15317914534811639,
+          "turnover": 12.092426818670198,
+          "position_changes": 56,
+          "time_in_market": 0.9333333333333333,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 16
+        }
+      }
+    },
+    "10bps": {
+      "AXP": {
+        "V7_BASE": {
+          "total_return": 0.9931528692859146,
+          "cagr": 0.1076952757810663,
+          "max_drawdown": -0.2899315590364885,
+          "calmar": 0.37145068353015215,
+          "turnover": 5.978531158801683,
+          "position_changes": 22,
+          "time_in_market": 0.9238938053097345,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 1.5026467382725368,
+          "cagr": 0.14572546742257186,
+          "max_drawdown": -0.2899315590364885,
+          "calmar": 0.5026202318466201,
+          "turnover": 5.89215218115942,
+          "position_changes": 21,
+          "time_in_market": 0.9581120943952802,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.9777750575023858,
+          "cagr": 0.10642373166444274,
+          "max_drawdown": -0.28258993614737427,
+          "calmar": 0.3766012799866355,
+          "turnover": 12.394772361463033,
+          "position_changes": 54,
+          "time_in_market": 0.9238938053097345,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 17
+        },
+        "BOTH": {
+          "total_return": 1.4674251139924017,
+          "cagr": 0.14331980868617844,
+          "max_drawdown": -0.28258993614737427,
+          "calmar": 0.5071652962596492,
+          "turnover": 12.455204595342707,
+          "position_changes": 53,
+          "time_in_market": 0.9581120943952802,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 17
+        }
+      },
+      "PGR": {
+        "V7_BASE": {
+          "total_return": 0.7059866467563887,
+          "cagr": 0.08243236820056232,
+          "max_drawdown": -0.34619877378481145,
+          "calmar": 0.2381070484432167,
+          "turnover": 5.092773486639251,
+          "position_changes": 18,
+          "time_in_market": 0.9463126843657818,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.7059866467563887,
+          "cagr": 0.08243236820056232,
+          "max_drawdown": -0.34619877378481145,
+          "calmar": 0.2381070484432167,
+          "turnover": 5.092773486639251,
+          "position_changes": 18,
+          "time_in_market": 0.9463126843657818,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.639533427849978,
+          "cagr": 0.07607339086010412,
+          "max_drawdown": -0.3405832224973977,
+          "calmar": 0.2233621207242097,
+          "turnover": 10.736087391855992,
+          "position_changes": 51,
+          "time_in_market": 0.9463126843657818,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 17
+        },
+        "BOTH": {
+          "total_return": 0.639533427849978,
+          "cagr": 0.07607339086010412,
+          "max_drawdown": -0.3405832224973977,
+          "calmar": 0.2233621207242097,
+          "turnover": 10.736087391855992,
+          "position_changes": 51,
+          "time_in_market": 0.9463126843657818,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 17
+        }
+      },
+      "CB": {
+        "V7_BASE": {
+          "total_return": 0.4846479932611001,
+          "cagr": 0.0603539670318598,
+          "max_drawdown": -0.19986154783185694,
+          "calmar": 0.3019788833149409,
+          "turnover": 6.23275354691764,
+          "position_changes": 25,
+          "time_in_market": 0.8424778761061947,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.6459879058324178,
+          "cagr": 0.07670055558043476,
+          "max_drawdown": -0.19986154783185706,
+          "calmar": 0.3837684457690817,
+          "turnover": 6.803536940752213,
+          "position_changes": 27,
+          "time_in_market": 0.8424778761061947,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 2,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.3767358318072793,
+          "cagr": 0.04855404289363774,
+          "max_drawdown": -0.19133162272600424,
+          "calmar": 0.253769043516499,
+          "turnover": 14.352010194853236,
+          "position_changes": 67,
+          "time_in_market": 0.8424778761061947,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 24
+        },
+        "BOTH": {
+          "total_return": 0.526348696099566,
+          "cagr": 0.0647187218999381,
+          "max_drawdown": -0.19133162272600412,
+          "calmar": 0.3382541839025656,
+          "turnover": 14.922793588687812,
+          "position_changes": 69,
+          "time_in_market": 0.8424778761061947,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 2,
+          "pm_sell_exec_count": 24
+        }
+      },
+      "ICE": {
+        "V7_BASE": {
+          "total_return": 0.6690356483151889,
+          "cagr": 0.07892308423306038,
+          "max_drawdown": -0.35148765775989854,
+          "calmar": 0.22454012961949518,
+          "turnover": 3.9555975658376648,
+          "position_changes": 15,
+          "time_in_market": 0.9728613569321534,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.6690356483151889,
+          "cagr": 0.07892308423306038,
+          "max_drawdown": -0.35148765775989854,
+          "calmar": 0.22454012961949518,
+          "turnover": 3.9555975658376648,
+          "position_changes": 15,
+          "time_in_market": 0.9728613569321534,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.670707812254411,
+          "cagr": 0.07908331441346572,
+          "max_drawdown": -0.34890299890833976,
+          "calmar": 0.22666275343262865,
+          "turnover": 9.743340955944705,
+          "position_changes": 44,
+          "time_in_market": 0.9728613569321534,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 14
+        },
+        "BOTH": {
+          "total_return": 0.7147870337897866,
+          "cagr": 0.0832585976396043,
+          "max_drawdown": -0.34890299890833976,
+          "calmar": 0.23862964176320295,
+          "turnover": 9.760454817966817,
+          "position_changes": 44,
+          "time_in_market": 0.9728613569321534,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 1,
+          "pm_sell_exec_count": 14
+        }
+      },
+      "T": {
+        "V7_BASE": {
+          "total_return": -0.14545654733756397,
+          "cagr": -0.023040563450663853,
+          "max_drawdown": -0.5387695644558557,
+          "calmar": -0.042765154104304814,
+          "turnover": 1.0014405334375212,
+          "position_changes": 5,
+          "time_in_market": 0.9952802359882006,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": -0.14545654733756397,
+          "cagr": -0.023040563450663853,
+          "max_drawdown": -0.5387695644558557,
+          "calmar": -0.042765154104304814,
+          "turnover": 1.0014405334375212,
+          "position_changes": 5,
+          "time_in_market": 0.9952802359882006,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": -0.13618461136904325,
+          "cagr": -0.02147582888429911,
+          "max_drawdown": -0.5202989047381907,
+          "calmar": -0.04127594482464946,
+          "turnover": 6.969400852511588,
+          "position_changes": 35,
+          "time_in_market": 0.9952802359882006,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 14
+        },
+        "BOTH": {
+          "total_return": -0.13580322507548537,
+          "cagr": -0.021411772875701507,
+          "max_drawdown": -0.5202989047381907,
+          "calmar": -0.04115283096064886,
+          "turnover": 6.969836620936728,
+          "position_changes": 35,
+          "time_in_market": 0.9952802359882006,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 1,
+          "pm_sell_exec_count": 14
+        }
+      },
+      "TMUS": {
+        "V7_BASE": {
+          "total_return": 1.1275119346275768,
+          "cagr": 0.11846320443829095,
+          "max_drawdown": -0.31985810684808214,
+          "calmar": 0.37036173822711804,
+          "turnover": 2.7091687741551826,
+          "position_changes": 10,
+          "time_in_market": 0.9663716814159292,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.9834714165863117,
+          "cagr": 0.10689572481898701,
+          "max_drawdown": -0.31985810684808214,
+          "calmar": 0.33419732853529815,
+          "turnover": 2.986955099170055,
+          "position_changes": 12,
+          "time_in_market": 0.9663716814159292,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.9576885946147051,
+          "cagr": 0.10475009975271576,
+          "max_drawdown": -0.3114308216571283,
+          "calmar": 0.33635110100965226,
+          "turnover": 10.346110414634818,
+          "position_changes": 48,
+          "time_in_market": 0.9663716814159292,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 20
+        },
+        "BOTH": {
+          "total_return": 0.8251457520848278,
+          "cagr": 0.09332444514682159,
+          "max_drawdown": -0.3114308216571283,
+          "calmar": 0.2996634843341476,
+          "turnover": 10.623896739649691,
+          "position_changes": 50,
+          "time_in_market": 0.9663716814159292,
+          "hard_exit_count": 1,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 20
+        }
+      },
+      "CMCSA": {
+        "V7_BASE": {
+          "total_return": -0.35820907622346443,
+          "cagr": -0.06365159430550194,
+          "max_drawdown": -0.5355465472506349,
+          "calmar": -0.11885352381090619,
+          "turnover": 4.431808695013252,
+          "position_changes": 16,
+          "time_in_market": 0.6684365781710915,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": -0.24825170702671107,
+          "cagr": -0.04143361850898608,
+          "max_drawdown": -0.5355465472506349,
+          "calmar": -0.07736697906409098,
+          "turnover": 4.881221433905698,
+          "position_changes": 17,
+          "time_in_market": 0.768141592920354,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": -0.2475792512735161,
+          "cagr": -0.041306510214597525,
+          "max_drawdown": -0.37954809322096583,
+          "calmar": -0.10883076730555367,
+          "turnover": 8.688491027612038,
+          "position_changes": 38,
+          "time_in_market": 0.6684365781710915,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 11
+        },
+        "BOTH": {
+          "total_return": -0.2368609889566996,
+          "cagr": -0.03929348274043998,
+          "max_drawdown": -0.4662930441458616,
+          "calmar": -0.08426778660706022,
+          "turnover": 9.226476707882744,
+          "position_changes": 40,
+          "time_in_market": 0.768141592920354,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 5,
+          "pm_sell_exec_count": 12
+        }
+      },
+      "CL": {
+        "V7_BASE": {
+          "total_return": 0.2311860487053814,
+          "cagr": 0.03132258739064264,
+          "max_drawdown": -0.20612101018983187,
+          "calmar": 0.15196212827501374,
+          "turnover": 4.215448240351999,
+          "position_changes": 17,
+          "time_in_market": 0.9091445427728614,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.266293957648734,
+          "cagr": 0.03563169765617169,
+          "max_drawdown": -0.20612101018983187,
+          "calmar": 0.17286785865912388,
+          "turnover": 5.750639654184154,
+          "position_changes": 21,
+          "time_in_market": 0.9622418879056047,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.19831333449627264,
+          "cagr": 0.027191880017876757,
+          "max_drawdown": -0.19756261664463248,
+          "calmar": 0.13763676792552507,
+          "turnover": 8.078061055794263,
+          "position_changes": 35,
+          "time_in_market": 0.9091445427728614,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 10
+        },
+        "BOTH": {
+          "total_return": 0.2324838609389157,
+          "cagr": 0.0314837312087366,
+          "max_drawdown": -0.19756261664463248,
+          "calmar": 0.15936077251582592,
+          "turnover": 9.613252469626419,
+          "position_changes": 39,
+          "time_in_market": 0.9622418879056047,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 10
+        }
+      },
+      "MDLZ": {
+        "V7_BASE": {
+          "total_return": 0.0032575573562139137,
+          "cagr": 0.0004824098929818721,
+          "max_drawdown": -0.3223477361335031,
+          "calmar": 0.0014965512051310882,
+          "turnover": 8.44945786056079,
+          "position_changes": 34,
+          "time_in_market": 0.8607669616519174,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.027984702154055352,
+          "cagr": 0.0041013654930144305,
+          "max_drawdown": -0.3056457381985277,
+          "calmar": 0.013418690269289634,
+          "turnover": 8.453474851696702,
+          "position_changes": 34,
+          "time_in_market": 0.8607669616519174,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.013305679502087164,
+          "cagr": 0.0019620730921359186,
+          "max_drawdown": -0.3223477361335031,
+          "calmar": 0.00608682138013623,
+          "turnover": 9.330097102108398,
+          "position_changes": 38,
+          "time_in_market": 0.8607669616519174,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 2
+        },
+        "BOTH": {
+          "total_return": 0.038280478922039896,
+          "cagr": 0.0055863809456091484,
+          "max_drawdown": -0.3056457381985278,
+          "calmar": 0.018277306853794882,
+          "turnover": 9.334114093244311,
+          "position_changes": 38,
+          "time_in_market": 0.8607669616519174,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 2
+        }
+      },
+      "GIS": {
+        "V7_BASE": {
+          "total_return": -0.34930128210948685,
+          "cagr": -0.06173563090153533,
+          "max_drawdown": -0.4790369896489932,
+          "calmar": -0.12887445486573207,
+          "turnover": 8.297666917762887,
+          "position_changes": 28,
+          "time_in_market": 0.8920353982300885,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": -0.541752531795362,
+          "cagr": -0.10927648868584716,
+          "max_drawdown": -0.6427985781213694,
+          "calmar": -0.17000113628940577,
+          "turnover": 8.824499523627951,
+          "position_changes": 31,
+          "time_in_market": 0.9026548672566371,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": -0.29328278493194726,
+          "cagr": -0.050174286559919845,
+          "max_drawdown": -0.45162856528376316,
+          "calmar": -0.11109635310245443,
+          "turnover": 11.233052180382296,
+          "position_changes": 49,
+          "time_in_market": 0.8920353982300885,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 12
+        },
+        "BOTH": {
+          "total_return": -0.5184683551450004,
+          "cagr": -0.10270566683526461,
+          "max_drawdown": -0.6362188817211127,
+          "calmar": -0.16143134035478965,
+          "turnover": 11.828015467335552,
+          "position_changes": 52,
+          "time_in_market": 0.9026548672566371,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 12
+        }
+      },
+      "MMM": {
+        "V7_BASE": {
+          "total_return": 0.19107749893848203,
+          "cagr": 0.026269701102508813,
+          "max_drawdown": -0.5871316253393671,
+          "calmar": 0.044742439290891035,
+          "turnover": 1.8318121534146907,
+          "position_changes": 8,
+          "time_in_market": 0.9238938053097345,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.19107749893848203,
+          "cagr": 0.026269701102508813,
+          "max_drawdown": -0.5871316253393671,
+          "calmar": 0.044742439290891035,
+          "turnover": 1.8318121534146907,
+          "position_changes": 8,
+          "time_in_market": 0.9238938053097345,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.017066376515437076,
+          "cagr": 0.0025126520388023543,
+          "max_drawdown": -0.5803343681581505,
+          "calmar": 0.004329662650821355,
+          "turnover": 6.496724556447991,
+          "position_changes": 33,
+          "time_in_market": 0.9238938053097345,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 14
+        },
+        "BOTH": {
+          "total_return": 0.017066376515437076,
+          "cagr": 0.0025126520388023543,
+          "max_drawdown": -0.5803343681581505,
+          "calmar": 0.004329662650821355,
+          "turnover": 6.496724556447991,
+          "position_changes": 33,
+          "time_in_market": 0.9238938053097345,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 14
+        }
+      },
+      "FDX": {
+        "V7_BASE": {
+          "total_return": 0.7027140857659715,
+          "cagr": 0.08212419578837893,
+          "max_drawdown": -0.5471973178927159,
+          "calmar": 0.15008150278338955,
+          "turnover": 5.30005968362737,
+          "position_changes": 20,
+          "time_in_market": 0.8442477876106195,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 1.6382530407539462,
+          "cagr": 0.1547262071849591,
+          "max_drawdown": -0.5471973178927158,
+          "calmar": 0.28276126750916375,
+          "turnover": 5.4268857643444575,
+          "position_changes": 21,
+          "time_in_market": 0.8973451327433628,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.7280404838073069,
+          "cagr": 0.08449611622289632,
+          "max_drawdown": -0.5270535600526954,
+          "calmar": 0.16031789295654944,
+          "turnover": 10.198658100099074,
+          "position_changes": 47,
+          "time_in_market": 0.8442477876106195,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 14
+        },
+        "BOTH": {
+          "total_return": 1.5552770583078739,
+          "cagr": 0.1492669583102939,
+          "max_drawdown": -0.5270535600526953,
+          "calmar": 0.28321022686075786,
+          "turnover": 10.991468347173447,
+          "position_changes": 50,
+          "time_in_market": 0.8973451327433628,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 14
+        }
+      },
+      "EMR": {
+        "V7_BASE": {
+          "total_return": 1.0474194780743251,
+          "cagr": 0.11211665054794095,
+          "max_drawdown": -0.4823681004371778,
+          "calmar": 0.23242965371534283,
+          "turnover": 1.9808267766846883,
+          "position_changes": 9,
+          "time_in_market": 0.9899705014749263,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 1.0474194780743251,
+          "cagr": 0.11211665054794095,
+          "max_drawdown": -0.4823681004371778,
+          "calmar": 0.23242965371534283,
+          "turnover": 1.9808267766846883,
+          "position_changes": 9,
+          "time_in_market": 0.9899705014749263,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 1.0396021986528101,
+          "cagr": 0.11148593694749875,
+          "max_drawdown": -0.4823681004371778,
+          "calmar": 0.23112211783170838,
+          "turnover": 7.666404262203294,
+          "position_changes": 36,
+          "time_in_market": 0.9899705014749263,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 14
+        },
+        "BOTH": {
+          "total_return": 1.0396021986528101,
+          "cagr": 0.11148593694749875,
+          "max_drawdown": -0.4823681004371778,
+          "calmar": 0.23112211783170838,
+          "turnover": 7.666404262203294,
+          "position_changes": 36,
+          "time_in_market": 0.9899705014749263,
+          "hard_exit_count": 0,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 14
+        }
+      },
+      "DUK": {
+        "V7_BASE": {
+          "total_return": 0.12980989302544876,
+          "cagr": 0.01826406886514187,
+          "max_drawdown": -0.24220614753335634,
+          "calmar": 0.0754071234406904,
+          "turnover": 11.400687647737252,
+          "position_changes": 45,
+          "time_in_market": 0.8702064896755162,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.12980989302544876,
+          "cagr": 0.01826406886514187,
+          "max_drawdown": -0.24220614753335634,
+          "calmar": 0.0754071234406904,
+          "turnover": 11.400687647737252,
+          "position_changes": 45,
+          "time_in_market": 0.8702064896755162,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.13934999447651064,
+          "cagr": 0.01953457708720019,
+          "max_drawdown": -0.24220614753335634,
+          "calmar": 0.08065268898474144,
+          "turnover": 14.496278075390283,
+          "position_changes": 63,
+          "time_in_market": 0.8702064896755162,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 8
+        },
+        "BOTH": {
+          "total_return": 0.13934999447651064,
+          "cagr": 0.01953457708720019,
+          "max_drawdown": -0.24220614753335634,
+          "calmar": 0.08065268898474144,
+          "turnover": 14.496278075390283,
+          "position_changes": 63,
+          "time_in_market": 0.8702064896755162,
+          "hard_exit_count": 5,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 8
+        }
+      },
+      "D": {
+        "V7_BASE": {
+          "total_return": -0.15301475045251367,
+          "cagr": -0.024326822444965757,
+          "max_drawdown": -0.33374281223442204,
+          "calmar": -0.07289092544674346,
+          "turnover": 6.804168001144042,
+          "position_changes": 28,
+          "time_in_market": 0.95929203539823,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": -0.2655755016356137,
+          "cagr": -0.0447420400938483,
+          "max_drawdown": -0.5260965213175051,
+          "calmar": -0.08504530686080318,
+          "turnover": 7.047215466022175,
+          "position_changes": 29,
+          "time_in_market": 0.9634218289085545,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": -0.13614496340438909,
+          "cagr": -0.02146916866018933,
+          "max_drawdown": -0.32595192288961516,
+          "calmar": -0.06586605923309723,
+          "turnover": 10.863177552423767,
+          "position_changes": 48,
+          "time_in_market": 0.95929203539823,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 11
+        },
+        "BOTH": {
+          "total_return": -0.24760075278541638,
+          "cagr": -0.041310572955363,
+          "max_drawdown": -0.520554923222456,
+          "calmar": -0.07935872107333654,
+          "turnover": 11.486360402473984,
+          "position_changes": 51,
+          "time_in_market": 0.9634218289085545,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 3,
+          "pm_sell_exec_count": 11
+        }
+      },
+      "EXC": {
+        "V7_BASE": {
+          "total_return": 0.33717798642190955,
+          "cagr": 0.04403053354770203,
+          "max_drawdown": -0.21953751644440933,
+          "calmar": 0.20056040653466772,
+          "turnover": 9.331652380703114,
+          "position_changes": 34,
+          "time_in_market": 0.831858407079646,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.3874917719141462,
+          "cagr": 0.04976484738302078,
+          "max_drawdown": -0.21953751644440966,
+          "calmar": 0.2266803787753608,
+          "turnover": 9.452666888288014,
+          "position_changes": 34,
+          "time_in_market": 0.831858407079646,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 1,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.40168874757846407,
+          "cagr": 0.05135083086179271,
+          "max_drawdown": -0.19069151418042407,
+          "calmar": 0.2692874461797328,
+          "turnover": 14.336091275318607,
+          "position_changes": 59,
+          "time_in_market": 0.831858407079646,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 13
+        },
+        "BOTH": {
+          "total_return": 0.45442986932042273,
+          "cagr": 0.05712535126274143,
+          "max_drawdown": -0.19069151418042374,
+          "calmar": 0.2995694460147398,
+          "turnover": 14.457105782903508,
+          "position_changes": 59,
+          "time_in_market": 0.831858407079646,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 1,
+          "pm_sell_exec_count": 13
+        }
+      },
+      "SLB": {
+        "V7_BASE": {
+          "total_return": 0.10533814597887914,
+          "cagr": 0.014962751341034641,
+          "max_drawdown": -0.5009137967007085,
+          "calmar": 0.029870910802592153,
+          "turnover": 7.117473418742351,
+          "position_changes": 28,
+          "time_in_market": 0.8772861356932153,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.35910935412378864,
+          "cagr": 0.04655228395963418,
+          "max_drawdown": -0.5009137967007086,
+          "calmar": 0.0929347210363398,
+          "turnover": 7.008483756880728,
+          "position_changes": 28,
+          "time_in_market": 0.9132743362831859,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 1,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.16773494464219896,
+          "cagr": 0.02326189895925923,
+          "max_drawdown": -0.4746235782760563,
+          "calmar": 0.0490112586562848,
+          "turnover": 10.465021320704874,
+          "position_changes": 47,
+          "time_in_market": 0.8772861356932153,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 11
+        },
+        "BOTH": {
+          "total_return": 0.41698031983354644,
+          "cagr": 0.053043863106624345,
+          "max_drawdown": -0.4747347654198092,
+          "calmar": 0.11173368156367802,
+          "turnover": 10.530997761127063,
+          "position_changes": 48,
+          "time_in_market": 0.9132743362831859,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 2,
+          "pm_sell_exec_count": 12
+        }
+      },
+      "EOG": {
+        "V7_BASE": {
+          "total_return": 0.8551348240705003,
+          "cagr": 0.09597002876026695,
+          "max_drawdown": -0.37940368185395423,
+          "calmar": 0.25294965059724744,
+          "turnover": 7.66375207306129,
+          "position_changes": 27,
+          "time_in_market": 0.9156342182890855,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 0.8551348240705003,
+          "cagr": 0.09597002876026695,
+          "max_drawdown": -0.37940368185395423,
+          "calmar": 0.25294965059724744,
+          "turnover": 7.66375207306129,
+          "position_changes": 27,
+          "time_in_market": 0.9156342182890855,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.8694393989633169,
+          "cagr": 0.09721914345303961,
+          "max_drawdown": -0.3518254701818032,
+          "calmar": 0.2763277582001165,
+          "turnover": 13.140447140814661,
+          "position_changes": 59,
+          "time_in_market": 0.9156342182890855,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 17
+        },
+        "BOTH": {
+          "total_return": 0.8694393989633169,
+          "cagr": 0.09721914345303961,
+          "max_drawdown": -0.3518254701818032,
+          "calmar": 0.2763277582001165,
+          "turnover": 13.140447140814661,
+          "position_changes": 59,
+          "time_in_market": 0.9156342182890855,
+          "hard_exit_count": 3,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 17
+        }
+      },
+      "F": {
+        "V7_BASE": {
+          "total_return": 0.936821506545112,
+          "cagr": 0.10299586386565807,
+          "max_drawdown": -0.6096836369491295,
+          "calmar": 0.16893329199558588,
+          "turnover": 5.454279268767989,
+          "position_changes": 23,
+          "time_in_market": 0.8365781710914454,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 1.2482487051221502,
+          "cagr": 0.12765610275297656,
+          "max_drawdown": -0.6278617947128435,
+          "calmar": 0.20331879376632697,
+          "turnover": 5.434857318012823,
+          "position_changes": 23,
+          "time_in_market": 0.9380530973451328,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.9865869331445185,
+          "cagr": 0.10715338441618116,
+          "max_drawdown": -0.6096836369491294,
+          "calmar": 0.175752436054179,
+          "turnover": 8.461605516779446,
+          "position_changes": 38,
+          "time_in_market": 0.8365781710914454,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 7
+        },
+        "BOTH": {
+          "total_return": 1.277697820189498,
+          "cagr": 0.12983441720528988,
+          "max_drawdown": -0.6278617947128438,
+          "calmar": 0.20678821087476806,
+          "turnover": 8.53034128999541,
+          "position_changes": 38,
+          "time_in_market": 0.9380530973451328,
+          "hard_exit_count": 2,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 7
+        }
+      },
+      "GM": {
+        "V7_BASE": {
+          "total_return": 0.9964980458767654,
+          "cagr": 0.10797077119026022,
+          "max_drawdown": -0.5741158201049803,
+          "calmar": 0.18806444171929831,
+          "turnover": 6.900491395000514,
+          "position_changes": 29,
+          "time_in_market": 0.8519174041297936,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 0
+        },
+        "BUY_ONLY": {
+          "total_return": 1.2299831143350164,
+          "cagr": 0.12629277780382409,
+          "max_drawdown": -0.5840242544567107,
+          "calmar": 0.2162457754794929,
+          "turnover": 6.821239260518139,
+          "position_changes": 27,
+          "time_in_market": 0.9333333333333333,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 0
+        },
+        "SELL_ONLY": {
+          "total_return": 0.5849201332623437,
+          "cagr": 0.07068088012167828,
+          "max_drawdown": -0.5741158201049803,
+          "calmar": 0.1231125805046687,
+          "turnover": 12.144320069727419,
+          "position_changes": 56,
+          "time_in_market": 0.8519174041297936,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 0,
+          "pm_sell_exec_count": 16
+        },
+        "BOTH": {
+          "total_return": 0.7707784368105333,
+          "cagr": 0.08843238391571284,
+          "max_drawdown": -0.5840242544567106,
+          "calmar": 0.15141902624913617,
+          "turnover": 12.090530378246497,
+          "position_changes": 55,
+          "time_in_market": 0.9333333333333333,
+          "hard_exit_count": 4,
+          "pm_buy_exec_count": 4,
+          "pm_sell_exec_count": 16
+        }
+      }
+    }
+  }
+}
