@@ -1,0 +1,372 @@
+{
+  "study": "SLTD_ASHARE50_INTEGRATED_RISK_V1",
+  "market": "China A-share main board",
+  "formal_window": [
+    "2018-01-02",
+    "2026-09-30"
+  ],
+  "fetch_start": "2016-01-01",
+  "fetch_end_exclusive": "2026-10-01",
+  "source": "Yahoo Finance via yfinance",
+  "price_mode": "auto_adjust=True",
+  "exclusions": [
+    "ST/*ST",
+    "STAR Market 688",
+    "ChiNext 300",
+    "BSE",
+    "recent IPOs without >=120-bar pre-2018 warmup"
+  ],
+  "role_rule": "35 DEVELOPMENT + 15 FRESH_OOS, frozen before any strategy result",
+  "symbols": [
+    {
+      "code": "600036",
+      "yahoo": "600036.SS",
+      "name": "招商银行",
+      "sector": "银行",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "601398",
+      "yahoo": "601398.SS",
+      "name": "工商银行",
+      "sector": "银行",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "601288",
+      "yahoo": "601288.SS",
+      "name": "农业银行",
+      "sector": "银行",
+      "role": "FRESH_OOS"
+    },
+    {
+      "code": "601166",
+      "yahoo": "601166.SS",
+      "name": "兴业银行",
+      "sector": "银行",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "601318",
+      "yahoo": "601318.SS",
+      "name": "中国平安",
+      "sector": "保险",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "601601",
+      "yahoo": "601601.SS",
+      "name": "中国太保",
+      "sector": "保险",
+      "role": "FRESH_OOS"
+    },
+    {
+      "code": "600030",
+      "yahoo": "600030.SS",
+      "name": "中信证券",
+      "sector": "证券",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "601688",
+      "yahoo": "601688.SS",
+      "name": "华泰证券",
+      "sector": "证券",
+      "role": "FRESH_OOS"
+    },
+    {
+      "code": "600519",
+      "yahoo": "600519.SS",
+      "name": "贵州茅台",
+      "sector": "食品饮料",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "000858",
+      "yahoo": "000858.SZ",
+      "name": "五粮液",
+      "sector": "食品饮料",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "000568",
+      "yahoo": "000568.SZ",
+      "name": "泸州老窖",
+      "sector": "食品饮料",
+      "role": "FRESH_OOS"
+    },
+    {
+      "code": "600887",
+      "yahoo": "600887.SS",
+      "name": "伊利股份",
+      "sector": "食品饮料",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "000895",
+      "yahoo": "000895.SZ",
+      "name": "双汇发展",
+      "sector": "食品饮料",
+      "role": "FRESH_OOS"
+    },
+    {
+      "code": "002714",
+      "yahoo": "002714.SZ",
+      "name": "牧原股份",
+      "sector": "农林牧渔",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "000333",
+      "yahoo": "000333.SZ",
+      "name": "美的集团",
+      "sector": "家用电器",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "000651",
+      "yahoo": "000651.SZ",
+      "name": "格力电器",
+      "sector": "家用电器",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "600690",
+      "yahoo": "600690.SS",
+      "name": "海尔智家",
+      "sector": "家用电器",
+      "role": "FRESH_OOS"
+    },
+    {
+      "code": "601888",
+      "yahoo": "601888.SS",
+      "name": "中国中免",
+      "sector": "商贸零售",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "600104",
+      "yahoo": "600104.SS",
+      "name": "上汽集团",
+      "sector": "汽车",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "002594",
+      "yahoo": "002594.SZ",
+      "name": "比亚迪",
+      "sector": "汽车",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "601633",
+      "yahoo": "601633.SS",
+      "name": "长城汽车",
+      "sector": "汽车",
+      "role": "FRESH_OOS"
+    },
+    {
+      "code": "000625",
+      "yahoo": "000625.SZ",
+      "name": "长安汽车",
+      "sector": "汽车",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "002415",
+      "yahoo": "002415.SZ",
+      "name": "海康威视",
+      "sector": "电子/计算机",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "000063",
+      "yahoo": "000063.SZ",
+      "name": "中兴通讯",
+      "sector": "通信设备",
+      "role": "FRESH_OOS"
+    },
+    {
+      "code": "000725",
+      "yahoo": "000725.SZ",
+      "name": "京东方A",
+      "sector": "电子",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "002475",
+      "yahoo": "002475.SZ",
+      "name": "立讯精密",
+      "sector": "电子",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "002241",
+      "yahoo": "002241.SZ",
+      "name": "歌尔股份",
+      "sector": "电子",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "600460",
+      "yahoo": "600460.SS",
+      "name": "士兰微",
+      "sector": "半导体",
+      "role": "FRESH_OOS"
+    },
+    {
+      "code": "600031",
+      "yahoo": "600031.SS",
+      "name": "三一重工",
+      "sector": "机械设备",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "601766",
+      "yahoo": "601766.SS",
+      "name": "中国中车",
+      "sector": "机械设备",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "000338",
+      "yahoo": "000338.SZ",
+      "name": "潍柴动力",
+      "sector": "汽车零部件",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "601006",
+      "yahoo": "601006.SS",
+      "name": "大秦铁路",
+      "sector": "交通运输",
+      "role": "FRESH_OOS"
+    },
+    {
+      "code": "600009",
+      "yahoo": "600009.SS",
+      "name": "上海机场",
+      "sector": "交通运输",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "601857",
+      "yahoo": "601857.SS",
+      "name": "中国石油",
+      "sector": "石油石化",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "600028",
+      "yahoo": "600028.SS",
+      "name": "中国石化",
+      "sector": "石油石化",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "601088",
+      "yahoo": "601088.SS",
+      "name": "中国神华",
+      "sector": "煤炭",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "601899",
+      "yahoo": "601899.SS",
+      "name": "紫金矿业",
+      "sector": "有色金属",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "600309",
+      "yahoo": "600309.SS",
+      "name": "万华化学",
+      "sector": "基础化工",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "600019",
+      "yahoo": "600019.SS",
+      "name": "宝钢股份",
+      "sector": "钢铁",
+      "role": "FRESH_OOS"
+    },
+    {
+      "code": "601012",
+      "yahoo": "601012.SS",
+      "name": "隆基绿能",
+      "sector": "电力设备",
+      "role": "FRESH_OOS"
+    },
+    {
+      "code": "600900",
+      "yahoo": "600900.SS",
+      "name": "长江电力",
+      "sector": "公用事业",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "600886",
+      "yahoo": "600886.SS",
+      "name": "国投电力",
+      "sector": "公用事业",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "601985",
+      "yahoo": "601985.SS",
+      "name": "中国核电",
+      "sector": "公用事业",
+      "role": "FRESH_OOS"
+    },
+    {
+      "code": "600276",
+      "yahoo": "600276.SS",
+      "name": "恒瑞医药",
+      "sector": "医药生物",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "000538",
+      "yahoo": "000538.SZ",
+      "name": "云南白药",
+      "sector": "医药生物",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "600436",
+      "yahoo": "600436.SS",
+      "name": "片仔癀",
+      "sector": "医药生物",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "000661",
+      "yahoo": "000661.SZ",
+      "name": "长春高新",
+      "sector": "医药生物",
+      "role": "FRESH_OOS"
+    },
+    {
+      "code": "601668",
+      "yahoo": "601668.SS",
+      "name": "中国建筑",
+      "sector": "建筑装饰",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "600048",
+      "yahoo": "600048.SS",
+      "name": "保利发展",
+      "sector": "房地产",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "code": "600050",
+      "yahoo": "600050.SS",
+      "name": "中国联通",
+      "sector": "通信运营",
+      "role": "FRESH_OOS"
+    }
+  ]
+}
