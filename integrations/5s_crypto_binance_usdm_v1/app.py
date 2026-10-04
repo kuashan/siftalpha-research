@@ -377,7 +377,7 @@ def render_index(selected_symbol: str | None = None) -> str:
                 <div class="chart-head">
                   <div class="chart-identity">
                     <small>行情图 · V7 交互</small>
-                    <strong>{html.escape(base)} / USDT · U本位永续 · {_TIMEFRAME_LABELS.get(timeframe, timeframe)}</strong>
+                    <strong>{html.escape(base)} / USDT · {_TIMEFRAME_LABELS.get(timeframe, timeframe)}</strong>
                     <span class="chart-candle-meta">移动或点击 K 线查看细节</span>
                   </div>
                   <div class="live-price" aria-live="polite">
