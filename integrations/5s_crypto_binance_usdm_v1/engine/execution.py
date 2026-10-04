@@ -6,8 +6,9 @@ from threading import RLock
 import time
 from typing import Any
 
-from engine.scheduler import M3Decision, TerminalDecisionError
+from engine.scheduler import TerminalDecisionError
 from exchange.binance_usdm_testnet import floor_to_step
+from strategy.registry import STRATEGY_5S, StrategyStep, get_spec
 
 
 class ExecutionBlocked(TerminalDecisionError):
@@ -36,6 +37,12 @@ def _float(value: Any, default: float = 0.0) -> float:
 
 
 class M3Executor:
+    """Strategy-agnostic Binance execution.
+
+    Strategy adapters decide target position fractions. This class only turns
+    target-position deltas into Binance orders and persists the resulting state.
+    """
+
     def __init__(self, store, *, pnl_refresh_seconds: float = 60.0):
         self.store = store
         self.pnl_refresh_seconds = max(10.0, float(pnl_refresh_seconds))
@@ -48,9 +55,24 @@ class M3Executor:
 
     @staticmethod
     def _client_order_id(symbol: str, bar_open_time: int, action: str) -> str:
+        """Backward-compatible 5s V1 ID helper retained for old ledgers/tests."""
         base = symbol[:-4] if symbol.endswith("USDT") else symbol
         code = {"BUY_60": "B60", "TOPUP_TO_100": "B40", "SELL_ALL": "S100"}[action]
         value = f"5sv1-{base}-{int(bar_open_time)}-{code}"
+        if len(value) > 36:
+            raise RuntimeError("clientOrderId too long")
+        return value
+
+    @staticmethod
+    def _strategy_client_order_id(
+        strategy_id: str,
+        symbol: str,
+        bar_open_time: int,
+        order_code: str,
+    ) -> str:
+        spec = get_spec(strategy_id)
+        base = symbol[:-4] if symbol.endswith("USDT") else symbol
+        value = f"{spec.order_prefix}-{base}-{int(bar_open_time)}-{order_code}"
         if len(value) > 36:
             raise RuntimeError("clientOrderId too long")
         return value
@@ -99,12 +121,23 @@ class M3Executor:
         side: str,
         quantity: Decimal,
         reference_price: Decimal,
+        strategy_id: str,
+        target_fraction_after: float,
+        strategy_state_after: dict[str, object],
     ) -> dict[str, Any]:
         existing = self._recover_existing(adapter, symbol, client_id)
         if existing is not None:
             return existing
+
         inserted = self.store.begin_order(
-            symbol, client_id, side=side, quantity=float(quantity), price=float(reference_price)
+            symbol,
+            client_id,
+            side=side,
+            quantity=float(quantity),
+            price=float(reference_price),
+            strategy_id=strategy_id,
+            target_fraction_after=target_fraction_after,
+            strategy_state_after=strategy_state_after,
         )
         if not inserted:
             existing = self._recover_existing(adapter, symbol, client_id)
@@ -139,7 +172,15 @@ class M3Executor:
             raise ExecutionBlocked(f"请求杠杆 {leverage} 倍超过 {symbol} 当前允许的 {maximum} 倍")
         adapter.set_leverage(symbol, leverage)
 
-    def _buy_quantity(self, *, adapter, symbol: str, margin_usdt: Decimal, leverage: int, reference_price: Decimal) -> Decimal:
+    def _buy_quantity(
+        self,
+        *,
+        adapter,
+        symbol: str,
+        margin_usdt: Decimal,
+        leverage: int,
+        reference_price: Decimal,
+    ) -> Decimal:
         if reference_price <= 0:
             raise ExecutionBlocked("当前参考价格无效")
         available = Decimal(str(adapter.available_usdt()))
@@ -158,113 +199,166 @@ class M3Executor:
             raise ExecutionBlocked("策略资金过小，无法达到最小名义价值")
         return quantity
 
-    def execute(self, symbol: str, decision: M3Decision, config: dict[str, Any], runtime: dict[str, Any], adapter, context: dict[str, Any]) -> ExecutionOutcome:
+    @staticmethod
+    def _legacy_steps(decision, runtime: dict[str, Any]) -> tuple[StrategyStep, ...]:
+        """Convert the old 5s-only M3Decision for compatibility with frozen tests."""
+        fraction = float(runtime.get("current_fraction") or 0.0)
+        state = dict(runtime.get("strategy_state") or {})
+        if not state:
+            if runtime.get("entry_signal_open_time") is not None:
+                state["entry_signal_open_time"] = int(runtime["entry_signal_open_time"])
+            if runtime.get("entry_family"):
+                state["entry_family"] = runtime["entry_family"]
+            state["c_confirmed"] = bool(runtime.get("c_confirmed"))
+
+        out: list[StrategyStep] = []
+        for action in getattr(decision, "actions", ()):
+            if action == "BUY_60":
+                family = "A" if str(decision.signal).startswith("BUY_A") else "B"
+                state = {
+                    "c_confirmed": False,
+                    "entry_signal_open_time": int(decision.bar_open_time),
+                    "entry_family": family,
+                }
+                fraction = 0.60
+                out.append(StrategyStep("5S_BUY_60", "B60", fraction, (f"BUY_{family}",), dict(state)))
+            elif action == "TOPUP_TO_100":
+                state["c_confirmed"] = True
+                fraction = 1.0
+                out.append(StrategyStep("5S_TOPUP_TO_100", "B40", fraction, ("BUY_C",), dict(state)))
+            elif action == "SELL_ALL":
+                fraction = 0.0
+                state = {}
+                out.append(StrategyStep("5S_SELL_ALL", "S100", fraction, (str(decision.signal),), {}))
+            else:
+                raise RuntimeError(f"unknown legacy action: {action}")
+        return tuple(out)
+
+    def execute(self, symbol: str, decision, config: dict[str, Any], runtime: dict[str, Any], adapter, context: dict[str, Any]) -> ExecutionOutcome:
         with self._lock:
             fresh_config = self.store.get_symbol_configs().get(symbol)
             if not fresh_config or not bool(fresh_config["enabled"]):
                 raise ExecutionBlocked("该币种已经停止，取消本次自动交易")
 
-            signal_bar = int(decision.bar_open_time or context["signal_bar_open_time"])
+            strategy_id = str(getattr(decision, "strategy_id", None) or STRATEGY_5S)
+            if str(fresh_config.get("strategy_id") or STRATEGY_5S) != strategy_id:
+                raise ExecutionBlocked("策略已经切换，取消旧策略的待执行动作")
+
+            signal_bar = int(getattr(decision, "bar_open_time", None) or context["signal_bar_open_time"])
             execution_bar = int(context["execution_bar_open_time"])
             reference_price = Decimal(str(context["reference_price"]))
             leverage = int(fresh_config["leverage"])
             budget = Decimal(str(fresh_config["capital_budget_usdt"]))
+            steps = tuple(getattr(decision, "steps", ()) or self._legacy_steps(decision, runtime))
             order_ids: list[str] = []
 
-            for action in decision.actions:
+            for step in steps:
                 fresh_runtime = self.store.get_runtime_states()[symbol]
-                client_id = self._client_order_id(symbol, signal_bar, action)
+                current_fraction = min(max(float(fresh_runtime.get("current_fraction") or 0.0), 0.0), 1.0)
+                target_fraction = min(max(float(step.target_fraction), 0.0), 1.0)
+                delta = target_fraction - current_fraction
+                client_id = self._strategy_client_order_id(
+                    strategy_id, symbol, signal_bar, str(step.order_code)
+                )
+
                 recovered = self._recover_existing(adapter, symbol, client_id)
                 if recovered is not None:
                     order_id = str(_first(recovered, "orderId", "order_id", "binance_order_id", default=client_id))
-                    if action == "BUY_60":
+                    if target_fraction > current_fraction:
                         self.store.set_accounting_start_if_missing(symbol, execution_bar)
-                        family = "A" if decision.signal.startswith("BUY_A") else "B"
-                        self.store.set_execution_position_state(
-                            symbol, current_fraction=0.60, c_confirmed=False,
-                            entry_signal_open_time=signal_bar, entry_family=family, last_order_id=order_id,
-                        )
-                    elif action == "TOPUP_TO_100":
-                        self.store.set_execution_position_state(
-                            symbol, current_fraction=1.0, c_confirmed=True,
-                            entry_signal_open_time=fresh_runtime.get("entry_signal_open_time"),
-                            entry_family=fresh_runtime.get("entry_family"), last_order_id=order_id,
-                        )
-                    else:
-                        self.store.set_execution_position_state(
-                            symbol, current_fraction=0.0, c_confirmed=False,
-                            entry_signal_open_time=None, entry_family=None, last_order_id=order_id,
-                        )
+                    self.store.set_strategy_execution_state(
+                        symbol,
+                        current_fraction=target_fraction,
+                        strategy_state=dict(step.state_after),
+                        last_order_id=order_id,
+                    )
                     order_ids.append(order_id)
+                    continue
+
+                if abs(delta) <= 1e-12:
+                    self.store.set_strategy_execution_state(
+                        symbol,
+                        current_fraction=target_fraction,
+                        strategy_state=dict(step.state_after),
+                        last_order_id=fresh_runtime.get("last_order_id"),
+                    )
                     continue
 
                 position_amount = Decimal(str(adapter.position_amount(symbol)))
                 if position_amount < 0:
-                    raise ExecutionBlocked("检测到空头持仓；当前策略只允许做多，已阻止自动交易")
+                    raise ExecutionBlocked("检测到空头持仓；当前框架只允许做多，已阻止自动交易")
 
-                if action in ("BUY_60", "TOPUP_TO_100"):
-                    if action == "BUY_60" and position_amount != 0:
-                        raise ExecutionBlocked("策略记录为空仓，但币安已有持仓；等待 M4 对账，不自动加仓")
-                    if action == "TOPUP_TO_100" and position_amount <= 0:
-                        raise ExecutionBlocked("策略准备补仓，但币安没有对应多头持仓；已阻止自动交易")
+                if delta > 0:
+                    if current_fraction <= 1e-12 and position_amount != 0:
+                        raise ExecutionBlocked("策略记录为空仓，但币安已有持仓；等待恢复对账，不自动加仓")
+                    if current_fraction > 1e-12 and position_amount <= 0:
+                        raise ExecutionBlocked("策略准备加仓，但币安没有对应多头持仓；已阻止自动交易")
                     self._validate_buy_environment(adapter, symbol, leverage)
-                    margin = budget * (Decimal("0.60") if action == "BUY_60" else Decimal("0.40"))
+                    margin = budget * Decimal(str(delta))
                     quantity = self._buy_quantity(
-                        adapter=adapter, symbol=symbol, margin_usdt=margin,
-                        leverage=leverage, reference_price=reference_price,
+                        adapter=adapter,
+                        symbol=symbol,
+                        margin_usdt=margin,
+                        leverage=leverage,
+                        reference_price=reference_price,
                     )
-                    order = self._submit_market(
-                        adapter=adapter, symbol=symbol, client_id=client_id,
-                        side="BUY", quantity=quantity, reference_price=reference_price,
-                    )
-                    order_id = str(_first(order, "orderId", "order_id", default=client_id))
-                    self.store.set_accounting_start_if_missing(symbol, execution_bar)
-                    if action == "BUY_60":
-                        family = "A" if decision.signal.startswith("BUY_A") else "B"
-                        self.store.set_execution_position_state(
-                            symbol, current_fraction=0.60, c_confirmed=False,
-                            entry_signal_open_time=signal_bar, entry_family=family, last_order_id=order_id,
-                        )
-                    else:
-                        self.store.set_execution_position_state(
-                            symbol, current_fraction=1.0, c_confirmed=True,
-                            entry_signal_open_time=fresh_runtime.get("entry_signal_open_time"),
-                            entry_family=fresh_runtime.get("entry_family"), last_order_id=order_id,
-                        )
-                    order_ids.append(order_id)
-
-                elif action == "SELL_ALL":
-                    if position_amount == 0:
-                        self.store.set_execution_position_state(
-                            symbol, current_fraction=0.0, c_confirmed=False,
-                            entry_signal_open_time=None, entry_family=None, last_order_id=None,
-                        )
-                        continue
+                    side = "BUY"
+                else:
+                    if current_fraction <= 1e-12:
+                        raise ExecutionBlocked("策略准备减仓，但本地策略仓位已经为空")
+                    if position_amount <= 0:
+                        if target_fraction <= 1e-12:
+                            self.store.set_strategy_execution_state(
+                                symbol,
+                                current_fraction=0.0,
+                                strategy_state=dict(step.state_after),
+                                last_order_id=fresh_runtime.get("last_order_id"),
+                            )
+                            continue
+                        raise ExecutionBlocked("策略准备减仓，但币安没有对应多头持仓；已阻止自动交易")
                     rules = adapter.symbol_rules(symbol)
                     if rules.step_size is None:
                         raise ExecutionBlocked("交易所没有返回有效的平仓数量规则")
-                    quantity = floor_to_step(abs(position_amount), rules.step_size)
+                    if target_fraction <= 1e-12:
+                        raw_quantity = abs(position_amount)
+                    else:
+                        ratio = Decimal(str((current_fraction - target_fraction) / current_fraction))
+                        raw_quantity = abs(position_amount) * ratio
+                    quantity = floor_to_step(raw_quantity, rules.step_size)
                     if quantity <= 0:
-                        raise ExecutionBlocked("当前持仓小于交易所最小可平数量")
-                    order = self._submit_market(
-                        adapter=adapter, symbol=symbol, client_id=client_id,
-                        side="SELL", quantity=quantity, reference_price=reference_price,
-                    )
-                    order_id = str(_first(order, "orderId", "order_id", default=client_id))
-                    self.store.set_execution_position_state(
-                        symbol, current_fraction=0.0, c_confirmed=False,
-                        entry_signal_open_time=None, entry_family=None, last_order_id=order_id,
-                    )
-                    order_ids.append(order_id)
-                else:
-                    raise RuntimeError(f"unknown M3 action: {action}")
+                        raise ExecutionBlocked("当前减仓数量小于交易所最小可执行数量")
+                    side = "SELL"
+
+                order = self._submit_market(
+                    adapter=adapter,
+                    symbol=symbol,
+                    client_id=client_id,
+                    side=side,
+                    quantity=quantity,
+                    reference_price=reference_price,
+                    strategy_id=strategy_id,
+                    target_fraction_after=target_fraction,
+                    strategy_state_after=dict(step.state_after),
+                )
+                order_id = str(_first(order, "orderId", "order_id", default=client_id))
+                if delta > 0:
+                    self.store.set_accounting_start_if_missing(symbol, execution_bar)
+                self.store.set_strategy_execution_state(
+                    symbol,
+                    current_fraction=target_fraction,
+                    strategy_state=dict(step.state_after),
+                    last_order_id=order_id,
+                )
+                order_ids.append(order_id)
 
             self.refresh_accounting(symbol, adapter, force=True)
+            action_codes = tuple(step.code for step in steps)
             self.store.append_audit(
-                "M3_EXECUTION_PASS", symbol,
-                f"signal={decision.signal};actions={'+'.join(decision.actions)};orders={','.join(order_ids) or 'NONE'}",
+                "M3_EXECUTION_PASS",
+                symbol,
+                f"strategy={strategy_id};signal={decision.signal};actions={'+'.join(action_codes)};orders={','.join(order_ids) or 'NONE'}",
             )
-            return ExecutionOutcome(symbol=symbol, actions=decision.actions, order_ids=tuple(order_ids))
+            return ExecutionOutcome(symbol=symbol, actions=action_codes, order_ids=tuple(order_ids))
 
     def refresh_accounting(self, symbol: str, adapter, *, force: bool = False) -> None:
         now = time.monotonic()
@@ -297,7 +391,10 @@ class M3Executor:
                     commission_income += value
 
         self.store.set_pnl(
-            symbol, realized_pnl=realized, unrealized_pnl=unrealized,
-            funding_fee=funding, trading_fee=-commission_income,
+            symbol,
+            realized_pnl=realized,
+            unrealized_pnl=unrealized,
+            funding_fee=funding,
+            trading_fee=-commission_income,
         )
         self._last_pnl_refresh[symbol] = now
