@@ -27,7 +27,7 @@ BINANCE_TIMEFRAMES = ("5m", "15m", "30m", "1h", "4h", "1d", "5d")
 
 
 class BinanceUsdMProvider:
-    provider_id = "BINANCE_USDM_PUBLIC"
+    provider_id = "BINANCE_USDM_PUBLIC_MS"
     provider_label_zh = "币安 USDⓈ-M"
     profile = CRYPTO_24_7
 
@@ -51,8 +51,8 @@ class BinanceUsdMProvider:
     def _normalize_row(row: list, *, complete: bool) -> dict:
         return {
             "date": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(int(row[0]) / 1000)),
-            "open_time": int(row[0]) // 1000,
-            "close_time": int(row[6]) // 1000,
+            "open_time": int(row[0]),
+            "close_time": int(row[6]),
             "open": float(row[1]),
             "high": float(row[2]),
             "low": float(row[3]),
