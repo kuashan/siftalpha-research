@@ -1,15 +1,13 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
 from typing import Any
 
 from strategy.frozen_signal_engine import evaluate_candles
-from strategy import e_strategy, ssss_strategy
+from strategy import ssss_strategy
 
 
 STRATEGY_5S = "5s_crypto_v1"
-STRATEGY_E = "e"  # legacy only; no longer registered for new trading
 STRATEGY_SSSS = "ssss"
 
 
@@ -193,147 +191,6 @@ def decide_5s(rows: list[Any], runtime: dict[str, Any]) -> StrategyDecision:
         signal="+".join(labels) if labels else "HOLD",
         steps=tuple(steps),
         bar_open_time=int(latest.open_time),
-    )
-
-
-def _dict_bars(rows: list[Any]) -> list[dict[str, Any]]:
-    out: list[dict[str, Any]] = []
-    for row in rows:
-        if isinstance(row, dict):
-            open_time = int(row.get("open_time", row.get("openTime")))
-            o, h, l, c = row["open"], row["high"], row["low"], row["close"]
-            volume = row.get("volume", 0)
-        else:
-            open_time = int(row[0])
-            o, h, l, c, volume = row[1], row[2], row[3], row[4], row[5]
-        stamp = open_time / 1000.0 if abs(open_time) >= 10_000_000_000 else float(open_time)
-        out.append(
-            {
-                "date": datetime.fromtimestamp(stamp, tz=timezone.utc).isoformat(),
-                "open_time": open_time,
-                "open": float(o),
-                "high": float(h),
-                "low": float(l),
-                "close": float(c),
-                "volume": float(volume),
-            }
-        )
-    return out
-
-
-def decide_e(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> StrategyDecision:
-    spec = get_spec(STRATEGY_E)
-    tf = str(timeframe).lower()
-    if tf not in spec.supported_timeframes:
-        raise ValueError(f"E 策略当前自动交易不支持周期：{tf}")
-
-    primary = e_strategy._copy_validated(_dict_bars(rows))
-    higher_tf, higher_bars = e_strategy.build_higher_bars(
-        primary,
-        tf,
-        {"exchange_timezone": "UTC", "continuous_24_7": True},
-    )
-    if len(higher_bars) < e_strategy.E_MIN_WARMUP_BARS:
-        raise ValueError(f"E 策略大周期 {higher_tf} 预热不足")
-
-    primary_ledger = e_strategy.build_ledger(primary, "BINANCE")
-    higher_ledger = e_strategy.build_ledger(higher_bars, f"BINANCE:{higher_tf}")
-    i = len(primary) - 1
-    h = -1
-    for j, row in enumerate(higher_bars):
-        if int(row["_source_end_index"]) <= i:
-            h = j
-        else:
-            break
-    higher_row = higher_ledger[h] if h >= e_strategy.E_MIN_WARMUP_BARS - 1 else None
-    if i < e_strategy.E_MIN_WARMUP_BARS - 1 or higher_row is None:
-        raise ValueError("E 策略主周期/大周期共同预热不足")
-
-    fraction = min(max(float(runtime.get("current_fraction") or 0.0), 0.0), e_strategy.E_MAX_POSITION)
-    state = _state(runtime)
-    b1 = bool(state.get("b1_used", False))
-    b2 = bool(state.get("b2_used", False))
-    b3 = bool(state.get("b3_used", False))
-    sell_stage = int(state.get("sell_stage", 0))
-    row = primary_ledger[i]
-    bar = primary[i]
-    next_state = {"b1_used": b1, "b2_used": b2, "b3_used": b3, "sell_stage": sell_stage}
-
-    steps: list[StrategyStep] = []
-    signal = "HOLD"
-
-    if fraction > 1e-12:
-        inner_up = e_strategy._break_above_zk1(i, primary, primary_ledger)
-        exit_active = sell_stage > 0 or inner_up
-        band = e_strategy._band_touch(bar, row)
-        bs = row.get("BS")
-        bs_hit = bs is not None and float(bar["high"]) >= float(bs)
-
-        if exit_active and band:
-            signal = "E_SELL_3"
-            steps.append(StrategyStep(
-                "E_EXIT", "X100", 0.0,
-                ("E_SELL_3_TOUCH_GZB_BAND_FULL_EXIT",), {}
-            ))
-        elif sell_stage > 0 and row.get("ZK1") is not None and float(bar["close"]) < float(row["ZK1"]):
-            signal = "E_SELL_4"
-            steps.append(StrategyStep(
-                "E_EXIT", "X100", 0.0,
-                ("E_SELL_4_CLOSE_BACK_BELOW_ZK1_FULL_EXIT",), {}
-            ))
-        elif exit_active and bs_hit:
-            signal = "E_SELL_2"
-            next_state["sell_stage"] = max(sell_stage, 2)
-            steps.append(StrategyStep(
-                "E_SELL_25PP", "S25", max(0.0, fraction - 0.25),
-                ("E_SELL_2_TOUCH_BS_MINUS_25PP",), dict(next_state)
-            ))
-        elif sell_stage == 0 and inner_up:
-            signal = "E_SELL_1"
-            next_state["sell_stage"] = 1
-            steps.append(StrategyStep(
-                "E_SELL_50PP", "S50", max(0.0, fraction - 0.50),
-                ("E_SELL_1_PRIMARY_CLOSE_BREAK_ABOVE_ZK1_MINUS_50PP",), dict(next_state)
-            ))
-
-    if not steps and sell_stage == 0:
-        color = str(row.get("color") or "")
-        inner_down = (
-            not b1
-            and color in {"BLUE", "GRAY"}
-            and e_strategy._break_below_zd1(i, primary, primary_ledger)
-        )
-        if inner_down:
-            ids = ["E_BUY_1_PRIMARY_CLOSE_BREAK_BELOW_ZD1"]
-            delta = 0.25
-            next_state["b1_used"] = True
-            if (
-                not b2
-                and higher_row.get("ZD1") is not None
-                and float(higher_row["close"]) < float(higher_row["ZD1"])
-            ):
-                ids.append("E_BUY_2_HIGHER_CLOSE_BELOW_ZD1")
-                delta = 0.50
-                next_state["b2_used"] = True
-            target = min(e_strategy.E_MAX_POSITION, fraction + delta)
-            signal = "E_BUY_1+E_BUY_2" if len(ids) == 2 else "E_BUY_1"
-            steps.append(StrategyStep(
-                "E_BUY", "B50" if delta > 0.25 else "B25", target,
-                tuple(ids), dict(next_state)
-            ))
-        elif b1 and not b3 and e_strategy._band_touch(bar, row):
-            next_state["b3_used"] = True
-            signal = "E_BUY_3"
-            steps.append(StrategyStep(
-                "E_BUY", "B25", min(e_strategy.E_MAX_POSITION, fraction + 0.25),
-                ("E_BUY_3_TOUCH_GZB_BAND",), dict(next_state)
-            ))
-
-    return StrategyDecision(
-        strategy_id=STRATEGY_E,
-        signal=signal,
-        steps=tuple(steps),
-        bar_open_time=int(primary[-1]["open_time"]),
     )
 
 
