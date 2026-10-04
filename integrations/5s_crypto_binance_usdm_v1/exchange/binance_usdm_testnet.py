@@ -401,6 +401,103 @@ class BinanceUsdMTestnetAdapter:
             self._signed_rest().change_initial_leverage(symbol=symbol, leverage=leverage)
         )
 
+    def modify_isolated_position_margin(
+        self,
+        symbol: str,
+        amount_usdt: float,
+        *,
+        reduce: bool = False,
+    ) -> Any:
+        """Add or reduce margin on one isolated one-way position.
+
+        This changes only the isolated margin buffer. It never changes the
+        strategy target fraction or order quantity.
+        """
+        symbol = self._check_symbol(symbol)
+        amount = float(amount_usdt)
+        if amount <= 0:
+            raise ValueError("逐仓保证金调整金额必须大于零")
+        if self.margin_type(symbol) != "ISOLATED":
+            raise RuntimeError("当前仓位不是逐仓模式，禁止调整逐仓保证金")
+        if abs(float(self.position_amount(symbol))) <= 1e-12:
+            raise RuntimeError("当前币种没有持仓，不能调整逐仓保证金")
+        return _response_data(
+            self._signed_rest().modify_isolated_position_margin(
+                symbol=symbol,
+                amount=amount,
+                type=2 if reduce else 1,
+                position_side="BOTH",
+            )
+        )
+
+    def position_metrics(self, symbol: str) -> dict[str, float | str | None]:
+        """Return Binance-native isolated position risk fields for the UI."""
+        symbol = self._check_symbol(symbol)
+        rows = self.positions(symbol)
+        position_rows = rows if isinstance(rows, list) else [rows]
+        row = next(
+            (
+                item for item in position_rows
+                if isinstance(item, dict)
+                and str(_first(item, "symbol", default="")).upper() == symbol
+            ),
+            {},
+        )
+
+        def number(*keys: str) -> float | None:
+            value = _first(row, *keys, default=None) if isinstance(row, dict) else None
+            try:
+                result = float(value)
+            except (TypeError, ValueError):
+                return None
+            return result
+
+        amount = number("positionAmt", "position_amt") or 0.0
+        entry_price = number("entryPrice", "entry_price")
+        liquidation_price = number("liquidationPrice", "liquidation_price")
+        unrealized = number("unRealizedProfit", "unrealizedProfit", "unrealized_profit") or 0.0
+        isolated_wallet = number("isolatedWallet", "isolated_wallet")
+        isolated_margin = number("isolatedMargin", "isolated_margin")
+        margin_type = str(_first(row, "marginType", "margin_type", default="") or "").upper()
+
+        maintenance_margin = None
+        try:
+            account = _response_data(self._signed_rest().account_information_v3())
+            account_positions = _first(account, "positions", default=[]) if isinstance(account, dict) else []
+            account_row = next(
+                (
+                    item for item in (account_positions or [])
+                    if isinstance(item, dict)
+                    and str(_first(item, "symbol", default="")).upper() == symbol
+                ),
+                {},
+            )
+            raw_maint = _first(account_row, "maintMargin", "maint_margin", default=None)
+            maintenance_margin = None if raw_maint is None else float(raw_maint)
+            if isolated_wallet is None:
+                raw_wallet = _first(account_row, "isolatedWallet", "isolated_wallet", default=None)
+                isolated_wallet = None if raw_wallet is None else float(raw_wallet)
+        except Exception:
+            maintenance_margin = None
+
+        wallet = isolated_wallet
+        if wallet is None:
+            wallet = isolated_margin
+        margin_balance = None if wallet is None else wallet + unrealized
+        margin_ratio = None
+        if maintenance_margin is not None and margin_balance is not None and margin_balance > 0:
+            margin_ratio = max(0.0, maintenance_margin / margin_balance * 100.0)
+
+        return {
+            "position_amount": amount,
+            "margin_type": margin_type or None,
+            "isolated_margin_usdt": wallet,
+            "entry_price": entry_price if entry_price and entry_price > 0 else None,
+            "liquidation_price": liquidation_price if liquidation_price and liquidation_price > 0 else None,
+            "maintenance_margin_usdt": maintenance_margin,
+            "margin_ratio_percent": margin_ratio,
+        }
+
     def submit_limit_buy(
         self,
         symbol: str,
