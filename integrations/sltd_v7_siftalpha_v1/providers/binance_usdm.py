@@ -51,8 +51,8 @@ class BinanceUsdMProvider:
     def _normalize_row(row: list, *, complete: bool) -> dict:
         return {
             "date": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(int(row[0]) / 1000)),
-            "open_time": int(row[0]),
-            "close_time": int(row[6]),
+            "open_time": int(row[0]) // 1000,
+            "close_time": int(row[6]) // 1000,
             "open": float(row[1]),
             "high": float(row[2]),
             "low": float(row[3]),
