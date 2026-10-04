@@ -4,3 +4,5 @@
 # SiftAlpha 的内嵌 CPython 依赖解析器会拒绝参数行，因此会改选内部 Alpine；
 # 内部 Alpine 中的标准 pip 可以正常接受这个参数。
 --only-binary=:all:
+
+binance-sdk-derivatives-trading-usds-futures==17.5.0
