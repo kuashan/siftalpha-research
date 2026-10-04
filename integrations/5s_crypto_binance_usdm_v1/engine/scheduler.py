@@ -7,10 +7,12 @@ import time
 
 from exchange.binance_usdm_testnet import BinanceUsdMTestnetAdapter
 from strategy.frozen_signal_engine import BarEvaluation, evaluate_candles
+from strategy.registry import STRATEGY_5S, decide as decide_strategy, get_spec
 
 
 @dataclass(frozen=True)
 class M3Decision:
+    """Legacy 5s-only decision retained for frozen regression compatibility."""
     signal: str
     actions: tuple[str, ...]
     c_eligible: bool = False
@@ -26,7 +28,7 @@ def decide_actions(
     latest: BarEvaluation,
     closed_open_times: list[int],
 ) -> M3Decision:
-    """Apply only the frozen Crypto V1 position-state rules."""
+    """Frozen Crypto V1 position rules; kept bit-for-bit compatible."""
     fraction = min(max(float(runtime.get("current_fraction") or 0.0), 0.0), 1.0)
     c_confirmed = bool(runtime.get("c_confirmed"))
     buy = tuple(latest.buy_onsets)
@@ -64,17 +66,10 @@ def decide_actions(
             actions.append("BUY_60")
             labels.append(f"BUY_{family}")
 
-    if not actions:
-        return M3Decision(
-            signal="HOLD",
-            actions=(),
-            c_eligible=False,
-            bar_open_time=latest.open_time,
-        )
     return M3Decision(
-        signal="+".join(labels),
+        signal="+".join(labels) if labels else "HOLD",
         actions=tuple(actions),
-        c_eligible=c_eligible,
+        c_eligible=c_eligible if actions else False,
         bar_open_time=latest.open_time,
     )
 
@@ -83,12 +78,19 @@ class TerminalDecisionError(RuntimeError):
     terminal = True
 
 
-class StrategyScheduler:
-    """One-process scheduler for four independent symbol slots.
+def _decision_action_codes(decision) -> list[str]:
+    steps = getattr(decision, "steps", None)
+    if steps is not None:
+        return [str(x.code) for x in steps]
+    return list(getattr(decision, "actions", ()))
 
-    M3.2 observes newly closed candles and persists frozen strategy decisions.
-    It does not place orders. M3.3 will attach the execution callback.
-    """
+
+def _has_actions(decision) -> bool:
+    return bool(getattr(decision, "steps", ()) or getattr(decision, "actions", ()))
+
+
+class StrategyScheduler:
+    """One scheduler, four fixed crypto symbols, pluggable strategy adapters."""
 
     def __init__(
         self,
@@ -134,6 +136,16 @@ class StrategyScheduler:
             return []
         return rows[:-1]
 
+    def _make_decision(self, strategy_id: str, closed: list[Any], state: dict[str, Any], timeframe: str):
+        # Tests from frozen 5s V1 inject a fake evaluator. Preserve that seam.
+        if strategy_id == STRATEGY_5S and self.evaluator is not evaluate_candles:
+            evaluations = self.evaluator(closed)
+            if not evaluations:
+                raise RuntimeError("冻结信号引擎没有返回结果")
+            latest = evaluations[-1]
+            return decide_actions(state, latest, [int(row[0]) for row in closed])
+        return decide_strategy(strategy_id, closed, state, timeframe)
+
     def run_once(self) -> dict[str, dict[str, Any]]:
         configs = self.store.get_symbol_configs()
         runtime = self.store.get_runtime_states()
@@ -167,8 +179,16 @@ class StrategyScheduler:
             cfg = configs[symbol]
             state = runtime[symbol]
             timeframe = str(cfg["timeframe"])
+            strategy_id = str(cfg.get("strategy_id") or STRATEGY_5S)
             try:
-                rows = adapter.klines(symbol, timeframe, limit=self.fetch_limit)
+                spec = get_spec(strategy_id)
+                if timeframe not in spec.supported_timeframes:
+                    raise ValueError(f"{spec.label} 不支持当前周期 {timeframe}")
+
+                limit = max(self.fetch_limit, int(spec.fetch_limit))
+                min_closed = max(self.minimum_closed_bars, int(spec.minimum_closed_bars))
+                rows = adapter.klines(symbol, timeframe, limit=limit)
+
                 if self.on_poll is not None:
                     try:
                         self.on_poll(symbol, adapter)
@@ -178,12 +198,15 @@ class StrategyScheduler:
                             symbol,
                             f"{type(exc).__name__}:{exc}",
                         )
+
                 closed = self._closed_rows(rows)
-                if len(closed) < self.minimum_closed_bars:
+                if len(closed) < min_closed:
                     self.store.set_run_state(symbol, "WAITING_HISTORY")
                     result[symbol] = {
                         "state": "WAITING_HISTORY",
                         "closed_bars": len(closed),
+                        "required_bars": min_closed,
+                        "strategy_id": strategy_id,
                         "timeframe": timeframe,
                     }
                     continue
@@ -195,6 +218,7 @@ class StrategyScheduler:
                     result[symbol] = {
                         "state": "MONITORING",
                         "baseline": latest_open_time,
+                        "strategy_id": strategy_id,
                         "timeframe": timeframe,
                     }
                     continue
@@ -204,16 +228,12 @@ class StrategyScheduler:
                     result[symbol] = {
                         "state": "MONITORING",
                         "new_bar": False,
+                        "strategy_id": strategy_id,
                         "timeframe": timeframe,
                     }
                     continue
 
-                evaluations = self.evaluator(closed)
-                if not evaluations:
-                    raise RuntimeError("冻结信号引擎没有返回结果")
-                latest = evaluations[-1]
-                closed_times = [int(row[0]) for row in closed]
-                decision = decide_actions(state, latest, closed_times)
+                decision = self._make_decision(strategy_id, closed, state, timeframe)
                 execution_context = {
                     "signal_bar_open_time": latest_open_time,
                     "execution_bar_open_time": int(rows[-1][0]),
@@ -221,7 +241,7 @@ class StrategyScheduler:
                     "timeframe": timeframe,
                 }
 
-                if decision.actions and self.on_decision is not None:
+                if _has_actions(decision) and self.on_decision is not None:
                     try:
                         self.on_decision(
                             symbol,
@@ -238,18 +258,20 @@ class StrategyScheduler:
                             signal=decision.signal,
                             pending_action=None,
                             run_state="BLOCKED",
+                            strategy_id=strategy_id,
                         )
                         self.store.append_audit(
                             "M3_EXECUTION_BLOCKED",
                             symbol,
-                            str(exc),
+                            f"strategy={strategy_id};{exc}",
                         )
                         result[symbol] = {
                             "state": "BLOCKED",
                             "new_bar": True,
+                            "strategy_id": strategy_id,
                             "timeframe": timeframe,
                             "signal": decision.signal,
-                            "actions": list(decision.actions),
+                            "actions": _decision_action_codes(decision),
                             "blocked": str(exc),
                         }
                         continue
@@ -260,6 +282,7 @@ class StrategyScheduler:
                         signal=decision.signal,
                         pending_action=None,
                         run_state="MONITORING",
+                        strategy_id=strategy_id,
                     )
                     state_name = "MONITORING"
                 else:
@@ -267,25 +290,31 @@ class StrategyScheduler:
                         symbol,
                         bar_open_time=latest_open_time,
                         signal=decision.signal,
-                        pending_action=decision.pending_action,
+                        pending_action=getattr(decision, "pending_action", None),
+                        strategy_id=strategy_id,
                     )
-                    state_name = "SIGNAL_READY" if decision.actions else "MONITORING"
+                    state_name = "SIGNAL_READY" if _has_actions(decision) else "MONITORING"
 
                 result[symbol] = {
                     "state": state_name,
                     "new_bar": True,
+                    "strategy_id": strategy_id,
                     "timeframe": timeframe,
                     "signal": decision.signal,
-                    "actions": list(decision.actions),
+                    "actions": _decision_action_codes(decision),
                 }
             except Exception as exc:
                 self.store.set_run_state(symbol, "ERROR")
                 self.store.append_audit(
                     "SCHEDULER_ERROR",
                     symbol,
-                    f"{type(exc).__name__}:{exc}",
+                    f"strategy={strategy_id};{type(exc).__name__}:{exc}",
                 )
-                result[symbol] = {"state": "ERROR", "error": str(exc)}
+                result[symbol] = {
+                    "state": "ERROR",
+                    "strategy_id": strategy_id,
+                    "error": str(exc),
+                }
 
         return result
 
@@ -307,7 +336,7 @@ class StrategyScheduler:
         if self._thread is not None and self._thread.is_alive():
             return
         self._stop.clear()
-        self._thread = Thread(target=self._loop, name="5s-crypto-m3-scheduler", daemon=True)
+        self._thread = Thread(target=self._loop, name="crypto-multistrategy-scheduler", daemon=True)
         self._thread.start()
 
     def stop(self, timeout: float = 3.0) -> None:
