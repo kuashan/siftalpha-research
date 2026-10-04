@@ -78,7 +78,13 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 .market-badge{padding:4px 7px;border-radius:999px;font-size:10px;font-weight:700;color:#a9c6ff;border:1px solid #36568d;background:#12203a;white-space:nowrap}
 .status-pill{padding:4px 7px;border-radius:999px;font-size:10px;border:1px solid var(--line)}
 .status-pill.running{color:#8ce6bc;border-color:#285945;background:#122b23}.status-pill.stopped{color:#aab6c9;background:#1a2230}
-.hero-pnl{text-align:right}.hero-pnl small{display:block;color:var(--muted);font-size:10px}.hero-pnl strong{font-size:23px}.hero-pnl span{font-size:10px;color:var(--muted)}
+.hero-right{display:flex;align-items:center;justify-content:flex-end;gap:12px;min-width:0}
+.strategy-switch{min-width:150px;text-align:left}
+.strategy-switch label{display:block}
+.strategy-switch select{min-height:36px;margin-top:3px;padding:6px 28px 6px 9px;font-size:12px;font-weight:700}
+.strategy-switch select:disabled{opacity:.62;cursor:not-allowed}
+.strategy-switch>small{display:block;margin-top:3px;color:var(--muted);font-size:9px;white-space:nowrap}
+.hero-pnl{text-align:right;min-width:92px}.hero-pnl small{display:block;color:var(--muted);font-size:10px}.hero-pnl strong{font-size:23px}.hero-pnl span{font-size:10px;color:var(--muted)}
 .market-chart{margin:10px 14px 0;background:var(--panel2);border:1px solid #1f2a3e;border-radius:11px;padding:10px}
 .chart-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(100px,.75fr) minmax(98px,auto);align-items:center;gap:12px}
 .chart-identity{min-width:0}
