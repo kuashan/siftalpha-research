@@ -21,6 +21,7 @@ from strategy.registry import (
     decide_ssss,
     get_spec,
     strategy_ids,
+    strategy_signal_label,
 )
 from strategy.ssss_strategy import (
     SSSSBar,
@@ -148,6 +149,15 @@ class SSSSFormulaTests(unittest.TestCase):
 
 
 class SSSSTradingRuleTests(unittest.TestCase):
+    def test_latest_signal_label_is_action_advice_only(self):
+        self.assertEqual(strategy_signal_label(STRATEGY_SSSS, "SSSS_BUY_9"), "买入 25%")
+        self.assertEqual(strategy_signal_label(STRATEGY_SSSS, "SSSS_EXIT_15"), "全部清仓")
+        self.assertEqual(strategy_signal_label(STRATEGY_SSSS, "HOLD"), "观望")
+        self.assertEqual(strategy_signal_label(STRATEGY_SSSS, None), "观望")
+        self.assertNotIn("💰", strategy_signal_label(STRATEGY_SSSS, "SSSS_BUY_9"))
+        self.assertNotIn("💥", strategy_signal_label(STRATEGY_SSSS, "SSSS_EXIT_15"))
+        self.assertNotIn("图标", strategy_signal_label(STRATEGY_SSSS, "SSSS_EXIT_15"))
+
     def test_registered_strategies_are_only_5s_and_ssss(self):
         self.assertEqual(strategy_ids(), (STRATEGY_5S, STRATEGY_SSSS))
         spec = get_spec(STRATEGY_SSSS)
