@@ -3,16 +3,18 @@ from __future__ import annotations
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
 from decimal import Decimal
+import json
 from threading import RLock
 import time
 from typing import Any
 
 from exchange.binance_usdm_testnet import floor_to_step
+from strategy.registry import STRATEGY_5S, get_spec
 
 
 TERMINAL_ORDER_STATES = {"FILLED", "CANCELED", "EXPIRED", "REJECTED", "NOT_FOUND"}
 ACTIVE_ORDER_STATES = {"NEW", "PARTIALLY_FILLED", "PENDING"}
-STRATEGY_PREFIX = "5sv1-"
+STRATEGY_PREFIXES = ("5sv1-", "ev1-")
 
 
 class RecoveryBlocked(RuntimeError):
@@ -41,7 +43,11 @@ def _status(order: dict[str, Any]) -> str:
     return str(_first(order, "status", default="") or "").upper()
 
 
-def _order_action(client_id: str) -> str | None:
+def _is_framework_client_id(client_id: str) -> bool:
+    return str(client_id).startswith(STRATEGY_PREFIXES)
+
+
+def _legacy_5s_action(client_id: str) -> str | None:
     if client_id.endswith("-B60"):
         return "BUY_60"
     if client_id.endswith("-B40"):
@@ -63,6 +69,16 @@ def _signal_bar_from_client_id(client_id: str) -> int | None:
         return None
 
 
+def _json_dict(value: object) -> dict[str, Any]:
+    if isinstance(value, dict):
+        return dict(value)
+    try:
+        parsed = json.loads(str(value or "{}"))
+        return dict(parsed) if isinstance(parsed, dict) else {}
+    except Exception:
+        return {}
+
+
 @dataclass(frozen=True)
 class SymbolRecovery:
     symbol: str
@@ -77,11 +93,7 @@ class SymbolRecovery:
 
 
 class M4Recovery:
-    """Restart/reconciliation boundary for M3 automatic Demo execution.
-
-    Binance Demo position + local filled-order ledger must agree before the
-    scheduler is allowed to resume. Unknown external state is never guessed.
-    """
+    """Reconcile one Binance net position with the selected strategy owner."""
 
     def __init__(self, store, *, execution_lock: RLock | None = None):
         self.store = store
@@ -99,7 +111,7 @@ class M4Recovery:
             if state in TERMINAL_ORDER_STATES:
                 continue
             client_id = str(row.get("client_order_id") or "")
-            if not client_id.startswith(STRATEGY_PREFIX):
+            if not _is_framework_client_id(client_id):
                 continue
             try:
                 remote = adapter.query_order(symbol, client_order_id=client_id)
@@ -132,7 +144,7 @@ class M4Recovery:
             if not isinstance(row, dict):
                 continue
             cid = _client_id(row)
-            if cid.startswith(STRATEGY_PREFIX):
+            if _is_framework_client_id(cid):
                 order_id = _first(row, "orderId", "order_id")
                 adapter.cancel_order(
                     symbol,
@@ -159,52 +171,67 @@ class M4Recovery:
                 net -= qty
         return net
 
-    def _derive_position_state(self, symbol: str) -> tuple[float, bool, int | None, str | None, str | None]:
-        fraction = 0.0
-        confirmed = False
-        entry_signal: int | None = None
-        entry_family: str | None = None
-        last_order_id: str | None = None
+    def _derive_position_state(
+        self,
+        symbol: str,
+        strategy_id: str,
+    ) -> tuple[float, dict[str, Any], str | None]:
         runtime = self.store.get_runtime_states()[symbol]
-        preserved_family = runtime.get("entry_family")
+        fraction = float(runtime.get("current_fraction") or 0.0)
+        strategy_state = _json_dict(runtime.get("strategy_state"))
+        last_order_id: str | None = None
 
-        for row in self.store.list_orders(symbol):
-            if str(row.get("status") or "").upper() != "FILLED":
-                continue
+        selected_rows = [
+            row for row in self.store.list_orders(symbol)
+            if str(row.get("status") or "").upper() == "FILLED"
+            and str(row.get("strategy_id") or STRATEGY_5S) == strategy_id
+        ]
+
+        for row in selected_rows:
             cid = str(row.get("client_order_id") or "")
-            action = _order_action(cid)
-            if not action:
-                continue
             last_order_id = str(row.get("binance_order_id") or cid)
+            target = row.get("target_fraction_after")
+            if target is not None:
+                fraction = float(target)
+                strategy_state = _json_dict(row.get("strategy_state_after_json"))
+                continue
+
+            # Backward compatibility with frozen 5s V1 ledgers created before
+            # multi-strategy metadata existed.
+            if strategy_id != STRATEGY_5S:
+                continue
+            action = _legacy_5s_action(cid)
             if action == "BUY_60":
                 fraction = 0.60
-                confirmed = False
-                entry_signal = _signal_bar_from_client_id(cid)
-                entry_family = str(preserved_family or "UNKNOWN")
+                strategy_state = {
+                    "c_confirmed": False,
+                    "entry_signal_open_time": _signal_bar_from_client_id(cid),
+                    "entry_family": runtime.get("entry_family") or "UNKNOWN",
+                }
             elif action == "TOPUP_TO_100":
                 fraction = 1.0
-                confirmed = True
+                strategy_state["c_confirmed"] = True
             elif action in {"SELL_ALL", "EMERGENCY_FLAT"}:
                 fraction = 0.0
-                confirmed = False
-                entry_signal = None
-                entry_family = None
-        return fraction, confirmed, entry_signal, entry_family, last_order_id
+                strategy_state = {}
+
+        return fraction, strategy_state, last_order_id
 
     def reconcile_symbol(self, adapter, symbol: str) -> SymbolRecovery:
         with self._lock:
             cfg = self.store.get_symbol_configs()[symbol]
+            strategy_id = str(cfg.get("strategy_id") or STRATEGY_5S)
             recovered = self._recover_local_orders(adapter, symbol)
             canceled, external = self._cancel_strategy_open_orders(adapter, symbol)
             if external:
-                reason = "检测到非本策略未成交订单：" + ",".join(external[:3])
+                reason = "检测到非本交易框架挂单；为避免误操作已阻止自动交易"
                 self.store.set_run_state(symbol, "RECOVERY_BLOCKED")
                 self.store.append_audit("M4_RECONCILE_BLOCKED", symbol, reason)
                 return SymbolRecovery(symbol, "BLOCKED", 0.0, 0.0, 0.0, canceled, recovered, None, reason)
 
             remote = Decimal(str(adapter.position_amount(symbol)))
             if remote < 0:
-                reason = "检测到空头仓位；当前策略只允许做多"
+                reason = "检测到空头仓位；当前框架只允许做多"
                 self.store.set_run_state(symbol, "RECOVERY_BLOCKED")
                 self.store.append_audit("M4_RECONCILE_BLOCKED", symbol, reason)
                 return SymbolRecovery(symbol, "BLOCKED", float(remote), 0.0, 0.0, canceled, recovered, None, reason)
@@ -218,14 +245,14 @@ class M4Recovery:
                 self.store.append_audit("M4_RECONCILE_BLOCKED", symbol, reason)
                 return SymbolRecovery(symbol, "BLOCKED", float(remote), float(ledger), 0.0, canceled, recovered, None, reason)
 
-            fraction, confirmed, entry_signal, entry_family, last_order_id = self._derive_position_state(symbol)
+            fraction, strategy_state, last_order_id = self._derive_position_state(symbol, strategy_id)
             if remote > tolerance and fraction <= 0:
-                reason = "币安存在多头仓位，但本地没有可验证的策略开仓记录"
+                reason = "币安存在多头仓位，但当前策略没有可验证的开仓记录"
                 self.store.set_run_state(symbol, "RECOVERY_BLOCKED")
                 self.store.append_audit("M4_RECONCILE_BLOCKED", symbol, reason)
                 return SymbolRecovery(symbol, "BLOCKED", float(remote), float(ledger), fraction, canceled, recovered, None, reason)
             if remote <= tolerance:
-                fraction, confirmed, entry_signal, entry_family = 0.0, False, None, None
+                fraction, strategy_state = 0.0, {}
 
             bars = adapter.klines(symbol, str(cfg["timeframe"]), limit=2)
             baseline: int | None = None
@@ -233,12 +260,10 @@ class M4Recovery:
                 baseline = int(bars[-2][0])
 
             run_state = "MONITORING" if bool(cfg["enabled"]) else "STOPPED"
-            self.store.set_recovery_runtime(
+            self.store.set_recovery_strategy_state(
                 symbol,
                 current_fraction=fraction,
-                c_confirmed=confirmed,
-                entry_signal_open_time=entry_signal,
-                entry_family=entry_family,
+                strategy_state=strategy_state,
                 last_order_id=last_order_id,
                 last_closed_bar_open_time=baseline,
                 run_state=run_state,
@@ -246,7 +271,7 @@ class M4Recovery:
             self.store.append_audit(
                 "M4_RECONCILE_PASS",
                 symbol,
-                f"remote={remote};ledger={ledger};fraction={fraction};baseline={baseline};canceled={canceled};recovered={recovered}",
+                f"strategy={strategy_id};remote={remote};ledger={ledger};fraction={fraction};baseline={baseline};canceled={canceled};recovered={recovered}",
             )
             return SymbolRecovery(
                 symbol=symbol,
@@ -285,23 +310,23 @@ class M4Recovery:
         with self._lock:
             canceled, external = self._cancel_strategy_open_orders(adapter, symbol)
             if external:
-                raise RecoveryBlocked("存在非本策略挂单，不会自动取消")
+                raise RecoveryBlocked("存在非本交易框架挂单，不会自动取消")
             self.store.append_audit("M4_CANCEL_STRATEGY_ORDERS", symbol, f"count={canceled}")
             return canceled
 
     def emergency_flatten(self, adapter, symbol: str) -> dict[str, Any]:
         with self._lock:
             self.store.set_symbol_enabled(symbol, False)
+            cfg = self.store.get_symbol_configs()[symbol]
+            strategy_id = str(cfg.get("strategy_id") or STRATEGY_5S)
             amount = Decimal(str(adapter.position_amount(symbol)))
             if amount < 0:
                 raise RecoveryBlocked("检测到空头仓位，当前程序不会自动处理")
             if amount == 0:
-                self.store.set_recovery_runtime(
+                self.store.set_recovery_strategy_state(
                     symbol,
                     current_fraction=0.0,
-                    c_confirmed=False,
-                    entry_signal_open_time=None,
-                    entry_family=None,
+                    strategy_state={},
                     last_order_id=None,
                     last_closed_bar_open_time=None,
                     run_state="STOPPED",
@@ -316,8 +341,18 @@ class M4Recovery:
                 raise RecoveryBlocked("当前仓位小于交易所可平最小数量")
 
             base = symbol[:-4] if symbol.endswith("USDT") else symbol
-            client_id = f"5sv1-{base}-{int(time.time() * 1000)}-EMG"
-            self.store.begin_order(symbol, client_id, side="SELL", quantity=float(quantity), price=0.0)
+            prefix = get_spec(strategy_id).order_prefix
+            client_id = f"{prefix}-{base}-{int(time.time() * 1000)}-EMG"
+            self.store.begin_order(
+                symbol,
+                client_id,
+                side="SELL",
+                quantity=float(quantity),
+                price=0.0,
+                strategy_id=strategy_id,
+                target_fraction_after=0.0,
+                strategy_state_after={},
+            )
             order = adapter.submit_market_sell_reduce_only(
                 symbol, quantity=quantity, client_order_id=client_id
             )
@@ -335,15 +370,17 @@ class M4Recovery:
             if status != "FILLED":
                 raise RecoveryBlocked(f"紧急平仓未完成：{status}")
 
-            self.store.set_recovery_runtime(
+            self.store.set_recovery_strategy_state(
                 symbol,
                 current_fraction=0.0,
-                c_confirmed=False,
-                entry_signal_open_time=None,
-                entry_family=None,
+                strategy_state={},
                 last_order_id=str(_first(order, "orderId", "order_id", default=client_id)),
                 last_closed_bar_open_time=None,
                 run_state="STOPPED",
             )
-            self.store.append_audit("M4_EMERGENCY_FLAT", symbol, f"qty={quantity};client_id={client_id}")
+            self.store.append_audit(
+                "M4_EMERGENCY_FLAT",
+                symbol,
+                f"strategy={strategy_id};qty={quantity};client_id={client_id}",
+            )
             return {"status": "FILLED", "order_id": _first(order, "orderId", "order_id")}
