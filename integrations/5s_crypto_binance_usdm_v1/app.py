@@ -186,6 +186,7 @@ def _e_chart_analysis(symbol: str, timeframe: str, rows: list[object]) -> dict[s
                 "GZB3": row.get("GZB3"),
                 "GZB4": row.get("GZB4"),
                 "BS": row.get("BS"),
+                "position": row.get("position"),
             }
         )
 
@@ -411,6 +412,13 @@ def render_index(selected_symbol: str | None = None) -> str:
                 </div>
               </div>
 
+              <div class="snapshot-grid snapshot-above-chart">
+                <div class="snapshot"><small>当前仓位</small><b>{current_fraction * 100:.0f}%</b></div>
+                <div class="snapshot"><small>最新信号</small><b>{html.escape(last_signal)}</b></div>
+                <div class="snapshot"><small>浮动盈亏</small><b class="{_pnl_class(p['unrealized_pnl'])}">{p['unrealized_pnl']:+.2f}</b></div>
+                <div class="snapshot"><small>已实现盈亏</small><b class="{_pnl_class(p['realized_pnl'])}">{p['realized_pnl']:+.2f}</b></div>
+              </div>
+
               <section
                 class="market-chart"
                 data-chart-symbol="{html.escape(symbol)}"
@@ -418,9 +426,9 @@ def render_index(selected_symbol: str | None = None) -> str:
               >
                 <div class="chart-head">
                   <div class="chart-identity">
-                    <small>行情图</small>
+                    <small>行情图 · V7 交互</small>
                     <strong>{html.escape(base)} / USDT · U本位永续 · {_TIMEFRAME_LABELS.get(timeframe, timeframe)}</strong>
-                    <span class="chart-candle-meta">最新 K 线</span>
+                    <span class="chart-candle-meta">移动或点击 K 线查看细节</span>
                   </div>
                   <div class="live-price" aria-live="polite">
                     <small>最新价</small>
@@ -435,22 +443,19 @@ def render_index(selected_symbol: str | None = None) -> str:
                   </div>
                 </div>
                 <div class="chart-scroll">
-                  <canvas class="kline-canvas" aria-label="{html.escape(base)} K 线蜡烛图与成交量"></canvas>
+                  <canvas class="kline-canvas" aria-label="{html.escape(base)} V7 交互 K 线图"></canvas>
                 </div>
                 <div class="chart-legend">
-                  <span><b class="legend-buy">B</b> 买入信号</span>
-                  <span><b class="legend-sell">S</b> 卖出信号</span>
-                  <span>下方柱状图为成交量</span>
+                  <span><i class="candle-key candle-up"></i>红涨</span>
+                  <span><i class="candle-key candle-down"></i>绿跌</span>
+                  <span><b class="legend-buy">B</b> 买入</span>
+                  <span><b class="legend-sell">S</b> 卖出</span>
+                  <span><b class="legend-exit">X</b> 清仓</span>
+                  <span class="strategy-legend"></span>
                 </div>
+                <div class="chart-gesture-hint">拖动平移 · 双指/滚轮缩放 · 点击锁定十字光标 · 双击恢复最新视图 · 最多显示 1000 根</div>
                 <div class="chart-message">正在加载 {_TIMEFRAME_LABELS.get(timeframe, timeframe)} K 线…</div>
               </section>
-
-              <div class="snapshot-grid">
-                <div class="snapshot"><small>当前仓位</small><b>{current_fraction * 100:.0f}%</b></div>
-                <div class="snapshot"><small>最新信号</small><b>{html.escape(last_signal)}</b></div>
-                <div class="snapshot"><small>浮动盈亏</small><b class="{_pnl_class(p['unrealized_pnl'])}">{p['unrealized_pnl']:+.2f}</b></div>
-                <div class="snapshot"><small>已实现盈亏</small><b class="{_pnl_class(p['realized_pnl'])}">{p['realized_pnl']:+.2f}</b></div>
-              </div>
 
               <div class="panel-body">
                 <details class="settings-block trade-settings">
