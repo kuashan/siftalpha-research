@@ -1,0 +1,78 @@
+name: SLTD State Score Risk Exposure v3 Stage A
+
+on:
+  push:
+    branches:
+      - research/sltd-state-score-risk-exposure-v3
+    paths:
+      - "research/ssss_reboot_v1/phase14/SLTD_STATE_SCORE_RISK_EXPOSURE_V3_PROTOCOL.md"
+      - "research/ssss_reboot_v1/phase14/SLTD_STATE_SCORE_RISK_EXPOSURE_V3_AMENDMENT_A.md"
+      - "research/ssss_reboot_v1/phase14/sltd_state_score_risk_layer_stage_a_v3.py"
+      - ".github/workflows/sltd-state-score-risk-exposure-v3-stage-a.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  stage-a:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -q numpy pandas
+
+      - name: Run Stage A
+        run: python research/ssss_reboot_v1/phase14/sltd_state_score_risk_layer_stage_a_v3.py
+
+      - name: Verify result contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("research/ssss_reboot_v1/phase14")
+          j=root/"SLTD_STATE_SCORE_RISK_LAYER_STAGE_A_V3_RESULT.json"
+          m=root/"SLTD_STATE_SCORE_RISK_LAYER_STAGE_A_V3_RESULT.md"
+          assert j.is_file() and m.is_file()
+          x=json.loads(j.read_text(encoding="utf-8"))
+          assert x["meta"]["chan_used"] is False
+          assert x["meta"]["representation"] == "FIRST_OBSERVED_CAUSAL"
+          assert x["meta"]["outcome_entry"] == "NEXT_BAR_OPEN"
+          assert x["meta"]["fresh_oos_consumed"] is False
+          assert x["summary"]["decision"] in {"IMPLEMENTED_AND_VERIFIED","REJECTED_NOT_ADMITTED"}
+          assert x["summary"]["discovery_state_keys"] > 0
+          assert x["summary"]["discovery_supported"] > 0
+          print(json.dumps({
+            "summary":x["summary"],
+            "family_funnel":x["family_funnel"],
+          },indent=2))
+          PY
+
+      - name: Commit Stage A result
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             research/ssss_reboot_v1/phase14/SLTD_STATE_SCORE_RISK_LAYER_STAGE_A_V3_RESULT.json             research/ssss_reboot_v1/phase14/SLTD_STATE_SCORE_RISK_LAYER_STAGE_A_V3_RESULT.md
+          if ! git diff --cached --quiet; then
+            git commit -m "research: archive SLTD risk-adjusted state layer stage A"
+            git push origin HEAD:research/sltd-state-score-risk-exposure-v3
+          fi
+
+      - name: Upload result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-state-score-risk-exposure-v3-stage-a
+          path: |
+            research/ssss_reboot_v1/phase14/SLTD_STATE_SCORE_RISK_LAYER_STAGE_A_V3_RESULT.json
+            research/ssss_reboot_v1/phase14/SLTD_STATE_SCORE_RISK_LAYER_STAGE_A_V3_RESULT.md
+          if-no-files-found: error
+          retention-days: 30
