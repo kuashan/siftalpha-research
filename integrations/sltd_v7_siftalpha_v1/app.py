@@ -12,6 +12,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
+from binance_demo_controller import BinanceDemoController
+
 from data_provider import (
     DEFAULT_TIMEFRAME,
     TIMEFRAMES,
@@ -54,6 +56,17 @@ DISPLAY_KLINE_LIMIT = 500
 _ANALYSIS_CACHE: dict[tuple[str, str, str], tuple[float, dict]] = {}
 _ANALYSIS_LOCK = threading.RLock()
 _ANALYSIS_TTL_SECONDS = 5.0
+_DEMO_CONTROLLER = None
+_DEMO_LOCK = threading.RLock()
+
+def demo_controller() -> BinanceDemoController:
+    global _DEMO_CONTROLLER
+    with _DEMO_LOCK:
+        if _DEMO_CONTROLLER is None:
+            _DEMO_CONTROLLER = BinanceDemoController()
+        return _DEMO_CONTROLLER
+
+
 AVAILABLE_STRATEGIES = {
     "v7": STRATEGY_VERSION,
     "e": E_STRATEGY_VERSION,
@@ -209,6 +222,16 @@ class Handler(BaseHTTPRequestHandler):
             "application/json; charset=utf-8",
         )
 
+    def _read_payload(self) -> dict:
+        length = int(self.headers.get("Content-Length", "0") or 0)
+        raw = self.rfile.read(length) if length > 0 else b""
+        ctype = str(self.headers.get("Content-Type") or "").lower()
+        if "application/json" in ctype:
+            data = json.loads(raw.decode("utf-8") or "{}")
+            return data if isinstance(data, dict) else {}
+        form = parse_qs(raw.decode("utf-8"), keep_blank_values=True)
+        return {k: (v[-1] if isinstance(v, list) and v else "") for k, v in form.items()}
+
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
 
@@ -240,6 +263,13 @@ class Handler(BaseHTTPRequestHandler):
                     ),
                 },
             )
+            return
+
+        if parsed.path == "/api/binance/status":
+            try:
+                self._json(200, demo_controller().status())
+            except Exception as exc:
+                self._json(500, {"error": "Binance Demo 状态读取失败", "detail": f"{type(exc).__name__}: {exc}"})
             return
 
         if parsed.path == "/api/rules":
@@ -292,6 +322,46 @@ class Handler(BaseHTTPRequestHandler):
 
         self._send(404, "页面不存在".encode("utf-8"), "text/plain; charset=utf-8")
 
+    def do_POST(self) -> None:
+        parsed = urlparse(self.path)
+        try:
+            data = self._read_payload()
+            ctl = demo_controller()
+            if parsed.path == "/api/binance/connect":
+                out = ctl.connect(str(data.get("api_key") or ""), str(data.get("api_secret") or ""))
+                self._json(200, out)
+                return
+            if parsed.path == "/api/binance/disconnect":
+                ctl.disconnect()
+                self._json(200, {"ok": True})
+                return
+            if parsed.path == "/api/binance/config":
+                symbol = str(data.get("symbol") or "").upper().strip()
+                ctl.configure(
+                    symbol,
+                    strategy_id=str(data.get("strategy_id") or "v7"),
+                    timeframe=str(data.get("timeframe") or "1h"),
+                    leverage=int(data.get("leverage") or 1),
+                    budget=float(data.get("capital_budget_usdt") or 1000),
+                )
+                self._json(200, ctl.status())
+                return
+            if parsed.path == "/api/binance/start":
+                out = ctl.start(str(data.get("symbol") or ""))
+                self._json(200, {"ok": True, "runtime": out})
+                return
+            if parsed.path == "/api/binance/stop":
+                ctl.stop(str(data.get("symbol") or ""))
+                self._json(200, {"ok": True})
+                return
+            if parsed.path == "/api/binance/emergency-flat":
+                out = ctl.emergency_flatten(str(data.get("symbol") or ""))
+                self._json(200, out)
+                return
+            self._json(404, {"error": "接口不存在"})
+        except Exception as exc:
+            self._json(400, {"error": str(exc), "detail": f"{type(exc).__name__}: {exc}"})
+
     def log_message(self, fmt: str, *args) -> None:
         print(f"[sltd-web] {self.address_string()} {fmt % args}", flush=True)
 
@@ -328,6 +398,9 @@ def main() -> None:
         pass
     finally:
         server.server_close()
+        global _DEMO_CONTROLLER
+        if _DEMO_CONTROLLER is not None:
+            _DEMO_CONTROLLER.shutdown()
 
 
 if __name__ == "__main__":
