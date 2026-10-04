@@ -1,0 +1,50 @@
+{
+  "study": "SLTD_V7_ORIGINAL_CRM_RERUN_V1",
+  "status": "COMPLETE",
+  "symbol": "CRM",
+  "source_base_commit": "e05919539328407cb7a67f8a995f6b90f0d4156b",
+  "run_id": 37174732742,
+  "strategy_variant": "DROP_B3_S1_S3",
+  "strategy_meaning": "Original SLTD V7 12-rule candidate; no Chan integration",
+  "window": {
+    "start": "2020-01-02",
+    "end": "2026-09-30",
+    "bars": 1695
+  },
+  "execution": "signal close -> next available open",
+  "position_policy": "first/next BUY +25pp capped 100%; ordinary SELL -25% of current position; SELL arms C2; BUY resets C2; armed C2 full exit",
+  "friction": {
+    "5bps": {
+      "total_return": 0.11291672295188859,
+      "cagr": 0.015991724097866866,
+      "max_drawdown": -0.5861723841509048,
+      "calmar": 0.027281606111539267,
+      "turnover": 4.869028983577921,
+      "position_changes": 16,
+      "time_in_market": 0.7805309734513274,
+      "hard_exit_count": 2
+    },
+    "10bps": {
+      "total_return": 0.11026943336714923,
+      "cagr": 0.015632971447372856,
+      "max_drawdown": -0.5861723841509047,
+      "calmar": 0.02666958026352243,
+      "turnover": 4.8684473593855095,
+      "position_changes": 16,
+      "time_in_market": 0.7805309734513274,
+      "hard_exit_count": 2
+    }
+  },
+  "buy_hold": {
+    "start_close": 166.99000549316406,
+    "end_close": 229.57000732421875,
+    "total_return": 0.3747529778578065
+  },
+  "signal_counts": {
+    "BUY": 27,
+    "HOLD": 24,
+    "WAIT": 3,
+    "SELL": 6,
+    "NO_ACTION": 1635
+  }
+}
