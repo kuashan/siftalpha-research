@@ -527,21 +527,11 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       })));
     }
 
-    if (String(payload.strategy_id || '') === 'ssss') {
-      state.positionSeries.setData(overlay
-        .map(row => {
-          const value = Number(row.position);
-          if (!Number.isFinite(value)) return null;
-          return {time: Math.floor(Number(row.open_time) / 1000), value};
-        })
-        .filter(Boolean));
-    } else {
-      const fraction = Math.max(0, Math.min(1, Number(payload.runtime_fraction || 0)));
-      state.positionSeries.setData(candles.map(c => ({
-        time: Math.floor(Number(c.open_time) / 1000),
-        value: fraction,
-      })));
-    }
+    const fraction = Math.max(0, Math.min(1, Number(payload.runtime_fraction || 0)));
+    state.positionSeries.setData(candles.map(c => ({
+      time: Math.floor(Number(c.open_time) / 1000),
+      value: fraction,
+    })));
 
     const tradeMarkers = markers.map((m,index) => {
       const side = String(m.side || '').toUpperCase();
