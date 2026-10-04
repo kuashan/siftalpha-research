@@ -42,6 +42,7 @@ class StrategySpec:
     fetch_limit: int
     minimum_closed_bars: int
     max_fraction: float
+    order_prefix: str
     description: str
 
 
@@ -54,6 +55,7 @@ _SPECS = {
         fetch_limit=220,
         minimum_closed_bars=80,
         max_fraction=1.0,
+        order_prefix="5sv1",
         description="冻结 5s Crypto V1：A/B 60% 开仓，W3 内 C 补至 100%，首个 SELL 全部退出。",
     ),
     STRATEGY_E: StrategySpec(
@@ -66,6 +68,7 @@ _SPECS = {
         fetch_limit=900,
         minimum_closed_bars=760,
         max_fraction=0.75,
+        order_prefix="ev1",
         description="E v1：条件 1/2/3 分层建仓，最高 75%；退出序列按冻结规则减仓或清仓。",
     ),
 }
