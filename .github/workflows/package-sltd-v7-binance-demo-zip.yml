@@ -7,6 +7,7 @@ on:
       - feature/sltd-v7-binance-usdm-demo-v1
     paths:
       - ".github/workflows/package-sltd-v7-binance-demo-zip.yml"
+      - ".github/package-trigger-v7-demo.txt"
 
 permissions:
   contents: write
