@@ -1,0 +1,88 @@
+name: SLTD State Score Mode v1
+
+on:
+  push:
+    branches:
+      - research/sltd-state-score-mode-v1
+    paths:
+      - "research/ssss_reboot_v1/phase12/SLTD_STATE_SCORE_MODE_V1_PROTOCOL.md"
+      - "research/ssss_reboot_v1/phase12/sltd_state_score_mode_v1.py"
+      - ".github/workflows/sltd-state-score-mode-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -q numpy pandas yfinance
+
+      - name: Run independent SLTD state-score mode
+        run: python research/ssss_reboot_v1/phase12/sltd_state_score_mode_v1.py
+
+      - name: Verify result contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("research/ssss_reboot_v1/phase12")
+          result=root/"SLTD_STATE_SCORE_MODE_V1_RESULT.json"
+          model=root/"SLTD_STATE_SCORE_MODE_V1_MODEL.json"
+          report=root/"SLTD_STATE_SCORE_MODE_V1_RESULT.md"
+          manifest=root/"state_score_fresh30_data"/"manifest.json"
+          assert result.is_file() and model.is_file() and report.is_file() and manifest.is_file()
+          x=json.loads(result.read_text(encoding="utf-8"))
+          assert x["meta"]["independent_of_v7_rules"] is True
+          assert x["meta"]["chan_used"] is False
+          assert len(x["meta"]["fresh30"]) == 30
+          assert x["meta"]["prior_overlap"] == []
+          assert len(list((root/"state_score_fresh30_data").glob("*.csv.gz"))) == 30
+          assert x["decision"] in {
+            "PROMOTE_STATE_SCORE_MODE_TO_ENGINEERING_CANDIDATE",
+            "RESEARCH_ONLY_NEEDS_NEW_SCORE_ARCHITECTURE",
+            "REJECTED_STATE_SCORE_V1",
+          }
+          print(json.dumps({
+            "decision":x["decision"],
+            "model":x["model_summary"],
+            "portfolio_5bps":x["portfolio"]["5bps"],
+            "breadth_5bps":x["breadth_5bps"],
+            "score_monotonicity":x["score_monotonicity"],
+            "gates":x["gates"],
+          },indent=2))
+          PY
+
+      - name: Commit frozen Fresh30 data and results
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             research/ssss_reboot_v1/phase12/state_score_fresh30_data             research/ssss_reboot_v1/phase12/SLTD_STATE_SCORE_MODE_V1_MODEL.json             research/ssss_reboot_v1/phase12/SLTD_STATE_SCORE_MODE_V1_RESULT.json             research/ssss_reboot_v1/phase12/SLTD_STATE_SCORE_MODE_V1_RESULT.md
+          if ! git diff --cached --quiet; then
+            git commit -m "research: archive SLTD state-score mode v1"
+            git push origin HEAD:research/sltd-state-score-mode-v1
+          fi
+
+      - name: Upload result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-state-score-mode-v1
+          path: |
+            research/ssss_reboot_v1/phase12/SLTD_STATE_SCORE_MODE_V1_MODEL.json
+            research/ssss_reboot_v1/phase12/SLTD_STATE_SCORE_MODE_V1_RESULT.json
+            research/ssss_reboot_v1/phase12/SLTD_STATE_SCORE_MODE_V1_RESULT.md
+            research/ssss_reboot_v1/phase12/state_score_fresh30_data/manifest.json
+          if-no-files-found: error
+          retention-days: 30
