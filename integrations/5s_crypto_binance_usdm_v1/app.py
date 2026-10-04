@@ -632,7 +632,7 @@ class Handler(BaseHTTPRequestHandler):
                 payload = chart_payload(symbol)
                 self._send(
                     200,
-                    json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+                    json.dumps(payload, ensure_ascii=False, allow_nan=False).encode("utf-8"),
                     "application/json; charset=utf-8",
                 )
             except Exception as exc:
