@@ -24,6 +24,10 @@ class FakeRest:
         self.calls = []
         self.dual = False
         self.margin = "CROSSED"
+        self.position_amt = "0"
+        self.isolated_wallet = "250"
+        self.unrealized_profit = "10"
+        self.maint_margin = "12.5"
 
     def exchange_information(self):
         return FakeResponse({
@@ -60,7 +64,32 @@ class FakeRest:
 
     def position_information_v2(self, **kwargs):
         symbol = kwargs.get("symbol") or "BTCUSDT"
-        return FakeResponse([{"symbol": symbol, "marginType": self.margin, "positionAmt": "0"}])
+        return FakeResponse([{
+            "symbol": symbol,
+            "marginType": self.margin,
+            "positionAmt": self.position_amt,
+            "entryPrice": "50000",
+            "liquidationPrice": "42000",
+            "isolatedWallet": self.isolated_wallet,
+            "unRealizedProfit": self.unrealized_profit,
+        }])
+
+    def account_information_v3(self):
+        return FakeResponse({
+            "positions": [{
+                "symbol": "BTCUSDT",
+                "maintMargin": self.maint_margin,
+                "isolatedWallet": self.isolated_wallet,
+            }]
+        })
+
+    def modify_isolated_position_margin(self, **kwargs):
+        self.calls.append(("modify_isolated_position_margin", kwargs))
+        return FakeResponse({
+            "symbol": kwargs["symbol"],
+            "amount": str(kwargs["amount"]),
+            "type": kwargs["type"],
+        })
 
     def current_all_open_orders(self, **kwargs):
         return FakeResponse([])
@@ -123,6 +152,38 @@ class AdapterTests(unittest.TestCase):
         self.assertTrue(a.is_one_way())
         self.assertTrue(a.ensure_isolated("BTCUSDT")["changed"])
         self.assertEqual(a.margin_type("BTCUSDT"), "ISOLATED")
+
+    def test_isolated_margin_add_reduce_and_metrics(self):
+        rest = FakeRest()
+        rest.margin = "ISOLATED"
+        rest.position_amt = "0.005"
+        a = self.adapter(rest)
+
+        added = a.modify_isolated_position_margin("BTCUSDT", 25.0)
+        self.assertEqual(added["type"], 1)
+        self.assertEqual(rest.calls[-1][0], "modify_isolated_position_margin")
+        self.assertEqual(rest.calls[-1][1]["position_side"], "BOTH")
+
+        reduced = a.modify_isolated_position_margin("BTCUSDT", 10.0, reduce=True)
+        self.assertEqual(reduced["type"], 2)
+
+        metrics = a.position_metrics("BTCUSDT")
+        self.assertEqual(metrics["entry_price"], 50000.0)
+        self.assertEqual(metrics["liquidation_price"], 42000.0)
+        self.assertEqual(metrics["isolated_margin_usdt"], 250.0)
+        self.assertAlmostEqual(
+            metrics["margin_ratio_percent"],
+            12.5 / (250.0 + 10.0) * 100.0,
+        )
+
+    def test_isolated_margin_change_requires_open_isolated_position(self):
+        rest = FakeRest()
+        a = self.adapter(rest)
+        with self.assertRaises(RuntimeError):
+            a.modify_isolated_position_margin("BTCUSDT", 10.0)
+        rest.margin = "ISOLATED"
+        with self.assertRaises(RuntimeError):
+            a.modify_isolated_position_margin("BTCUSDT", 10.0)
 
     def test_leverage_and_order_round_trip(self):
         rest = FakeRest()
