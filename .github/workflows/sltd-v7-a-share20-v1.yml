@@ -1,0 +1,226 @@
+name: SLTD V7 A-share 20 v1
+
+on:
+  push:
+    branches:
+      - research/sltd-v7-a-share20-v1
+    paths:
+      - ".github/workflows/sltd-v7-a-share20-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -q numpy pandas yfinance
+
+      - name: Run original SLTD V7 on diversified A-share universe
+        run: |
+          python - <<'PY'
+          import json, math, sys, time
+          from pathlib import Path
+          import numpy as np
+          import pandas as pd
+          import yfinance as yf
+
+          repo=Path.cwd()
+          strategy_dir=repo/"integrations"/"sltd_v7_siftalpha_v1"
+          sys.path.insert(0,str(strategy_dir))
+          import strategy
+
+          FORMAL_START=pd.Timestamp("2020-01-02")
+          FORMAL_END=pd.Timestamp("2026-09-30")
+          FETCH_START="2010-01-04"
+          FETCH_END="2026-10-01"
+
+          universe=[
+            {"ticker":"600036.SS","code":"600036","name":"招商银行","industry":"金融"},
+            {"ticker":"601318.SS","code":"601318","name":"中国平安","industry":"金融"},
+            {"ticker":"601398.SS","code":"601398","name":"工商银行","industry":"金融"},
+
+            {"ticker":"600519.SS","code":"600519","name":"贵州茅台","industry":"食品饮料"},
+            {"ticker":"000858.SZ","code":"000858","name":"五粮液","industry":"食品饮料"},
+
+            {"ticker":"002415.SZ","code":"002415","name":"海康威视","industry":"科技电子"},
+            {"ticker":"000725.SZ","code":"000725","name":"京东方A","industry":"科技电子"},
+            {"ticker":"002230.SZ","code":"002230","name":"科大讯飞","industry":"科技电子"},
+
+            {"ticker":"300750.SZ","code":"300750","name":"宁德时代","industry":"新能源电力设备"},
+            {"ticker":"601012.SS","code":"601012","name":"隆基绿能","industry":"新能源电力设备"},
+            {"ticker":"300274.SZ","code":"300274","name":"阳光电源","industry":"新能源电力设备"},
+
+            {"ticker":"600276.SS","code":"600276","name":"恒瑞医药","industry":"医药医疗"},
+            {"ticker":"300760.SZ","code":"300760","name":"迈瑞医疗","industry":"医药医疗"},
+
+            {"ticker":"601857.SS","code":"601857","name":"中国石油","industry":"能源资源"},
+            {"ticker":"601088.SS","code":"601088","name":"中国神华","industry":"能源资源"},
+
+            {"ticker":"600031.SS","code":"600031","name":"三一重工","industry":"工业制造"},
+            {"ticker":"601766.SS","code":"601766","name":"中国中车","industry":"工业制造"},
+            {"ticker":"000338.SZ","code":"000338","name":"潍柴动力","industry":"工业制造"},
+
+            {"ticker":"000333.SZ","code":"000333","name":"美的集团","industry":"家电"},
+            {"ticker":"000651.SZ","code":"000651","name":"格力电器","industry":"家电"},
+          ]
+
+          def flatten(frame,ticker):
+              if isinstance(frame.columns,pd.MultiIndex):
+                  frame=frame.copy()
+                  selected=False
+                  for level in range(frame.columns.nlevels):
+                      vals={str(x) for x in frame.columns.get_level_values(level)}
+                      if ticker in vals:
+                          frame=frame.xs(ticker,axis=1,level=level,drop_level=True)
+                          selected=True
+                          break
+                  if isinstance(frame.columns,pd.MultiIndex):
+                      frame.columns=frame.columns.get_level_values(0)
+              frame=frame.reset_index()
+              dc="Date" if "Date" in frame.columns else frame.columns[0]
+              frame=frame.rename(columns={dc:"Date"})
+              req=["Date","Open","High","Low","Close","Volume"]
+              miss=[x for x in req if x not in frame.columns]
+              if miss: raise RuntimeError(f"{ticker}: missing {miss}")
+              out=frame[req].copy()
+              out["Date"]=pd.to_datetime(out["Date"],utc=True,errors="coerce").dt.tz_convert(None)
+              for c in req[1:]:
+                  out[c]=pd.to_numeric(out[c],errors="coerce")
+              return out.dropna(subset=["Date","Open","High","Low","Close"]).drop_duplicates("Date").sort_values("Date")
+
+          def fetch(ticker):
+              last=None
+              for attempt in range(4):
+                  try:
+                      f=yf.download(ticker,start=FETCH_START,end=FETCH_END,interval="1d",
+                                    auto_adjust=False,actions=False,repair=False,progress=False,
+                                    threads=False,multi_level_index=True)
+                      if f is not None and not f.empty:
+                          return flatten(f,ticker)
+                      last=RuntimeError("empty")
+                  except Exception as e:
+                      last=e
+                  time.sleep(3*(attempt+1))
+              raise RuntimeError(f"{ticker}: download failed: {last}")
+
+          def maxdd(curve):
+              a=np.asarray(curve,dtype=float)
+              p=np.maximum.accumulate(a)
+              return float(np.min(a/p-1.0))
+
+          rows=[]
+          failures=[]
+          for u in universe:
+              ticker=u["ticker"]
+              try:
+                  df=fetch(ticker)
+                  candles=[{
+                    "date":pd.Timestamp(r.Date).strftime("%Y-%m-%d"),
+                    "open":float(r.Open),"high":float(r.High),"low":float(r.Low),
+                    "close":float(r.Close),"volume":0.0 if pd.isna(r.Volume) else float(r.Volume)
+                  } for r in df.itertuples(index=False)]
+                  ledger=strategy.build_ledger(candles,u["code"])
+                  sim=strategy.simulate_policy(candles,ledger,friction_bps=5.0)
+
+                  dates=pd.to_datetime([x["date"] for x in candles])
+                  idx=np.flatnonzero(((dates>=FORMAL_START)&(dates<=FORMAL_END)).to_numpy())
+                  if len(idx)<2: raise RuntimeError("insufficient formal bars")
+                  i0,i1=int(idx[0]),int(idx[-1])
+                  curve=np.asarray(sim["equity_curve"],dtype=float)[idx]
+                  positions=[sim["positions"][i] for i in idx]
+                  d0=pd.Timestamp(candles[i0]["date"]); d1=pd.Timestamp(candles[i1]["date"])
+                  days=max(1,(d1-d0).days)
+                  final=float(curve[-1]); total=final-1.0
+                  cagr=float(final**(365.25/days)-1.0) if final>0 else -1.0
+                  mdd=maxdd(curve)
+                  bh=float(candles[i1]["close"]/candles[i0]["close"]-1.0)
+                  markers=[m for m in sim["markers"] if candles[i0]["date"]<=m["execution_date"]<=candles[i1]["date"]]
+                  row={
+                    **u,
+                    "start":candles[i0]["date"],"end":candles[i1]["date"],"bars":len(idx),
+                    "sltd_total_return":total,"sltd_cagr":cagr,"sltd_max_drawdown":mdd,
+                    "calmar":(cagr/abs(mdd) if mdd<-1e-12 else (999.0 if cagr>0 else 0.0)),
+                    "time_in_market":float(np.mean([float(p["fraction"])>1e-8 for p in positions])),
+                    "buy_hold_raw_price_return":bh,
+                    "delta_sltd_minus_buyhold":total-bh,
+                    "buy_exec_count":sum(m["side"]=="B" for m in markers),
+                    "sell_exec_count":sum(m["side"]=="S" for m in markers),
+                    "c2_exit_count":sum(m["side"]=="X" for m in markers),
+                    "final_position_fraction":float(sim["position_fraction"]),
+                  }
+                  rows.append(row)
+                  print(json.dumps(row,ensure_ascii=False))
+              except Exception as e:
+                  failures.append({**u,"error":repr(e)})
+                  print("FAIL",u,repr(e),flush=True)
+
+          if failures:
+              raise RuntimeError("A-share failures: "+json.dumps(failures,ensure_ascii=False))
+
+          by_industry={}
+          for industry in sorted({r["industry"] for r in rows}):
+              rr=[r for r in rows if r["industry"]==industry]
+              by_industry[industry]={
+                "count":len(rr),
+                "mean_sltd_return":float(np.mean([x["sltd_total_return"] for x in rr])),
+                "median_sltd_return":float(np.median([x["sltd_total_return"] for x in rr])),
+                "mean_max_drawdown":float(np.mean([x["sltd_max_drawdown"] for x in rr])),
+                "beats_buyhold_count":sum(x["delta_sltd_minus_buyhold"]>0 for x in rr),
+              }
+
+          ranked=sorted(rows,key=lambda x:x["sltd_total_return"],reverse=True)
+          out={
+            "study":"SLTD_V7_A_SHARE_20_V1",
+            "status":"COMPLETE",
+            "source_base_commit":"e05919539328407cb7a67f8a995f6b90f0d4156b",
+            "strategy_source_commit":strategy.STRATEGY_SOURCE_COMMIT,
+            "strategy_version":strategy.STRATEGY_VERSION,
+            "chan_integration":False,
+            "representation":"causal original SLTD V7 build_ledger",
+            "execution":"signal close -> next available open",
+            "position_policy":strategy.POSITION_POLICY_ID,
+            "hard_exit":strategy.HARD_EXIT_ID,
+            "friction_bps":5.0,
+            "data_source":"Yahoo Finance via yfinance",
+            "price_mode":"raw unadjusted OHLC, matching frozen US-stock research protocol",
+            "formal_window":"2020-01-02..2026-09-30",
+            "universe_count":len(rows),
+            "industry_count":len(by_industry),
+            "summary":{
+              "positive_sltd_count":sum(x["sltd_total_return"]>0 for x in rows),
+              "beats_raw_buyhold_count":sum(x["delta_sltd_minus_buyhold"]>0 for x in rows),
+              "mean_sltd_return":float(np.mean([x["sltd_total_return"] for x in rows])),
+              "median_sltd_return":float(np.median([x["sltd_total_return"] for x in rows])),
+              "mean_max_drawdown":float(np.mean([x["sltd_max_drawdown"] for x in rows])),
+              "median_max_drawdown":float(np.median([x["sltd_max_drawdown"] for x in rows])),
+            },
+            "industries":by_industry,
+            "ranked":ranked,
+            "per_symbol":rows,
+          }
+          p=Path("/tmp/SLTD_V7_A_SHARE_20_RESULT_v1.json")
+          p.write_text(json.dumps(out,indent=2,ensure_ascii=False),encoding="utf-8")
+          print("\nFINAL_SUMMARY")
+          print(json.dumps(out["summary"],indent=2,ensure_ascii=False))
+          print("\nRANKED")
+          for r in ranked:
+              print(f'{r["code"]} {r["name"]} {r["industry"]}: SLTD={r["sltd_total_return"]:.6f}, MDD={r["sltd_max_drawdown"]:.6f}, BH={r["buy_hold_raw_price_return"]:.6f}, delta={r["delta_sltd_minus_buyhold"]:.6f}')
+          PY
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: sltd-v7-a-share20-v1
+          path: /tmp/SLTD_V7_A_SHARE_20_RESULT_v1.json
+          if-no-files-found: error
+          retention-days: 30
