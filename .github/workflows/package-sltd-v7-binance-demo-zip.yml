@@ -19,16 +19,51 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Build ZIP
+
+      - name: Build flat project ZIP
         run: |
           set -euo pipefail
           rm -rf package dist
-          mkdir -p package/SiftAlpha-V7-Binance-Demo/integrations dist
-          cp -a integrations/sltd_v7_siftalpha_v1 package/SiftAlpha-V7-Binance-Demo/integrations/
-          cp -a integrations/shared_market_data package/SiftAlpha-V7-Binance-Demo/integrations/
-          printf '%s\n'             'Branch: feature/sltd-v7-binance-usdm-demo-v1'             "HEAD: $(git rev-parse HEAD)"             'Status: IMPLEMENTED_AND_VERIFIED'             'Binance timestamp contract: NATIVE_MILLISECONDS_VERIFIED'             > package/SiftAlpha-V7-Binance-Demo/PACKAGE_INFO.txt
-          (cd package && zip -qr ../dist/SiftAlpha-V7-Binance-Demo.zip SiftAlpha-V7-Binance-Demo)
+          mkdir -p package dist
+
+          cp -a integrations/sltd_v7_siftalpha_v1/. package/
+          cp -a integrations/shared_market_data package/shared_market_data
+
+          printf '%s\n' \
+            'Branch: feature/sltd-v7-binance-usdm-demo-v1' \
+            "HEAD: $(git rev-parse HEAD)" \
+            'Status: IMPLEMENTED_AND_VERIFIED' \
+            'Package layout: FLAT_PROJECT_ROOT' \
+            'Entry point: app.py' \
+            'Binance timestamp contract: NATIVE_MILLISECONDS_VERIFIED' \
+            > package/PACKAGE_INFO.txt
+
+          test -f package/app.py
+          test -f package/requirements.txt
+          test -d package/templates
+          test -d package/providers
+          test -d package/vendor
+          test -d package/shared_market_data
+
+          (cd package && zip -qr ../dist/SiftAlpha-V7-Binance-Demo.zip .)
+
+          python - <<'PY'
+          import zipfile
+          p='dist/SiftAlpha-V7-Binance-Demo.zip'
+          with zipfile.ZipFile(p) as z:
+              names=set(z.namelist())
+              required={'app.py','requirements.txt','PACKAGE_INFO.txt'}
+              missing=sorted(required-names)
+              if missing:
+                  raise SystemExit(f'ZIP root contract failed, missing: {missing}')
+              bad=[x for x in names if x.startswith('SiftAlpha-V7-Binance-Demo/') or x.startswith('integrations/')]
+              if bad:
+                  raise SystemExit(f'ZIP has forbidden outer wrapper: {bad[:5]}')
+              print('FLAT_ZIP_ROOT_PASS')
+          PY
+
           sha256sum dist/SiftAlpha-V7-Binance-Demo.zip > dist/SiftAlpha-V7-Binance-Demo.zip.sha256
+
       - name: Commit ZIP
         run: |
           set -euo pipefail
@@ -39,10 +74,11 @@ jobs:
           cp dist/SiftAlpha-V7-Binance-Demo.zip.sha256 releases/sltd-v7-binance-demo/
           git add releases/sltd-v7-binance-demo
           if ! git diff --cached --quiet; then
-            git commit -m "build: package V7 Binance Demo ZIP"
+            git commit -m "build: package flat V7 Binance Demo ZIP"
             git pull --rebase origin feature/sltd-v7-binance-usdm-demo-v1
             git push origin HEAD:feature/sltd-v7-binance-usdm-demo-v1
           fi
+
       - uses: actions/upload-artifact@v4
         with:
           name: SiftAlpha-V7-Binance-Demo
