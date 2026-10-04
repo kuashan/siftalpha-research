@@ -470,12 +470,9 @@
         }
       }
 
-      let chanSignals = [];
-      if (selected.has('chan')) {
-        chanSignals = get('chan')?.chan?.signals || [];
-      } else if (selected.has('v7')) {
-        chanSignals = get('v7')?.chan_signal_overlay || [];
-      }
+      const chanSignals = selected.has('chan')
+        ? (get('chan')?.chan?.signals || [])
+        : [];
       for (const s of chanSignals) {
         const date = String(s.anchor_date || '');
         const bar = barMap.get(date);
