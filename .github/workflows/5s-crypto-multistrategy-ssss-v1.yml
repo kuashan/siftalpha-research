@@ -91,7 +91,7 @@ jobs:
           assert 'STRATEGY_SSSS = "ssss"' in registry
           assert 'STRATEGY_E: StrategySpec' not in registry
           assert '💰=买入25%' in page
-          assert '人型=全部清仓' in page
+          assert '💥=全部清仓' in page
           assert 'strategy_indicator_markers' in app
           assert 'SSSS_SOURCE_SHA256' in source
           print("SSSS_SELECTOR_UI_PASS")
