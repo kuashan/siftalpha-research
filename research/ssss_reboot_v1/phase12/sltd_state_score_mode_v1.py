@@ -21,7 +21,8 @@ import yfinance as yf
 ROOT = Path(__file__).resolve().parent
 PHASE7 = ROOT.parent / "phase7"
 PHASE8 = ROOT.parent / "phase8"
-sys.path.insert(0, str(ROOT))
+PHASE11 = ROOT.parent / "phase11"
+sys.path.insert(0, str(PHASE11))
 import pure_sltd_state_probability_v1 as st
 import pure_sltd_v8_probability_map_r2_v1 as r2
 import pure_sltd_v8_probability_map_r3_v1 as r3
