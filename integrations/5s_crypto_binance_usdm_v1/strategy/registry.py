@@ -259,7 +259,7 @@ def decide(strategy_id: str, rows: list[Any], runtime: dict[str, Any], timeframe
 def strategy_signal_label(strategy_id: str, raw: object) -> str:
     text = str(raw or "").strip().upper()
     if not text:
-        return "等待信号"
+        return "观望" if strategy_id == STRATEGY_SSSS else "等待信号"
     if strategy_id == STRATEGY_5S:
         labels = {
             "BUY_A": "买入信号一",
@@ -274,8 +274,8 @@ def strategy_signal_label(strategy_id: str, raw: object) -> str:
         return " + ".join(labels.get(part, part) for part in text.split("+"))
     if strategy_id == STRATEGY_SSSS:
         labels = {
-            "SSSS_BUY_9": "💰 买入 25%",
-            "SSSS_EXIT_15": "人型图标·全部清仓",
+            "SSSS_BUY_9": "买入 25%",
+            "SSSS_EXIT_15": "全部清仓",
             "HOLD": "观望",
         }
         return " + ".join(labels.get(part, part) for part in text.split("+"))
