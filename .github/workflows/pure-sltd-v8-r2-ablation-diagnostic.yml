@@ -1,0 +1,54 @@
+name: Pure SLTD V8 R2 Ablation Diagnostic
+
+on:
+  push:
+    branches:
+      - research/sltd-v8-probability-map-r2-v1
+    paths:
+      - "research/ssss_reboot_v1/phase11/pure_sltd_v8_probability_map_r2_ablation_v1.py"
+      - ".github/workflows/pure-sltd-v8-r2-ablation-diagnostic.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -q numpy pandas yfinance
+      - name: Run ablation diagnostic
+        run: python research/ssss_reboot_v1/phase11/pure_sltd_v8_probability_map_r2_ablation_v1.py
+      - name: Verify outputs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("research/ssss_reboot_v1/phase11")
+          p=root/"PURE_SLTD_V8_PROBABILITY_MAP_R2_ABLATION_DIAGNOSTIC_v1.json"
+          x=json.loads(p.read_text(encoding="utf-8"))
+          assert x["fresh20_already_seen"] is True
+          assert set(x["portfolio"]["5bps"])=={"V7_BASE","BUY_ONLY","SELL_ONLY","BOTH"}
+          print(json.dumps({
+            "portfolio_5bps":x["portfolio"]["5bps"],
+            "breadth_5bps":x["breadth_5bps"],
+          },indent=2))
+          PY
+      - name: Commit diagnostic
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             research/ssss_reboot_v1/phase11/PURE_SLTD_V8_PROBABILITY_MAP_R2_ABLATION_DIAGNOSTIC_v1.json             research/ssss_reboot_v1/phase11/PURE_SLTD_V8_PROBABILITY_MAP_R2_ABLATION_DIAGNOSTIC_v1.md
+          if ! git diff --cached --quiet; then
+            git commit -m "research: archive probability-map R2 ablation diagnostic"
+            git push origin HEAD:research/sltd-v8-probability-map-r2-v1
+          fi
