@@ -28,7 +28,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install -q numpy pandas
+        run: pip install -q numpy pandas yfinance
 
       - name: Run Stage A
         run: python research/ssss_reboot_v1/phase14/sltd_state_score_risk_layer_stage_a_v3.py
