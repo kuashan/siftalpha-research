@@ -127,6 +127,26 @@ def _short_symbol(symbol: str) -> str:
     return symbol[:-4] if symbol.endswith("USDT") else symbol
 
 
+def _position_metrics(symbol: str) -> dict[str, object]:
+    api_key, api_secret = testnet_session.credentials()
+    if not api_key or not api_secret:
+        return {}
+    try:
+        return dict(testnet_session.adapter().position_metrics(symbol))
+    except Exception:
+        return {}
+
+
+def _number_label(value: object, *, suffix: str = "", digits: int = 2) -> str:
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return "—"
+    if number <= 0:
+        return "—"
+    return f"{number:.{digits}f}{suffix}"
+
+
 def run_m4_recovery() -> dict[str, object]:
     adapter = testnet_session.adapter()
     summary = m4_recovery.reconcile_all(adapter, settings.symbols)
@@ -297,6 +317,17 @@ def render_index(selected_symbol: str | None = None) -> str:
         last_signal = _signal_label(rt.get("last_signal"), strategy_id)
         base = _short_symbol(symbol)
         selected = symbol == initial_symbol
+        position_metrics = _position_metrics(symbol)
+        margin_ratio_label = _number_label(
+            position_metrics.get("margin_ratio_percent"), suffix="%", digits=2
+        )
+        entry_price_label = _number_label(position_metrics.get("entry_price"), digits=4)
+        liquidation_price_label = _number_label(
+            position_metrics.get("liquidation_price"), digits=4
+        )
+        isolated_margin_label = _number_label(
+            position_metrics.get("isolated_margin_usdt"), suffix=" USDT", digits=2
+        )
         strategy_locked = enabled or current_fraction > 1e-12
         strategy_option_html = "".join(
             f'<option value="{html.escape(sid)}"{" selected" if is_selected else ""}>{html.escape("5s V1" if sid == STRATEGY_5S else label)}</option>'
@@ -367,6 +398,9 @@ def render_index(selected_symbol: str | None = None) -> str:
                 <div class="snapshot"><small>最新信号</small><b>{html.escape(last_signal)}</b></div>
                 <div class="snapshot"><small>浮动盈亏</small><b class="{_pnl_class(p['unrealized_pnl'])}">{p['unrealized_pnl']:+.2f}</b></div>
                 <div class="snapshot"><small>已实现盈亏</small><b class="{_pnl_class(p['realized_pnl'])}">{p['realized_pnl']:+.2f}</b></div>
+                <div class="snapshot"><small>保证金比率</small><b>{html.escape(margin_ratio_label)}</b></div>
+                <div class="snapshot"><small>开仓价格</small><b>{html.escape(entry_price_label)}</b></div>
+                <div class="snapshot"><small>强平价格</small><b>{html.escape(liquidation_price_label)}</b></div>
               </div>
 
               <section
@@ -378,7 +412,6 @@ def render_index(selected_symbol: str | None = None) -> str:
                   <div class="chart-identity">
                     <small>行情图 · V7 交互</small>
                     <strong>{html.escape(base)} / USDT · {_TIMEFRAME_LABELS.get(timeframe, timeframe)}</strong>
-                    <span class="chart-candle-meta">移动或点击 K 线查看细节</span>
                   </div>
                   <div class="live-price" aria-live="polite">
                     <small>最新价</small>
@@ -457,6 +490,27 @@ def render_index(selected_symbol: str | None = None) -> str:
                     </div>
                     <button class="secondary save-button" type="submit">保存设置</button>
                   </form>
+                  <div class="isolated-margin-control">
+                    <div class="isolated-margin-head">
+                      <div>
+                        <small>逐仓保证金管理</small>
+                        <strong>{html.escape(isolated_margin_label)}</strong>
+                      </div>
+                      <span>与策略资金独立</span>
+                    </div>
+                    <form class="isolated-margin-form" method="post" action="/position-margin">
+                      <input type="hidden" name="symbol" value="{html.escape(symbol)}">
+                      <label>调整金额
+                        <div class="input-with-unit">
+                          <input name="amount_usdt" type="number" min="0.01" step="0.01" inputmode="decimal" required>
+                          <span>USDT</span>
+                        </div>
+                      </label>
+                      <button class="secondary" type="submit" name="action" value="add">追加保证金</button>
+                      <button class="danger" type="submit" name="action" value="reduce">减少保证金</button>
+                    </form>
+                    <small class="isolated-margin-note">只调整当前币种逐仓保证金，不改变策略仓位百分比；减少额度由 Binance 风控最终校验。</small>
+                  </div>
                   </div>
                 </details>
 
@@ -745,6 +799,28 @@ class Handler(BaseHTTPRequestHandler):
                 store.set_symbol_strategy(symbol, spec.strategy_id, timeframe)
                 if api_key and api_secret:
                     run_m4_recovery()
+                self._redirect_home(symbol)
+                return
+
+            if self.path == "/position-margin":
+                symbol = self._symbol_from_form(form)
+                action = form.get("action", [""])[0].lower().strip()
+                if action not in {"add", "reduce"}:
+                    raise ValueError("不支持这个保证金操作")
+                amount = float(form.get("amount_usdt", ["0"])[0])
+                if amount <= 0:
+                    raise ValueError("逐仓保证金调整金额必须大于零")
+                adapter = testnet_session.adapter()
+                result = adapter.modify_isolated_position_margin(
+                    symbol,
+                    amount,
+                    reduce=action == "reduce",
+                )
+                store.append_audit(
+                    "ISOLATED_MARGIN_CHANGE",
+                    symbol,
+                    f"action={action};amount_usdt={amount:.8f};result={result!r}",
+                )
                 self._redirect_home(symbol)
                 return
 
