@@ -79,11 +79,11 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 .status-pill{padding:4px 7px;border-radius:999px;font-size:10px;border:1px solid var(--line)}
 .status-pill.running{color:#8ce6bc;border-color:#285945;background:#122b23}.status-pill.stopped{color:#aab6c9;background:#1a2230}
 .hero-right{display:flex;align-items:center;justify-content:flex-end;gap:12px;min-width:0}
-.strategy-switch{min-width:150px;text-align:left}
-.strategy-switch label{display:block}
-.strategy-switch select{min-height:36px;margin-top:3px;padding:6px 28px 6px 9px;font-size:12px;font-weight:700}
+.strategy-switch{width:98px;min-width:98px;text-align:left}
+.strategy-switch label{display:block;font-size:10px;color:var(--muted)}
+.strategy-switch select{width:100%;min-height:32px;margin-top:3px;padding:5px 24px 5px 8px;font-size:11px;font-weight:700}
 .strategy-switch select:disabled{opacity:.62;cursor:not-allowed}
-.strategy-switch>small{display:block;margin-top:3px;color:var(--muted);font-size:9px;white-space:nowrap}
+.strategy-switch>small{display:block;margin-top:2px;color:var(--muted);font-size:8px;white-space:nowrap}
 .hero-pnl{text-align:right;min-width:92px}.hero-pnl small{display:block;color:var(--muted);font-size:10px}.hero-pnl strong{font-size:23px}.hero-pnl span{font-size:10px;color:var(--muted)}
 .market-chart{margin:10px 14px 0;background:var(--panel2);border:1px solid #1f2a3e;border-radius:11px;padding:10px}
 .chart-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(100px,.75fr) minmax(98px,auto);align-items:center;gap:12px}
@@ -308,6 +308,8 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     const liveStatus = section.querySelector('.live-price-status');
     const candles = Array.isArray(payload.candles) ? payload.candles : [];
     const markers = Array.isArray(payload.markers) ? payload.markers : [];
+    const overlay = Array.isArray(payload.strategy_overlay) ? payload.strategy_overlay : [];
+    const strategySnapshot = payload.strategy_snapshot || {};
     if (!canvas || !scroll || candles.length === 0) {
       if (message) message.textContent = '暂时没有可显示的 K 线数据';
       return;
@@ -332,8 +334,15 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     const volumeTop = logicalHeight * 0.78;
     const volumeBottom = logicalHeight - 18;
     const plotRight = logicalWidth - right;
-    const lows = candles.map(c => Number(c.low));
-    const highs = candles.map(c => Number(c.high));
+    const overlayPrices = [];
+    overlay.forEach(row => {
+      ['ZK1','ZD1','GZB3','GZB4','BS'].forEach(key => {
+        const value = Number(row[key]);
+        if (Number.isFinite(value)) overlayPrices.push(value);
+      });
+    });
+    const lows = candles.map(c => Number(c.low)).concat(overlayPrices);
+    const highs = candles.map(c => Number(c.high)).concat(overlayPrices);
     let minPrice = Math.min.apply(null, lows);
     let maxPrice = Math.max.apply(null, highs);
     let pad = (maxPrice - minPrice) * 0.06;
@@ -356,6 +365,65 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       ctx.fillText(formatPrice(p), plotRight + 5, y + 3);
     }
     ctx.beginPath(); ctx.moveTo(left, volumeTop - 5); ctx.lineTo(plotRight, volumeTop - 5); ctx.stroke();
+
+    const overlayMap = new Map();
+    overlay.forEach(row => overlayMap.set(String(row.open_time), row));
+
+    // E strategy state background and slow-band area.
+    if (String(payload.strategy_id || '') === 'e') {
+      candles.forEach((c, i) => {
+        const row = overlayMap.get(String(c.open_time));
+        if (!row) return;
+        const state = String(row.state || '');
+        let fill = 'rgba(135,145,160,.035)';
+        if (state === 'BLUE') fill = 'rgba(91,140,255,.055)';
+        else if (state === 'GREEN') fill = 'rgba(82,212,154,.045)';
+        else if (state === 'GRAY') fill = 'rgba(160,170,185,.035)';
+        const x = left + i * candleStep;
+        ctx.fillStyle = fill;
+        ctx.fillRect(x, priceTop, candleStep, priceBottom - priceTop);
+
+        const g3 = Number(row.GZB3), g4 = Number(row.GZB4);
+        if (Number.isFinite(g3) && Number.isFinite(g4)) {
+          const y1 = yPrice(g3), y2 = yPrice(g4);
+          ctx.fillStyle = 'rgba(175,185,200,.08)';
+          ctx.fillRect(x, Math.min(y1,y2), candleStep, Math.max(1, Math.abs(y2-y1)));
+        }
+      });
+
+      function drawOverlayLine(key, stroke, dash, width) {
+        ctx.save();
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = width || 1;
+        ctx.setLineDash(dash || []);
+        ctx.beginPath();
+        let started = false;
+        candles.forEach((c, i) => {
+          const row = overlayMap.get(String(c.open_time));
+          const value = row ? Number(row[key]) : NaN;
+          if (!Number.isFinite(value)) {
+            started = false;
+            return;
+          }
+          const x = left + i * candleStep + candleStep / 2;
+          const y = yPrice(value);
+          if (!started) {
+            ctx.moveTo(x, y);
+            started = true;
+          } else {
+            ctx.lineTo(x, y);
+          }
+        });
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      drawOverlayLine('ZK1', '#f0a3a8', [4,3], 1);
+      drawOverlayLine('ZD1', '#7eb0ff', [4,3], 1);
+      drawOverlayLine('GZB3', '#9aa7ba', [], 1);
+      drawOverlayLine('GZB4', '#6f7d92', [], 1);
+      drawOverlayLine('BS', '#d2b2ff', [2,3], 1);
+    }
 
     const markerMap = new Map();
     markers.forEach(m => {
@@ -459,8 +527,26 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       if (liveStatus) liveStatus.textContent = '等待实时行情';
     }
     if (message) {
-      message.textContent =
-        payload.source + ' · ' + payload.timeframe_label + ' · B/S 为真实策略信号';
+      const runtime = payload.runtime_state_label || '未知状态';
+      const fraction = Number(payload.runtime_fraction || 0) * 100;
+      if (String(payload.strategy_id || '') === 'e') {
+        const state = strategySnapshot.state_zh || '状态未知';
+        const action = strategySnapshot.resolved_action_zh || '无新动作';
+        const next = strategySnapshot.next_action || '';
+        message.textContent =
+          'E · ' + runtime + ' · 仓位 ' + fraction.toFixed(0) + '% · ' +
+          state + ' · ' + action + (next ? ' · ' + next : '');
+      } else {
+        message.textContent =
+          payload.strategy_label + ' · ' + runtime + ' · 仓位 ' + fraction.toFixed(0) +
+          '% · ' + payload.timeframe_label + ' · B/S 为策略信号';
+      }
+      const legend = section.querySelector('.strategy-legend');
+      if (legend) {
+        legend.textContent = String(payload.strategy_id || '') === 'e'
+          ? 'E：状态区 · ZK1/ZD1 · GZB3/GZB4 · BS · B/S/X'
+          : payload.strategy_label;
+      }
     }
     if (section.dataset.scrolled !== '1') {
       requestAnimationFrame(() => {
