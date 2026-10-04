@@ -47,6 +47,8 @@ button{cursor:pointer}
 .connection-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
 .connection-stats div,.snapshot,.exposure-row div{background:var(--panel2);border-radius:9px;padding:9px;min-width:0}
 .connection-stats small,.snapshot small,.exposure-row small{display:block;color:var(--muted);font-size:10px;margin-bottom:4px}
+.snapshot{padding:6px 8px}
+.snapshot small{margin-bottom:2px}
 .connection-stats b,.snapshot b,.exposure-row b{font-size:13px;overflow-wrap:anywhere}
 .connect-form{display:grid;grid-template-columns:1fr 1.3fr 1.3fr auto;gap:8px;align-items:end;margin-top:10px}
 label{color:var(--muted);font-size:11px}
@@ -90,7 +92,6 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 .chart-identity{min-width:0}
 .chart-identity small,.live-price small{display:block;color:var(--muted);font-size:10px}
 .chart-identity strong{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chart-candle-meta{display:block;margin-top:5px;color:var(--muted);font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .live-price{text-align:center;min-width:0;padding:2px 10px;border-left:1px solid #1f2a3e;border-right:1px solid #1f2a3e}
 .live-price-value{display:block;margin-top:2px;font-size:20px;line-height:1.15;font-variant-numeric:tabular-nums;white-space:nowrap}
 .live-price-status{display:block;margin-top:3px;color:var(--muted);font-size:9px;white-space:nowrap}
@@ -99,7 +100,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 .chart-ohlc small{color:var(--muted);font-size:9px}
 .chart-ohlc b{font-size:10px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}
 .chart-scroll{margin:10px 0 0;overflow:hidden;border-radius:9px;background:#080d17;position:relative;user-select:none}
-.kline-chart{display:block;width:100%;height:520px;touch-action:pan-y;position:relative}
+.kline-chart{display:block;width:100%;height:416px;touch-action:pan-y;position:relative}
 .chart-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:7px;color:var(--muted);font-size:10px;align-items:center}
 .chart-legend b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;color:#08110d}
 .legend-buy{background:#ff7b82;color:#1a0708!important}.legend-sell{background:#52d49a;color:#07130e!important}.legend-exit{background:#eab464;color:#1a1207!important}
@@ -152,6 +153,14 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 .timeframe-option.selected small{color:#9dbbff}
 .exposure-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:8px}
 .save-button{width:100%;margin-top:8px}
+.isolated-margin-control{margin-top:10px;padding-top:10px;border-top:1px solid #26344d}
+.isolated-margin-head{display:flex;align-items:end;justify-content:space-between;gap:8px}
+.isolated-margin-head small{display:block;color:var(--muted);font-size:10px}
+.isolated-margin-head strong{display:block;margin-top:2px;font-size:13px}
+.isolated-margin-head span,.isolated-margin-note{color:var(--muted);font-size:9px}
+.isolated-margin-form{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:7px;align-items:end;margin-top:7px}
+.isolated-margin-form button{min-height:42px;white-space:nowrap}
+.isolated-margin-note{display:block;margin-top:6px;line-height:1.45}
 .control-block{display:flex;flex-direction:column;justify-content:space-between}
 .control-block p{color:var(--muted);font-size:11px;line-height:1.5;margin:8px 0 12px}
 .control-button{width:100%}
@@ -171,8 +180,9 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
   .connect-form{grid-template-columns:1fr 1fr}.connect-form label:nth-child(2),.connect-form label:nth-child(3){grid-column:1/-1}.connect-form button{grid-column:1/-1;width:100%}
   .section-head{margin-top:12px}
   .coin-tabs{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.coin-tab{min-width:0;min-height:50px;padding:7px 5px}.coin-tab strong{font-size:12px}
-  .coin-hero{padding:12px}.market-chart{margin:8px 2px 0;padding:8px 4px}.chart-head{grid-template-columns:minmax(0,1fr) minmax(88px,.72fr) minmax(88px,auto);gap:7px}.chart-identity strong{font-size:11px}.chart-candle-meta{font-size:8px}.live-price{padding:2px 6px}.live-price-value{font-size:16px}.live-price-status{font-size:8px}.chart-ohlc{min-width:84px}.chart-ohlc div{gap:5px}.chart-ohlc small{font-size:8px}.chart-ohlc b{font-size:9px}.kline-canvas{height:300px}.snapshot-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px 12px 0}.snapshot{padding:7px 5px}.snapshot small{font-size:8px}.snapshot b{font-size:11px}
+  .coin-hero{padding:12px}.market-chart{margin:8px 2px 0;padding:8px 4px}.chart-head{grid-template-columns:minmax(0,1fr) minmax(88px,.72fr) minmax(88px,auto);gap:7px}.chart-identity strong{font-size:11px}.live-price{padding:2px 6px}.live-price-value{font-size:16px}.live-price-status{font-size:8px}.chart-ohlc{min-width:84px}.chart-ohlc div{gap:5px}.chart-ohlc small{font-size:8px}.chart-ohlc b{font-size:9px}.kline-canvas{height:300px}.snapshot-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px 12px 0}.snapshot{padding:4px 5px}.snapshot small{font-size:8px;margin-bottom:1px}.snapshot b{font-size:11px}
   .panel-body{grid-template-columns:1fr;padding:8px 12px 12px}
+  .isolated-margin-form{grid-template-columns:1fr 1fr}.isolated-margin-form label{grid-column:1/-1}
   .field-grid{grid-template-columns:1fr 1fr}.budget-field{grid-column:1/-1}.timeframe-field{grid-column:1/-1}
   .timeframe-menu{grid-template-columns:repeat(3,minmax(0,1fr))}
   .exposure-row{grid-template-columns:1fr 1fr}.exposure-row div:last-child{grid-column:1/-1}
@@ -189,7 +199,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
   <header class="topbar">
     <div class="title-row">
       <div class="brand">
-        <h1>5s crypto v 1</h1>
+        <h1>Siftalpha crypto V5</h1>
         <p>币安 U 本位合约 · 虚拟测试控制台</p>
       </div>
       <div class="badges">
@@ -308,7 +318,6 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
   function drawChart(section, payload) {
     const host = section.querySelector('.kline-chart');
     const message = section.querySelector('.chart-message');
-    const candleMeta = section.querySelector('.chart-candle-meta');
     const liveValue = section.querySelector('.live-price-value');
     const liveStatus = section.querySelector('.live-price-status');
     const candles = Array.isArray(payload.candles) ? payload.candles : [];
@@ -353,7 +362,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 
       const chart = LW.createChart(host, {
         width: Math.max(320, host.clientWidth || 320),
-        height: host.clientHeight || 520,
+        height: host.clientHeight || 416,
         layout: {
           background: {color: '#080d17'},
           textColor: '#8798ab',
@@ -446,36 +455,17 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
         if (!param || !param.time || !state?.payload) return;
         const bar = param.seriesData.get(state.candleSeries);
         if (!bar || bar.open == null) return;
-        const ms = Number(param.time) * 1000;
-        const original = (state.payload.candles || []).find(x =>
-          Math.floor(Number(x.open_time) / 1000) === Number(param.time)
-        );
-        if (!original) return;
 
         [['open',bar.open],['high',bar.high],['low',bar.low],['close',bar.close]].forEach(([name,value]) => {
           const node = section.querySelector('[data-ohlc="' + name + '"]');
           if (node) node.textContent = formatPrice(value);
         });
-        const tradeMarks = (state.payload.markers || []).filter(m =>
-          Math.floor(Number(m.open_time) / 1000) === Number(param.time)
-        );
-        const markText = tradeMarks.length
-          ? ' · 成交 ' + tradeMarks.map(m => m.side).join('/')
-          : '';
-        if (candleMeta) {
-          candleMeta.textContent = formatTime(ms) +
-            ' · 开 ' + formatPrice(bar.open) +
-            ' 高 ' + formatPrice(bar.high) +
-            ' 低 ' + formatPrice(bar.low) +
-            ' 收 ' + formatPrice(bar.close) +
-            ' · 量 ' + formatVolume(original.volume) + markText;
-        }
       });
 
       const resize = new ResizeObserver(() => {
         chart.applyOptions({
           width: Math.max(320, host.clientWidth || 320),
-          height: host.clientHeight || 520,
+          height: host.clientHeight || 416,
         });
       });
       resize.observe(host);
@@ -553,7 +543,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     );
 
     const panes = state.chart.panes();
-    panes[0]?.setHeight(330);
+    panes[0]?.setHeight(264);
     let paneIndex = 1;
     if (state.stateSeries) panes[paneIndex++]?.setHeight(30);
     panes[paneIndex++]?.setHeight(80);
@@ -575,13 +565,6 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
         const node = section.querySelector('[data-ohlc="' + name + '"]');
         if (node) node.textContent = formatPrice(value);
       });
-      if (candleMeta) {
-        candleMeta.textContent = '最新 K 线 · ' + formatTime(latest.open_time) +
-          ' · 开 ' + formatPrice(latest.open) +
-          ' 高 ' + formatPrice(latest.high) +
-          ' 低 ' + formatPrice(latest.low) +
-          ' 收 ' + formatPrice(latest.close);
-      }
       if (liveValue && section.dataset.livePriceReady !== '1') {
         liveValue.textContent = formatPrice(latest.close);
         if (liveStatus) liveStatus.textContent = '等待实时行情';
@@ -795,7 +778,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
   setInterval(() => {
     const active = tabs.find(tab => tab.classList.contains('active'));
     if (active) loadChart(active.dataset.symbol, true);
-  }, 30000);
+  }, 1000);
   window.addEventListener('beforeunload', stopPriceStream);
 })();
 </script>
