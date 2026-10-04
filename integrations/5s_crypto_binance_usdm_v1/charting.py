@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Iterable
 
 
-DISPLAY_KLINE_LIMIT = 300
+DISPLAY_KLINE_LIMIT = 1000
 
 
 def normalize_chart_klines(rows: Iterable[Any]) -> list[dict[str, float | int]]:
