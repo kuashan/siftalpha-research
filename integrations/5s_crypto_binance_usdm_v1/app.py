@@ -253,17 +253,14 @@ def chart_payload(symbol: str) -> dict[str, object]:
 
     strategy_overlay: list[dict[str, object]] = []
     strategy_snapshot: dict[str, object] = {}
+    markers = store.list_trade_markers(symbol, strategy_id)
     if strategy_id == "e":
         try:
             e_view = _e_chart_analysis(symbol, timeframe, all_rows)
-            markers = list(e_view["markers"])
             strategy_overlay = list(e_view["overlay"])
             strategy_snapshot = dict(e_view["snapshot"])
         except Exception as exc:
-            markers = []
             strategy_snapshot = {"analysis_error": str(exc)}
-    else:
-        markers = store.list_signal_markers(symbol, strategy_id)
 
     if candles:
         first_time = int(candles[0]["open_time"])
@@ -410,13 +407,6 @@ def render_index(selected_symbol: str | None = None) -> str:
                     <span>USDT</span>
                   </div>
                 </div>
-              </div>
-
-              <div class="snapshot-grid snapshot-above-chart">
-                <div class="snapshot"><small>当前仓位</small><b>{current_fraction * 100:.0f}%</b></div>
-                <div class="snapshot"><small>最新信号</small><b>{html.escape(last_signal)}</b></div>
-                <div class="snapshot"><small>浮动盈亏</small><b class="{_pnl_class(p['unrealized_pnl'])}">{p['unrealized_pnl']:+.2f}</b></div>
-                <div class="snapshot"><small>已实现盈亏</small><b class="{_pnl_class(p['realized_pnl'])}">{p['realized_pnl']:+.2f}</b></div>
               </div>
 
               <div class="snapshot-grid snapshot-above-chart">
