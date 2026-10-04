@@ -23,7 +23,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install research dependencies
-        run: pip install -q numpy pandas
+        run: pip install -q numpy pandas yfinance
 
       - name: Re-run original SLTD V7 on CRM
         run: |
