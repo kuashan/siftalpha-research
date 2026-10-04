@@ -19,6 +19,7 @@ ROOT=Path(__file__).resolve().parent
 PHASE7=ROOT.parent/"phase7"
 PHASE11=ROOT.parent/"phase11"
 
+sys.path.insert(0,str(PHASE7))
 sys.path.insert(0,str(PHASE11))
 import pure_sltd_v8_probability_map_r2_v1 as r2
 
@@ -85,6 +86,13 @@ def load_confirmed_weights():
     return weights,metadata
 
 
+def parse_bool(v):
+    if isinstance(v,(bool,np.bool_)):
+        return bool(v)
+    if v is None or (isinstance(v,float) and math.isnan(v)):
+        return False
+    return str(v).strip().lower() in {"1","true","yes","y"}
+
 def norm(v,default="NONE"):
     if v is None or (isinstance(v,float) and math.isnan(v)):
         return default
@@ -128,13 +136,13 @@ def descriptor(ledger, i):
                 elif now<old: slow_trend="DOWN"
 
     events=[]
-    if bool(row.get("lower")):
+    if parse_bool(row.get("lower")):
         events.append(("LOWER",norm(row.get("lower_subtype"),"NONE")))
-    if bool(row.get("upper")):
+    if parse_bool(row.get("upper")):
         events.append(("UPPER",norm(row.get("upper_subtype"),"NONE")))
-    if bool(row.get("light_support")):
+    if parse_bool(row.get("light_support")):
         events.append(("LIGHT_SUPPORT","CONTACT"))
-    if bool(row.get("light_resist")):
+    if parse_bool(row.get("light_resist")):
         events.append(("LIGHT_RESIST","CONTACT"))
 
     return {
@@ -521,7 +529,7 @@ def main():
       f"- Negative scale: **{calibration['neg_scale']:.6f}**",
       f"- Calibration nonzero states: **{calibration['nonzero_n']}**","",
       "## Equal-weight Fresh24 portfolio — 5 bps","",
-      "| System | Return | CAGR | MaxDD | Calmar | Turnover mean | Exposure mean |",
+      "| System | Return | CAGR | MaxDD | Calmar | Turnover mean | Invested bars |",
       "|---|---:|---:|---:|---:|---:|---:|",
     ]
     for label in ("SCORE_EXPOSURE","V7_BASE","FIXED_75_LONG","BUY_HOLD","SMA200_TREND"):
