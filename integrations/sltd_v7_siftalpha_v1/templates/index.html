@@ -427,7 +427,6 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
       if(selected.has('v7')){
         items.push('<span class="legend-tag"><i class="legend-dot legend-buy"></i>SLTD 买</span>');
         items.push('<span class="legend-tag"><i class="legend-dot legend-sell"></i>SLTD 卖</span>');
-        items.push('<span class="legend-tag"><i class="legend-dot legend-chan-sell"></i>SLTD 内置缠论 BSP</span>');
       }
       if(selected.has('e'))items.push('<span class="legend-tag"><i class="legend-dot legend-exit"></i>E 买卖</span>');
     }
@@ -550,12 +549,6 @@ td.rules{max-width:330px;color:#c7d3e4;overflow-wrap:anywhere}
         if(d!==target)continue;
         const side=m.side==='B'?'买':(m.side==='S'?'卖':'清');
         out.push(LABELS[id]+' '+side);
-      }
-      if(id==='v7'&&!selected.has('chan')){
-        for(const s of (p.chan_signal_overlay||[])){
-          if(String(s.anchor_date||'')!==target)continue;
-          out.push('缠论 '+String(s.kind||''));
-        }
       }
       if(id==='chan'){
         const ch=(p.chan||{});
