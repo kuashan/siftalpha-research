@@ -322,7 +322,9 @@ class M3Executor:
                     if target_fraction <= 1e-12:
                         raw_quantity = abs(position_amount)
                     else:
-                        ratio = Decimal(str((current_fraction - target_fraction) / current_fraction))
+                        current_d = Decimal(str(current_fraction))
+                        target_d = Decimal(str(target_fraction))
+                        ratio = (current_d - target_d) / current_d
                         raw_quantity = abs(position_amount) * ratio
                     quantity = floor_to_step(raw_quantity, rules.step_size)
                     if quantity <= 0:
