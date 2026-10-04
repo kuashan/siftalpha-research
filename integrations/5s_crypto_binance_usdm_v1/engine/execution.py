@@ -124,6 +124,10 @@ class M3Executor:
         strategy_id: str,
         target_fraction_after: float,
         strategy_state_after: dict[str, object],
+        signal_bar_open_time: int,
+        execution_bar_open_time: int,
+        marker_side: str,
+        strategy_signal: str,
     ) -> dict[str, Any]:
         existing = self._recover_existing(adapter, symbol, client_id)
         if existing is not None:
@@ -138,6 +142,10 @@ class M3Executor:
             strategy_id=strategy_id,
             target_fraction_after=target_fraction_after,
             strategy_state_after=strategy_state_after,
+            signal_bar_open_time=signal_bar_open_time,
+            execution_bar_open_time=execution_bar_open_time,
+            marker_side=marker_side,
+            strategy_signal=strategy_signal,
         )
         if not inserted:
             existing = self._recover_existing(adapter, symbol, client_id)
@@ -341,6 +349,10 @@ class M3Executor:
                     strategy_id=strategy_id,
                     target_fraction_after=target_fraction,
                     strategy_state_after=dict(step.state_after),
+                    signal_bar_open_time=signal_bar,
+                    execution_bar_open_time=execution_bar,
+                    marker_side=("B" if delta > 0 else ("X" if target_fraction <= 1e-12 else "S")),
+                    strategy_signal=str(decision.signal),
                 )
                 order_id = str(_first(order, "orderId", "order_id", default=client_id))
                 if delta > 0:
