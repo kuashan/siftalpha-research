@@ -422,6 +422,10 @@ def evaluate_ssss(rows: Iterable[Any], *, source_path: Path = SSSS_SOURCE_PATH) 
     return out
 
 
+def _json_number(value: float) -> float | None:
+    return float(value) if _finite(value) else None
+
+
 def chart_overlay(rows: Iterable[Any], *, display_limit: int = 1000) -> list[dict[str, object]]:
     evaluated = evaluate_ssss(rows)
     if display_limit > 0:
@@ -432,8 +436,9 @@ def chart_overlay(rows: Iterable[Any], *, display_limit: int = 1000) -> list[dic
         state = "GRAY" if _truth(v["GZB14"]) else "BLUE" if _truth(v["GZB12"]) else "RED" if _truth(v["GZB13"]) else "OTHER"
         out.append({
             "open_time": bar.open_time, "state": state,
-            "GZB3": v["GZB3"], "GZB4": v["GZB4"], "ZK1": v["ZK1"], "ZD1": v["ZD1"],
-            "BS": v["BS"], "BD": v["BD"],
+            "GZB3": _json_number(v["GZB3"]), "GZB4": _json_number(v["GZB4"]),
+            "ZK1": _json_number(v["ZK1"]), "ZD1": _json_number(v["ZD1"]),
+            "BS": _json_number(v["BS"]), "BD": _json_number(v["BD"]),
             "buy_icon_9": bar.buy_icon_9, "exit_icon_15": bar.exit_icon_15,
         })
     return out
