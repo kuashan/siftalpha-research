@@ -24,7 +24,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install dependencies
-        run: pip install -q numpy pandas
+        run: pip install -q numpy pandas yfinance
       - name: Run A-share severe-risk Stage A
         run: python research/ssss_reboot_v1/phase18/sltd_ashare50_integrated_risk_v1_stage_a.py
       - name: Verify result contract
