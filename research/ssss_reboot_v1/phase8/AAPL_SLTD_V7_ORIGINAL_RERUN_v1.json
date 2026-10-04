@@ -1,0 +1,50 @@
+{
+  "study": "SLTD_V7_ORIGINAL_AAPL_RERUN_V1",
+  "status": "COMPLETE",
+  "symbol": "AAPL",
+  "source_base_commit": "e05919539328407cb7a67f8a995f6b90f0d4156b",
+  "run_id": 37174862448,
+  "strategy_variant": "DROP_B3_S1_S3",
+  "strategy_meaning": "Original SLTD V7 12-rule candidate; no Chan integration",
+  "window": {
+    "start": "2020-01-02",
+    "end": "2026-09-30",
+    "bars": 1695
+  },
+  "execution": "signal close -> next available open",
+  "position_policy": "first/next BUY +25pp capped 100%; ordinary SELL -25% of current position; SELL arms C2; BUY resets C2; armed C2 full exit",
+  "friction": {
+    "5bps": {
+      "total_return": 2.4963362441230927,
+      "cagr": 0.2039681252244352,
+      "max_drawdown": -0.3343370956600402,
+      "calmar": 0.6100672879919778,
+      "turnover": 6.1748985423761535,
+      "position_changes": 22,
+      "time_in_market": 0.9663716814159292,
+      "hard_exit_count": 2
+    },
+    "10bps": {
+      "total_return": 2.4858595544778677,
+      "cagr": 0.20343244385053172,
+      "max_drawdown": -0.3343370956600401,
+      "calmar": 0.608465068612624,
+      "turnover": 6.1739553739501725,
+      "position_changes": 22,
+      "time_in_market": 0.9663716814159292,
+      "hard_exit_count": 2
+    }
+  },
+  "buy_hold": {
+    "start_close": 75.0875015258789,
+    "end_close": 333.0199890136719,
+    "total_return": 3.4350921557683813
+  },
+  "signal_counts": {
+    "BUY": 54,
+    "HOLD": 34,
+    "WAIT": 1,
+    "SELL": 6,
+    "NO_ACTION": 1600
+  }
+}
