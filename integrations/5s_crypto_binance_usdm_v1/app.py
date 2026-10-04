@@ -155,7 +155,7 @@ def _ssss_chart_analysis(rows: list[object]) -> dict[str, object]:
             indicators.append({
                 "open_time": int(row["open_time"]),
                 "kind": "EXIT_ICON_15",
-                "text": "人",
+                "text": "💥",
             })
     latest = overlay[-1] if overlay else {}
     return {
