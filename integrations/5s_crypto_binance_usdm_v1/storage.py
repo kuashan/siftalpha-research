@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import sqlite3
 from pathlib import Path
 from typing import Iterable
@@ -88,10 +89,15 @@ class StateStore:
             self._ensure_column(conn, "symbol_settings", "capital_budget_usdt", "REAL NOT NULL DEFAULT 1000")
             self._ensure_column(conn, "symbol_settings", "timeframe", "TEXT NOT NULL DEFAULT '1d'")
             self._ensure_column(conn, "symbol_settings", "enabled", "INTEGER NOT NULL DEFAULT 0")
+            self._ensure_column(conn, "symbol_settings", "strategy_id", "TEXT NOT NULL DEFAULT '5s_crypto_v1'")
             self._ensure_column(conn, "runtime_state", "run_state", "TEXT NOT NULL DEFAULT 'STOPPED'")
             self._ensure_column(conn, "runtime_state", "entry_signal_open_time", "INTEGER")
             self._ensure_column(conn, "runtime_state", "entry_family", "TEXT")
             self._ensure_column(conn, "runtime_state", "accounting_start_time_ms", "INTEGER")
+            self._ensure_column(conn, "runtime_state", "strategy_state_json", "TEXT NOT NULL DEFAULT '{}'")
+            self._ensure_column(conn, "orders", "strategy_id", "TEXT NOT NULL DEFAULT '5s_crypto_v1'")
+            self._ensure_column(conn, "orders", "target_fraction_after", "REAL")
+            self._ensure_column(conn, "orders", "strategy_state_after_json", "TEXT")
 
             if "capital_budget_usdt" not in old_symbol_columns:
                 row = conn.execute("SELECT value FROM app_settings WHERE key='capital_budget_usdt'").fetchone()
@@ -131,7 +137,7 @@ class StateStore:
         with self._connect() as conn:
             rows = conn.execute(
                 """
-                SELECT symbol, requested_leverage, capital_budget_usdt, timeframe, enabled
+                SELECT symbol, requested_leverage, capital_budget_usdt, timeframe, enabled, strategy_id
                 FROM symbol_settings ORDER BY symbol
                 """
             ).fetchall()
@@ -142,6 +148,7 @@ class StateStore:
                     "capital_budget_usdt": float(r["capital_budget_usdt"]),
                     "timeframe": str(r["timeframe"]),
                     "enabled": bool(r["enabled"]),
+                    "strategy_id": str(r["strategy_id"] or "5s_crypto_v1"),
                 }
                 for r in rows
             }
@@ -161,6 +168,44 @@ class StateStore:
             conn.execute(
                 "INSERT INTO audit_events(event_type, symbol, detail) VALUES('SET_SYMBOL_CONFIG', ?, ?)",
                 (symbol, f"budget={capital_budget_usdt};leverage={leverage};timeframe={timeframe}"),
+            )
+
+    def set_symbol_strategy(self, symbol: str, strategy_id: str, timeframe: str) -> None:
+        with self._connect() as conn:
+            cur = conn.execute(
+                """
+                UPDATE symbol_settings
+                SET strategy_id=?, timeframe=?, enabled=0, updated_at=CURRENT_TIMESTAMP
+                WHERE symbol=?
+                """,
+                (str(strategy_id), str(timeframe), symbol),
+            )
+            if cur.rowcount != 1:
+                raise KeyError(f"unknown symbol: {symbol}")
+            conn.execute(
+                """
+                UPDATE runtime_state
+                SET last_closed_bar_open_time=NULL, current_fraction=0, c_confirmed=0,
+                    pending_action=NULL, last_signal=NULL, last_order_id=NULL,
+                    run_state='STOPPED', entry_signal_open_time=NULL, entry_family=NULL,
+                    accounting_start_time_ms=NULL, strategy_state_json='{}',
+                    updated_at=CURRENT_TIMESTAMP
+                WHERE symbol=?
+                """,
+                (symbol,),
+            )
+            conn.execute(
+                """
+                UPDATE symbol_pnl
+                SET realized_pnl=0, unrealized_pnl=0, funding_fee=0, trading_fee=0,
+                    updated_at=CURRENT_TIMESTAMP
+                WHERE symbol=?
+                """,
+                (symbol,),
+            )
+            conn.execute(
+                "INSERT INTO audit_events(event_type, symbol, detail) VALUES('SET_SYMBOL_STRATEGY', ?, ?)",
+                (symbol, f"strategy={strategy_id};timeframe={timeframe}"),
             )
 
     def set_symbol_enabled(self, symbol: str, enabled: bool) -> None:
@@ -187,11 +232,20 @@ class StateStore:
                 """
                 SELECT symbol, last_closed_bar_open_time, current_fraction, c_confirmed,
                        pending_action, last_signal, last_order_id, run_state,
-                       entry_signal_open_time, entry_family, accounting_start_time_ms
+                       entry_signal_open_time, entry_family, accounting_start_time_ms,
+                       strategy_state_json
                 FROM runtime_state ORDER BY symbol
                 """
             ).fetchall()
-            return {str(r["symbol"]): dict(r) for r in rows}
+            out: dict[str, dict[str, object]] = {}
+            for r in rows:
+                item = dict(r)
+                try:
+                    item["strategy_state"] = json.loads(str(item.get("strategy_state_json") or "{}"))
+                except Exception:
+                    item["strategy_state"] = {}
+                out[str(r["symbol"])] = item
+            return out
 
     def set_run_state(self, symbol: str, run_state: str) -> None:
         with self._connect() as conn:
@@ -228,6 +282,7 @@ class StateStore:
         signal: str,
         pending_action: str | None,
         run_state: str | None = None,
+        strategy_id: str = "5s_crypto_v1",
     ) -> None:
         run_state = run_state or ("SIGNAL_READY" if pending_action else "MONITORING")
         with self._connect() as conn:
@@ -246,7 +301,7 @@ class StateStore:
                 "INSERT INTO audit_events(event_type, symbol, detail) VALUES('M3_SIGNAL_BAR', ?, ?)",
                 (
                     symbol,
-                    f"bar_open_time={int(bar_open_time)};signal={signal};pending={pending_action or 'NONE'}",
+                    f"bar_open_time={int(bar_open_time)};strategy={strategy_id};signal={signal};pending={pending_action or 'NONE'}",
                 ),
             )
 
@@ -283,6 +338,81 @@ class StateStore:
             if cur.rowcount != 1:
                 raise KeyError(f"unknown symbol: {symbol}")
 
+    def set_strategy_execution_state(
+        self,
+        symbol: str,
+        *,
+        current_fraction: float,
+        strategy_state: dict[str, object],
+        last_order_id: str | None = None,
+        run_state: str = "MONITORING",
+    ) -> None:
+        state = dict(strategy_state or {})
+        c_confirmed = bool(state.get("c_confirmed", False))
+        entry_signal = state.get("entry_signal_open_time")
+        entry_family = state.get("entry_family")
+        with self._connect() as conn:
+            cur = conn.execute(
+                """
+                UPDATE runtime_state
+                SET current_fraction=?, c_confirmed=?, entry_signal_open_time=?,
+                    entry_family=?, strategy_state_json=?, last_order_id=?,
+                    pending_action=NULL, run_state=?, updated_at=CURRENT_TIMESTAMP
+                WHERE symbol=?
+                """,
+                (
+                    float(current_fraction),
+                    1 if c_confirmed else 0,
+                    int(entry_signal) if entry_signal is not None else None,
+                    str(entry_family) if entry_family is not None else None,
+                    json.dumps(state, ensure_ascii=False, sort_keys=True),
+                    last_order_id,
+                    str(run_state),
+                    symbol,
+                ),
+            )
+            if cur.rowcount != 1:
+                raise KeyError(f"unknown symbol: {symbol}")
+
+    def set_recovery_strategy_state(
+        self,
+        symbol: str,
+        *,
+        current_fraction: float,
+        strategy_state: dict[str, object],
+        last_order_id: str | None,
+        last_closed_bar_open_time: int | None,
+        run_state: str,
+    ) -> None:
+        state = dict(strategy_state or {})
+        c_confirmed = bool(state.get("c_confirmed", False))
+        entry_signal = state.get("entry_signal_open_time")
+        entry_family = state.get("entry_family")
+        with self._connect() as conn:
+            cur = conn.execute(
+                """
+                UPDATE runtime_state
+                SET current_fraction=?, c_confirmed=?, entry_signal_open_time=?,
+                    entry_family=?, strategy_state_json=?, last_order_id=?,
+                    last_closed_bar_open_time=?, pending_action=NULL, run_state=?,
+                    updated_at=CURRENT_TIMESTAMP
+                WHERE symbol=?
+                """,
+                (
+                    float(current_fraction),
+                    1 if c_confirmed else 0,
+                    int(entry_signal) if entry_signal is not None else None,
+                    str(entry_family) if entry_family is not None else None,
+                    json.dumps(state, ensure_ascii=False, sort_keys=True),
+                    last_order_id,
+                    last_closed_bar_open_time,
+                    str(run_state),
+                    symbol,
+                ),
+            )
+            if cur.rowcount != 1:
+                raise KeyError(f"unknown symbol: {symbol}")
+
     def append_audit(self, event_type: str, symbol: str | None, detail: str) -> None:
         with self._connect() as conn:
             conn.execute(
@@ -309,15 +439,33 @@ class StateStore:
                 raise KeyError(f"unknown symbol: {symbol}")
             return int(row[0])
 
-    def begin_order(self, symbol: str, client_order_id: str, *, side: str, quantity: float, price: float) -> bool:
+    def begin_order(
+        self,
+        symbol: str,
+        client_order_id: str,
+        *,
+        side: str,
+        quantity: float,
+        price: float,
+        strategy_id: str = "5s_crypto_v1",
+        target_fraction_after: float | None = None,
+        strategy_state_after: dict[str, object] | None = None,
+    ) -> bool:
+        state_json = json.dumps(strategy_state_after or {}, ensure_ascii=False, sort_keys=True)
         with self._connect() as conn:
             cur = conn.execute(
                 """
                 INSERT OR IGNORE INTO orders(
-                    symbol, client_order_id, side, quantity, price, status
-                ) VALUES(?, ?, ?, ?, ?, 'PENDING')
+                    symbol, client_order_id, side, quantity, price, status,
+                    strategy_id, target_fraction_after, strategy_state_after_json
+                ) VALUES(?, ?, ?, ?, ?, 'PENDING', ?, ?, ?)
                 """,
-                (symbol, client_order_id, side, float(quantity), float(price)),
+                (
+                    symbol, client_order_id, side, float(quantity), float(price),
+                    str(strategy_id),
+                    float(target_fraction_after) if target_fraction_after is not None else None,
+                    state_json,
+                ),
             )
             return cur.rowcount == 1
 
@@ -325,7 +473,8 @@ class StateStore:
         with self._connect() as conn:
             row = conn.execute(
                 """
-                SELECT symbol, client_order_id, binance_order_id, side, quantity, price, status
+                SELECT symbol, client_order_id, binance_order_id, side, quantity, price, status,
+                       strategy_id, target_fraction_after, strategy_state_after_json
                 FROM orders WHERE symbol=? AND client_order_id=?
                 """,
                 (symbol, client_order_id),
@@ -337,7 +486,8 @@ class StateStore:
             rows = conn.execute(
                 """
                 SELECT id, symbol, client_order_id, binance_order_id, side,
-                       quantity, price, status, created_at, updated_at
+                       quantity, price, status, strategy_id, target_fraction_after,
+                       strategy_state_after_json, created_at, updated_at
                 FROM orders WHERE symbol=? ORDER BY id ASC
                 """,
                 (symbol,),
@@ -408,7 +558,7 @@ class StateStore:
             if cur.rowcount != 1:
                 raise KeyError(f"unknown order: {symbol}/{client_order_id}")
 
-    def list_signal_markers(self, symbol: str) -> list[dict[str, object]]:
+    def list_signal_markers(self, symbol: str, strategy_id: str = "5s_crypto_v1") -> list[dict[str, object]]:
         with self._connect() as conn:
             rows = conn.execute(
                 """
@@ -432,6 +582,9 @@ class StateStore:
             try:
                 open_time = int(fields.get("bar_open_time", ""))
             except ValueError:
+                continue
+            event_strategy = fields.get("strategy") or "5s_crypto_v1"
+            if event_strategy != strategy_id:
                 continue
             signal = fields.get("signal", "").upper()
             sides: list[str] = []
