@@ -440,7 +440,7 @@ def render_index(selected_symbol: str | None = None) -> str:
                   </div>
                 </div>
                 <div class="chart-scroll">
-                  <canvas class="kline-canvas" aria-label="{html.escape(base)} V7 交互 K 线图"></canvas>
+                  <div class="kline-chart" aria-label="{html.escape(base)} K 线图"></div>
                 </div>
                 <div class="chart-legend">
                   <span><i class="candle-key candle-up"></i>红涨</span>
@@ -659,6 +659,17 @@ class Handler(BaseHTTPRequestHandler):
                 200,
                 render_index(selected).encode("utf-8"),
                 "text/html; charset=utf-8",
+            )
+            return
+        if parsed.path == "/vendor/lightweight-charts.standalone.production.js":
+            vendor_path = Path(__file__).parent / "vendor" / "lightweight-charts.standalone.production.js"
+            if not vendor_path.exists():
+                self._send(404, b"chart vendor missing", "text/plain; charset=utf-8")
+                return
+            self._send(
+                200,
+                vendor_path.read_bytes(),
+                "application/javascript; charset=utf-8",
             )
             return
         if parsed.path == "/api/chart":
