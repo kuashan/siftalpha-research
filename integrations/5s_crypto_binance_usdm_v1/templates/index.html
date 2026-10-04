@@ -98,13 +98,17 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 .chart-ohlc div{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:15px}
 .chart-ohlc small{color:var(--muted);font-size:9px}
 .chart-ohlc b{font-size:10px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}
-.chart-scroll{margin-top:7px;overflow-x:auto;overflow-y:hidden;border-radius:8px;background:#080d17;scrollbar-width:thin}
-.kline-canvas{display:block;height:330px}
-.chart-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:7px;color:var(--muted);font-size:10px}
+.chart-scroll{margin:10px 0 0;overflow:hidden;border-radius:9px;background:#080d17;position:relative;user-select:none}
+.kline-canvas{display:block;width:100%;height:460px;touch-action:none;cursor:crosshair}
+.chart-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:7px;color:var(--muted);font-size:10px;align-items:center}
 .chart-legend b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;color:#08110d}
-.legend-buy{background:#52d49a}.legend-sell{background:#ff7b82;color:#1a0708!important}
+.legend-buy{background:#ff7b82;color:#1a0708!important}.legend-sell{background:#52d49a;color:#07130e!important}.legend-exit{background:#eab464;color:#1a1207!important}
+.candle-key{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.candle-up{background:#ff7b82}.candle-down{background:#52d49a}
+.chart-gesture-hint{margin-top:6px;color:#71819a;font-size:9px}
 .chart-message{margin-top:5px;color:var(--muted);font-size:10px}
 .snapshot-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px 14px 0}
+.snapshot-above-chart{padding-bottom:0}
 .panel-body{display:grid;grid-template-columns:minmax(0,2fr) minmax(220px,.75fr);gap:10px;padding:10px 14px 14px}
 .settings-block,.control-block{background:var(--panel2);border:1px solid #1f2a3e;border-radius:11px;padding:11px}
 .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
@@ -269,6 +273,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 
 
   const chartCache = new Map();
+  const chartViewStates = new Map();
   const livePriceCache = new Map();
   let priceSocket = null;
   let priceSocketGeneration = 0;
@@ -306,254 +311,436 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     const candleMeta = section.querySelector('.chart-candle-meta');
     const liveValue = section.querySelector('.live-price-value');
     const liveStatus = section.querySelector('.live-price-status');
-    const candles = Array.isArray(payload.candles) ? payload.candles : [];
+    const allCandles = Array.isArray(payload.candles) ? payload.candles : [];
     const markers = Array.isArray(payload.markers) ? payload.markers : [];
     const overlay = Array.isArray(payload.strategy_overlay) ? payload.strategy_overlay : [];
     const strategySnapshot = payload.strategy_snapshot || {};
-    if (!canvas || !scroll || candles.length === 0) {
+    if (!canvas || !scroll || allCandles.length === 0) {
       if (message) message.textContent = '暂时没有可显示的 K 线数据';
       return;
     }
 
+    const stateKey = String(payload.symbol || '') + ':' + String(payload.timeframe || '');
+    let view = chartViewStates.get(stateKey);
+    if (!view) {
+      view = {
+        seriesKey: '',
+        viewStart: null,
+        viewCount: 90,
+        selectedIndex: null,
+        selectedCrosshairY: null,
+        activePointers: new Map(),
+        panStartX: null,
+        panStartView: null,
+        gestureMoved: false,
+        pinchStartDistance: null,
+        pinchStartCount: null,
+        pinchAnchorIndex: null,
+        pinchAnchorFraction: .5,
+      };
+      chartViewStates.set(stateKey, view);
+    }
+
+    const seriesKey = String(allCandles[0].open_time) + '|' +
+      String(allCandles[allCandles.length - 1].open_time) + '|' + allCandles.length;
+    if (view.seriesKey !== seriesKey) {
+      view.seriesKey = seriesKey;
+      view.viewCount = Math.min(allCandles.length, 90);
+      view.viewStart = Math.max(0, allCandles.length - view.viewCount);
+      view.selectedIndex = allCandles.length - 1;
+      view.selectedCrosshairY = null;
+    }
+
+    const minView = Math.min(25, allCandles.length);
+    const maxView = Math.min(1000, allCandles.length);
+    view.viewCount = Math.max(minView, Math.min(maxView, Math.round(view.viewCount)));
+    const maxStart = Math.max(0, allCandles.length - view.viewCount);
+    if (view.viewStart == null) view.viewStart = maxStart;
+    view.viewStart = Math.max(0, Math.min(maxStart, Math.round(view.viewStart)));
+
+    const candles = allCandles.slice(view.viewStart, view.viewStart + view.viewCount);
+    if (!candles.length) return;
+
     const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-    const left = 8;
-    const right = 64;
-    const candleStep = 6;
-    const logicalWidth = Math.max(scroll.clientWidth, left + right + candles.length * candleStep);
-    const logicalHeight = window.innerWidth <= 760 ? 300 : 330;
-    canvas.style.width = logicalWidth + 'px';
-    canvas.style.height = logicalHeight + 'px';
-    canvas.width = Math.round(logicalWidth * dpr);
-    canvas.height = Math.round(logicalHeight * dpr);
+    const cssW = Math.max(320, scroll.clientWidth || 320);
+    const cssH = 460;
+    canvas.style.width = cssW + 'px';
+    canvas.style.height = cssH + 'px';
+    canvas.width = Math.floor(cssW * dpr);
+    canvas.height = Math.floor(cssH * dpr);
     const ctx = canvas.getContext('2d');
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, logicalWidth, logicalHeight);
+    ctx.clearRect(0, 0, cssW, cssH);
 
-    const priceTop = 12;
-    const priceBottom = logicalHeight * 0.72;
-    const volumeTop = logicalHeight * 0.78;
-    const volumeBottom = logicalHeight - 18;
-    const plotRight = logicalWidth - right;
-    const overlayPrices = [];
-    overlay.forEach(row => {
-      ['ZK1','ZD1','GZB3','GZB4','BS'].forEach(key => {
-        const value = Number(row[key]);
-        if (Number.isFinite(value)) overlayPrices.push(value);
-      });
-    });
-    const lows = candles.map(c => Number(c.low)).concat(overlayPrices);
-    const highs = candles.map(c => Number(c.high)).concat(overlayPrices);
-    let minPrice = Math.min.apply(null, lows);
-    let maxPrice = Math.max.apply(null, highs);
-    let pad = (maxPrice - minPrice) * 0.06;
-    if (!Number.isFinite(pad) || pad <= 0) pad = Math.max(1, maxPrice * 0.01);
-    minPrice -= pad;
-    maxPrice += pad;
-    const priceSpan = Math.max(1e-12, maxPrice - minPrice);
-    const maxVolume = Math.max(1, ...candles.map(c => Number(c.volume) || 0));
-    const yPrice = p => priceTop + (maxPrice - Number(p)) / priceSpan * (priceBottom - priceTop);
-
-    ctx.strokeStyle = '#1a2639';
-    ctx.lineWidth = 1;
-    ctx.fillStyle = '#71819a';
-    ctx.font = '10px system-ui';
-    ctx.textAlign = 'left';
-    for (let g = 0; g <= 4; g++) {
-      const y = priceTop + (priceBottom - priceTop) * g / 4;
-      ctx.beginPath(); ctx.moveTo(left, y); ctx.lineTo(plotRight, y); ctx.stroke();
-      const p = maxPrice - priceSpan * g / 4;
-      ctx.fillText(formatPrice(p), plotRight + 5, y + 3);
-    }
-    ctx.beginPath(); ctx.moveTo(left, volumeTop - 5); ctx.lineTo(plotRight, volumeTop - 5); ctx.stroke();
+    // Same viewport geometry as the final V7 chart.
+    const left = 24, right = 72, top = 16, priceBottom = 276;
+    const stateTop = 286, stateBottom = 298;
+    const volTop = 310, volBottom = 350;
+    const posTop = 366, posBottom = 406, dateY = 447;
+    const plotW = Math.max(1, cssW - left - right);
+    const step = plotW / Math.max(1, candles.length);
+    const xAt = i => left + i * step + step / 2;
 
     const overlayMap = new Map();
     overlay.forEach(row => overlayMap.set(String(row.open_time), row));
 
-    // E strategy state background and slow-band area.
+    const prices = [];
+    candles.forEach(c => { prices.push(Number(c.low), Number(c.high)); });
+    function addVal(v) {
+      if (v == null || v === '') return;
+      const n = Number(v);
+      if (Number.isFinite(n)) prices.push(n);
+    }
     if (String(payload.strategy_id || '') === 'e') {
-      candles.forEach((c, i) => {
-        const row = overlayMap.get(String(c.open_time));
-        if (!row) return;
-        const state = String(row.state || '');
-        let fill = 'rgba(135,145,160,.035)';
-        if (state === 'BLUE') fill = 'rgba(91,140,255,.055)';
-        else if (state === 'GREEN') fill = 'rgba(82,212,154,.045)';
-        else if (state === 'GRAY') fill = 'rgba(160,170,185,.035)';
-        const x = left + i * candleStep;
-        ctx.fillStyle = fill;
-        ctx.fillRect(x, priceTop, candleStep, priceBottom - priceTop);
-
-        const g3 = Number(row.GZB3), g4 = Number(row.GZB4);
-        if (Number.isFinite(g3) && Number.isFinite(g4)) {
-          const y1 = yPrice(g3), y2 = yPrice(g4);
-          ctx.fillStyle = 'rgba(175,185,200,.08)';
-          ctx.fillRect(x, Math.min(y1,y2), candleStep, Math.max(1, Math.abs(y2-y1)));
-        }
+      candles.forEach(c => {
+        const row = overlayMap.get(String(c.open_time)) || {};
+        ['GZB3','GZB4','ZD1','ZK1','BS'].forEach(k => addVal(row[k]));
       });
-
-      function drawOverlayLine(key, stroke, dash, width) {
-        ctx.save();
-        ctx.strokeStyle = stroke;
-        ctx.lineWidth = width || 1;
-        ctx.setLineDash(dash || []);
-        ctx.beginPath();
-        let started = false;
-        candles.forEach((c, i) => {
-          const row = overlayMap.get(String(c.open_time));
-          const value = row ? Number(row[key]) : NaN;
-          if (!Number.isFinite(value)) {
-            started = false;
-            return;
-          }
-          const x = left + i * candleStep + candleStep / 2;
-          const y = yPrice(value);
-          if (!started) {
-            ctx.moveTo(x, y);
-            started = true;
-          } else {
-            ctx.lineTo(x, y);
-          }
-        });
-        ctx.stroke();
-        ctx.restore();
-      }
-
-      drawOverlayLine('ZK1', '#f0a3a8', [4,3], 1);
-      drawOverlayLine('ZD1', '#7eb0ff', [4,3], 1);
-      drawOverlayLine('GZB3', '#9aa7ba', [], 1);
-      drawOverlayLine('GZB4', '#6f7d92', [], 1);
-      drawOverlayLine('BS', '#d2b2ff', [2,3], 1);
     }
 
-    const markerMap = new Map();
-    markers.forEach(m => {
-      const key = String(m.open_time);
-      if (!markerMap.has(key)) markerMap.set(key, []);
-      markerMap.get(key).push(m);
-    });
+    let minP = Math.min(...prices), maxP = Math.max(...prices);
+    if (!(maxP > minP)) maxP = minP + 1;
+    const pad = (maxP - minP) * .06;
+    minP -= pad; maxP += pad;
+    const yPrice = v => priceBottom - (Number(v) - minP) / (maxP - minP) * (priceBottom - top);
+    const priceAtY = y => maxP - (Math.max(top, Math.min(priceBottom, y)) - top) /
+      (priceBottom - top) * (maxP - minP);
 
+    ctx.strokeStyle = '#1a2638';
+    ctx.lineWidth = 1;
+    ctx.fillStyle = '#8292aa';
+    ctx.font = '10px system-ui';
+    for (let k = 0; k < 5; k++) {
+      const y = top + (priceBottom - top) * k / 4;
+      ctx.beginPath(); ctx.moveTo(left, y); ctx.lineTo(cssW - right, y); ctx.stroke();
+      const pv = maxP - (maxP - minP) * k / 4;
+      ctx.fillText(formatPrice(pv), cssW - right + 7, y + 3);
+    }
+
+    const drawSeries = (key, stroke, dash = [], width = 1) => {
+      ctx.save();
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = width;
+      ctx.setLineDash(dash);
+      ctx.beginPath();
+      let started = false;
+      candles.forEach((c, i) => {
+        const row = overlayMap.get(String(c.open_time)) || {};
+        const v = row[key];
+        if (v == null || v === '' || !Number.isFinite(Number(v))) {
+          started = false;
+          return;
+        }
+        const x = xAt(i), y = yPrice(Number(v));
+        if (!started) { ctx.moveTo(x, y); started = true; }
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+      ctx.restore();
+    };
+
+    const isE = String(payload.strategy_id || '') === 'e';
+    if (isE) {
+      drawSeries('GZB3', '#728096', [], 1);
+      drawSeries('GZB4', '#9ba6b7', [], 1);
+      drawSeries('ZD1', '#65c5d8', [4,3], 1);
+      drawSeries('ZK1', '#c28bd8', [4,3], 1);
+      drawSeries('BS', '#eab464', [2,3], 1);
+    }
+
+    let maxVol = 1;
+    candles.forEach(c => maxVol = Math.max(maxVol, Number(c.volume) || 0));
+
+    // User-selected Chinese candle convention: RED = rise, GREEN = fall.
     candles.forEach((c, i) => {
-      const x = left + i * candleStep + candleStep / 2;
-      const open = Number(c.open), high = Number(c.high), low = Number(c.low), close = Number(c.close);
-      const up = close >= open;
-      const color = up ? '#52d49a' : '#ff7b82';
-      const yOpen = yPrice(open), yClose = yPrice(close), yHigh = yPrice(high), yLow = yPrice(low);
+      const x = xAt(i);
+      const o = Number(c.open), cl = Number(c.close), hi = Number(c.high), lo = Number(c.low);
+      const up = cl >= o;
+      const color = up ? '#ff7b82' : '#52d49a';
       ctx.strokeStyle = color;
       ctx.fillStyle = color;
-      ctx.beginPath(); ctx.moveTo(x, yHigh); ctx.lineTo(x, yLow); ctx.stroke();
-      const bodyTop = Math.min(yOpen, yClose);
-      const bodyHeight = Math.max(1, Math.abs(yClose - yOpen));
-      ctx.fillRect(x - 1.7, bodyTop, 3.4, bodyHeight);
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x, yPrice(hi)); ctx.lineTo(x, yPrice(lo)); ctx.stroke();
+      const y1 = yPrice(o), y2 = yPrice(cl);
+      const bw = Math.max(2.2, Math.min(8, step * .62));
+      const bh = Math.max(1, Math.abs(y2 - y1));
+      ctx.fillRect(x - bw / 2, Math.min(y1, y2), bw, bh);
 
-      const vh = (Number(c.volume) || 0) / maxVolume * (volumeBottom - volumeTop);
-      ctx.globalAlpha = 0.62;
-      ctx.fillRect(x - 1.7, volumeBottom - vh, 3.4, vh);
+      if (isE) {
+        const row = overlayMap.get(String(c.open_time)) || {};
+        const stateColor = {
+          BLUE:'#5b8cff', GRAY:'#8d99aa', GREEN:'#52d49a', OTHER:'#344055'
+        }[String(row.state || '')] || '#344055';
+        ctx.fillStyle = stateColor;
+        ctx.fillRect(x - step / 2 + .5, stateTop, Math.max(1, step - 1), stateBottom - stateTop);
+      }
+
+      const vh = (Number(c.volume) || 0) / maxVol * (volBottom - volTop);
+      ctx.globalAlpha = .58;
+      ctx.fillStyle = color;
+      ctx.fillRect(x - bw / 2, volBottom - vh, bw, vh);
       ctx.globalAlpha = 1;
+    });
 
-      const ms = markerMap.get(String(c.open_time)) || [];
-      let buyOffset = 0, sellOffset = 0;
-      ms.forEach(m => {
-        const side = String(m.side || '');
-        const isBuy = side === 'B';
-        const y = isBuy ? Math.min(priceBottom - 10, yLow + 13 + buyOffset) : Math.max(priceTop + 10, yHigh - 13 - sellOffset);
-        if (isBuy) buyOffset += 18; else sellOffset += 18;
-        ctx.beginPath();
-        ctx.fillStyle = isBuy ? '#52d49a' : '#ff7b82';
-        ctx.arc(x, y, 7, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = isBuy ? '#07130e' : '#1b0809';
-        ctx.font = 'bold 9px system-ui';
-        ctx.textAlign = 'center';
-        ctx.fillText(side, x, y + 3);
+    if (isE) {
+      ctx.fillStyle = '#71819a';
+      ctx.font = '8px system-ui';
+      ctx.textAlign = 'left';
+      ctx.fillText('E 三色状态', left, stateTop - 2);
+    }
+
+    const dateIndex = new Map(candles.map((x, i) => [String(x.open_time), i]));
+    const arrowStacks = new Map();
+    function nextArrowSlot(openTime, buy) {
+      const key = String(openTime) + '|' + (buy ? 'B' : 'S');
+      const n = arrowStacks.get(key) || 0;
+      arrowStacks.set(key, n + 1);
+      return n;
+    }
+    function triangle(x, y, buy, color, label) {
+      ctx.save();
+      ctx.fillStyle = color;
+      ctx.strokeStyle = 'rgba(6,10,18,.9)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      if (buy) {
+        ctx.moveTo(x, y - 6); ctx.lineTo(x - 5, y + 4); ctx.lineTo(x + 5, y + 4);
+      } else {
+        ctx.moveTo(x, y + 6); ctx.lineTo(x - 5, y - 4); ctx.lineTo(x + 5, y - 4);
+      }
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.font = 'bold 8px system-ui';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = color;
+      ctx.fillText(label, x, y + (buy ? 14 : -10));
+      ctx.restore();
+    }
+    markers.forEach(m => {
+      const i = dateIndex.get(String(m.open_time));
+      if (i == null) return;
+      const candle = candles[i];
+      const side = String(m.side || '');
+      const buy = side === 'B';
+      const slot = nextArrowSlot(m.open_time, buy);
+      const y = buy
+        ? yPrice(candle.low) + 15 + slot * 15
+        : yPrice(candle.high) - 15 - slot * 15;
+      const color = buy ? '#ff9aa0' : (side === 'X' ? '#eab464' : '#73dda9');
+      const prefix = isE ? 'E' : '5S';
+      const action = side === 'X' ? '清' : (buy ? '买' : '卖');
+      triangle(xAt(i), y, buy, color, prefix + action);
+    });
+
+    // V7-style compact position strip.
+    ctx.strokeStyle = '#27344a';
+    ctx.lineWidth = 1;
+    [0,.5,1].forEach(v => {
+      const y = posBottom - (posBottom - posTop) * v;
+      ctx.strokeStyle = '#1f2c41';
+      ctx.beginPath(); ctx.moveTo(left, y); ctx.lineTo(cssW - right, y); ctx.stroke();
+      ctx.fillStyle = '#7f8fa7'; ctx.font = '8px system-ui'; ctx.textAlign = 'left';
+      ctx.fillText((v * 100) + '%', cssW - right + 7, y + 3);
+    });
+
+    if (isE) {
+      ctx.save();
+      ctx.strokeStyle = '#dba6ff';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      let started = false, lastV = null;
+      candles.forEach((c, i) => {
+        const row = overlayMap.get(String(c.open_time)) || {};
+        const v = Number(row.position);
+        if (!Number.isFinite(v)) return;
+        lastV = Math.max(0, Math.min(1, v));
+        const y = posBottom - (posBottom - posTop) * lastV;
+        if (!started) { ctx.moveTo(xAt(i), y); started = true; }
+        else ctx.lineTo(xAt(i), y);
       });
-    });
+      ctx.stroke();
+      if (lastV != null) {
+        ctx.fillStyle = '#dba6ff'; ctx.font = 'bold 8px system-ui'; ctx.textAlign = 'right';
+        ctx.fillText('E ' + Math.round(lastV * 100) + '%', cssW - right - 3, posTop + 9);
+      }
+      ctx.restore();
+    } else {
+      const v = Math.max(0, Math.min(1, Number(payload.runtime_fraction || 0)));
+      const y = posBottom - (posBottom - posTop) * v;
+      ctx.save(); ctx.strokeStyle = '#65c5d8'; ctx.lineWidth = 1.2; ctx.setLineDash([5,3]);
+      ctx.beginPath(); ctx.moveTo(left, y); ctx.lineTo(cssW - right, y); ctx.stroke();
+      ctx.fillStyle = '#65c5d8'; ctx.font = 'bold 8px system-ui'; ctx.textAlign = 'right';
+      ctx.fillText('5S 当前 ' + Math.round(v * 100) + '%', cssW - right - 3, posTop + 9);
+      ctx.restore();
+    }
 
-    ctx.textAlign = 'left';
-    ctx.fillStyle = '#71819a';
-    ctx.font = '9px system-ui';
-    const labelEvery = Math.max(1, Math.floor(candles.length / 8));
-    candles.forEach((c, i) => {
-      if (i % labelEvery !== 0 && i !== candles.length - 1) return;
-      const x = left + i * candleStep;
-      ctx.fillText(formatTime(c.open_time), x, logicalHeight - 4);
-    });
+    if (view.selectedIndex == null) view.selectedIndex = allCandles.length - 1;
+    if (view.selectedIndex < view.viewStart || view.selectedIndex >= view.viewStart + view.viewCount) {
+      view.selectedIndex = Math.min(allCandles.length - 1, view.viewStart + view.viewCount - 1);
+    }
+    const rel = view.selectedIndex - view.viewStart;
+    if (rel >= 0 && rel < candles.length) {
+      const csel = allCandles[view.selectedIndex], x = xAt(rel);
+      const cy = view.selectedCrosshairY == null
+        ? yPrice(csel.close)
+        : Math.max(top, Math.min(priceBottom, view.selectedCrosshairY));
+      ctx.save();
+      ctx.strokeStyle = 'rgba(210,222,240,.58)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4,3]);
+      ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, posBottom); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(left, cy); ctx.lineTo(cssW - right, cy); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#dce5f2'; ctx.font = '9px system-ui'; ctx.textAlign = 'center';
+      ctx.fillText(formatTime(csel.open_time), x, dateY);
+      const ptxt = formatPrice(priceAtY(cy));
+      const tw = ctx.measureText(ptxt).width + 8;
+      ctx.fillStyle = '#26344d';
+      ctx.fillRect(cssW - right + 2, cy - 8, Math.min(right - 4, tw), 16);
+      ctx.fillStyle = '#f1f5fb'; ctx.textAlign = 'left';
+      ctx.fillText(ptxt, cssW - right + 6, cy + 3);
+      ctx.restore();
+    }
 
     function showCandle(c, prefix) {
       if (!c) return;
-      const values = {
-        open: c.open,
-        high: c.high,
-        low: c.low,
-        close: c.close
-      };
-      Object.entries(values).forEach(([key, value]) => {
+      const values = {open:c.open, high:c.high, low:c.low, close:c.close};
+      Object.entries(values).forEach(([key,value]) => {
         const node = section.querySelector('[data-ohlc="' + key + '"]');
         if (node) node.textContent = formatPrice(value);
       });
-      const ms = markerMap.get(String(c.open_time)) || [];
-      const mark = ms.length ? ' · 信号 ' + ms.map(m => m.side).join('/') : '';
+      const ms = markers.filter(m => String(m.open_time) === String(c.open_time));
+      const marks = ms.length ? ' · 信号 ' + ms.map(m => m.side).join('/') : '';
       if (candleMeta) {
-        candleMeta.textContent =
-          prefix + ' · ' + formatTime(c.open_time) +
-          ' · 量 ' + formatVolume(c.volume) + mark;
+        candleMeta.textContent = prefix + ' · ' + formatTime(c.open_time) +
+          ' · 开 ' + formatPrice(c.open) + ' 高 ' + formatPrice(c.high) +
+          ' 低 ' + formatPrice(c.low) + ' 收 ' + formatPrice(c.close) +
+          ' · 量 ' + formatVolume(c.volume) + marks;
       }
     }
+    const selectedCandle = allCandles[Math.max(0, Math.min(allCandles.length - 1, view.selectedIndex))];
+    showCandle(selectedCandle, '所选 K 线');
 
-    const latestCandle = candles[candles.length - 1];
-    function showFromClientX(clientX) {
-      const rect = canvas.getBoundingClientRect();
-      const localX = clientX - rect.left;
-      const index = Math.max(0, Math.min(candles.length - 1, Math.floor((localX - left) / candleStep)));
-      showCandle(candles[index], '所选 K 线');
-    }
-    function restoreLatestCandle() {
-      showCandle(latestCandle, '最新 K 线');
-    }
-
-    canvas.onmousemove = e => showFromClientX(e.clientX);
-    canvas.onmouseleave = restoreLatestCandle;
-    canvas.ontouchstart = e => {
-      if (e.touches && e.touches[0]) showFromClientX(e.touches[0].clientX);
-    };
-    canvas.ontouchmove = e => {
-      if (e.touches && e.touches[0]) showFromClientX(e.touches[0].clientX);
-    };
-    canvas.ontouchend = restoreLatestCandle;
-    canvas.ontouchcancel = restoreLatestCandle;
-    restoreLatestCandle();
-
+    const latestCandle = allCandles[allCandles.length - 1];
     if (liveValue && section.dataset.livePriceReady !== '1') {
       liveValue.textContent = formatPrice(latestCandle.close);
       if (liveStatus) liveStatus.textContent = '等待实时行情';
     }
+
     if (message) {
       const runtime = payload.runtime_state_label || '未知状态';
       const fraction = Number(payload.runtime_fraction || 0) * 100;
-      if (String(payload.strategy_id || '') === 'e') {
+      if (isE) {
         const state = strategySnapshot.state_zh || '状态未知';
         const action = strategySnapshot.resolved_action_zh || '无新动作';
         const next = strategySnapshot.next_action || '';
-        message.textContent =
-          'E · ' + runtime + ' · 仓位 ' + fraction.toFixed(0) + '% · ' +
-          state + ' · ' + action + (next ? ' · ' + next : '');
+        message.textContent = 'E · ' + runtime + ' · 仓位 ' + fraction.toFixed(0) +
+          '% · ' + state + ' · ' + action + (next ? ' · ' + next : '') +
+          ' · 当前显示 ' + candles.length + '/' + allCandles.length + ' 根';
       } else {
-        message.textContent =
-          payload.strategy_label + ' · ' + runtime + ' · 仓位 ' + fraction.toFixed(0) +
-          '% · ' + payload.timeframe_label + ' · B/S 为策略信号';
-      }
-      const legend = section.querySelector('.strategy-legend');
-      if (legend) {
-        legend.textContent = String(payload.strategy_id || '') === 'e'
-          ? 'E：状态区 · ZK1/ZD1 · GZB3/GZB4 · BS · B/S/X'
-          : payload.strategy_label;
+        message.textContent = payload.strategy_label + ' · ' + runtime + ' · 仓位 ' +
+          fraction.toFixed(0) + '% · ' + payload.timeframe_label +
+          ' · 当前显示 ' + candles.length + '/' + allCandles.length + ' 根';
       }
     }
-    if (section.dataset.scrolled !== '1') {
-      requestAnimationFrame(() => {
-        scroll.scrollLeft = Math.max(0, scroll.scrollWidth - scroll.clientWidth);
-        section.dataset.scrolled = '1';
-      });
+    const legend = section.querySelector('.strategy-legend');
+    if (legend) {
+      legend.textContent = isE
+        ? 'E：三色状态 · GZB3/GZB4 · ZD1/ZK1 · BS'
+        : '5s V1：B/S 信号';
     }
+
+    function localPoint(ev) {
+      const rect = canvas.getBoundingClientRect();
+      return {x:ev.clientX - rect.left, y:ev.clientY - rect.top};
+    }
+    function selectAt(x,y) {
+      const relIndex = Math.max(0, Math.min(candles.length - 1, Math.floor((x - left) / step)));
+      view.selectedIndex = view.viewStart + relIndex;
+      view.selectedCrosshairY = Math.max(top, Math.min(priceBottom, y));
+      drawChart(section, payload);
+    }
+    function zoomAt(x,factor) {
+      const fraction = Math.max(0, Math.min(1, (x - left) / plotW));
+      const anchor = view.viewStart + fraction * view.viewCount;
+      const newCount = Math.max(minView, Math.min(maxView, Math.round(view.viewCount * factor)));
+      view.viewCount = newCount;
+      view.viewStart = Math.round(anchor - fraction * newCount);
+      drawChart(section, payload);
+    }
+
+    canvas.onwheel = ev => {
+      ev.preventDefault();
+      const pt = localPoint(ev);
+      zoomAt(pt.x, ev.deltaY > 0 ? 1.16 : .86);
+    };
+    canvas.onpointerdown = ev => {
+      canvas.setPointerCapture?.(ev.pointerId);
+      view.activePointers.set(ev.pointerId, {x:ev.clientX,y:ev.clientY});
+      view.gestureMoved = false;
+      if (view.activePointers.size === 1) {
+        view.panStartX = ev.clientX;
+        view.panStartView = view.viewStart;
+      }
+      if (view.activePointers.size === 2) {
+        const pts = Array.from(view.activePointers.values());
+        const dx = pts[0].x - pts[1].x, dy = pts[0].y - pts[1].y;
+        view.pinchStartDistance = Math.hypot(dx,dy);
+        view.pinchStartCount = view.viewCount;
+        const rect = canvas.getBoundingClientRect();
+        const mid = ((pts[0].x + pts[1].x) / 2) - rect.left;
+        view.pinchAnchorFraction = Math.max(0, Math.min(1, (mid - left) / plotW));
+        view.pinchAnchorIndex = view.viewStart + view.pinchAnchorFraction * view.viewCount;
+      }
+    };
+    canvas.onpointermove = ev => {
+      if (view.activePointers.has(ev.pointerId)) {
+        view.activePointers.set(ev.pointerId, {x:ev.clientX,y:ev.clientY});
+        if (view.activePointers.size === 2 && view.pinchStartDistance) {
+          const pts = Array.from(view.activePointers.values());
+          const dx = pts[0].x - pts[1].x, dy = pts[0].y - pts[1].y;
+          const dist = Math.hypot(dx,dy);
+          if (Math.abs(dist - view.pinchStartDistance) > 3) {
+            view.gestureMoved = true;
+            view.viewCount = Math.max(minView, Math.min(maxView,
+              Math.round(view.pinchStartCount * (view.pinchStartDistance / dist))));
+            view.viewStart = Math.round(view.pinchAnchorIndex -
+              view.pinchAnchorFraction * view.viewCount);
+            drawChart(section, payload);
+          }
+          return;
+        }
+        if (view.activePointers.size === 1 && view.panStartX != null) {
+          const dx = ev.clientX - view.panStartX;
+          if (Math.abs(dx) > 4) {
+            view.gestureMoved = true;
+            view.viewStart = Math.round(view.panStartView - dx / Math.max(2, step));
+            drawChart(section, payload);
+          }
+          return;
+        }
+      }
+    };
+    canvas.onpointerup = ev => {
+      const pt = localPoint(ev);
+      const wasSingle = view.activePointers.size === 1;
+      view.activePointers.delete(ev.pointerId);
+      if (wasSingle && !view.gestureMoved) selectAt(pt.x,pt.y);
+      if (view.activePointers.size === 0) {
+        view.panStartX = null; view.panStartView = null;
+        view.pinchStartDistance = null; view.pinchStartCount = null;
+        view.pinchAnchorIndex = null;
+      }
+    };
+    canvas.onpointercancel = canvas.onpointerup;
+    canvas.ondblclick = ev => {
+      ev.preventDefault();
+      view.viewCount = Math.min(allCandles.length, 90);
+      view.viewStart = Math.max(0, allCandles.length - view.viewCount);
+      view.selectedIndex = allCandles.length - 1;
+      view.selectedCrosshairY = null;
+      drawChart(section, payload);
+    };
+    canvas.oncontextmenu = ev => ev.preventDefault();
   }
 
   function activeSymbol() {
