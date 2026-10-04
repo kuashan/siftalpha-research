@@ -106,6 +106,7 @@ class StrategyScheduler:
         minimum_closed_bars: int = 80,
         on_decision: Callable[..., Any] | None = None,
         on_poll: Callable[..., Any] | None = None,
+        market_data: Any = None,
     ):
         self.store = store
         self.session = session
@@ -118,6 +119,7 @@ class StrategyScheduler:
         self.minimum_closed_bars = max(64, int(minimum_closed_bars))
         self.on_decision = on_decision
         self.on_poll = on_poll
+        self.market_data = market_data
         self._stop = Event()
         self._thread: Thread | None = None
 
@@ -145,6 +147,47 @@ class StrategyScheduler:
             latest = evaluations[-1]
             return decide_actions(state, latest, [int(row[0]) for row in closed])
         return decide_strategy(strategy_id, closed, state, timeframe)
+
+    def _strategy_rows(self, adapter, symbol: str, timeframe: str, limit: int, min_closed: int) -> tuple[list[Any], str]:
+        demo_error: Exception | None = None
+        demo_rows: list[Any] = []
+        try:
+            raw = adapter.klines(symbol, timeframe, limit=limit)
+            if isinstance(raw, list):
+                demo_rows = raw
+            if len(demo_rows) >= min_closed + 1:
+                return demo_rows, "DEMO"
+        except Exception as exc:
+            demo_error = exc
+
+        if self.market_data is not None:
+            try:
+                raw = self.market_data.klines(symbol, timeframe, limit=limit)
+                public_rows = raw if isinstance(raw, list) else []
+                if len(public_rows) >= min_closed + 1:
+                    reason = (
+                        f"demo_error={type(demo_error).__name__}:{demo_error}"
+                        if demo_error is not None
+                        else f"demo_rows={len(demo_rows)}"
+                    )
+                    self.store.append_audit(
+                        "M3_MARKETDATA_FALLBACK_PUBLIC",
+                        symbol,
+                        f"timeframe={timeframe};{reason};public_rows={len(public_rows)}",
+                    )
+                    return public_rows, "PUBLIC"
+                if len(public_rows) > len(demo_rows):
+                    demo_rows = public_rows
+            except Exception as exc:
+                self.store.append_audit(
+                    "M3_MARKETDATA_PUBLIC_ERROR",
+                    symbol,
+                    f"timeframe={timeframe};{type(exc).__name__}:{exc}",
+                )
+
+        if demo_error is not None and not demo_rows:
+            raise demo_error
+        return demo_rows, "DEMO_INSUFFICIENT"
 
     def run_once(self) -> dict[str, dict[str, Any]]:
         configs = self.store.get_symbol_configs()
@@ -187,7 +230,9 @@ class StrategyScheduler:
 
                 limit = max(self.fetch_limit, int(spec.fetch_limit))
                 min_closed = max(self.minimum_closed_bars, int(spec.minimum_closed_bars))
-                rows = adapter.klines(symbol, timeframe, limit=limit)
+                rows, market_source = self._strategy_rows(
+                    adapter, symbol, timeframe, limit, min_closed
+                )
 
                 if self.on_poll is not None:
                     try:
@@ -206,6 +251,7 @@ class StrategyScheduler:
                         "state": "WAITING_HISTORY",
                         "closed_bars": len(closed),
                         "required_bars": min_closed,
+                        "market_source": market_source,
                         "strategy_id": strategy_id,
                         "timeframe": timeframe,
                     }
@@ -218,6 +264,7 @@ class StrategyScheduler:
                     result[symbol] = {
                         "state": "MONITORING",
                         "baseline": latest_open_time,
+                        "market_source": market_source,
                         "strategy_id": strategy_id,
                         "timeframe": timeframe,
                     }
@@ -228,6 +275,7 @@ class StrategyScheduler:
                     result[symbol] = {
                         "state": "MONITORING",
                         "new_bar": False,
+                        "market_source": market_source,
                         "strategy_id": strategy_id,
                         "timeframe": timeframe,
                     }
@@ -268,6 +316,7 @@ class StrategyScheduler:
                         result[symbol] = {
                             "state": "BLOCKED",
                             "new_bar": True,
+                            "market_source": market_source,
                             "strategy_id": strategy_id,
                             "timeframe": timeframe,
                             "signal": decision.signal,
@@ -298,6 +347,7 @@ class StrategyScheduler:
                 result[symbol] = {
                     "state": state_name,
                     "new_bar": True,
+                    "market_source": market_source,
                     "strategy_id": strategy_id,
                     "timeframe": timeframe,
                     "signal": decision.signal,
