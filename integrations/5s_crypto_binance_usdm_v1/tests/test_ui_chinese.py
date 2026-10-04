@@ -81,9 +81,13 @@ class ChineseUiTests(unittest.TestCase):
         self.assertIn("strategy_indicator_markers", app_text)
         self.assertIn("SSSS 每个 💰 买入 25%", app_text)
         self.assertIn("💰=买入25%", text)
-        self.assertIn("人型=全部清仓", text)
+        self.assertIn("💥=全部清仓", text)
         self.assertNotIn("=== 'e'", text)
         self.assertNotIn("E：三色状态", text)
+        self.assertNotIn("positionSeries", text)
+        self.assertIn("stateSeries) panes[paneIndex++]?.setHeight(30)", text)
+        self.assertIn("panes[paneIndex++]?.setHeight(80)", text)
+        self.assertIn(".market-chart{margin:8px 2px 0;padding:8px 4px}", text)
 
 
 if __name__ == "__main__":
