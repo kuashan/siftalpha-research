@@ -171,7 +171,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
   .connect-form{grid-template-columns:1fr 1fr}.connect-form label:nth-child(2),.connect-form label:nth-child(3){grid-column:1/-1}.connect-form button{grid-column:1/-1;width:100%}
   .section-head{margin-top:12px}
   .coin-tabs{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.coin-tab{min-width:0;min-height:50px;padding:7px 5px}.coin-tab strong{font-size:12px}
-  .coin-hero{padding:12px}.market-chart{margin:8px 12px 0;padding:8px}.chart-head{grid-template-columns:minmax(0,1fr) minmax(88px,.72fr) minmax(88px,auto);gap:7px}.chart-identity strong{font-size:11px}.chart-candle-meta{font-size:8px}.live-price{padding:2px 6px}.live-price-value{font-size:16px}.live-price-status{font-size:8px}.chart-ohlc{min-width:84px}.chart-ohlc div{gap:5px}.chart-ohlc small{font-size:8px}.chart-ohlc b{font-size:9px}.kline-canvas{height:300px}.snapshot-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px 12px 0}.snapshot{padding:7px 5px}.snapshot small{font-size:8px}.snapshot b{font-size:11px}
+  .coin-hero{padding:12px}.market-chart{margin:8px 2px 0;padding:8px 4px}.chart-head{grid-template-columns:minmax(0,1fr) minmax(88px,.72fr) minmax(88px,auto);gap:7px}.chart-identity strong{font-size:11px}.chart-candle-meta{font-size:8px}.live-price{padding:2px 6px}.live-price-value{font-size:16px}.live-price-status{font-size:8px}.chart-ohlc{min-width:84px}.chart-ohlc div{gap:5px}.chart-ohlc small{font-size:8px}.chart-ohlc b{font-size:9px}.kline-canvas{height:300px}.snapshot-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px 12px 0}.snapshot{padding:7px 5px}.snapshot small{font-size:8px}.snapshot b{font-size:11px}
   .panel-body{grid-template-columns:1fr;padding:8px 12px 12px}
   .field-grid{grid-template-columns:1fr 1fr}.budget-field{grid-column:1/-1}.timeframe-field{grid-column:1/-1}
   .timeframe-menu{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -432,21 +432,13 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
         priceFormat: {type: 'volume'},
       }, nextPane++);
 
-      const positionSeries = chart.addSeries(LW.LineSeries, {
-        color: String(payload.strategy_id || '') === 'ssss' ? '#dba6ff' : '#65c5d8',
-        lineWidth: 2,
-        priceLineVisible: false,
-        lastValueVisible: true,
-        priceFormat: {type: 'percent'},
-      }, nextPane++);
-
       const markerApi = LW.createSeriesMarkers
         ? LW.createSeriesMarkers(candleSeries, [])
         : null;
 
       state = {
         key, chart, candleSeries, mainLines, stateSeries,
-        volumeSeries, positionSeries, markerApi,
+        volumeSeries, markerApi,
         resize: null, initialized: false, payload: null,
       };
 
@@ -529,12 +521,6 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       })));
     }
 
-    const fraction = Math.max(0, Math.min(1, Number(payload.runtime_fraction || 0)));
-    state.positionSeries.setData(candles.map(c => ({
-      time: Math.floor(Number(c.open_time) / 1000),
-      value: fraction,
-    })));
-
     const tradeMarkers = markers.map((m,index) => {
       const side = String(m.side || '').toUpperCase();
       const isBuy = side === 'B';
@@ -557,7 +543,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
         position: isBuy ? 'belowBar' : 'aboveBar',
         color: isBuy ? '#f4c95d' : '#d8dee9',
         shape: 'circle',
-        text: String(m.text || (isBuy ? '💰' : '人')),
+        text: String(m.text || (isBuy ? '💰' : '💥')),
         id: 'ssss-' + String(index) + '-' + String(m.open_time || ''),
         size: 0.9,
       };
@@ -571,7 +557,6 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     let paneIndex = 1;
     if (state.stateSeries) panes[paneIndex++]?.setHeight(30);
     panes[paneIndex++]?.setHeight(80);
-    panes[paneIndex++]?.setHeight(70);
 
     if (oldRange) {
       state.chart.timeScale().setVisibleLogicalRange(oldRange);
@@ -608,7 +593,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       const fraction = Number(payload.runtime_fraction || 0) * 100;
       if (String(payload.strategy_id || '') === 'ssss') {
         const iconText = strategySnapshot.exit_icon_15
-          ? '人型图标'
+          ? '💥图标'
           : (strategySnapshot.buy_icon_9 ? '💰图标' : '无新图标');
         message.textContent = 'SSSS · ' + runtime + ' · 仓位 ' + fraction.toFixed(0) +
           '% · ' + String(strategySnapshot.state || '状态未知') + ' · ' + iconText +
@@ -623,7 +608,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     const legend = section.querySelector('.strategy-legend');
     if (legend) {
       legend.textContent = String(payload.strategy_id || '') === 'ssss'
-        ? 'SSSS：原始富途指标 · 💰=买入25% · 人型=全部清仓 · B/X仅代表真实成交'
+        ? 'SSSS：原始富途指标 · 💰=买入25% · 💥=全部清仓 · B/X仅代表真实成交'
         : '5s V1：仅成交成功后显示 B/S/X';
     }
   }
