@@ -39,7 +39,7 @@ UNIVERSE=[
  ("GD","Industrials"),("NOC","Industrials"),("ROK","Industrials"),
  ("NEM","Materials"),("ECL","Materials"),("DD","Materials"),
  ("KR","Consumer"),("KHC","Consumer"),("DG","Consumer"),
- ("EA","Communication"),("TTWO","Communication"),("FOXA","Communication"),
+ ("CHTR","Communication"),("TTWO","Communication"),("FOXA","Communication"),
  ("EQIX","RealEstate"),("PSA","RealEstate"),("O","RealEstate"),
  ("MPC","Energy"),("OXY","Energy"),("VLO","Energy"),
 ]
