@@ -133,7 +133,7 @@ jobs:
                   sim=strategy.simulate_policy(candles,ledger,friction_bps=5.0)
 
                   dates=pd.to_datetime([x["date"] for x in candles])
-                  idx=np.flatnonzero(((dates>=FORMAL_START)&(dates<=FORMAL_END)).to_numpy())
+                  idx=np.flatnonzero((dates>=FORMAL_START)&(dates<=FORMAL_END))
                   if len(idx)<2: raise RuntimeError("insufficient formal bars")
                   i0,i1=int(idx[0]),int(idx[-1])
                   curve=np.asarray(sim["equity_curve"],dtype=float)[idx]
