@@ -35,11 +35,22 @@ class BinanceDemoFoundationTests(unittest.TestCase):
         self.assertNotEqual(a,b)
         self.assertLessEqual(len(a),36)
 
-    def test_binance_provider_converts_milliseconds_to_seconds(self):
+    def test_binance_provider_preserves_millisecond_timestamps(self):
         row=[1700000000000,"1","2","0.5","1.5","10",1700000299999]
         out=BinanceUsdMProvider._normalize_row(row,complete=True)
-        self.assertEqual(out["open_time"],1700000000)
-        self.assertEqual(out["close_time"],1700000299)
+        self.assertEqual(out["open_time"],1700000000000)
+        self.assertEqual(out["close_time"],1700000299999)
+
+    def test_e_calendar_bucket_accepts_seconds_and_milliseconds(self):
+        import e_strategy
+        self.assertEqual(
+            e_strategy._open_time_epoch_seconds(1700000000000),
+            1700000000.0,
+        )
+        self.assertEqual(
+            e_strategy._open_time_epoch_seconds(1700000000),
+            1700000000.0,
+        )
 
 
 if __name__=="__main__":
