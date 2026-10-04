@@ -99,7 +99,9 @@ jobs:
           assert 'setScrollEnabled(true)' in js
           assert "onCrosshairChange" in js
           assert "STATE_COLORS" in js
-          assert "chan_signal_overlay" in js
+          assert "chan_signal_overlay" not in js
+          assert "chan_signal_overlay" not in app
+          assert "selected.has('chan')" in js
           assert "ch.zhongshus || []" in js
           assert "['sr_long_pressure', '#52d49a', [], 1]" in js
           assert "DISPLAY_KLINE_LIMIT = 500" in app
