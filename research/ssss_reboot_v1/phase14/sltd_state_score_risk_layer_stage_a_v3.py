@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stage A for SLTD State Score Risk-Exposure v3.
+"""Stage A for SLTD State Score Risk-Exposure v3.\n\nCI_TRIGGER_AFTER_WORKFLOW_REGISTRATION: workflow already exists before this push.
 
 Build a risk-adjusted pure-SLTD state layer from the frozen original 79-stock data.
 No portfolio mapping is performed here.
