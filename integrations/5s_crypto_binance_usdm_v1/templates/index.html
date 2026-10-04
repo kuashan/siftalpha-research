@@ -313,6 +313,8 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     const liveStatus = section.querySelector('.live-price-status');
     const candles = Array.isArray(payload.candles) ? payload.candles : [];
     const markers = Array.isArray(payload.markers) ? payload.markers : [];
+    const indicatorMarkers = Array.isArray(payload.strategy_indicator_markers)
+      ? payload.strategy_indicator_markers : [];
     const overlay = Array.isArray(payload.strategy_overlay) ? payload.strategy_overlay : [];
     const strategySnapshot = payload.strategy_snapshot || {};
     const LW = window.LightweightCharts;
@@ -393,13 +395,14 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       }, 0);
 
       const mainLines = {};
-      if (String(payload.strategy_id || '') === 'e') {
+      if (String(payload.strategy_id || '') === 'ssss') {
         [
           ['GZB3','#728096',0],
           ['GZB4','#9ba6b7',0],
           ['ZD1','#65c5d8',2],
           ['ZK1','#c28bd8',2],
           ['BS','#eab464',1],
+          ['BD','#20bd92',1],
         ].forEach(([field,color,lineStyle]) => {
           mainLines[field] = chart.addSeries(LW.LineSeries, {
             color,
@@ -413,7 +416,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 
       let nextPane = 1;
       let stateSeries = null;
-      if (String(payload.strategy_id || '') === 'e') {
+      if (String(payload.strategy_id || '') === 'ssss') {
         stateSeries = chart.addSeries(LW.HistogramSeries, {
           priceLineVisible: false,
           lastValueVisible: false,
@@ -428,7 +431,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       }, nextPane++);
 
       const positionSeries = chart.addSeries(LW.LineSeries, {
-        color: String(payload.strategy_id || '') === 'e' ? '#dba6ff' : '#65c5d8',
+        color: String(payload.strategy_id || '') === 'ssss' ? '#dba6ff' : '#65c5d8',
         lineWidth: 2,
         priceLineVisible: false,
         lastValueVisible: true,
@@ -515,7 +518,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 
     if (state.stateSeries) {
       const stateColors = {
-        BLUE:'#5b8cff', GRAY:'#8d99aa', GREEN:'#52d49a', OTHER:'#344055',
+        BLUE:'#5b8cff', RED:'#ef5350', GRAY:'#8d99aa', OTHER:'#344055',
       };
       state.stateSeries.setData(overlay.map(row => ({
         time: Math.floor(Number(row.open_time) / 1000),
@@ -524,7 +527,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       })));
     }
 
-    if (String(payload.strategy_id || '') === 'e') {
+    if (String(payload.strategy_id || '') === 'ssss') {
       state.positionSeries.setData(overlay
         .map(row => {
           const value = Number(row.position);
@@ -553,8 +556,23 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
         id: String(m.client_order_id || index),
         size: 1.1,
       };
-    }).sort((a,b) => Number(a.time) - Number(b.time));
-    state.markerApi?.setMarkers(tradeMarkers);
+    });
+    const formulaMarkers = indicatorMarkers.map((m,index) => {
+      const kind = String(m.kind || '');
+      const isBuy = kind === 'BUY_ICON_9';
+      return {
+        time: Math.floor(Number(m.open_time) / 1000),
+        position: isBuy ? 'belowBar' : 'aboveBar',
+        color: isBuy ? '#f4c95d' : '#d8dee9',
+        shape: 'circle',
+        text: String(m.text || (isBuy ? '💰' : '人')),
+        id: 'ssss-' + String(index) + '-' + String(m.open_time || ''),
+        size: 0.9,
+      };
+    });
+    state.markerApi?.setMarkers(
+      tradeMarkers.concat(formulaMarkers).sort((a,b) => Number(a.time) - Number(b.time))
+    );
 
     const panes = state.chart.panes();
     panes[0]?.setHeight(330);
@@ -596,11 +614,14 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     if (message) {
       const runtime = payload.runtime_state_label || '未知状态';
       const fraction = Number(payload.runtime_fraction || 0) * 100;
-      if (String(payload.strategy_id || '') === 'e') {
+      if (String(payload.strategy_id || '') === 'ssss') {
         const eState = strategySnapshot.state_zh || '状态未知';
         const action = strategySnapshot.resolved_action_zh || '无新动作';
-        message.textContent = 'E · ' + runtime + ' · 仓位 ' + fraction.toFixed(0) +
-          '% · ' + eState + ' · ' + action +
+        const iconText = strategySnapshot.exit_icon_15
+          ? '人型图标'
+          : (strategySnapshot.buy_icon_9 ? '💰图标' : '无新图标');
+        message.textContent = 'SSSS · ' + runtime + ' · 仓位 ' + fraction.toFixed(0) +
+          '% · ' + String(strategySnapshot.state || '状态未知') + ' · ' + iconText +
           ' · K线 ' + candles.length + '/1000';
       } else {
         message.textContent = payload.strategy_label + ' · ' + runtime +
@@ -611,8 +632,8 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 
     const legend = section.querySelector('.strategy-legend');
     if (legend) {
-      legend.textContent = String(payload.strategy_id || '') === 'e'
-        ? 'E：三色状态 · GZB3/GZB4 · ZD1/ZK1 · BS · 成交后显示 B/S/X'
+      legend.textContent = String(payload.strategy_id || '') === 'ssss'
+        ? 'SSSS：原始富途指标 · 💰=买入25% · 人型=全部清仓 · B/X仅代表真实成交'
         : '5s V1：仅成交成功后显示 B/S/X';
     }
   }
