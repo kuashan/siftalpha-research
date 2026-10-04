@@ -197,16 +197,24 @@ def _aggregate_session_day(
         return []
     days = sorted(by_day)
     last_day = days[-1]
-    regular_end = (market_meta or {}).get("regular_market_end")
+    meta = market_meta or {}
+    continuous = bool(meta.get("continuous_24_7"))
+    regular_end = meta.get("regular_market_end")
     try:
         regular_end_i = int(regular_end) if regular_end is not None else None
     except Exception:
         regular_end_i = None
     session_closed = regular_end_i is not None and int(time.time()) >= regular_end_i
+    current_day = datetime.now(tz=tz).date()
 
     out: list[dict] = []
     for day in days:
-        if day == last_day and not session_closed:
+        if continuous:
+            # Crypto has no exchange close. A UTC calendar day becomes complete
+            # only after the date has rolled to the next day.
+            if day >= current_day:
+                continue
+        elif day == last_day and not session_closed:
             continue
         chunk = sorted(by_day[day], key=lambda x: int(x[1]["open_time"]))
         if chunk:
