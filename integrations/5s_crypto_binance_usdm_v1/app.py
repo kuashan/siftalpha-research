@@ -754,6 +754,10 @@ class Handler(BaseHTTPRequestHandler):
                 )
                 for symbol in settings.symbols
             }
+            ssss_signal_events = {
+                symbol: store.recent_ssss_signal_events(symbol, limit=20)
+                for symbol in settings.symbols
+            }
             payload = {
                 "app": settings.app_name,
                 "environment": testnet_session.public_status(),
@@ -767,6 +771,7 @@ class Handler(BaseHTTPRequestHandler):
                 "pnl": store.get_pnl(),
                 "pnl_summary": store.pnl_summary(),
                 "diagnostics": diagnostics,
+                "ssss_signal_events": ssss_signal_events,
                 "binance_public": {
                     "ok": result.ok,
                     "latency_ms": result.latency_ms,
