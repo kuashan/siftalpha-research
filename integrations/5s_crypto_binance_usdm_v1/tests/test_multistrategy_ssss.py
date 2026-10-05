@@ -312,6 +312,7 @@ class _SchedulerAdapter(FakeAdapter):
     def __init__(self):
         super().__init__()
         self.generation = 0
+        self.revision = 0
         self.requested_limits = []
 
     def klines(self, symbol, timeframe, limit):
@@ -319,10 +320,12 @@ class _SchedulerAdapter(FakeAdapter):
         base = 1700000000000
         rows = []
         # SSSS runtime contract: 1000 closed bars plus one current open bar.
-        for i in range(1000 + self.generation):
+        closed_count = 1000 + self.generation
+        for i in range(closed_count):
             t = base + i * 900000
-            rows.append([t, 100.0, 101.0, 99.0, 100.0, 1000.0])
-        i = 1000 + self.generation
+            close = 100.0 + (float(self.revision) if i == closed_count - 1 else 0.0)
+            rows.append([t, 100.0, 101.0, 99.0, close, 1000.0])
+        i = closed_count
         t = base + i * 900000
         rows.append([t, 100.0, 101.0, 99.0, 100.0, 1000.0])
         return rows[-int(limit):]
@@ -415,6 +418,66 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
             and "decision=SSSS_BUY_9" in detail
             for detail in details
         ))
+        clear_analysis_cache()
+
+
+    @patch("strategy.registry.ssss_strategy.evaluate_ssss")
+    def test_same_closed_bar_revision_can_create_new_money_signal(self, mocked):
+        clear_analysis_cache()
+        base = 1700000000000
+
+        def evaluate(rows):
+            bars = [fake_bar(open_time=int(row[0])) for row in rows]
+            # First poll for a newly closed bar sees its initial close and HOLD.
+            # A later Binance response revises the same bar's OHLC without
+            # advancing open_time. That revision creates the 💰 signal.
+            if float(rows[-1][4]) > 100.5:
+                bars[-1] = fake_bar(buy=True, open_time=int(rows[-1][0]))
+            return bars
+
+        mocked.side_effect = evaluate
+
+        baseline = self.scheduler.run_once()
+        self.assertIn("baseline", baseline["BTCUSDT"])
+
+        self.adapter.generation = 1
+        first_view = self.scheduler.run_once()
+        self.assertEqual(first_view["BTCUSDT"]["signal"], "HOLD")
+        self.assertEqual(self.adapter.submits, 0)
+        stable_open_time = int(
+            self.store.get_runtime_states()["BTCUSDT"]["last_closed_bar_open_time"]
+        )
+
+        # No new bar: only the OHLC payload changes.
+        self.adapter.revision = 1
+        revised = self.scheduler.run_once()
+        self.assertEqual(
+            int(self.store.get_runtime_states()["BTCUSDT"]["last_closed_bar_open_time"]),
+            stable_open_time,
+        )
+        self.assertEqual(revised["BTCUSDT"]["signal"], "SSSS_BUY_9", revised)
+        self.assertEqual(revised["BTCUSDT"]["actions"], ["SSSS_BUY_25"])
+        self.assertEqual(self.adapter.submits, 1)
+        self.assertAlmostEqual(
+            float(self.store.get_runtime_states()["BTCUSDT"]["current_fraction"]),
+            0.25,
+        )
+
+        # The same persisted event key must not execute twice.
+        repeated = self.scheduler.run_once()
+        self.assertEqual(repeated["BTCUSDT"]["actions"], [])
+        self.assertEqual(self.adapter.submits, 1)
+
+        events = self.store.recent_ssss_signal_events("BTCUSDT", limit=5)
+        self.assertEqual(len(events), 1)
+        event = events[0]
+        self.assertEqual(int(event["icon_id"]), 9)
+        self.assertEqual(int(event["signal_bar_open_time"]), stable_open_time)
+        self.assertTrue(str(event["first_detected_time"]))
+        self.assertEqual(str(event["status"]), "FILLED")
+        self.assertIsNotNone(event["execution_bar_open_time"])
+        self.assertTrue(str(event["binance_order_id"]))
+        self.assertIn("SSSS_BUY_9", str(event["result"]))
         clear_analysis_cache()
 
 
