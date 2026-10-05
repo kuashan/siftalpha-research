@@ -96,6 +96,20 @@ def _has_actions(decision) -> bool:
     return bool(getattr(decision, "steps", ()) or getattr(decision, "actions", ()))
 
 
+def _ssss_event_parts(key: object) -> tuple[str, int, int] | None:
+    parts = str(key).split(":")
+    if len(parts) != 3:
+        return None
+    try:
+        icon_id = int(parts[1])
+        open_time = int(parts[2])
+    except (TypeError, ValueError):
+        return None
+    if icon_id not in (9, 15):
+        return None
+    return str(parts[0]).lower(), icon_id, open_time
+
+
 class StrategyScheduler:
     """One scheduler, four fixed crypto symbols, pluggable strategy adapters."""
 
@@ -293,12 +307,26 @@ class StrategyScheduler:
                         strategy_state=baseline_state,
                     )
                     if strategy_id == STRATEGY_SSSS and baseline_state is not None:
+                        baseline_keys = list(baseline_state.get("seen_icon_events") or [])
+                        for key in baseline_keys:
+                            parts = _ssss_event_parts(key)
+                            if parts is None:
+                                continue
+                            event_tf, icon_id, signal_open_time = parts
+                            self.store.record_ssss_signal_detection(
+                                symbol,
+                                timeframe=event_tf,
+                                signal_bar_open_time=signal_open_time,
+                                icon_id=icon_id,
+                                detection_bar_open_time=latest_open_time,
+                                status="BASELINE",
+                            )
                         self.store.append_audit(
                             "SSSS_SIGNAL_BASELINE",
                             symbol,
                             (
                                 f"bar_open_time={latest_open_time};timeframe={timeframe};"
-                                f"seen_events={len(baseline_state.get('seen_icon_events') or [])};"
+                                f"seen_events={len(baseline_keys)};"
                                 f"reason={'TRACKER_INIT' if tracker_needs_baseline else 'FIRST_BAR'}"
                             ),
                         )
@@ -311,7 +339,29 @@ class StrategyScheduler:
                     }
                     continue
 
-                if latest_open_time <= int(previous_open_time):
+                previous_open_time = int(previous_open_time)
+                if latest_open_time < previous_open_time:
+                    self.store.append_audit(
+                        "M3_STALE_CLOSED_BAR",
+                        symbol,
+                        (
+                            f"strategy={strategy_id};timeframe={timeframe};"
+                            f"latest={latest_open_time};previous={previous_open_time};"
+                            f"market_source={market_source}"
+                        ),
+                    )
+                    result[symbol] = {
+                        "state": str(state.get("run_state") or "MONITORING"),
+                        "new_bar": False,
+                        "stale_bar": True,
+                        "market_source": market_source,
+                        "strategy_id": strategy_id,
+                        "timeframe": timeframe,
+                    }
+                    continue
+
+                is_new_bar = latest_open_time > previous_open_time
+                if strategy_id != STRATEGY_SSSS and not is_new_bar:
                     self.store.set_run_state(symbol, "MONITORING")
                     result[symbol] = {
                         "state": "MONITORING",
@@ -322,6 +372,10 @@ class StrategyScheduler:
                     }
                     continue
 
+                # SSSS intentionally re-runs on the same latest closed-bar timestamp.
+                # Binance/chart data may receive a final OHLC revision after the first
+                # boundary poll. The persisted icon set, not only bar_open_time, is
+                # therefore the authority for deciding whether a signal is new.
                 decision = self._make_decision(strategy_id, closed, state, timeframe)
                 execution_context = {
                     "signal_bar_open_time": latest_open_time,
@@ -330,13 +384,55 @@ class StrategyScheduler:
                     "timeframe": timeframe,
                 }
 
+                ssss_new_events: list[tuple[str, int, int]] = []
+                ssss_detection_rows: list[dict[str, object]] = []
                 if strategy_id == STRATEGY_SSSS:
                     metadata = dict(getattr(decision, "metadata", None) or {})
+                    for key in (metadata.get("new_icon_events") or []):
+                        parts = _ssss_event_parts(key)
+                        if parts is None:
+                            continue
+                        event_tf, icon_id, signal_open_time = parts
+                        ssss_new_events.append(parts)
+                        ssss_detection_rows.append(
+                            self.store.record_ssss_signal_detection(
+                                symbol,
+                                timeframe=event_tf,
+                                signal_bar_open_time=signal_open_time,
+                                icon_id=icon_id,
+                                detection_bar_open_time=latest_open_time,
+                                status="DETECTED",
+                            )
+                        )
+
+                    # Same timestamp + unchanged event set is a genuine no-op.
+                    # Do not write one HOLD/audit row every second.
+                    if not is_new_bar and not ssss_new_events:
+                        current_state = str(state.get("run_state") or "MONITORING")
+                        if current_state == "ERROR":
+                            self.store.set_run_state(symbol, "MONITORING")
+                            current_state = "MONITORING"
+                        result[symbol] = {
+                            "state": current_state,
+                            "new_bar": False,
+                            "market_source": market_source,
+                            "strategy_id": strategy_id,
+                            "timeframe": timeframe,
+                            "signal": str(state.get("last_signal") or "HOLD"),
+                            "actions": [],
+                        }
+                        continue
+
+                    first_detected = ",".join(
+                        str(row.get("first_detected_time") or "")
+                        for row in ssss_detection_rows
+                    ) or "NONE"
                     self.store.append_audit(
                         "SSSS_BAR_DECISION",
                         symbol,
                         (
                             f"bar_open_time={latest_open_time};timeframe={timeframe};"
+                            f"new_bar={1 if is_new_bar else 0};"
                             f"market_source={market_source};closed_bars={len(closed)};"
                             f"icon9={1 if metadata.get('buy_icon_9') else 0};"
                             f"icon15={1 if metadata.get('exit_icon_15') else 0};"
@@ -344,6 +440,7 @@ class StrategyScheduler:
                             f"new_buy_count={int(metadata.get('new_buy_count') or 0)};"
                             f"new_exit_count={int(metadata.get('new_exit_count') or 0)};"
                             f"source_signal_bar={metadata.get('source_signal_bar_open_time') or 'NONE'};"
+                            f"first_detected_time={first_detected};"
                             f"decision={decision.signal};"
                             f"actions={'+'.join(_decision_action_codes(decision)) or 'NONE'}"
                         ),
@@ -361,12 +458,29 @@ class StrategyScheduler:
                         )
                     except TerminalDecisionError as exc:
                         if strategy_id == STRATEGY_SSSS:
+                            for event_tf, icon_id, signal_open_time in ssss_new_events:
+                                event_status = (
+                                    "SUPPRESSED_BY_EXIT"
+                                    if decision.signal == "SSSS_EXIT_15" and icon_id == 9
+                                    else "BLOCKED"
+                                )
+                                self.store.mark_ssss_signal_result(
+                                    symbol,
+                                    timeframe=event_tf,
+                                    signal_bar_open_time=signal_open_time,
+                                    icon_id=icon_id,
+                                    status=event_status,
+                                    execution_bar_open_time=int(execution_context["execution_bar_open_time"]),
+                                    result=f"decision={decision.signal};reason={exc}",
+                                )
                             self.store.append_audit(
                                 "SSSS_BAR_EXECUTION",
                                 symbol,
                                 (
-                                    f"bar_open_time={latest_open_time};decision={decision.signal};"
-                                    f"status=BLOCKED;reason={exc}"
+                                    f"bar_open_time={latest_open_time};"
+                                    f"signal_bar_open_time={decision.bar_open_time};"
+                                    f"execution_bar_open_time={execution_context['execution_bar_open_time']};"
+                                    f"decision={decision.signal};status=BLOCKED;reason={exc}"
                                 ),
                             )
                         self.store.record_strategy_observation(
@@ -396,24 +510,57 @@ class StrategyScheduler:
                         continue
                     except Exception as exc:
                         if strategy_id == STRATEGY_SSSS:
+                            for event_tf, icon_id, signal_open_time in ssss_new_events:
+                                self.store.mark_ssss_signal_result(
+                                    symbol,
+                                    timeframe=event_tf,
+                                    signal_bar_open_time=signal_open_time,
+                                    icon_id=icon_id,
+                                    status="ERROR",
+                                    execution_bar_open_time=int(execution_context["execution_bar_open_time"]),
+                                    result=f"{type(exc).__name__}:{exc}",
+                                )
                             self.store.append_audit(
                                 "SSSS_BAR_EXECUTION",
                                 symbol,
                                 (
-                                    f"bar_open_time={latest_open_time};decision={decision.signal};"
-                                    f"status=ERROR;reason={type(exc).__name__}:{exc}"
+                                    f"bar_open_time={latest_open_time};"
+                                    f"signal_bar_open_time={decision.bar_open_time};"
+                                    f"execution_bar_open_time={execution_context['execution_bar_open_time']};"
+                                    f"decision={decision.signal};status=ERROR;"
+                                    f"reason={type(exc).__name__}:{exc}"
                                 ),
                             )
                         raise
 
                     if strategy_id == STRATEGY_SSSS:
                         order_ids = tuple(getattr(execution_outcome, "order_ids", ()) or ())
+                        order_text = ",".join(str(x) for x in order_ids) or "NONE"
+                        for event_tf, icon_id, signal_open_time in ssss_new_events:
+                            event_status = (
+                                "SUPPRESSED_BY_EXIT"
+                                if decision.signal == "SSSS_EXIT_15" and icon_id == 9
+                                else "FILLED"
+                            )
+                            self.store.mark_ssss_signal_result(
+                                symbol,
+                                timeframe=event_tf,
+                                signal_bar_open_time=signal_open_time,
+                                icon_id=icon_id,
+                                status=event_status,
+                                execution_bar_open_time=int(execution_context["execution_bar_open_time"]),
+                                binance_order_id=order_text if event_status == "FILLED" else None,
+                                result=f"decision={decision.signal};orders={order_text}",
+                            )
                         self.store.append_audit(
                             "SSSS_BAR_EXECUTION",
                             symbol,
                             (
-                                f"bar_open_time={latest_open_time};decision={decision.signal};"
-                                f"status=FILLED;order_ids={','.join(str(x) for x in order_ids) or 'NONE'}"
+                                f"bar_open_time={latest_open_time};"
+                                f"signal_bar_open_time={decision.bar_open_time};"
+                                f"execution_bar_open_time={execution_context['execution_bar_open_time']};"
+                                f"decision={decision.signal};"
+                                f"status=FILLED;order_ids={order_text}"
                             ),
                         )
 
@@ -429,12 +576,29 @@ class StrategyScheduler:
                     state_name = "MONITORING"
                 else:
                     if strategy_id == STRATEGY_SSSS:
+                        for event_tf, icon_id, signal_open_time in ssss_new_events:
+                            event_status = (
+                                "SUPPRESSED_BY_EXIT"
+                                if decision.signal == "SSSS_EXIT_15" and icon_id == 9
+                                else "IGNORED_NO_ACTION"
+                            )
+                            self.store.mark_ssss_signal_result(
+                                symbol,
+                                timeframe=event_tf,
+                                signal_bar_open_time=signal_open_time,
+                                icon_id=icon_id,
+                                status=event_status,
+                                execution_bar_open_time=int(execution_context["execution_bar_open_time"]),
+                                result=f"decision={decision.signal};action=NONE",
+                            )
                         self.store.append_audit(
                             "SSSS_BAR_EXECUTION",
                             symbol,
                             (
-                                f"bar_open_time={latest_open_time};decision={decision.signal};"
-                                "status=NONE;order_ids=NONE"
+                                f"bar_open_time={latest_open_time};"
+                                f"signal_bar_open_time={decision.bar_open_time};"
+                                f"execution_bar_open_time={execution_context['execution_bar_open_time']};"
+                                f"decision={decision.signal};status=NONE;order_ids=NONE"
                             ),
                         )
                     self.store.record_strategy_observation(
