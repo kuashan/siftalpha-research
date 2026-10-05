@@ -26,6 +26,9 @@ from strategy.registry import (
 from strategy.ssss_strategy import (
     SSSSBar,
     SSSS_SOURCE_SHA256,
+    analyze_ssss,
+    chart_overlay,
+    clear_analysis_cache,
     evaluate_ssss,
     load_formula_source,
     source_sha256,
@@ -146,6 +149,29 @@ class SSSSFormulaTests(unittest.TestCase):
         overlay = chart_overlay(rows)
         encoded = json.dumps(overlay, allow_nan=False)
         self.assertIn("null", encoded)
+
+
+class SSSSSharedAnalysisTests(unittest.TestCase):
+    @patch("strategy.ssss_strategy.evaluate_ssss")
+    def test_chart_and_trade_share_one_cached_latest_signal(self, mocked):
+        clear_analysis_cache()
+        rows = [
+            [1700000000000, 100.0, 101.0, 99.0, 100.0, 1000.0],
+            [1700000180000, 100.0, 101.0, 98.0, 99.0, 1000.0],
+        ]
+        mocked.return_value = [fake_bar(buy=True, open_time=1700000180000)]
+
+        analysis = analyze_ssss(rows)
+        overlay = chart_overlay(rows)
+        decision = decide_ssss(rows, {"current_fraction": 0.0}, "3m")
+
+        self.assertTrue(analysis.latest.buy_icon_9)
+        self.assertTrue(overlay[-1]["buy_icon_9"])
+        self.assertEqual(decision.signal, "SSSS_BUY_9")
+        self.assertEqual(decision.steps[0].code, "SSSS_BUY_25")
+        # Same closed-bar input is evaluated once; chart and trade reuse it.
+        self.assertEqual(mocked.call_count, 1)
+        clear_analysis_cache()
 
 
 class SSSSTradingRuleTests(unittest.TestCase):
@@ -286,20 +312,20 @@ class _SchedulerAdapter(FakeAdapter):
     def __init__(self):
         super().__init__()
         self.generation = 0
+        self.requested_limits = []
 
     def klines(self, symbol, timeframe, limit):
+        self.requested_limits.append(int(limit))
         base = 1700000000000
         rows = []
-        # 180 closed bars are enough for the SSSS registry minimum.
-        for i in range(180 + self.generation):
+        # SSSS runtime contract: 1000 closed bars plus one current open bar.
+        for i in range(1000 + self.generation):
             t = base + i * 900000
             rows.append([t, 100.0, 101.0, 99.0, 100.0, 1000.0])
-        # Current open bar; scheduler excludes this from signal calculation and
-        # uses its open as the execution reference.
-        i = 180 + self.generation
+        i = 1000 + self.generation
         t = base + i * 900000
         rows.append([t, 100.0, 101.0, 99.0, 100.0, 1000.0])
-        return rows
+        return rows[-int(limit):]
 
 
 class SSSSEndToEndAutomationTests(unittest.TestCase):
@@ -330,8 +356,8 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
 
         def evaluate(rows):
             latest = int(rows[-1][0])
-            buy_time = base + 180 * 900000
-            exit_time = base + 181 * 900000
+            buy_time = base + 1000 * 900000
+            exit_time = base + 1001 * 900000
             return [fake_bar(
                 buy=latest == buy_time,
                 exit_=latest == exit_time,
@@ -344,11 +370,13 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
         first = self.scheduler.run_once()
         self.assertEqual(first["BTCUSDT"]["state"], "MONITORING")
         self.assertEqual(self.adapter.submits, 0)
+        self.assertEqual(self.adapter.requested_limits[-1], 1001)
 
         # Next closed bar shows 💰: scheduler must reach the Binance adapter BUY.
         self.adapter.generation = 1
         second = self.scheduler.run_once()
         self.assertEqual(second["BTCUSDT"]["signal"], "SSSS_BUY_9")
+        self.assertEqual(len(mocked.call_args.args[0]), 1000)
         self.assertEqual(second["BTCUSDT"]["actions"], ["SSSS_BUY_25"])
         self.assertEqual(self.adapter.submits, 1)
         self.assertGreater(self.adapter.position, Decimal("0"))
@@ -374,6 +402,15 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
         self.assertEqual([x["side"] for x in orders], ["BUY", "SELL"])
         markers = self.store.list_trade_markers("BTCUSDT", STRATEGY_SSSS)
         self.assertEqual([x["side"] for x in markers], ["B", "X"])
+
+        with self.store._connect() as conn:
+            audit_rows = conn.execute(
+                "SELECT event_type, detail FROM audit_events "
+                "WHERE symbol='BTCUSDT' AND event_type LIKE 'SSSS_BAR_%' ORDER BY id"
+            ).fetchall()
+        details = [str(row["detail"]) for row in audit_rows]
+        self.assertTrue(any("icon9=1" in x and "decision=SSSS_BUY_9" in x for x in details))
+        self.assertTrue(any("status=FILLED" in x for x in details))
 
 
 
