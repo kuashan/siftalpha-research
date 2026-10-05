@@ -36,6 +36,24 @@ class StorageTests(unittest.TestCase):
             self.assertAlmostEqual(pnl["BNBUSDT"]["total_pnl"], -1.9)
             self.assertAlmostEqual(s.pnl_summary()["total_pnl"], 9.3)
 
+    def test_recent_audit_filters_and_returns_latest_first(self):
+        with tempfile.TemporaryDirectory() as td:
+            s = StateStore(Path(td) / "state.db")
+            s.seed(["BTCUSDT"], 1, 1000, "1d")
+            s.append_audit("SSSS_BAR_DECISION", "BTCUSDT", "decision=HOLD")
+            s.append_audit("SCHEDULER_ERROR", "BTCUSDT", "RuntimeError:test failure")
+            s.append_audit("SSSS_BAR_EXECUTION", "BTCUSDT", "status=ERROR")
+            rows = s.recent_audit(
+                "BTCUSDT",
+                event_types=("SCHEDULER_ERROR", "SSSS_BAR_EXECUTION"),
+                limit=10,
+            )
+            self.assertEqual([row["event_type"] for row in rows], [
+                "SSSS_BAR_EXECUTION",
+                "SCHEDULER_ERROR",
+            ])
+            self.assertIn("test failure", rows[1]["detail"])
+
     def test_legacy_global_values_migrate_to_existing_symbol(self):
         with tempfile.TemporaryDirectory() as td:
             path = Path(td) / "legacy.db"
