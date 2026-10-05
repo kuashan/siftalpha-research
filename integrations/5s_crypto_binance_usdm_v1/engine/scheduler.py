@@ -7,7 +7,14 @@ import time
 
 from exchange.binance_usdm_testnet import BinanceUsdMTestnetAdapter
 from strategy.frozen_signal_engine import BarEvaluation, evaluate_candles
-from strategy.registry import STRATEGY_5S, STRATEGY_SSSS, decide as decide_strategy, get_spec
+from strategy.registry import (
+    STRATEGY_5S,
+    STRATEGY_SSSS,
+    baseline_ssss_state,
+    decide as decide_strategy,
+    get_spec,
+    ssss_tracker_matches,
+)
 
 
 @dataclass(frozen=True)
@@ -266,8 +273,35 @@ class StrategyScheduler:
 
                 latest_open_time = int(closed[-1][0])
                 previous_open_time = state.get("last_closed_bar_open_time")
-                if previous_open_time is None:
-                    self.store.baseline_closed_bar(symbol, latest_open_time)
+
+                # SSSS must establish a full icon baseline before trading. This
+                # also safely migrates existing installations that already have
+                # last_closed_bar_open_time but predate the signal tracker.
+                tracker_needs_baseline = (
+                    strategy_id == STRATEGY_SSSS
+                    and not ssss_tracker_matches(state, timeframe)
+                )
+                if previous_open_time is None or tracker_needs_baseline:
+                    baseline_state = (
+                        baseline_ssss_state(closed, timeframe)
+                        if strategy_id == STRATEGY_SSSS
+                        else None
+                    )
+                    self.store.baseline_closed_bar(
+                        symbol,
+                        latest_open_time,
+                        strategy_state=baseline_state,
+                    )
+                    if strategy_id == STRATEGY_SSSS and baseline_state is not None:
+                        self.store.append_audit(
+                            "SSSS_SIGNAL_BASELINE",
+                            symbol,
+                            (
+                                f"bar_open_time={latest_open_time};timeframe={timeframe};"
+                                f"seen_events={len(baseline_state.get('seen_icon_events') or [])};"
+                                f"reason={'TRACKER_INIT' if tracker_needs_baseline else 'FIRST_BAR'}"
+                            ),
+                        )
                     result[symbol] = {
                         "state": "MONITORING",
                         "baseline": latest_open_time,
@@ -306,6 +340,10 @@ class StrategyScheduler:
                             f"market_source={market_source};closed_bars={len(closed)};"
                             f"icon9={1 if metadata.get('buy_icon_9') else 0};"
                             f"icon15={1 if metadata.get('exit_icon_15') else 0};"
+                            f"new_events={','.join(str(x) for x in (metadata.get('new_icon_events') or [])) or 'NONE'};"
+                            f"new_buy_count={int(metadata.get('new_buy_count') or 0)};"
+                            f"new_exit_count={int(metadata.get('new_exit_count') or 0)};"
+                            f"source_signal_bar={metadata.get('source_signal_bar_open_time') or 'NONE'};"
                             f"decision={decision.signal};"
                             f"actions={'+'.join(_decision_action_codes(decision)) or 'NONE'}"
                         ),
@@ -338,6 +376,7 @@ class StrategyScheduler:
                             pending_action=None,
                             run_state="BLOCKED",
                             strategy_id=strategy_id,
+                            strategy_state=getattr(decision, "state_after", None),
                         )
                         self.store.append_audit(
                             "M3_EXECUTION_BLOCKED",
@@ -385,6 +424,7 @@ class StrategyScheduler:
                         pending_action=None,
                         run_state="MONITORING",
                         strategy_id=strategy_id,
+                        strategy_state=getattr(decision, "state_after", None),
                     )
                     state_name = "MONITORING"
                 else:
@@ -403,6 +443,7 @@ class StrategyScheduler:
                         signal=decision.signal,
                         pending_action=getattr(decision, "pending_action", None),
                         strategy_id=strategy_id,
+                        strategy_state=getattr(decision, "state_after", None),
                     )
                     state_name = "SIGNAL_READY" if _has_actions(decision) else "MONITORING"
 
