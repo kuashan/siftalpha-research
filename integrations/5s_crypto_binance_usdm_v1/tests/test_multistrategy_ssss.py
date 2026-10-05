@@ -352,6 +352,7 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
 
     @patch("strategy.registry.ssss_strategy.evaluate_ssss")
     def test_new_money_icon_on_older_bar_executes_once_even_if_it_reappears(self, mocked):
+        clear_analysis_cache()
         base = 1700000000000
         source_signal_time = base + 998 * 900000
 
@@ -414,6 +415,7 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
             and "decision=SSSS_BUY_9" in detail
             for detail in details
         ))
+        clear_analysis_cache()
 
 
     @patch("strategy.registry.ssss_strategy.evaluate_ssss")
