@@ -466,6 +466,40 @@ class StateStore:
                 (event_type, symbol, str(detail)),
             )
 
+    def recent_audit(
+        self,
+        symbol: str,
+        *,
+        event_types: tuple[str, ...] | None = None,
+        limit: int = 20,
+    ) -> list[dict[str, object]]:
+        safe_limit = min(max(int(limit), 1), 200)
+        with self._connect() as conn:
+            if event_types:
+                placeholders = ",".join("?" for _ in event_types)
+                rows = conn.execute(
+                    f"""
+                    SELECT id, ts, event_type, symbol, detail
+                    FROM audit_events
+                    WHERE symbol=? AND event_type IN ({placeholders})
+                    ORDER BY id DESC
+                    LIMIT ?
+                    """,
+                    (symbol, *event_types, safe_limit),
+                ).fetchall()
+            else:
+                rows = conn.execute(
+                    """
+                    SELECT id, ts, event_type, symbol, detail
+                    FROM audit_events
+                    WHERE symbol=?
+                    ORDER BY id DESC
+                    LIMIT ?
+                    """,
+                    (symbol, safe_limit),
+                ).fetchall()
+            return [dict(row) for row in rows]
+
     def set_accounting_start_if_missing(self, symbol: str, start_time_ms: int) -> int:
         with self._connect() as conn:
             conn.execute(
