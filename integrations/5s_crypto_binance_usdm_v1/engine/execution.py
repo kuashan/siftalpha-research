@@ -231,12 +231,41 @@ class M3Executor:
             "stage=ENSURE_ISOLATED",
         )
         adapter.ensure_isolated(symbol)
+        # Preserve the frozen local leverage-cap guard when Binance exposes
+        # leverage brackets, but do not let a missing/malformed Demo bracket
+        # response prevent a valid order from reaching the exchange.
+        try:
+            maximum = int(adapter.max_allowed_leverage(symbol))
+        except Exception as exc:
+            self.store.append_audit(
+                "BINANCE_EXECUTION_STAGE",
+                symbol,
+                (
+                    f"stage=LEVERAGE_BRACKET_UNAVAILABLE;"
+                    f"requested_leverage={int(leverage)};"
+                    f"reason={type(exc).__name__}:{exc}"
+                ),
+            )
+        else:
+            self.store.append_audit(
+                "BINANCE_EXECUTION_STAGE",
+                symbol,
+                (
+                    f"stage=LEVERAGE_BRACKET_PASS;"
+                    f"requested_leverage={int(leverage)};maximum={maximum}"
+                ),
+            )
+            if leverage > maximum:
+                raise ExecutionBlocked(
+                    f"请求杠杆 {leverage} 倍超过 {symbol} 当前允许的 {maximum} 倍"
+                )
+
         self.store.append_audit(
             "BINANCE_EXECUTION_STAGE",
             symbol,
             f"stage=SET_LEVERAGE;requested_leverage={int(leverage)}",
         )
-        # Binance itself validates the requested leverage for the symbol.
+        # Binance itself remains the final authority.
         adapter.set_leverage(symbol, leverage)
         self.store.append_audit(
             "BINANCE_EXECUTION_STAGE",
