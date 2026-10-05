@@ -27,6 +27,7 @@ class StrategyDecision:
     steps: tuple[StrategyStep, ...]
     bar_open_time: int
     metadata: dict[str, Any] | None = None
+    state_after: dict[str, Any] | None = None
 
     @property
     def pending_action(self) -> str | None:
@@ -195,6 +196,62 @@ def decide_5s(rows: list[Any], runtime: dict[str, Any]) -> StrategyDecision:
     )
 
 
+def _ssss_event_key(timeframe: str, icon_id: int, open_time: int) -> str:
+    return f"{str(timeframe).lower()}:{int(icon_id)}:{int(open_time)}"
+
+
+def _ssss_event_open_time(key: object) -> int | None:
+    try:
+        return int(str(key).rsplit(":", 1)[-1])
+    except (TypeError, ValueError):
+        return None
+
+
+def _ssss_events(analysis, timeframe: str) -> list[dict[str, Any]]:
+    events: list[dict[str, Any]] = []
+    for bar in analysis.bars:
+        open_time = int(bar.open_time)
+        if bool(bar.buy_icon_9):
+            events.append({
+                "key": _ssss_event_key(timeframe, 9, open_time),
+                "icon_id": 9,
+                "open_time": open_time,
+            })
+        if bool(bar.exit_icon_15):
+            events.append({
+                "key": _ssss_event_key(timeframe, 15, open_time),
+                "icon_id": 15,
+                "open_time": open_time,
+            })
+    events.sort(key=lambda item: (int(item["open_time"]), int(item["icon_id"])))
+    return events
+
+
+def baseline_ssss_state(rows: list[Any], timeframe: str) -> dict[str, Any]:
+    """Snapshot all currently visible SSSS icons without creating trades."""
+    tf = str(timeframe).lower()
+    analysis = ssss_strategy.analyze_ssss(rows)
+    events = _ssss_events(analysis, tf)
+    latest = analysis.latest
+    return {
+        "signal_tracker_initialized": True,
+        "tracker_timeframe": tf,
+        "source_sha256": ssss_strategy.source_sha256(),
+        "seen_icon_events": [str(item["key"]) for item in events],
+        "last_detection_bar_open_time": int(latest.open_time) if latest is not None else None,
+    }
+
+
+def ssss_tracker_matches(runtime: dict[str, Any], timeframe: str) -> bool:
+    state = _state(runtime)
+    return (
+        bool(state.get("signal_tracker_initialized"))
+        and str(state.get("tracker_timeframe") or "").lower() == str(timeframe).lower()
+        and str(state.get("source_sha256") or "") == ssss_strategy.source_sha256()
+        and isinstance(state.get("seen_icon_events"), list)
+    )
+
+
 def decide_ssss(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> StrategyDecision:
     spec = get_spec(STRATEGY_SSSS)
     tf = str(timeframe).lower()
@@ -205,52 +262,100 @@ def decide_ssss(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> Str
     latest = analysis.latest
     if latest is None:
         raise ValueError("SSSS 原始指标没有返回计算结果")
+
     fraction = min(max(float(runtime.get("current_fraction") or 0.0), 0.0), 1.0)
     state = _state(runtime)
+    events = _ssss_events(analysis, tf)
+
+    # Keep "seen ever" only for source bars still inside the active 1000-bar
+    # window. This is enough to stop a repainted icon disappearing/reappearing
+    # from firing twice while keeping the persisted JSON bounded.
+    earliest_open_time = int(analysis.bars[0].open_time)
+    seen_before = {
+        str(key)
+        for key in (state.get("seen_icon_events") or [])
+        if _ssss_event_open_time(key) is not None
+        and int(_ssss_event_open_time(key)) >= earliest_open_time
+    }
+    new_events = [item for item in events if str(item["key"]) not in seen_before]
+    seen_after = seen_before | {str(item["key"]) for item in events}
+
     state.update({
+        "signal_tracker_initialized": True,
+        "tracker_timeframe": tf,
         "source_sha256": ssss_strategy.source_sha256(),
-        "last_icon_bar_open_time": int(latest.open_time),
+        "seen_icon_events": sorted(
+            seen_after,
+            key=lambda key: (
+                int(_ssss_event_open_time(key) or 0),
+                int(str(key).split(":")[1]),
+            ),
+        ),
+        "last_detection_bar_open_time": int(latest.open_time),
     })
 
+    new_exits = [item for item in new_events if int(item["icon_id"]) == 15]
+    new_buys = [item for item in new_events if int(item["icon_id"]) == 9]
     steps: list[StrategyStep] = []
     signal = "HOLD"
+    source_bar_open_time = int(latest.open_time)
 
-    # User-frozen priority: if both icons somehow exist on one bar, exit wins.
-    if latest.exit_icon_15:
+    # User-frozen priority: any newly appearing exit icon wins over every buy
+    # icon discovered in the same recalculation batch.
+    if new_exits:
+        chosen = max(new_exits, key=lambda item: int(item["open_time"]))
+        source_bar_open_time = int(chosen["open_time"])
         signal = "SSSS_EXIT_15"
         state["last_icon"] = 15
+        state["last_icon_bar_open_time"] = source_bar_open_time
         if fraction > 1e-12:
             steps.append(StrategyStep(
                 code="SSSS_EXIT_ALL",
                 order_code="X100",
                 target_fraction=0.0,
-                rule_ids=("DRAWICON_15",),
-                state_after={},
-            ))
-    elif latest.buy_icon_9:
-        signal = "SSSS_BUY_9"
-        state["last_icon"] = 9
-        if fraction < 1.0 - 1e-12:
-            target = min(1.0, fraction + 0.25)
-            steps.append(StrategyStep(
-                code="SSSS_BUY_25",
-                order_code="B25",
-                target_fraction=target,
-                rule_ids=("DRAWICON_9",),
+                rule_ids=tuple(
+                    f"DRAWICON_15:{int(item['open_time'])}" for item in new_exits
+                ),
                 state_after=dict(state),
             ))
+    elif new_buys:
+        chosen = max(new_buys, key=lambda item: int(item["open_time"]))
+        source_bar_open_time = int(chosen["open_time"])
+        signal = "SSSS_BUY_9"
+        state["last_icon"] = 9
+        state["last_icon_bar_open_time"] = source_bar_open_time
+        if fraction < 1.0 - 1e-12:
+            target = min(1.0, fraction + 0.25 * len(new_buys))
+            delta_pct = int(round((target - fraction) * 100))
+            if delta_pct > 0:
+                steps.append(StrategyStep(
+                    code="SSSS_BUY_25" if delta_pct == 25 else f"SSSS_BUY_{delta_pct}",
+                    order_code=f"B{delta_pct}",
+                    target_fraction=target,
+                    rule_ids=tuple(
+                        f"DRAWICON_9:{int(item['open_time'])}" for item in new_buys
+                    ),
+                    state_after=dict(state),
+                ))
 
+    metadata = {
+        "buy_icon_9": bool(latest.buy_icon_9),
+        "exit_icon_15": bool(latest.exit_icon_15),
+        "analysis_bar_count": len(analysis.bars),
+        "source_sha256": ssss_strategy.source_sha256(),
+        "new_icon_events": [str(item["key"]) for item in new_events],
+        "new_buy_count": len(new_buys),
+        "new_exit_count": len(new_exits),
+        "detection_bar_open_time": int(latest.open_time),
+        "source_signal_bar_open_time": source_bar_open_time if new_events else None,
+    }
     return StrategyDecision(
         strategy_id=STRATEGY_SSSS,
         signal=signal,
         steps=tuple(steps),
-        bar_open_time=int(latest.open_time),
-        metadata={
-            "buy_icon_9": bool(latest.buy_icon_9),
-            "exit_icon_15": bool(latest.exit_icon_15),
-            "analysis_bar_count": len(analysis.bars),
-            "source_sha256": ssss_strategy.source_sha256(),
-        },
+        bar_open_time=source_bar_open_time,
+        metadata=metadata,
+        state_after=dict(state),
     )
 
 
