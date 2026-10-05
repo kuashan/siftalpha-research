@@ -22,7 +22,11 @@ from strategy.registry import (
     strategy_options,
     strategy_signal_label,
 )
-from strategy.ssss_strategy import chart_overlay as ssss_chart_overlay, source_sha256 as ssss_source_sha256
+from strategy.ssss_strategy import (
+    analyze_ssss,
+    closed_bar_window as ssss_closed_bar_window,
+    source_sha256 as ssss_source_sha256,
+)
 
 
 settings = Settings.from_env()
@@ -161,8 +165,10 @@ def run_m4_recovery() -> dict[str, object]:
 
 
 def _ssss_chart_analysis(rows: list[object]) -> dict[str, object]:
-    closed_rows = rows[:-1] if len(rows) >= 2 else []
-    overlay = ssss_chart_overlay(closed_rows, display_limit=DISPLAY_KLINE_LIMIT)
+    # Exact same 1000-closed-bar input and same cached evaluator as automation.
+    closed_rows = ssss_closed_bar_window(rows, closed_limit=DISPLAY_KLINE_LIMIT)
+    analysis = analyze_ssss(closed_rows)
+    overlay = analysis.overlay(display_limit=DISPLAY_KLINE_LIMIT)
     indicators: list[dict[str, object]] = []
     for row in overlay:
         if bool(row.get("buy_icon_9")):
