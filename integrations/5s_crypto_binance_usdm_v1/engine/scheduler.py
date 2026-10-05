@@ -499,7 +499,7 @@ class StrategyScheduler:
                         )
                         result[symbol] = {
                             "state": "BLOCKED",
-                            "new_bar": True,
+                            "new_bar": is_new_bar,
                             "market_source": market_source,
                             "strategy_id": strategy_id,
                             "timeframe": timeframe,
@@ -613,7 +613,7 @@ class StrategyScheduler:
 
                 result[symbol] = {
                     "state": state_name,
-                    "new_bar": True,
+                    "new_bar": is_new_bar,
                     "market_source": market_source,
                     "strategy_id": strategy_id,
                     "timeframe": timeframe,
