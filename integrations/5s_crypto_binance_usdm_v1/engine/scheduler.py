@@ -7,7 +7,7 @@ import time
 
 from exchange.binance_usdm_testnet import BinanceUsdMTestnetAdapter
 from strategy.frozen_signal_engine import BarEvaluation, evaluate_candles
-from strategy.registry import STRATEGY_5S, decide as decide_strategy, get_spec
+from strategy.registry import STRATEGY_5S, STRATEGY_SSSS, decide as decide_strategy, get_spec
 
 
 @dataclass(frozen=True)
@@ -101,7 +101,7 @@ class StrategyScheduler:
         allowed_timeframes: tuple[str, ...],
         adapter_factory: Callable[..., Any] = BinanceUsdMTestnetAdapter,
         evaluator: Callable[[Any], list[BarEvaluation]] = evaluate_candles,
-        poll_seconds: float = 5.0,
+        poll_seconds: float = 1.0,
         fetch_limit: int = 220,
         minimum_closed_bars: int = 80,
         on_decision: Callable[..., Any] | None = None,
@@ -228,7 +228,11 @@ class StrategyScheduler:
                 if timeframe not in spec.supported_timeframes:
                     raise ValueError(f"{spec.label} 不支持当前周期 {timeframe}")
 
+                # SSSS fetch_limit is defined as *closed* bars. Binance also returns
+                # the current open candle, so request one extra row for SSSS.
                 limit = max(self.fetch_limit, int(spec.fetch_limit))
+                if strategy_id == STRATEGY_SSSS:
+                    limit += 1
                 min_closed = max(self.minimum_closed_bars, int(spec.minimum_closed_bars))
                 rows, market_source = self._strategy_rows(
                     adapter, symbol, timeframe, limit, min_closed
@@ -245,6 +249,9 @@ class StrategyScheduler:
                         )
 
                 closed = self._closed_rows(rows)
+                if strategy_id == STRATEGY_SSSS and len(closed) > int(spec.fetch_limit):
+                    # Keep chart and automation on the identical 1000-closed-bar window.
+                    closed = closed[-int(spec.fetch_limit):]
                 if len(closed) < min_closed:
                     self.store.set_run_state(symbol, "WAITING_HISTORY")
                     result[symbol] = {
@@ -289,9 +296,24 @@ class StrategyScheduler:
                     "timeframe": timeframe,
                 }
 
+                if strategy_id == STRATEGY_SSSS:
+                    metadata = dict(getattr(decision, "metadata", None) or {})
+                    self.store.append_audit(
+                        "SSSS_BAR_DECISION",
+                        symbol,
+                        (
+                            f"bar_open_time={latest_open_time};timeframe={timeframe};"
+                            f"market_source={market_source};closed_bars={len(closed)};"
+                            f"icon9={1 if metadata.get('buy_icon_9') else 0};"
+                            f"icon15={1 if metadata.get('exit_icon_15') else 0};"
+                            f"decision={decision.signal};"
+                            f"actions={'+'.join(_decision_action_codes(decision)) or 'NONE'}"
+                        ),
+                    )
+
                 if _has_actions(decision) and self.on_decision is not None:
                     try:
-                        self.on_decision(
+                        execution_outcome = self.on_decision(
                             symbol,
                             decision,
                             cfg,
@@ -300,6 +322,15 @@ class StrategyScheduler:
                             execution_context,
                         )
                     except TerminalDecisionError as exc:
+                        if strategy_id == STRATEGY_SSSS:
+                            self.store.append_audit(
+                                "SSSS_BAR_EXECUTION",
+                                symbol,
+                                (
+                                    f"bar_open_time={latest_open_time};decision={decision.signal};"
+                                    f"status=BLOCKED;reason={exc}"
+                                ),
+                            )
                         self.store.record_strategy_observation(
                             symbol,
                             bar_open_time=latest_open_time,
@@ -324,6 +355,28 @@ class StrategyScheduler:
                             "blocked": str(exc),
                         }
                         continue
+                    except Exception as exc:
+                        if strategy_id == STRATEGY_SSSS:
+                            self.store.append_audit(
+                                "SSSS_BAR_EXECUTION",
+                                symbol,
+                                (
+                                    f"bar_open_time={latest_open_time};decision={decision.signal};"
+                                    f"status=ERROR;reason={type(exc).__name__}:{exc}"
+                                ),
+                            )
+                        raise
+
+                    if strategy_id == STRATEGY_SSSS:
+                        order_ids = tuple(getattr(execution_outcome, "order_ids", ()) or ())
+                        self.store.append_audit(
+                            "SSSS_BAR_EXECUTION",
+                            symbol,
+                            (
+                                f"bar_open_time={latest_open_time};decision={decision.signal};"
+                                f"status=FILLED;order_ids={','.join(str(x) for x in order_ids) or 'NONE'}"
+                            ),
+                        )
 
                     self.store.record_strategy_observation(
                         symbol,
@@ -335,6 +388,15 @@ class StrategyScheduler:
                     )
                     state_name = "MONITORING"
                 else:
+                    if strategy_id == STRATEGY_SSSS:
+                        self.store.append_audit(
+                            "SSSS_BAR_EXECUTION",
+                            symbol,
+                            (
+                                f"bar_open_time={latest_open_time};decision={decision.signal};"
+                                "status=NONE;order_ids=NONE"
+                            ),
+                        )
                     self.store.record_strategy_observation(
                         symbol,
                         bar_open_time=latest_open_time,
