@@ -723,6 +723,21 @@ class Handler(BaseHTTPRequestHandler):
             return
         if parsed.path == "/api/status":
             result = probe.probe()
+            diagnostic_types = (
+                "SCHEDULER_ERROR",
+                "M3_EXECUTION_BLOCKED",
+                "SSSS_BAR_DECISION",
+                "SSSS_BAR_EXECUTION",
+                "SSSS_SIGNAL_BASELINE",
+            )
+            diagnostics = {
+                symbol: store.recent_audit(
+                    symbol,
+                    event_types=diagnostic_types,
+                    limit=12,
+                )
+                for symbol in settings.symbols
+            }
             payload = {
                 "app": settings.app_name,
                 "environment": testnet_session.public_status(),
@@ -735,6 +750,7 @@ class Handler(BaseHTTPRequestHandler):
                 "runtime": store.get_runtime_states(),
                 "pnl": store.get_pnl(),
                 "pnl_summary": store.pnl_summary(),
+                "diagnostics": diagnostics,
                 "binance_public": {
                     "ok": result.ok,
                     "latency_ms": result.latency_ms,
