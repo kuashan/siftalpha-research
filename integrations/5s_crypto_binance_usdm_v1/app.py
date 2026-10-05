@@ -316,6 +316,21 @@ def render_index(selected_symbol: str | None = None) -> str:
         run_state = str(rt.get("run_state") or ("ARMED" if enabled else "STOPPED"))
         status_label = _RUN_STATE_LABELS.get(run_state, "运行中" if enabled else "未启动")
         status_class = "running" if enabled and run_state in {"ARMED", "MONITORING", "SIGNAL_READY"} else "stopped"
+        status_detail_html = ""
+        if run_state in {"ERROR", "BLOCKED"}:
+            recent_problem = store.recent_audit(
+                symbol,
+                event_types=("SCHEDULER_ERROR", "M3_EXECUTION_BLOCKED"),
+                limit=1,
+            )
+            if recent_problem:
+                detail = str(recent_problem[0].get("detail") or "").strip()
+                if detail:
+                    status_detail_html = (
+                        '<div class="status-detail">'
+                        + html.escape(detail[:220])
+                        + '</div>'
+                    )
         action = "stop" if enabled else "start"
         action_label = "停止" if enabled else "启动"
         action_class = "danger" if enabled else "primary"
@@ -389,6 +404,7 @@ def render_index(selected_symbol: str | None = None) -> str:
                     <span class="market-badge">U本位永续</span>
                     <span class="status-pill {status_class}">{status_label}</span>
                   </div>
+                  {status_detail_html}
                 </div>
                 <div class="hero-right">
                   <form class="strategy-switch" method="post" action="/symbol-strategy" data-strategy-picker>
