@@ -1,16 +1,21 @@
 from __future__ import annotations
 
+from collections import OrderedDict
 from dataclasses import dataclass
 import base64
 from hashlib import sha256
 import math
 from pathlib import Path
 import re
+from threading import RLock
 from typing import Any, Iterable
 
 SSSS_SOURCE_PATH = Path(__file__).with_name("SSSS.ftindex")
 SSSS_SOURCE_B64_PATH = Path(__file__).with_name("SSSS.ftindex.b64")
 SSSS_SOURCE_SHA256 = "25f8c56075c0021dd2d0567401d37def25d6a9b895f139b3a8a9abc376fecaa7"
+SSSS_CLOSED_BAR_LIMIT = 1000
+_ANALYSIS_CACHE_MAX = 8
+
 
 
 @dataclass(frozen=True)
@@ -24,6 +29,41 @@ class SSSSBar:
     values: dict[str, float]
     buy_icon_9: bool
     exit_icon_15: bool
+
+
+@dataclass(frozen=True)
+class SSSSAnalysis:
+    bars: tuple[SSSSBar, ...]
+
+    @property
+    def latest(self) -> SSSSBar | None:
+        return self.bars[-1] if self.bars else None
+
+    def overlay(self, *, display_limit: int = SSSS_CLOSED_BAR_LIMIT) -> list[dict[str, object]]:
+        bars = self.bars
+        if display_limit > 0:
+            bars = bars[-int(display_limit):]
+        out: list[dict[str, object]] = []
+        for bar in bars:
+            v = bar.values
+            state = (
+                "GRAY" if _truth(v["GZB14"])
+                else "BLUE" if _truth(v["GZB12"])
+                else "RED" if _truth(v["GZB13"])
+                else "OTHER"
+            )
+            out.append({
+                "open_time": bar.open_time, "state": state,
+                "GZB3": _json_number(v["GZB3"]), "GZB4": _json_number(v["GZB4"]),
+                "ZK1": _json_number(v["ZK1"]), "ZD1": _json_number(v["ZD1"]),
+                "BS": _json_number(v["BS"]), "BD": _json_number(v["BD"]),
+                "buy_icon_9": bar.buy_icon_9, "exit_icon_15": bar.exit_icon_15,
+            })
+        return out
+
+
+_ANALYSIS_CACHE: "OrderedDict[str, SSSSAnalysis]" = OrderedDict()
+_ANALYSIS_CACHE_LOCK = RLock()
 
 
 class SSSSFormulaError(RuntimeError):
@@ -426,19 +466,80 @@ def _json_number(value: float) -> float | None:
     return float(value) if _finite(value) else None
 
 
-def chart_overlay(rows: Iterable[Any], *, display_limit: int = 1000) -> list[dict[str, object]]:
-    evaluated = evaluate_ssss(rows)
-    if display_limit > 0:
-        evaluated = evaluated[-int(display_limit):]
-    out: list[dict[str, object]] = []
-    for bar in evaluated:
-        v = bar.values
-        state = "GRAY" if _truth(v["GZB14"]) else "BLUE" if _truth(v["GZB12"]) else "RED" if _truth(v["GZB13"]) else "OTHER"
-        out.append({
-            "open_time": bar.open_time, "state": state,
-            "GZB3": _json_number(v["GZB3"]), "GZB4": _json_number(v["GZB4"]),
-            "ZK1": _json_number(v["ZK1"]), "ZD1": _json_number(v["ZD1"]),
-            "BS": _json_number(v["BS"]), "BD": _json_number(v["BD"]),
-            "buy_icon_9": bar.buy_icon_9, "exit_icon_15": bar.exit_icon_15,
-        })
-    return out
+def closed_bar_window(
+    rows: Iterable[Any],
+    *,
+    closed_limit: int = SSSS_CLOSED_BAR_LIMIT,
+) -> list[Any]:
+    """Return the exact closed-bar window shared by chart and automation.
+
+    Binance kline endpoints include the current open candle as the last row.
+    SSSS is therefore fed exactly the last 1000 *closed* candles.
+    """
+    row_list = list(rows)
+    if len(row_list) < 2:
+        return []
+    closed = row_list[:-1]
+    if closed_limit > 0:
+        closed = closed[-int(closed_limit):]
+    return closed
+
+
+def _analysis_fingerprint(rows: list[Any]) -> str:
+    digest = sha256()
+    for row in rows:
+        if isinstance(row, dict):
+            values = (
+                row.get("open_time", row.get("openTime")),
+                row.get("open"),
+                row.get("high"),
+                row.get("low"),
+                row.get("close"),
+                row.get("volume", 0.0),
+            )
+        else:
+            values = tuple(row[:6])
+        digest.update(repr(values).encode("utf-8"))
+        digest.update(b"\n")
+    return digest.hexdigest()
+
+
+def clear_analysis_cache() -> None:
+    with _ANALYSIS_CACHE_LOCK:
+        _ANALYSIS_CACHE.clear()
+
+
+def analyze_ssss(
+    rows: Iterable[Any],
+    *,
+    source_path: Path = SSSS_SOURCE_PATH,
+) -> SSSSAnalysis:
+    """Single cached SSSS calculation entry used by chart and automation."""
+    row_list = list(rows)
+    # Alternate source files are test/research inputs and deliberately bypass
+    # the runtime cache. Empty synthetic inputs also bypass it for test seams.
+    if source_path != SSSS_SOURCE_PATH or not row_list:
+        return SSSSAnalysis(tuple(evaluate_ssss(row_list, source_path=source_path)))
+
+    key = _analysis_fingerprint(row_list)
+    with _ANALYSIS_CACHE_LOCK:
+        cached = _ANALYSIS_CACHE.get(key)
+        if cached is not None:
+            _ANALYSIS_CACHE.move_to_end(key)
+            return cached
+
+    analysis = SSSSAnalysis(tuple(evaluate_ssss(row_list, source_path=source_path)))
+    with _ANALYSIS_CACHE_LOCK:
+        _ANALYSIS_CACHE[key] = analysis
+        _ANALYSIS_CACHE.move_to_end(key)
+        while len(_ANALYSIS_CACHE) > _ANALYSIS_CACHE_MAX:
+            _ANALYSIS_CACHE.popitem(last=False)
+    return analysis
+
+
+def chart_overlay(
+    rows: Iterable[Any],
+    *,
+    display_limit: int = SSSS_CLOSED_BAR_LIMIT,
+) -> list[dict[str, object]]:
+    return analyze_ssss(rows).overlay(display_limit=display_limit)
