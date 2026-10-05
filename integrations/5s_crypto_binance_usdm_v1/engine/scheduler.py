@@ -531,6 +531,25 @@ class StrategyScheduler:
                                     f"reason={type(exc).__name__}:{exc}"
                                 ),
                             )
+                            # Keep the detected BUY/EXIT visible in the UI but
+                            # deliberately preserve the *pre-decision* tracker
+                            # state. The event is therefore not consumed by a
+                            # transport/SDK failure and the same-bar SSSS rescan
+                            # can retry idempotently using the same clientOrderId.
+                            prior_strategy_state = state.get("strategy_state")
+                            self.store.record_strategy_observation(
+                                symbol,
+                                bar_open_time=latest_open_time,
+                                signal=decision.signal,
+                                pending_action=getattr(decision, "pending_action", None),
+                                run_state="ERROR",
+                                strategy_id=strategy_id,
+                                strategy_state=(
+                                    dict(prior_strategy_state)
+                                    if isinstance(prior_strategy_state, dict)
+                                    else {}
+                                ),
+                            )
                         raise
 
                     if strategy_id == STRATEGY_SSSS:
