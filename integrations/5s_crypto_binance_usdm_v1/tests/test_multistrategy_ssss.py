@@ -375,6 +375,7 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
         # Next closed bar shows 💰: scheduler must reach the Binance adapter BUY.
         self.adapter.generation = 1
         second = self.scheduler.run_once()
+        self.assertEqual(second["BTCUSDT"]["state"], "MONITORING", second)
         self.assertEqual(second["BTCUSDT"]["signal"], "SSSS_BUY_9")
         self.assertEqual(len(mocked.call_args.args[0]), 1000)
         self.assertEqual(second["BTCUSDT"]["actions"], ["SSSS_BUY_25"])
