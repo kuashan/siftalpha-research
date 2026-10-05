@@ -97,6 +97,10 @@ class ChineseUiTests(unittest.TestCase):
         ):
             self.assertIn(label, app_text)
         self.assertIn("逐仓保证金管理", app_text)
+        self.assertIn("status-detail", app_text)
+        self.assertIn("SCHEDULER_ERROR", app_text)
+        self.assertIn("M3_EXECUTION_BLOCKED", app_text)
+        self.assertIn('"diagnostics": diagnostics', app_text)
         self.assertIn('action="/position-margin"', app_text)
         self.assertIn('value="add">追加保证金', app_text)
         self.assertIn('value="reduce">减少保证金', app_text)
