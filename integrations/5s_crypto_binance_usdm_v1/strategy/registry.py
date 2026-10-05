@@ -200,11 +200,28 @@ def _ssss_event_key(timeframe: str, icon_id: int, open_time: int) -> str:
     return f"{str(timeframe).lower()}:{int(icon_id)}:{int(open_time)}"
 
 
-def _ssss_event_open_time(key: object) -> int | None:
+def _ssss_event_parts(key: object) -> tuple[str, int, int] | None:
+    parts = str(key).split(":")
+    if len(parts) != 3:
+        return None
     try:
-        return int(str(key).rsplit(":", 1)[-1])
+        icon_id = int(parts[1])
+        open_time = int(parts[2])
     except (TypeError, ValueError):
         return None
+    if icon_id not in (9, 15):
+        return None
+    return parts[0].lower(), icon_id, open_time
+
+
+def _ssss_event_open_time(key: object) -> int | None:
+    parts = _ssss_event_parts(key)
+    return int(parts[2]) if parts is not None else None
+
+
+def _ssss_event_icon_id(key: object) -> int | None:
+    parts = _ssss_event_parts(key)
+    return int(parts[1]) if parts is not None else None
 
 
 def _ssss_events(analysis, timeframe: str) -> list[dict[str, Any]]:
@@ -274,8 +291,9 @@ def decide_ssss(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> Str
     seen_before = {
         str(key)
         for key in (state.get("seen_icon_events") or [])
-        if _ssss_event_open_time(key) is not None
-        and int(_ssss_event_open_time(key)) >= earliest_open_time
+        if _ssss_event_parts(key) is not None
+        and str(_ssss_event_parts(key)[0]).lower() == tf
+        and int(_ssss_event_parts(key)[2]) >= earliest_open_time
     }
     new_events = [item for item in events if str(item["key"]) not in seen_before]
     seen_after = seen_before | {str(item["key"]) for item in events}
@@ -288,7 +306,7 @@ def decide_ssss(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> Str
             seen_after,
             key=lambda key: (
                 int(_ssss_event_open_time(key) or 0),
-                int(str(key).split(":")[1]),
+                int(_ssss_event_icon_id(key) or 0),
             ),
         ),
         "last_detection_bar_open_time": int(latest.open_time),
