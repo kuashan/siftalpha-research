@@ -351,6 +351,72 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
         self.tmp.cleanup()
 
     @patch("strategy.registry.ssss_strategy.evaluate_ssss")
+    def test_new_money_icon_on_older_bar_executes_once_even_if_it_reappears(self, mocked):
+        base = 1700000000000
+        source_signal_time = base + 998 * 900000
+
+        def evaluate(rows):
+            latest = int(rows[-1][0])
+            bars = [
+                fake_bar(open_time=int(row[0]))
+                for row in rows
+            ]
+            # Baseline generation: no icon.
+            # Generation 1: a newly recalculated 💰 appears on an older source bar,
+            # while the newest closed bar itself remains HOLD.
+            # Generation 2: icon disappears.
+            # Generation 3: same source icon reappears and must NOT trade again.
+            if self.adapter.generation in (1, 3):
+                for idx, bar in enumerate(bars):
+                    if int(bar.open_time) == source_signal_time:
+                        bars[idx] = fake_bar(buy=True, open_time=source_signal_time)
+                        break
+            return bars
+
+        mocked.side_effect = evaluate
+
+        first = self.scheduler.run_once()
+        self.assertIn("baseline", first["BTCUSDT"])
+        self.assertEqual(self.adapter.submits, 0)
+
+        self.adapter.generation = 1
+        second = self.scheduler.run_once()
+        self.assertEqual(second["BTCUSDT"]["signal"], "SSSS_BUY_9", second)
+        self.assertEqual(second["BTCUSDT"]["actions"], ["SSSS_BUY_25"])
+        self.assertEqual(self.adapter.submits, 1)
+        self.assertAlmostEqual(
+            float(self.store.get_runtime_states()["BTCUSDT"]["current_fraction"]),
+            0.25,
+        )
+
+        self.adapter.generation = 2
+        third = self.scheduler.run_once()
+        self.assertEqual(third["BTCUSDT"]["signal"], "HOLD")
+        self.assertEqual(self.adapter.submits, 1)
+
+        self.adapter.generation = 3
+        fourth = self.scheduler.run_once()
+        self.assertEqual(fourth["BTCUSDT"]["signal"], "HOLD", fourth)
+        self.assertEqual(self.adapter.submits, 1)
+
+        runtime = self.store.get_runtime_states()["BTCUSDT"]
+        seen = runtime["strategy_state"].get("seen_icon_events") or []
+        self.assertIn(f"15m:9:{source_signal_time}", seen)
+
+        with self.store._connect() as conn:
+            rows = conn.execute(
+                "SELECT detail FROM audit_events "
+                "WHERE symbol='BTCUSDT' AND event_type='SSSS_BAR_DECISION' ORDER BY id"
+            ).fetchall()
+        details = [str(row["detail"]) for row in rows]
+        self.assertTrue(any(
+            f"new_events=15m:9:{source_signal_time}" in detail
+            and "decision=SSSS_BUY_9" in detail
+            for detail in details
+        ))
+
+
+    @patch("strategy.registry.ssss_strategy.evaluate_ssss")
     def test_money_signal_buys_and_explosion_signal_fully_exits(self, mocked):
         base = 1700000000000
 
