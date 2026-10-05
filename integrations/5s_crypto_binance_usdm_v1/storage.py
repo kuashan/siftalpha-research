@@ -81,6 +81,23 @@ class StateStore:
                     symbol TEXT,
                     detail TEXT NOT NULL
                 );
+
+                CREATE TABLE IF NOT EXISTS ssss_signal_events (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    symbol TEXT NOT NULL,
+                    timeframe TEXT NOT NULL,
+                    signal_bar_open_time INTEGER NOT NULL,
+                    icon_id INTEGER NOT NULL,
+                    first_detected_time TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    last_detected_time TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    detection_bar_open_time INTEGER,
+                    status TEXT NOT NULL DEFAULT 'DETECTED',
+                    execution_bar_open_time INTEGER,
+                    execution_time TEXT,
+                    binance_order_id TEXT,
+                    result TEXT,
+                    UNIQUE(symbol, timeframe, signal_bar_open_time, icon_id)
+                );
                 """
             )
 
@@ -498,6 +515,131 @@ class StateStore:
                     """,
                     (symbol, safe_limit),
                 ).fetchall()
+            return [dict(row) for row in rows]
+
+    def record_ssss_signal_detection(
+        self,
+        symbol: str,
+        *,
+        timeframe: str,
+        signal_bar_open_time: int,
+        icon_id: int,
+        detection_bar_open_time: int,
+        status: str = "DETECTED",
+    ) -> dict[str, object]:
+        """Persist first detection exactly once while refreshing last-seen metadata."""
+        tf = str(timeframe).lower()
+        icon = int(icon_id)
+        if icon not in (9, 15):
+            raise ValueError(f"unsupported SSSS icon: {icon}")
+        with self._connect() as conn:
+            cur = conn.execute(
+                """
+                INSERT OR IGNORE INTO ssss_signal_events(
+                    symbol, timeframe, signal_bar_open_time, icon_id,
+                    detection_bar_open_time, status
+                ) VALUES(?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    symbol, tf, int(signal_bar_open_time), icon,
+                    int(detection_bar_open_time), str(status),
+                ),
+            )
+            inserted = cur.rowcount == 1
+            if not inserted:
+                conn.execute(
+                    """
+                    UPDATE ssss_signal_events
+                    SET last_detected_time=CURRENT_TIMESTAMP,
+                        detection_bar_open_time=?
+                    WHERE symbol=? AND timeframe=?
+                      AND signal_bar_open_time=? AND icon_id=?
+                    """,
+                    (
+                        int(detection_bar_open_time), symbol, tf,
+                        int(signal_bar_open_time), icon,
+                    ),
+                )
+            row = conn.execute(
+                """
+                SELECT id, symbol, timeframe, signal_bar_open_time, icon_id,
+                       first_detected_time, last_detected_time,
+                       detection_bar_open_time, status,
+                       execution_bar_open_time, execution_time,
+                       binance_order_id, result
+                FROM ssss_signal_events
+                WHERE symbol=? AND timeframe=?
+                  AND signal_bar_open_time=? AND icon_id=?
+                """,
+                (symbol, tf, int(signal_bar_open_time), icon),
+            ).fetchone()
+            if row is None:
+                raise RuntimeError("SSSS signal event persistence failed")
+            item = dict(row)
+            item["is_new"] = inserted
+            return item
+
+    def mark_ssss_signal_result(
+        self,
+        symbol: str,
+        *,
+        timeframe: str,
+        signal_bar_open_time: int,
+        icon_id: int,
+        status: str,
+        execution_bar_open_time: int | None = None,
+        binance_order_id: str | None = None,
+        result: str | None = None,
+    ) -> None:
+        with self._connect() as conn:
+            cur = conn.execute(
+                """
+                UPDATE ssss_signal_events
+                SET status=?,
+                    execution_bar_open_time=?,
+                    execution_time=CURRENT_TIMESTAMP,
+                    binance_order_id=?,
+                    result=?,
+                    last_detected_time=CURRENT_TIMESTAMP
+                WHERE symbol=? AND timeframe=?
+                  AND signal_bar_open_time=? AND icon_id=?
+                """,
+                (
+                    str(status),
+                    int(execution_bar_open_time) if execution_bar_open_time is not None else None,
+                    str(binance_order_id) if binance_order_id else None,
+                    str(result) if result is not None else None,
+                    symbol, str(timeframe).lower(),
+                    int(signal_bar_open_time), int(icon_id),
+                ),
+            )
+            if cur.rowcount != 1:
+                raise KeyError(
+                    f"unknown SSSS signal event: {symbol}/{timeframe}/{icon_id}/{signal_bar_open_time}"
+                )
+
+    def recent_ssss_signal_events(
+        self,
+        symbol: str,
+        *,
+        limit: int = 20,
+    ) -> list[dict[str, object]]:
+        safe_limit = min(max(int(limit), 1), 200)
+        with self._connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT id, symbol, timeframe, signal_bar_open_time, icon_id,
+                       first_detected_time, last_detected_time,
+                       detection_bar_open_time, status,
+                       execution_bar_open_time, execution_time,
+                       binance_order_id, result
+                FROM ssss_signal_events
+                WHERE symbol=?
+                ORDER BY id DESC
+                LIMIT ?
+                """,
+                (symbol, safe_limit),
+            ).fetchall()
             return [dict(row) for row in rows]
 
     def set_accounting_start_if_missing(self, symbol: str, start_time_ms: int) -> int:
