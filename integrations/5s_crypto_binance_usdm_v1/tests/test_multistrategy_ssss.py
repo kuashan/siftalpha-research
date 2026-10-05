@@ -249,6 +249,43 @@ class SSSSExecutionTests(unittest.TestCase):
             },
         )
 
+    def test_ssss_buy_reaches_binance_without_leverage_bracket_lookup(self):
+        def forbidden(_symbol):
+            raise AssertionError("leverage bracket lookup must not gate order submission")
+
+        self.adapter.max_allowed_leverage = forbidden
+        buy = StrategyDecision(
+            strategy_id=STRATEGY_SSSS,
+            signal="SSSS_BUY_9",
+            steps=(StrategyStep(
+                code="SSSS_BUY_25",
+                order_code="B25",
+                target_fraction=0.25,
+                rule_ids=("DRAWICON_9",),
+                state_after={"last_icon": 9},
+            ),),
+            bar_open_time=1700000000000,
+        )
+
+        self._execute(buy, 1700000900000)
+
+        self.assertEqual(self.adapter.submits, 1)
+        self.assertGreater(self.adapter.position, Decimal("0"))
+        audits = self.store.recent_audit("BTCUSDT", limit=30)
+        details = [(str(x["event_type"]), str(x["detail"])) for x in audits]
+        self.assertTrue(any(
+            kind == "M3_EXECUTION_DISPATCH" and "signal=SSSS_BUY_9" in detail
+            for kind, detail in details
+        ))
+        self.assertTrue(any(
+            kind == "BINANCE_ORDER_SUBMIT" and "stage=REQUEST" in detail and "side=BUY" in detail
+            for kind, detail in details
+        ))
+        self.assertTrue(any(
+            kind == "BINANCE_ORDER_SUBMIT" and "stage=RESPONSE" in detail and "status=FILLED" in detail
+            for kind, detail in details
+        ))
+
     def test_filled_money_buy_and_explosion_exit_leave_b_and_x(self):
         buy = StrategyDecision(
             strategy_id=STRATEGY_SSSS,
