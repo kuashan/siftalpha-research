@@ -517,9 +517,12 @@ def analyze_ssss(
     """Single cached SSSS calculation entry used by chart and automation."""
     row_list = list(rows)
     # Alternate source files are test/research inputs and deliberately bypass
-    # the runtime cache. Empty synthetic inputs also bypass it for test seams.
-    if source_path != SSSS_SOURCE_PATH or not row_list:
+    # the runtime cache. Preserve the historical default-call signature so
+    # existing evaluator test seams remain valid.
+    if source_path != SSSS_SOURCE_PATH:
         return SSSSAnalysis(tuple(evaluate_ssss(row_list, source_path=source_path)))
+    if not row_list:
+        return SSSSAnalysis(tuple(evaluate_ssss(row_list)))
 
     key = _analysis_fingerprint(row_list)
     with _ANALYSIS_CACHE_LOCK:
@@ -528,7 +531,7 @@ def analyze_ssss(
             _ANALYSIS_CACHE.move_to_end(key)
             return cached
 
-    analysis = SSSSAnalysis(tuple(evaluate_ssss(row_list, source_path=source_path)))
+    analysis = SSSSAnalysis(tuple(evaluate_ssss(row_list)))
     with _ANALYSIS_CACHE_LOCK:
         _ANALYSIS_CACHE[key] = analysis
         _ANALYSIS_CACHE.move_to_end(key)
