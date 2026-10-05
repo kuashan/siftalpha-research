@@ -152,14 +152,53 @@ class M3Executor:
             if existing is not None:
                 return existing
 
-        order = (
-            adapter.submit_market_buy(symbol, quantity=quantity, client_order_id=client_id)
-            if side == "BUY"
-            else adapter.submit_market_sell_reduce_only(symbol, quantity=quantity, client_order_id=client_id)
+        self.store.append_audit(
+            "BINANCE_ORDER_SUBMIT",
+            symbol,
+            (
+                f"stage=REQUEST;strategy={strategy_id};side={side};"
+                f"client_order_id={client_id};quantity={quantity};"
+                f"signal_bar_open_time={int(signal_bar_open_time)};"
+                f"execution_bar_open_time={int(execution_bar_open_time)}"
+            ),
         )
+        try:
+            order = (
+                adapter.submit_market_buy(symbol, quantity=quantity, client_order_id=client_id)
+                if side == "BUY"
+                else adapter.submit_market_sell_reduce_only(symbol, quantity=quantity, client_order_id=client_id)
+            )
+        except Exception as exc:
+            self.store.append_audit(
+                "BINANCE_ORDER_SUBMIT",
+                symbol,
+                (
+                    f"stage=ERROR;strategy={strategy_id};side={side};"
+                    f"client_order_id={client_id};"
+                    f"reason={type(exc).__name__}:{exc}"
+                ),
+            )
+            raise
         if not isinstance(order, dict):
+            self.store.append_audit(
+                "BINANCE_ORDER_SUBMIT",
+                symbol,
+                (
+                    f"stage=INVALID_RESPONSE;strategy={strategy_id};side={side};"
+                    f"client_order_id={client_id};response_type={type(order).__name__}"
+                ),
+            )
             raise RuntimeError("币安订单返回格式异常")
         status = self._status(order)
+        self.store.append_audit(
+            "BINANCE_ORDER_SUBMIT",
+            symbol,
+            (
+                f"stage=RESPONSE;strategy={strategy_id};side={side};"
+                f"client_order_id={client_id};status={status or 'UNKNOWN'};"
+                f"order_id={_first(order, 'orderId', 'order_id', default='')}"
+            ),
+        )
         self.store.complete_order(
             symbol,
             client_id,
@@ -173,12 +212,37 @@ class M3Executor:
         return order
 
     def _validate_buy_environment(self, adapter, symbol: str, leverage: int) -> None:
+        """Prepare the Binance account without a redundant leverage-bracket gate.
+
+        The exchange's change_initial_leverage endpoint is the final authority.
+        Querying leverage brackets immediately before every order adds another
+        authenticated failure point and can prevent an otherwise valid MARKET
+        order from ever reaching Binance Demo.
+        """
+        self.store.append_audit(
+            "BINANCE_EXECUTION_STAGE",
+            symbol,
+            f"stage=ENSURE_ONE_WAY;requested_leverage={int(leverage)}",
+        )
         adapter.ensure_one_way()
+        self.store.append_audit(
+            "BINANCE_EXECUTION_STAGE",
+            symbol,
+            "stage=ENSURE_ISOLATED",
+        )
         adapter.ensure_isolated(symbol)
-        maximum = int(adapter.max_allowed_leverage(symbol))
-        if leverage > maximum:
-            raise ExecutionBlocked(f"请求杠杆 {leverage} 倍超过 {symbol} 当前允许的 {maximum} 倍")
+        self.store.append_audit(
+            "BINANCE_EXECUTION_STAGE",
+            symbol,
+            f"stage=SET_LEVERAGE;requested_leverage={int(leverage)}",
+        )
+        # Binance itself validates the requested leverage for the symbol.
         adapter.set_leverage(symbol, leverage)
+        self.store.append_audit(
+            "BINANCE_EXECUTION_STAGE",
+            symbol,
+            f"stage=PREPARE_BUY_PASS;requested_leverage={int(leverage)}",
+        )
 
     def _buy_quantity(
         self,
@@ -252,6 +316,15 @@ class M3Executor:
             if str(fresh_config.get("strategy_id") or STRATEGY_5S) != strategy_id:
                 raise ExecutionBlocked("策略已经切换，取消旧策略的待执行动作")
 
+            self.store.append_audit(
+                "M3_EXECUTION_DISPATCH",
+                symbol,
+                (
+                    f"strategy={strategy_id};signal={getattr(decision, 'signal', '')};"
+                    f"actions={'+'.join(str(x.code) for x in (getattr(decision, 'steps', ()) or ())) or 'LEGACY_OR_NONE'}"
+                ),
+            )
+
             signal_bar = int(getattr(decision, "bar_open_time", None) or context["signal_bar_open_time"])
             execution_bar = int(context["execution_bar_open_time"])
             reference_price = Decimal(str(context["reference_price"]))
@@ -292,7 +365,20 @@ class M3Executor:
                     )
                     continue
 
+                self.store.append_audit(
+                    "BINANCE_EXECUTION_STAGE",
+                    symbol,
+                    (
+                        f"stage=POSITION_CHECK;strategy={strategy_id};"
+                        f"current_fraction={current_fraction:.8f};target_fraction={target_fraction:.8f}"
+                    ),
+                )
                 position_amount = Decimal(str(adapter.position_amount(symbol)))
+                self.store.append_audit(
+                    "BINANCE_EXECUTION_STAGE",
+                    symbol,
+                    f"stage=POSITION_PASS;position_amount={position_amount}",
+                )
                 if position_amount < 0:
                     raise ExecutionBlocked("检测到空头持仓；当前框架只允许做多，已阻止自动交易")
 
@@ -303,6 +389,14 @@ class M3Executor:
                         raise ExecutionBlocked("策略准备加仓，但币安没有对应多头持仓；已阻止自动交易")
                     self._validate_buy_environment(adapter, symbol, leverage)
                     margin = budget * Decimal(str(delta))
+                    self.store.append_audit(
+                        "BINANCE_EXECUTION_STAGE",
+                        symbol,
+                        (
+                            f"stage=BUY_QUANTITY;delta={delta:.8f};"
+                            f"margin_usdt={margin};reference_price={reference_price}"
+                        ),
+                    )
                     quantity = self._buy_quantity(
                         adapter=adapter,
                         symbol=symbol,
