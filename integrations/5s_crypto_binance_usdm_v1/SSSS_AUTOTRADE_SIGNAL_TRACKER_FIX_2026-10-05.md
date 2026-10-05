@@ -119,3 +119,77 @@ HEAD 前已经存在第一版“新图标事件追踪器”：
 **IMPLEMENTED_AND_CI_VERIFIED / DEVICE_VERIFY_PENDING**
 
 在 BNB/SOL 真机实际再次出现新 💰，并确认 Binance Demo 自动成交且图表出现 B 之前，不得宣称自动交易问题 CLOSED。
+
+
+## Binance 执行桥接二次审计
+
+用户真机现象“图表已有 💰，页面仍显示观望，并出现检测异常”不能只解释为信号计算失败。代码审计确认还存在一条执行异常后的 UI 状态保留问题：
+
+- scheduler 已可能生成 `SSSS_BUY_9`；
+- 进入 `M3Executor.execute()` 后，如果 Binance SDK / 网络 / 前置账户检查抛异常；
+- 旧代码只把 `run_state` 改成 `ERROR`，没有把本次 `decision.signal` 写回 runtime；
+- 因此页面仍可能显示上一次的 `HOLD / 观望`，造成“交易程序完全没有识别 💰”的假象。
+
+本轮已修复：
+
+1. **执行异常时保留本次 SSSS decision**
+   - `run_state=ERROR` 时，`last_signal` 仍写入本次 `SSSS_BUY_9 / SSSS_EXIT_15`。
+   - 但故意保留“决策前”的 `strategy_state`，不把失败事件加入已消费集合。
+   - 配合同一 closed bar 重扫，同一个 signal 可以在临时 Binance/SDK 错误恢复后继续重试。
+
+2. **利用 clientOrderId 保证重试幂等**
+   - 同一 SSSS signal 使用同一 `clientOrderId`。
+   - 重试前先查询本地订单和 Binance 订单。
+   - 若第一次请求实际已被 Binance 接收但本地因网络异常未拿到结果，后续轮询优先恢复已有订单，而不是盲目重复下单。
+
+3. **下单链增加逐阶段审计**
+   新增：
+   - `M3_EXECUTION_DISPATCH`
+   - `BINANCE_EXECUTION_STAGE`
+   - `BINANCE_ORDER_SUBMIT`
+
+   可以区分：
+   - decision 是否已经交给执行器；
+   - 是否通过仓位检查；
+   - 是否完成 ONE_WAY / ISOLATED 检查；
+   - 是否完成杠杆设置；
+   - 是否完成下单数量计算；
+   - 是否真正调用 Binance `new_order`；
+   - Binance 是否返回 `FILLED` 或错误。
+
+4. **杠杆档位查询不再成为单点阻断**
+   - 原代码在真正 `new_order` 前强制调用 `max_allowed_leverage()`。
+   - Demo leverage bracket 接口若返回缺失/格式异常，会导致订单根本没有送到 Binance。
+   - 现在保留原有 leverage-cap 安全检查：**如果 bracket 能正常读取，则仍按上限阻止超额杠杆**。
+   - 如果 Demo bracket 本身不可用，则记录 `LEVERAGE_BRACKET_UNAVAILABLE`，继续调用 Binance `set_leverage`，由 Binance 本身作为最终杠杆合法性权威。
+
+## 开源实现对照
+
+本轮同时对照了成熟开源 Binance Futures 实现：
+
+- Hummingbot 的 Binance Perpetual 下单路径直接构造 `symbol / side / quantity / type / newClientOrderId` 后调用订单 API；ONE_WAY 平仓使用 `reduceOnly`。
+- Freqtrade 同样把信号/仓位决策与交易所 `create_order` 执行层分开，交易所拒绝由执行层显式抛出和记录。
+- Binance 官方 USDⓈ-M SDK 示例支持 ONE_WAY 下使用 `position_side="BOTH"`，并支持 `newOrderRespType=RESULT`；MARKET 订单在 RESULT 模式下应直接返回最终成交结果。
+
+因此当前方向不是改写 SSSS 公式，而是保证：
+`SSSS decision -> execution dispatcher -> Binance order submit -> FILLED persistence`
+这条链每一段都可观察、可恢复、不可静默丢信号。
+
+## 新增关键回归
+
+新增并锁定：
+
+- SSSS BUY 不依赖 leverage bracket 查询成功也能走到 Binance submit。
+- leverage bracket 正常返回时，原有超杠杆阻止规则仍保留。
+- 第一次 Binance submit 模拟网络异常时：
+  - runtime 显示本次 `SSSS_BUY_9`，而不是旧 HOLD；
+  - signal 不被消费；
+  - 同一 closed bar 下一轮可以重试；
+  - 第二次成功后只产生一次 FILLED 仓位变化。
+- Audit 必须出现 `BINANCE_ORDER_SUBMIT stage=REQUEST` 和最终 `stage=RESPONSE status=FILLED`。
+
+最终状态仍是：
+
+**IMPLEMENTED_AND_CI_VERIFIED / DEVICE_VERIFY_PENDING**
+
+只有真机 BNB/SOL 再次出现新 💰，并在 Binance Demo 中实际看到 FILLED、页面仓位 +25%、图表出现 B，才能把本问题标记 CLOSED。
