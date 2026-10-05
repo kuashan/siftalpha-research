@@ -26,6 +26,7 @@ class StrategyDecision:
     signal: str
     steps: tuple[StrategyStep, ...]
     bar_open_time: int
+    metadata: dict[str, Any] | None = None
 
     @property
     def pending_action(self) -> str | None:
@@ -200,10 +201,10 @@ def decide_ssss(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> Str
     if tf not in spec.supported_timeframes:
         raise ValueError(f"SSSS 当前自动交易不支持周期：{tf}")
 
-    evaluated = ssss_strategy.evaluate_ssss(rows)
-    if not evaluated:
+    analysis = ssss_strategy.analyze_ssss(rows)
+    latest = analysis.latest
+    if latest is None:
         raise ValueError("SSSS 原始指标没有返回计算结果")
-    latest = evaluated[-1]
     fraction = min(max(float(runtime.get("current_fraction") or 0.0), 0.0), 1.0)
     state = _state(runtime)
     state.update({
@@ -244,6 +245,12 @@ def decide_ssss(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> Str
         signal=signal,
         steps=tuple(steps),
         bar_open_time=int(latest.open_time),
+        metadata={
+            "buy_icon_9": bool(latest.buy_icon_9),
+            "exit_icon_15": bool(latest.exit_icon_15),
+            "analysis_bar_count": len(analysis.bars),
+            "source_sha256": ssss_strategy.source_sha256(),
+        },
     )
 
 
