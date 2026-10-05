@@ -742,6 +742,9 @@ class Handler(BaseHTTPRequestHandler):
             diagnostic_types = (
                 "SCHEDULER_ERROR",
                 "M3_EXECUTION_BLOCKED",
+                "M3_EXECUTION_DISPATCH",
+                "BINANCE_EXECUTION_STAGE",
+                "BINANCE_ORDER_SUBMIT",
                 "SSSS_BAR_DECISION",
                 "SSSS_BAR_EXECUTION",
                 "SSSS_SIGNAL_BASELINE",
