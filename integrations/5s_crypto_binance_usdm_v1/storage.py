@@ -260,17 +260,39 @@ class StateStore:
             if cur.rowcount != 1:
                 raise KeyError(f"unknown symbol: {symbol}")
 
-    def baseline_closed_bar(self, symbol: str, bar_open_time: int) -> None:
+    def baseline_closed_bar(
+        self,
+        symbol: str,
+        bar_open_time: int,
+        *,
+        strategy_state: dict[str, object] | None = None,
+    ) -> None:
         with self._connect() as conn:
-            cur = conn.execute(
-                """
-                UPDATE runtime_state
-                SET last_closed_bar_open_time=?, pending_action=NULL,
-                    run_state='MONITORING', updated_at=CURRENT_TIMESTAMP
-                WHERE symbol=?
-                """,
-                (int(bar_open_time), symbol),
-            )
+            if strategy_state is None:
+                cur = conn.execute(
+                    """
+                    UPDATE runtime_state
+                    SET last_closed_bar_open_time=?, pending_action=NULL,
+                        run_state='MONITORING', updated_at=CURRENT_TIMESTAMP
+                    WHERE symbol=?
+                    """,
+                    (int(bar_open_time), symbol),
+                )
+            else:
+                cur = conn.execute(
+                    """
+                    UPDATE runtime_state
+                    SET last_closed_bar_open_time=?, pending_action=NULL,
+                        strategy_state_json=?, run_state='MONITORING',
+                        updated_at=CURRENT_TIMESTAMP
+                    WHERE symbol=?
+                    """,
+                    (
+                        int(bar_open_time),
+                        json.dumps(dict(strategy_state), ensure_ascii=False, sort_keys=True),
+                        symbol,
+                    ),
+                )
             if cur.rowcount != 1:
                 raise KeyError(f"unknown symbol: {symbol}")
             conn.execute(
@@ -287,18 +309,38 @@ class StateStore:
         pending_action: str | None,
         run_state: str | None = None,
         strategy_id: str = "5s_crypto_v1",
+        strategy_state: dict[str, object] | None = None,
     ) -> None:
         run_state = run_state or ("SIGNAL_READY" if pending_action else "MONITORING")
         with self._connect() as conn:
-            cur = conn.execute(
-                """
-                UPDATE runtime_state
-                SET last_closed_bar_open_time=?, last_signal=?, pending_action=?,
-                    run_state=?, updated_at=CURRENT_TIMESTAMP
-                WHERE symbol=?
-                """,
-                (int(bar_open_time), signal, pending_action, run_state, symbol),
-            )
+            if strategy_state is None:
+                cur = conn.execute(
+                    """
+                    UPDATE runtime_state
+                    SET last_closed_bar_open_time=?, last_signal=?, pending_action=?,
+                        run_state=?, updated_at=CURRENT_TIMESTAMP
+                    WHERE symbol=?
+                    """,
+                    (int(bar_open_time), signal, pending_action, run_state, symbol),
+                )
+            else:
+                cur = conn.execute(
+                    """
+                    UPDATE runtime_state
+                    SET last_closed_bar_open_time=?, last_signal=?, pending_action=?,
+                        strategy_state_json=?, run_state=?,
+                        updated_at=CURRENT_TIMESTAMP
+                    WHERE symbol=?
+                    """,
+                    (
+                        int(bar_open_time),
+                        signal,
+                        pending_action,
+                        json.dumps(dict(strategy_state), ensure_ascii=False, sort_keys=True),
+                        run_state,
+                        symbol,
+                    ),
+                )
             if cur.rowcount != 1:
                 raise KeyError(f"unknown symbol: {symbol}")
             conn.execute(
