@@ -459,6 +459,64 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
 
 
     @patch("strategy.registry.ssss_strategy.evaluate_ssss")
+    def test_transient_binance_submit_error_keeps_signal_and_retries_same_bar(self, mocked):
+        clear_analysis_cache()
+        base = 1700000000000
+
+        def evaluate(rows):
+            latest = int(rows[-1][0])
+            buy_time = base + 1000 * 900000
+            return [fake_bar(
+                buy=latest == buy_time,
+                open_time=latest,
+            )]
+
+        mocked.side_effect = evaluate
+        self.scheduler.run_once()  # baseline
+
+        original_submit = self.adapter.submit_market_buy
+        attempts = {"count": 0}
+
+        def flaky_submit(symbol, *, quantity, client_order_id):
+            attempts["count"] += 1
+            if attempts["count"] == 1:
+                raise RuntimeError("simulated Binance transport failure")
+            return original_submit(
+                symbol,
+                quantity=quantity,
+                client_order_id=client_order_id,
+            )
+
+        self.adapter.submit_market_buy = flaky_submit
+        self.adapter.generation = 1
+
+        first = self.scheduler.run_once()
+        self.assertEqual(first["BTCUSDT"]["state"], "ERROR", first)
+        runtime = self.store.get_runtime_states()["BTCUSDT"]
+        self.assertEqual(runtime["last_signal"], "SSSS_BUY_9")
+        self.assertAlmostEqual(float(runtime["current_fraction"]), 0.0)
+        self.assertNotIn(
+            f"15m:9:{base + 1000 * 900000}",
+            runtime["strategy_state"].get("seen_icon_events") or [],
+        )
+
+        # No new closed bar. The SSSS same-bar rescan must retry the same signal.
+        second = self.scheduler.run_once()
+        self.assertEqual(second["BTCUSDT"]["signal"], "SSSS_BUY_9", second)
+        self.assertEqual(second["BTCUSDT"]["actions"], ["SSSS_BUY_25"])
+        self.assertEqual(attempts["count"], 2)
+        self.assertAlmostEqual(
+            float(self.store.get_runtime_states()["BTCUSDT"]["current_fraction"]),
+            0.25,
+        )
+
+        events = self.store.recent_ssss_signal_events("BTCUSDT", limit=5)
+        self.assertEqual(len(events), 1)
+        self.assertEqual(str(events[0]["status"]), "FILLED")
+        clear_analysis_cache()
+
+
+    @patch("strategy.registry.ssss_strategy.evaluate_ssss")
     def test_same_closed_bar_revision_can_create_new_money_signal(self, mocked):
         clear_analysis_cache()
         base = 1700000000000
