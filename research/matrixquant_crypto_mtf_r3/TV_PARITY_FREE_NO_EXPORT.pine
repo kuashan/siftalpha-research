@@ -555,7 +555,7 @@ plot(isBearishBreakout ? 1.0 : 0.0, title="PARITY_PAI_DOWN_MINUS5_CONFIRMED", di
 // Works without TradingView chart-data CSV export. The existing calculations
 // above remain untouched. This is diagnostic only, NOT trading logic.
 // -----------------------------------------------------------------------------
-FreeParityBars = input.int(40, title="Confirmed candles in Pine Logs", minval=5, maxval=150, group="R3 Free Parity丨免费校验")
+FreeParityBars = input.int(40, title="Confirmed candles in Pine Logs", minval=5, maxval=500, group="R3 Free Parity丨免费校验")
 FreeParityTableRows = input.int(8, title="Rows in visible table", minval=3, maxval=12, group="R3 Free Parity丨免费校验")
 
 // This block runs only on the last confirmed historical bar, not an unfinished
