@@ -102,6 +102,30 @@ def evaluate_pai(rows: Iterable[Any]) -> list[PAIPoint]:
     ]
 
 
+def chart_signal_markers(points: Iterable[PAIPoint]) -> list[dict[str, object]]:
+    """Historical CLOSED-bar PAI indications, not Binance fills or orders.
+
+    Call with the same complete *closed* candle window used for the PAI line.
+    Marker time is the confirming candle's open_time, never a retroactive
+    next-bar fill or a shifted divergence pivot. FILLED B/X remain separate.
+    """
+    markers: list[dict[str, object]] = []
+    for point in points:
+        if point.buy:
+            markers.append({
+                "open_time": int(point.open_time),
+                "kind": "MFRA_PAI_BUY",
+                "text": "BUY",
+            })
+        if point.sell:
+            markers.append({
+                "open_time": int(point.open_time),
+                "kind": "MFRA_PAI_SELL",
+                "text": "SELL",
+            })
+    return markers
+
+
 def chart_snapshot(rows: Iterable[Any]) -> dict[str, object]:
     points = evaluate_pai(rows)
     if not points:
