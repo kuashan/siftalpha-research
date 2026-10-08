@@ -1,53 +1,62 @@
-# 5s 独立服务器模块 — M1 源码审计与构建方案（先验只读版）
+# 5s 独立服务器模块 — M1 审计与部署设计（功能保留版）
 
 日期：2026-10-08（JST）
-目标：将 5s-crypto-multistrategy-ssss-v1 从 SiftAlpha Web ZIP / Workspace 执行链路迁移为 Oracle ARM 上独立管理的容器模块；本轮只审计与设计，不构建、不部署、不启动交易。
+说明：本版纠正此前“不允许 API Key / 禁止 HTTP POST / 只读 PAPER / 禁止模拟下单”等不当限制。**这些限制全部撤回**。本轮只纠正设计文档，不改策略源码、不构建、不部署、不启动交易。
 
-## 0. 冻结与证据边界
+## 0. 用户授权边界
 
-- 候选源码唯一事实源：私有仓库 `kuashan/siftalpha-research`，分支 `feature/5s-crypto-multistrategy-ssss-v1`。
-- 本轮审计使用不可变源码提交：`7db2f6eb7eb8d12bddf63810564faa2b8a4c325e`。
-- 路径：`integrations/5s_crypto_binance_usdm_v1/`。
-- 该仓库的源代码快照 **尚未经 Oracle 现有 5s Workspace 哈希比对**；不能在比对之前声称此 commit 就是服务器运行版本。
-- 无 Oracle 连接可供本次直接执行只读盘点，因此旧实例状态、持久化数据库、既有运行参数、真实文件清单、数据目录、容器状态暂标 **UNVERIFIED**。
-- 未修改交易策略、未创建 Docker 构建文件、未构建镜像、未运行服务器脚本。
+- 5s 是用户自主控制的交易系统。**服务器独立部署不能以安全之名擅自禁用或删改已有功能**。
+- 现有功能须保留：Binance Demo（模拟交易）账户连接及凭据录入、策略启停、自动模拟买卖、撤单、恢复对账、保证金操作、紧急平仓、网页设置与所有原有合法 HTTP POST。
+- PAPER、DEMO、TESTNET 的实际行为由原代码和用户配置决定；不得硬编码 `FIVES_MODE=PAPER` 或一律清空 API Key/Secret，阻断用户选择的 Demo 交易。
+- 安全边界作用于**防止密钥泄露、阻断未经授权访问、避免部署时意外并行实例/重复下单、核对目标环境**，而不是剥夺用户正常交易操作。
+- 当前已审源码没有 LIVE 实盘接入实现，不得宣称已经支持 LIVE，也不得因本次部署擅自增加真实资金交易能力。后续是否开发、启用 LIVE 由用户单独决定。
+- 不允许代理擅自改动交易信号、仓位计算、订单映射或原本冻结的 5s/SSSS 策略逻辑。
 
-## 1. 已核对的源码事实
+## 1. 版本与证据
 
-| 范围 | GitHub 源码证据 | M1 结论 |
+- GitHub 候选事实源：`kuashan/siftalpha-research` 的 `feature/5s-crypto-multistrategy-ssss-v1`。
+- 已审源代码不可变 commit：`7db2f6eb7eb8d12bddf63810564faa2b8a4c325e`。
+- 程序路径：`integrations/5s_crypto_binance_usdm_v1/`。
+- 尚未与 Oracle 原 5s Workspace/ZIP 的文件清单及 SHA256 比对；因此候选 commit **不代表已经证明与现有运行版本一致**。
+- 服务器旧实例状态、持久化数据、实际容器参数、私网路由尚未现场核验，不得猜测 PASS。
+
+## 2. 已审源码事实
+
+| 范围 | 代码依据 | 结论 |
 | --- | --- | --- |
-| 入口 | `app.py` 行 944–975：`create_server(host="127.0.0.1", port=0)`，`main(host="127.0.0.1", port=0)`，入口 `main()` | 需要外部启动包装固定 `0.0.0.0:8080`；不可只执行 `python app.py` |
-| 运行依赖 | `requirements.txt` 当前仅锁 `binance-sdk-derivatives-trading-usds-futures==17.5.0`；CI 使用 Python 3.11、Node 22；浏览器 JS 由 GitHub workflow npm pack `lightweight-charts@5.2.1` 提供 | GitHub 构建应产出包含 vendor 资源的完整镜像，Oracle 只 pull |
-| 静态/策略资产 | `strategy/SSSS.ftindex.b64` 在 CI 还原为原始 `SSSS.ftindex`，校验 SHA256 `25f8c56075c0021dd2d0567401d37def25d6a9b895f139b3a8a9abc376fecaa7` | 打包时严格复用验证流程，不改策略公式 |
-| GitHub workflow | 存在 `.github/workflows/5s-crypto-multistrategy-ssss-v1.yml`，负责测试与 ZIP 构建；**不存在已证实的 5s ARM64 容器镜像 workflow** | `M2` 需要新增“部署包装 + 容器构建工作流”，不是从零创建项目测试 |
-| DB | `config.py` 的 `FIVES_DB_PATH` 默认为 `data/5s_crypto_v1.db`；`storage.py` 使用 SQLite | 目标通过 `FIVES_DB_PATH=/data/5s_crypto_v1.db` 将 SQLite 与临时/程序文件分离 |
-| 模式 | `config.py` 读取 `FIVES_MODE=PAPER`；只接受 PAPER/DEMO/TESTNET，其他值回退 PAPER | 裸 `MODE=PAPER` 不生效；`LIVE_TRADING=NO`、`API_KEY_EMPTY=YES` 不是现有源码强制门禁 |
-| 交易连接 | `app.py` 提供 `POST /testnet-connect`，可通过网页向进程注入 DEMO 凭据；`strategy_scheduler.start()` 随 `app.main()` 启动；scheduler 在无凭据时返回 `WAITING_DEMO` | **只清空环境凭据并不足够**：首次运行需要禁止任意通过 HTTP 输入凭据/交易写入 |
-| Web 端点 | `GET /` 返回 UI；`GET /api/status` 含外部行情探测 | 健康检查优先 GET `/`，避免依赖外部交易所可用性 |
-| 资金/执行 | `engine/execution.py` 和 `exchange/binance_usdm_testnet.py` 含下单逻辑；`engine/paper.py` 提供 exposure preview | PAPER 无密钥并不等于已经具备完整纸面撮合/自动纸面交易；本轮不得宣称策略 PAPER 收益验证 |
+| Web 启动 | `app.py`：`main(host="127.0.0.1", port=0)`；入口直接 `main()` | 外部部署启动包装显式调用 `app.main(host="0.0.0.0", port=8080)`，不修改策略 |
+| 运行环境 | `requirements.txt` 锁 `binance-sdk-derivatives-trading-usds-futures==17.5.0`；现有 CI Python 3.11 / Node 22 / `lightweight-charts@5.2.1` | 保留 CI 回归和依赖构建；新增 ARM64 镜像包装 |
+| SSSS 原件 | 由 `strategy/SSSS.ftindex.b64` 还原，SHA256 `25f8c56075c0021dd2d0567401d37def25d6a9b895f139b3a8a9abc376fecaa7` | 保留字节级校验，不修改公式 |
+| 现有 CI | `.github/workflows/5s-crypto-multistrategy-ssss-v1.yml` 做策略回归与 ZIP 打包 | 目前没有已核实的独立 5s ARM64 OCI 镜像构建流程；需要新增部署包装 |
+| 模式配置 | `config.py` 实际读取 `FIVES_MODE`，接受 PAPER/DEMO/TESTNET；其他值回退 PAPER | 按用户选择运行，不得用 `MODE=PAPER` 等无效变量强行约束 |
+| Demo 连接 | `runtime_testnet_session.py`、`app.py` 接受用户提供的 DEMO 凭据，且 `POST /testnet-connect` 能连接/校验模拟账户 | 这是已有核心功能，必须保留，不能用“空 API Key”作为永久运行规则 |
+| 自动交易 | `engine/scheduler.py`、`engine/execution.py` 通过 DEMO 适配器执行已启用的策略；缺凭据时状态 `WAITING_DEMO` | 有效 Demo 凭据应允许用户在模拟交易账户实际下单 |
+| Web 表单 | `app.py` 保留 `/symbol-action`、`/symbol-strategy`、`/testnet-connect`、`/reconcile`、`/cancel-strategy-orders`、`/emergency-flatten` 等 POST | **禁止全局阻断 HTTP POST**；要以私网/鉴权保护控制界面 |
+| 持久化 | `config.py` 的 `FIVES_DB_PATH`，`storage.py` SQLite | 建议独立持久化 volume `/data`，不随镜像重建丢失状态 |
+| 健康检查 | `GET /` 返回 UI；`GET /api/status` 含外部行情探测 | 使用仅确认 Web 可用的无交易副作用健康检查，不把行情供应商短暂失败当成容器退出 |
 
-## 2. 最小交付架构（M2 预案，不在 M1 实现）
+## 3. M2 独立构建与运行方案（尚未执行）
 
-1. **输入固定**：先让 Oracle 只读导出 `app.py`、`requirements.txt`、`config.py`、核心策略文件及现有打包清单的 SHA256/文件目录；与上述 GitHub commit 比对，确定确切唯一的版本。不能复制 .env、密钥、SQLite、订单日志到 GitHub。
-2. **独立源码归档**：建议使用单独的私有 5s deployment 仓库/明确路径，继承已经验证的原始代码与 CI，提交不可变 source commit；不得把 `siftalpha-crypto` 其他项目自动当作此应用。
-3. **GitHub Actions**：旧的 Python 单元测试、JS/Python parity、SSSS 原件 SHA256 校验和前端 vendor 构建复用；新增 ARM64 Docker Buildx，发布到 GHCR，记录 run ID、源 commit、OCI digest、SBOM/制品校验（如果现有工具支持）。
-4. **启动包装**：通过独立的 entrypoint/server wrapper 固定 `app.main(host="0.0.0.0",port=8080)` 或等价的只读包装；不改 `app.py` 交易算法。启动前要求 `FIVES_MODE=PAPER`，所有 DEMO/TESTNET Key/Secret 为空，`LIVE_TRADING=NO`，`API_KEY_EMPTY=YES`，**由包装明确执行并验证**，不得把这几个标志当作旧程序天然支持的安全机制。
-5. **首次运行硬安全**：在安全包装/路由层拒绝全部 HTTP POST（尤其 `/testnet-connect`、`/symbol-action`、`/emergency-flatten`），或提供同等经验证的不可绕过隔离；容器不得注入凭据、不得访问交易下单通道。用新建空数据库，旧交易状态不自动迁移。即便无 API Key，应用初始化也会启动 scheduler，因此需要在没有密钥的前提下验证没有任何 order submit 路径可用。
-6. **存储**：唯一定义的持久化目录为 `/data`，数据库 `/data/5s_crypto_v1.db` 及 SQLite journal/WAL（如有）；日志写 stdout/stderr，由 Coolify 采集，凭据不落盘；源代码与镜像只读；明确备份/恢复演练、volume owner、迁移边界。
-7. **访问**：容器端口 8080 仅暴露在受控 Docker 私网，host 不绑定公网端口；通过现有 WireGuard/私网路由访问，服务与代理 ACL 防止外部及其他不受信任容器绕过。Docker 非 root、无特权、不挂 docker.sock、限制内存/CPU、禁止 host network。确认认证/读写隔离。
-8. **实例互斥**：旧 Coolify 5s 必须 STOPPED，自动部署/自动重启已禁用且有只读证据；不得在旧 5s 仍运行或可能自动启动时创建新的 active 交易进程。M3 通过且另行批准后再清理旧实例。
-9. **部署分工**：GitHub Actions 构建并推送 digest-pinned `linux/arm64` OCI image；Oracle/Coolify 只拉取和启动；不通过 SiftAlpha ZIP/Source-Git，不在 Oracle 上 docker build。
-10. **收尾边界**：M1 源码与现场事实审计 + 设计，M2 GitHub 构建镜像，M3 Oracle 私网部署和生命周期验收；任何 Gate 失败立即停止，不增开新机制。
+1. **版本固定**：先对照 Oracle Workspace/ZIP 与源码 commit 的文件列表及哈希，明确实际 5s 运行版本。不要上传真实密钥、.env、SQLite、历史订单。
+2. **最小部署包装**：只新增独立启动包装 / Dockerfile / Compose / GitHub Actions 构建工作流；不得修改策略算法、原本的交易接口或 UI 功能。
+3. **端口**：Web 包装固定 `0.0.0.0:8080`，容器本身不绑定公网端口；通过 WireGuard、私网反向代理及访问鉴权提供控制台。
+4. **模式与交易**：完整保留 PAPER、Binance DEMO/TESTNET 原有能力。使用 `FIVES_MODE` 和原应用已有 Demo 账户连接机制；凭据通过用户指定的受控密钥机制/私网表单输入，不写入镜像、GitHub、日志、公开配置。仅做环境识别，**不阻断模拟交易请求**。
+5. **存储**：SQLite 位于独立受控 `/data` volume，配置 `FIVES_DB_PATH=/data/5s_crypto_v1.db`。制定数据库备份、恢复与切换方案；未经用户批准不重置现有状态。
+6. **构建**：GitHub Actions 先跑现有回归测试，再生成 `linux/arm64` GHCR 镜像，提供固定源 SHA、run ID、digest 和回滚方案。Oracle 仅拉取镜像，不直接从源码 docker build。
+7. **双实例**：旧 5s 在切换期间保持停机或明确隔离，避免两个实例对同一 Demo 账户同时下单；这是部署冲突防护，不是禁用 5s 功能。旧实例仅在新部署通过且用户同意后清理。
+8. **用户自主控制**：配置、连接 Demo、选择策略、启动/停止自动交易均由用户经受保护的私网 UI 执行；自动化代理不得擅自代替用户切换交易环境或启用策略。
+9. **收尾**：M1 审计、M2 镜像构建、M3 私网部署与 Demo 交易完整功能验证，每阶段 PASS/BLOCKED/CLOSED；不因单个错误无限增设适配器。
 
-## 3. M1 完成门禁（截至本次只读源码审计）
+## 4. M1 Completion Gate（调整后的真实要求）
 
-- `SOURCE_AUDIT=PARTIAL_GITHUB_SOURCE_ONLY`：已读源码，但 Oracle 工作区尚未核验。
-- `ENTRYPOINT_DEFINED=PASS_DESIGN_ONLY`：已确认 `0.0.0.0:8080` 的外部包装调用；尚未生成/验证包装文件。
-- `PAPER_SAFETY_BOUNDARY=BLOCKED_DESIGN_PENDING_VALIDATION`：网页凭据输入 / 状态恢复 / POST 与 scheduler 交互需验证拒绝。
-- `PERSISTENCE_BOUNDARY=PASS_DESIGN_ONLY`：/data SQLite 已定义，旧 DB 迁移策略/真实权限未验。
-- `PRIVATE_ACCESS_BOUNDARY=PASS_DESIGN_ONLY`：不暴露公网，WireGuard/代理 ACL 现场未验。
-- `OLD_INSTANCE_NOT_RUNNING=UNVERIFIED_ORACLE`：必须读取 Coolify 资源状态和自动启动设置。
-- `BUILD_INPUT_IMMUTABLE=BLOCKED_WORKSPACE_MISMATCH_UNKNOWN`：候选 commit 固定，但未与现有 5s Workspace 哈希对照。
+- `SOURCE_AUDIT=PARTIAL_GITHUB_SOURCE_ONLY`：已核对源码，仍需 Oracle 版本匹配。
+- `ENTRYPOINT_DEFINED=PASS_DESIGN_ONLY`：已明确 `app.main(host="0.0.0.0", port=8080)`，尚未实现包装。
+- `TRADING_CAPABILITY_PRESERVED=PASS_DESIGN_ONLY`：方案明确不屏蔽 Demo 连接、POST 或自动模拟交易，仍需未来镜像验证。
+- `DEMO_TRADING_BOUNDARY=PASS_DESIGN_ONLY`：目标限定为当前已有的 Binance Demo/Testnet 实现，未实际部署验证。
+- `PERSISTENCE_BOUNDARY=PASS_DESIGN_ONLY`：已明确 `/data`，尚未现场验证。
+- `PRIVATE_ACCESS_BOUNDARY=PASS_DESIGN_ONLY`：已明确 WireGuard/私网访问，尚未现场验证。
+- `OLD_INSTANCE_NOT_RUNNING=UNVERIFIED_ORACLE`：需核对旧资源状态与自动重启行为。
+- `BUILD_INPUT_IMMUTABLE=BLOCKED_WORKSPACE_MISMATCH_UNKNOWN`：候选 commit 固定，但未与 Oracle 工作区比对。
 
 ```ini
 M1=IN_PROGRESS_AUDIT
@@ -55,24 +64,17 @@ M2=NOT_STARTED
 M3=NOT_STARTED
 ORACLE_DEPLOYMENT=NOT_STARTED
 STRATEGY_CODE_MODIFIED=NO
-DOCKER_IMAGE_BUILT=NO
-SERVER_MODIFIED=NO
+TRADING_FUNCTIONS_DISABLED=NO
+CODE_BUILD_STARTED=NO
 STOP_AND_WAIT=YES
 ```
 
-## 4. Codex 只读审计补齐内容（不得自动进入 M2）
+## 5. Codex 本阶段只读盘点
 
-只读盘点且隐藏所有凭据值：
+- 核对当前真实远端 HEAD、新提交与原 5s Workspace 对应版本，避免错误镜像源。
+- 只读核对原程序和 UI 的 DEMO/TESTNET 交易操作、凭据注入与环境绑定，报告真实功能，不删除。
+- 只读核对旧 Coolify 实例、数据库与私网状态；不要未经授权修改交易状态。
+- 识别独立部署需要新增的最小文件及严格测试项，不修改现有策略代码。
+- 交付审计报告后 `STOP_AND_WAIT=YES`，不提前构建、运行或发交易指令。
 
-- 确认现有 5s Workspace 完整目录、脚本哈希、ZIP 导入记录，与上方不可变 commit/Release ZIP 的一致性。
-- 记录 Python / Node 版本、实际启动方式、当前配置字段和值的**安全布尔判定**（不要打印真实密钥）。
-- 记录 DB 路径、权限、大小、持久化配置及其安全迁移或不迁移方案；不得接触用户交易状态用于测试。
-- 记录旧 5s Coolify UUID（历史候选：`sfcfnzk2ia38saplhgzpw9dv`）、运行状态、自动启动/自动部署/重启策略；没有实际查询证据不能标 PASS。
-- 检查 5s 实际版本 HTTP POST 是否支持通过网页注入 API Key，确认单纯空环境变量不能代表运行时强制无凭据。
-- 确认同机既有服务占用、ARM64、私网网络和路由，不做端口绑定或容器启动。
-- 给出最小新增文件清单和逐项门禁，首次部署限定为只读 PAPER 无交易实例。
-- 报告仍缺少的证据，输出 `STOP_AND_WAIT=YES`。
-
-## 5. 重要否定边界
-
-禁止宣称当前 M1 已 CLOSED；禁止将 Docker 镜像构建的缺失等同于 5s 原有应用不能运行；禁止将 PAPER 与可执行模拟下单混淆；禁止发布含 .env、keys、真实交易数据的构建上下文；禁止同时运行新旧交易实例。
+**本文件替代先前的全局 POST 禁止、空 API Key、只读 PAPER 强制约束。**
