@@ -1,0 +1,170 @@
+{
+  "head_at_manifest": "cc308d73df24b98332f840f73b01c50cc047fe9f",
+  "data_type": "git-frozen original semicolon-delimited Twelve Data provider responses",
+  "source_endpoint": "Twelve Data connected historical OHLC",
+  "expected_series": 16,
+  "verified_series": 16,
+  "all_original_series_present": true,
+  "inventory": [
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/15min_BNB_USD.csv",
+      "git_blob_sha": "8130f125d94fbfe41a21c05bbee60dfc8815ed19",
+      "bytes": 236175,
+      "rows": 5000,
+      "from": "2026-08-08 22:15:00",
+      "to": "2026-09-30 00:00:00",
+      "calendar_gaps": 0,
+      "volume_rows": 0
+    },
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/15min_BTC_USD.csv",
+      "git_blob_sha": "e8f00e49c1a9d989abf522da95002f192750ba72",
+      "bytes": 265420,
+      "rows": 5000,
+      "from": "2026-08-08 22:15:00",
+      "to": "2026-09-30 00:00:00",
+      "calendar_gaps": 0,
+      "volume_rows": 0
+    },
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/15min_ETH_USD.csv",
+      "git_blob_sha": "847200f111a438452805fd61ed68570e942b47ef",
+      "bytes": 255521,
+      "rows": 5000,
+      "from": "2026-08-08 22:15:00",
+      "to": "2026-09-30 00:00:00",
+      "calendar_gaps": 0,
+      "volume_rows": 0
+    },
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/15min_SOL_USD.csv",
+      "git_blob_sha": "99567c4923c2943692f60b904ab41beafe3a95c5",
+      "bytes": 228977,
+      "rows": 5000,
+      "from": "2026-08-08 22:15:00",
+      "to": "2026-09-30 00:00:00",
+      "calendar_gaps": 0,
+      "volume_rows": 0
+    },
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/1day_BNB_USD.csv",
+      "git_blob_sha": "79051efa89d909558f67afd7a89fd6a8bcf7b909",
+      "bytes": 146445,
+      "rows": 3249,
+      "from": "2017-11-08",
+      "to": "2026-09-30",
+      "calendar_gaps": 0,
+      "volume_rows": 0
+    },
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/1day_BTC_USD.csv",
+      "git_blob_sha": "6b3abda96446b12a98e5245cb599cf39cc77e1c5",
+      "bytes": 176360,
+      "rows": 3321,
+      "from": "2017-08-28",
+      "to": "2026-09-30",
+      "calendar_gaps": 0,
+      "volume_rows": 0
+    },
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/1day_ETH_USD.csv",
+      "git_blob_sha": "a41ad8a09649217c92831340a9dd31f1f027176e",
+      "bytes": 167585,
+      "rows": 3174,
+      "from": "2018-01-17",
+      "to": "2026-09-30",
+      "calendar_gaps": 2,
+      "volume_rows": 0
+    },
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/1day_SOL_USD.csv",
+      "git_blob_sha": "4f1386248b9eb7474a85bfe172a2649282238a39",
+      "bytes": 98812,
+      "rows": 2242,
+      "from": "2020-08-11",
+      "to": "2026-09-30",
+      "calendar_gaps": 0,
+      "volume_rows": 0
+    },
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/1h_BNB_USD.csv",
+      "git_blob_sha": "daa2282c579c76c3514cc0a454cd47e8471b1082",
+      "bytes": 235870,
+      "rows": 5000,
+      "from": "2026-03-05 17:00:00",
+      "to": "2026-09-30 00:00:00",
+      "calendar_gaps": 0,
+      "volume_rows": 0
+    },
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/1h_BTC_USD.csv",
+      "git_blob_sha": "ae11535319b90137762a4350bc19773237d3915c",
+      "bytes": 266653,
+      "rows": 5000,
+      "from": "2026-03-05 17:00:00",
+      "to": "2026-09-30 00:00:00",
+      "calendar_gaps": 0,
+      "volume_rows": 0
+    },
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/1h_ETH_USD.csv",
+      "git_blob_sha": "0b093d50cb780974a83e2d519a33888a0447c137",
+      "bytes": 255125,
+      "rows": 5000,
+      "from": "2026-03-05 17:00:00",
+      "to": "2026-09-30 00:00:00",
+      "calendar_gaps": 0,
+      "volume_rows": 0
+    },
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/1h_SOL_USD.csv",
+      "git_blob_sha": "6d03c3d7f92e8b7d37a215dbc21d0506abcb4fd3",
+      "bytes": 220172,
+      "rows": 5000,
+      "from": "2026-03-05 17:00:00",
+      "to": "2026-09-30 00:00:00",
+      "calendar_gaps": 0,
+      "volume_rows": 0
+    },
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/4h_BNB_USD.csv",
+      "git_blob_sha": "2b9d5d93a7082f3fd559b2285744dc825d78b4a4",
+      "bytes": 241076,
+      "rows": 5000,
+      "from": "2024-06-18 20:00:00",
+      "to": "2026-09-30 00:00:00",
+      "calendar_gaps": 0,
+      "volume_rows": 0
+    },
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/4h_BTC_USD.csv",
+      "git_blob_sha": "35128dd28b86280fe0710e76e282e40043d7c089",
+      "bytes": 279202,
+      "rows": 5000,
+      "from": "2024-06-18 20:00:00",
+      "to": "2026-09-30 00:00:00",
+      "calendar_gaps": 0,
+      "volume_rows": 0
+    },
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/4h_ETH_USD.csv",
+      "git_blob_sha": "da922becaea8025f66d6094bdd0a4f8a071782a1",
+      "bytes": 261567,
+      "rows": 5000,
+      "from": "2024-06-18 20:00:00",
+      "to": "2026-09-30 00:00:00",
+      "calendar_gaps": 0,
+      "volume_rows": 0
+    },
+    {
+      "path": "research/matrixquant_crypto_mtf_r2/data/4h_SOL_USD.csv",
+      "git_blob_sha": "1deb90f129e4609ced119ae44b1f17681bf1260a",
+      "bytes": 240244,
+      "rows": 5000,
+      "from": "2024-06-18 20:00:00",
+      "to": "2026-09-30 00:00:00",
+      "calendar_gaps": 0,
+      "volume_rows": 0
+    }
+  ]
+}
