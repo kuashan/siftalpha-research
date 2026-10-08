@@ -24,7 +24,9 @@
 ## UI
 - 策略切换列表现为 **5s V1 / SSSS / MatrixQuant PAI**，切换锁保护共用。
 - MatrixQuant 显示原始 PAI 曲线专属子面板、PAI 当前已收盘值、资金 25% 阶梯预估、运行状态。
-- 蜡烛图 B/X **仅代表真实 / 模拟账户实际成交的 FILLED 持久化订单**；PAI 原始信号不伪造 B/X。
+- 蜡烛图 **BUY / SELL** 为 PAI 收盘确认的指标历史信号，不代表下单或成交。图表读取同一批已收盘 Binance OHLC，与自动决策使用的 `evaluate_pai` 函数一致，不读取进行中的 K 线、不使用未来数据。
+- 蜡烛图 **B / X** 仍仅代表 Binance Demo 已确认 `FILLED` 的真实订单事件，依然由 SQLite 订单账本独立提供。
+- 这两种标记不相互取代。即使 Demo 停止或尚无订单，历史 BUY / SELL 也应显示；若实际成交则在对应执行 K 线上额外显示 B/X。图例已说明各自含义。
 
 ## 验证和交付
 - `tests/test_multistrategy_mfra.py`：根据用户于 2026-10-08 从 TradingView 免费 Pine Logs 导出的 BTC 4h **400 根 K 线**，预热 250 根、其余 150 根原始 PAI 数值和跨 ±5 信号与 Pine 逐根比对；每个 BUY+25%、上限100%、SELL 全退、优先级、模拟 Binance 买/加/卖、FILLED-B/B/X 存储标记。
@@ -38,3 +40,10 @@
 - 自动单测试主要为 FakeAdapter 模拟已成交情形；尚需用户的独立环境里进行 Binance USDM Demo 真正 API 连通/滑点/订单状态与恢复对账验收。
 - 策略不能保证盈利；R2 测试不同时间框架分歧、4h 负收益、日线大回撤；本次改为 25% 分批是新执行政策，与之前 100% 单笔回测的收益率**不可直接等同**。
 - 真实交易执行只允许用户自行启动；禁止在生产分支或服务器自行启动、部署或改变持仓。
+
+## 2026-10-08 补充：修复“MatrixQuant 看不到买卖点”
+- 根因：最初 UI 只显示 MatrixQuant PAI 曲线与已成交 `B/X`；`strategy_indicator_markers` 对 MatrixQuant 未赋值。没有真实 Demo 订单时，主图就缺少历史买卖点。
+- 修复：新增 `matrixquant_strategy.chart_signal_markers(points)`，通过相同的已收盘 `PAIPoint.buy/sell` 将所有 PAI 阈值事件输出为独立的 `MFRA_PAI_BUY / MFRA_PAI_SELL` 指标标记。使用 TradingView 风格的绿色 BUY 上箭头/红色 SELL 下箭头；已成交 B/X 仍单独读取 `store.list_trade_markers`，只有 `FILLED` 才显示。
+- 验证：BTC 4h 用户真实 TradingView 400 根数据校验历史信号；关闭 Demo、零订单时仍返回 BUY/SELL；最新尚未收盘 K 线不计算信号；既有 5s/SSSS 及对账基线逻辑保持不变。
+- 数据边界：SiftAlpha 图表依据 Binance OHLC 重算阈值，而之前 TradingView 的数据为用户图表数据。两者的价格来源/更新时间不同可能造成个别信号偏差；不表示自动执行已发生。
+- 正式状态：`UI_SIGNAL_MARKERS_IMPLEMENTED`；`OFFLINE_CI` 以最新流水线为准；`BINANCE_DEMO_LIVE_ACCEPTANCE` 仍然 `PENDING`，没有部署或自动启动。
