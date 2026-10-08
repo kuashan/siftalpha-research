@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/5s-crypto-multistrategy-ssss-v1
+      - feature/5s-crypto-multistrategy-mfra-v1
     paths:
       - "integrations/5s_crypto_binance_usdm_v1/**"
       - "deployment/5s-independent-server-module/**"
