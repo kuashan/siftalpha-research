@@ -1,0 +1,56 @@
+name: MatrixQuant R4 offline components (four coin 4h)
+on:
+  push:
+    branches:
+      - research/matrixquant-four-component-r4-20261009
+    paths:
+      - "research/matrixquant_r4_components/**"
+      - ".github/workflows/matrixquant-r4-component-study.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Study same frozen 4h source, independently replay R4-A event study
+        run: |
+          node research/matrixquant_r4_components/run_r4_4h_event_study.js > "$RUNNER_TEMP/R4_results.json"
+          node - "$RUNNER_TEMP/R4_results.json" <<'JS'
+          const fs = require("node:fs");
+          const d = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
+          const names = ["BASE", "PAI_UP5", "PAI_DOWN5", "WT_UP", "WT_DOWN",
+                         "WT_BULL_DIV", "WT_BEAR_DIV", "GOLD_ENTER_LT30", "GOLD_EXIT_GT30"];
+          const pct = x => x == null ? "NA" : (x * 100).toFixed(3) + "%";
+          if(d.aggregated.BASE.n !== 18920) throw Error("R4 baseline denominator changed");
+          for (const [c,v] of Object.entries(d.per_coin)) {
+            if(v.quality.bars!==5000 || v.quality.invalid || v.quality.gaps || v.quality.duplicate)
+              throw Error("Data check failed " + c);
+            console.log("R4_COIN " + c + " bars=" + v.quality.bars + " " + v.quality.start + ".." + v.quality.end);
+            for (const name of names) {
+              const x=v.stats[name];
+              console.log("R4_ROW " + c + " " + name
+                          + " n="+x.n+" r20="+pct(x.r20_mean)
+                          + " positive="+pct(x.positive)
+                          + " mfe="+pct(x.mfe20_mean)+" mae="+pct(x.mae20_mean));
+            }
+          }
+          for (const name of names) {
+            const x=d.aggregated[name];
+            console.log("R4_POOL " + name + " n="+x.n+" r5="+pct(x.r5_mean)
+                        +" r20="+pct(x.r20_mean)+" positive="+pct(x.positive));
+          }
+          console.log("MATRIXQUANT_R4_FOUR_COIN_EVENT_REPLAY_PASS");
+          JS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: matrixquant-r4-four-coin-4h-json
+          path: ${{ runner.temp }}/R4_results.json
+          if-no-files-found: error
