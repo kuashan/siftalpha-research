@@ -1,0 +1,34 @@
+{
+  "source": "user pasted TradingView Pine Logs, BTC 4h (assumed from conversation); not full standalone parity",
+  "sourceRows": 7,
+  "fieldsPerRow": 19,
+  "startUTC": "2026-10-01 20:00",
+  "endUTC": "2026-10-02 20:00",
+  "invalidOHLC": 0,
+  "non4hIntervals": 0,
+  "histMaxAbsError": 1.000000082740371e-8,
+  "sma4MaxAbsError": 2.500001983207767e-9,
+  "firstPAIcrossUp5": [
+    "2026-10-01 20:00"
+  ],
+  "PAIcrossDownMinus5": [
+    "2026-10-02 20:00"
+  ],
+  "WTcrossUnder": [
+    "2026-10-02 16:00"
+  ],
+  "WTbullDivergenceSignals": 0,
+  "WTbearDivergenceSignals": 0,
+  "PAIbullDivergenceSignals": 0,
+  "PAIbearDivergenceSignals": 0,
+  "candidateCompositeEntryNextOpen": 84877.5,
+  "candidateCompositeExitNextOpen": 84303.8,
+  "grossReturn": -0.0067591528968218295,
+  "netReturnAt15bpsPerSide": -0.009736640646225259,
+  "uncertainties": [
+    "Cannot independently compute PAI/WT from just 7 OHLC; need at least 250 consecutive prior candles for stable EMA warmup.",
+    "CSV log source may be BINANCE BTCUSDT 4h; verify symbol from user chart.",
+    "PAI-only exit after 2026-10-02 20:00 UTC requires next 4h candle open not provided.",
+    "No bearish or bullish divergences confirmed within these 7 rows."
+  ]
+}
