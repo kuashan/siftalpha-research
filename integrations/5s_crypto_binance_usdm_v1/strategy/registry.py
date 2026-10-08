@@ -4,11 +4,12 @@ from dataclasses import dataclass
 from typing import Any
 
 from strategy.frozen_signal_engine import evaluate_candles
-from strategy import ssss_strategy
+from strategy import ssss_strategy, matrixquant_strategy
 
 
 STRATEGY_5S = "5s_crypto_v1"
 STRATEGY_SSSS = "ssss"
+STRATEGY_MFRA = "matrixquant_pai"
 
 
 @dataclass(frozen=True)
@@ -69,6 +70,17 @@ _SPECS = {
         max_fraction=1.0,
         order_prefix="ssss",
         description="原始富途 SSSS.ftindex：图标 9 每次买入 25%，图标 15 全部清仓；同根同时出现时清仓优先。",
+    ),
+    STRATEGY_MFRA: StrategySpec(
+        strategy_id=STRATEGY_MFRA,
+        label="MatrixQuant PAI",
+        supported_timeframes=("3m", "5m", "15m", "1h", "2h", "4h", "6h", "12h", "1d"),
+        default_timeframe="4h",
+        fetch_limit=1000,
+        minimum_closed_bars=250,
+        max_fraction=1.0,
+        order_prefix="mfra",
+        description="原始 PAI 收盘向上突破 +5：每次买入 25%，最多 100%；收盘跌破 -5：全部清仓。",
     ),
 }
 
@@ -377,12 +389,71 @@ def decide_ssss(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> Str
     )
 
 
+def decide_mfra(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> StrategyDecision:
+    """PAI thresholds confirmed only on the latest CLOSED candle.
+
+    Share SSSS's 25%-per-BUY/full-EXIT capital policy and shared M3 executor.
+    This pure decision does not consume a signal until execution persists it.
+    """
+    spec = get_spec(STRATEGY_MFRA)
+    if str(timeframe).lower() not in spec.supported_timeframes:
+        raise ValueError(f"MatrixQuant PAI 不支持周期：{timeframe}")
+    points = matrixquant_strategy.evaluate_pai(rows)
+    if len(points) < spec.minimum_closed_bars:
+        raise ValueError("MatrixQuant PAI 历史已收盘 K 线不足")
+    latest = points[-1]
+    if latest.raw is None:
+        raise ValueError("MatrixQuant PAI 暂无有效数值")
+    fraction = min(max(float(runtime.get("current_fraction") or 0.0), 0.0), 1.0)
+    state = _state(runtime)
+    state.update({
+        "formula_version": matrixquant_strategy.PAI_SOURCE_VERSION,
+        "last_pai_raw": float(latest.raw),
+        "last_detection_bar_open_time": int(latest.open_time),
+    })
+    steps: list[StrategyStep] = []
+    signal = "HOLD"
+    if latest.sell:
+        signal = "MFRA_SELL_MINUS5"
+        if fraction > 1e-12:
+            steps.append(StrategyStep(
+                code="MFRA_EXIT_ALL", order_code="X100", target_fraction=0.0,
+                rule_ids=("PAI_CROSS_DOWN_MINUS5",), state_after=dict(state),
+            ))
+    elif latest.buy:
+        signal = "MFRA_BUY_PLUS5"
+        if fraction < 1.0 - 1e-12:
+            target = min(1.0, round(fraction + 0.25, 10))
+            pct = int(round((target - fraction) * 100))
+            if pct > 0:
+                steps.append(StrategyStep(
+                    code=f"MFRA_BUY_{pct}", order_code=f"B{pct}",
+                    target_fraction=target, rule_ids=("PAI_CROSS_UP_PLUS5",),
+                    state_after=dict(state),
+                ))
+    return StrategyDecision(
+        strategy_id=STRATEGY_MFRA,
+        signal=signal,
+        steps=tuple(steps),
+        bar_open_time=int(latest.open_time),
+        metadata={
+            "pai_raw": latest.raw,
+            "buy_cross_up5": latest.buy,
+            "sell_cross_down_minus5": latest.sell,
+            "formula_version": matrixquant_strategy.PAI_SOURCE_VERSION,
+        },
+        state_after=state,
+    )
+
+
 def decide(strategy_id: str, rows: list[Any], runtime: dict[str, Any], timeframe: str) -> StrategyDecision:
     sid = get_spec(strategy_id).strategy_id
     if sid == STRATEGY_5S:
         return decide_5s(rows, runtime)
     if sid == STRATEGY_SSSS:
         return decide_ssss(rows, runtime, timeframe)
+    if sid == STRATEGY_MFRA:
+        return decide_mfra(rows, runtime, timeframe)
     raise ValueError(f"不支持的策略：{strategy_id}")
 
 
@@ -406,6 +477,13 @@ def strategy_signal_label(strategy_id: str, raw: object) -> str:
         labels = {
             "SSSS_BUY_9": "买入 25%",
             "SSSS_EXIT_15": "全部清仓",
+            "HOLD": "观望",
+        }
+        return " + ".join(labels.get(part, part) for part in text.split("+"))
+    if strategy_id == STRATEGY_MFRA:
+        labels = {
+            "MFRA_BUY_PLUS5": "PAI 买入 25%",
+            "MFRA_SELL_MINUS5": "PAI 全部清仓",
             "HOLD": "观望",
         }
         return " + ".join(labels.get(part, part) for part in text.split("+"))

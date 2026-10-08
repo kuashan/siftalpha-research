@@ -18,10 +18,12 @@ from storage import StateStore
 from strategy.registry import (
     STRATEGY_5S,
     STRATEGY_SSSS,
+    STRATEGY_MFRA,
     get_spec,
     strategy_options,
     strategy_signal_label,
 )
+from strategy.matrixquant_strategy import chart_snapshot as mfra_chart_snapshot, evaluate_pai
 from strategy.ssss_strategy import (
     analyze_ssss,
     closed_bar_window as ssss_closed_bar_window,
@@ -103,8 +105,10 @@ def _timeframe_options(selected_timeframe: str, strategy_id: str) -> str:
         label = _TIMEFRAME_LABELS.get(interval, interval)
         if strategy_id == STRATEGY_5S:
             status = "已验证基线" if interval in settings.validated_timeframes else "实验周期"
-        else:
+        elif strategy_id == STRATEGY_SSSS:
             status = "SSSS 原始指标周期"
+        else:
+            status = "MatrixQuant PAI 研究周期"
         options.append(
             '<button '
             'type="button" '
@@ -249,6 +253,20 @@ def chart_payload(symbol: str) -> dict[str, object]:
             strategy_indicator_markers = list(ssss_view["indicator_markers"])
         except Exception as exc:
             strategy_snapshot = {"analysis_error": str(exc)}
+    elif strategy_id == STRATEGY_MFRA:
+        try:
+            # Strictly CLOSED rows, never the still-forming current candle.
+            closed = all_rows[:-1][-int(spec.fetch_limit):]
+            points = evaluate_pai(closed)
+            strategy_snapshot = mfra_chart_snapshot(closed)
+            strategy_overlay = [
+                {"open_time": point.open_time, "PAI": point.raw}
+                for point in points if point.raw is not None
+            ]
+            # No pre-trade B/X marker: execution marker comes ONLY from
+            # store.list_trade_markers() after FILLED confirmation.
+        except Exception as exc:
+            strategy_snapshot = {"analysis_error": str(exc)}
 
     if candles:
         first_time = int(candles[0]["open_time"])
@@ -322,7 +340,7 @@ def render_index(selected_symbol: str | None = None) -> str:
         if strategy_id == STRATEGY_5S:
             validation = "已验证基线" if timeframe in settings.validated_timeframes else "实验周期"
         else:
-            validation = "SSSS 原始指标" if timeframe in spec.supported_timeframes else "当前周期不支持"
+            validation = (spec.label + " 研究周期") if timeframe in spec.supported_timeframes else "当前周期不支持"
         run_state = str(rt.get("run_state") or ("ARMED" if enabled else "STOPPED"))
         status_label = _RUN_STATE_LABELS.get(run_state, "运行中" if enabled else "未启动")
         status_class = "running" if enabled and run_state in {"ARMED", "MONITORING", "SIGNAL_READY"} else "stopped"
@@ -368,20 +386,27 @@ def render_index(selected_symbol: str | None = None) -> str:
                 f'data-strategy-option="{html.escape(sid)}" '
                 f'role="option" aria-selected="{"true" if is_selected else "false"}">'
                 f'<span>{html.escape("5s V1" if sid == STRATEGY_5S else label)}</span>'
-                f'<small>{html.escape("A/B 60% · C 补至 100% · SELL 全退" if sid == STRATEGY_5S else "💰 +25% · 💥 全部清仓")}</small>'
+                f'<small>{html.escape("A/B 60% · C 补至 100% · SELL 全退" if sid == STRATEGY_5S else ("💰 +25% · 💥 全部清仓" if sid == STRATEGY_SSSS else "PAI +5 买25% · -5 全清"))}</small>'
                 f'</button>'
             )
             for sid, label, is_selected in strategy_options(strategy_id)
         )
         strategy_lock_note = "已锁定" if strategy_locked else "可切换"
-        exposure_html = (
-            f'<div><small>首次买入 60% 名义价值</small><b>{initial.target_notional_usdt:.2f} USDT</b></div>'
-            f'<div><small>补仓后 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
-            if strategy_id == STRATEGY_5S
-            else
-            f'<div><small>SSSS 每个 💰 买入 25% 名义价值</small><b>{ssss25.target_notional_usdt:.2f} USDT</b></div>'
-            f'<div><small>SSSS 满仓 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
-        )
+        if strategy_id == STRATEGY_5S:
+            exposure_html = (
+                f'<div><small>首次买入 60% 名义价值</small><b>{initial.target_notional_usdt:.2f} USDT</b></div>'
+                f'<div><small>补仓后 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
+            )
+        elif strategy_id == STRATEGY_SSSS:
+            exposure_html = (
+                f'<div><small>SSSS 每个 💰 买入 25% 名义价值</small><b>{ssss25.target_notional_usdt:.2f} USDT</b></div>'
+                f'<div><small>SSSS 满仓 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
+            )
+        else:
+            exposure_html = (
+                f'<div><small>PAI 每次 +5 突破买入 25% 名义价值</small><b>{ssss25.target_notional_usdt:.2f} USDT</b></div>'
+                f'<div><small>MatrixQuant 满仓 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
+            )
         exposure_html += (
             f'<div><small>资金费与手续费净额</small><b>{p["funding_fee"] - p["trading_fee"]:+.2f} USDT</b></div>'
         )

@@ -92,7 +92,10 @@ jobs:
           source = Path("strategy/ssss_strategy.py").read_text(encoding="utf-8")
           assert 'action="/symbol-strategy"' in app
           assert 'STRATEGY_SSSS' in app
+          assert 'STRATEGY_MFRA' in app
           assert 'STRATEGY_SSSS = "ssss"' in registry
+          assert 'STRATEGY_MFRA = "matrixquant_pai"' in registry
+          assert 'MatrixQuant PAI' in registry
           assert 'STRATEGY_E: StrategySpec' not in registry
           assert '💰=买入25%' in page
           assert '💥=全部清仓' in page
@@ -108,11 +111,11 @@ jobs:
         run: |
           python - <<'PY'
           import app
-          from strategy.registry import STRATEGY_5S, STRATEGY_SSSS, strategy_ids
+          from strategy.registry import STRATEGY_5S, STRATEGY_MFRA, STRATEGY_SSSS, strategy_ids
           cfg = app.store.get_symbol_configs()
           assert tuple(app.settings.symbols) == ("BTCUSDT","ETHUSDT","BNBUSDT","SOLUSDT")
           assert all(x["strategy_id"] == STRATEGY_5S for x in cfg.values())
-          assert strategy_ids() == (STRATEGY_5S, STRATEGY_SSSS)
+          assert strategy_ids() == (STRATEGY_5S, STRATEGY_SSSS, STRATEGY_MFRA)
           print("SSSS_APP_IMPORT_PASS")
           PY
 
