@@ -23,3 +23,5 @@ jobs:
         run: node research/matrixquant_crypto_mtf_r3/test_parity_checker.js
       - name: Assert free Pine logger does not require dynamic history buffering
         run: node research/matrixquant_crypto_mtf_r3/test_free_no_export_source.js
+      - name: Verify copied TVR3 Pine Logs parser and numerical parity checks
+        run: node research/matrixquant_crypto_mtf_r3/test_tv_pine_logs.js
