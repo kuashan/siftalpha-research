@@ -19,7 +19,9 @@ assert.ok(free.includes("FreeParityBars = input.int(40"),"default 40 records");
 assert.ok(free.includes("maxval=500"),"optional max log records");
 assert.equal((free.match(/\brec \+=/g)||[]).length,18,"19 delimited log fields total");
 for(let s of ["PAIvalue", "WTlineRaw", "SignalLineRaw", "HistRaw", "WTbullCond", "WTbearCond", "PAIbullCond", "PAIbearCond"]){
-  assert.ok(free.includes("str.tostring("+s+(s==="WTbullCond"||s==="WTbearCond"||s==="PAIbullCond"||s==="PAIbearCond"?" ? 1 : 0":""),"expected diagnostic field "+s);
+  const boolField = ["WTbullCond", "WTbearCond", "PAIbullCond", "PAIbearCond"].includes(s);
+  const needle = boolField ? "str.tostring(" + s + " ? 1 : 0)" : "str.tostring(" + s + ",";
+  assert.ok(free.includes(needle), "expected diagnostic field " + s);
 }
 console.log("PASS: free Pine logs avoid dynamic historical offsets, preserve original formula section, retain 19 fields and screenshot table.");
 console.log("INFO: static code checks; a real TradingView Pine runtime pass must be verified by the user.");
