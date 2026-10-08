@@ -203,3 +203,6 @@ if (require.main===module) {
   if(report.total_mismatches)process.exitCode=1;
  }catch(e){console.error("PARITY_INPUT_OR_ENGINE_ERROR:",e.message);process.exitCode=2;}
 }
+
+// Public API used by offline regression tests; no side effects.
+module.exports = {compareTV,tvRows,pivotAll,derive,backtest};
