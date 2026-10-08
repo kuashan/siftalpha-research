@@ -175,8 +175,8 @@ jobs:
             rm -f "$GITHUB_WORKSPACE/integrations/5s_crypto_binance_usdm_v1/strategy/SSSS.ftindex"
             git -C "$GITHUB_WORKSPACE" reset --hard HEAD
             git -C "$GITHUB_WORKSPACE" clean -fd integrations/5s_crypto_binance_usdm_v1/vendor
-            git -C "$GITHUB_WORKSPACE" pull --rebase origin feature/5s-crypto-multistrategy-ssss-v1
-            git -C "$GITHUB_WORKSPACE" push origin HEAD:feature/5s-crypto-multistrategy-ssss-v1
+            git -C "$GITHUB_WORKSPACE" pull --rebase origin feature/5s-crypto-multistrategy-mfra-v1
+            git -C "$GITHUB_WORKSPACE" push origin HEAD:feature/5s-crypto-multistrategy-mfra-v1
           fi
 
       - uses: actions/upload-artifact@v4
