@@ -148,6 +148,36 @@ FIRST_BLOCKER=OLD_INSTANCE_AUTOSTART_UNVERIFIED_BEFORE_M3
 STOP_AND_WAIT=YES
 ```
 
+## M3 Oracle 部署与验收结果（2026-10-08）
+
+- 旧 Coolify Application `lmhifd5qwbuzdhqwxhbe5yeq` 保留，状态为 `exited:unhealthy`，无运行容器；未配置自动部署，未修改旧资源。
+- 新建独立 Coolify Docker Image Application：`v7xgbs1bqydpsaujrniqhiaf`，名称 `5s-crypto-multistrategy-ssss-v1-m3`。
+- 镜像固定为 `ghcr.io/kuashan/5s-crypto-multistrategy-ssss-v1@sha256:8354ee4019234e8da6ba2a38578575b61cb17c279a7a9b1ce83ee6aac569b622`，Oracle ARM64 匿名 manifest 拉取通过。
+- 仅暴露容器端口 `8080`，未配置 host port；容器连接 `coolify` 网络，数据使用独立 `/data` named volume。
+- 首次运行使用 `FIVES_MODE=PAPER`，未注入 Binance API key/secret；未执行交易。
+- Private URL `http://5s-crypto-multistrategy-ssss-v1-m3.10.77.0.1.sslip.io` 经 `10.77.0.1:80` 返回 HTTP 200。
+- Coolify 生命周期验收：Stop、Start、Restart 均通过；Restart 后容器仍为 running，旧应用、SiftAlpha Web、Production Agent、WireGuard、Xray、Docker 和 Cockpit 未修改。
+- 回滚快照：`/var/lib/siftalpha-web/m3-rollback-20261008T043740Z`。
+
+```ini
+OLD_INSTANCE_NOT_RUNNING=PASS
+OLD_INSTANCE_AUTOSTART=NO
+ORACLE_DEPLOYMENT=PASS
+M3_APPLICATION_UUID=v7xgbs1bqydpsaujrniqhiaf
+M3_IMAGE_DIGEST=sha256:8354ee4019234e8da6ba2a38578575b61cb17c279a7a9b1ce83ee6aac569b622
+M3_PRIVATE_HTTP=200
+M3_STOP=PASS
+M3_START=PASS
+M3_RESTART=PASS
+M3_PERSISTENCE=PASS
+M3_PUBLIC_HOST_PORT=NO
+M3_TRADING_MODE=PAPER
+M3_API_KEYS_INJECTED=NO
+M3=PASS/CLOSED
+FIRST_BLOCKER=NONE
+STOP_AND_WAIT=YES
+```
+
 ## 5. Codex 本阶段只读盘点
 
 - 核对当前真实远端 HEAD、新提交与原 5s Workspace 对应版本，避免错误镜像源。
