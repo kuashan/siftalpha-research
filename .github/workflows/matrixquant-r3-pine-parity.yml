@@ -21,3 +21,5 @@ jobs:
           node-version: '22'
       - name: Verify baseline R2 replay and R3 CSV checker
         run: node research/matrixquant_crypto_mtf_r3/test_parity_checker.js
+      - name: Assert free Pine logger does not require dynamic history buffering
+        run: node research/matrixquant_crypto_mtf_r3/test_free_no_export_source.js
