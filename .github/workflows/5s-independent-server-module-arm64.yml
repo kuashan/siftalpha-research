@@ -102,7 +102,10 @@ jobs:
           assert '💥=全部清仓' in page
           assert 'strategy_indicator_markers' in app
           assert 'SSSS_SOURCE_SHA256' in source
-          print("SSSS_SELECTOR_UI_PASS")
+          assert 'STRATEGY_MFRA' in app and 'matrixquant_pai' in registry
+          assert 'MatrixQuant PAI' in app and 'MFRA' not in source
+          assert 'matrixquant_pai' in page
+          print("SSSS_MFRA_SELECTOR_UI_PASS")
           PY
 
       - name: PAPER import
@@ -112,12 +115,12 @@ jobs:
         run: |
           python - <<'PY'
           import app
-          from strategy.registry import STRATEGY_5S, STRATEGY_SSSS, strategy_ids
+          from strategy.registry import STRATEGY_5S, STRATEGY_SSSS, STRATEGY_MFRA, strategy_ids
           cfg = app.store.get_symbol_configs()
           assert tuple(app.settings.symbols) == ("BTCUSDT", "ETHUSDT", "BNBUSDT", "SOLUSDT")
           assert all(x["strategy_id"] == STRATEGY_5S for x in cfg.values())
-          assert strategy_ids() == (STRATEGY_5S, STRATEGY_SSSS)
-          print("SSSS_APP_IMPORT_PASS")
+          assert strategy_ids() == (STRATEGY_5S, STRATEGY_SSSS, STRATEGY_MFRA)
+          print("SSSS_MFRA_APP_IMPORT_PASS")
           PY
 
       - name: M2 packaging contract
