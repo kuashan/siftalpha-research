@@ -39,7 +39,7 @@ assert.equal(FIELDS.length,14);
 
 const bad=lines.slice();
 let p=bad[350].split("|");
-p[5]=(Number(p[5])+0.08).toFixed(8);bad[350]=p.join("|");
+p[6]=(Number(p[6])+0.08).toFixed(8);bad[350]=p.join("|");
 let wrong=runPineLogParity(bad.join("\n"));
 assert.equal(wrong.status,"MISMATCH_REQUIRES_AUDIT");
 assert.equal(wrong.compare.fields.PARITY_PAI_RAW.mismatches,1);
