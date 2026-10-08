@@ -20,8 +20,11 @@ function parsePineLogs(contents){
    if(parts.length!==19)throw Error("LOG_FORMAT: 19 fields expected, got "+parts.length+" in "+line.slice(0,170));
    const ts=parts[0];
    if(!/^\d{4}-\d\d-\d\d \d\d:\d\d$/.test(ts))throw Error("INVALID_UTC: "+ts);
-   const vals=parts.slice(1).map(Number);
-   if(vals.some(x=>!Number.isFinite(x)))throw Error("NONFINITE_LOG_VALUE at "+ts);
+   // TradingView may export NaN/na before the first complete indicator window.
+   // Keep those startup observations for warm-up, but require finite OHLC and
+   // exact boolean (0/1) confirmation flags.
+   const vals=parts.slice(1).map(v=>/^(na|nan)$/i.test(v)?NaN:Number(v));
+   if(vals.slice(0,4).some(x=>!Number.isFinite(x)))throw Error("NONFINITE_OHLC at "+ts);
    const [o,h,l,c]=vals;
    if(o<=0||h<=0||l<=0||c<=0||h<Math.max(o,c,l)||l>Math.min(o,c,h))
       throw Error("INVALID_OHLC at "+ts);
