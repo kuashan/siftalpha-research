@@ -1,0 +1,23 @@
+name: MatrixQuant R3 Pine Parity Offline Regression
+on:
+  push:
+    branches:
+      - research/matrixquant-pine-parity-r3-20261008
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out research branch
+        uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify baseline R2 replay and R3 CSV checker
+        run: node research/matrixquant_crypto_mtf_r3/test_parity_checker.js
