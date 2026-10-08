@@ -154,8 +154,18 @@ jobs:
         working-directory: .
         run: |
           set -euo pipefail
-          digest="$(docker buildx imagetools inspect python:3.11-slim-bookworm | awk '/^Digest:/ {print $2; exit}')"
+          registry_token="$(curl -fsSL \
+            "https://auth.docker.io/token?service=registry.docker.io&scope=repository:library/python:pull" \
+            | python -c 'import json, sys; print(json.load(sys.stdin)["token"])')"
+          digest="$(curl -fsSIL \
+            -H "Authorization: Bearer $registry_token" \
+            -H "Accept: application/vnd.oci.image.index.v1+json" \
+            "https://registry-1.docker.io/v2/library/python/manifests/3.11-slim-bookworm" \
+            | awk 'tolower($1) == "docker-content-digest:" {print $2; exit}' \
+            | tr -d "\r")"
+          unset registry_token
           test -n "$digest"
+          case "$digest" in sha256:*) ;; *) echo "invalid base digest" >&2; exit 1 ;; esac
           echo "image=python:3.11-slim-bookworm@$digest" >> "$GITHUB_OUTPUT"
           echo "PYTHON_BASE_IMAGE=$digest" >> "$GITHUB_STEP_SUMMARY"
 
