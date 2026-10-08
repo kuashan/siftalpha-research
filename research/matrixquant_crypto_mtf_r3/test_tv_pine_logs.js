@@ -46,6 +46,20 @@ assert.equal(wrong.compare.fields.PARITY_PAI_RAW.mismatches,1);
 
 assert.throws(()=>parsePineLogs("indicator(title='x')"),/NO_TVR3_RECORDS/);
 assert.throws(()=>parsePineLogs(supplied+rows[0].timestamp+" TVR3|"+rows[0].timestamp+"|"+rows[0].values.join("|")),/DUPLICATE_CANDLE/);
+// Real user-provided 400 bars: same-provider OHLC, a 250-bar rolling warm-up.
+// All default PAI/WT numerical values and WT divergence/event flags must match;
+// one PAI bearish-divergence flag remains an independently investigated exception.
+const realCsv=fs.readFileSync(path.join(__dirname,"user_tv_logs/BTC_4H_20260802_20261008_TV_400_REAL.csv"),"utf8");
+const real=runPineLogParity(realCsv);
+assert.equal(real.rows,400);
+assert.equal(real.compare.total_mismatches,1);
+assert.equal(real.status,"MISMATCH_REQUIRES_AUDIT");
+for(const [field,diagnostic] of Object.entries(real.compare.fields)) {
+ assert.equal(diagnostic.compared,150);
+ assert.equal(diagnostic.mismatches,field==="PARITY_PAI_BEAR_CONFIRMED"?1:0,"real mismatch in "+field);
+}
+assert.equal(real.compare.first_mismatches[0].t,"2026-09-20 00:00");
+console.log("PASS: actual TradingView 400-bar BTC 4h parity, 150 compared bars x 14 fields; only 1 PAI bearish divergence mismatch; formula numeric fields all match.");
 console.log("PASS: parsed real 7-bar user log; tagged as insufficient; detected PAI flags and WT hist arithmetic.");
 console.log("PASS: 520-bar synthetic TVR3 log numerical reconstruction matches all 14 fields; corrupted value fails.");
 console.log("INFO: this does not establish actual TV-vs-JS numerical parity until >=350 real consecutive TVR3 bars arrive.");
