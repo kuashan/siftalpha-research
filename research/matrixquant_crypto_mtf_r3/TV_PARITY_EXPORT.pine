@@ -1,0 +1,549 @@
+//  __  __         _          _         ___                        _   
+// |  \/  |  __ _ | |_  _ __ (_)__  __ / _ \  _   _   __ _  _ __  | |_ 
+// | |\/| | / _` || __|| '__|| |\ \/ /| | | || | | | / _` || '_ \ | __|
+// | |  | || (_| || |_ | |   | | >  < | |_| || |_| || (_| || | | || |_ 
+// |_|  |_| \__,_| \__||_|   |_|/_/\_\ \__\_\ \__,_| \__,_||_| |_| \__|
+// 
+// This Pine Script® code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © MatrixQuant
+//
+//@version=6
+indicator(title = 'Multi-Factor Reversal Analyzer · R3 Parity Export', shorttitle='★ Multi-Factor Reversal Analyzer丨多因子反转分析器 ★', overlay=false)
+
+//Trend Detector丨趋势探测器
+EnableTrendDetector = input.bool(true, title = 'Enable Trend Detector丨启用趋势探测器', group = 'Trend Detector丨趋势探测器', tooltip = '▶︎ The Trend Detector analyzes price and volume momentum to output a composite trend strength score. Higher values indicate stronger trends. It helps identify potential tops, bottoms, or trend continuation zones. For best results, use alongside other indicators or price action.\n▶︎ The indicator performs optimally when used in conjunction with a harmonic pattern recognition tool.\n▶︎ 趋势探测器用于综合分析价格与成交量的多空动能强弱，输出趋势强度分值。数值越高代表趋势越强，多用于识别顶部、底部或趋势延续状态，建议结合其他信号辅助判断交易方向。\n▶︎ 与谐波形态识别工具结合使用时，该指标表现最佳。')
+OHLCtrendLength = input.int(8, title = 'OHLC Trend Length丨四价趋势长度', minval = 1, group = 'Trend Detector丨趋势探测器')
+CloseTrendLength = input.int(20, title = 'Close Trend Length丨收盘价趋势长度', minval = 1, group = 'Trend Detector丨趋势探测器')
+
+OhlcDirectionalWeight = close == high and close == low or high == low ? 0 : (2 * close - low - high) / (high - low) * volume
+OhlcTrendStrength = math.sum(OhlcDirectionalWeight, 1) / math.sum(volume, 1)
+OhlcUpStrength = math.sum(volume * (ta.change(ohlc4) <= 0 ? 0 : ohlc4), OHLCtrendLength)
+OhlcDownStrength = math.sum(volume * (ta.change(ohlc4) >= 0 ? 0 : ohlc4), OHLCtrendLength)
+paramaters(UpStrengthA, DownStrengthA) =>
+    if DownStrengthA == 0
+        100
+    if UpStrengthA == 0
+        0
+    100.0 - 100.0 / (1.0 + OhlcUpStrength / OhlcDownStrength)
+OHLCtrendLine = paramaters(OhlcUpStrength, OhlcDownStrength)
+
+CloseDirectionalWeight = close == high and close == low or high == low ? 0 : (2 * close - low - high) / (high - low) * volume
+CloseTrendStrength = math.sum(CloseDirectionalWeight, 1) / math.sum(volume, 1)
+CloseUpStrength = math.sum(volume * (ta.change(close) <= 0 ? 0 : close), CloseTrendLength)
+CloseDownStrength = math.sum(volume * (ta.change(close) >= 0 ? 0 : close), CloseTrendLength)
+paramaters2(UpStrengthB, DownStrengthB) =>
+    if DownStrengthB == 0
+        100
+    if UpStrengthB == 0
+        0
+    100.0 - 100.0 / (1.0 + CloseUpStrength / CloseDownStrength)
+CloseTrendLine = paramaters2(CloseUpStrength, CloseDownStrength)
+
+OverboughtA = hline(100, color = color.new(#ff0000, 0), linestyle = hline.style_solid, title = 'Overbought Line-A丨超买线-A')
+OverboughtB = hline(85, color = color.new(#ff0000, 50), linestyle = hline.style_solid, title = 'Overbought Line-B丨超买线-B')
+OverboughtC = hline(70, color = color.new(#ff0000, 75), linestyle = hline.style_solid, title = 'Overbought Line-C丨超买线-C')
+OversoldC = hline(30, color = color.new(#00ff00, 75), linestyle = hline.style_solid, title = 'Oversold Line-C丨超卖线-C')
+OversoldB = hline(15, color = color.new(#00ff00, 50), linestyle = hline.style_solid, title = 'Oversold Line-B丨超卖线-B')
+OversoldA = hline(0, color = color.new(#00ff00, 0), linestyle = hline.style_solid, title = 'Oversold Line-A丨超卖线-A')
+plot(EnableTrendDetector ? OHLCtrendLine + OhlcTrendStrength / CloseTrendLine + CloseTrendStrength : na, 'Trend Detector Line丨趋势探测线', style = plot.style_histogram, color = color.new(color.yellow, 65))
+//Trend Detector丨趋势探测器
+
+
+// Gold Zone丨黄金坑
+ShowGoldZone = input.bool(true, title = 'Show Gold Zone丨显示黄金坑', group = 'Gold Zone丨黄金坑', tooltip = '▶︎ The Gold Zone is used to identify extreme states of price volatility and momentum, signaling an upcoming significant price move. You should combine it with other indicators to determine the bullish or bearish trend.\n▶︎ 黄金坑用于识别价格波动和动能极限状态，预示即将出现一次较大波动的行情，你需要结合多种指标判断多空趋势。')
+GoldZoneLength = input(8, title = 'Gold Zone Length丨黄金坑长度', group = 'Gold Zone丨黄金坑')
+GoldZoneThreshold = input.float(30, title = 'Gold Zone Threshold丨黄金坑阈值', minval = 0, maxval = 30, step = 1, group = 'Gold Zone丨黄金坑')
+GoldZoneSRC = input(hlc3, title = 'Data Source丨数据源', group = 'Gold Zone丨黄金坑')
+PI = 3.14159265359
+
+ModeType = 'Standard'
+SimpleHarmonicType = 'Simple Harmonic'
+RSItype = 'RSI'
+KarobeinType = 'Karobein'
+MoscillatorType = 'M-Oscillator'
+CalculationType = RSItype
+
+PriceVolatility(PriceSrc, SmoothingLen) =>
+    math.sqrt(PriceSrc / (SmoothingLen * 4 * math.log(2)) * math.sum(math.pow(math.log(high / low), 2), SmoothingLen))
+
+RMA(PriceSrc, SmoothingLen) =>
+    ta.sma(PriceSrc, SmoothingLen * 3) + ta.sma(PriceSrc, SmoothingLen * 2) - ta.sma(PriceSrc, SmoothingLen)
+
+GoldZoneRSI(PriceSrc, SmoothingLen) =>
+    UpMove = math.max(PriceSrc - PriceSrc[1], 0)
+    DownMove = math.max(PriceSrc[1] - PriceSrc, 0)
+    RelativeStrength = ta.rma(UpMove, SmoothingLen) / ta.rma(DownMove, SmoothingLen)
+    RSIvalue = 100 - 100 / (1 + RelativeStrength)
+    RSIvalue
+
+SimpleHarmonic(PriceSrc, SmoothingLen) =>
+    CurrentPrice = PriceSrc
+    PreviousPrice = CurrentPrice[1]
+    PastPrice = CurrentPrice[2]
+    CurrentVelocity = CurrentPrice - PreviousPrice
+    PreviousVelocity = PreviousPrice - PastPrice
+    RawAcceleration = CurrentVelocity - PreviousVelocity
+    SmoothedAcceleration = ta.ema(RawAcceleration, SmoothingLen)
+    OscillationPeriod = 2 * PI * math.sqrt(math.abs(CurrentVelocity / SmoothedAcceleration))
+    DirectionalPeriod = CurrentPrice > PreviousPrice ? OscillationPeriod : OscillationPeriod * -1
+    SmoothedDirectionalPeriod = ta.ema(DirectionalPeriod, SmoothingLen)
+    SmoothedOscillationPeriod = ta.ema(OscillationPeriod, SmoothingLen)
+    SimpleHarmonicOscillator = SmoothedDirectionalPeriod / SmoothedOscillationPeriod * 100
+    SimpleHarmonicOscillator
+
+Karobein(PriceSrc, SmoothingLen) =>
+    KarobeinSRC = ta.ema(PriceSrc, SmoothingLen)
+    DownRatio = ta.ema(KarobeinSRC < KarobeinSRC[1] ? KarobeinSRC / KarobeinSRC[1] : 0, SmoothingLen)
+    UpRatio = ta.ema(KarobeinSRC > KarobeinSRC[1] ? KarobeinSRC / KarobeinSRC[1] : 0, SmoothingLen)
+    TrendRatio = KarobeinSRC / KarobeinSRC[1] / (KarobeinSRC / KarobeinSRC[1] + UpRatio)
+    KarobeinSignal = 2 * (KarobeinSRC / KarobeinSRC[1] / (KarobeinSRC / KarobeinSRC[1] + TrendRatio * DownRatio)) - 1
+    KarobeinSignal
+
+Moscillator(PriceSrc, SmoothingLen) =>
+    CumulativeTrendScore = 0
+    for Index = 1 to SmoothingLen by 1
+        CurrentPrice = PriceSrc[0]
+        LookbackPrice = PriceSrc[Index]
+        TrendScore = CurrentPrice > LookbackPrice ? 1 : CurrentPrice < LookbackPrice ? -1 : 0
+        CumulativeTrendScore := CumulativeTrendScore + TrendScore
+        CumulativeTrendScore
+    CumulativeTrendScore
+
+CalculateOscillator(CalculationMode, PriceSrc, SmoothingLen) =>
+    CalculationMode == ModeType ? PriceVolatility(GoldZoneSRC, GoldZoneLength) : CalculationMode == RSItype ? GoldZoneRSI(PriceVolatility(GoldZoneSRC, GoldZoneLength), SmoothingLen) : CalculationMode == SimpleHarmonicType ? SimpleHarmonic(PriceVolatility(GoldZoneSRC, GoldZoneLength), SmoothingLen) : CalculationMode == KarobeinType ? Karobein(PriceVolatility(GoldZoneSRC, GoldZoneLength), SmoothingLen) : CalculationMode == MoscillatorType ? ta.ema(ta.ema(Moscillator(PriceVolatility(GoldZoneSRC, GoldZoneLength), SmoothingLen), 5), 3) : na
+
+TypeA = CalculationType
+TypeB = TypeA == ModeType ? GoldZoneSRC : PriceVolatility(GoldZoneSRC, GoldZoneLength)
+TypeC = TypeA == ModeType ? GoldZoneLength : GoldZoneLength
+
+GoldZoneRSI = CalculateOscillator(TypeA, TypeB, TypeC)
+
+// 黄金坑参考线（隐藏）
+GoldZoneLevelHidden = plot(30, title = 'Gold Zone Plot Line丨黄金坑绘制线', display = display.none)
+// 计算 30 以下的区域，但不显示线
+GoldZoneBelowHidden = plot(ShowGoldZone and GoldZoneRSI < GoldZoneThreshold ? GoldZoneRSI : na, style = plot.style_linebr, display = display.none, title = 'Gold Zone Level丨黄金坑水平线')
+// 填充30以下参考线之间的区域
+fill(GoldZoneLevelHidden, GoldZoneBelowHidden, color = ShowGoldZone ? color.new(color.yellow, 0) : na, title = 'Gold Zone Fill丨黄金坑填充')
+// Gold Zone丨黄金坑
+
+
+// Wave Trend丨波浪趋势
+EnableWaveTrend = input.bool(true, title = "Enable Wave Trend Indicator丨启用波浪趋势", group = "Wave Trend丨波浪趋势", tooltip = '▶︎ Wave Trend is an oscillator-based indicator that uses smoothed main and signal lines to identify trend strength, turning points, and divergences, making it effective in both trending and ranging markets.\n▶︎ 波浪趋势是一种基于震荡器的技术指标，利用平滑的主线与信号线识别趋势强弱、拐点与背离信号，适用于趋势与震荡行情中的买卖决策。')
+WTchanLen = input(title = 'Wave Trend Channel Length丨波浪趋势通道长度', defval = 10, group = 'Wave Trend丨波浪趋势') 
+WTavgLen = input(title = 'Wave Trend Average Length丨波浪趋势平均长度', defval = 21, group = 'Wave Trend丨波浪趋势') 
+EnableLagFilter = input(title = 'Apply Laguerre Smoothing丨启用拉盖尔滤波', defval = false, group = 'Wave Trend丨波浪趋势')
+LagGamma = input(title = 'Laguerre Gamma', defval = 0.02, group = 'Wave Trend丨波浪趋势')
+
+Laguerre(g, p) =>  // Laguerre PPO Code from TheLark
+    L0 = 0.0
+    L0 := (1 - g) * p + g * nz(L0[1])
+    L1 = 0.0
+    L1 := -g * L0 + nz(L0[1]) + g * nz(L1[1])
+    L2 = 0.0
+    L2 := -g * L1 + nz(L1[1]) + g * nz(L2[1])
+    L3 = 0.0
+    L3 := -g * L2 + nz(L2[1]) + g * nz(L3[1])
+    (L0 + 2 * L1 + 2 * L2 + L3) / 6
+
+AvgPrice = hlc3
+ExpSmoothAvg = ta.ema(AvgPrice, WTchanLen)
+AbsPriceDev = math.abs(AvgPrice - ExpSmoothAvg)
+SmoothDev = ta.ema(AbsPriceDev, WTchanLen)
+CompIndex = (AvgPrice - ExpSmoothAvg) / (0.015 * SmoothDev)
+TrendCompIndex = ta.ema(CompIndex, WTavgLen)
+
+LagSmoothedTCI = Laguerre(LagGamma, TrendCompIndex)
+WTlineRaw = EnableLagFilter ? LagSmoothedTCI : TrendCompIndex
+SignalLineRaw = ta.sma(WTlineRaw, 4)
+HistRaw = WTlineRaw - SignalLineRaw
+
+WTlineRawNorm = (WTlineRaw + 100) / 2
+SignalLineRawNorm = (SignalLineRaw + 100) / 2
+HistRawNorm = (HistRaw + 100) / 2
+
+WTlinePlot = plot(EnableWaveTrend ? WTlineRawNorm : na, title="Wave Trend Line丨波浪趋势线", color=color.new(color.aqua, 0))
+SignalPlot = plot(EnableWaveTrend ? SignalLineRawNorm : na, title="Signal Line丨信号线", color=color.new(color.fuchsia, 0))
+WTfillColor = WTlineRawNorm > SignalLineRawNorm ? color.new(color.aqua, 80) : color.new(color.fuchsia, 80)
+fill(WTlinePlot, SignalPlot, color=EnableWaveTrend ? WTfillColor : na, title="WT Fill丨波浪趋势填充")
+
+histCenter = 50.0
+histColor = HistRawNorm >= histCenter ? color.new(color.aqua, 75) : color.new(color.fuchsia, 75)
+HistUpLine = plot(EnableWaveTrend ? HistRawNorm : na, title="Histogram Track Line丨直方图轨迹线", color=na, display=display.none)
+HistDownLine = plot(EnableWaveTrend ? histCenter : na, title="Histogram Midline丨直方图中线", color=na, display=display.none)
+fill(HistUpLine, HistDownLine, color=EnableWaveTrend ? histColor : na, title="Histogram Fill丨直方图填充")
+
+WTshowRegularDiv = input.bool(true, title = 'Show Regular Divergence丨显示常规背离', group='Wave Trend丨波浪趋势')
+WTshowHiddenDiv = input.bool(false, title = 'Show Hidden Divergence丨显示隐藏背离', group='Wave Trend丨波浪趋势')
+WTdivSRC = input.string(title='Divergence Source丨背离数据源', defval='Histogram', options=['Wave Trend', 'Signal', 'Histogram'], group='Wave Trend丨波浪趋势')
+WTpvtLBr = input(title = 'Pivot Lookback Right丨向右回溯长度', defval = 1, group = 'Wave Trend丨波浪趋势', tooltip = '▶︎ Confirms a pivot only if future candles don’t surpass the current value. Higher values delay confirmation but improve stability and reduce false signals.\n▶︎ 仅当前方的 K 线都未突破当前值时，才能确认其为枢轴点。数值越大，确认越滞后，但更稳定，可减少误报。')
+WTpvtLBl = input(title = 'Pivot Lookback Left丨向左回溯长度', defval = 5, group = 'Wave Trend丨波浪趋势', tooltip = '▶︎ When identifying highs/lows, a larger left-side lookback requires more stable past movement, making detection more cautious but more reliable.\n▶︎ 用于识别当前是否为高/低点时，左侧回溯长度越大，越需确认前方走势的平稳性，从而提升判断的谨慎度与可靠性。')
+WTdivRangeMax = input(title = 'Max of Lookback Range丨最大回溯范围', defval = 60, group = 'Wave Trend丨波浪趋势', tooltip = '▶︎ Controls the maximum distance between pivot points for divergence signals. A smaller Max value helps avoid detecting signals that are “too far to matter,” enhancing timeliness.\n▶︎ 用于控制背离信号中枢轴点的最大间隔，Max 值越小越能避免“太远无效”的识别，提高信号时效性。')
+WTdivRangeMin = input(title = 'Min of Lookback Range丨最小回溯范围', defval = 5, group = 'Wave Trend丨波浪趋势', tooltip = '▶︎ Controls the spacing between pivot points for divergence signals. A higher Min value avoids signals that are “too close to count,” improving reliability.\n▶︎ 用于控制背离信号中枢轴点的间隔。较高的 Min 值可避免“间距过近不计入”的情况，从而提升信号可靠性。')
+
+WTbearColor = color.fuchsia
+WTbullColor = color.aqua
+WThiddenBullColor = color.new(color.aqua, 50)
+WThiddenBearColor = color.new(color.fuchsia, 50)
+WTtextColor = color.white
+WTnoneColor = color.new(color.white, 100)
+
+//WTlineRaw="Wave Trend", SignalLineRaw="Signal", HistRaw="Histogram"
+WTosc = WTdivSRC == 'Wave Trend' ? WTlineRawNorm : WTdivSRC == 'Signal' ? SignalLineRawNorm : WTdivSRC == 'Histogram' ? HistRawNorm : WTlineRawNorm
+
+WTpivotLowFound = na(ta.pivotlow(WTosc, WTpvtLBl, WTpvtLBr)) ? false : true
+WTpivotHighFound = na(ta.pivothigh(WTosc, WTpvtLBl, WTpvtLBr)) ? false : true
+WTinRange(cond) =>
+    WTbarsSincePivot = ta.barssince(cond == true)
+    WTdivRangeMin <= WTbarsSincePivot and WTbarsSincePivot <= WTdivRangeMax
+
+//------------------------------------------------------------------------------
+// Regular Bullish
+// WTosc: Higher Low
+WToscHL = WTosc[WTpvtLBr] > ta.valuewhen(WTpivotLowFound, WTosc[WTpvtLBr], 1) and WTinRange(WTpivotLowFound[1])
+
+// Price: Lower Low
+WTdivPriceLL = low[WTpvtLBr] < ta.valuewhen(WTpivotLowFound, low[WTpvtLBr], 1)
+WTbullCond = EnableWaveTrend and WTshowRegularDiv and WTdivPriceLL and WToscHL and WTpivotLowFound
+plot(WTpivotLowFound ? WTosc[WTpvtLBr] : na, offset = -WTpvtLBr, title = 'WT Reg. Bull丨常规看涨背离', color = WTbullCond ? WTbullColor : WTnoneColor)
+plotshape(WTbullCond ? WTosc[WTpvtLBr] : na, offset = -WTpvtLBr, title = 'WT Reg. Bull Label丨常规看涨背离标签', text = '▲', style = shape.labelup, location = location.absolute, color = WTbullColor, textcolor = color.new(WTtextColor, 0))
+
+//------------------------------------------------------------------------------
+// Hidden Bullish
+// WTosc: Lower Low
+WToscLL = WTosc[WTpvtLBr] < ta.valuewhen(WTpivotLowFound, WTosc[WTpvtLBr], 1) and WTinRange(WTpivotLowFound[1])
+
+// Price: Higher Low
+WTdivPriceHL = low[WTpvtLBr] > ta.valuewhen(WTpivotLowFound, low[WTpvtLBr], 1)
+WThiddenBullCond = EnableWaveTrend and WTshowHiddenDiv and WTdivPriceHL and WToscLL and WTpivotLowFound
+plot(WTpivotLowFound ? WTosc[WTpvtLBr] : na, offset = -WTpvtLBr, title = 'WT Hidden Bull丨隐藏看涨背离', color = WThiddenBullCond ? WThiddenBullColor : WTnoneColor)
+plotshape(WThiddenBullCond ? WTosc[WTpvtLBr] : na, offset = -WTpvtLBr, title = 'WT Hidden Bull Label丨隐藏看涨背离标签', text = '△', style = shape.labelup, location = location.absolute, color = WThiddenBullColor, textcolor = color.new(WTtextColor, 0))
+
+//------------------------------------------------------------------------------
+// Regular Bearish
+// WTosc: Lower High
+WToscLH = WTosc[WTpvtLBr] < ta.valuewhen(WTpivotHighFound, WTosc[WTpvtLBr], 1) and WTinRange(WTpivotHighFound[1])
+
+// Price: Higher High
+WTdivPriceHH = high[WTpvtLBr] > ta.valuewhen(WTpivotHighFound, high[WTpvtLBr], 1)
+WTbearCond = EnableWaveTrend and WTshowRegularDiv and WTdivPriceHH and WToscLH and WTpivotHighFound
+plot(WTpivotHighFound ? WTosc[WTpvtLBr] : na, offset = -WTpvtLBr, title = 'WT Reg. Bear丨常规看跌背离', color = WTbearCond ? WTbearColor : WTnoneColor)
+plotshape(WTbearCond ? WTosc[WTpvtLBr] : na, offset = -WTpvtLBr, title = 'WT Reg. Bear Label丨常规看跌背离标签', text = '▼', style = shape.labeldown, location = location.absolute, color = WTbearColor, textcolor = color.new(WTtextColor, 0))
+
+//------------------------------------------------------------------------------
+// Hidden Bearish
+// WTosc: Higher High
+WToscHH = WTosc[WTpvtLBr] > ta.valuewhen(WTpivotHighFound, WTosc[WTpvtLBr], 1) and WTinRange(WTpivotHighFound[1])
+
+// Price: Lower High
+WTdivPriceLH = high[WTpvtLBr] < ta.valuewhen(WTpivotHighFound, high[WTpvtLBr], 1)
+WThiddenBearCond = EnableWaveTrend and WTshowHiddenDiv and WTdivPriceLH and WToscHH and WTpivotHighFound
+plot(WTpivotHighFound ? WTosc[WTpvtLBr] : na, offset = -WTpvtLBr, title = 'WT Hidden Bear丨隐藏看跌背离', color = WThiddenBearCond ? WThiddenBearColor : WTnoneColor)
+plotshape(WThiddenBearCond ? WTosc[WTpvtLBr] : na, offset = -WTpvtLBr, title = 'WT Hidden Bear Label丨隐藏看跌背离标签', text = '▽', style = shape.labeldown, location = location.absolute, color = WThiddenBearColor, textcolor = color.new(WTtextColor, 0))
+// Wave Trend丨波浪趋势
+
+
+// Price Action Index丨价格行为指数
+EnablePAI = input.bool(true, title='Enable Price Action Index丨启用价格行为指数', group='Price Action Index丨价格行为指数', tooltip = '▶︎ The Price Action Index is a composite indicator that integrates price momentum with volatility dispersion to evaluate the direction and strength of market trends. It effectively identifies consolidation ranges, breakout points, and potential reversals. When used alongside value thresholds and divergence signals, PAI becomes a powerful tool for precise trend analysis.\n▶︎ 价格行为指数是一种融合价格动量与波动离散度的复合型指标，用于衡量市场趋势的方向与强度。它能有效识别震荡区间、突破时机与潜在反转点，结合数值区间与背离信号使用，将显著提升趋势判断的准确性。')
+TF0 = 'None丨禁用' 
+TF1 = 'Auto-Steps丨自动步进' 
+TF2 = 'TF Multiple丨时间框架倍数' 
+TF3 = 'Fixed TF丨固定时间框架' 
+UseHTFrepaint = input.bool(false, 'Use HTF Repaint丨使用时间框架重绘', group='Price Action Index丨价格行为指数', tooltip = '▶︎ The Repaint HTF feature allows the indicator to display higher timeframe (HTF) data in real-time using the most recent bar’s values. This helps provide timely signals based on larger trends, but may introduce repainting as HTF candles are still forming.\n▶︎ 启用“重绘 HTF”功能后，指标将使用当前周期最近一根 K 线的数值来实时显示高时间周期（HTF）的数据。这有助于基于更大趋势提前发出信号，但由于 HTF 的 K 线尚未收盘，可能会出现重绘现象。')
+HTFmode = input.string(TF0, 'Select HTF Mode丨选择HTF模式', options=[TF0, TF1, TF2, TF3], group='Price Action Index丨价格行为指数')
+TFmult = input.float(3, 'TF Multiple丨时间框架倍数', minval=1, group='Price Action Index丨价格行为指数')
+FixedTF = input.timeframe('D', 'Fixed TF丨固定时间框架', group='Price Action Index丨价格行为指数')
+
+// HTF is being used.
+var useHTF = HTFmode != TF0
+//var bool	i_invert    = input(true,      "Invert Colors")
+
+// —————————— PineCoders MTF Selection Framework functions
+// ————— Converts current "timeframe.multiplier" plus the TF into minutes of type float.
+GetCurrentTFinMinutes() =>
+    CurrentTFinMinutes = timeframe.multiplier * (timeframe.isseconds ? 1. / 60. : timeframe.isminutes ? 1. : timeframe.isdaily ? 1440. : timeframe.isweekly ? 10080. : timeframe.ismonthly ? 43800. : na)
+    CurrentTFinMinutes
+
+// ————— Returns resolution of TFstring period in minutes.
+GetTFInMinutes(TFstring) =>
+    // TFstring: resolution of any TF (in "timeframe.period" string format).
+    request.security(syminfo.tickerid, TFstring, GetCurrentTFinMinutes())
+
+// ————— Given current resolution, returns next step of HTF.
+GetNextHTFstep(CurrentMinutes) =>
+    // CurrentMinutes: current TF in fractional minutes.
+    CurrentMinutes <= 1 ? '15' : CurrentMinutes <= 5 ? '60' : CurrentMinutes <= 30 ? '240' : CurrentMinutes <= 60 ? '1D' : CurrentMinutes <= 360 ? '3D' : CurrentMinutes <= 1440 ? '1W' : CurrentMinutes <= 10080 ? '1M' : '12M'
+
+// ————— Returns a multiple of current resolution as a string in "timeframe.period" format usable with "security()".
+GetTFmultiple(CurrentMinutes, Multiplier) =>
+    // CurrentMinutes:  current resolution in minutes, in the fractional format supplied by GetCurrentTFinMinutes() companion function.
+    // Multiplier: Multiple of current TF to be calculated.
+    // Convert current float TF in minutes to target string TF in "timeframe.period" format.
+    TargetTFinMinutes = CurrentMinutes * math.max(Multiplier, 1)
+    TargetTFinMinutes <= 0.083 ? '5S' : TargetTFinMinutes <= 0.251 ? '15S' : TargetTFinMinutes <= 0.501 ? '30S' : TargetTFinMinutes <= 1440 ? str.tostring(math.round(TargetTFinMinutes)) : TargetTFinMinutes <= 43800 ? str.tostring(math.round(math.min(TargetTFinMinutes / 1440, 365))) + 'D' : str.tostring(math.round(math.min(TargetTFinMinutes / 43800, 12))) + 'M'
+
+// ————— HTF calcs
+// Get current resolution in float minutes.
+var resInMinutes = GetCurrentTFinMinutes()
+// Get HTF from user-defined mode.
+var HTF = HTFmode == TF0 ? timeframe.period : HTFmode == TF1 ? GetNextHTFstep(resInMinutes) : HTFmode == TF2 ? GetTFmultiple(resInMinutes, TFmult) : FixedTF
+
+// Methods of Dispersion {
+string DispStdev = 'Standard Deviation丨标准差'
+CalcStdev(PriceSRC, LBlen) =>
+    ta.stdev(PriceSRC, LBlen)
+string DispVariance = 'Variance丨方差'
+CalcVariance(PriceSRC, LBlen) =>
+    ta.variance(PriceSRC, LBlen)
+string DispCV = 'Coefficient of Variation丨变异系数'
+CalcCV(PriceSRC, LBlen) =>
+    ta.stdev(PriceSRC, LBlen)/ta.sma(PriceSRC, LBlen)
+string DispSN = 'Signal-to-Noise丨信噪比'
+CalcSN(PriceSRC, LBlen) =>
+    ta.sma(PriceSRC, LBlen)/ta.stdev(PriceSRC, LBlen)
+string DispSN2 = 'Signal-to-Noise²丨信噪比平方'
+CalcSN2(PriceSRC, LBlen) =>
+    math.pow(ta.sma(PriceSRC, LBlen), 2) / math.pow(ta.stdev(PriceSRC, LBlen), 2)
+string DispIndex = 'Index of Dispersion丨离散指数'
+CalcDisIndex(PriceSRC, LBlen) =>
+    math.pow(ta.variance(PriceSRC, LBlen), 2)/ta.sma(PriceSRC, LBlen)
+string DispEfficiency = 'Efficiency丨趋势效率比'
+CalcEfficiency(PriceSRC, LBlen) =>
+    math.pow(ta.stdev(PriceSRC, LBlen), 2)/math.pow(ta.sma(PriceSRC, LBlen), 2)
+string DispRange = 'High-Low Range丨高低价区间'
+CalcRange(PriceSRC, LBlen) =>
+    ta.highest(LBlen) - ta.lowest(LBlen)
+// }
+
+// Price Action Index Inputs {
+PriceSRC = input.source(defval=close, title='Data Source丨数据源', group='Price Action Index丨价格行为指数')
+LBlen = input.int(defval=20, title='Stochastic丨随机指数', group='Price Action Index丨价格行为指数', inline='Stoch')
+LBsmooth = input.int(defval=3, title='', group='Price Action Index丨价格行为指数', inline='Stoch', tooltip = '▶︎ The first value is the lookback length for your traditional Stochastic Oscillator. The second is the smoothing length.\n▶︎ 第一个数值是传统随机震荡指标的回溯周期，第二个数值是其平滑处理周期。')
+DispMethod = input.string(DispStdev, options=[DispStdev, DispVariance, DispCV, DispSN, DispSN2, DispIndex, DispEfficiency, DispRange], title='Dispersion丨离散度', group='Price Action Index丨价格行为指数', inline='Dispersion')
+DispLen = input.int(defval=20, title='', group='Price Action Index丨价格行为指数', inline='Dispersion', tooltip = '▶︎ The dropdown is a selection of methods of calculating dispersion. The box that follows is the lookback length to measure.\n▶︎ 下拉菜单用于选择计算离散度的方法，后面的输入框则用于设置对应的回溯周期。')
+
+StraddleArea = input.float(defval=5.0, title='Straddle Area丨震荡区间', group='Price Action Index丨价格行为指数', tooltip = '▶︎ This value defines the size of the \'Straddle Area\' where price is within consolidation and the limits where it breaks out.\n▶︎ 该数值定义了“震荡区间”的范围，当价格在该范围内波动时表示处于整理状态，突破该范围则视为突破信号。')
+UseBarColors = input.bool(defval=false, title='Use Bar Colors丨使用K线着色', group='Price Action Index丨价格行为指数', tooltip = '▶︎ Check this box if you want to color candles/bars similar to the color of the Price Action Index.\n▶︎ 勾选此选项可使K线柱状颜色与价格行为指数的颜色保持一致。')
+PAIshowLabels = input.bool(false, title = 'Show Bull & Bear Labels丨显示多空标签', group = 'Price Action Index丨价格行为指数', tooltip = '▶︎ Enabling this will display bull/bear trend strength labels near the price for visual reference, helping highlight moments of strong trend direction.\n▶︎ 启用后将在价格附近显示多空趋势强度标签，提供视觉参考，有助于突出趋势明显的时刻。')
+
+// Divergence Indicator Inputs {
+PAIshowRegularDiv = input.bool(true, title='Show Regular Divergences丨显示常规背离', group='Price Action Index丨价格行为指数')
+PAIshowHiddenDiv = input.bool(false, title='Show Hidden Divergences丨显示隐藏背离', group='Price Action Index丨价格行为指数')
+
+PAIpvtLBr = input.int(title='Pivot Lookback Right丨向右回溯长度', defval=2, group='Price Action Index丨价格行为指数', tooltip = '▶︎ Confirms a pivot only if future candles don’t surpass the current value. Higher values delay confirmation but improve stability and reduce false signals.\n▶︎ 仅当前方的 K 线都未突破当前值时，才能确认其为枢轴点。数值越大，确认越滞后，但更稳定，可减少误报。')
+PAIpvtLBl = input.int(title='Pivot Lookback Left丨向左回溯长度', defval=2, group='Price Action Index丨价格行为指数', tooltip = '▶︎ When identifying highs/lows, a larger left-side lookback requires more stable past movement, making detection more cautious but more reliable.\n▶︎ 用于识别当前是否为高/低点时，左侧回溯长度越大，越需确认前方走势的平稳性，从而提升判断的谨慎度与可靠性。')
+PAIdivRangeMax = input.int(title='Max of Lookback Range丨最大回溯范围', defval=10, group='Price Action Index丨价格行为指数', tooltip = '▶︎ Controls the maximum distance between pivot points for divergence signals. A smaller Max value helps avoid detecting signals that are “too far to matter,” enhancing timeliness.\n▶︎ 用于控制背离信号中枢轴点的最大间隔，Max 值越小越能避免“太远无效”的识别，提高信号时效性。')
+PAIdivRangeMin = input.int(title='Min of Lookback Range丨最小回溯范围', defval=2, group='Price Action Index丨价格行为指数', tooltip = '▶︎ Controls the spacing between pivot points for divergence signals. A higher Min value avoids signals that are “too close to count,” improving reliability.\n▶︎ 用于控制背离信号中枢轴点的间隔。较高的 Min 值可避免“间距过近不计入”的情况，从而提升信号可靠性。')
+
+PAIbearColor = color.red
+PAIbullColor = color.green
+PAIhiddenBullColor = color.new(color.green, 50)
+PAIhiddenBearColor = color.new(color.red, 50)
+PAItextColor = color.white
+PAInoneColor = color.new(color.white, 100)
+// }
+
+// PAI Calcs {
+PAI(PriceSRC, Disp, LBlen) =>
+    DispValue = CalcStdev(PriceSRC, DispLen)
+    if DispMethod == DispVariance
+        DispValue := CalcVariance(PriceSRC, DispLen)
+        DispValue
+    else
+        if DispMethod == DispCV
+            DispValue := CalcCV(PriceSRC, DispLen)
+            DispValue
+        else
+            if DispMethod == DispSN
+                DispValue := -CalcSN(PriceSRC, DispLen)
+                DispValue
+            else
+                if DispMethod == DispSN2
+                    DispValue := -CalcSN2(PriceSRC, DispLen)
+                    DispValue
+                else
+                    if DispMethod == DispIndex
+                        DispValue := CalcDisIndex(PriceSRC, DispLen)
+                        DispValue
+                    else
+                        if DispMethod == DispEfficiency
+                            DispValue := CalcEfficiency(PriceSRC, DispLen)
+                            DispValue
+                        else
+                            if DispMethod == DispRange
+                                DispValue := CalcRange(PriceSRC, DispLen)
+                                DispValue
+
+    PriceMomentum = PriceSRC == close ? (ta.sma(ta.stoch(close, high, low, LBlen), LBsmooth) - 50) / 50 : (ta.sma(ta.stoch(PriceSRC, PriceSRC, PriceSRC, LBlen), LBsmooth) - 50) / 50
+    VolatilityStoch = ta.stoch(DispValue, DispValue, DispValue, LBlen)
+    PriceMomentum * VolatilityStoch
+
+GetHTFdata(Symbol, CurrentMinutes, SrcFunc, EnableRepaint) =>
+    request.security(Symbol, CurrentMinutes, SrcFunc[not EnableRepaint and barstate.isrealtime ? 1 : 0])[EnableRepaint or barstate.isrealtime ? 0 : 1]
+PAIvalue = not useHTF ? PAI(PriceSRC, DispLen, LBlen) : GetHTFdata(syminfo.tickerid, HTF, PAI(PriceSRC, DispLen, LBlen), UseHTFrepaint)
+// }
+
+// Output Conditionals {
+isStraddling = PAIvalue < StraddleArea and PAIvalue > -StraddleArea
+isBullishRally = PAIvalue > 40
+isBearishDrop = PAIvalue < -40
+
+color PAIcolor = color.black
+if isStraddling
+    PAIcolor := color.yellow
+    PAIcolor
+if PAIvalue > StraddleArea
+    PAIcolor := color.lime
+    PAIcolor
+if PAIvalue < -StraddleArea
+    PAIcolor := color.red
+    PAIcolor
+// }
+
+// Plots {
+PAInormalized = (PAIvalue + 100) / 2
+plot(EnablePAI ? PAInormalized : na, title='PAI Normalized', color=color.new(PAIcolor, 0), style=plot.style_stepline)
+barcolor(EnablePAI and UseBarColors ? PAIcolor : na, editable=false, title='Bar Colors')
+
+fill(OverboughtA, OverboughtB, color=EnablePAI and isBullishRally ? color.new(color.red, 65) : na, title='Overbought Area丨超买区')
+fill(OversoldA, OversoldB, color=EnablePAI and isBearishDrop ? color.new(color.lime, 65) : na, title='Oversold Area丨超卖区')
+
+barcolor(UseBarColors ? PAIcolor : na, editable=false, title='Bar Colors')
+// }
+
+// Divergence Plots {
+PAIosc = PAInormalized
+PAIpivotLowFound = na(ta.pivotlow(PAIosc, PAIpvtLBl, PAIpvtLBr)) ? false : true
+PAIpivotHighFound = na(ta.pivothigh(PAIosc, PAIpvtLBl, PAIpvtLBr)) ? false : true
+PAIinRange(PAIcond) =>
+    PAIbarsSincePivot = ta.barssince(PAIcond == true)
+    PAIdivRangeMin <= PAIbarsSincePivot and PAIbarsSincePivot <= PAIdivRangeMax
+
+//------------------------------------------------------------------------------
+// Regular Bullish
+// PAIosc: Higher Low
+
+PAIoscHL = PAIosc[PAIpvtLBr] > ta.valuewhen(PAIpivotLowFound, PAIosc[PAIpvtLBr], 1) and PAIinRange(PAIpivotLowFound[1])
+
+// Price: Lower Low
+PAIdivPriceLL = low[PAIpvtLBr] < ta.valuewhen(PAIpivotLowFound, low[PAIpvtLBr], 1)
+PAIbullCond = PAIshowRegularDiv and PAIdivPriceLL and PAIoscHL and PAIpivotLowFound
+plot(EnablePAI and PAIbullCond ? PAIosc[PAIpvtLBr] : na, offset=-PAIpvtLBr, title='PAI Reg. Bull丨常规看涨背离', color=PAIbullCond ? PAIbullColor : PAInoneColor)
+plotshape(EnablePAI and PAIbullCond ? PAIosc[PAIpvtLBr] : na, offset=-PAIpvtLBr, title='PAI Reg. Bull Label丨常规看涨背离标签', text='▲', style=shape.labelup, location=location.absolute, color=PAIbullColor, textcolor=color.new(PAItextColor, 0))
+//------------------------------------------------------------------------------
+// Hidden Bullish
+// PAIosc: Lower Low
+
+PAIoscLL = PAIosc[PAIpvtLBr] < ta.valuewhen(PAIpivotLowFound, PAIosc[PAIpvtLBr], 1) and PAIinRange(PAIpivotLowFound[1])
+
+// Price: Higher Low
+PAIdivPriceHL = low[PAIpvtLBr] > ta.valuewhen(PAIpivotLowFound, low[PAIpvtLBr], 1)
+PAIhiddenBullCond = PAIshowHiddenDiv and PAIdivPriceHL and PAIoscLL and PAIpivotLowFound
+plot(EnablePAI and PAIpivotLowFound ? PAIosc[PAIpvtLBr] : na, offset=-PAIpvtLBr, title='PAI Hidden Bull丨隐藏看涨背离', color=PAIhiddenBullCond ? PAIhiddenBullColor : PAInoneColor)
+plotshape(EnablePAI and PAIhiddenBullCond ? PAIosc[PAIpvtLBr] : na, offset=-PAIpvtLBr, title='PAI Hidden Bull Label丨隐藏看涨背离标签', text='△', style=shape.labelup, location=location.absolute, color=PAIhiddenBullColor, textcolor=color.new(PAItextColor, 0))
+//------------------------------------------------------------------------------
+// Regular Bearish
+// PAIosc: Lower High
+
+PAIoscLH = PAIosc[PAIpvtLBr] < ta.valuewhen(PAIpivotHighFound, PAIosc[PAIpvtLBr], 1) and PAIinRange(PAIpivotHighFound[1])
+
+// Price: Higher High
+PAIdivPriceHH = high[PAIpvtLBr] > ta.valuewhen(PAIpivotHighFound, high[PAIpvtLBr], 1)
+PAIbearCond = PAIshowRegularDiv and PAIdivPriceHH and PAIoscLH and PAIpivotHighFound
+plot(EnablePAI and PAIpivotHighFound ? PAIosc[PAIpvtLBr] : na, offset=-PAIpvtLBr, title='PAI Reg. Bear丨常规看跌背离', color=PAIbearCond ? PAIbearColor : PAInoneColor)
+plotshape(EnablePAI and PAIbearCond ? PAIosc[PAIpvtLBr] : na, offset=-PAIpvtLBr, title='PAI Reg. Bear Label丨常规看跌背离', text='▼', style=shape.labeldown, location=location.absolute, color=PAIbearColor, textcolor=color.new(PAItextColor, 0))
+
+//------------------------------------------------------------------------------
+// Hidden Bearish
+// PAIosc: Higher High
+
+PAIoscHH = PAIosc[PAIpvtLBr] > ta.valuewhen(PAIpivotHighFound, PAIosc[PAIpvtLBr], 1) and PAIinRange(PAIpivotHighFound[1])
+
+// Price: Lower High
+PAIdivPriceLH = high[PAIpvtLBr] < ta.valuewhen(PAIpivotHighFound, high[PAIpvtLBr], 1)
+PAIhiddenBearCond = PAIshowHiddenDiv and PAIdivPriceLH and PAIoscHH and PAIpivotHighFound
+plot(EnablePAI and PAIpivotHighFound ? PAIosc[PAIpvtLBr] : na, offset=-PAIpvtLBr, title='PAI Hidden Bear丨隐藏看跌背离', color=PAIhiddenBearCond ? PAIhiddenBearColor : PAInoneColor)
+plotshape(EnablePAI and PAIhiddenBearCond ? PAIosc[PAIpvtLBr] : na, offset=-PAIpvtLBr, title='PAI Hidden Bear Label丨隐藏看跌背离标签', text='▽', style=shape.labeldown, location=location.absolute, color=PAIhiddenBearColor, textcolor=color.new(PAItextColor, 0))
+// }
+
+// Conditions {
+isBullishBreakout = ta.crossover(PAIvalue, StraddleArea)
+isBullTop = ta.crossunder(PAIvalue, 80)
+isBearishBreakout = ta.crossunder(PAIvalue, -StraddleArea)
+isBearBottom = ta.crossover(PAIvalue, -80)
+// }
+
+BullishLabel(x, y, LabelText, PAIcolor = color.white) =>
+    var label PAIlabel = label.new(x, y, LabelText, color = #00000000, style = label.style_label_left)
+    label.set_xy(PAIlabel, x, y)
+    label.set_text(PAIlabel, LabelText)
+    label.set_textcolor(PAIlabel, PAIcolor)
+    PAIlabel
+OversoldLabelY = 7.5
+
+BearishLabel(x, y, LabelText, PAIcolor = color.white) =>
+    var label PAIlabel = label.new(x, y, LabelText, color = #00000000, style = label.style_label_left)
+    label.set_xy(PAIlabel, x, y)
+    label.set_text(PAIlabel, LabelText)
+    label.set_textcolor(PAIlabel, PAIcolor)
+    PAIlabel
+OverboughtLabelY = 92.5
+
+if EnablePAI and PAIshowLabels
+    BullishLabel(bar_index, OversoldLabelY, 'Bullish')
+    BearishLabel(bar_index, OverboughtLabelY, 'Bearish')
+
+TrendCombined = PAInormalized
+
+TrendLabelText = 
+      TrendCombined >= 99 ? '🔴 99% ▼' :
+      TrendCombined >= 98 ? '🔴 98% ▼' :
+      TrendCombined >= 97 ? '🔴 97% ▼' :
+      TrendCombined >= 95 ? '🔴 95% ▼' :
+      TrendCombined >= 90 ? '🔴 90% ▼' :
+      TrendCombined >= 85 ? '🔴 85% ▼' :
+      TrendCombined >= 80 ? '🔴 80% ▼' :
+      TrendCombined >= 75 ? '75% ▼' :
+      TrendCombined >= 70 ? '70% ▼' :
+      TrendCombined >= 65 ? '65% ▼' :
+      TrendCombined >= 60 ? '60% ▼' :
+      TrendCombined >= 55 ? '55% ▼' :
+      TrendCombined >= 50.5 ? '50% ▼' :
+      TrendCombined > 50 ? '50% ▲' :
+      TrendCombined >= 45 ? '55% ▲' :
+      TrendCombined >= 40 ? '60% ▲' :
+      TrendCombined >= 35 ? '65% ▲' :
+      TrendCombined >= 30 ? '70% ▲' :
+      TrendCombined >= 25 ? '75% ▲' :
+      TrendCombined >= 20 ? '🟢 80% ▲' :
+      TrendCombined >= 15 ? '🟢 85% ▲' :
+      TrendCombined >= 10 ? '🟢 90% ▲' :
+      TrendCombined >= 5 ? '🟢 95% ▲' :
+      TrendCombined >= 2 ? '🟢 98% ▲' :
+      '🟢 99% ▲'
+
+if PAIshowLabels and EnablePAI
+    label TrendCombLabel = label.new(bar_index, 50, text = TrendLabelText, color = color.rgb(0, 0, 0, 100), xloc = xloc.bar_index, style = label.style_label_left, textcolor = TrendCombined > 50 ? color.red : TrendCombined < 50 ? color.green : color.white, textalign = text.align_left)
+    label.set_x(TrendCombLabel, bar_index)
+    label.delete(TrendCombLabel[1])
+// Price Action Index丨价格行为指数
+
+
+//-----------------------------------------------------------------------------
+// Round 3 diagnostic columns only. Append-only instrumentation.
+// Confirmed on this bar (NO negative plot offset). Plot names become TV CSV columns.
+// These are NOT trade orders; they do NOT change the original indicators' values.
+//-----------------------------------------------------------------------------
+plot(PAIvalue, title="PARITY_PAI_RAW", display=display.data_window)
+plot(WTlineRaw, title="PARITY_WT_RAW", display=display.data_window)
+plot(SignalLineRaw, title="PARITY_WT_SIGNAL_RAW", display=display.data_window)
+plot(HistRaw, title="PARITY_WT_HIST_RAW", display=display.data_window)
+plot(WTpivotLowFound ? 1.0 : 0.0, title="PARITY_WT_PIVOT_LOW_CONFIRMED", display=display.data_window)
+plot(WTpivotHighFound ? 1.0 : 0.0, title="PARITY_WT_PIVOT_HIGH_CONFIRMED", display=display.data_window)
+plot(WTbullCond ? 1.0 : 0.0, title="PARITY_WT_BULL_CONFIRMED", display=display.data_window)
+plot(WTbearCond ? 1.0 : 0.0, title="PARITY_WT_BEAR_CONFIRMED", display=display.data_window)
+plot(PAIpivotLowFound ? 1.0 : 0.0, title="PARITY_PAI_PIVOT_LOW_CONFIRMED", display=display.data_window)
+plot(PAIpivotHighFound ? 1.0 : 0.0, title="PARITY_PAI_PIVOT_HIGH_CONFIRMED", display=display.data_window)
+plot(PAIbullCond ? 1.0 : 0.0, title="PARITY_PAI_BULL_CONFIRMED", display=display.data_window)
+plot(PAIbearCond ? 1.0 : 0.0, title="PARITY_PAI_BEAR_CONFIRMED", display=display.data_window)
+plot(isBullishBreakout ? 1.0 : 0.0, title="PARITY_PAI_UP5_CONFIRMED", display=display.data_window)
+plot(isBearishBreakout ? 1.0 : 0.0, title="PARITY_PAI_DOWN_MINUS5_CONFIRMED", display=display.data_window)
