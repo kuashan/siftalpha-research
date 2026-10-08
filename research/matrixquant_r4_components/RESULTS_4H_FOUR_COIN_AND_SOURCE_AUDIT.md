@@ -73,3 +73,19 @@
 - R4-C（待 R4-B 通过）：利用预先固定的 BTC/ETH/BNB/SOL 各自 4h 分段样本，比较 **PAI 跌破 -5 后反弹**和 **Gold Zone 30上穿** 是否在下跌/震荡/上涨状态中同向出现；加入非重叠事件检验、与持有时间和暴露相同的基准；只有稳定结果再进入完整仓位及手续费策略回测。禁止补更多无证据规则。
 
 R4-A最终：`STATIC_SOURCE_AUDIT=PASS`; `4H_FROZEN_DATA_4X5000_QUALITY=PASS`; `R4_CI_REPLAY=PASS`; `EVENT_STUDY=COMPUTED_EXPLORATORY`; `GOLD_PINE_NUMERIC_PARITY=PENDING`; `TREND_VOLUME_PARITY=BLOCKED_MISSING_VOLUME`; `AUTO_TRADE_PROMOTION=REJECT`.
+
+## R4-A 重要补充（2026-10-09）：漏审了原指标最直观的 80/20 反转区域
+
+**审计修正级别：MAJOR OMISSION；上一轮结果仅能说明 ±5 及简单 WT/Gold Zone 事件，不能代表完整 MatrixQuant 反转信号研究，更不能据此否定 80/20 的价值。**
+
+经再次对原始 529 行 Pine 源码逐句核实：
+- 第403与495行分别为 `PAInormalized = (PAIvalue + 100) / 2` 和 `TrendCombined = PAInormalized`。
+- 第504行 `TrendCombined >= 80 ? '🔴 80% ▼'`，数值更高向 `85%...99% ▼` 展示；第517行 `TrendCombined >= 20 ? '🟢 80% ▲'`，低于20依次显示 `85%...99% ▲`。
+- 因此用户观察到的高于80为潜在 SELL/顶部区域、低于20为潜在 BUY/底部区域，与**原公式的展示意图**相符。这里的 80、20 是归一化 PAI，对应原始 PAI +60 和 -60；**不是**我们此前测试过的原始 PAI +5/-5。
+- 原脚本有原始 PAI `isBullTop = ta.crossunder(PAIvalue, 80)` 与 `isBearBottom = ta.crossover(PAIvalue, -80)` 的变量名，但它们在该脚本中没有被后续绘图或交易代码调用；它们相当于归一化 PAI 90 / 10，不能偷换为归一化 80/20。
+- 原图另外画出超买100/85/70和超卖30/15/0的水平线，均是画图与市场状态提示；**原始 Pine 为 indicator，不是 strategy**，不存在已经实现的委托成交规则；图中文字中的“80%、90%、99%”不是统计验证的胜率。
+- R4-A 研究遗漏 80/20 严重影响“反转模型是否有用”的完整判断；上述旧事件统计仍是可重算的**局部问题**，但本轮有关完整 MatrixQuant 反转策略的任何负面泛化结论正式撤回。
+- 下轮研究应事先冻结三类不同的研究事件：`PAInormalized <20` / `>80` 的极端区状态、**首次进入**极端区、**离开并回穿20或80**的收盘确认信号；必须明确是否使用极端状态期间的 WT 动量/背离确认，分开比较绝对收益、未来5/20根 MFE/MAE、每币与不同市场阶段。**先验证事件，再允许设计交易规则；不能凭80/20区域就即刻下单。**
+- 上轮 R4-A 研究报告不修改原来冻结的分析协议，也不暗改结果或补造效益数值。交易系统源码、自动下单逻辑与服务器均未修改。
+
+**治理结论更新**：`R4_A_80_20_REVERSION_COVERAGE=NOT_STUDIED`；`FULL_FORMULA_REVERSION_AUDIT=INCOMPLETE`；`PAI_80_20_AS_TRADE_SIGNAL=PENDING_VALIDATION`；`AUTO_TRADING=NOT_APPROVED`。
