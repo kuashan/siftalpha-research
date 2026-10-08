@@ -23,7 +23,7 @@ from strategy.registry import (
     strategy_options,
     strategy_signal_label,
 )
-from strategy.matrixquant_strategy import chart_snapshot as mfra_chart_snapshot, evaluate_pai
+from strategy.matrixquant_strategy import chart_snapshot as mfra_chart_snapshot, evaluate_pai, chart_signal_markers as mfra_chart_signal_markers
 from strategy.ssss_strategy import (
     analyze_ssss,
     closed_bar_window as ssss_closed_bar_window,
@@ -263,8 +263,10 @@ def chart_payload(symbol: str) -> dict[str, object]:
                 {"open_time": point.open_time, "PAI": point.raw}
                 for point in points if point.raw is not None
             ]
-            # No pre-trade B/X marker: execution marker comes ONLY from
-            # store.list_trade_markers() after FILLED confirmation.
+            # Visual indicators use confirmed PAI threshold crossings, even
+            # when Demo is stopped. These are NOT filled execution markers.
+            strategy_indicator_markers = mfra_chart_signal_markers(points)
+            # B/X execution markers still come ONLY from SQLite FILLED orders.
         except Exception as exc:
             strategy_snapshot = {"analysis_error": str(exc)}
 
