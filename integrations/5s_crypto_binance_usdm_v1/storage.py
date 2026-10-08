@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
+from decimal import Decimal
 from pathlib import Path
 from typing import Iterable
 
@@ -80,6 +81,15 @@ class StateStore:
                     event_type TEXT NOT NULL,
                     symbol TEXT,
                     detail TEXT NOT NULL
+                );
+
+                CREATE TABLE IF NOT EXISTS reconciliation_baselines (
+                    symbol TEXT NOT NULL,
+                    strategy_id TEXT NOT NULL,
+                    baseline_position REAL NOT NULL,
+                    reason TEXT NOT NULL,
+                    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    PRIMARY KEY(symbol, strategy_id)
                 );
 
                 CREATE TABLE IF NOT EXISTS ssss_signal_events (
@@ -246,6 +256,39 @@ class StateStore:
                 "INSERT INTO audit_events(event_type, symbol, detail) VALUES(?, ?, ?)",
                 ("START_SYMBOL" if enabled else "STOP_SYMBOL", symbol, f"run_state={run_state}"),
             )
+
+    def get_reconciliation_baseline(self, symbol: str, strategy_id: str) -> Decimal:
+        with self._connect() as conn:
+            row = conn.execute(
+                """
+                SELECT baseline_position
+                FROM reconciliation_baselines
+                WHERE symbol=? AND strategy_id=?
+                """,
+                (symbol, str(strategy_id)),
+            ).fetchone()
+            if row is None:
+                return Decimal("0")
+            return Decimal(str(row["baseline_position"]))
+
+    def set_reconciliation_baseline(
+        self,
+        symbol: str,
+        strategy_id: str,
+        baseline_position: Decimal,
+        *,
+        reason: str,
+    ) -> bool:
+        with self._connect() as conn:
+            cur = conn.execute(
+                """
+                INSERT OR IGNORE INTO reconciliation_baselines(
+                    symbol, strategy_id, baseline_position, reason
+                ) VALUES(?, ?, ?, ?)
+                """,
+                (symbol, str(strategy_id), float(baseline_position), str(reason)),
+            )
+            return cur.rowcount == 1
 
     def get_runtime_states(self) -> dict[str, dict[str, object]]:
         with self._connect() as conn:

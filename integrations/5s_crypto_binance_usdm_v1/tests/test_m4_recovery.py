@@ -78,6 +78,21 @@ class M4RecoveryTests(unittest.TestCase):
         self.assertEqual(result["status"], "BLOCKED")
         self.assertEqual(self.store.get_runtime_states()["BTCUSDT"]["run_state"], "RECOVERY_BLOCKED")
 
+    def test_flat_remote_position_reanchors_stale_terminal_ledger(self):
+        self.add_filled("5sv1-BTC-444-EMG", "SELL", 0.0029)
+        a = FakeAdapter()
+
+        result = self.recovery.reconcile_all(a, ("BTCUSDT",))
+
+        self.assertEqual(result["status"], "PASS")
+        self.assertEqual(result["symbols"]["BTCUSDT"]["ledger_position"], 0.0)
+        self.assertEqual(
+            self.store.get_reconciliation_baseline("BTCUSDT", "5s_crypto_v1"),
+            Decimal("-0.0029"),
+        )
+        audit = self.store.recent_audit("BTCUSDT", event_types=("M4_AUTO_BASELINE",))
+        self.assertEqual(len(audit), 1)
+
     def test_external_open_order_blocks_without_canceling_it(self):
         a = FakeAdapter()
         a.open = [{"orderId":55,"clientOrderId":"manual-order","status":"NEW"}]

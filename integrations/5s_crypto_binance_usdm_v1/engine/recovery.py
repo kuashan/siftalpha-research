@@ -236,14 +236,33 @@ class M4Recovery:
                 self.store.append_audit("M4_RECONCILE_BLOCKED", symbol, reason)
                 return SymbolRecovery(symbol, "BLOCKED", float(remote), 0.0, 0.0, canceled, recovered, None, reason)
 
-            ledger = self._ledger_position(symbol)
+            raw_ledger = self._ledger_position(symbol)
+            baseline = self.store.get_reconciliation_baseline(symbol, strategy_id)
+            ledger = raw_ledger - baseline
             rules = adapter.symbol_rules(symbol)
             tolerance = (rules.step_size or Decimal("0.00000001")) / Decimal("2")
             if abs(remote - ledger) > tolerance:
-                reason = f"本地订单账本仓位 {ledger} 与币安模拟仓位 {remote} 不一致"
-                self.store.set_run_state(symbol, "RECOVERY_BLOCKED")
-                self.store.append_audit("M4_RECONCILE_BLOCKED", symbol, reason)
-                return SymbolRecovery(symbol, "BLOCKED", float(remote), float(ledger), 0.0, canceled, recovered, None, reason)
+                if remote <= tolerance and baseline == 0:
+                    created = self.store.set_reconciliation_baseline(
+                        symbol,
+                        strategy_id,
+                        raw_ledger,
+                        reason="REMOTE_ZERO_TERMINAL_LEDGER",
+                    )
+                    if created:
+                        baseline = raw_ledger
+                        ledger = Decimal("0")
+                        self.store.append_audit(
+                            "M4_AUTO_BASELINE",
+                            symbol,
+                            f"strategy={strategy_id};raw_ledger={raw_ledger};remote={remote};baseline={baseline}",
+                        )
+
+                if abs(remote - ledger) > tolerance:
+                    reason = f"本地订单账本仓位 {ledger} 与币安模拟仓位 {remote} 不一致"
+                    self.store.set_run_state(symbol, "RECOVERY_BLOCKED")
+                    self.store.append_audit("M4_RECONCILE_BLOCKED", symbol, reason)
+                    return SymbolRecovery(symbol, "BLOCKED", float(remote), float(ledger), 0.0, canceled, recovered, None, reason)
 
             fraction, strategy_state, last_order_id = self._derive_position_state(symbol, strategy_id)
             if remote > tolerance and fraction <= 0:

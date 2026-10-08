@@ -164,6 +164,16 @@ def run_m4_recovery() -> dict[str, object]:
     return summary
 
 
+def ensure_symbol_reconciled_for_start(symbol: str) -> None:
+    """Refresh recovery before enabling a symbol; never bypass a block."""
+    if not all(testnet_session.credentials()):
+        raise ValueError("请先连接模拟交易账户")
+    summary = run_m4_recovery()
+    item = (summary.get("symbols") or {}).get(symbol)
+    if not isinstance(item, dict) or item.get("status") != "PASS":
+        raise ValueError("恢复对账未通过，已阻止启动")
+
+
 def _ssss_chart_analysis(rows: list[object]) -> dict[str, object]:
     # Exact same 1000-closed-bar input and same cached evaluator as automation.
     closed_rows = ssss_closed_bar_window(rows, closed_limit=DISPLAY_KLINE_LIMIT)
@@ -920,6 +930,7 @@ class Handler(BaseHTTPRequestHandler):
                     spec = get_spec(str(cfg.get("strategy_id") or STRATEGY_5S))
                     if str(cfg["timeframe"]) not in spec.supported_timeframes:
                         raise ValueError("当前策略不支持所选 K 线周期")
+                    ensure_symbol_reconciled_for_start(symbol)
                 store.set_symbol_enabled(symbol, action == "start")
                 self._redirect_home(symbol)
                 return
