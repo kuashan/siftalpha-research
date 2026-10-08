@@ -558,31 +558,30 @@ plot(isBearishBreakout ? 1.0 : 0.0, title="PARITY_PAI_DOWN_MINUS5_CONFIRMED", di
 FreeParityBars = input.int(40, title="Confirmed candles in Pine Logs", minval=5, maxval=500, group="R3 Free Parity丨免费校验")
 FreeParityTableRows = input.int(8, title="Rows in visible table", minval=3, maxval=12, group="R3 Free Parity丨免费校验")
 
-// This block runs only on the last confirmed historical bar, not an unfinished
-// live candle. Each message is a delimited record from the actual TV chart feed.
-if barstate.islastconfirmedhistory
-    int freeCount = math.min(FreeParityBars, bar_index + 1)
-    for n = 0 to freeCount - 1
-        string rec = "TVR3|" + str.format_time(time[n], "yyyy-MM-dd HH:mm", "Etc/UTC")
-        rec += "|" + str.tostring(open[n], "#.########")
-        rec += "|" + str.tostring(high[n], "#.########")
-        rec += "|" + str.tostring(low[n], "#.########")
-        rec += "|" + str.tostring(close[n], "#.########")
-        rec += "|" + str.tostring(PAIvalue[n], "#.########")
-        rec += "|" + str.tostring(WTlineRaw[n], "#.########")
-        rec += "|" + str.tostring(SignalLineRaw[n], "#.########")
-        rec += "|" + str.tostring(HistRaw[n], "#.########")
-        rec += "|" + str.tostring(WTpivotLowFound[n] ? 1 : 0)
-        rec += "|" + str.tostring(WTpivotHighFound[n] ? 1 : 0)
-        rec += "|" + str.tostring(WTbullCond[n] ? 1 : 0)
-        rec += "|" + str.tostring(WTbearCond[n] ? 1 : 0)
-        rec += "|" + str.tostring(PAIpivotLowFound[n] ? 1 : 0)
-        rec += "|" + str.tostring(PAIpivotHighFound[n] ? 1 : 0)
-        rec += "|" + str.tostring(PAIbullCond[n] ? 1 : 0)
-        rec += "|" + str.tostring(PAIbearCond[n] ? 1 : 0)
-        rec += "|" + str.tostring(isBullishBreakout[n] ? 1 : 0)
-        rec += "|" + str.tostring(isBearishBreakout[n] ? 1 : 0)
-        log.info(rec)
+// Record the CURRENT already-confirmed candle directly. No variable [n]
+// lookbacks, so Pine does not need to grow series history buffers dynamically.
+// last_bar_index is available during historical runs as the chart's final index.
+if barstate.isconfirmed and bar_index >= last_bar_index - FreeParityBars and bar_index >= 250
+    string rec = "TVR3|" + str.format_time(time, "yyyy-MM-dd HH:mm", "Etc/UTC")
+    rec += "|" + str.tostring(open, "#.########")
+    rec += "|" + str.tostring(high, "#.########")
+    rec += "|" + str.tostring(low, "#.########")
+    rec += "|" + str.tostring(close, "#.########")
+    rec += "|" + str.tostring(PAIvalue, "#.########")
+    rec += "|" + str.tostring(WTlineRaw, "#.########")
+    rec += "|" + str.tostring(SignalLineRaw, "#.########")
+    rec += "|" + str.tostring(HistRaw, "#.########")
+    rec += "|" + str.tostring(WTpivotLowFound ? 1 : 0)
+    rec += "|" + str.tostring(WTpivotHighFound ? 1 : 0)
+    rec += "|" + str.tostring(WTbullCond ? 1 : 0)
+    rec += "|" + str.tostring(WTbearCond ? 1 : 0)
+    rec += "|" + str.tostring(PAIpivotLowFound ? 1 : 0)
+    rec += "|" + str.tostring(PAIpivotHighFound ? 1 : 0)
+    rec += "|" + str.tostring(PAIbullCond ? 1 : 0)
+    rec += "|" + str.tostring(PAIbearCond ? 1 : 0)
+    rec += "|" + str.tostring(isBullishBreakout ? 1 : 0)
+    rec += "|" + str.tostring(isBearishBreakout ? 1 : 0)
+    log.info(rec)
 
 // Show a compact table for screenshots. All rows are closed candles.
 // May contain the currently completed last historical bar or, when a realtime
