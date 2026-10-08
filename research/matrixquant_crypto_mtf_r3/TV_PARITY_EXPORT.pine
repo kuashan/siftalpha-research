@@ -8,7 +8,7 @@
 // © MatrixQuant
 //
 //@version=6
-indicator(title = 'Multi-Factor Reversal Analyzer · R3 Parity Export', shorttitle='★ Multi-Factor Reversal Analyzer丨多因子反转分析器 ★', overlay=false)
+indicator(title = 'Multi-Factor Reversal Analyzer · R3 Parity Export', shorttitle='★ MFRA R3 PARITY ★', overlay=false, precision=8)
 
 //Trend Detector丨趋势探测器
 EnableTrendDetector = input.bool(true, title = 'Enable Trend Detector丨启用趋势探测器', group = 'Trend Detector丨趋势探测器', tooltip = '▶︎ The Trend Detector analyzes price and volume momentum to output a composite trend strength score. Higher values indicate stronger trends. It helps identify potential tops, bottoms, or trend continuation zones. For best results, use alongside other indicators or price action.\n▶︎ The indicator performs optimally when used in conjunction with a harmonic pattern recognition tool.\n▶︎ 趋势探测器用于综合分析价格与成交量的多空动能强弱，输出趋势强度分值。数值越高代表趋势越强，多用于识别顶部、底部或趋势延续状态，建议结合其他信号辅助判断交易方向。\n▶︎ 与谐波形态识别工具结合使用时，该指标表现最佳。')
