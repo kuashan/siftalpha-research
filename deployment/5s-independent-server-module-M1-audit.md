@@ -95,8 +95,22 @@
 本阶段已完成源码、用户 ZIP、Oracle workspace、旧运行资源、交易能力保留边界和 ARM64/GHCR 构建方案审计。结论为：可以进入 M2，但 M2 尚未开始；旧实例自动启动设置仍需在 M2 前置检查中确认。
 
 
+
+## M2 构建执行结果（2026-10-08）
+
+- `M2_CI_RUN=37726219374`
+- `M2_CI_RESULT=PASS`
+- 构建源提交：`790c7bd06ff961527d9fe75196d145cd2eea9a5a`
+- Python 基础镜像在 CI 中按 digest 解析：`python:3.11-slim-bookworm@sha256:0a310eeecf4e1f5a0743f9a6520c90c88d089c903ca5fd283f501e3a805f5f89`
+- ARM64 镜像：`ghcr.io/kuashan/5s-crypto-multistrategy-ssss-v1:sha-790c7bd06ff961527d9fe75196d145cd2eea9a5a`
+- 镜像平台：`linux/arm64`
+- 镜像 digest：`sha256:8354ee4019234e8da6ba2a38578575b61cb17c279a7a9b1ce83ee6aac569b622`
+- CI 已通过现有 SSSS 回归、冻结策略校验、UI contract、PAPER import、M2 packaging contract、Compose interpolation/source boundary 和 Docker Buildx ARM64 构建。
+- 本阶段没有访问 Oracle、Coolify、Docker 主机或交易实例；没有注入或输出任何 API 凭据。
+
+
 ```ini
-REMOTE_HEAD=968999119a4e4ff1ad53c0dd1b625f4593025b3e
+REMOTE_HEAD=790c7bd06ff961527d9fe75196d145cd2eea9a5a
 SOURCE_COMMIT=7db2f6eb7eb8d12bddf63810564faa2b8a4c325e
 SOURCE_AUDIT=PASS
 WORKSPACE_SOURCE_MATCH=PASS
@@ -115,15 +129,22 @@ GITHUB_ACTIONS_PLAN=PASS
 GHCR_IMAGE_PLAN=PASS
 ROLLBACK_PLAN=PASS
 
+M2_CI_RUN=37726219374
+M2_CI_RESULT=PASS
+M2_SOURCE_HEAD=790c7bd06ff961527d9fe75196d145cd2eea9a5a
+M2_IMAGE=ghcr.io/kuashan/5s-crypto-multistrategy-ssss-v1:sha-790c7bd06ff961527d9fe75196d145cd2eea9a5a
+M2_IMAGE_DIGEST=sha256:8354ee4019234e8da6ba2a38578575b61cb17c279a7a9b1ce83ee6aac569b622
+M2_PLATFORM=linux/arm64
+
 STRATEGY_CODE_MODIFIED=NO
 TRADING_FUNCTIONS_DISABLED=NO
 ORACLE_DEPLOYMENT=NOT_STARTED
 
 M1=PASS/CLOSED
-M2=NOT_STARTED
+M2=PASS/CLOSED
 M3=NOT_STARTED
 
-FIRST_BLOCKER=OLD_INSTANCE_AUTOSTART_UNVERIFIED_BEFORE_M2
+FIRST_BLOCKER=OLD_INSTANCE_AUTOSTART_UNVERIFIED_BEFORE_M3
 STOP_AND_WAIT=YES
 ```
 
