@@ -563,15 +563,18 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     });
     const formulaMarkers = indicatorMarkers.map((m,index) => {
       const kind = String(m.kind || '');
-      const isBuy = kind === 'BUY_ICON_9';
+      const isMfra = kind === 'MFRA_PAI_BUY' || kind === 'MFRA_PAI_SELL';
+      const isBuy = kind === 'BUY_ICON_9' || kind === 'MFRA_PAI_BUY';
       return {
         time: Math.floor(Number(m.open_time) / 1000),
         position: isBuy ? 'belowBar' : 'aboveBar',
-        color: isBuy ? '#f4c95d' : '#d8dee9',
-        shape: 'circle',
-        text: String(m.text || (isBuy ? '💰' : '💥')),
-        id: 'ssss-' + String(index) + '-' + String(m.open_time || ''),
-        size: 0.9,
+        color: isMfra
+          ? (isBuy ? '#20bd92' : '#ef5350')
+          : (isBuy ? '#f4c95d' : '#d8dee9'),
+        shape: isMfra ? (isBuy ? 'arrowUp' : 'arrowDown') : 'circle',
+        text: String(m.text || (isMfra ? (isBuy ? 'BUY' : 'SELL') : (isBuy ? '💰' : '💥'))),
+        id: (isMfra ? 'mfra-signal-' : 'ssss-icon-') + String(index) + '-' + String(m.open_time || ''),
+        size: isMfra ? 1.0 : 0.9,
       };
     });
     state.markerApi?.setMarkers(
@@ -635,7 +638,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       legend.textContent = String(payload.strategy_id || '') === 'ssss'
         ? 'SSSS：💰=买入25% · 💥=全部清仓 · B/X仅代表真实成交'
         : String(payload.strategy_id || '') === 'matrixquant_pai'
-          ? 'MatrixQuant PAI：向上突破+5买入25% · 跌破-5全部清仓 · B/X仅在成交后显示'
+          ? 'MatrixQuant：绿色BUY/红色SELL=PAI收盘确认的指标信号（未必成交） · B/X=仅成交成功后显示 · 上穿+5买25%/下穿-5全清'
           : '5s V1：仅成交成功后显示 B/S/X';
     }
   }
