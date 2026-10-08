@@ -55,6 +55,18 @@ function run(){
  const pivot=pivotAll(small,oscillator,5,1,5,60);
  assert.equal(pivot.pl[5],false);
  assert.equal(pivot.pl[6],true);
+ // Equal-high plateau is attributed to its LAST bar by Pine's ta.pivothigh.
+ const plateau=[1,2,3,4,5,9,9,8,7,6,5,4,3,2];
+ const barsPlateau=plateau.map((x,i)=>({t:String(i),o:x,c:x,h:x+1,l:x-1}));
+ const pHi=pivotAll(barsPlateau,plateau,2,2,2,10);
+ assert.equal(pHi.ph[7],false);
+ assert.equal(pHi.ph[8],true);
+ // Equal-low plateau follows the same last-equal-bar policy.
+ const trough=[9,8,7,6,5,1,1,2,3,4,5,6,7];
+ const barsTrough=trough.map((x,i)=>({t:String(i),o:x,c:x,h:x+1,l:x-1}));
+ const pLo=pivotAll(barsTrough,trough,2,2,2,10);
+ assert.equal(pLo.pl[7],false);
+ assert.equal(pLo.pl[8],true);
 
  // Trade after a confirmed signal, not at the signal candle itself.
  const bars=[{t:"0",o:10,h:10,l:10,c:10},{t:"1",o:11,h:12,l:11,c:12},{t:"2",o:13,h:14,l:13,c:14},{t:"3",o:14,h:15,l:14,c:15}];
