@@ -53,6 +53,72 @@ class MatrixQuantFormulaParityTests(unittest.TestCase):
             mq.evaluate_pai([(1, 2, 1, 3, 2)])
 
 
+    def test_indicator_signals_from_real_tradingview_history_are_not_fills(self):
+        bars = _real_chart_bars()
+        closed = mq.evaluate_pai(bars)
+        markers = mq.chart_signal_markers(closed)
+        self.assertTrue(markers, "400 historical BTC 4h candles should contain PAI threshold signals")
+        self.assertEqual(
+            len(markers), sum(int(p.buy) + int(p.sell) for p in closed)
+        )
+        for marker in markers:
+            self.assertEqual(set(marker), {"open_time", "kind", "text"})
+            self.assertIn(marker["kind"], {"MFRA_PAI_BUY", "MFRA_PAI_SELL"})
+            self.assertEqual(marker["text"], "BUY" if marker["kind"] == "MFRA_PAI_BUY" else "SELL")
+        # Previous TradingView/Pine R3 export established parity on indices 250:400.
+        expected = {
+            (bars[i][0], "MFRA_PAI_BUY" if bool(int(bars[i][6][18])) else "MFRA_PAI_SELL")
+            for i in range(250, 400)
+            if bool(int(bars[i][6][18])) or bool(int(bars[i][6][19]))
+        }
+        actual = {(m["open_time"], m["kind"]) for m in markers
+                  if m["open_time"] >= bars[250][0]}
+        self.assertEqual(actual, expected)
+
+    def test_mfra_chart_payload_has_historical_signals_without_filled_orders(self):
+        import app
+        rows = _real_chart_bars()
+        # Last returned candle is still forming. Intentionally make it extreme:
+        # neither the indicator curve nor signals may include this candle.
+        time_delta = rows[-1][0] - rows[-2][0]
+        last = rows[-1]
+        still_open = (
+            last[0] + time_delta, last[4], last[4] * 1.50,
+            last[4] * 0.50, last[4] * 1.40, 1.0
+        )
+        rows_with_open = [row[:6] for row in rows] + [still_open]
+        cfg = {"BTCUSDT": {"strategy_id": STRATEGY_MFRA, "timeframe": "4h"}}
+        rt = {"BTCUSDT": {"run_state": "STOPPED", "current_fraction": 0.0, "last_signal": "HOLD"}}
+        with patch.object(app.store, "get_symbol_configs", return_value=cfg), \
+             patch.object(app.store, "get_runtime_states", return_value=rt), \
+             patch.object(app.store, "list_trade_markers", return_value=[]), \
+             patch.object(app.testnet_session, "credentials", return_value=("", "")), \
+             patch.object(app.probe, "klines", return_value=rows_with_open):
+            payload = app.chart_payload("BTCUSDT")
+        self.assertEqual(payload["strategy_id"], STRATEGY_MFRA)
+        self.assertEqual(payload["markers"], [], "zero FILLED orders means zero execution B/X")
+        self.assertTrue(payload["strategy_indicator_markers"], "PAI signal labels should appear even while stopped")
+        observed = {(m["open_time"], m["kind"]) for m in payload["strategy_indicator_markers"]}
+        expected = {(m["open_time"], m["kind"]) for m in mq.chart_signal_markers(mq.evaluate_pai(rows))}
+        self.assertEqual(observed, expected)
+        self.assertNotIn(still_open[0], [m["open_time"] for m in payload["strategy_indicator_markers"]])
+        self.assertEqual(payload["strategy_overlay"][-1]["open_time"], rows[-1][0])
+        self.assertEqual(payload["candles"][-1]["open_time"], still_open[0])
+
+
+class MatrixQuantChartContractTests(unittest.TestCase):
+    def test_js_distinguishes_unfilled_mfra_signal_from_filled_order(self):
+        template = (Path(__file__).parents[1] / "templates" / "index.html").read_text(encoding="utf-8")
+        app_source = (Path(__file__).parents[1] / "app.py").read_text(encoding="utf-8")
+        self.assertIn("mfra_chart_signal_markers(points)", app_source)
+        self.assertIn("kind === 'MFRA_PAI_BUY' || kind === 'MFRA_PAI_SELL'", template)
+        self.assertIn("shape: isMfra ? (isBuy ? 'arrowUp' : 'arrowDown') : 'circle'", template)
+        self.assertIn("BUY/红色SELL=PAI收盘确认的指标信号", template)
+        self.assertIn("B/X=仅成交成功后显示", template)
+
+
+
+
 class MatrixQuantDecisionTests(unittest.TestCase):
     def setUp(self):
         self.rows = [(i * 900000, 100, 110, 90, 100, 1) for i in range(260)]
