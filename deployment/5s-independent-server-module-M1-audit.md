@@ -58,14 +58,72 @@
 - `OLD_INSTANCE_NOT_RUNNING=UNVERIFIED_ORACLE`：需核对旧资源状态与自动重启行为。
 - `BUILD_INPUT_IMMUTABLE=BLOCKED_WORKSPACE_MISMATCH_UNKNOWN`：候选 commit 固定，但未与 Oracle 工作区比对。
 
+
+## M1 现场审计收口（2026-10-08）
+
+本节记录本次只读审计的最终事实，并覆盖前文中尚未完成的占位状态。M1 仅完成审计、边界确认和构建方案；没有开始 M2 构建，也没有进行 Oracle 部署或交易动作。
+
+### 源码与制品一致性
+
+- `REMOTE_HEAD=968999119a4e4ff1ad53c0dd1b625f4593025b3e`；目标分支与该提交比较结果为 `identical`。
+- `SOURCE_COMMIT=7db2f6eb7eb8d12bddf63810564faa2b8a4c325e`，作为策略源码不可变输入；分支 HEAD 为后续文档提交。
+- 用户提供 ZIP 的 SHA-256：`7e71c46d4b92afa972f899249aa665d7c568753a29edee93dfb4a795b8c1e157`。
+- ZIP 路径遍历检查通过，未发现符号链接；发现的 `__pycache__` 仅作为本地生成物，不能进入私有源码仓库或正式构建上下文。
+- GitHub 固定源码提交的 19 个受跟踪源文件与 ZIP 的 Git blob SHA 全部一致。ZIP 中的 lightweight-charts vendor 文件属于现有 CI 生成依赖，不属于该源提交中的策略源码。
+- Oracle immutable workspace revision 为 `e61ef33ee85bf67cbbd4009bd3d91948477f878b858815d8ea209d484d33f2ae`；去除 `__pycache__` 后与 ZIP 均为 21 个文件，规范化树哈希为 `93531c7f17785a9e1e3559e5030262e10bdc2fcd56f17b7fcac92189f7c73f58`。结论：`WORKSPACE_SOURCE_MATCH=PASS`。
+
+### 运行能力与交易边界
+
+- 入口是 `app.py`；当前默认 `main(host="127.0.0.1", port=0)`。M2 只增加非策略启动包装，调用 `app.main("0.0.0.0", 8080)`，不改策略源码。
+- requirements 仅包含 `binance-sdk-derivatives-trading-usds-futures==17.5.0`；现有 CI 使用 Python 3.11。Oracle 主机为 ARM64（`aarch64`），运行时 Python 为 3.12.3，M2 镜像将以 CI 固定的 Python 3.11 作为可复现构建输入。
+- `FIVES_MODE` 支持 `PAPER`、`DEMO`、`TESTNET`；Demo/Testnet 凭据通过环境变量或现有 `/testnet-connect` 流程加载。现有调度、下单、撤单、恢复对账、紧急平仓及四个交易对逻辑均在源码中保留。没有在本次审计中输出、上传或提交任何密钥，也没有发送订单。
+- 现有合法控制面接口（包括 symbol action、strategy、testnet-connect、reconcile、cancel-strategy-orders、emergency-flatten）已核对存在；M2 不得通过安全包装删减这些既有能力，也不得把 Demo 强制改成 PAPER。
+- Oracle 当前没有运行中的 5s 容器，也没有 5s systemd unit；Coolify 中唯一旧 5s Application 为 `lmhifd5qwbuzdhqwxhbe5yeq`，状态为 `exited:unhealthy`。因此当前没有已知自动交易实例。旧实例自动部署/自动启动开关未由当前 API 响应暴露，记录为 `OLD_INSTANCE_AUTOSTART=UNVERIFIED`，M2 切换前必须再次确认。
+- 代码默认数据库路径为 `data/5s_crypto_v1.db`；当前 immutable workspace 未发现数据库、日志或交易记录。M2 运行时必须显式设置 `FIVES_DB_PATH=/data/5s_crypto_v1.db`，仅挂载独立 `/data`，不得覆盖或重置既有数据。
+- Oracle `wg0` 已存在并使用 `10.77.0.1/24`；宿主机 8080 当前无监听。M2 使用现有 WireGuard 私网访问，不新增公网 host port。
+
+### M2 最小构建方案（仅方案，未执行）
+
+1. 在私有仓库中保留现有策略目录与现有测试；只新增部署包装文件，不改 `engine/`、`strategy/`、`exchange/`、`app.py` 的交易逻辑。
+2. 新增 ARM64 可构建的 Dockerfile，基于 Python 3.11 的多架构基础镜像，并在 M2 锁定基础镜像 digest；安装现有 requirements，复制策略源码和只读前端 vendor，使用独立 entrypoint 调用 `app.main("0.0.0.0", 8080)`。
+3. 新增 image-only Compose：镜像以不可变 digest 引用；独立服务名和网络；仅挂载 `/data`; 不发布公网端口；私网访问通过现有 Coolify/WireGuard 路径完成。凭据只通过运行时 secret/environment 注入。
+4. 新增 GitHub Actions：先运行现有 Python/Node/策略/UI 测试，再以 `linux/arm64` 构建并推送 GHCR；记录源 Commit、Run ID、镜像 digest 和测试结果。Oracle 只 pull 固定 digest，不在服务器编译源码。
+5. 回滚使用上一枚已验收镜像 digest 与其独立 `/data` 配置；部署前保存运行配置，切换失败只恢复旧镜像，不删除 workspace、数据库或其他项目。旧实例在新实例通过完整验收前保持不变，但必须避免同一账户出现两个自动交易运行者。
+
+### M1 结论
+
+本阶段已完成源码、用户 ZIP、Oracle workspace、旧运行资源、交易能力保留边界和 ARM64/GHCR 构建方案审计。结论为：可以进入 M2，但 M2 尚未开始；旧实例自动启动设置仍需在 M2 前置检查中确认。
+
+
 ```ini
-M1=IN_PROGRESS_AUDIT
-M2=NOT_STARTED
-M3=NOT_STARTED
-ORACLE_DEPLOYMENT=NOT_STARTED
+REMOTE_HEAD=968999119a4e4ff1ad53c0dd1b625f4593025b3e
+SOURCE_COMMIT=7db2f6eb7eb8d12bddf63810564faa2b8a4c325e
+SOURCE_AUDIT=PASS
+WORKSPACE_SOURCE_MATCH=PASS
+ENTRYPOINT_DEFINED=PASS_DESIGN_ONLY
+TRADING_CAPABILITY_PRESERVED=PASS_AUDIT_ONLY
+DEMO_TRADING_BOUNDARY=PASS_AUDIT_ONLY
+PERSISTENCE_BOUNDARY=PASS_DESIGN_ONLY
+PRIVATE_ACCESS_BOUNDARY=PASS_DESIGN_ONLY
+OLD_INSTANCE_NOT_RUNNING=PASS
+OLD_INSTANCE_AUTOSTART=UNVERIFIED
+BUILD_INPUT_IMMUTABLE=PASS
+
+DOCKERFILE_PLAN=PASS
+COMPOSE_PLAN=PASS
+GITHUB_ACTIONS_PLAN=PASS
+GHCR_IMAGE_PLAN=PASS
+ROLLBACK_PLAN=PASS
+
 STRATEGY_CODE_MODIFIED=NO
 TRADING_FUNCTIONS_DISABLED=NO
-CODE_BUILD_STARTED=NO
+ORACLE_DEPLOYMENT=NOT_STARTED
+
+M1=PASS/CLOSED
+M2=NOT_STARTED
+M3=NOT_STARTED
+
+FIRST_BLOCKER=OLD_INSTANCE_AUTOSTART_UNVERIFIED_BEFORE_M2
 STOP_AND_WAIT=YES
 ```
 
