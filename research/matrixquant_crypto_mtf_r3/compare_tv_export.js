@@ -154,7 +154,10 @@ function pivotAll(z,line,left,right,minSpacing,maxSpacing) {
     let isL=true,isH=true;
     for(let j=k-left;j<=k+right;j++) {
       if(!Number.isFinite(line[j])){isL=isH=false;break;}
-      if(j!==k){if(line[j]<=mid)isL=false;if(line[j]>=mid)isH=false;}
+      // Pine ta.pivotlow/high chooses the most recent bar on an equal-value
+      // plateau: ties allowed to the left, never to the confirming right.
+      if(j<k){if(line[j]<mid)isL=false;if(line[j]>mid)isH=false;}
+      if(j>k){if(line[j]<=mid)isL=false;if(line[j]>=mid)isH=false;}
     }
     if(isL){pl[t]=true;if(prevL>=0&&k-prevL-1>=minSpacing&&k-prevL-1<=maxSpacing&&mid>line[prevL]&&z[k].l<z[prevL].l)bull[t]=true;prevL=k;}
     if(isH){ph[t]=true;if(prevH>=0&&k-prevH-1>=minSpacing&&k-prevH-1<=maxSpacing&&mid<line[prevH]&&z[k].h>z[prevH].h)bear[t]=true;prevH=k;}
