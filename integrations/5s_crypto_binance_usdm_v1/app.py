@@ -392,14 +392,21 @@ def render_index(selected_symbol: str | None = None) -> str:
             for sid, label, is_selected in strategy_options(strategy_id)
         )
         strategy_lock_note = "已锁定" if strategy_locked else "可切换"
-        exposure_html = (
-            f'<div><small>首次买入 60% 名义价值</small><b>{initial.target_notional_usdt:.2f} USDT</b></div>'
-            f'<div><small>补仓后 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
-            if strategy_id == STRATEGY_5S
-            else
-            f'<div><small>{html.escape("SSSS 每个 💰" if strategy_id == STRATEGY_SSSS else "PAI 每次 +5 突破")} 买入 25% 名义价值</small><b>{ssss25.target_notional_usdt:.2f} USDT</b></div>'
-            f'<div><small>累计满仓 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
-        )
+        if strategy_id == STRATEGY_5S:
+            exposure_html = (
+                f'<div><small>首次买入 60% 名义价值</small><b>{initial.target_notional_usdt:.2f} USDT</b></div>'
+                f'<div><small>补仓后 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
+            )
+        elif strategy_id == STRATEGY_SSSS:
+            exposure_html = (
+                f'<div><small>SSSS 每个 💰 买入 25% 名义价值</small><b>{ssss25.target_notional_usdt:.2f} USDT</b></div>'
+                f'<div><small>SSSS 满仓 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
+            )
+        else:
+            exposure_html = (
+                f'<div><small>PAI 每次 +5 突破买入 25% 名义价值</small><b>{ssss25.target_notional_usdt:.2f} USDT</b></div>'
+                f'<div><small>MatrixQuant 满仓 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
+            )
         exposure_html += (
             f'<div><small>资金费与手续费净额</small><b>{p["funding_fee"] - p["trading_fee"]:+.2f} USDT</b></div>'
         )
