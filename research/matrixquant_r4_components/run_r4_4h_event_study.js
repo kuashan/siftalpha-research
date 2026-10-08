@@ -1,4 +1,8 @@
-// Reproducible, pre-specified R4-A study (no order calls).\n'use strict';\nconst fs=require('node:fs');\nconst path=require('node:path');\nconst runStudy=function runStudy(inputs){
+// Reproducible, pre-specified R4-A study (no order calls).
+'use strict';
+const fs=require('node:fs');
+const path=require('node:path');
+const runStudy=function runStudy(inputs){
 const N=20, W=250, H=20, TF=14400000, symbols=["BTC","ETH","BNB","SOL"];
 const isF=Number.isFinite, S=(z,n)=>{let o=Array(z.length).fill(NaN);for(let i=n-1;i<z.length;i++){let a=z.slice(i-n+1,i+1);if(a.every(isF))o[i]=a.reduce((p,v)=>p+v,0)/n;}return o;};
 const E=(z,n)=>{let out=[],v=NaN,a=2/(n+1);for(let x of z){if(isF(x))v=isF(v)?v+a*(x-v):x;out.push(v);}return out};
@@ -64,4 +68,8 @@ for(const coin of symbols){
 }
 for(let key of events){results.aggregated[key]=stats(all[key]);results.aggregated[key].per_coin_n=Object.fromEntries(symbols.map(c=>[c,results.per_coin[c].stats[key].n]));}
 return results;
-};\nconst dir=path.resolve(__dirname,'../matrixquant_crypto_mtf_r2/data');\nconst names=['BTC','ETH','BNB','SOL'];\nconst input=Object.fromEntries(names.map(c=>[c,fs.readFileSync(path.join(dir,'4h_'+c+'_USD.csv'),'utf8')]));\nprocess.stdout.write(JSON.stringify(runStudy(input),null,2)+'\\n');\n
+};
+const dir=path.resolve(__dirname,'../matrixquant_crypto_mtf_r2/data');
+const names=['BTC','ETH','BNB','SOL'];
+const input=Object.fromEntries(names.map(c=>[c,fs.readFileSync(path.join(dir,'4h_'+c+'_USD.csv'),'utf8')]));
+process.stdout.write(JSON.stringify(runStudy(input),null,2));
