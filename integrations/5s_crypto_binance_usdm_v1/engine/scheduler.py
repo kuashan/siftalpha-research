@@ -10,6 +10,7 @@ from strategy.frozen_signal_engine import BarEvaluation, evaluate_candles
 from strategy.registry import (
     STRATEGY_5S,
     STRATEGY_SSSS,
+    STRATEGY_MFRA,
     baseline_ssss_state,
     decide as decide_strategy,
     get_spec,
@@ -252,7 +253,7 @@ class StrategyScheduler:
                 # SSSS fetch_limit is defined as *closed* bars. Binance also returns
                 # the current open candle, so request one extra row for SSSS.
                 limit = max(self.fetch_limit, int(spec.fetch_limit))
-                if strategy_id == STRATEGY_SSSS:
+                if strategy_id in (STRATEGY_SSSS, STRATEGY_MFRA):
                     limit += 1
                 min_closed = max(self.minimum_closed_bars, int(spec.minimum_closed_bars))
                 rows, market_source = self._strategy_rows(
@@ -270,7 +271,7 @@ class StrategyScheduler:
                         )
 
                 closed = self._closed_rows(rows)
-                if strategy_id == STRATEGY_SSSS and len(closed) > int(spec.fetch_limit):
+                if strategy_id in (STRATEGY_SSSS, STRATEGY_MFRA) and len(closed) > int(spec.fetch_limit):
                     # Keep chart and automation on the identical 1000-closed-bar window.
                     closed = closed[-int(spec.fetch_limit):]
                 if len(closed) < min_closed:
@@ -371,6 +372,30 @@ class StrategyScheduler:
                         "timeframe": timeframe,
                     }
                     continue
+
+                # MatrixQuant is non-repainting at a confirmed candle close.
+                # Never execute a crossover discovered on a stale or delayed
+                # candle as though it were just observed at the next open.
+                if strategy_id == STRATEGY_MFRA and is_new_bar:
+                    signal_open = latest_open_time
+                    execution_open = int(rows[-1][0])
+                    expected_ms = {
+                        "3m": 180000, "5m": 300000, "15m": 900000,
+                        "1h": 3600000, "2h": 7200000, "4h": 14400000,
+                        "6h": 21600000, "12h": 43200000, "1d": 86400000,
+                    }[timeframe]
+                    if execution_open - signal_open != expected_ms:
+                        self.store.append_audit(
+                            "MFRA_STALE_NEXT_OPEN_BLOCKED", symbol,
+                            f"signal_open={signal_open};execution_open={execution_open};expected_ms={expected_ms}",
+                        )
+                        self.store.baseline_closed_bar(symbol, latest_open_time)
+                        result[symbol] = {
+                            "state": "MONITORING", "strategy_id": strategy_id,
+                            "timeframe": timeframe, "stale_bar": True,
+                            "new_bar": True, "market_source": market_source,
+                        }
+                        continue
 
                 # SSSS intentionally re-runs on the same latest closed-bar timestamp.
                 # Binance/chart data may receive a final OHLC revision after the first
