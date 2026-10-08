@@ -16,8 +16,16 @@ Use [TV_PARITY_FREE_NO_EXPORT.pine](TV_PARITY_FREE_NO_EXPORT.pine) in your *own,
 ## Critical constraints
 
 - Only visual diagnostics / logs are added to original PAI and WT formulas, not trading rules; the script has a single `indicator()`.
-- Pine logs are created at `barstate.islastconfirmedhistory`, so records refer to **closed bars**, not live unconfirmed fluctuations.
+- Pine logs are created **once per confirmed candle** near the chart's last bar (`barstate.isconfirmed`, `bar_index >= last_bar_index - FreeParityBars`); no variable-offset history loop is used. This prevents the prior error `requested historical offset (36) ... buffer limit (35)` without changing original indicator logic. The script skips the earliest 250 warm-up bars.
 - Chart symbol matters: BINANCE BTCUSDT != Twelve Data BTC/USD. A screenshot of TV values cannot be compared naively to a different provider's last-bar values. For numeric comparison use OHLC copied from the **same** TV log records.
 - Even after matching numeric PAI/WT samples, Pine-computed historical signal offsets and engine execution timing require explicit parity validation before any strategy promotion.
 - The fallback was generated and audited statically in GitHub. It has **not** been compiled in a live TradingView account by the assistant; share any displayed errors as-is.
 - Do not touch the frozen SSSS/5s crypto live strategies.
+
+## Runtime fix record (2026-10-08)
+
+- Version: same `TV_PARITY_FREE_NO_EXPORT.pine` URL, now updated in-place.
+- Root cause: last-history-bar log loop requested offset `[n]` up to the user-selected candle count; the runtime had allocated a smaller 35-bar buffer.
+- Fix: log each currently closed candle directly (`time`, `open`, `high`, `low`, `close`, raw indicator and confirmed flags), filter by `last_bar_index`, and retain the small on-chart table. Avoid script-wide `max_bars_back=500` allocation.
+- Regression: GitHub Actions runs `test_free_no_export_source.js` with frozen R2 replay; **CI success is static/regression evidence, not a live Pine compile/runtime PASS**.
+- User action: select ALL code in Pine Editor and replace it with the latest complete file; do not append to a previous script. If the error persists, send the exact bar/line error.
