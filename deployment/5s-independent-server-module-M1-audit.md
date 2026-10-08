@@ -187,3 +187,37 @@ STOP_AND_WAIT=YES
 - 交付审计报告后 `STOP_AND_WAIT=YES`，不提前构建、运行或发交易指令。
 
 **本文件替代先前的全局 POST 禁止、空 API Key、只读 PAPER 强制约束。**
+
+
+## 2026-10-09 三策略 MFRA 镜像更新与 Oracle 部署记录
+
+本记录对应用户确认的三策略版本提交 `17b46fc0404dea3e26308f4eb1675581360272ce`。该提交本身为文档收尾提交；随后仅增加了 ARM64 workflow 的 MFRA 分支触发与三策略 CI 断言修正，未修改交易策略或运行逻辑。
+
+```ini
+REPOSITORY=kuashan/siftalpha-research
+BRANCH=feature/5s-crypto-multistrategy-mfra-v1
+USER_FUNCTIONAL_COMMIT=17b46fc0404dea3e26308f4eb1675581360272ce
+DEPLOY_SOURCE_COMMIT=b2adcdc9521b6b1cc6644152287980cd716e07b3
+
+ARM64_CI_RUN=37805279934
+ARM64_CI_RESULT=PASS
+ARM64_PLATFORM=linux/arm64
+ARM64_IMAGE=ghcr.io/kuashan/5s-crypto-multistrategy-ssss-v1
+ARM64_IMAGE_DIGEST=sha256:98b1cd730cdc74bcfd282d6a77ad1d715a7a1eb15c9548bb5e389ad1c01b7fb9
+
+COOLIFY_APPLICATION_UUID=v7xgbs1bqydpsaujrniqhiaf
+COOLIFY_DEPLOYMENT_UUID=cfmhgjavl9itb79rsursgudo
+COOLIFY_DEPLOYMENT_STATUS=finished
+COOLIFY_IMAGE_READBACK=PASS
+
+ROLLBACK_PATH=/var/lib/siftalpha-web/5s-mfra-deploy-b2ad-20261008T160619Z-before-arm64
+PRIVATE_URL=http://5s-crypto-multistrategy-ssss-v1.10.77.0.1.sslip.io
+PRIVATE_HTTP=200
+MFRA_UI=PASS
+SSSS_UI=PASS
+TRADING_ACTIONS_EXECUTED=NO
+NEW_COOLIFY_APPLICATION=NO
+STRATEGY_CODE_MODIFIED=NO
+```
+
+部署只更新了既有 Coolify Application 的镜像 digest；没有新建 Application，没有执行交易、策略启停或账户操作。
