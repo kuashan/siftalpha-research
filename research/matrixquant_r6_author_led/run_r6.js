@@ -6,7 +6,7 @@ function runR6(batches){
  const C={MODIFIED:{paiLook:14,dispLook:21,trendOHLC:13,trendClose:21,lag:.08,lagEnabled:true},ORIGINAL:{paiLook:20,dispLook:20,trendOHLC:8,trendClose:20,lag:.02,lagEnabled:false}};
  const windows={early:{start:"2020-01-01",end:"2023-12-29"},late:{start:"2024-01-01",end:"2026-08-31"},full:{start:"2020-01-01",end:"2026-08-31"}};
  const m=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
- const mid=a=>a.length?[...a].sort((x,y)=>x-y)[Math.floor(a.length/2)]:null;
+ const mid=a=>{if(!a.length)return null;const s=[...a].sort((x,y)=>x-y),k=Math.floor(s.length/2);return s.length%2?s[k]:(s[k-1]+s[k])/2;};
  const pc=(x,d=2)=>x==null?null:+(x*100).toFixed(d);
  const ema=(x,y,len)=>y==null?x:y+2/(len+1)*(x-y);
  const dict={};const qc=[];
