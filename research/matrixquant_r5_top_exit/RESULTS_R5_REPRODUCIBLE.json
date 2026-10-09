@@ -1,0 +1,3716 @@
+{
+  "status": "EXPLORATORY_NO_AUTO_TRADING",
+  "refPolicy": "PROTOCOL_FROZEN_BEFORE_RESULTS.md",
+  "warnings": [
+    "Prior price data are re-fetched archived Twelve Data snapshots; not certified adjusted; no dividends.",
+    "TDX-modified PAI 14/3/21 and WaveTrend lag gamma .08, NOT original Pine default 20/3/20; per-bar TDX parity has not been independently certified.",
+    "Later period is a historical robustness segment, not independent untouched OOS.",
+    "Event directional hits are conditional price statistics, not completed-trade win rates."
+  ],
+  "data": [
+    {
+      "sym": "AAPL",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "ABT",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "AMD",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "AMZN",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "BAC",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "CAT",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "COST",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "GOOGL",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "GS",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "JNJ",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "JPM",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "LLY",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "META",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "MSFT",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "NVDA",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "ORCL",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "PG",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "TSLA",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "WMT",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    },
+    {
+      "sym": "XOM",
+      "n": 2197,
+      "start": "2018-01-02",
+      "end": "2026-09-29",
+      "invalid": 0,
+      "dupe": 0,
+      "badjump": 0,
+      "eligible": 1674
+    }
+  ],
+  "events": {
+    "S0_TOP_ENTER": {
+      "all": {
+        "n": 830,
+        "stocks": 20,
+        "down5": 41.93,
+        "down10": 42.41,
+        "down20": 42.41,
+        "meanLong5": 0.67,
+        "meanLong20": 2.03,
+        "medianLong20": 1.37,
+        "mfe20": 7.93,
+        "mae20": -5.56
+      },
+      "dedup": {
+        "n": 585,
+        "stocks": 20,
+        "down5": 39.66,
+        "down10": 41.2,
+        "down20": 40.68,
+        "meanLong5": 0.76,
+        "meanLong20": 2.2,
+        "medianLong20": 1.73,
+        "mfe20": 7.95,
+        "mae20": -5.53
+      },
+      "early": {
+        "n": 351,
+        "stocks": 20,
+        "down5": 37.61,
+        "down10": 38.18,
+        "down20": 39.89,
+        "meanLong5": 1.12,
+        "meanLong20": 2.12,
+        "medianLong20": 1.68,
+        "mfe20": 8.22,
+        "mae20": -5.51
+      },
+      "late": {
+        "n": 234,
+        "stocks": 20,
+        "down5": 42.74,
+        "down10": 45.73,
+        "down20": 41.88,
+        "meanLong5": 0.22,
+        "meanLong20": 2.32,
+        "medianLong20": 1.82,
+        "mfe20": 7.56,
+        "mae20": -5.56
+      }
+    },
+    "S1_PAI_DOWN80": {
+      "all": {
+        "n": 778,
+        "stocks": 20,
+        "down5": 42.16,
+        "down10": 45.63,
+        "down20": 45.12,
+        "meanLong5": 0.8,
+        "meanLong20": 1.3,
+        "medianLong20": 1.15,
+        "mfe20": 7.7,
+        "mae20": -5.94
+      },
+      "dedup": {
+        "n": 588,
+        "stocks": 20,
+        "down5": 42.18,
+        "down10": 44.73,
+        "down20": 43.37,
+        "meanLong5": 0.69,
+        "meanLong20": 1.44,
+        "medianLong20": 1.34,
+        "mfe20": 7.68,
+        "mae20": -5.92
+      },
+      "early": {
+        "n": 345,
+        "stocks": 20,
+        "down5": 41.16,
+        "down10": 45.22,
+        "down20": 44.64,
+        "meanLong5": 0.76,
+        "meanLong20": 1.11,
+        "medianLong20": 1.18,
+        "mfe20": 7.71,
+        "mae20": -6.13
+      },
+      "late": {
+        "n": 243,
+        "stocks": 20,
+        "down5": 43.62,
+        "down10": 44.44,
+        "down20": 41.98,
+        "meanLong5": 0.59,
+        "meanLong20": 1.9,
+        "medianLong20": 1.68,
+        "mfe20": 7.63,
+        "mae20": -5.64
+      }
+    },
+    "S2_WT_BEAR": {
+      "all": {
+        "n": 714,
+        "stocks": 20,
+        "down5": 43.56,
+        "down10": 45.66,
+        "down20": 44.82,
+        "meanLong5": 0.58,
+        "meanLong20": 1.33,
+        "medianLong20": 1.28,
+        "mfe20": 7.52,
+        "mae20": -5.88
+      },
+      "dedup": {
+        "n": 564,
+        "stocks": 20,
+        "down5": 43.97,
+        "down10": 46.1,
+        "down20": 44.86,
+        "meanLong5": 0.47,
+        "meanLong20": 1.44,
+        "medianLong20": 1.35,
+        "mfe20": 7.52,
+        "mae20": -5.87
+      },
+      "early": {
+        "n": 333,
+        "stocks": 20,
+        "down5": 45.65,
+        "down10": 48.95,
+        "down20": 46.55,
+        "meanLong5": 0.35,
+        "meanLong20": 1.08,
+        "medianLong20": 1.23,
+        "mfe20": 7.39,
+        "mae20": -6.13
+      },
+      "late": {
+        "n": 231,
+        "stocks": 20,
+        "down5": 41.56,
+        "down10": 41.99,
+        "down20": 42.42,
+        "meanLong5": 0.65,
+        "meanLong20": 1.97,
+        "medianLong20": 1.5,
+        "mfe20": 7.7,
+        "mae20": -5.5
+      }
+    },
+    "S3_PRICE_BREAK": {
+      "all": {
+        "n": 663,
+        "stocks": 20,
+        "down5": 47.96,
+        "down10": 47.36,
+        "down20": 45.4,
+        "meanLong5": 0.44,
+        "meanLong20": 1.17,
+        "medianLong20": 0.85,
+        "mfe20": 7.7,
+        "mae20": -6.78
+      },
+      "dedup": {
+        "n": 437,
+        "stocks": 20,
+        "down5": 47.14,
+        "down10": 48.74,
+        "down20": 45.08,
+        "meanLong5": 0.58,
+        "meanLong20": 1.11,
+        "medianLong20": 0.91,
+        "mfe20": 7.51,
+        "mae20": -6.51
+      },
+      "early": {
+        "n": 248,
+        "stocks": 20,
+        "down5": 45.97,
+        "down10": 49.6,
+        "down20": 48.79,
+        "meanLong5": 0.57,
+        "meanLong20": 0.54,
+        "medianLong20": 0.31,
+        "mfe20": 7.37,
+        "mae20": -6.94
+      },
+      "late": {
+        "n": 189,
+        "stocks": 20,
+        "down5": 48.68,
+        "down10": 47.62,
+        "down20": 40.21,
+        "meanLong5": 0.6,
+        "meanLong20": 1.86,
+        "medianLong20": 1.57,
+        "mfe20": 7.7,
+        "mae20": -5.95
+      }
+    },
+    "S4_WT_AND_PRICE": {
+      "all": {
+        "n": 473,
+        "stocks": 20,
+        "down5": 48.84,
+        "down10": 47.99,
+        "down20": 43.76,
+        "meanLong5": 0.49,
+        "meanLong20": 1.38,
+        "medianLong20": 1,
+        "mfe20": 7.76,
+        "mae20": -6.75
+      },
+      "dedup": {
+        "n": 339,
+        "stocks": 20,
+        "down5": 46.31,
+        "down10": 50.44,
+        "down20": 42.77,
+        "meanLong5": 0.79,
+        "meanLong20": 1.43,
+        "medianLong20": 1.08,
+        "mfe20": 7.73,
+        "mae20": -6.54
+      },
+      "early": {
+        "n": 195,
+        "stocks": 20,
+        "down5": 46.15,
+        "down10": 48.21,
+        "down20": 46.15,
+        "meanLong5": 0.73,
+        "meanLong20": 1.03,
+        "medianLong20": 0.81,
+        "mfe20": 7.73,
+        "mae20": -6.83
+      },
+      "late": {
+        "n": 144,
+        "stocks": 20,
+        "down5": 46.53,
+        "down10": 53.47,
+        "down20": 38.19,
+        "meanLong5": 0.87,
+        "meanLong20": 1.97,
+        "medianLong20": 2.22,
+        "mfe20": 7.73,
+        "mae20": -6.14
+      }
+    }
+  },
+  "topEpisodeWait": {
+    "S1_PAI_DOWN80": {
+      "topEpisodes": 582,
+      "confirmedWithin15": 559,
+      "coverage": 96.05,
+      "medianDelayBars": 5,
+      "meanMissedLongReturn": 0.21,
+      "medianMissedLongReturn": -0.49
+    },
+    "S2_WT_BEAR": {
+      "topEpisodes": 582,
+      "confirmedWithin15": 529,
+      "coverage": 90.89,
+      "medianDelayBars": 7,
+      "meanMissedLongReturn": 0.38,
+      "medianMissedLongReturn": -0.32
+    },
+    "S3_PRICE_BREAK": {
+      "topEpisodes": 582,
+      "confirmedWithin15": 366,
+      "coverage": 62.89,
+      "medianDelayBars": 7,
+      "meanMissedLongReturn": -1.97,
+      "medianMissedLongReturn": -2.1
+    },
+    "S4_WT_AND_PRICE": {
+      "topEpisodes": 582,
+      "confirmedWithin15": 262,
+      "coverage": 45.02,
+      "medianDelayBars": 10,
+      "meanMissedLongReturn": -2.65,
+      "medianMissedLongReturn": -2.29
+    }
+  },
+  "roundTrips": {
+    "whole": {
+      "S0_TOP_ENTER": {
+        "n": 20,
+        "medianAssetReturn": 82.54,
+        "medianBuyHold": 218.53,
+        "beatsBuyHold": 1,
+        "beatsNaive": 0,
+        "medianMdd": -34.56,
+        "medianExposure": 39.25,
+        "completedRoundTrips": 277,
+        "allTradeWinRate": 74.37,
+        "noClosedTradeAssets": [],
+        "perStock": [
+          {
+            "sym": "AAPL",
+            "return": 141.93,
+            "buyHold": 326.55,
+            "maxDD": -25.89,
+            "exposure": 41.64,
+            "closedTrades": 14,
+            "tradeWin": 78.57,
+            "hasOpen": false
+          },
+          {
+            "sym": "ABT",
+            "return": -22.11,
+            "buyHold": 27.85,
+            "maxDD": -42.45,
+            "exposure": 50.42,
+            "closedTrades": 10,
+            "tradeWin": 50,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMD",
+            "return": 293.83,
+            "buyHold": 901.51,
+            "maxDD": -47.8,
+            "exposure": 45.22,
+            "closedTrades": 15,
+            "tradeWin": 73.33,
+            "hasOpen": true
+          },
+          {
+            "sym": "AMZN",
+            "return": 82.54,
+            "buyHold": 176.26,
+            "maxDD": -33.08,
+            "exposure": 42.95,
+            "closedTrades": 13,
+            "tradeWin": 76.92,
+            "hasOpen": false
+          },
+          {
+            "sym": "BAC",
+            "return": 35.07,
+            "buyHold": 74.69,
+            "maxDD": -48.22,
+            "exposure": 40.56,
+            "closedTrades": 14,
+            "tradeWin": 64.29,
+            "hasOpen": false
+          },
+          {
+            "sym": "CAT",
+            "return": 34.31,
+            "buyHold": 433.61,
+            "maxDD": -34.26,
+            "exposure": 39.25,
+            "closedTrades": 11,
+            "tradeWin": 63.64,
+            "hasOpen": true
+          },
+          {
+            "sym": "COST",
+            "return": 76.22,
+            "buyHold": 220.02,
+            "maxDD": -23.51,
+            "exposure": 32.92,
+            "closedTrades": 15,
+            "tradeWin": 73.33,
+            "hasOpen": true
+          },
+          {
+            "sym": "GOOGL",
+            "return": 150.51,
+            "buyHold": 401.82,
+            "maxDD": -34.56,
+            "exposure": 37.57,
+            "closedTrades": 14,
+            "tradeWin": 78.57,
+            "hasOpen": false
+          },
+          {
+            "sym": "GS",
+            "return": 112.48,
+            "buyHold": 342.78,
+            "maxDD": -40.04,
+            "exposure": 35.19,
+            "closedTrades": 13,
+            "tradeWin": 84.62,
+            "hasOpen": true
+          },
+          {
+            "sym": "JNJ",
+            "return": 55.46,
+            "buyHold": 81.7,
+            "maxDD": -22.54,
+            "exposure": 41.7,
+            "closedTrades": 16,
+            "tradeWin": 68.75,
+            "hasOpen": false
+          },
+          {
+            "sym": "JPM",
+            "return": 31.11,
+            "buyHold": 153.92,
+            "maxDD": -35.8,
+            "exposure": 35.13,
+            "closedTrades": 13,
+            "tradeWin": 69.23,
+            "hasOpen": false
+          },
+          {
+            "sym": "LLY",
+            "return": 379.62,
+            "buyHold": 775.21,
+            "maxDD": -23.64,
+            "exposure": 33.93,
+            "closedTrades": 18,
+            "tradeWin": 94.44,
+            "hasOpen": false
+          },
+          {
+            "sym": "META",
+            "return": 26.71,
+            "buyHold": 176,
+            "maxDD": -61.72,
+            "exposure": 34.35,
+            "closedTrades": 13,
+            "tradeWin": 61.54,
+            "hasOpen": false
+          },
+          {
+            "sym": "MSFT",
+            "return": 89.92,
+            "buyHold": 218.53,
+            "maxDD": -30.2,
+            "exposure": 37.93,
+            "closedTrades": 14,
+            "tradeWin": 78.57,
+            "hasOpen": false
+          },
+          {
+            "sym": "NVDA",
+            "return": 296.65,
+            "buyHold": 3587.84,
+            "maxDD": -47.55,
+            "exposure": 27.9,
+            "closedTrades": 13,
+            "tradeWin": 69.23,
+            "hasOpen": false
+          },
+          {
+            "sym": "ORCL",
+            "return": 75.63,
+            "buyHold": 179.09,
+            "maxDD": -66.21,
+            "exposure": 37.81,
+            "closedTrades": 15,
+            "tradeWin": 80,
+            "hasOpen": false
+          },
+          {
+            "sym": "PG",
+            "return": 33.42,
+            "buyHold": 16.21,
+            "maxDD": -21.53,
+            "exposure": 47.37,
+            "closedTrades": 14,
+            "tradeWin": 71.43,
+            "hasOpen": false
+          },
+          {
+            "sym": "TSLA",
+            "return": 89.53,
+            "buyHold": 1196.28,
+            "maxDD": -64.01,
+            "exposure": 39.49,
+            "closedTrades": 11,
+            "tradeWin": 72.73,
+            "hasOpen": true
+          },
+          {
+            "sym": "WMT",
+            "return": 64.06,
+            "buyHold": 163.9,
+            "maxDD": -21.72,
+            "exposure": 30.35,
+            "closedTrades": 15,
+            "tradeWin": 80,
+            "hasOpen": true
+          },
+          {
+            "sym": "XOM",
+            "return": 84.77,
+            "buyHold": 128.46,
+            "maxDD": -53.52,
+            "exposure": 44.8,
+            "closedTrades": 16,
+            "tradeWin": 81.25,
+            "hasOpen": false
+          }
+        ]
+      },
+      "S1_PAI_DOWN80": {
+        "n": 20,
+        "medianAssetReturn": 95.09,
+        "medianBuyHold": 218.53,
+        "beatsBuyHold": 1,
+        "beatsNaive": 11,
+        "medianMdd": -35.74,
+        "medianExposure": 44.62,
+        "completedRoundTrips": 277,
+        "allTradeWinRate": 73.65,
+        "noClosedTradeAssets": [],
+        "perStock": [
+          {
+            "sym": "AAPL",
+            "return": 165.92,
+            "buyHold": 326.55,
+            "maxDD": -25.89,
+            "exposure": 47.13,
+            "closedTrades": 14,
+            "tradeWin": 85.71,
+            "hasOpen": false
+          },
+          {
+            "sym": "ABT",
+            "return": -10.35,
+            "buyHold": 27.85,
+            "maxDD": -37.68,
+            "exposure": 54.12,
+            "closedTrades": 10,
+            "tradeWin": 50,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMD",
+            "return": 724.15,
+            "buyHold": 901.51,
+            "maxDD": -47.8,
+            "exposure": 51.67,
+            "closedTrades": 15,
+            "tradeWin": 73.33,
+            "hasOpen": true
+          },
+          {
+            "sym": "AMZN",
+            "return": 96.89,
+            "buyHold": 176.26,
+            "maxDD": -32.43,
+            "exposure": 48.03,
+            "closedTrades": 13,
+            "tradeWin": 76.92,
+            "hasOpen": false
+          },
+          {
+            "sym": "BAC",
+            "return": 26.75,
+            "buyHold": 74.69,
+            "maxDD": -48.22,
+            "exposure": 44.86,
+            "closedTrades": 14,
+            "tradeWin": 71.43,
+            "hasOpen": false
+          },
+          {
+            "sym": "CAT",
+            "return": 34.41,
+            "buyHold": 433.61,
+            "maxDD": -34.26,
+            "exposure": 44.62,
+            "closedTrades": 11,
+            "tradeWin": 54.55,
+            "hasOpen": true
+          },
+          {
+            "sym": "COST",
+            "return": 95.09,
+            "buyHold": 220.02,
+            "maxDD": -23.51,
+            "exposure": 38.71,
+            "closedTrades": 15,
+            "tradeWin": 80,
+            "hasOpen": true
+          },
+          {
+            "sym": "GOOGL",
+            "return": 136.77,
+            "buyHold": 401.82,
+            "maxDD": -35.74,
+            "exposure": 41.82,
+            "closedTrades": 14,
+            "tradeWin": 85.71,
+            "hasOpen": false
+          },
+          {
+            "sym": "GS",
+            "return": 183.32,
+            "buyHold": 342.78,
+            "maxDD": -40.04,
+            "exposure": 41.52,
+            "closedTrades": 13,
+            "tradeWin": 84.62,
+            "hasOpen": true
+          },
+          {
+            "sym": "JNJ",
+            "return": 47.41,
+            "buyHold": 81.7,
+            "maxDD": -22.54,
+            "exposure": 47.13,
+            "closedTrades": 16,
+            "tradeWin": 62.5,
+            "hasOpen": false
+          },
+          {
+            "sym": "JPM",
+            "return": 31.05,
+            "buyHold": 153.92,
+            "maxDD": -35.8,
+            "exposure": 39.73,
+            "closedTrades": 13,
+            "tradeWin": 69.23,
+            "hasOpen": false
+          },
+          {
+            "sym": "LLY",
+            "return": 588.19,
+            "buyHold": 775.21,
+            "maxDD": -23.64,
+            "exposure": 42,
+            "closedTrades": 18,
+            "tradeWin": 94.44,
+            "hasOpen": false
+          },
+          {
+            "sym": "META",
+            "return": 22.65,
+            "buyHold": 176,
+            "maxDD": -65.16,
+            "exposure": 39.01,
+            "closedTrades": 13,
+            "tradeWin": 69.23,
+            "hasOpen": false
+          },
+          {
+            "sym": "MSFT",
+            "return": 96.2,
+            "buyHold": 218.53,
+            "maxDD": -30.2,
+            "exposure": 44.98,
+            "closedTrades": 14,
+            "tradeWin": 78.57,
+            "hasOpen": false
+          },
+          {
+            "sym": "NVDA",
+            "return": 289.99,
+            "buyHold": 3587.84,
+            "maxDD": -50.23,
+            "exposure": 33.69,
+            "closedTrades": 13,
+            "tradeWin": 69.23,
+            "hasOpen": false
+          },
+          {
+            "sym": "ORCL",
+            "return": 25.72,
+            "buyHold": 179.09,
+            "maxDD": -68.94,
+            "exposure": 43.31,
+            "closedTrades": 15,
+            "tradeWin": 66.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "PG",
+            "return": 38.86,
+            "buyHold": 16.21,
+            "maxDD": -21.53,
+            "exposure": 52.63,
+            "closedTrades": 14,
+            "tradeWin": 64.29,
+            "hasOpen": false
+          },
+          {
+            "sym": "TSLA",
+            "return": 192.49,
+            "buyHold": 1196.28,
+            "maxDD": -62.55,
+            "exposure": 43.73,
+            "closedTrades": 11,
+            "tradeWin": 72.73,
+            "hasOpen": true
+          },
+          {
+            "sym": "WMT",
+            "return": 38.99,
+            "buyHold": 163.9,
+            "maxDD": -22.77,
+            "exposure": 36.32,
+            "closedTrades": 15,
+            "tradeWin": 66.67,
+            "hasOpen": true
+          },
+          {
+            "sym": "XOM",
+            "return": 38.32,
+            "buyHold": 128.46,
+            "maxDD": -53.52,
+            "exposure": 50.54,
+            "closedTrades": 16,
+            "tradeWin": 81.25,
+            "hasOpen": false
+          }
+        ]
+      },
+      "S2_WT_BEAR": {
+        "n": 20,
+        "medianAssetReturn": 98.28,
+        "medianBuyHold": 218.53,
+        "beatsBuyHold": 1,
+        "beatsNaive": 11,
+        "medianMdd": -36.13,
+        "medianExposure": 46.12,
+        "completedRoundTrips": 272,
+        "allTradeWinRate": 75.37,
+        "noClosedTradeAssets": [],
+        "perStock": [
+          {
+            "sym": "AAPL",
+            "return": 197.27,
+            "buyHold": 326.55,
+            "maxDD": -25.89,
+            "exposure": 49.22,
+            "closedTrades": 14,
+            "tradeWin": 85.71,
+            "hasOpen": false
+          },
+          {
+            "sym": "ABT",
+            "return": -15.72,
+            "buyHold": 27.85,
+            "maxDD": -37.88,
+            "exposure": 55.5,
+            "closedTrades": 10,
+            "tradeWin": 60,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMD",
+            "return": 735.96,
+            "buyHold": 901.51,
+            "maxDD": -47.8,
+            "exposure": 53.11,
+            "closedTrades": 15,
+            "tradeWin": 73.33,
+            "hasOpen": true
+          },
+          {
+            "sym": "AMZN",
+            "return": 118.52,
+            "buyHold": 176.26,
+            "maxDD": -32.43,
+            "exposure": 52.99,
+            "closedTrades": 13,
+            "tradeWin": 84.62,
+            "hasOpen": false
+          },
+          {
+            "sym": "BAC",
+            "return": 24.41,
+            "buyHold": 74.69,
+            "maxDD": -48.22,
+            "exposure": 49.16,
+            "closedTrades": 13,
+            "tradeWin": 76.92,
+            "hasOpen": false
+          },
+          {
+            "sym": "CAT",
+            "return": 19.34,
+            "buyHold": 433.61,
+            "maxDD": -34.26,
+            "exposure": 44.62,
+            "closedTrades": 11,
+            "tradeWin": 36.36,
+            "hasOpen": true
+          },
+          {
+            "sym": "COST",
+            "return": 106.34,
+            "buyHold": 220.02,
+            "maxDD": -23.51,
+            "exposure": 40.5,
+            "closedTrades": 15,
+            "tradeWin": 80,
+            "hasOpen": true
+          },
+          {
+            "sym": "GOOGL",
+            "return": 134.76,
+            "buyHold": 401.82,
+            "maxDD": -36.81,
+            "exposure": 46.36,
+            "closedTrades": 13,
+            "tradeWin": 84.62,
+            "hasOpen": false
+          },
+          {
+            "sym": "GS",
+            "return": 135.55,
+            "buyHold": 342.78,
+            "maxDD": -40.04,
+            "exposure": 43.31,
+            "closedTrades": 13,
+            "tradeWin": 84.62,
+            "hasOpen": true
+          },
+          {
+            "sym": "JNJ",
+            "return": 42.29,
+            "buyHold": 81.7,
+            "maxDD": -22.54,
+            "exposure": 52.21,
+            "closedTrades": 15,
+            "tradeWin": 73.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "JPM",
+            "return": 21.97,
+            "buyHold": 153.92,
+            "maxDD": -36.13,
+            "exposure": 43.73,
+            "closedTrades": 12,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "LLY",
+            "return": 641.35,
+            "buyHold": 775.21,
+            "maxDD": -23.64,
+            "exposure": 45.46,
+            "closedTrades": 18,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "META",
+            "return": -10.8,
+            "buyHold": 176,
+            "maxDD": -66.92,
+            "exposure": 40.5,
+            "closedTrades": 13,
+            "tradeWin": 69.23,
+            "hasOpen": false
+          },
+          {
+            "sym": "MSFT",
+            "return": 98.28,
+            "buyHold": 218.53,
+            "maxDD": -32.1,
+            "exposure": 46.12,
+            "closedTrades": 14,
+            "tradeWin": 78.57,
+            "hasOpen": false
+          },
+          {
+            "sym": "NVDA",
+            "return": 428.12,
+            "buyHold": 3587.84,
+            "maxDD": -52.37,
+            "exposure": 35.72,
+            "closedTrades": 13,
+            "tradeWin": 69.23,
+            "hasOpen": false
+          },
+          {
+            "sym": "ORCL",
+            "return": 32.83,
+            "buyHold": 179.09,
+            "maxDD": -68.58,
+            "exposure": 44.44,
+            "closedTrades": 15,
+            "tradeWin": 73.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "PG",
+            "return": 61.29,
+            "buyHold": 16.21,
+            "maxDD": -22.01,
+            "exposure": 56.21,
+            "closedTrades": 14,
+            "tradeWin": 71.43,
+            "hasOpen": false
+          },
+          {
+            "sym": "TSLA",
+            "return": 529.14,
+            "buyHold": 1196.28,
+            "maxDD": -59.54,
+            "exposure": 46.12,
+            "closedTrades": 11,
+            "tradeWin": 81.82,
+            "hasOpen": true
+          },
+          {
+            "sym": "WMT",
+            "return": 41.61,
+            "buyHold": 163.9,
+            "maxDD": -22.89,
+            "exposure": 36.62,
+            "closedTrades": 14,
+            "tradeWin": 71.43,
+            "hasOpen": true
+          },
+          {
+            "sym": "XOM",
+            "return": 79.77,
+            "buyHold": 128.46,
+            "maxDD": -53.52,
+            "exposure": 55.26,
+            "closedTrades": 16,
+            "tradeWin": 81.25,
+            "hasOpen": false
+          }
+        ]
+      },
+      "S3_PRICE_BREAK": {
+        "n": 20,
+        "medianAssetReturn": 92.2,
+        "medianBuyHold": 218.53,
+        "beatsBuyHold": 3,
+        "beatsNaive": 14,
+        "medianMdd": -36.05,
+        "medianExposure": 53.82,
+        "completedRoundTrips": 248,
+        "allTradeWinRate": 70.16,
+        "noClosedTradeAssets": [],
+        "perStock": [
+          {
+            "sym": "AAPL",
+            "return": 316.94,
+            "buyHold": 326.55,
+            "maxDD": -25.89,
+            "exposure": 58.3,
+            "closedTrades": 13,
+            "tradeWin": 92.31,
+            "hasOpen": false
+          },
+          {
+            "sym": "ABT",
+            "return": -17.48,
+            "buyHold": 27.85,
+            "maxDD": -41.12,
+            "exposure": 68.22,
+            "closedTrades": 6,
+            "tradeWin": 50,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMD",
+            "return": 541.53,
+            "buyHold": 901.51,
+            "maxDD": -51.41,
+            "exposure": 49.7,
+            "closedTrades": 16,
+            "tradeWin": 62.5,
+            "hasOpen": true
+          },
+          {
+            "sym": "AMZN",
+            "return": 92.2,
+            "buyHold": 176.26,
+            "maxDD": -36.05,
+            "exposure": 54.9,
+            "closedTrades": 14,
+            "tradeWin": 57.14,
+            "hasOpen": false
+          },
+          {
+            "sym": "BAC",
+            "return": 63.21,
+            "buyHold": 74.69,
+            "maxDD": -48.22,
+            "exposure": 56.93,
+            "closedTrades": 12,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "CAT",
+            "return": 32.59,
+            "buyHold": 433.61,
+            "maxDD": -34.26,
+            "exposure": 50.06,
+            "closedTrades": 11,
+            "tradeWin": 36.36,
+            "hasOpen": true
+          },
+          {
+            "sym": "COST",
+            "return": 242.01,
+            "buyHold": 220.02,
+            "maxDD": -26.53,
+            "exposure": 61.53,
+            "closedTrades": 12,
+            "tradeWin": 83.33,
+            "hasOpen": true
+          },
+          {
+            "sym": "GOOGL",
+            "return": 104.42,
+            "buyHold": 401.82,
+            "maxDD": -38.05,
+            "exposure": 49.7,
+            "closedTrades": 13,
+            "tradeWin": 84.62,
+            "hasOpen": false
+          },
+          {
+            "sym": "GS",
+            "return": 215.92,
+            "buyHold": 342.78,
+            "maxDD": -40.04,
+            "exposure": 51.61,
+            "closedTrades": 12,
+            "tradeWin": 83.33,
+            "hasOpen": true
+          },
+          {
+            "sym": "JNJ",
+            "return": 29.12,
+            "buyHold": 81.7,
+            "maxDD": -22.6,
+            "exposure": 64.87,
+            "closedTrades": 11,
+            "tradeWin": 63.64,
+            "hasOpen": false
+          },
+          {
+            "sym": "JPM",
+            "return": 47.34,
+            "buyHold": 153.92,
+            "maxDD": -35.8,
+            "exposure": 45.94,
+            "closedTrades": 12,
+            "tradeWin": 66.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "LLY",
+            "return": 844.29,
+            "buyHold": 775.21,
+            "maxDD": -23.64,
+            "exposure": 58.12,
+            "closedTrades": 15,
+            "tradeWin": 80,
+            "hasOpen": false
+          },
+          {
+            "sym": "META",
+            "return": 49.69,
+            "buyHold": 176,
+            "maxDD": -66.69,
+            "exposure": 44.62,
+            "closedTrades": 13,
+            "tradeWin": 76.92,
+            "hasOpen": false
+          },
+          {
+            "sym": "MSFT",
+            "return": 102.38,
+            "buyHold": 218.53,
+            "maxDD": -32.18,
+            "exposure": 52.21,
+            "closedTrades": 13,
+            "tradeWin": 76.92,
+            "hasOpen": false
+          },
+          {
+            "sym": "NVDA",
+            "return": 564.43,
+            "buyHold": 3587.84,
+            "maxDD": -50.23,
+            "exposure": 38.83,
+            "closedTrades": 13,
+            "tradeWin": 76.92,
+            "hasOpen": false
+          },
+          {
+            "sym": "ORCL",
+            "return": 42.31,
+            "buyHold": 179.09,
+            "maxDD": -66.95,
+            "exposure": 53.82,
+            "closedTrades": 15,
+            "tradeWin": 53.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "PG",
+            "return": 49.61,
+            "buyHold": 16.21,
+            "maxDD": -21.53,
+            "exposure": 62.72,
+            "closedTrades": 11,
+            "tradeWin": 54.55,
+            "hasOpen": false
+          },
+          {
+            "sym": "TSLA",
+            "return": 228.82,
+            "buyHold": 1196.28,
+            "maxDD": -45.67,
+            "exposure": 47.19,
+            "closedTrades": 11,
+            "tradeWin": 81.82,
+            "hasOpen": true
+          },
+          {
+            "sym": "WMT",
+            "return": 37.34,
+            "buyHold": 163.9,
+            "maxDD": -23.18,
+            "exposure": 43.37,
+            "closedTrades": 14,
+            "tradeWin": 64.29,
+            "hasOpen": true
+          },
+          {
+            "sym": "XOM",
+            "return": 65.42,
+            "buyHold": 128.46,
+            "maxDD": -53.52,
+            "exposure": 63.62,
+            "closedTrades": 11,
+            "tradeWin": 72.73,
+            "hasOpen": true
+          }
+        ]
+      },
+      "S4_WT_AND_PRICE": {
+        "n": 20,
+        "medianAssetReturn": 122.68,
+        "medianBuyHold": 218.53,
+        "beatsBuyHold": 2,
+        "beatsNaive": 17,
+        "medianMdd": -38.81,
+        "medianExposure": 62.78,
+        "completedRoundTrips": 211,
+        "allTradeWinRate": 71.09,
+        "noClosedTradeAssets": [],
+        "perStock": [
+          {
+            "sym": "AAPL",
+            "return": 302.61,
+            "buyHold": 326.55,
+            "maxDD": -27.9,
+            "exposure": 62.49,
+            "closedTrades": 12,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "ABT",
+            "return": -7.17,
+            "buyHold": 27.85,
+            "maxDD": -41.12,
+            "exposure": 70.55,
+            "closedTrades": 6,
+            "tradeWin": 50,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMD",
+            "return": 516.78,
+            "buyHold": 901.51,
+            "maxDD": -51.41,
+            "exposure": 53.7,
+            "closedTrades": 15,
+            "tradeWin": 53.33,
+            "hasOpen": true
+          },
+          {
+            "sym": "AMZN",
+            "return": 86.56,
+            "buyHold": 176.26,
+            "maxDD": -36.05,
+            "exposure": 56.69,
+            "closedTrades": 13,
+            "tradeWin": 53.85,
+            "hasOpen": true
+          },
+          {
+            "sym": "BAC",
+            "return": 62.82,
+            "buyHold": 74.69,
+            "maxDD": -48.22,
+            "exposure": 64.87,
+            "closedTrades": 11,
+            "tradeWin": 81.82,
+            "hasOpen": false
+          },
+          {
+            "sym": "CAT",
+            "return": 167.32,
+            "buyHold": 433.61,
+            "maxDD": -34.26,
+            "exposure": 63.8,
+            "closedTrades": 9,
+            "tradeWin": 55.56,
+            "hasOpen": true
+          },
+          {
+            "sym": "COST",
+            "return": 304.92,
+            "buyHold": 220.02,
+            "maxDD": -26.53,
+            "exposure": 79.87,
+            "closedTrades": 10,
+            "tradeWin": 90,
+            "hasOpen": true
+          },
+          {
+            "sym": "GOOGL",
+            "return": 179.21,
+            "buyHold": 401.82,
+            "maxDD": -38.81,
+            "exposure": 63.26,
+            "closedTrades": 11,
+            "tradeWin": 72.73,
+            "hasOpen": true
+          },
+          {
+            "sym": "GS",
+            "return": 235.68,
+            "buyHold": 342.78,
+            "maxDD": -40.04,
+            "exposure": 54.78,
+            "closedTrades": 11,
+            "tradeWin": 81.82,
+            "hasOpen": true
+          },
+          {
+            "sym": "JNJ",
+            "return": 22.78,
+            "buyHold": 81.7,
+            "maxDD": -23.9,
+            "exposure": 70.85,
+            "closedTrades": 9,
+            "tradeWin": 55.56,
+            "hasOpen": false
+          },
+          {
+            "sym": "JPM",
+            "return": 13.53,
+            "buyHold": 153.92,
+            "maxDD": -40.83,
+            "exposure": 53.35,
+            "closedTrades": 8,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "LLY",
+            "return": 454.66,
+            "buyHold": 775.21,
+            "maxDD": -26.25,
+            "exposure": 62.78,
+            "closedTrades": 10,
+            "tradeWin": 90,
+            "hasOpen": true
+          },
+          {
+            "sym": "META",
+            "return": 35.63,
+            "buyHold": 176,
+            "maxDD": -65.51,
+            "exposure": 48.98,
+            "closedTrades": 13,
+            "tradeWin": 76.92,
+            "hasOpen": false
+          },
+          {
+            "sym": "MSFT",
+            "return": 122.68,
+            "buyHold": 218.53,
+            "maxDD": -34.18,
+            "exposure": 62.78,
+            "closedTrades": 10,
+            "tradeWin": 80,
+            "hasOpen": false
+          },
+          {
+            "sym": "NVDA",
+            "return": 311.19,
+            "buyHold": 3587.84,
+            "maxDD": -58.48,
+            "exposure": 42.95,
+            "closedTrades": 10,
+            "tradeWin": 70,
+            "hasOpen": false
+          },
+          {
+            "sym": "ORCL",
+            "return": 45.15,
+            "buyHold": 179.09,
+            "maxDD": -68.58,
+            "exposure": 62.66,
+            "closedTrades": 13,
+            "tradeWin": 53.85,
+            "hasOpen": true
+          },
+          {
+            "sym": "PG",
+            "return": 65.38,
+            "buyHold": 16.21,
+            "maxDD": -21.53,
+            "exposure": 70.67,
+            "closedTrades": 11,
+            "tradeWin": 63.64,
+            "hasOpen": false
+          },
+          {
+            "sym": "TSLA",
+            "return": 520.67,
+            "buyHold": 1196.28,
+            "maxDD": -48,
+            "exposure": 54,
+            "closedTrades": 10,
+            "tradeWin": 80,
+            "hasOpen": true
+          },
+          {
+            "sym": "WMT",
+            "return": 105.38,
+            "buyHold": 163.9,
+            "maxDD": -22.89,
+            "exposure": 56.15,
+            "closedTrades": 11,
+            "tradeWin": 81.82,
+            "hasOpen": true
+          },
+          {
+            "sym": "XOM",
+            "return": 105.9,
+            "buyHold": 128.46,
+            "maxDD": -53.52,
+            "exposure": 77.9,
+            "closedTrades": 8,
+            "tradeWin": 75,
+            "hasOpen": true
+          }
+        ]
+      }
+    },
+    "early": {
+      "S0_TOP_ENTER": {
+        "n": 20,
+        "medianAssetReturn": 42.41,
+        "medianBuyHold": 97.32,
+        "beatsBuyHold": 4,
+        "beatsNaive": 0,
+        "medianMdd": -33.08,
+        "medianExposure": 41.65,
+        "completedRoundTrips": 175,
+        "allTradeWinRate": 72.57,
+        "noClosedTradeAssets": [],
+        "perStock": [
+          {
+            "sym": "AAPL",
+            "return": 85.15,
+            "buyHold": 159.19,
+            "maxDD": -25.89,
+            "exposure": 44.04,
+            "closedTrades": 8,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "ABT",
+            "return": -10.16,
+            "buyHold": 27.52,
+            "maxDD": -28.71,
+            "exposure": 46.32,
+            "closedTrades": 6,
+            "tradeWin": 50,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMD",
+            "return": 109,
+            "buyHold": 213.63,
+            "maxDD": -34.53,
+            "exposure": 45.03,
+            "closedTrades": 10,
+            "tradeWin": 70,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMZN",
+            "return": 25.6,
+            "buyHold": 61.58,
+            "maxDD": -33.08,
+            "exposure": 43.84,
+            "closedTrades": 8,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "BAC",
+            "return": -0.38,
+            "buyHold": -5.04,
+            "maxDD": -48.22,
+            "exposure": 49.01,
+            "closedTrades": 9,
+            "tradeWin": 66.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "CAT",
+            "return": 4.67,
+            "buyHold": 97.84,
+            "maxDD": -34.26,
+            "exposure": 45.92,
+            "closedTrades": 7,
+            "tradeWin": 57.14,
+            "hasOpen": false
+          },
+          {
+            "sym": "COST",
+            "return": 32.84,
+            "buyHold": 123.8,
+            "maxDD": -23.51,
+            "exposure": 30.62,
+            "closedTrades": 9,
+            "tradeWin": 66.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "GOOGL",
+            "return": 67.11,
+            "buyHold": 106.57,
+            "maxDD": -34.56,
+            "exposure": 38.57,
+            "closedTrades": 9,
+            "tradeWin": 77.78,
+            "hasOpen": false
+          },
+          {
+            "sym": "GS",
+            "return": 69.81,
+            "buyHold": 66.5,
+            "maxDD": -40.04,
+            "exposure": 49.4,
+            "closedTrades": 11,
+            "tradeWin": 81.82,
+            "hasOpen": false
+          },
+          {
+            "sym": "JNJ",
+            "return": 43.2,
+            "buyHold": 7.13,
+            "maxDD": -22.54,
+            "exposure": 41.35,
+            "closedTrades": 12,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "JPM",
+            "return": 9.06,
+            "buyHold": 21.32,
+            "maxDD": -35.8,
+            "exposure": 41.65,
+            "closedTrades": 9,
+            "tradeWin": 66.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "LLY",
+            "return": 154.06,
+            "buyHold": 341.05,
+            "maxDD": -11.35,
+            "exposure": 32.5,
+            "closedTrades": 12,
+            "tradeWin": 91.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "META",
+            "return": -20.62,
+            "buyHold": 70.69,
+            "maxDD": -61.72,
+            "exposure": 38.57,
+            "closedTrades": 7,
+            "tradeWin": 42.86,
+            "hasOpen": false
+          },
+          {
+            "sym": "MSFT",
+            "return": 58.69,
+            "buyHold": 136.12,
+            "maxDD": -20.21,
+            "exposure": 34,
+            "closedTrades": 8,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "NVDA",
+            "return": 120.08,
+            "buyHold": 727.2,
+            "maxDD": -47.55,
+            "exposure": 29.22,
+            "closedTrades": 7,
+            "tradeWin": 57.14,
+            "hasOpen": false
+          },
+          {
+            "sym": "ORCL",
+            "return": 42.41,
+            "buyHold": 97.32,
+            "maxDD": -32.21,
+            "exposure": 31.11,
+            "closedTrades": 8,
+            "tradeWin": 87.5,
+            "hasOpen": true
+          },
+          {
+            "sym": "PG",
+            "return": 7.8,
+            "buyHold": 17.35,
+            "maxDD": -21.53,
+            "exposure": 46.52,
+            "closedTrades": 8,
+            "tradeWin": 62.5,
+            "hasOpen": true
+          },
+          {
+            "sym": "TSLA",
+            "return": 106.14,
+            "buyHold": 775.39,
+            "maxDD": -64.01,
+            "exposure": 39.56,
+            "closedTrades": 7,
+            "tradeWin": 85.71,
+            "hasOpen": true
+          },
+          {
+            "sym": "WMT",
+            "return": 31.2,
+            "buyHold": 32.24,
+            "maxDD": -21.72,
+            "exposure": 35.69,
+            "closedTrades": 10,
+            "tradeWin": 80,
+            "hasOpen": true
+          },
+          {
+            "sym": "XOM",
+            "return": 41.94,
+            "buyHold": 41.91,
+            "maxDD": -53.52,
+            "exposure": 45.63,
+            "closedTrades": 10,
+            "tradeWin": 80,
+            "hasOpen": true
+          }
+        ]
+      },
+      "S1_PAI_DOWN80": {
+        "n": 20,
+        "medianAssetReturn": 36.59,
+        "medianBuyHold": 97.32,
+        "beatsBuyHold": 3,
+        "beatsNaive": 13,
+        "medianMdd": -32.43,
+        "medianExposure": 47.81,
+        "completedRoundTrips": 173,
+        "allTradeWinRate": 71.1,
+        "noClosedTradeAssets": [],
+        "perStock": [
+          {
+            "sym": "AAPL",
+            "return": 109.33,
+            "buyHold": 159.19,
+            "maxDD": -25.89,
+            "exposure": 49.7,
+            "closedTrades": 8,
+            "tradeWin": 87.5,
+            "hasOpen": false
+          },
+          {
+            "sym": "ABT",
+            "return": 0.11,
+            "buyHold": 27.52,
+            "maxDD": -30.72,
+            "exposure": 50.3,
+            "closedTrades": 6,
+            "tradeWin": 50,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMD",
+            "return": 167.3,
+            "buyHold": 213.63,
+            "maxDD": -35.44,
+            "exposure": 51.69,
+            "closedTrades": 10,
+            "tradeWin": 70,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMZN",
+            "return": 28.35,
+            "buyHold": 61.58,
+            "maxDD": -32.43,
+            "exposure": 49.11,
+            "closedTrades": 8,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "BAC",
+            "return": -6.37,
+            "buyHold": -5.04,
+            "maxDD": -48.22,
+            "exposure": 52.68,
+            "closedTrades": 9,
+            "tradeWin": 66.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "CAT",
+            "return": 16.86,
+            "buyHold": 97.84,
+            "maxDD": -34.26,
+            "exposure": 52.09,
+            "closedTrades": 6,
+            "tradeWin": 33.33,
+            "hasOpen": true
+          },
+          {
+            "sym": "COST",
+            "return": 30.04,
+            "buyHold": 123.8,
+            "maxDD": -23.51,
+            "exposure": 35.29,
+            "closedTrades": 9,
+            "tradeWin": 77.78,
+            "hasOpen": false
+          },
+          {
+            "sym": "GOOGL",
+            "return": 42.05,
+            "buyHold": 106.57,
+            "maxDD": -35.74,
+            "exposure": 41.95,
+            "closedTrades": 8,
+            "tradeWin": 75,
+            "hasOpen": true
+          },
+          {
+            "sym": "GS",
+            "return": 123.01,
+            "buyHold": 66.5,
+            "maxDD": -40.04,
+            "exposure": 58.65,
+            "closedTrades": 11,
+            "tradeWin": 81.82,
+            "hasOpen": false
+          },
+          {
+            "sym": "JNJ",
+            "return": 36.59,
+            "buyHold": 7.13,
+            "maxDD": -22.54,
+            "exposure": 47.81,
+            "closedTrades": 12,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "JPM",
+            "return": 9.55,
+            "buyHold": 21.32,
+            "maxDD": -35.8,
+            "exposure": 47.61,
+            "closedTrades": 9,
+            "tradeWin": 66.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "LLY",
+            "return": 270.13,
+            "buyHold": 341.05,
+            "maxDD": -13.03,
+            "exposure": 42.15,
+            "closedTrades": 12,
+            "tradeWin": 91.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "META",
+            "return": -21.62,
+            "buyHold": 70.69,
+            "maxDD": -65.16,
+            "exposure": 42.35,
+            "closedTrades": 7,
+            "tradeWin": 57.14,
+            "hasOpen": false
+          },
+          {
+            "sym": "MSFT",
+            "return": 66.61,
+            "buyHold": 136.12,
+            "maxDD": -20.03,
+            "exposure": 41.05,
+            "closedTrades": 8,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "NVDA",
+            "return": 138.86,
+            "buyHold": 727.2,
+            "maxDD": -50.23,
+            "exposure": 34.89,
+            "closedTrades": 7,
+            "tradeWin": 57.14,
+            "hasOpen": false
+          },
+          {
+            "sym": "ORCL",
+            "return": 45.98,
+            "buyHold": 97.32,
+            "maxDD": -32.3,
+            "exposure": 37.08,
+            "closedTrades": 8,
+            "tradeWin": 75,
+            "hasOpen": true
+          },
+          {
+            "sym": "PG",
+            "return": 17.95,
+            "buyHold": 17.35,
+            "maxDD": -21.53,
+            "exposure": 52.29,
+            "closedTrades": 8,
+            "tradeWin": 62.5,
+            "hasOpen": true
+          },
+          {
+            "sym": "TSLA",
+            "return": 181.43,
+            "buyHold": 775.39,
+            "maxDD": -62.55,
+            "exposure": 44.43,
+            "closedTrades": 7,
+            "tradeWin": 71.43,
+            "hasOpen": true
+          },
+          {
+            "sym": "WMT",
+            "return": 8.64,
+            "buyHold": 32.24,
+            "maxDD": -22.77,
+            "exposure": 42.05,
+            "closedTrades": 10,
+            "tradeWin": 60,
+            "hasOpen": true
+          },
+          {
+            "sym": "XOM",
+            "return": 17.49,
+            "buyHold": 41.91,
+            "maxDD": -53.52,
+            "exposure": 51.19,
+            "closedTrades": 10,
+            "tradeWin": 80,
+            "hasOpen": true
+          }
+        ]
+      },
+      "S2_WT_BEAR": {
+        "n": 20,
+        "medianAssetReturn": 40.03,
+        "medianBuyHold": 97.32,
+        "beatsBuyHold": 4,
+        "beatsNaive": 13,
+        "medianMdd": -33.16,
+        "medianExposure": 51.99,
+        "completedRoundTrips": 169,
+        "allTradeWinRate": 73.37,
+        "noClosedTradeAssets": [],
+        "perStock": [
+          {
+            "sym": "AAPL",
+            "return": 131.92,
+            "buyHold": 159.19,
+            "maxDD": -25.89,
+            "exposure": 52.19,
+            "closedTrades": 8,
+            "tradeWin": 87.5,
+            "hasOpen": false
+          },
+          {
+            "sym": "ABT",
+            "return": 4.96,
+            "buyHold": 27.52,
+            "maxDD": -27.15,
+            "exposure": 52.19,
+            "closedTrades": 6,
+            "tradeWin": 66.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMD",
+            "return": 214.55,
+            "buyHold": 213.63,
+            "maxDD": -41.97,
+            "exposure": 54.17,
+            "closedTrades": 10,
+            "tradeWin": 70,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMZN",
+            "return": 36.42,
+            "buyHold": 61.58,
+            "maxDD": -32.43,
+            "exposure": 53.48,
+            "closedTrades": 7,
+            "tradeWin": 85.71,
+            "hasOpen": true
+          },
+          {
+            "sym": "BAC",
+            "return": -7.46,
+            "buyHold": -5.04,
+            "maxDD": -48.22,
+            "exposure": 59.34,
+            "closedTrades": 8,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "CAT",
+            "return": 7.22,
+            "buyHold": 97.84,
+            "maxDD": -34.26,
+            "exposure": 51.99,
+            "closedTrades": 7,
+            "tradeWin": 42.86,
+            "hasOpen": false
+          },
+          {
+            "sym": "COST",
+            "return": 40.03,
+            "buyHold": 123.8,
+            "maxDD": -23.51,
+            "exposure": 37.97,
+            "closedTrades": 9,
+            "tradeWin": 77.78,
+            "hasOpen": false
+          },
+          {
+            "sym": "GOOGL",
+            "return": 40.4,
+            "buyHold": 106.57,
+            "maxDD": -36.81,
+            "exposure": 47.51,
+            "closedTrades": 7,
+            "tradeWin": 71.43,
+            "hasOpen": true
+          },
+          {
+            "sym": "GS",
+            "return": 93.56,
+            "buyHold": 66.5,
+            "maxDD": -40.04,
+            "exposure": 61.33,
+            "closedTrades": 11,
+            "tradeWin": 81.82,
+            "hasOpen": false
+          },
+          {
+            "sym": "JNJ",
+            "return": 22.08,
+            "buyHold": 7.13,
+            "maxDD": -22.54,
+            "exposure": 53.78,
+            "closedTrades": 11,
+            "tradeWin": 72.73,
+            "hasOpen": false
+          },
+          {
+            "sym": "JPM",
+            "return": -1.04,
+            "buyHold": 21.32,
+            "maxDD": -36.13,
+            "exposure": 50.7,
+            "closedTrades": 9,
+            "tradeWin": 66.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "LLY",
+            "return": 219.9,
+            "buyHold": 341.05,
+            "maxDD": -14.69,
+            "exposure": 44.04,
+            "closedTrades": 12,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "META",
+            "return": -28.53,
+            "buyHold": 70.69,
+            "maxDD": -66.92,
+            "exposure": 43.74,
+            "closedTrades": 7,
+            "tradeWin": 57.14,
+            "hasOpen": false
+          },
+          {
+            "sym": "MSFT",
+            "return": 66.4,
+            "buyHold": 136.12,
+            "maxDD": -19.86,
+            "exposure": 42.45,
+            "closedTrades": 8,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "NVDA",
+            "return": 157.57,
+            "buyHold": 727.2,
+            "maxDD": -52.37,
+            "exposure": 36.68,
+            "closedTrades": 7,
+            "tradeWin": 57.14,
+            "hasOpen": false
+          },
+          {
+            "sym": "ORCL",
+            "return": 50.19,
+            "buyHold": 97.32,
+            "maxDD": -33.16,
+            "exposure": 37.77,
+            "closedTrades": 8,
+            "tradeWin": 87.5,
+            "hasOpen": true
+          },
+          {
+            "sym": "PG",
+            "return": 26.27,
+            "buyHold": 17.35,
+            "maxDD": -22.01,
+            "exposure": 54.97,
+            "closedTrades": 8,
+            "tradeWin": 62.5,
+            "hasOpen": true
+          },
+          {
+            "sym": "TSLA",
+            "return": 266.87,
+            "buyHold": 775.39,
+            "maxDD": -59.54,
+            "exposure": 45.73,
+            "closedTrades": 7,
+            "tradeWin": 85.71,
+            "hasOpen": true
+          },
+          {
+            "sym": "WMT",
+            "return": 13.76,
+            "buyHold": 32.24,
+            "maxDD": -22.89,
+            "exposure": 41.55,
+            "closedTrades": 9,
+            "tradeWin": 66.67,
+            "hasOpen": true
+          },
+          {
+            "sym": "XOM",
+            "return": 37.99,
+            "buyHold": 41.91,
+            "maxDD": -53.52,
+            "exposure": 54.97,
+            "closedTrades": 10,
+            "tradeWin": 80,
+            "hasOpen": true
+          }
+        ]
+      },
+      "S3_PRICE_BREAK": {
+        "n": 20,
+        "medianAssetReturn": 40.71,
+        "medianBuyHold": 97.32,
+        "beatsBuyHold": 7,
+        "beatsNaive": 14,
+        "medianMdd": -35.8,
+        "medianExposure": 57.55,
+        "completedRoundTrips": 150,
+        "allTradeWinRate": 64,
+        "noClosedTradeAssets": [],
+        "perStock": [
+          {
+            "sym": "AAPL",
+            "return": 195.39,
+            "buyHold": 159.19,
+            "maxDD": -25.89,
+            "exposure": 61.33,
+            "closedTrades": 7,
+            "tradeWin": 85.71,
+            "hasOpen": true
+          },
+          {
+            "sym": "ABT",
+            "return": -0.83,
+            "buyHold": 27.52,
+            "maxDD": -31.85,
+            "exposure": 60.64,
+            "closedTrades": 3,
+            "tradeWin": 66.67,
+            "hasOpen": true
+          },
+          {
+            "sym": "AMD",
+            "return": 138.23,
+            "buyHold": 213.63,
+            "maxDD": -36.99,
+            "exposure": 51.09,
+            "closedTrades": 11,
+            "tradeWin": 63.64,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMZN",
+            "return": 9.03,
+            "buyHold": 61.58,
+            "maxDD": -36.05,
+            "exposure": 51.59,
+            "closedTrades": 8,
+            "tradeWin": 37.5,
+            "hasOpen": true
+          },
+          {
+            "sym": "BAC",
+            "return": 15.86,
+            "buyHold": -5.04,
+            "maxDD": -48.22,
+            "exposure": 65.81,
+            "closedTrades": 7,
+            "tradeWin": 71.43,
+            "hasOpen": true
+          },
+          {
+            "sym": "CAT",
+            "return": 26.52,
+            "buyHold": 97.84,
+            "maxDD": -34.26,
+            "exposure": 55.86,
+            "closedTrades": 7,
+            "tradeWin": 28.57,
+            "hasOpen": true
+          },
+          {
+            "sym": "COST",
+            "return": 138.72,
+            "buyHold": 123.8,
+            "maxDD": -26.53,
+            "exposure": 66.3,
+            "closedTrades": 7,
+            "tradeWin": 71.43,
+            "hasOpen": true
+          },
+          {
+            "sym": "GOOGL",
+            "return": 25.39,
+            "buyHold": 106.57,
+            "maxDD": -38.05,
+            "exposure": 51.49,
+            "closedTrades": 7,
+            "tradeWin": 71.43,
+            "hasOpen": true
+          },
+          {
+            "sym": "GS",
+            "return": 147.75,
+            "buyHold": 66.5,
+            "maxDD": -40.04,
+            "exposure": 68.69,
+            "closedTrades": 9,
+            "tradeWin": 77.78,
+            "hasOpen": true
+          },
+          {
+            "sym": "JNJ",
+            "return": 10.31,
+            "buyHold": 7.13,
+            "maxDD": -22.54,
+            "exposure": 70.08,
+            "closedTrades": 8,
+            "tradeWin": 62.5,
+            "hasOpen": false
+          },
+          {
+            "sym": "JPM",
+            "return": 40.71,
+            "buyHold": 21.32,
+            "maxDD": -35.8,
+            "exposure": 59.44,
+            "closedTrades": 8,
+            "tradeWin": 62.5,
+            "hasOpen": true
+          },
+          {
+            "sym": "LLY",
+            "return": 309.93,
+            "buyHold": 341.05,
+            "maxDD": -13.14,
+            "exposure": 57.55,
+            "closedTrades": 10,
+            "tradeWin": 70,
+            "hasOpen": false
+          },
+          {
+            "sym": "META",
+            "return": -7.85,
+            "buyHold": 70.69,
+            "maxDD": -66.69,
+            "exposure": 44.93,
+            "closedTrades": 7,
+            "tradeWin": 71.43,
+            "hasOpen": false
+          },
+          {
+            "sym": "MSFT",
+            "return": 55.47,
+            "buyHold": 136.12,
+            "maxDD": -20.03,
+            "exposure": 46.12,
+            "closedTrades": 8,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "NVDA",
+            "return": 139.12,
+            "buyHold": 727.2,
+            "maxDD": -50.23,
+            "exposure": 37.18,
+            "closedTrades": 7,
+            "tradeWin": 57.14,
+            "hasOpen": false
+          },
+          {
+            "sym": "ORCL",
+            "return": 50.13,
+            "buyHold": 97.32,
+            "maxDD": -37.03,
+            "exposure": 50.2,
+            "closedTrades": 8,
+            "tradeWin": 62.5,
+            "hasOpen": true
+          },
+          {
+            "sym": "PG",
+            "return": 22.69,
+            "buyHold": 17.35,
+            "maxDD": -21.53,
+            "exposure": 64.12,
+            "closedTrades": 6,
+            "tradeWin": 33.33,
+            "hasOpen": true
+          },
+          {
+            "sym": "TSLA",
+            "return": 238.32,
+            "buyHold": 775.39,
+            "maxDD": -44.52,
+            "exposure": 47.22,
+            "closedTrades": 7,
+            "tradeWin": 85.71,
+            "hasOpen": true
+          },
+          {
+            "sym": "WMT",
+            "return": 13.43,
+            "buyHold": 32.24,
+            "maxDD": -23.18,
+            "exposure": 52.58,
+            "closedTrades": 9,
+            "tradeWin": 55.56,
+            "hasOpen": true
+          },
+          {
+            "sym": "XOM",
+            "return": 36.31,
+            "buyHold": 41.91,
+            "maxDD": -53.52,
+            "exposure": 70.38,
+            "closedTrades": 6,
+            "tradeWin": 66.67,
+            "hasOpen": true
+          }
+        ]
+      },
+      "S4_WT_AND_PRICE": {
+        "n": 20,
+        "medianAssetReturn": 66.39,
+        "medianBuyHold": 97.32,
+        "beatsBuyHold": 6,
+        "beatsNaive": 14,
+        "medianMdd": -36.05,
+        "medianExposure": 64.51,
+        "completedRoundTrips": 128,
+        "allTradeWinRate": 67.97,
+        "noClosedTradeAssets": [],
+        "perStock": [
+          {
+            "sym": "AAPL",
+            "return": 189.97,
+            "buyHold": 159.19,
+            "maxDD": -25.89,
+            "exposure": 61.63,
+            "closedTrades": 7,
+            "tradeWin": 85.71,
+            "hasOpen": true
+          },
+          {
+            "sym": "ABT",
+            "return": 11.57,
+            "buyHold": 27.52,
+            "maxDD": -30.88,
+            "exposure": 64.51,
+            "closedTrades": 3,
+            "tradeWin": 66.67,
+            "hasOpen": true
+          },
+          {
+            "sym": "AMD",
+            "return": 117.99,
+            "buyHold": 213.63,
+            "maxDD": -40.9,
+            "exposure": 54.47,
+            "closedTrades": 10,
+            "tradeWin": 60,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMZN",
+            "return": 12.75,
+            "buyHold": 61.58,
+            "maxDD": -36.05,
+            "exposure": 52.98,
+            "closedTrades": 8,
+            "tradeWin": 37.5,
+            "hasOpen": true
+          },
+          {
+            "sym": "BAC",
+            "return": 7.3,
+            "buyHold": -5.04,
+            "maxDD": -48.22,
+            "exposure": 71.47,
+            "closedTrades": 7,
+            "tradeWin": 71.43,
+            "hasOpen": true
+          },
+          {
+            "sym": "CAT",
+            "return": 55.98,
+            "buyHold": 97.84,
+            "maxDD": -34.26,
+            "exposure": 64.51,
+            "closedTrades": 5,
+            "tradeWin": 40,
+            "hasOpen": true
+          },
+          {
+            "sym": "COST",
+            "return": 171.18,
+            "buyHold": 123.8,
+            "maxDD": -26.53,
+            "exposure": 83.2,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": true
+          },
+          {
+            "sym": "GOOGL",
+            "return": 66.39,
+            "buyHold": 106.57,
+            "maxDD": -38.81,
+            "exposure": 68.89,
+            "closedTrades": 6,
+            "tradeWin": 66.67,
+            "hasOpen": true
+          },
+          {
+            "sym": "GS",
+            "return": 124.83,
+            "buyHold": 66.5,
+            "maxDD": -40.04,
+            "exposure": 70.48,
+            "closedTrades": 8,
+            "tradeWin": 75,
+            "hasOpen": true
+          },
+          {
+            "sym": "JNJ",
+            "return": 5.29,
+            "buyHold": 7.13,
+            "maxDD": -22.54,
+            "exposure": 74.45,
+            "closedTrades": 6,
+            "tradeWin": 50,
+            "hasOpen": true
+          },
+          {
+            "sym": "JPM",
+            "return": 8.42,
+            "buyHold": 21.32,
+            "maxDD": -40.83,
+            "exposure": 71.77,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": true
+          },
+          {
+            "sym": "LLY",
+            "return": 185.28,
+            "buyHold": 341.05,
+            "maxDD": -18.83,
+            "exposure": 62.23,
+            "closedTrades": 7,
+            "tradeWin": 85.71,
+            "hasOpen": false
+          },
+          {
+            "sym": "META",
+            "return": -1.73,
+            "buyHold": 70.69,
+            "maxDD": -65.51,
+            "exposure": 50.8,
+            "closedTrades": 7,
+            "tradeWin": 71.43,
+            "hasOpen": false
+          },
+          {
+            "sym": "MSFT",
+            "return": 66.82,
+            "buyHold": 136.12,
+            "maxDD": -27.67,
+            "exposure": 58.35,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "NVDA",
+            "return": 84,
+            "buyHold": 727.2,
+            "maxDD": -58.48,
+            "exposure": 41.45,
+            "closedTrades": 5,
+            "tradeWin": 60,
+            "hasOpen": false
+          },
+          {
+            "sym": "ORCL",
+            "return": 75.49,
+            "buyHold": 97.32,
+            "maxDD": -37.03,
+            "exposure": 59.05,
+            "closedTrades": 8,
+            "tradeWin": 62.5,
+            "hasOpen": true
+          },
+          {
+            "sym": "PG",
+            "return": 41.78,
+            "buyHold": 17.35,
+            "maxDD": -21.53,
+            "exposure": 73.96,
+            "closedTrades": 6,
+            "tradeWin": 50,
+            "hasOpen": true
+          },
+          {
+            "sym": "TSLA",
+            "return": 334.75,
+            "buyHold": 775.39,
+            "maxDD": -45.72,
+            "exposure": 51.99,
+            "closedTrades": 7,
+            "tradeWin": 85.71,
+            "hasOpen": true
+          },
+          {
+            "sym": "WMT",
+            "return": 35.06,
+            "buyHold": 32.24,
+            "maxDD": -22.89,
+            "exposure": 58.35,
+            "closedTrades": 8,
+            "tradeWin": 75,
+            "hasOpen": true
+          },
+          {
+            "sym": "XOM",
+            "return": 40.95,
+            "buyHold": 41.91,
+            "maxDD": -53.52,
+            "exposure": 80.62,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": true
+          }
+        ]
+      }
+    },
+    "late": {
+      "S0_TOP_ENTER": {
+        "n": 20,
+        "medianAssetReturn": 30.67,
+        "medianBuyHold": 70.91,
+        "beatsBuyHold": 1,
+        "beatsNaive": 0,
+        "medianMdd": -22.99,
+        "medianExposure": 38.02,
+        "completedRoundTrips": 99,
+        "allTradeWinRate": 76.77,
+        "noClosedTradeAssets": [],
+        "perStock": [
+          {
+            "sym": "AAPL",
+            "return": 30.67,
+            "buyHold": 68.8,
+            "maxDD": -22.99,
+            "exposure": 38.02,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "ABT",
+            "return": -13.31,
+            "buyHold": 0.43,
+            "maxDD": -36.78,
+            "exposure": 56.59,
+            "closedTrades": 4,
+            "tradeWin": 50,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMD",
+            "return": 88.44,
+            "buyHold": 225.28,
+            "maxDD": -47.8,
+            "exposure": 45.51,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": true
+          },
+          {
+            "sym": "AMZN",
+            "return": 45.34,
+            "buyHold": 70.91,
+            "maxDD": -21.94,
+            "exposure": 41.62,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": false
+          },
+          {
+            "sym": "BAC",
+            "return": 35.58,
+            "buyHold": 84.95,
+            "maxDD": -25.4,
+            "exposure": 27.84,
+            "closedTrades": 5,
+            "tradeWin": 60,
+            "hasOpen": false
+          },
+          {
+            "sym": "CAT",
+            "return": 28.31,
+            "buyHold": 170.96,
+            "maxDD": -25.07,
+            "exposure": 29.19,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": true
+          },
+          {
+            "sym": "COST",
+            "return": 32.66,
+            "buyHold": 43.55,
+            "maxDD": -8.23,
+            "exposure": 36.38,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": true
+          },
+          {
+            "sym": "GOOGL",
+            "return": 49.91,
+            "buyHold": 144.2,
+            "maxDD": -23.39,
+            "exposure": 36.08,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": false
+          },
+          {
+            "sym": "GS",
+            "return": 25.13,
+            "buyHold": 167.06,
+            "maxDD": -21.11,
+            "exposure": 13.77,
+            "closedTrades": 2,
+            "tradeWin": 100,
+            "hasOpen": true
+          },
+          {
+            "sym": "JNJ",
+            "return": 8.56,
+            "buyHold": 68.9,
+            "maxDD": -16.15,
+            "exposure": 42.22,
+            "closedTrades": 4,
+            "tradeWin": 50,
+            "hasOpen": false
+          },
+          {
+            "sym": "JPM",
+            "return": 20.22,
+            "buyHold": 109.92,
+            "maxDD": -16.27,
+            "exposure": 25.3,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "LLY",
+            "return": 88.78,
+            "buyHold": 98.7,
+            "maxDD": -23.64,
+            "exposure": 36.08,
+            "closedTrades": 6,
+            "tradeWin": 100,
+            "hasOpen": false
+          },
+          {
+            "sym": "META",
+            "return": 59.61,
+            "buyHold": 62.42,
+            "maxDD": -22.62,
+            "exposure": 27.99,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "MSFT",
+            "return": 19.68,
+            "buyHold": 35.28,
+            "maxDD": -30.2,
+            "exposure": 43.86,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "NVDA",
+            "return": 80.23,
+            "buyHold": 346.99,
+            "maxDD": -36.89,
+            "exposure": 25.9,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "ORCL",
+            "return": 13.87,
+            "buyHold": 42.24,
+            "maxDD": -66.21,
+            "exposure": 45.21,
+            "closedTrades": 6,
+            "tradeWin": 66.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "PG",
+            "return": 16,
+            "buyHold": -1.14,
+            "maxDD": -13.9,
+            "exposure": 45.81,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": false
+          },
+          {
+            "sym": "TSLA",
+            "return": -3.11,
+            "buyHold": 46.69,
+            "maxDD": -39.67,
+            "exposure": 38.47,
+            "closedTrades": 4,
+            "tradeWin": 50,
+            "hasOpen": true
+          },
+          {
+            "sym": "WMT",
+            "return": 22.16,
+            "buyHold": 99.47,
+            "maxDD": -10.44,
+            "exposure": 21.11,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": true
+          },
+          {
+            "sym": "XOM",
+            "return": 33.77,
+            "buyHold": 59,
+            "maxDD": -16.3,
+            "exposure": 41.92,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          }
+        ]
+      },
+      "S1_PAI_DOWN80": {
+        "n": 20,
+        "medianAssetReturn": 27.03,
+        "medianBuyHold": 70.91,
+        "beatsBuyHold": 2,
+        "beatsNaive": 8,
+        "medianMdd": -23.64,
+        "medianExposure": 43.26,
+        "completedRoundTrips": 99,
+        "allTradeWinRate": 76.77,
+        "noClosedTradeAssets": [],
+        "perStock": [
+          {
+            "sym": "AAPL",
+            "return": 27.03,
+            "buyHold": 68.8,
+            "maxDD": -22.99,
+            "exposure": 43.26,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "ABT",
+            "return": -10.44,
+            "buyHold": 0.43,
+            "maxDD": -36.78,
+            "exposure": 59.88,
+            "closedTrades": 4,
+            "tradeWin": 50,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMD",
+            "return": 208.32,
+            "buyHold": 225.28,
+            "maxDD": -47.8,
+            "exposure": 51.65,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": true
+          },
+          {
+            "sym": "AMZN",
+            "return": 53.4,
+            "buyHold": 70.91,
+            "maxDD": -23.95,
+            "exposure": 46.41,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": false
+          },
+          {
+            "sym": "BAC",
+            "return": 35.37,
+            "buyHold": 84.95,
+            "maxDD": -25.4,
+            "exposure": 33.08,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": false
+          },
+          {
+            "sym": "CAT",
+            "return": 19.57,
+            "buyHold": 170.96,
+            "maxDD": -31.23,
+            "exposure": 33.08,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": true
+          },
+          {
+            "sym": "COST",
+            "return": 50.02,
+            "buyHold": 43.55,
+            "maxDD": -10.11,
+            "exposure": 43.86,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": true
+          },
+          {
+            "sym": "GOOGL",
+            "return": 69.64,
+            "buyHold": 144.2,
+            "maxDD": -26.34,
+            "exposure": 41.47,
+            "closedTrades": 5,
+            "tradeWin": 100,
+            "hasOpen": false
+          },
+          {
+            "sym": "GS",
+            "return": 27.05,
+            "buyHold": 167.06,
+            "maxDD": -21.11,
+            "exposure": 15.72,
+            "closedTrades": 2,
+            "tradeWin": 100,
+            "hasOpen": true
+          },
+          {
+            "sym": "JNJ",
+            "return": 7.93,
+            "buyHold": 68.9,
+            "maxDD": -14.35,
+            "exposure": 46.11,
+            "closedTrades": 4,
+            "tradeWin": 25,
+            "hasOpen": false
+          },
+          {
+            "sym": "JPM",
+            "return": 19.63,
+            "buyHold": 109.92,
+            "maxDD": -16.27,
+            "exposure": 27.84,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "LLY",
+            "return": 85.93,
+            "buyHold": 98.7,
+            "maxDD": -23.64,
+            "exposure": 41.77,
+            "closedTrades": 6,
+            "tradeWin": 100,
+            "hasOpen": false
+          },
+          {
+            "sym": "META",
+            "return": 56.48,
+            "buyHold": 62.42,
+            "maxDD": -22.62,
+            "exposure": 33.98,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "MSFT",
+            "return": 17.76,
+            "buyHold": 35.28,
+            "maxDD": -30.2,
+            "exposure": 50.9,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "NVDA",
+            "return": 63.27,
+            "buyHold": 346.99,
+            "maxDD": -36.89,
+            "exposure": 31.89,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "ORCL",
+            "return": -19.58,
+            "buyHold": 42.24,
+            "maxDD": -68.94,
+            "exposure": 49.55,
+            "closedTrades": 6,
+            "tradeWin": 50,
+            "hasOpen": false
+          },
+          {
+            "sym": "PG",
+            "return": 9.37,
+            "buyHold": -1.14,
+            "maxDD": -15.45,
+            "exposure": 48.8,
+            "closedTrades": 5,
+            "tradeWin": 60,
+            "hasOpen": false
+          },
+          {
+            "sym": "TSLA",
+            "return": 9.52,
+            "buyHold": 46.69,
+            "maxDD": -39.67,
+            "exposure": 41.77,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": true
+          },
+          {
+            "sym": "WMT",
+            "return": 25.15,
+            "buyHold": 99.47,
+            "maxDD": -12.38,
+            "exposure": 26.05,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": true
+          },
+          {
+            "sym": "XOM",
+            "return": 20.99,
+            "buyHold": 59,
+            "maxDD": -16.3,
+            "exposure": 47.9,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          }
+        ]
+      },
+      "S2_WT_BEAR": {
+        "n": 20,
+        "medianAssetReturn": 28.18,
+        "medianBuyHold": 70.91,
+        "beatsBuyHold": 4,
+        "beatsNaive": 10,
+        "medianMdd": -23.75,
+        "medianExposure": 45.81,
+        "completedRoundTrips": 98,
+        "allTradeWinRate": 77.55,
+        "noClosedTradeAssets": [],
+        "perStock": [
+          {
+            "sym": "AAPL",
+            "return": 28.18,
+            "buyHold": 68.8,
+            "maxDD": -22.99,
+            "exposure": 44.76,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "ABT",
+            "return": -19.7,
+            "buyHold": 0.43,
+            "maxDD": -36.78,
+            "exposure": 60.48,
+            "closedTrades": 4,
+            "tradeWin": 50,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMD",
+            "return": 165.76,
+            "buyHold": 225.28,
+            "maxDD": -47.8,
+            "exposure": 51.5,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": true
+          },
+          {
+            "sym": "AMZN",
+            "return": 42.68,
+            "buyHold": 70.91,
+            "maxDD": -24.86,
+            "exposure": 47.6,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": false
+          },
+          {
+            "sym": "BAC",
+            "return": 34.44,
+            "buyHold": 84.95,
+            "maxDD": -25.4,
+            "exposure": 33.83,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": false
+          },
+          {
+            "sym": "CAT",
+            "return": 11.31,
+            "buyHold": 170.96,
+            "maxDD": -32.95,
+            "exposure": 33.53,
+            "closedTrades": 4,
+            "tradeWin": 25,
+            "hasOpen": true
+          },
+          {
+            "sym": "COST",
+            "return": 47.35,
+            "buyHold": 43.55,
+            "maxDD": -11.12,
+            "exposure": 44.31,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": true
+          },
+          {
+            "sym": "GOOGL",
+            "return": 68.74,
+            "buyHold": 144.2,
+            "maxDD": -26.47,
+            "exposure": 44.31,
+            "closedTrades": 5,
+            "tradeWin": 100,
+            "hasOpen": false
+          },
+          {
+            "sym": "GS",
+            "return": 21.7,
+            "buyHold": 167.06,
+            "maxDD": -21.11,
+            "exposure": 16.17,
+            "closedTrades": 2,
+            "tradeWin": 100,
+            "hasOpen": true
+          },
+          {
+            "sym": "JNJ",
+            "return": 16.55,
+            "buyHold": 68.9,
+            "maxDD": -14.62,
+            "exposure": 49.85,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "JPM",
+            "return": 23.25,
+            "buyHold": 109.92,
+            "maxDD": -16.27,
+            "exposure": 33.23,
+            "closedTrades": 3,
+            "tradeWin": 100,
+            "hasOpen": false
+          },
+          {
+            "sym": "LLY",
+            "return": 131.75,
+            "buyHold": 98.7,
+            "maxDD": -23.64,
+            "exposure": 47.6,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "META",
+            "return": 24.81,
+            "buyHold": 62.42,
+            "maxDD": -23.75,
+            "exposure": 35.63,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "MSFT",
+            "return": 19.16,
+            "buyHold": 35.28,
+            "maxDD": -32.1,
+            "exposure": 51.65,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "NVDA",
+            "return": 105.04,
+            "buyHold": 346.99,
+            "maxDD": -37.85,
+            "exposure": 34.28,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "ORCL",
+            "return": -19.29,
+            "buyHold": 42.24,
+            "maxDD": -68.58,
+            "exposure": 51.05,
+            "closedTrades": 6,
+            "tradeWin": 50,
+            "hasOpen": false
+          },
+          {
+            "sym": "PG",
+            "return": 18.28,
+            "buyHold": -1.14,
+            "maxDD": -15.14,
+            "exposure": 54.04,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": false
+          },
+          {
+            "sym": "TSLA",
+            "return": 80.71,
+            "buyHold": 46.69,
+            "maxDD": -39.67,
+            "exposure": 45.81,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": true
+          },
+          {
+            "sym": "WMT",
+            "return": 20.36,
+            "buyHold": 99.47,
+            "maxDD": -14.33,
+            "exposure": 26.65,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": true
+          },
+          {
+            "sym": "XOM",
+            "return": 33.88,
+            "buyHold": 59,
+            "maxDD": -16.3,
+            "exposure": 54.04,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          }
+        ]
+      },
+      "S3_PRICE_BREAK": {
+        "n": 20,
+        "medianAssetReturn": 30.17,
+        "medianBuyHold": 70.91,
+        "beatsBuyHold": 4,
+        "beatsNaive": 12,
+        "medianMdd": -24.86,
+        "medianExposure": 48.8,
+        "completedRoundTrips": 87,
+        "allTradeWinRate": 77.01,
+        "noClosedTradeAssets": [],
+        "perStock": [
+          {
+            "sym": "AAPL",
+            "return": 48.74,
+            "buyHold": 68.8,
+            "maxDD": -22.99,
+            "exposure": 53.44,
+            "closedTrades": 6,
+            "tradeWin": 100,
+            "hasOpen": false
+          },
+          {
+            "sym": "ABT",
+            "return": -17.79,
+            "buyHold": 0.43,
+            "maxDD": -41.12,
+            "exposure": 77.25,
+            "closedTrades": 2,
+            "tradeWin": 50,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMD",
+            "return": 169.29,
+            "buyHold": 225.28,
+            "maxDD": -49.14,
+            "exposure": 47.6,
+            "closedTrades": 5,
+            "tradeWin": 60,
+            "hasOpen": true
+          },
+          {
+            "sym": "AMZN",
+            "return": 47.6,
+            "buyHold": 70.91,
+            "maxDD": -24.86,
+            "exposure": 48.8,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": false
+          },
+          {
+            "sym": "BAC",
+            "return": 47.07,
+            "buyHold": 84.95,
+            "maxDD": -25.4,
+            "exposure": 42.37,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "CAT",
+            "return": 8.94,
+            "buyHold": 170.96,
+            "maxDD": -32.04,
+            "exposure": 41.02,
+            "closedTrades": 3,
+            "tradeWin": 33.33,
+            "hasOpen": true
+          },
+          {
+            "sym": "COST",
+            "return": 45.22,
+            "buyHold": 43.55,
+            "maxDD": -14.3,
+            "exposure": 54.19,
+            "closedTrades": 4,
+            "tradeWin": 100,
+            "hasOpen": true
+          },
+          {
+            "sym": "GOOGL",
+            "return": 65.92,
+            "buyHold": 144.2,
+            "maxDD": -26.34,
+            "exposure": 46.86,
+            "closedTrades": 5,
+            "tradeWin": 100,
+            "hasOpen": false
+          },
+          {
+            "sym": "GS",
+            "return": 20.99,
+            "buyHold": 167.06,
+            "maxDD": -21.11,
+            "exposure": 16.17,
+            "closedTrades": 2,
+            "tradeWin": 100,
+            "hasOpen": true
+          },
+          {
+            "sym": "JNJ",
+            "return": 17.05,
+            "buyHold": 68.9,
+            "maxDD": -15.13,
+            "exposure": 57.04,
+            "closedTrades": 3,
+            "tradeWin": 66.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "JPM",
+            "return": 6.45,
+            "buyHold": 109.92,
+            "maxDD": -16.27,
+            "exposure": 24.1,
+            "closedTrades": 3,
+            "tradeWin": 66.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "LLY",
+            "return": 130.35,
+            "buyHold": 98.7,
+            "maxDD": -23.64,
+            "exposure": 58.98,
+            "closedTrades": 5,
+            "tradeWin": 100,
+            "hasOpen": false
+          },
+          {
+            "sym": "META",
+            "return": 62.44,
+            "buyHold": 62.42,
+            "maxDD": -27.65,
+            "exposure": 44.16,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "MSFT",
+            "return": 30.17,
+            "buyHold": 35.28,
+            "maxDD": -32.18,
+            "exposure": 61.38,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": false
+          },
+          {
+            "sym": "NVDA",
+            "return": 177.86,
+            "buyHold": 346.99,
+            "maxDD": -36.89,
+            "exposure": 41.32,
+            "closedTrades": 6,
+            "tradeWin": 100,
+            "hasOpen": false
+          },
+          {
+            "sym": "ORCL",
+            "return": -11.49,
+            "buyHold": 42.24,
+            "maxDD": -66.95,
+            "exposure": 56.14,
+            "closedTrades": 6,
+            "tradeWin": 33.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "PG",
+            "return": 13.56,
+            "buyHold": -1.14,
+            "maxDD": -16.15,
+            "exposure": 56.44,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "TSLA",
+            "return": 2.41,
+            "buyHold": 46.69,
+            "maxDD": -41.89,
+            "exposure": 46.26,
+            "closedTrades": 4,
+            "tradeWin": 50,
+            "hasOpen": true
+          },
+          {
+            "sym": "WMT",
+            "return": 18.26,
+            "buyHold": 99.47,
+            "maxDD": -14.97,
+            "exposure": 27.1,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": true
+          },
+          {
+            "sym": "XOM",
+            "return": 24.71,
+            "buyHold": 59,
+            "maxDD": -16.3,
+            "exposure": 51.8,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": true
+          }
+        ]
+      },
+      "S4_WT_AND_PRICE": {
+        "n": 20,
+        "medianAssetReturn": 46.32,
+        "medianBuyHold": 70.91,
+        "beatsBuyHold": 3,
+        "beatsNaive": 13,
+        "medianMdd": -26.25,
+        "medianExposure": 57.04,
+        "completedRoundTrips": 72,
+        "allTradeWinRate": 72.22,
+        "noClosedTradeAssets": [],
+        "perStock": [
+          {
+            "sym": "AAPL",
+            "return": 46.32,
+            "buyHold": 68.8,
+            "maxDD": -27.9,
+            "exposure": 63.47,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": false
+          },
+          {
+            "sym": "ABT",
+            "return": -17.79,
+            "buyHold": 0.43,
+            "maxDD": -41.12,
+            "exposure": 77.25,
+            "closedTrades": 2,
+            "tradeWin": 50,
+            "hasOpen": false
+          },
+          {
+            "sym": "AMD",
+            "return": 182.93,
+            "buyHold": 225.28,
+            "maxDD": -49.14,
+            "exposure": 52.54,
+            "closedTrades": 5,
+            "tradeWin": 40,
+            "hasOpen": true
+          },
+          {
+            "sym": "AMZN",
+            "return": 38.54,
+            "buyHold": 70.91,
+            "maxDD": -24.86,
+            "exposure": 51.2,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": true
+          },
+          {
+            "sym": "BAC",
+            "return": 58.42,
+            "buyHold": 84.95,
+            "maxDD": -25.4,
+            "exposure": 53.74,
+            "closedTrades": 3,
+            "tradeWin": 100,
+            "hasOpen": false
+          },
+          {
+            "sym": "CAT",
+            "return": 78.16,
+            "buyHold": 170.96,
+            "maxDD": -33.14,
+            "exposure": 62.43,
+            "closedTrades": 3,
+            "tradeWin": 66.67,
+            "hasOpen": true
+          },
+          {
+            "sym": "COST",
+            "return": 51.35,
+            "buyHold": 43.55,
+            "maxDD": -19.57,
+            "exposure": 74.7,
+            "closedTrades": 3,
+            "tradeWin": 100,
+            "hasOpen": true
+          },
+          {
+            "sym": "GOOGL",
+            "return": 71.41,
+            "buyHold": 144.2,
+            "maxDD": -29.68,
+            "exposure": 54.34,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": true
+          },
+          {
+            "sym": "GS",
+            "return": 43.82,
+            "buyHold": 167.06,
+            "maxDD": -21.11,
+            "exposure": 20.81,
+            "closedTrades": 2,
+            "tradeWin": 100,
+            "hasOpen": true
+          },
+          {
+            "sym": "JNJ",
+            "return": 17.05,
+            "buyHold": 68.9,
+            "maxDD": -15.13,
+            "exposure": 57.04,
+            "closedTrades": 3,
+            "tradeWin": 66.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "JPM",
+            "return": 6.45,
+            "buyHold": 109.92,
+            "maxDD": -16.27,
+            "exposure": 24.1,
+            "closedTrades": 3,
+            "tradeWin": 66.67,
+            "hasOpen": false
+          },
+          {
+            "sym": "LLY",
+            "return": 94.43,
+            "buyHold": 98.7,
+            "maxDD": -26.25,
+            "exposure": 63.62,
+            "closedTrades": 3,
+            "tradeWin": 100,
+            "hasOpen": true
+          },
+          {
+            "sym": "META",
+            "return": 38.02,
+            "buyHold": 62.42,
+            "maxDD": -27.65,
+            "exposure": 46.26,
+            "closedTrades": 6,
+            "tradeWin": 83.33,
+            "hasOpen": false
+          },
+          {
+            "sym": "MSFT",
+            "return": 33.48,
+            "buyHold": 35.28,
+            "maxDD": -34.18,
+            "exposure": 69.46,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "NVDA",
+            "return": 123.48,
+            "buyHold": 346.99,
+            "maxDD": -43.53,
+            "exposure": 45.21,
+            "closedTrades": 5,
+            "tradeWin": 80,
+            "hasOpen": false
+          },
+          {
+            "sym": "ORCL",
+            "return": -23.72,
+            "buyHold": 42.24,
+            "maxDD": -68.58,
+            "exposure": 63.62,
+            "closedTrades": 4,
+            "tradeWin": 25,
+            "hasOpen": true
+          },
+          {
+            "sym": "PG",
+            "return": 8.62,
+            "buyHold": -1.14,
+            "maxDD": -16.15,
+            "exposure": 61.53,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": false
+          },
+          {
+            "sym": "TSLA",
+            "return": 50.44,
+            "buyHold": 46.69,
+            "maxDD": -48,
+            "exposure": 56.14,
+            "closedTrades": 3,
+            "tradeWin": 33.33,
+            "hasOpen": true
+          },
+          {
+            "sym": "WMT",
+            "return": 13.78,
+            "buyHold": 99.47,
+            "maxDD": -15.59,
+            "exposure": 31.59,
+            "closedTrades": 2,
+            "tradeWin": 100,
+            "hasOpen": true
+          },
+          {
+            "sym": "XOM",
+            "return": 50.12,
+            "buyHold": 59,
+            "maxDD": -16.3,
+            "exposure": 72.16,
+            "closedTrades": 4,
+            "tradeWin": 75,
+            "hasOpen": true
+          }
+        ]
+      }
+    }
+  }
+}
