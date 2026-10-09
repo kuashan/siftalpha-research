@@ -1,0 +1,35 @@
+name: MatrixQuant R5 Repro
+on:
+  push:
+    branches:
+      - research/matrixquant-top-exit-falsification-20261009
+    paths:
+      - 'research/matrixquant_r5_top_exit/**'
+      - '.github/workflows/matrixquant-r5-repro.yml'
+  workflow_dispatch:
+jobs:
+  deterministic-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Calculate R5 from exact archived OHLCV
+        run: |
+          node research/matrixquant_r5_top_exit/run_r5.js \
+            research/matrixquant_stock_extreme_20261009/raw_batch_01.json \
+            research/matrixquant_stock_extreme_20261009/raw_batch_02.json \
+            research/matrixquant_stock_extreme_20261009/raw_batch_03.json > /tmp/matrixquant-r5-replay.json
+      - name: Require byte-equivalent parsed report
+        run: |
+          node - <<'JS'
+          const fs = require('fs');
+          const assert = require('node:assert/strict');
+          const expected = JSON.parse(fs.readFileSync('research/matrixquant_r5_top_exit/RESULTS_R5_REPRODUCIBLE.json','utf8'));
+          const actual = JSON.parse(fs.readFileSync('/tmp/matrixquant-r5-replay.json','utf8'));
+          assert.deepStrictEqual(actual, expected);
+          if (actual.data.length !== 20) throw Error('Unexpected stock count');
+          console.log('MATRIXQUANT_R5_DETERMINISTIC_REPLAY=PASS');
+          console.log('STOCKS=' + actual.data.length);
+          console.log('CANDIDATE_S0_EVENTS=' + actual.events.S0_TOP_ENTER.dedup.n);
+          console.log('CANDIDATE_S4_EVENTS=' + actual.events.S4_WT_AND_PRICE.dedup.n);
+          JS
