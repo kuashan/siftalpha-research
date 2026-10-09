@@ -255,14 +255,43 @@ def chart_payload(symbol: str) -> dict[str, object]:
             strategy_snapshot = {"analysis_error": str(exc)}
     elif strategy_id == STRATEGY_ZBGE:
         try:
-            # Unfinished candles are display-only; never emit unfilled B/S markers.
+            # Causal indicator hints are visible even when auto-trading is STOPPED.
+            # Only store.list_trade_markers() provides actual FILLED trade markers.
             closed = all_rows[:-1][-int(spec.fetch_limit):]
             points = evaluate_zbge(closed)
-            strategy_snapshot = zbge_chart_snapshot(closed)
+            strategy_snapshot = {
+                **zbge_chart_snapshot(closed),
+                "indicator_b_count": sum(bool(p.buy) for p in points),
+                "indicator_s_count": sum(bool(p.sell) for p in points),
+            }
             strategy_overlay = [
-                {"open_time": p.open_time, "TREND": p.trend}
-                for p in points if p.trend is not None
+                {
+                    "open_time": p.open_time,
+                    "TREND": p.trend,
+                    "CYAN": p.cyan,
+                    "RED": p.red,
+                    "GRAY": p.gray,
+                    "YELLOW": p.gray if p.yellow else None,
+                    "PINK": p.gray if p.pink else None,
+                    "RUSH": 20 + p.rush if p.rush is not None else None,
+                    "RUSH_HOT": p.rush_red,
+                    "FOLLOW": 100 if p.follow_main else None,
+                    "BULL": 100 if p.big_bull else None,
+                    "SMILE": p.smile,
+                }
+                for p in points
             ]
+            for p in points:
+                if p.buy:
+                    strategy_indicator_markers.append({
+                        "open_time": p.open_time, "kind": "ZBGE_BUY_B",
+                        "text": "B",
+                    })
+                if p.sell:
+                    strategy_indicator_markers.append({
+                        "open_time": p.open_time, "kind": "ZBGE_SELL_S",
+                        "text": "S",
+                    })
         except Exception as exc:
             strategy_snapshot = {"analysis_error": str(exc)}
 
