@@ -26,7 +26,5 @@ jobs:
       - name: Compile modified Python modules
         run: |
           python -m py_compile strategy/zbge_strategy.py strategy/registry.py engine/scheduler.py engine/execution.py app.py
-      - name: Run ZBGE B/S and frozen SSSS regressions
-        run: |
-          python -m unittest discover -s tests -p 'test_zbge_bs.py' -v
-          python -m unittest discover -s tests -p 'test_multistrategy_ssss.py' -v
+      - name: Run entire 5s-crypto integration regression suite
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
