@@ -4,12 +4,13 @@ from dataclasses import dataclass
 from typing import Any
 
 from strategy.frozen_signal_engine import evaluate_candles
-from strategy import ssss_strategy, matrixquant_strategy
+from strategy import ssss_strategy, zbge_strategy
 
 
 STRATEGY_5S = "5s_crypto_v1"
 STRATEGY_SSSS = "ssss"
-STRATEGY_MFRA = "matrixquant_pai"
+STRATEGY_ZBGE = "zbge_bs"
+RETIRED_MFRA_ID = "matrixquant_pai"  # legacy ledger recognition only
 
 
 @dataclass(frozen=True)
@@ -71,18 +72,28 @@ _SPECS = {
         order_prefix="ssss",
         description="原始富途 SSSS.ftindex：图标 9 每次买入 25%，图标 15 全部清仓；同根同时出现时清仓优先。",
     ),
-    STRATEGY_MFRA: StrategySpec(
-        strategy_id=STRATEGY_MFRA,
-        label="MatrixQuant PAI",
+    STRATEGY_ZBGE: StrategySpec(
+        strategy_id=STRATEGY_ZBGE,
+        label="ZBGE B/S",
         supported_timeframes=("3m", "5m", "15m", "1h", "2h", "4h", "6h", "12h", "1d"),
         default_timeframe="4h",
         fetch_limit=1000,
-        minimum_closed_bars=250,
+        minimum_closed_bars=180,
         max_fraction=1.0,
-        order_prefix="mfra",
-        description="原始 PAI 收盘向上突破 +5：每次买入 25%，最多 100%；收盘跌破 -5：全部清仓。",
+        order_prefix="zbge",
+        description="B：黄柱+趋势线<20+ZBGE8>15，每次初始资金25%；S：跟随主力>75或连续第3根笑脸，先卖75%再清仓，高于实际持仓成本才卖。",
     ),
 }
+
+
+_RETIRED_MFRA_SPEC = StrategySpec(
+    strategy_id=RETIRED_MFRA_ID,
+    label="PAI 已停用（请清仓后切换）",
+    supported_timeframes=("3m", "5m", "15m", "1h", "2h", "4h", "6h", "12h", "1d"),
+    default_timeframe="4h", fetch_limit=1000, minimum_closed_bars=250,
+    max_fraction=1.0, order_prefix="mfra",
+    description="仅识别旧数据库的策略持仓与订单；禁止新建 PAI 交易。",
+)
 
 
 def strategy_ids() -> tuple[str, ...]:
@@ -91,6 +102,8 @@ def strategy_ids() -> tuple[str, ...]:
 
 def get_spec(strategy_id: str) -> StrategySpec:
     key = str(strategy_id or "").strip().lower()
+    if key == RETIRED_MFRA_ID:
+        return _RETIRED_MFRA_SPEC
     try:
         return _SPECS[key]
     except KeyError as exc:
@@ -389,62 +402,67 @@ def decide_ssss(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> Str
     )
 
 
-def decide_mfra(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> StrategyDecision:
-    """PAI thresholds confirmed only on the latest CLOSED candle.
-
-    Share SSSS's 25%-per-BUY/full-EXIT capital policy and shared M3 executor.
-    This pure decision does not consume a signal until execution persists it.
-    """
-    spec = get_spec(STRATEGY_MFRA)
+def decide_zbge(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> StrategyDecision:
+    """Fixed 25%-of-initial-budget B, 75% then all S, with strict cost guard."""
+    spec = get_spec(STRATEGY_ZBGE)
     if str(timeframe).lower() not in spec.supported_timeframes:
-        raise ValueError(f"MatrixQuant PAI 不支持周期：{timeframe}")
-    points = matrixquant_strategy.evaluate_pai(rows)
+        raise ValueError(f"ZBGE B/S 不支持周期：{timeframe}")
+    points = zbge_strategy.evaluate_zbge(rows)
     if len(points) < spec.minimum_closed_bars:
-        raise ValueError("MatrixQuant PAI 历史已收盘 K 线不足")
+        raise ValueError("ZBGE 已收盘 K 线不足")
     latest = points[-1]
-    if latest.raw is None:
-        raise ValueError("MatrixQuant PAI 暂无有效数值")
     fraction = min(max(float(runtime.get("current_fraction") or 0.0), 0.0), 1.0)
     state = _state(runtime)
-    state.update({
-        "formula_version": matrixquant_strategy.PAI_SOURCE_VERSION,
-        "last_pai_raw": float(latest.raw),
-        "last_detection_bar_open_time": int(latest.open_time),
-    })
+    stage = 1 if int(state.get("sell_stage") or 0) == 1 else 0
     steps: list[StrategyStep] = []
     signal = "HOLD"
     if latest.sell:
-        signal = "MFRA_SELL_MINUS5"
+        signal = "ZBGE_SELL_A" if latest.sell_a else "ZBGE_SELL_B"
         if fraction > 1e-12:
-            steps.append(StrategyStep(
-                code="MFRA_EXIT_ALL", order_code="X100", target_fraction=0.0,
-                rule_ids=("PAI_CROSS_DOWN_MINUS5",), state_after=dict(state),
-            ))
-    elif latest.buy:
-        signal = "MFRA_BUY_PLUS5"
-        if fraction < 1.0 - 1e-12:
-            target = min(1.0, round(fraction + 0.25, 10))
-            pct = int(round((target - fraction) * 100))
-            if pct > 0:
+            cost = runtime.get("position_entry_price")
+            if cost is None or float(cost) <= 0:
+                signal = "ZBGE_S_COST_UNAVAILABLE"
+            elif latest.close <= float(cost):
+                signal = "ZBGE_S_BELOW_COST"
+            else:
+                first = stage == 0
+                target = round(fraction * .25, 10) if first else 0.0
+                next_state = {**state, "sell_stage": 1} if first else {}
                 steps.append(StrategyStep(
-                    code=f"MFRA_BUY_{pct}", order_code=f"B{pct}",
-                    target_fraction=target, rule_ids=("PAI_CROSS_UP_PLUS5",),
-                    state_after=dict(state),
+                    code="ZBGE_SELL_75" if first else "ZBGE_SELL_ALL",
+                    order_code="S75" if first else "X100",
+                    target_fraction=target,
+                    rule_ids=tuple(
+                        key for key, ok in (
+                            ("FOLLOW_MAIN_TREND_GT75", latest.sell_a),
+                            ("SMILE_STREAK_EQ3", latest.sell_b),
+                        ) if ok
+                    ),
+                    state_after=next_state,
                 ))
+    elif latest.buy:
+        signal = "ZBGE_BUY_B"
+        # Never use a partial 25% purchase; use the configured initial budget.
+        if fraction <= .75 + 1e-12:
+            steps.append(StrategyStep(
+                code="ZBGE_BUY_25", order_code="B25",
+                target_fraction=round(fraction + .25, 10),
+                rule_ids=("YELLOW", "TREND_LT20", "ZBGE8_GT15"),
+                state_after=dict(state),
+            ))
+        else:
+            signal = "ZBGE_B_INSUFFICIENT_BUDGET"
     return StrategyDecision(
-        strategy_id=STRATEGY_MFRA,
-        signal=signal,
-        steps=tuple(steps),
-        bar_open_time=int(latest.open_time),
+        strategy_id=STRATEGY_ZBGE, signal=signal,
+        steps=tuple(steps), bar_open_time=int(latest.open_time),
         metadata={
-            "pai_raw": latest.raw,
-            "buy_cross_up5": latest.buy,
-            "sell_cross_down_minus5": latest.sell,
-            "formula_version": matrixquant_strategy.PAI_SOURCE_VERSION,
+            "trend": latest.trend, "absorption": latest.absorption,
+            "yellow": latest.yellow, "smile_count": latest.smile_count,
+            "buy": latest.buy, "sell_a": latest.sell_a, "sell_b": latest.sell_b,
+            "signal_close": latest.close,
         },
-        state_after=state,
+        state_after=dict(state),
     )
-
 
 def decide(strategy_id: str, rows: list[Any], runtime: dict[str, Any], timeframe: str) -> StrategyDecision:
     sid = get_spec(strategy_id).strategy_id
@@ -452,8 +470,10 @@ def decide(strategy_id: str, rows: list[Any], runtime: dict[str, Any], timeframe
         return decide_5s(rows, runtime)
     if sid == STRATEGY_SSSS:
         return decide_ssss(rows, runtime, timeframe)
-    if sid == STRATEGY_MFRA:
-        return decide_mfra(rows, runtime, timeframe)
+    if sid == STRATEGY_ZBGE:
+        return decide_zbge(rows, runtime, timeframe)
+    if sid == RETIRED_MFRA_ID:
+        raise ValueError("MatrixQuant PAI 已停用；请停止旧策略、核对持仓并切换至 ZBGE B/S")
     raise ValueError(f"不支持的策略：{strategy_id}")
 
 
@@ -480,10 +500,14 @@ def strategy_signal_label(strategy_id: str, raw: object) -> str:
             "HOLD": "观望",
         }
         return " + ".join(labels.get(part, part) for part in text.split("+"))
-    if strategy_id == STRATEGY_MFRA:
+    if strategy_id == STRATEGY_ZBGE:
         labels = {
-            "MFRA_BUY_PLUS5": "PAI 买入 25%",
-            "MFRA_SELL_MINUS5": "PAI 全部清仓",
+            "ZBGE_BUY_B": "B 买入初始资金25%",
+            "ZBGE_SELL_A": "S 卖出",
+            "ZBGE_SELL_B": "S 卖出",
+            "ZBGE_S_BELOW_COST": "S 不高于持仓成本，等待下次",
+            "ZBGE_S_COST_UNAVAILABLE": "无法核对成本，停止卖出",
+            "ZBGE_B_INSUFFICIENT_BUDGET": "初始策略资金不足，跳过 B",
             "HOLD": "观望",
         }
         return " + ".join(labels.get(part, part) for part in text.split("+"))

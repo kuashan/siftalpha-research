@@ -10,7 +10,8 @@ from strategy.frozen_signal_engine import BarEvaluation, evaluate_candles
 from strategy.registry import (
     STRATEGY_5S,
     STRATEGY_SSSS,
-    STRATEGY_MFRA,
+    STRATEGY_ZBGE,
+    RETIRED_MFRA_ID,
     baseline_ssss_state,
     decide as decide_strategy,
     get_spec,
@@ -247,13 +248,22 @@ class StrategyScheduler:
             strategy_id = str(cfg.get("strategy_id") or STRATEGY_5S)
             try:
                 spec = get_spec(strategy_id)
+                # Retired PAI selections remain locked until their legacy
+                # positions are reconciled and the user explicitly switches.
+                if strategy_id == RETIRED_MFRA_ID:
+                    self.store.set_run_state(symbol, "BLOCKED")
+                    result[symbol] = {
+                        "state": "BLOCKED", "strategy_id": strategy_id,
+                        "blocked": "MatrixQuant PAI 已移除：停止旧策略、核对仓位并手动切换",
+                    }
+                    continue
                 if timeframe not in spec.supported_timeframes:
                     raise ValueError(f"{spec.label} 不支持当前周期 {timeframe}")
 
                 # SSSS fetch_limit is defined as *closed* bars. Binance also returns
                 # the current open candle, so request one extra row for SSSS.
                 limit = max(self.fetch_limit, int(spec.fetch_limit))
-                if strategy_id in (STRATEGY_SSSS, STRATEGY_MFRA):
+                if strategy_id in (STRATEGY_SSSS, STRATEGY_ZBGE):
                     limit += 1
                 min_closed = max(self.minimum_closed_bars, int(spec.minimum_closed_bars))
                 rows, market_source = self._strategy_rows(
@@ -271,7 +281,7 @@ class StrategyScheduler:
                         )
 
                 closed = self._closed_rows(rows)
-                if strategy_id in (STRATEGY_SSSS, STRATEGY_MFRA) and len(closed) > int(spec.fetch_limit):
+                if strategy_id in (STRATEGY_SSSS, STRATEGY_ZBGE) and len(closed) > int(spec.fetch_limit):
                     # Keep chart and automation on the identical 1000-closed-bar window.
                     closed = closed[-int(spec.fetch_limit):]
                 if len(closed) < min_closed:
@@ -373,10 +383,9 @@ class StrategyScheduler:
                     }
                     continue
 
-                # MatrixQuant is non-repainting at a confirmed candle close.
-                # Never execute a crossover discovered on a stale or delayed
-                # candle as though it were just observed at the next open.
-                if strategy_id == STRATEGY_MFRA and is_new_bar:
+                # ZBGE signals are based on CLOSED bars. Do not trade a stale
+                # delayed signal using a later-than-next bar's open price.
+                if strategy_id == STRATEGY_ZBGE and is_new_bar:
                     signal_open = latest_open_time
                     execution_open = int(rows[-1][0])
                     expected_ms = {
@@ -386,7 +395,7 @@ class StrategyScheduler:
                     }[timeframe]
                     if execution_open - signal_open != expected_ms:
                         self.store.append_audit(
-                            "MFRA_STALE_NEXT_OPEN_BLOCKED", symbol,
+                            "ZBGE_STALE_NEXT_OPEN_BLOCKED", symbol,
                             f"signal_open={signal_open};execution_open={execution_open};expected_ms={expected_ms}",
                         )
                         self.store.baseline_closed_bar(symbol, latest_open_time)
@@ -401,7 +410,21 @@ class StrategyScheduler:
                 # Binance/chart data may receive a final OHLC revision after the first
                 # boundary poll. The persisted icon set, not only bar_open_time, is
                 # therefore the authority for deciding whether a signal is new.
-                decision = self._make_decision(strategy_id, closed, state, timeframe)
+                decision_runtime = state
+                if strategy_id == STRATEGY_ZBGE and float(state.get("current_fraction") or 0) > 1e-12:
+                    # Binance's native entry price, not a reconstructed local
+                    # average, is authoritative for cost-protected exits.
+                    decision_runtime = dict(state)
+                    try:
+                        metrics = adapter.position_metrics(symbol)
+                        decision_runtime["position_entry_price"] = metrics.get("entry_price")
+                    except Exception as exc:
+                        decision_runtime["position_entry_price"] = None
+                        self.store.append_audit(
+                            "ZBGE_COST_LOOKUP_UNAVAILABLE", symbol,
+                            f"{type(exc).__name__}:{exc}",
+                        )
+                decision = self._make_decision(strategy_id, closed, decision_runtime, timeframe)
                 execution_context = {
                     "signal_bar_open_time": latest_open_time,
                     "execution_bar_open_time": int(rows[-1][0]),
@@ -615,7 +638,13 @@ class StrategyScheduler:
                         pending_action=None,
                         run_state="MONITORING",
                         strategy_id=strategy_id,
-                        strategy_state=getattr(decision, "state_after", None),
+                        # A successful fill persists the NEXT sell_stage through
+                        # M3Executor. Never overwrite it with pre-fill decision state.
+                        strategy_state=(
+                            self.store.get_runtime_states()[symbol].get("strategy_state")
+                            if strategy_id == STRATEGY_ZBGE
+                            else getattr(decision, "state_after", None)
+                        ),
                     )
                     state_name = "MONITORING"
                 else:

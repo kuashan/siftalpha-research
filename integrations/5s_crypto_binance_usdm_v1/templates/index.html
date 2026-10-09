@@ -457,7 +457,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
           lastValueVisible: false,
           priceFormat: {type: 'volume'},
         }, nextPane++);
-      } else if (String(payload.strategy_id || '') === 'matrixquant_pai') {
+      } else if (String(payload.strategy_id || '') === 'zbge_bs') {
         stateSeries = chart.addSeries(LW.LineSeries, {
           color: '#65c5d8', lineWidth: 2,
           priceLineVisible: false, lastValueVisible: true,
@@ -529,12 +529,12 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       series.setData(lineData(field));
     });
 
-    if (state.stateSeries && String(payload.strategy_id || '') === 'matrixquant_pai') {
+    if (state.stateSeries && String(payload.strategy_id || '') === 'zbge_bs') {
       state.stateSeries.setData(overlay
-        .filter(row => row.PAI != null && Number.isFinite(Number(row.PAI)))
+        .filter(row => row.TREND != null && Number.isFinite(Number(row.TREND)))
         .map(row => ({
           time: Math.floor(Number(row.open_time) / 1000),
-          value: Number(row.PAI),
+          value: Number(row.TREND),
         })));
     } else if (state.stateSeries) {
       const stateColors = {
@@ -617,11 +617,11 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
         message.textContent = 'SSSS · ' + runtime + ' · 仓位 ' + fraction.toFixed(0) +
           '% · ' + String(strategySnapshot.state || '状态未知') + ' · ' + iconText +
           ' · K线 ' + candles.length + '/1000';
-      } else if (String(payload.strategy_id || '') === 'matrixquant_pai') {
-        const value = Number(strategySnapshot.pai_raw);
-        const paiText = strategySnapshot.pai_raw == null || !Number.isFinite(value)
+      } else if (String(payload.strategy_id || '') === 'zbge_bs') {
+        const value = Number(strategySnapshot.trend);
+        const trendText = strategySnapshot.trend == null || !Number.isFinite(value)
           ? '--' : value.toFixed(2);
-        message.textContent = 'MatrixQuant PAI · ' + runtime + ' · PAI ' + paiText +
+        message.textContent = 'ZBGE B/S · ' + runtime + ' · 趋势线 ' + trendText +
           ' · 仓位 ' + fraction.toFixed(0) + '% · K线 ' + candles.length + '/1000';
       } else {
         message.textContent = payload.strategy_label + ' · ' + runtime +
@@ -634,8 +634,8 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     if (legend) {
       legend.textContent = String(payload.strategy_id || '') === 'ssss'
         ? 'SSSS：💰=买入25% · 💥=全部清仓 · B/X仅代表真实成交'
-        : String(payload.strategy_id || '') === 'matrixquant_pai'
-          ? 'MatrixQuant PAI：向上突破+5买入25% · 跌破-5全部清仓 · B/X仅在成交后显示'
+        : String(payload.strategy_id || '') === 'zbge_bs'
+          ? 'ZBGE：B每次初始资金25% · S先卖75%再清仓 · 高于持仓成本才卖 · 仅成交后显示B/S/X'
           : '5s V1：仅成交成功后显示 B/S/X';
     }
   }

@@ -18,12 +18,12 @@ from storage import StateStore
 from strategy.registry import (
     STRATEGY_5S,
     STRATEGY_SSSS,
-    STRATEGY_MFRA,
+    STRATEGY_ZBGE,
     get_spec,
     strategy_options,
     strategy_signal_label,
 )
-from strategy.matrixquant_strategy import chart_snapshot as mfra_chart_snapshot, evaluate_pai
+from strategy.zbge_strategy import chart_snapshot as zbge_chart_snapshot, evaluate_zbge
 from strategy.ssss_strategy import (
     analyze_ssss,
     closed_bar_window as ssss_closed_bar_window,
@@ -108,7 +108,7 @@ def _timeframe_options(selected_timeframe: str, strategy_id: str) -> str:
         elif strategy_id == STRATEGY_SSSS:
             status = "SSSS 原始指标周期"
         else:
-            status = "MatrixQuant PAI 研究周期"
+            status = "ZBGE B/S 实验周期" if strategy_id == STRATEGY_ZBGE else "已停用的旧策略"
         options.append(
             '<button '
             'type="button" '
@@ -253,18 +253,16 @@ def chart_payload(symbol: str) -> dict[str, object]:
             strategy_indicator_markers = list(ssss_view["indicator_markers"])
         except Exception as exc:
             strategy_snapshot = {"analysis_error": str(exc)}
-    elif strategy_id == STRATEGY_MFRA:
+    elif strategy_id == STRATEGY_ZBGE:
         try:
-            # Strictly CLOSED rows, never the still-forming current candle.
+            # Unfinished candles are display-only; never emit unfilled B/S markers.
             closed = all_rows[:-1][-int(spec.fetch_limit):]
-            points = evaluate_pai(closed)
-            strategy_snapshot = mfra_chart_snapshot(closed)
+            points = evaluate_zbge(closed)
+            strategy_snapshot = zbge_chart_snapshot(closed)
             strategy_overlay = [
-                {"open_time": point.open_time, "PAI": point.raw}
-                for point in points if point.raw is not None
+                {"open_time": p.open_time, "TREND": p.trend}
+                for p in points if p.trend is not None
             ]
-            # No pre-trade B/X marker: execution marker comes ONLY from
-            # store.list_trade_markers() after FILLED confirmation.
         except Exception as exc:
             strategy_snapshot = {"analysis_error": str(exc)}
 
@@ -386,7 +384,7 @@ def render_index(selected_symbol: str | None = None) -> str:
                 f'data-strategy-option="{html.escape(sid)}" '
                 f'role="option" aria-selected="{"true" if is_selected else "false"}">'
                 f'<span>{html.escape("5s V1" if sid == STRATEGY_5S else label)}</span>'
-                f'<small>{html.escape("A/B 60% · C 补至 100% · SELL 全退" if sid == STRATEGY_5S else ("💰 +25% · 💥 全部清仓" if sid == STRATEGY_SSSS else "PAI +5 买25% · -5 全清"))}</small>'
+                f'<small>{html.escape("A/B 60% · C 补至 100% · SELL 全退" if sid == STRATEGY_5S else ("💰 +25% · 💥 全部清仓" if sid == STRATEGY_SSSS else "B 买初始资金25% · S先卖75%再清仓 · 低于成本不卖"))}</small>'
                 f'</button>'
             )
             for sid, label, is_selected in strategy_options(strategy_id)
@@ -402,11 +400,13 @@ def render_index(selected_symbol: str | None = None) -> str:
                 f'<div><small>SSSS 每个 💰 买入 25% 名义价值</small><b>{ssss25.target_notional_usdt:.2f} USDT</b></div>'
                 f'<div><small>SSSS 满仓 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
             )
-        else:
+        elif strategy_id == STRATEGY_ZBGE:
             exposure_html = (
-                f'<div><small>PAI 每次 +5 突破买入 25% 名义价值</small><b>{ssss25.target_notional_usdt:.2f} USDT</b></div>'
-                f'<div><small>MatrixQuant 满仓 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
+                f'<div><small>ZBGE 每个 B 投入初始策略资金25%</small><b>{ssss25.target_notional_usdt:.2f} USDT 名义价值</b></div>'
+                f'<div><small>首次有效 S 卖出持币75%，第二次全部清仓</small><b>低于持仓均价不卖</b></div>'
             )
+        else:
+            exposure_html = '<div><small>旧 PAI 策略已移除</small><b>停止并核对仓位后切换</b></div>'
         exposure_html += (
             f'<div><small>资金费与手续费净额</small><b>{p["funding_fee"] - p["trading_fee"]:+.2f} USDT</b></div>'
         )

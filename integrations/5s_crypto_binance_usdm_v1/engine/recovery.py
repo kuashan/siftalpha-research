@@ -14,7 +14,7 @@ from strategy.registry import STRATEGY_5S, get_spec, strategy_ids
 
 TERMINAL_ORDER_STATES = {"FILLED", "CANCELED", "EXPIRED", "REJECTED", "NOT_FOUND"}
 ACTIVE_ORDER_STATES = {"NEW", "PARTIALLY_FILLED", "PENDING"}
-STRATEGY_PREFIXES = tuple(f"{get_spec(sid).order_prefix}-" for sid in strategy_ids())
+STRATEGY_PREFIXES = tuple(f"{get_spec(sid).order_prefix}-" for sid in strategy_ids()) + ("mfra-",)  # retired PAI historical orders
 
 
 class RecoveryBlocked(RuntimeError):

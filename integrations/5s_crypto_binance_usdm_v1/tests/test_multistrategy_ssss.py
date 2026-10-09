@@ -15,7 +15,7 @@ from exchange.binance_usdm_testnet import SymbolRules
 from storage import StateStore
 from strategy.registry import (
     STRATEGY_5S,
-    STRATEGY_MFRA,
+    STRATEGY_ZBGE,
     STRATEGY_SSSS,
     StrategyDecision,
     StrategyStep,
@@ -185,8 +185,8 @@ class SSSSTradingRuleTests(unittest.TestCase):
         self.assertNotIn("💥", strategy_signal_label(STRATEGY_SSSS, "SSSS_EXIT_15"))
         self.assertNotIn("图标", strategy_signal_label(STRATEGY_SSSS, "SSSS_EXIT_15"))
 
-    def test_registered_strategies_include_5s_ssss_and_mfra(self):
-        self.assertEqual(strategy_ids(), (STRATEGY_5S, STRATEGY_SSSS, STRATEGY_MFRA))
+    def test_registered_strategies_include_5s_ssss_and_zbge(self):
+        self.assertEqual(strategy_ids(), (STRATEGY_5S, STRATEGY_SSSS, STRATEGY_ZBGE))
         spec = get_spec(STRATEGY_SSSS)
         self.assertEqual(spec.max_fraction, 1.0)
         self.assertEqual(spec.order_prefix, "ssss")
