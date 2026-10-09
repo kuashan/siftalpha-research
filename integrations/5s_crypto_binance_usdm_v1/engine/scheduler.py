@@ -638,7 +638,13 @@ class StrategyScheduler:
                         pending_action=None,
                         run_state="MONITORING",
                         strategy_id=strategy_id,
-                        strategy_state=getattr(decision, "state_after", None),
+                        # A successful fill persists the NEXT sell_stage through
+                        # M3Executor. Never overwrite it with pre-fill decision state.
+                        strategy_state=(
+                            self.store.get_runtime_states()[symbol].get("strategy_state")
+                            if strategy_id == STRATEGY_ZBGE
+                            else getattr(decision, "state_after", None)
+                        ),
                     )
                     state_name = "MONITORING"
                 else:
