@@ -8,7 +8,7 @@ from typing import Any
 
 from engine.scheduler import TerminalDecisionError
 from exchange.binance_usdm_testnet import floor_to_step
-from strategy.registry import STRATEGY_5S, StrategyStep, get_spec
+from strategy.registry import STRATEGY_5S, STRATEGY_ZBGE, StrategyStep, get_spec
 
 
 class ExecutionBlocked(TerminalDecisionError):
@@ -361,6 +361,7 @@ class M3Executor:
             budget = Decimal(str(fresh_config["capital_budget_usdt"]))
             steps = tuple(getattr(decision, "steps", ()) or self._legacy_steps(decision, runtime))
             order_ids: list[str] = []
+            executed_actions: list[str] = []
 
             for step in steps:
                 fresh_runtime = self.store.get_runtime_states()[symbol]
@@ -383,6 +384,7 @@ class M3Executor:
                         last_order_id=order_id,
                     )
                     order_ids.append(order_id)
+                    executed_actions.append(str(step.code))
                     continue
 
                 if abs(delta) <= 1e-12:
@@ -410,6 +412,27 @@ class M3Executor:
                 )
                 if position_amount < 0:
                     raise ExecutionBlocked("检测到空头持仓；当前框架只允许做多，已阻止自动交易")
+
+                if strategy_id == STRATEGY_ZBGE and delta < 0:
+                    # Recheck at execution: a profitable CLOSED-bar S is not
+                    # permission to sell below cost after a next-open gap.
+                    # Never advance sell_stage when this safety gate skips.
+                    try:
+                        metrics = adapter.position_metrics(symbol)
+                        cost = Decimal(str(metrics.get("entry_price") or 0))
+                    except Exception as exc:
+                        raise ExecutionBlocked(f"无法核对币安当前持仓均价，阻止卖出：{exc}") from exc
+                    signal_price = Decimal(str(
+                        (getattr(decision, "metadata", None) or {}).get("signal_close") or 0
+                    ))
+                    if cost <= 0:
+                        raise ExecutionBlocked("币安没有返回有效持仓均价，阻止 ZBGE 卖出")
+                    if signal_price <= cost or reference_price <= cost:
+                        self.store.append_audit(
+                            "ZBGE_S_SKIPPED_COST", symbol,
+                            f"signal_close={signal_price};next_open={reference_price};entry={cost};stage_unchanged=1",
+                        )
+                        continue
 
                 if delta > 0:
                     if current_fraction <= 1e-12 and position_amount != 0:
@@ -487,9 +510,10 @@ class M3Executor:
                     last_order_id=order_id,
                 )
                 order_ids.append(order_id)
+                executed_actions.append(str(step.code))
 
             self.refresh_accounting(symbol, adapter, force=True)
-            action_codes = tuple(step.code for step in steps)
+            action_codes = tuple(executed_actions)
             self.store.append_audit(
                 "M3_EXECUTION_PASS",
                 symbol,
