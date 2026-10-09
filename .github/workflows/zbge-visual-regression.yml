@@ -1,0 +1,42 @@
+name: ZBGE full visual and signal regression
+on:
+  push:
+    branches:
+      - codex/zbge-full-subchart-signals-v1
+  pull_request:
+    branches:
+      - feature/5s-crypto-multistrategy-ssss-v1
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: integrations/5s_crypto_binance_usdm_v1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m pip install -r requirements.txt
+      - name: Python module compilation
+        run: python -m compileall -q .
+      - name: Full 5s and ZBGE regression suite
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Validate embedded browser JavaScript syntax
+        run: |
+          python - <<'PY'
+          import re
+          from pathlib import Path
+          page = Path('templates/index.html').read_text(encoding='utf8')
+          blocks = re.findall(r'<script(?:\\s[^>]*)?>(.*?)</script>', page, flags=re.S)
+          assert blocks, 'Missing inline UI JavaScript'
+          Path('/tmp/zbge-inline.js').write_text('\\n'.join(blocks),encoding='utf8')
+          PY
+          node --check /tmp/zbge-inline.js
