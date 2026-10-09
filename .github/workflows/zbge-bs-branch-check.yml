@@ -1,0 +1,32 @@
+name: ZBGE B/S replacement regression
+on:
+  push:
+    branches:
+      - codex/replace-mfra-zbge-bs-v1
+  pull_request:
+    branches:
+      - feature/5s-crypto-multistrategy-ssss-v1
+
+permissions:
+  contents: read
+
+jobs:
+  zbge:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: integrations/5s_crypto_binance_usdm_v1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install existing runtime dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Compile modified Python modules
+        run: |
+          python -m py_compile strategy/zbge_strategy.py strategy/registry.py engine/scheduler.py engine/execution.py app.py
+      - name: Run ZBGE B/S and frozen SSSS regressions
+        run: |
+          python -m unittest discover -s tests -p 'test_zbge_bs.py' -v
+          python -m unittest discover -s tests -p 'test_multistrategy_ssss.py' -v
