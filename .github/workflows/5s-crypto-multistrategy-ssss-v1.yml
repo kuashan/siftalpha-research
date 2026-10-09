@@ -82,6 +82,9 @@ jobs:
       - name: SSSS strategy contract
         run: python -m unittest tests.test_multistrategy_ssss -v
 
+      - name: ZBGE B/S contract
+        run: python -m unittest tests.test_zbge_bs -v
+
       - name: UI contract
         run: |
           python - <<'PY'
@@ -92,16 +95,18 @@ jobs:
           source = Path("strategy/ssss_strategy.py").read_text(encoding="utf-8")
           assert 'action="/symbol-strategy"' in app
           assert 'STRATEGY_SSSS' in app
-          assert 'STRATEGY_MFRA' in app
+          assert 'STRATEGY_ZBGE' in app
           assert 'STRATEGY_SSSS = "ssss"' in registry
-          assert 'STRATEGY_MFRA = "matrixquant_pai"' in registry
-          assert 'MatrixQuant PAI' in registry
+          assert 'STRATEGY_ZBGE = "zbge_bs"' in registry
+          assert 'ZBGE B/S' in registry
+          assert 'matrixquant_pai' not in page
+          assert 'ZBGE B/S' in page
           assert 'STRATEGY_E: StrategySpec' not in registry
           assert '💰=买入25%' in page
           assert '💥=全部清仓' in page
           assert 'strategy_indicator_markers' in app
           assert 'SSSS_SOURCE_SHA256' in source
-          print("SSSS_SELECTOR_UI_PASS")
+          print("ZBGE_SELECTOR_UI_PASS")
           PY
 
       - name: PAPER import
@@ -111,12 +116,13 @@ jobs:
         run: |
           python - <<'PY'
           import app
-          from strategy.registry import STRATEGY_5S, STRATEGY_MFRA, STRATEGY_SSSS, strategy_ids
+          from strategy.registry import STRATEGY_5S, STRATEGY_SSSS, STRATEGY_ZBGE, RETIRED_MFRA_ID, strategy_ids
           cfg = app.store.get_symbol_configs()
           assert tuple(app.settings.symbols) == ("BTCUSDT","ETHUSDT","BNBUSDT","SOLUSDT")
           assert all(x["strategy_id"] == STRATEGY_5S for x in cfg.values())
-          assert strategy_ids() == (STRATEGY_5S, STRATEGY_SSSS, STRATEGY_MFRA)
-          print("SSSS_APP_IMPORT_PASS")
+          assert strategy_ids() == (STRATEGY_5S, STRATEGY_SSSS, STRATEGY_ZBGE)
+          assert RETIRED_MFRA_ID not in strategy_ids()
+          print("ZBGE_APP_IMPORT_PASS")
           PY
 
       - name: Build flat direct-import package
@@ -144,6 +150,7 @@ jobs:
                   "app.py","requirements.txt","templates/index.html",
                   "strategy/frozen_signal_engine.py","strategy/registry.py",
                   "strategy/ssss_strategy.py","strategy/SSSS.ftindex",
+                  "strategy/zbge_strategy.py","strategy/ZBGE_BS_original.ftindex",
                   "engine/execution.py","engine/recovery.py","engine/scheduler.py",
                   "vendor/lightweight-charts.standalone.production.js",
               }
@@ -151,6 +158,8 @@ jobs:
               assert not missing, missing
               assert "strategy/e_strategy.py" not in names
               assert "strategy/e_sltd_core.py" not in names
+              assert "strategy/matrixquant_strategy.py" not in names
+              assert "strategy/MatrixQuant_original.pine" not in names
               assert hashlib.sha256(z.read("strategy/SSSS.ftindex")).hexdigest() == expected
               assert not any(x.startswith("5s-crypto-multistrategy-ssss-v1/") for x in names)
           print("SSSS_FLAT_DIRECT_IMPORT_PACKAGE_PASS")
