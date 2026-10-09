@@ -35,8 +35,8 @@ jobs:
           import re
           from pathlib import Path
           page = Path('templates/index.html').read_text(encoding='utf8')
-          blocks = re.findall(r'<script(?:\\s[^>]*)?>(.*?)</script>', page, flags=re.S)
+          blocks = re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>', page, flags=re.S)
           assert blocks, 'Missing inline UI JavaScript'
-          Path('/tmp/zbge-inline.js').write_text('\\n'.join(blocks),encoding='utf8')
+          Path('/tmp/zbge-inline.js').write_text('\n'.join(blocks),encoding='utf8')
           PY
           node --check /tmp/zbge-inline.js
