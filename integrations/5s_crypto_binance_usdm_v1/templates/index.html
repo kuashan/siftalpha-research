@@ -361,6 +361,8 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       return;
     }
 
+    // Full ZBGE subchart needs room for lines, absorption, guide levels and volume.
+    host.style.height = String(payload.strategy_id || '') === 'zbge_bs' ? '650px' : '468px';
     const key = String(payload.symbol || '') + ':' +
       String(payload.timeframe || '') + ':' + String(payload.strategy_id || '');
     let state = chartInstances.get(section);
@@ -451,6 +453,8 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 
       let nextPane = 1;
       let stateSeries = null;
+      let zbgeSeries = null;
+      let zbgeSmileSeries = [];
       if (String(payload.strategy_id || '') === 'ssss') {
         stateSeries = chart.addSeries(LW.HistogramSeries, {
           priceLineVisible: false,
@@ -458,10 +462,46 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
           priceFormat: {type: 'volume'},
         }, nextPane++);
       } else if (String(payload.strategy_id || '') === 'zbge_bs') {
-        stateSeries = chart.addSeries(LW.LineSeries, {
-          color: '#65c5d8', lineWidth: 2,
-          priceLineVisible: false, lastValueVisible: true,
-        }, nextPane++);
+        const pane = nextPane++;
+        zbgeSeries = {};
+        const noPrices = {priceLineVisible: false, lastValueVisible: false};
+        // Draw each original component in the same indicator pane.
+        // Histogram columns share the 0 baseline unless explicitly specified.
+        [
+          ['CYAN','#53d4e5',0],
+          ['GRAY','rgba(148,158,174,.65)',0],
+          ['RED','rgba(239,83,80,.75)',0],
+          ['YELLOW','#f5cc43',0],
+          ['PINK','#e577df',0],
+          ['RUSH','#e9776f',20],
+          ['FOLLOW','#47bb83',80],
+          ['BULL','#e4eaf2',0],
+        ].forEach(([field,color,base]) => {
+          zbgeSeries[field] = chart.addSeries(LW.HistogramSeries, {
+            ...noPrices, color, base, priceFormat: {type: 'price', precision: 2, minMove: .01},
+          }, pane);
+        });
+        zbgeSeries.TREND = chart.addSeries(LW.LineSeries, {
+          ...noPrices, color: '#5d86ec', lineWidth: 2,
+          priceFormat: {type:'price', precision:2, minMove:.01},
+        }, pane);
+        // TDX's 0/85/100 POINTDOT guides.
+        [0,85,100].forEach(level => {
+          zbgeSeries.TREND.createPriceLine({
+            price: level, color: 'rgba(148,163,184,.34)',
+            lineWidth: 1, lineStyle: 2, axisLabelVisible: false,
+          });
+        });
+        // Original DRAWICON(smile,100/90/80,35): independent overlay symbols.
+        [80,90,100].forEach(level => {
+          const anchor = chart.addSeries(LW.LineSeries, {
+            ...noPrices, lineVisible: false, crosshairMarkerVisible: false,
+          }, pane);
+          zbgeSmileSeries.push({
+            level, series: anchor,
+            markerApi: LW.createSeriesMarkers ? LW.createSeriesMarkers(anchor, []) : null,
+          });
+        });
       }
 
       const volumeSeries = chart.addSeries(LW.HistogramSeries, {
@@ -476,7 +516,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
 
       state = {
         key, chart, candleSeries, mainLines, stateSeries,
-        volumeSeries, markerApi,
+        zbgeSeries, zbgeSmileSeries, volumeSeries, markerApi,
         resize: null, initialized: false, payload: null,
       };
 
@@ -529,13 +569,30 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       series.setData(lineData(field));
     });
 
-    if (state.stateSeries && String(payload.strategy_id || '') === 'zbge_bs') {
-      state.stateSeries.setData(overlay
-        .filter(row => row.TREND != null && Number.isFinite(Number(row.TREND)))
-        .map(row => ({
-          time: Math.floor(Number(row.open_time) / 1000),
-          value: Number(row.TREND),
+    if (state.zbgeSeries) {
+      Object.entries(state.zbgeSeries).forEach(([field,series]) => {
+        const items = lineData(field);
+        // RUSH is red in the original formula's 1/13 extreme state.
+        if (field === 'RUSH') {
+          const hotTimes = new Set(overlay.filter(row => row.RUSH_HOT)
+            .map(row => Math.floor(Number(row.open_time) / 1000)));
+          series.setData(items.map(p => ({
+            ...p, color: hotTimes.has(p.time) ? '#f04646' : '#e9776f',
+          })));
+        } else {
+          series.setData(items);
+        }
+      });
+      state.zbgeSmileSeries.forEach(item => {
+        const data = overlay.filter(row => row.SMILE).map(row => ({
+          time: Math.floor(Number(row.open_time) / 1000), value: item.level,
+        }));
+        item.series.setData(data);
+        item.markerApi?.setMarkers(data.map(row => ({
+          time: row.time, position:'aboveBar', shape:'circle',
+          color:'#e9d88a', text:'☺', size:.55,
         })));
+      });
     } else if (state.stateSeries) {
       const stateColors = {
         BLUE:'#5b8cff', RED:'#ef5350', GRAY:'#8d99aa', OTHER:'#344055',
@@ -556,13 +613,26 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
         position: isBuy ? 'belowBar' : 'aboveBar',
         color: isBuy ? '#ef5350' : (isExit ? '#eab464' : '#20bd92'),
         shape: isBuy ? 'arrowUp' : 'arrowDown',
-        text: side,
+        text: String(payload.strategy_id || '') === 'zbge_bs' ? '成交' + side : side,
         id: String(m.client_order_id || index),
         size: 1.1,
       };
     });
     const formulaMarkers = indicatorMarkers.map((m,index) => {
       const kind = String(m.kind || '');
+      const zbgeBuy = kind === 'ZBGE_BUY_B';
+      const zbgeSell = kind === 'ZBGE_SELL_S';
+      if (zbgeBuy || zbgeSell) {
+        return {
+          time: Math.floor(Number(m.open_time) / 1000),
+          position: zbgeBuy ? 'belowBar' : 'aboveBar',
+          color: zbgeBuy ? '#f5cc43' : '#e577df',
+          shape: zbgeBuy ? 'arrowUp' : 'arrowDown',
+          text: zbgeBuy ? 'B' : 'S',
+          id: 'zbge-indicator-' + kind + '-' + String(m.open_time || index),
+          size: 1.05,
+        };
+      }
       const isBuy = kind === 'BUY_ICON_9';
       return {
         time: Math.floor(Number(m.open_time) / 1000),
@@ -579,9 +649,10 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     );
 
     const panes = state.chart.panes();
-    panes[0]?.setHeight(297);
+    panes[0]?.setHeight(state.zbgeSeries ? 270 : 297);
     let paneIndex = 1;
     if (state.stateSeries) panes[paneIndex++]?.setHeight(30);
+    if (state.zbgeSeries) panes[paneIndex++]?.setHeight(245);
     panes[paneIndex++]?.setHeight(80);
 
     if (oldRange) {
@@ -635,7 +706,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       legend.textContent = String(payload.strategy_id || '') === 'ssss'
         ? 'SSSS：💰=买入25% · 💥=全部清仓 · B/X仅代表真实成交'
         : String(payload.strategy_id || '') === 'zbge_bs'
-          ? 'ZBGE：B每次初始资金25% · S先卖75%再清仓 · 高于持仓成本才卖 · 仅成交后显示B/S/X'
+          ? 'ZBGE：图上 B/S 为理论信号（未交易也显示）；成交B/S/X 才是已执行订单 · S低于成本仍标信号但不卖'
           : '5s V1：仅成交成功后显示 B/S/X';
     }
   }

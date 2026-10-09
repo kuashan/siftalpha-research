@@ -23,6 +23,15 @@ class ZBGEPoint:
     buy: bool
     sell_a: bool
     sell_b: bool
+    # Additional plot-only values; never read these fields in trading decisions.
+    z2: float | None = None
+    cyan: float | None = None
+    red: float | None = None
+    gray: float | None = None
+    pink: bool = False
+    rush: float | None = None
+    rush_red: bool = False
+    big_bull: bool = False
 
     @property
     def sell(self) -> bool:
@@ -144,9 +153,19 @@ def evaluate_zbge(rows: list[Any]) -> list[ZBGEPoint]:
     z29 = _sma(z28, 3)
     z18 = [3 * z28[i] - 2 * z29[i] for i in range(len(close))]
 
+    # 冲顶: 2/ZBGE26-2 (ZBGE26 = SMA(13-period close drawdown, 5, 1)).
+    lo_close13 = _rolling(close, 13, minimum=True)
+    hi_close13 = _rolling(close, 13, minimum=False)
+    z26 = _sma([
+        _safe_ratio(hi_close13[i] - c, hi_close13[i] - lo_close13[i])
+        for i, c in enumerate(close)
+    ], 5)
+
     points: list[ZBGEPoint] = []
     last_cross_up: int | None = None
     smile_count = 0
+    last_kdj_down: int | None = None
+    last_kdj_up: int | None = None
     for i in range(len(close)):
         yellow = (
             i >= 2
@@ -166,6 +185,28 @@ def evaluate_zbge(rows: list[Any]) -> list[ZBGEPoint]:
         )
         sell_a = bool(follow and trend[i] > 75)
         sell_b = smile_count == 3
+
+        # Trend-bull requires the K/D cross-up and a recent cross-down.
+        if _cross_above(z29, z28, i):
+            last_kdj_down = i
+        kdj_up = _cross_above(z28, z29, i)
+        if kdj_up:
+            last_kdj_up = i
+        big_bull = bool(
+            kdj_up and z28[i] < 20
+            and last_kdj_up is not None and i - last_kdj_up < 9
+            and last_kdj_down is not None and i - last_kdj_down < 9
+        )
+        # The original cyan/red/gray absorption columns all start at zero.
+        cyan = z2[i] if _finite(z2[i]) and 0 < z2[i] <= 14 else None
+        red = z8[i] if _finite(z8[i]) and z8[i] > 0 else None
+        gray = abs(z14[i]) if _finite(z14[i]) and z14[i] > -120 and abs(z14[i]) > 0 else None
+        pink = bool(
+            i >= 2 and 0.1 < z14[i] < 1
+            and z18[i] > z18[i - 2] and z18[i - 1] < z18[i - 2]
+        )
+        rush = (2 / z26[i] - 2) if _finite(z26[i]) and z26[i] != 0 else math.nan
+        rush_red = bool(_finite(z26[i]) and 0 < z26[i] < 1 / 13)
         points.append(
             ZBGEPoint(
                 open_time=times[i],
@@ -179,6 +220,14 @@ def evaluate_zbge(rows: list[Any]) -> list[ZBGEPoint]:
                 buy=buy,
                 sell_a=sell_a,
                 sell_b=sell_b,
+                z2=z2[i] if _finite(z2[i]) else None,
+                cyan=cyan,
+                red=red,
+                gray=gray,
+                pink=pink,
+                rush=rush if _finite(rush) and rush > 0 else None,
+                rush_red=rush_red,
+                big_bull=big_bull,
             )
         )
     return points
