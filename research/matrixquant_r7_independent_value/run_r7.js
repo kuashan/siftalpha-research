@@ -73,7 +73,7 @@ function indicator(rows,cfg,spyMap){
    }
   }
   const prev=arr.at(-1),wd=wt!=null&&signal!=null?wt-signal:null;
-  const feats=base?base.concat([trend,prev&&prev.trend!=null&&trend!=null?trend-prev.trend5:null,gold,gold==null?null:Number(gold<30),wt,wd,prev&&prev.wd!=null&&wd!=null?wd-prev.wd:null,pai,prev&&prev.pai!=null&&pai!=null?pai-prev.pai:null,pai==null?null:Number(pai>40),pai==null?null:Number(pai< -40)]):null;
+  const feats=base?base.concat([trend,arr.length>=5&&arr[arr.length-5].trend!=null&&trend!=null?trend-arr[arr.length-5].trend:null,gold,gold==null?null:Number(gold<30),wt,wd,prev&&prev.wd!=null&&wd!=null?wd-prev.wd:null,pai,prev&&prev.pai!=null&&pai!=null?pai-prev.pai:null,pai==null?null:Number(pai>40),pai==null?null:Number(pai< -40)]):null;
   arr.push({d:z.d,feat:feats,trend,trend5:arr.length>4?arr[arr.length-5].trend:null,gold,wt,wd,pai,y5:i+5<rows.length?+(rows[i+5].c>rows[i+1].o):null,y20:i+20<rows.length?+(rows[i+20].c>rows[i+1].o):null});
  }
  return arr;
