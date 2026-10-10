@@ -18,6 +18,22 @@ _ANALYSIS_CACHE_MAX = 8
 
 
 
+def band_state(values: dict[str, float]) -> str:
+    """SSSS band-state labels as rendered in the SiftAlpha chart.
+
+    GZB12=BLUE, GZB13=GREEN, GZB14=GRAY. The original indicator
+    bytes are immutable; this is only a runtime display/decision label.
+    Gray wins if overlapping states occur, matching overlay precedence.
+    """
+    if _truth(values.get("GZB14", 0)):
+        return "GRAY"
+    if _truth(values.get("GZB12", 0)):
+        return "BLUE"
+    if _truth(values.get("GZB13", 0)):
+        return "GREEN"
+    return "OTHER"
+
+
 @dataclass(frozen=True)
 class SSSSBar:
     open_time: int
@@ -46,12 +62,7 @@ class SSSSAnalysis:
         out: list[dict[str, object]] = []
         for bar in bars:
             v = bar.values
-            state = (
-                "GRAY" if _truth(v["GZB14"])
-                else "BLUE" if _truth(v["GZB12"])
-                else "RED" if _truth(v["GZB13"])
-                else "OTHER"
-            )
+            state = band_state(v)
             out.append({
                 "open_time": bar.open_time, "state": state,
                 "GZB3": _json_number(v["GZB3"]), "GZB4": _json_number(v["GZB4"]),
