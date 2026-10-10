@@ -666,8 +666,21 @@ class StrategyScheduler:
                         # A successful fill persists the NEXT sell_stage through
                         # M3Executor. Never overwrite it with pre-fill decision state.
                         strategy_state=(
-                            self.store.get_runtime_states()[symbol].get("strategy_state")
-                            if strategy_id in (STRATEGY_ZBGE, STRATEGY_SSSS)
+                            {
+                                **dict(getattr(decision, "state_after", None) or {}),
+                                # A market-order skip must still consume this
+                                # signal's seen-event key; only an actual fill
+                                # may advance the successful sell stage.
+                                "sell_stage": int(
+                                    (
+                                        self.store.get_runtime_states()[symbol].get("strategy_state")
+                                        or {}
+                                    ).get("sell_stage") or 0
+                                ),
+                            }
+                            if strategy_id == STRATEGY_SSSS
+                            else self.store.get_runtime_states()[symbol].get("strategy_state")
+                            if strategy_id == STRATEGY_ZBGE
                             else getattr(decision, "state_after", None)
                         ),
                     )
