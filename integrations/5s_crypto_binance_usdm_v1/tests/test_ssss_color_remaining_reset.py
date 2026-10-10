@@ -6,6 +6,13 @@ SSSS.ftindex formula or ZBGE/5s signals.
 from __future__ import annotations
 
 from dataclasses import replace
+from decimal import Decimal
+import tempfile
+from unittest.mock import patch
+from engine.execution import M3Executor
+from storage import StateStore
+from strategy.registry import StrategyDecision, StrategyStep
+from test_multistrategy_ssss import FakeAdapter
 from pathlib import Path
 from unittest.mock import patch
 import unittest
@@ -146,6 +153,69 @@ class CapitalAndResetTests(unittest.TestCase):
         self.assertIn("SSSS_SOURCE_SHA256", source)
         self.assertIn("GREEN:'#22b573'", ui)
         self.assertIn("蓝带或绿转灰允许买", ui)
+
+
+class SSSSActualFillStateTests(unittest.TestCase):
+    def setUp(self):
+        self.folder = tempfile.TemporaryDirectory()
+        self.store = StateStore(Path(self.folder.name) / "ssss-policy.sqlite")
+        self.store.seed(("BTCUSDT",), 1, 1000, "15m")
+        self.store.set_symbol_strategy("BTCUSDT", STRATEGY_SSSS, "15m")
+        self.store.set_symbol_enabled("BTCUSDT", True)
+        self.adapter = FakeAdapter()
+        self.engine = M3Executor(self.store)
+
+    def tearDown(self):
+        self.folder.cleanup()
+
+    def run_buy(self, target, existing_fraction, stage):
+        self.store.set_strategy_execution_state(
+            "BTCUSDT", current_fraction=existing_fraction,
+            strategy_state={"sell_stage":stage, "tracker_timeframe":"15m"},
+        )
+        self.adapter.position = Decimal("0") if existing_fraction == 0 else Decimal("0.500")
+        entry = StrategyDecision(
+            strategy_id=STRATEGY_SSSS, signal="SSSS_BUY_9",
+            bar_open_time=1700000000000,
+            steps=(StrategyStep(
+                code="SSSS_BUY_25", order_code="B25",
+                target_fraction=target, rule_ids=("DRAWICON_9",),
+                state_after={"sell_stage":0 if stage==1 else stage, "tracker_timeframe":"15m"},
+            ),), metadata={"signal_close":100},
+        )
+        with patch.object(self.engine, "refresh_accounting"):
+            result = self.engine.execute(
+                "BTCUSDT", entry,
+                self.store.get_symbol_configs()["BTCUSDT"],
+                self.store.get_runtime_states()["BTCUSDT"],
+                self.adapter,
+                {
+                    "signal_bar_open_time":1700000000000,
+                    "execution_bar_open_time":1700000900000,
+                    "reference_price":100, "timeframe":"15m",
+                },
+            )
+        return result, self.store.get_runtime_states()["BTCUSDT"]
+
+    def test_successful_post_first_s_buy_resets_stage(self):
+        outcome,state=self.run_buy(.375,.125,1)
+        self.assertEqual(outcome.actions,("SSSS_BUY_25",))
+        self.assertAlmostEqual(state["current_fraction"],.375)
+        self.assertEqual(state["strategy_state"]["sell_stage"],0)
+
+    def test_dust_purchase_skips_without_resetting_sell_stage(self):
+        outcome,state=self.run_buy(.999925,.9999,1)
+        self.assertEqual(outcome.actions,())
+        self.assertEqual(self.adapter.submits,0)
+        self.assertAlmostEqual(state["current_fraction"],.9999)
+        self.assertEqual(state["strategy_state"]["sell_stage"],1)
+
+    def test_insufficient_free_margin_skips_without_b(self):
+        self.adapter.available=10.0
+        outcome,state=self.run_buy(.25,0.0,0)
+        self.assertEqual(outcome.actions,())
+        self.assertEqual(self.adapter.submits,0)
+        self.assertAlmostEqual(state["current_fraction"],0)
 
 
 if __name__ == "__main__":
