@@ -435,6 +435,41 @@ class M3Executor:
                         continue
 
                 if delta > 0:
+                    if strategy_id == STRATEGY_SSSS:
+                        # Quarter-of-remaining purchases approach zero: stop
+                        # cleanly when the next tranche is too small for
+                        # Binance rules or there is insufficient free margin.
+                        # No stage change and no synthetic B fill on skip.
+                        margin_check = budget * Decimal(str(delta))
+                        available_check = Decimal(str(adapter.available_usdt()))
+                        if available_check < margin_check:
+                            self.store.append_audit(
+                                "SSSS_B_SKIPPED_FUNDS", symbol,
+                                f"requested_margin={margin_check};available={available_check}",
+                            )
+                            continue
+                        rules_check = adapter.symbol_rules(symbol)
+                        if reference_price <= 0:
+                            raise ExecutionBlocked("无法确认下一根K线的有效买入价")
+                        if rules_check.step_size is None or rules_check.min_qty is None:
+                            raise ExecutionBlocked("无法确认币安交易数量精度")
+                        quantity_check = floor_to_step(
+                            margin_check * Decimal(leverage) / reference_price,
+                            rules_check.step_size,
+                        )
+                        if (
+                            quantity_check <= 0
+                            or quantity_check < rules_check.min_qty
+                            or (
+                                rules_check.min_notional is not None
+                                and quantity_check * reference_price < rules_check.min_notional
+                            )
+                        ):
+                            self.store.append_audit(
+                                "SSSS_B_SKIPPED_MINIMUM", symbol,
+                                f"margin={margin_check};rounded_quantity={quantity_check}",
+                            )
+                            continue
                     if current_fraction <= 1e-12 and position_amount != 0:
                         raise ExecutionBlocked("策略记录为空仓，但币安已有持仓；等待恢复对账，不自动加仓")
                     if current_fraction > 1e-12 and position_amount <= 0:
