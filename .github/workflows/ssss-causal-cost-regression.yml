@@ -1,0 +1,29 @@
+name: SSSS causal and cost policy regression
+on:
+  push:
+    branches:
+      - codex/ssss-causal-staged-cost-v1
+  pull_request:
+    branches:
+      - feature/5s-crypto-multistrategy-ssss-v1
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: integrations/5s_crypto_binance_usdm_v1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Compile entire integration
+        run: python -m compileall -q .
+      - name: SSSS, ZBGE, 5s full regression
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
