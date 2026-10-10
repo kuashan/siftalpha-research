@@ -435,6 +435,10 @@ class M3Executor:
                         continue
 
                 if delta > 0:
+                    if current_fraction <= 1e-12 and position_amount != 0:
+                        raise ExecutionBlocked("策略记录为空仓，但币安已有持仓；等待恢复对账，不自动加仓")
+                    if current_fraction > 1e-12 and position_amount <= 0:
+                        raise ExecutionBlocked("策略准备加仓，但币安没有对应多头持仓；已阻止自动交易")
                     if strategy_id == STRATEGY_SSSS:
                         # Quarter-of-remaining purchases approach zero: stop
                         # cleanly when the next tranche is too small for
@@ -470,10 +474,6 @@ class M3Executor:
                                 f"margin={margin_check};rounded_quantity={quantity_check}",
                             )
                             continue
-                    if current_fraction <= 1e-12 and position_amount != 0:
-                        raise ExecutionBlocked("策略记录为空仓，但币安已有持仓；等待恢复对账，不自动加仓")
-                    if current_fraction > 1e-12 and position_amount <= 0:
-                        raise ExecutionBlocked("策略准备加仓，但币安没有对应多头持仓；已阻止自动交易")
                     self._validate_buy_environment(adapter, symbol, leverage)
                     margin = budget * Decimal(str(delta))
                     self.store.append_audit(
