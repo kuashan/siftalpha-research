@@ -453,7 +453,7 @@ def render_index(selected_symbol: str | None = None) -> str:
             )
         elif strategy_id == STRATEGY_SSSS:
             exposure_html = (
-                f'<div><small>SSSS 每个 💰 买入 25% 名义价值</small><b>{ssss25.target_notional_usdt:.2f} USDT</b></div>'
+                f'<div><small>SSSS 每个 💰 使用初始策略资金25%（含杠杆名义价值）</small><b>{ssss25.target_notional_usdt:.2f} USDT</b></div>'
                 f'<div><small>💥首次有效卖出75%，第二次全部清仓</small><b>必须高于平均持仓成本</b></div>'
             )
         elif strategy_id == STRATEGY_ZBGE:
