@@ -1,0 +1,26 @@
+name: SSSS band and remaining-capital policy
+on:
+  push:
+    branches: [codex/ssss-band-filter-remaining25-reset-v1]
+  pull_request:
+    branches: [feature/5s-crypto-multistrategy-ssss-v1]
+
+permissions:
+  contents: read
+
+jobs:
+  full-regression:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: integrations/5s_crypto_binance_usdm_v1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r requirements.txt
+      - name: Compile Python
+        run: python -m compileall -q .
+      - name: All SSSS / ZBGE / 5s regression tests
+        run: python -m unittest discover -s tests -p 'test_*.py' -v

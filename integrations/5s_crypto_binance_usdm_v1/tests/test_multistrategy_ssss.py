@@ -200,9 +200,11 @@ class SSSSTradingRuleTests(unittest.TestCase):
         )
 
     @patch("strategy.registry.ssss_strategy.evaluate_ssss")
-    def test_money_icon_adds_exactly_25_percentage_points(self, mocked):
+    def test_money_icon_uses_initial_25_then_25_of_remaining(self, mocked):
         mocked.return_value = [fake_bar(buy=True)]
-        for current, target in [(0.0, 0.25), (0.25, 0.50), (0.50, 0.75), (0.75, 1.0)]:
+        for current, target in [
+            (0.0, 0.25), (0.25, 0.4375), (0.4375, 0.578125), (0.75, 0.8125)
+        ]:
             decision = decide_ssss([], {"current_fraction": current}, "15m")
             self.assertEqual(decision.signal, "SSSS_BUY_9")
             self.assertEqual(len(decision.steps), 1)

@@ -32,22 +32,22 @@ class CausalSignalRules(unittest.TestCase):
             self.assertEqual(decision.bar_open_time, 1800000900000)
 
     @patch("strategy.registry.ssss_strategy.evaluate_ssss")
-    def test_b_after_first_s_preserves_second_sell_stage(self, mocked):
+    def test_b_after_first_s_resets_next_sell_to_75_percent(self, mocked):
         mocked.return_value = [fake_bar(buy=True)]
         decision = decide_ssss([], {
             "current_fraction": .25, "strategy_state": {"sell_stage": 1},
         }, "15m")
         self.assertEqual(decision.steps[0].code, "SSSS_BUY_25")
         self.assertAlmostEqual(decision.steps[0].target_fraction, .50)
-        self.assertEqual(decision.steps[0].state_after["sell_stage"], 1)
+        self.assertEqual(decision.steps[0].state_after["sell_stage"], 0)
         mocked.return_value = [fake_bar(exit_=True)]
         decision = decide_ssss([], {
-            "current_fraction": .50, "strategy_state": {"sell_stage": 1},
+            "current_fraction": .50, "strategy_state": {"sell_stage": 0},
             "position_entry_price": 90,
         }, "15m")
-        self.assertEqual(decision.steps[0].code, "SSSS_EXIT_ALL")
-        self.assertEqual(decision.steps[0].target_fraction, 0)
-        self.assertEqual(decision.steps[0].state_after["sell_stage"], 0)
+        self.assertEqual(decision.steps[0].code, "SSSS_SELL_75")
+        self.assertAlmostEqual(decision.steps[0].target_fraction, .125)
+        self.assertEqual(decision.steps[0].state_after["sell_stage"], 1)
 
     @patch("strategy.registry.ssss_strategy.evaluate_ssss")
     def test_below_average_cost_and_missing_cost_never_advance_stage(self, mocked):

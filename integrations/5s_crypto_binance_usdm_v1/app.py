@@ -440,7 +440,7 @@ def render_index(selected_symbol: str | None = None) -> str:
                 f'data-strategy-option="{html.escape(sid)}" '
                 f'role="option" aria-selected="{"true" if is_selected else "false"}">'
                 f'<span>{html.escape("5s V1" if sid == STRATEGY_5S else label)}</span>'
-                f'<small>{html.escape("A/B 60% · C 补至 100% · SELL 全退" if sid == STRATEGY_5S else ("💰 初始资金25% · 💥先卖75%后全清 · 不低于成本卖出" if sid == STRATEGY_SSSS else "B 买初始资金25% · S先卖75%再清仓 · 低于成本不卖"))}</small>'
+                f'<small>{html.escape("A/B 60% · C 补至 100% · SELL 全退" if sid == STRATEGY_5S else ("💰首买初始资金25%/后买剩余25% · 蓝带或绿转灰 · 💥盈利卖75%/全清，重新买入重置卖出" if sid == STRATEGY_SSSS else "B 买初始资金25% · S先卖75%再清仓 · 低于成本不卖"))}</small>'
                 f'</button>'
             )
             for sid, label, is_selected in strategy_options(strategy_id)
@@ -453,8 +453,8 @@ def render_index(selected_symbol: str | None = None) -> str:
             )
         elif strategy_id == STRATEGY_SSSS:
             exposure_html = (
-                f'<div><small>SSSS 每个 💰 使用初始策略资金25%（含杠杆名义价值）</small><b>{ssss25.target_notional_usdt:.2f} USDT</b></div>'
-                f'<div><small>💥首次有效卖出75%，第二次全部清仓</small><b>必须高于平均持仓成本</b></div>'
+                f'<div><small>SSSS 首次 💰 使用初始策略资金25%（含杠杆名义价值）</small><b>{ssss25.target_notional_usdt:.2f} USDT</b></div>'
+                f'<div><small>后续 💰 买剩余策略资金25%；💥卖75%后若再次买入则重置卖出阶段</small><b>必须高于平均持仓成本</b></div>'
             )
         elif strategy_id == STRATEGY_ZBGE:
             exposure_html = (

@@ -97,13 +97,15 @@ jobs:
           assert 'STRATEGY_SSSS' in app
           assert 'STRATEGY_ZBGE' in app
           assert 'STRATEGY_SSSS = "ssss"' in registry
+          assert 'SSSS_BUY_COLOR_BLOCKED' in registry
+          assert 'SSSS_BUY_BUDGET_EXHAUSTED' in registry
           assert 'STRATEGY_ZBGE = "zbge_bs"' in registry
           assert 'ZBGE B/S' in registry
           assert 'matrixquant_pai' not in page
           assert 'ZBGE B/S' in page
           assert 'STRATEGY_E: StrategySpec' not in registry
-          assert '💰=初始资金25%买点' in page
-          assert '💥=盈利才卖(先75%，再全清)' in page
+          assert '💰蓝带或绿转灰允许买' in page
+          assert '💥盈利卖75%/全清' in page
           assert 'strategy_indicator_markers' in app
           assert 'SSSS_SOURCE_SHA256' in source
           print("ZBGE_SELECTOR_UI_PASS")

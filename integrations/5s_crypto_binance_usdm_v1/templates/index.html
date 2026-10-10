@@ -595,7 +595,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
       });
     } else if (state.stateSeries) {
       const stateColors = {
-        BLUE:'#5b8cff', RED:'#ef5350', GRAY:'#8d99aa', OTHER:'#344055',
+        BLUE:'#5b8cff', GREEN:'#22b573', GRAY:'#8d99aa', OTHER:'#344055',
       };
       state.stateSeries.setData(overlay.map(row => ({
         time: Math.floor(Number(row.open_time) / 1000),
@@ -707,7 +707,7 @@ input:focus,select:focus{border-color:#5b8cff;box-shadow:0 0 0 2px rgba(91,140,2
     const legend = section.querySelector('.strategy-legend');
     if (legend) {
       legend.textContent = String(payload.strategy_id || '') === 'ssss'
-        ? 'SSSS：💰=初始资金25%买点 · 💥=盈利才卖(先75%，再全清) · 记录💰/💥=当时检测、后重绘消失 · B/S/X=成交'
+        ? 'SSSS：💰蓝带或绿转灰允许买；首买初始资金25%，之后剩余资金25% · 💥盈利卖75%/全清，成交B后卖出次数重置 · 记录图标=历史检测，B/S/X=成交'
         : String(payload.strategy_id || '') === 'zbge_bs'
           ? 'ZBGE：图上 B/S 为理论信号（未交易也显示）；成交B/S/X 才是已执行订单 · S低于成本仍标信号但不卖'
           : '5s V1：仅成交成功后显示 B/S/X';
