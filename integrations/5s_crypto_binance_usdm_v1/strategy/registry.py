@@ -70,7 +70,7 @@ _SPECS = {
         minimum_closed_bars=180,
         max_fraction=1.0,
         order_prefix="ssss",
-        description="原始富途 SSSS.ftindex：最新收盘K线图标9每次投入初始资金25%；图标15首次高于成本卖75%、第二次全清；历史重绘只留痕不追单。",
+        description="原始SSSS：💰仅蓝带或绿转灰可买；首买初始资金25%，后买剩余资金25%；首次💥高于成本卖75%、下一次全清；中途💰重置卖出阶段。",
     ),
     STRATEGY_ZBGE: StrategySpec(
         strategy_id=STRATEGY_ZBGE,
@@ -312,6 +312,18 @@ def decide_ssss(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> Str
     fraction = min(max(float(runtime.get("current_fraction") or 0.0), 0.0), 1.0)
     state = _state(runtime)
     stage = 1 if int(state.get("sell_stage") or 0) == 1 else 0
+    # Gray may last many bars: its parent is the latest PREVIOUS non-gray
+    # band (BLUE or GREEN), not just the immediately previous candle.
+    band = ssss_strategy.band_state(latest.values)
+    prior_non_gray = None
+    for previous in reversed(analysis.bars[:-1]):
+        old_band = ssss_strategy.band_state(previous.values)
+        if old_band != "GRAY":
+            prior_non_gray = old_band
+            break
+    buy_color_allowed = band == "BLUE" or (
+        band == "GRAY" and prior_non_gray == "GREEN"
+    )
     events = _ssss_events(analysis, tf)
     earliest_open_time = int(analysis.bars[0].open_time)
     latest_open_time = int(latest.open_time)
@@ -369,15 +381,32 @@ def decide_ssss(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> Str
         signal = "SSSS_BUY_9"
         state["last_icon"] = 9
         state["last_icon_bar_open_time"] = latest_open_time
-        if fraction <= .75 + 1e-12:
-            steps.append(StrategyStep(
-                code="SSSS_BUY_25", order_code="B25",
-                target_fraction=round(fraction + .25, 10),
-                rule_ids=(f"DRAWICON_9:{latest_open_time}",),
-                state_after=dict(state),
-            ))
+        if not buy_color_allowed:
+            signal = "SSSS_BUY_COLOR_BLOCKED"
         else:
-            signal = "SSSS_BUY_BUDGET_EXHAUSTED"
+            # First B in a flat cycle: 25% of the configured initial budget.
+            # Later B: 25% of the *remaining* strategy allocation.
+            # A B after first successful S: a fresh 25% initial-budget buy
+            # and reset sell_stage=0 ONLY after the B is actually FILLED.
+            from_initial_budget = fraction <= 1e-12 or stage == 1
+            added_fraction = .25 if from_initial_budget else (1.0 - fraction) * .25
+            target = min(1.0, round(fraction + added_fraction, 10))
+            if added_fraction <= 1e-10 or target - fraction <= 1e-10 or target > 1.0 + 1e-10:
+                signal = "SSSS_BUY_BUDGET_EXHAUSTED"
+            elif added_fraction > 1.0 - fraction + 1e-10:
+                signal = "SSSS_BUY_BUDGET_EXHAUSTED"
+            else:
+                next_state = {**state, "sell_stage": 0} if stage == 1 else dict(state)
+                steps.append(StrategyStep(
+                    code="SSSS_BUY_25", order_code="B25",
+                    target_fraction=target,
+                    rule_ids=(
+                        f"DRAWICON_9:{latest_open_time}",
+                        f"BAND_{band}", f"PRIOR_BAND_{prior_non_gray or 'NONE'}",
+                        "INITIAL_25" if from_initial_budget else "REMAINING_25",
+                    ),
+                    state_after=next_state,
+                ))
 
     metadata = {
         "buy_icon_9": bool(latest.buy_icon_9),
@@ -394,6 +423,9 @@ def decide_ssss(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> Str
         "source_signal_bar_open_time": latest_open_time if eligible else None,
         "signal_close": float(latest.close),
         "sell_stage": stage,
+        "band_state": band,
+        "preceding_non_gray_band": prior_non_gray,
+        "buy_color_allowed": buy_color_allowed,
     }
     return StrategyDecision(
         strategy_id=STRATEGY_SSSS, signal=signal,
@@ -497,6 +529,7 @@ def strategy_signal_label(strategy_id: str, raw: object) -> str:
             "SSSS_BUY_9": "买入 25%",
             "SSSS_EXIT_15": "高于成本则先卖75%，下次全清",
             "SSSS_EXIT_BELOW_COST": "💥低于持仓成本，等待下次有效💥",
+            "SSSS_BUY_COLOR_BLOCKED": "💰理论买点被彩色带过滤，未交易",
             "SSSS_EXIT_COST_UNAVAILABLE": "无法核对平均成本，停止卖出",
             "SSSS_BUY_BUDGET_EXHAUSTED": "策略资金不足，跳过💰",
             "HOLD": "观望",
