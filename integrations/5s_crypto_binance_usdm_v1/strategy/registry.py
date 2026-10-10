@@ -70,7 +70,7 @@ _SPECS = {
         minimum_closed_bars=180,
         max_fraction=1.0,
         order_prefix="ssss",
-        description="原始富途 SSSS.ftindex：图标 9 每次买入 25%，图标 15 全部清仓；同根同时出现时清仓优先。",
+        description="原始富途 SSSS.ftindex：最新收盘K线图标9每次投入初始资金25%；图标15首次高于成本卖75%、第二次全清；历史重绘只留痕不追单。",
     ),
     STRATEGY_ZBGE: StrategySpec(
         strategy_id=STRATEGY_ZBGE,
@@ -295,11 +295,15 @@ def ssss_tracker_matches(runtime: dict[str, Any], timeframe: str) -> bool:
 
 
 def decide_ssss(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> StrategyDecision:
+    """Only newly detected icons on the LAST closed candle may create orders.
+
+    XMA may repaint older source candles: record such events in the tracker
+    and event ledger but NEVER turn a retrospective repaint into a new order.
+    """
     spec = get_spec(STRATEGY_SSSS)
     tf = str(timeframe).lower()
     if tf not in spec.supported_timeframes:
         raise ValueError(f"SSSS 当前自动交易不支持周期：{tf}")
-
     analysis = ssss_strategy.analyze_ssss(rows)
     latest = analysis.latest
     if latest is None:
@@ -307,22 +311,20 @@ def decide_ssss(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> Str
 
     fraction = min(max(float(runtime.get("current_fraction") or 0.0), 0.0), 1.0)
     state = _state(runtime)
+    stage = 1 if int(state.get("sell_stage") or 0) == 1 else 0
     events = _ssss_events(analysis, tf)
-
-    # Keep "seen ever" only for source bars still inside the active 1000-bar
-    # window. This is enough to stop a repainted icon disappearing/reappearing
-    # from firing twice while keeping the persisted JSON bounded.
     earliest_open_time = int(analysis.bars[0].open_time)
+    latest_open_time = int(latest.open_time)
     seen_before = {
-        str(key)
-        for key in (state.get("seen_icon_events") or [])
+        str(key) for key in (state.get("seen_icon_events") or [])
         if _ssss_event_parts(key) is not None
         and str(_ssss_event_parts(key)[0]).lower() == tf
         and int(_ssss_event_parts(key)[2]) >= earliest_open_time
     }
-    new_events = [item for item in events if str(item["key"]) not in seen_before]
-    seen_after = seen_before | {str(item["key"]) for item in events}
-
+    new_events = [e for e in events if str(e["key"]) not in seen_before]
+    eligible = [e for e in new_events if int(e["open_time"]) == latest_open_time]
+    late = [e for e in new_events if int(e["open_time"]) < latest_open_time]
+    seen_after = seen_before | {str(e["key"]) for e in events}
     state.update({
         "signal_tracker_initialized": True,
         "tracker_timeframe": tf,
@@ -334,73 +336,70 @@ def decide_ssss(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> Str
                 int(_ssss_event_icon_id(key) or 0),
             ),
         ),
-        "last_detection_bar_open_time": int(latest.open_time),
+        "last_detection_bar_open_time": latest_open_time,
     })
 
-    new_exits = [item for item in new_events if int(item["icon_id"]) == 15]
-    new_buys = [item for item in new_events if int(item["icon_id"]) == 9]
+    # If a bar simultaneously has buy and exit icons, exit always wins.
+    exits = [e for e in eligible if int(e["icon_id"]) == 15]
+    buys = [e for e in eligible if int(e["icon_id"]) == 9]
     steps: list[StrategyStep] = []
     signal = "HOLD"
-    source_bar_open_time = int(latest.open_time)
-
-    # User-frozen priority: any newly appearing exit icon wins over every buy
-    # icon discovered in the same recalculation batch.
-    if new_exits:
-        chosen = max(new_exits, key=lambda item: int(item["open_time"]))
-        source_bar_open_time = int(chosen["open_time"])
+    if exits:
         signal = "SSSS_EXIT_15"
         state["last_icon"] = 15
-        state["last_icon_bar_open_time"] = source_bar_open_time
+        state["last_icon_bar_open_time"] = latest_open_time
         if fraction > 1e-12:
-            steps.append(StrategyStep(
-                code="SSSS_EXIT_ALL",
-                order_code="X100",
-                target_fraction=0.0,
-                rule_ids=tuple(
-                    f"DRAWICON_15:{int(item['open_time'])}" for item in new_exits
-                ),
-                state_after=dict(state),
-            ))
-    elif new_buys:
-        chosen = max(new_buys, key=lambda item: int(item["open_time"]))
-        source_bar_open_time = int(chosen["open_time"])
+            cost = runtime.get("position_entry_price")
+            if cost is None or float(cost) <= 0:
+                signal = "SSSS_EXIT_COST_UNAVAILABLE"
+            elif float(latest.close) <= float(cost):
+                signal = "SSSS_EXIT_BELOW_COST"
+            else:
+                first = stage == 0
+                target = round(fraction * .25, 10) if first else 0.0
+                next_state = {**state, "sell_stage": 1 if first else 0}
+                steps.append(StrategyStep(
+                    code="SSSS_SELL_75" if first else "SSSS_EXIT_ALL",
+                    order_code="S75" if first else "X100",
+                    target_fraction=target,
+                    rule_ids=(f"DRAWICON_15:{latest_open_time}",),
+                    state_after=next_state,
+                ))
+    elif buys:
         signal = "SSSS_BUY_9"
         state["last_icon"] = 9
-        state["last_icon_bar_open_time"] = source_bar_open_time
-        if fraction < 1.0 - 1e-12:
-            target = min(1.0, fraction + 0.25 * len(new_buys))
-            delta_pct = int(round((target - fraction) * 100))
-            if delta_pct > 0:
-                steps.append(StrategyStep(
-                    code="SSSS_BUY_25" if delta_pct == 25 else f"SSSS_BUY_{delta_pct}",
-                    order_code=f"B{delta_pct}",
-                    target_fraction=target,
-                    rule_ids=tuple(
-                        f"DRAWICON_9:{int(item['open_time'])}" for item in new_buys
-                    ),
-                    state_after=dict(state),
-                ))
+        state["last_icon_bar_open_time"] = latest_open_time
+        if fraction <= .75 + 1e-12:
+            steps.append(StrategyStep(
+                code="SSSS_BUY_25", order_code="B25",
+                target_fraction=round(fraction + .25, 10),
+                rule_ids=(f"DRAWICON_9:{latest_open_time}",),
+                state_after=dict(state),
+            ))
+        else:
+            signal = "SSSS_BUY_BUDGET_EXHAUSTED"
 
     metadata = {
         "buy_icon_9": bool(latest.buy_icon_9),
         "exit_icon_15": bool(latest.exit_icon_15),
         "analysis_bar_count": len(analysis.bars),
         "source_sha256": ssss_strategy.source_sha256(),
-        "new_icon_events": [str(item["key"]) for item in new_events],
-        "new_buy_count": len(new_buys),
-        "new_exit_count": len(new_exits),
-        "detection_bar_open_time": int(latest.open_time),
-        "source_signal_bar_open_time": source_bar_open_time if new_events else None,
+        "new_icon_events": [str(e["key"]) for e in new_events],
+        "actionable_icon_events": [str(e["key"]) for e in eligible],
+        "late_icon_events": [str(e["key"]) for e in late],
+        "new_buy_count": len(buys),
+        "new_exit_count": len(exits),
+        "late_event_count": len(late),
+        "detection_bar_open_time": latest_open_time,
+        "source_signal_bar_open_time": latest_open_time if eligible else None,
+        "signal_close": float(latest.close),
+        "sell_stage": stage,
     }
     return StrategyDecision(
-        strategy_id=STRATEGY_SSSS,
-        signal=signal,
-        steps=tuple(steps),
-        bar_open_time=source_bar_open_time,
-        metadata=metadata,
-        state_after=dict(state),
+        strategy_id=STRATEGY_SSSS, signal=signal,
+        steps=tuple(steps), bar_open_time=latest_open_time,
+        metadata=metadata, state_after=dict(state),
     )
-
 
 def decide_zbge(rows: list[Any], runtime: dict[str, Any], timeframe: str) -> StrategyDecision:
     """Fixed 25%-of-initial-budget B, 75% then all S, with strict cost guard."""
@@ -496,7 +495,10 @@ def strategy_signal_label(strategy_id: str, raw: object) -> str:
     if strategy_id == STRATEGY_SSSS:
         labels = {
             "SSSS_BUY_9": "买入 25%",
-            "SSSS_EXIT_15": "全部清仓",
+            "SSSS_EXIT_15": "高于成本则先卖75%，下次全清",
+            "SSSS_EXIT_BELOW_COST": "💥低于持仓成本，等待下次有效💥",
+            "SSSS_EXIT_COST_UNAVAILABLE": "无法核对平均成本，停止卖出",
+            "SSSS_BUY_BUDGET_EXHAUSTED": "策略资金不足，跳过💰",
             "HOLD": "观望",
         }
         return " + ".join(labels.get(part, part) for part in text.split("+"))
