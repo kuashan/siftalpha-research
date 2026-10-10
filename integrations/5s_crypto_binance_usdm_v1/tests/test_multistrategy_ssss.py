@@ -42,6 +42,10 @@ class FakeAdapter:
         self.available = 1000.0
         self.orders = {}
         self.submits = 0
+        self.avg_entry = 90.0
+
+    def position_metrics(self, symbol):
+        return {'entry_price': self.avg_entry}
 
     def ensure_one_way(self): return {"changed": False}
     def ensure_isolated(self, symbol): return {"changed": False}
@@ -178,7 +182,7 @@ class SSSSSharedAnalysisTests(unittest.TestCase):
 class SSSSTradingRuleTests(unittest.TestCase):
     def test_latest_signal_label_is_action_advice_only(self):
         self.assertEqual(strategy_signal_label(STRATEGY_SSSS, "SSSS_BUY_9"), "买入 25%")
-        self.assertEqual(strategy_signal_label(STRATEGY_SSSS, "SSSS_EXIT_15"), "全部清仓")
+        self.assertEqual(strategy_signal_label(STRATEGY_SSSS, "SSSS_EXIT_15"), "高于成本则先卖75%，下次全清")
         self.assertEqual(strategy_signal_label(STRATEGY_SSSS, "HOLD"), "观望")
         self.assertEqual(strategy_signal_label(STRATEGY_SSSS, None), "观望")
         self.assertNotIn("💰", strategy_signal_label(STRATEGY_SSSS, "SSSS_BUY_9"))
@@ -209,17 +213,20 @@ class SSSSTradingRuleTests(unittest.TestCase):
     def test_money_icon_at_full_position_does_not_overbuy(self, mocked):
         mocked.return_value = [fake_bar(buy=True)]
         decision = decide_ssss([], {"current_fraction": 1.0}, "15m")
-        self.assertEqual(decision.signal, "SSSS_BUY_9")
+        self.assertEqual(decision.signal, "SSSS_BUY_BUDGET_EXHAUSTED")
         self.assertEqual(decision.steps, ())
 
     @patch("strategy.registry.ssss_strategy.evaluate_ssss")
-    def test_explosion_icon_full_exit_has_same_bar_priority(self, mocked):
+    def test_explosion_icon_sells_75pct_and_has_same_bar_priority(self, mocked):
         mocked.return_value = [fake_bar(buy=True, exit_=True)]
-        decision = decide_ssss([], {"current_fraction": 0.75}, "15m")
+        decision = decide_ssss([], {
+            "current_fraction": 0.75, "position_entry_price": 90,
+        }, "15m")
         self.assertEqual(decision.signal, "SSSS_EXIT_15")
         self.assertEqual(len(decision.steps), 1)
-        self.assertEqual(decision.steps[0].order_code, "X100")
-        self.assertEqual(decision.steps[0].target_fraction, 0.0)
+        self.assertEqual(decision.steps[0].order_code, "S75")
+        self.assertAlmostEqual(decision.steps[0].target_fraction, 0.1875)
+        self.assertEqual(decision.steps[0].state_after["sell_stage"], 1)
 
 
 class SSSSExecutionTests(unittest.TestCase):
@@ -287,7 +294,7 @@ class SSSSExecutionTests(unittest.TestCase):
             for kind, detail in details
         ))
 
-    def test_filled_money_buy_and_explosion_exit_leave_b_and_x(self):
+    def test_filled_money_buy_and_explosion_exit_leave_b_s_x(self):
         buy = StrategyDecision(
             strategy_id=STRATEGY_SSSS,
             signal="SSSS_BUY_9",
@@ -310,26 +317,36 @@ class SSSSExecutionTests(unittest.TestCase):
         self.assertEqual([m["side"] for m in markers], ["B"])
         self.assertEqual(markers[0]["open_time"], 1700000900000)
 
-        exit_decision = StrategyDecision(
-            strategy_id=STRATEGY_SSSS,
-            signal="SSSS_EXIT_15",
+        first_exit = StrategyDecision(
+            strategy_id=STRATEGY_SSSS, signal="SSSS_EXIT_15",
             steps=(StrategyStep(
-                code="SSSS_EXIT_ALL",
-                order_code="X100",
-                target_fraction=0.0,
+                code="SSSS_SELL_75", order_code="S75",
+                target_fraction=0.0625,
                 rule_ids=("DRAWICON_15",),
-                state_after={},
-            ),),
-            bar_open_time=1700001800000,
+                state_after={"sell_stage":1},
+            ),), bar_open_time=1700001800000,
+            metadata={"signal_close":100.0},
         )
-        self._execute(exit_decision, 1700002700000)
-
+        self._execute(first_exit, 1700002700000)
+        self.assertEqual(self.adapter.position, Decimal("0.125"))
+        self.assertEqual(self.store.get_runtime_states()["BTCUSDT"]["strategy_state"]["sell_stage"], 1)
+        final_exit = StrategyDecision(
+            strategy_id=STRATEGY_SSSS, signal="SSSS_EXIT_15",
+            steps=(StrategyStep(
+                code="SSSS_EXIT_ALL", order_code="X100",
+                target_fraction=0.0, rule_ids=("DRAWICON_15",),
+                state_after={"sell_stage":0},
+            ),), bar_open_time=1700003600000,
+            metadata={"signal_close":100.0},
+        )
+        self._execute(final_exit, 1700004500000)
         self.assertEqual(self.adapter.position, Decimal("0"))
         runtime = self.store.get_runtime_states()["BTCUSDT"]
         self.assertAlmostEqual(float(runtime["current_fraction"]), 0.0)
+        self.assertEqual(runtime["strategy_state"]["sell_stage"], 0)
         markers = self.store.list_trade_markers("BTCUSDT", STRATEGY_SSSS)
-        self.assertEqual([m["side"] for m in markers], ["B", "X"])
-        self.assertEqual(markers[-1]["open_time"], 1700002700000)
+        self.assertEqual([m["side"] for m in markers], ["B","S","X"])
+        self.assertEqual(markers[-1]["open_time"], 1700004500000)
 
         orders = self.store.list_orders("BTCUSDT")
         self.assertTrue(all(x["strategy_id"] == STRATEGY_SSSS for x in orders))
@@ -392,7 +409,7 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
         self.tmp.cleanup()
 
     @patch("strategy.registry.ssss_strategy.evaluate_ssss")
-    def test_new_money_icon_on_older_bar_executes_once_even_if_it_reappears(self, mocked):
+    def test_new_money_icon_on_older_bar_is_recorded_but_never_traded(self, mocked):
         clear_analysis_cache()
         base = 1700000000000
         source_signal_time = base + 998 * 900000
@@ -423,23 +440,21 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
 
         self.adapter.generation = 1
         second = self.scheduler.run_once()
-        self.assertEqual(second["BTCUSDT"]["signal"], "SSSS_BUY_9", second)
-        self.assertEqual(second["BTCUSDT"]["actions"], ["SSSS_BUY_25"])
-        self.assertEqual(self.adapter.submits, 1)
-        self.assertAlmostEqual(
-            float(self.store.get_runtime_states()["BTCUSDT"]["current_fraction"]),
-            0.25,
-        )
+        self.assertEqual(second["BTCUSDT"]["signal"], "HOLD", second)
+        self.assertEqual(second["BTCUSDT"]["actions"], [])
+        self.assertEqual(self.adapter.submits, 0)
+        events = self.store.recent_ssss_signal_events("BTCUSDT", limit=1)
+        self.assertEqual(events[0]["status"], "LATE_REPAINT_IGNORED")
 
         self.adapter.generation = 2
         third = self.scheduler.run_once()
         self.assertEqual(third["BTCUSDT"]["signal"], "HOLD")
-        self.assertEqual(self.adapter.submits, 1)
+        self.assertEqual(self.adapter.submits, 0)
 
         self.adapter.generation = 3
         fourth = self.scheduler.run_once()
         self.assertEqual(fourth["BTCUSDT"]["signal"], "HOLD", fourth)
-        self.assertEqual(self.adapter.submits, 1)
+        self.assertEqual(self.adapter.submits, 0)
 
         runtime = self.store.get_runtime_states()["BTCUSDT"]
         seen = runtime["strategy_state"].get("seen_icon_events") or []
@@ -453,7 +468,7 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
         details = [str(row["detail"]) for row in rows]
         self.assertTrue(any(
             f"new_events=15m:9:{source_signal_time}" in detail
-            and "decision=SSSS_BUY_9" in detail
+            and "decision=HOLD" in detail
             for detail in details
         ))
         clear_analysis_cache()
@@ -578,7 +593,7 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
 
 
     @patch("strategy.registry.ssss_strategy.evaluate_ssss")
-    def test_money_signal_buys_and_explosion_signal_fully_exits(self, mocked):
+    def test_money_signal_buys_and_first_explosion_sells_75pct(self, mocked):
         base = 1700000000000
 
         def evaluate(rows):
@@ -617,12 +632,15 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
         self.adapter.generation = 2
         third = self.scheduler.run_once()
         self.assertEqual(third["BTCUSDT"]["signal"], "SSSS_EXIT_15")
-        self.assertEqual(third["BTCUSDT"]["actions"], ["SSSS_EXIT_ALL"])
+        self.assertEqual(third["BTCUSDT"]["actions"], ["SSSS_SELL_75"])
         self.assertEqual(self.adapter.submits, 2)
-        self.assertEqual(self.adapter.position, Decimal("0"))
+        self.assertEqual(self.adapter.position, Decimal("0.125"))
         self.assertAlmostEqual(
             float(self.store.get_runtime_states()["BTCUSDT"]["current_fraction"]),
-            0.0,
+            0.0625,
+        )
+        self.assertEqual(
+            self.store.get_runtime_states()["BTCUSDT"]["strategy_state"]["sell_stage"], 1,
         )
 
         orders = self.store.list_orders("BTCUSDT")
