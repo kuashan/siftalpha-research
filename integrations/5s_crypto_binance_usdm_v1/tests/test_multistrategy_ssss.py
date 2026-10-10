@@ -660,5 +660,48 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
 
 
 
+    @patch("strategy.registry.ssss_strategy.evaluate_ssss")
+    def test_cost_gap_at_next_open_consumes_signal_without_repeat_sell(self, mocked):
+        """A detected S with next-open below cost must not sell later on same bar."""
+        base = 1700000000000
+        def evaluate(rows):
+            t = int(rows[-1][0])
+            is_exit = t == base + 1000 * 900000
+            return [fake_bar(exit_=is_exit, open_time=t)]
+        mocked.side_effect = evaluate
+        self.scheduler.run_once()  # establish historical tracker
+        state = self.store.get_runtime_states()["BTCUSDT"]["strategy_state"]
+        self.store.set_strategy_execution_state(
+            "BTCUSDT", current_fraction=.5, strategy_state=state,
+        )
+        self.adapter.position = Decimal("1.000")
+        self.adapter.avg_entry = 95.0
+        self.adapter.generation = 1
+        self.adapter.current_open_price = 90.0
+        original_klines = self.adapter.klines
+
+        def moved_open(symbol, timeframe, limit):
+            rows = original_klines(symbol, timeframe, limit)
+            rows[-1][1] = self.adapter.current_open_price
+            return rows
+
+        self.adapter.klines = moved_open
+        first = self.scheduler.run_once()
+        self.assertEqual(first["BTCUSDT"]["signal"], "SSSS_EXIT_15")
+        self.assertEqual(self.adapter.submits, 0)
+        self.assertEqual(
+            self.store.get_runtime_states()["BTCUSDT"]["strategy_state"].get("sell_stage", 0),
+            0,
+        )
+        status = self.store.recent_ssss_signal_events("BTCUSDT", limit=1)[0]["status"]
+        self.assertEqual(status, "SKIPPED_AT_NEXT_OPEN")
+        self.adapter.current_open_price = 100.0
+        repeated = self.scheduler.run_once()
+        self.assertEqual(repeated["BTCUSDT"]["actions"], [])
+        self.assertEqual(self.adapter.submits, 0)
+        self.assertEqual(self.store.recent_ssss_signal_events("BTCUSDT", limit=1)[0]["status"], "SKIPPED_AT_NEXT_OPEN")
+        clear_analysis_cache()
+
+
 if __name__ == "__main__":
     unittest.main()
