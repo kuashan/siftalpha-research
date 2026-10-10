@@ -647,7 +647,7 @@ class SSSSEndToEndAutomationTests(unittest.TestCase):
         self.assertEqual([str(x["status"]).upper() for x in orders], ["FILLED", "FILLED"])
         self.assertEqual([x["side"] for x in orders], ["BUY", "SELL"])
         markers = self.store.list_trade_markers("BTCUSDT", STRATEGY_SSSS)
-        self.assertEqual([x["side"] for x in markers], ["B", "X"])
+        self.assertEqual([x["side"] for x in markers], ["B", "S"])
 
         with self.store._connect() as conn:
             audit_rows = conn.execute(
