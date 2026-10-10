@@ -112,7 +112,7 @@ class ChineseUiTests(unittest.TestCase):
         self.assertIn("STRATEGY_SSSS", app_text)
         self.assertIn("strategy_indicator_markers", app_text)
         self.assertIn("SSSS 每个 💰 买入 25%", app_text)
-        self.assertIn("💰=买入25%", text)
+        self.assertIn("💰=初始资金25%买点", text)
         self.assertIn("💥=全部清仓", text)
         self.assertNotIn("SSSS：原始富途指标", text)
         self.assertIn("SSSS：💰=买入25%", text)
