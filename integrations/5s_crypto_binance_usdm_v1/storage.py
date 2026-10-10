@@ -685,6 +685,35 @@ class StateStore:
             ).fetchall()
             return [dict(row) for row in rows]
 
+    def chart_ssss_signal_events(
+        self, symbol: str, *, timeframe: str, first_open_time: int,
+        last_open_time: int,
+    ) -> list[dict[str, object]]:
+        """Immutable first-detection ledger survives XMA repaint and restarts.
+
+        The most recent 1000 closed candles have at most 2000 icon slots.
+        BASELINE icons are excluded because they predate activation.
+        """
+        with self._connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT signal_bar_open_time, detection_bar_open_time,
+                       icon_id, first_detected_time, status,
+                       execution_bar_open_time, binance_order_id
+                FROM ssss_signal_events
+                WHERE symbol=? AND timeframe=?
+                  AND signal_bar_open_time BETWEEN ? AND ?
+                  AND status <> 'BASELINE'
+                ORDER BY signal_bar_open_time ASC, icon_id ASC
+                LIMIT 2000
+                """,
+                (
+                    symbol, str(timeframe).lower(),
+                    int(first_open_time), int(last_open_time),
+                ),
+            ).fetchall()
+        return [dict(row) for row in rows]
+
     def set_accounting_start_if_missing(self, symbol: str, start_time_ms: int) -> int:
         with self._connect() as conn:
             conn.execute(

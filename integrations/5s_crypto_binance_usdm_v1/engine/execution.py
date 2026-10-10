@@ -8,7 +8,7 @@ from typing import Any
 
 from engine.scheduler import TerminalDecisionError
 from exchange.binance_usdm_testnet import floor_to_step
-from strategy.registry import STRATEGY_5S, STRATEGY_ZBGE, StrategyStep, get_spec
+from strategy.registry import STRATEGY_5S, STRATEGY_SSSS, STRATEGY_ZBGE, StrategyStep, get_spec
 
 
 class ExecutionBlocked(TerminalDecisionError):
@@ -413,7 +413,7 @@ class M3Executor:
                 if position_amount < 0:
                     raise ExecutionBlocked("检测到空头持仓；当前框架只允许做多，已阻止自动交易")
 
-                if strategy_id == STRATEGY_ZBGE and delta < 0:
+                if strategy_id in (STRATEGY_ZBGE, STRATEGY_SSSS) and delta < 0:
                     # Recheck at execution: a profitable CLOSED-bar S is not
                     # permission to sell below cost after a next-open gap.
                     # Never advance sell_stage when this safety gate skips.
@@ -426,10 +426,10 @@ class M3Executor:
                         (getattr(decision, "metadata", None) or {}).get("signal_close") or 0
                     ))
                     if cost <= 0:
-                        raise ExecutionBlocked("币安没有返回有效持仓均价，阻止 ZBGE 卖出")
+                        raise ExecutionBlocked("币安没有返回有效持仓均价，阻止成本保护卖出")
                     if signal_price <= cost or reference_price <= cost:
                         self.store.append_audit(
-                            "ZBGE_S_SKIPPED_COST", symbol,
+                            "PROTECTED_S_SKIPPED_COST", symbol,
                             f"signal_close={signal_price};next_open={reference_price};entry={cost};stage_unchanged=1",
                         )
                         continue

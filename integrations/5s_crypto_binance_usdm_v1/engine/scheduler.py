@@ -308,7 +308,10 @@ class StrategyScheduler:
                 )
                 if previous_open_time is None or tracker_needs_baseline:
                     baseline_state = (
-                        baseline_ssss_state(closed, timeframe)
+                        {
+                            **dict(state.get("strategy_state") or {}),
+                            **baseline_ssss_state(closed, timeframe),
+                        }
                         if strategy_id == STRATEGY_SSSS
                         else None
                     )
@@ -385,7 +388,7 @@ class StrategyScheduler:
 
                 # ZBGE signals are based on CLOSED bars. Do not trade a stale
                 # delayed signal using a later-than-next bar's open price.
-                if strategy_id == STRATEGY_ZBGE and is_new_bar:
+                if strategy_id in (STRATEGY_SSSS, STRATEGY_ZBGE):
                     signal_open = latest_open_time
                     execution_open = int(rows[-1][0])
                     expected_ms = {
@@ -395,10 +398,22 @@ class StrategyScheduler:
                     }[timeframe]
                     if execution_open - signal_open != expected_ms:
                         self.store.append_audit(
-                            "ZBGE_STALE_NEXT_OPEN_BLOCKED", symbol,
+                            "SSSS_STALE_NEXT_OPEN_BLOCKED" if strategy_id == STRATEGY_SSSS else "ZBGE_STALE_NEXT_OPEN_BLOCKED", symbol,
                             f"signal_open={signal_open};execution_open={execution_open};expected_ms={expected_ms}",
                         )
-                        self.store.baseline_closed_bar(symbol, latest_open_time)
+                        # Never replay a signal detected on a non-adjacent bar.
+                        # For SSSS, preserve its existing exit stage and snapshot
+                        # old icons so even repainted source bars cannot backtrade.
+                        stale_state = (
+                            {
+                                **dict(state.get("strategy_state") or {}),
+                                **baseline_ssss_state(closed, timeframe),
+                            }
+                            if strategy_id == STRATEGY_SSSS else None
+                        )
+                        self.store.baseline_closed_bar(
+                            symbol, latest_open_time, strategy_state=stale_state
+                        )
                         result[symbol] = {
                             "state": "MONITORING", "strategy_id": strategy_id,
                             "timeframe": timeframe, "stale_bar": True,
@@ -411,7 +426,7 @@ class StrategyScheduler:
                 # boundary poll. The persisted icon set, not only bar_open_time, is
                 # therefore the authority for deciding whether a signal is new.
                 decision_runtime = state
-                if strategy_id == STRATEGY_ZBGE and float(state.get("current_fraction") or 0) > 1e-12:
+                if strategy_id in (STRATEGY_ZBGE, STRATEGY_SSSS) and float(state.get("current_fraction") or 0) > 1e-12:
                     # Binance's native entry price, not a reconstructed local
                     # average, is authoritative for cost-protected exits.
                     decision_runtime = dict(state)
@@ -421,7 +436,7 @@ class StrategyScheduler:
                     except Exception as exc:
                         decision_runtime["position_entry_price"] = None
                         self.store.append_audit(
-                            "ZBGE_COST_LOOKUP_UNAVAILABLE", symbol,
+                            "COST_LOOKUP_UNAVAILABLE", symbol,
                             f"{type(exc).__name__}:{exc}",
                         )
                 decision = self._make_decision(strategy_id, closed, decision_runtime, timeframe)
@@ -449,7 +464,10 @@ class StrategyScheduler:
                                 signal_bar_open_time=signal_open_time,
                                 icon_id=icon_id,
                                 detection_bar_open_time=latest_open_time,
-                                status="DETECTED",
+                                status=(
+                                    "LATE_REPAINT_IGNORED"
+                                    if signal_open_time < latest_open_time else "DETECTED"
+                                ),
                             )
                         )
 
@@ -487,6 +505,7 @@ class StrategyScheduler:
                             f"new_events={','.join(str(x) for x in (metadata.get('new_icon_events') or [])) or 'NONE'};"
                             f"new_buy_count={int(metadata.get('new_buy_count') or 0)};"
                             f"new_exit_count={int(metadata.get('new_exit_count') or 0)};"
+                            f"late_repaints={int(metadata.get('late_event_count') or 0)};"
                             f"source_signal_bar={metadata.get('source_signal_bar_open_time') or 'NONE'};"
                             f"first_detected_time={first_detected};"
                             f"decision={decision.signal};"
@@ -508,8 +527,8 @@ class StrategyScheduler:
                         if strategy_id == STRATEGY_SSSS:
                             for event_tf, icon_id, signal_open_time in ssss_new_events:
                                 event_status = (
-                                    "SUPPRESSED_BY_EXIT"
-                                    if decision.signal == "SSSS_EXIT_15" and icon_id == 9
+                                    "LATE_REPAINT_IGNORED" if signal_open_time < latest_open_time
+                                    else "SUPPRESSED_BY_EXIT" if icon_id == 9 and bool(metadata.get("new_exit_count"))
                                     else "BLOCKED"
                                 )
                                 self.store.mark_ssss_signal_result(
@@ -564,7 +583,10 @@ class StrategyScheduler:
                                     timeframe=event_tf,
                                     signal_bar_open_time=signal_open_time,
                                     icon_id=icon_id,
-                                    status="ERROR",
+                                    status=(
+                                        "LATE_REPAINT_IGNORED" if signal_open_time < latest_open_time
+                                        else "ERROR"
+                                    ),
                                     execution_bar_open_time=int(execution_context["execution_bar_open_time"]),
                                     result=f"{type(exc).__name__}:{exc}",
                                 )
@@ -603,11 +625,14 @@ class StrategyScheduler:
                     if strategy_id == STRATEGY_SSSS:
                         order_ids = tuple(getattr(execution_outcome, "order_ids", ()) or ())
                         order_text = ",".join(str(x) for x in order_ids) or "NONE"
+                        filled_actions = tuple(getattr(execution_outcome, "actions", ()) or ())
                         for event_tf, icon_id, signal_open_time in ssss_new_events:
                             event_status = (
-                                "SUPPRESSED_BY_EXIT"
-                                if decision.signal == "SSSS_EXIT_15" and icon_id == 9
-                                else "FILLED"
+                                "LATE_REPAINT_IGNORED" if signal_open_time < latest_open_time
+                                else "SUPPRESSED_BY_EXIT" if icon_id == 9 and bool(metadata.get("new_exit_count"))
+                                else "FILLED" if filled_actions
+                                else "SKIPPED_AT_NEXT_OPEN" if decision.steps
+                                else "IGNORED_NO_ACTION"
                             )
                             self.store.mark_ssss_signal_result(
                                 symbol,
@@ -627,7 +652,7 @@ class StrategyScheduler:
                                 f"signal_bar_open_time={decision.bar_open_time};"
                                 f"execution_bar_open_time={execution_context['execution_bar_open_time']};"
                                 f"decision={decision.signal};"
-                                f"status=FILLED;order_ids={order_text}"
+                                f"status={'FILLED' if filled_actions else 'SKIPPED'};order_ids={order_text}"
                             ),
                         )
 
@@ -641,7 +666,20 @@ class StrategyScheduler:
                         # A successful fill persists the NEXT sell_stage through
                         # M3Executor. Never overwrite it with pre-fill decision state.
                         strategy_state=(
-                            self.store.get_runtime_states()[symbol].get("strategy_state")
+                            {
+                                **dict(getattr(decision, "state_after", None) or {}),
+                                # A market-order skip must still consume this
+                                # signal's seen-event key; only an actual fill
+                                # may advance the successful sell stage.
+                                "sell_stage": int(
+                                    (
+                                        self.store.get_runtime_states()[symbol].get("strategy_state")
+                                        or {}
+                                    ).get("sell_stage") or 0
+                                ),
+                            }
+                            if strategy_id == STRATEGY_SSSS
+                            else self.store.get_runtime_states()[symbol].get("strategy_state")
                             if strategy_id == STRATEGY_ZBGE
                             else getattr(decision, "state_after", None)
                         ),
@@ -651,8 +689,10 @@ class StrategyScheduler:
                     if strategy_id == STRATEGY_SSSS:
                         for event_tf, icon_id, signal_open_time in ssss_new_events:
                             event_status = (
-                                "SUPPRESSED_BY_EXIT"
-                                if decision.signal == "SSSS_EXIT_15" and icon_id == 9
+                                "LATE_REPAINT_IGNORED" if signal_open_time < latest_open_time
+                                else "SUPPRESSED_BY_EXIT" if icon_id == 9 and bool(metadata.get("new_exit_count"))
+                                else "SKIPPED_BELOW_COST" if decision.signal == "SSSS_EXIT_BELOW_COST"
+                                else "COST_UNAVAILABLE" if decision.signal == "SSSS_EXIT_COST_UNAVAILABLE"
                                 else "IGNORED_NO_ACTION"
                             )
                             self.store.mark_ssss_signal_result(

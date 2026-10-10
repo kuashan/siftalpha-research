@@ -310,6 +310,33 @@ def chart_payload(symbol: str) -> dict[str, object]:
             row for row in strategy_indicator_markers
             if first_time <= int(row["open_time"]) <= last_time
         ]
+        if strategy_id == STRATEGY_SSSS:
+            # Today's recomputed XMA view can erase an icon that truly
+            # existed when the order was triggered. Preserve a distinct
+            # "detected then repainted" marker from the persistent ledger;
+            # never fabricate a current raw DRAWICON in its place.
+            visible = {
+                (int(m["open_time"]), str(m["kind"]))
+                for m in strategy_indicator_markers
+            }
+            for event in store.chart_ssss_signal_events(
+                symbol, timeframe=timeframe,
+                first_open_time=first_time, last_open_time=last_time,
+            ):
+                icon = int(event["icon_id"])
+                t = int(event["signal_bar_open_time"])
+                raw_kind = "BUY_ICON_9" if icon == 9 else "EXIT_ICON_15"
+                if (t, raw_kind) in visible:
+                    continue
+                strategy_indicator_markers.append({
+                    "open_time": t,
+                    "kind": "SSSS_RECORDED_BUY_9" if icon == 9
+                            else "SSSS_RECORDED_EXIT_15",
+                    "text": "记录💰" if icon == 9 else "记录💥",
+                    "status": str(event["status"]),
+                    "first_detected_time": event["first_detected_time"],
+                    "detection_bar_open_time": event["detection_bar_open_time"],
+                })
     else:
         markers = []
         strategy_overlay = []
@@ -413,7 +440,7 @@ def render_index(selected_symbol: str | None = None) -> str:
                 f'data-strategy-option="{html.escape(sid)}" '
                 f'role="option" aria-selected="{"true" if is_selected else "false"}">'
                 f'<span>{html.escape("5s V1" if sid == STRATEGY_5S else label)}</span>'
-                f'<small>{html.escape("A/B 60% · C 补至 100% · SELL 全退" if sid == STRATEGY_5S else ("💰 +25% · 💥 全部清仓" if sid == STRATEGY_SSSS else "B 买初始资金25% · S先卖75%再清仓 · 低于成本不卖"))}</small>'
+                f'<small>{html.escape("A/B 60% · C 补至 100% · SELL 全退" if sid == STRATEGY_5S else ("💰 初始资金25% · 💥先卖75%后全清 · 不低于成本卖出" if sid == STRATEGY_SSSS else "B 买初始资金25% · S先卖75%再清仓 · 低于成本不卖"))}</small>'
                 f'</button>'
             )
             for sid, label, is_selected in strategy_options(strategy_id)
@@ -426,8 +453,8 @@ def render_index(selected_symbol: str | None = None) -> str:
             )
         elif strategy_id == STRATEGY_SSSS:
             exposure_html = (
-                f'<div><small>SSSS 每个 💰 买入 25% 名义价值</small><b>{ssss25.target_notional_usdt:.2f} USDT</b></div>'
-                f'<div><small>SSSS 满仓 100% 名义价值</small><b>{full.target_notional_usdt:.2f} USDT</b></div>'
+                f'<div><small>SSSS 每个 💰 使用初始策略资金25%（含杠杆名义价值）</small><b>{ssss25.target_notional_usdt:.2f} USDT</b></div>'
+                f'<div><small>💥首次有效卖出75%，第二次全部清仓</small><b>必须高于平均持仓成本</b></div>'
             )
         elif strategy_id == STRATEGY_ZBGE:
             exposure_html = (
