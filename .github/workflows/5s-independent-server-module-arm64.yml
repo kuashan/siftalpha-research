@@ -83,7 +83,7 @@ jobs:
         run: python -m unittest tests.test_m3_signal_engine_parity -v
 
       - name: SSSS strategy contract
-        run: python -m unittest tests.test_multistrategy_ssss -v
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
 
       - name: ZBGE B/S contract
         run: python -m unittest tests.test_zbge_bs -v
@@ -105,8 +105,8 @@ jobs:
           assert 'matrixquant_pai' not in page
           assert 'ZBGE B/S' in page
           assert 'STRATEGY_E: StrategySpec' not in registry
-          assert '💰=买入25%' in page
-          assert '💥=全部清仓' in page
+          assert '💰=初始资金25%买点' in page
+          assert '💥=盈利才卖(先75%，再全清)' in page
           assert 'strategy_indicator_markers' in app
           assert 'SSSS_SOURCE_SHA256' in source
           print("ZBGE_SELECTOR_UI_PASS")
